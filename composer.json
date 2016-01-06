@@ -1,0 +1,27 @@
+{
+  "name": "amabnl/amadeus-ws-client",
+  "type": "library",
+  "description": "SOAP Web Service client library for interacting with the Amadeus GDS through its SOAP interface",
+  "keywords": ["amadeus", "GDS", "webservice", "soap", "wsdl", "client", "xml"],
+  "minimum-stability": "stable",
+  "license": "Apache",
+  "authors": [
+    {
+      "name": "Dieter Devlieghere",
+      "email": "dieter.devlieghere@benelux.amadeus.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.11"
+  },
+  "autoload": {
+    "psr-4": {
+      "Amadeus\\": "src/Amadeus"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Test\\Amadeus\\": "tests/Amadeus"
+    }
+  }
+}
