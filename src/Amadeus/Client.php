@@ -22,6 +22,13 @@
 
 namespace Amadeus;
 
+use Amadeus\Client\Exception;
+use Amadeus\Client\Params;
+use Amadeus\Client\RequestCreator\RequestCreatorInterface;
+use Amadeus\Client\RequestOptions\PnrRetrieveRequestOptions;
+use Amadeus\Client\Session\Handler\HandlerFactory;
+use Amadeus\Client\Session\Handler\HandlerInterface;
+
 /**
  * Amadeus Web Service Client.
  *
@@ -30,5 +37,103 @@ namespace Amadeus;
  */
 class Client
 {
+    /**
+     * Amadeus SOAP header version 1
+     */
+    const HEADER_V1 = "1";
+    /**
+     * Amadeus SOAP header version 2
+     */
+    const HEADER_V2 = "2";
+    /**
+     * Amadeus SOAP header version 4
+     */
+    const HEADER_V4 = "4";
 
+    /**
+     * Version string
+     *
+     * @var string
+     */
+    const version = "0.0.1dev";
+
+    /**
+     * @var HandlerInterface
+     */
+    protected $sessionHandler;
+
+    /**
+     * @var RequestCreatorInterface
+     */
+    protected $requestCreator;
+
+    /**
+     * @param Params $params
+     */
+    public function __construct($params)
+    {
+        $this->requestCreator = $this->loadRequestCreator($params->requestCreator);
+        $this->sessionHandler = $this->loadSessionHandler(
+            $params->sessionHandler,
+            $params->sessionHandlerParams,
+            self::version
+        );
+    }
+
+    /**
+     * @param string $recordLocator Amadeus Record Locator for PNR
+     * @param bool $responseAsString (OPTIONAL)
+     * @return string|\stdClass|null
+     * @throws Exception
+     */
+    public function retrievePnr($recordLocator, $responseAsString = true)
+    {
+
+
+        $response = $this->sessionHandler->sendMessage(
+            'retrievePnr',
+            $this->requestCreator->createRequest(
+                'retrievePnr',
+                new PnrRetrieveRequestOptions($recordLocator)
+            ),
+            $responseAsString
+        );
+    }
+
+    /**
+     * @param HandlerInterface|null $sessionHandler
+     * @param Params\SessionHandlerParams $params
+     * @param string $libVersion Version string for the library (for Received From)
+     * @return HandlerInterface
+     */
+    protected function loadSessionHandler($sessionHandler, $params, $libVersion)
+    {
+        $newSessionHandler = null;
+
+        if ($sessionHandler instanceof HandlerInterface) {
+            $newSessionHandler = $sessionHandler;
+        } else {
+            $newSessionHandler = HandlerFactory::createHandler($params, $libVersion);
+        }
+
+        return $newSessionHandler;
+    }
+
+    /**
+     * @param RequestCreatorInterface|null $requestCreator
+     * @return RequestCreatorInterface
+     * @throws \RuntimeException
+     */
+    protected function loadRequestCreator($requestCreator)
+    {
+        $newRequestCreator = null;
+
+        if ($requestCreator instanceof RequestCreatorInterface) {
+            $newRequestCreator = $requestCreator;
+        } else {
+            $newRequestCreator = new Client\RequestCreator\Base();
+        }
+
+        return $newRequestCreator;
+    }
 }
