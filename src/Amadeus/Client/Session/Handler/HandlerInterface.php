@@ -22,6 +22,9 @@
 
 namespace Amadeus\Client\Session\Handler;
 
+use Amadeus\Client\Params\SessionHandlerParams;
+use Amadeus\Client\Struct\BaseWsMessage;
+
 /**
  * HandlerInterface
  *
@@ -32,6 +35,16 @@ namespace Amadeus\Client\Session\Handler;
  */
 interface HandlerInterface
 {
+    /**
+     * @param SessionHandlerParams $params
+     */
+    public function __construct(SessionHandlerParams $params);
 
-    public function sendMessage($messageName, $messageBody, $asString);
+    /**
+     * @param string $messageName
+     * @param BaseWsMessage $messageBody
+     * @param array $messageOptions
+     * @return string|\stdClass
+     */
+    public function sendMessage($messageName, BaseWsMessage $messageBody, $messageOptions);
 }

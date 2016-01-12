@@ -32,6 +32,10 @@ use Amadeus\Client\Session\Handler\HandlerInterface;
 /**
  * Amadeus Web Service Client.
  *
+ * TODO:
+ * - have a solution for session pooling for stateful sessions
+ * - support older versions of SoapHeader (1, 2)
+ *
  * @package Amadeus
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
@@ -56,6 +60,12 @@ class Client
      * @var string
      */
     const version = "0.0.1dev";
+    /**
+     * An identifier string for the library (to be used in Received From entries)
+     *
+     * @var string
+     */
+    const receivedFromIdentifier = "amabnl/amadeus-ws-client";
 
     /**
      * @var HandlerInterface
@@ -76,21 +86,26 @@ class Client
         $this->sessionHandler = $this->loadSessionHandler(
             $params->sessionHandler,
             $params->sessionHandlerParams,
-            self::version
+            self::receivedFromIdentifier . "-" .self::version
         );
     }
 
     /**
+     * Retrieve an Amadeus PNR by record locator
+     *
+     * By default, the result will be the PNR_Reply XML as string.
+     * That way you can easily parse the PNR's contents with XPath.
+     *
+     * Set $responseAsString FALSE to get the response as a PHP object.
+     *
      * @param string $recordLocator Amadeus Record Locator for PNR
-     * @param bool $responseAsString (OPTIONAL)
+     * @param bool $responseAsString (OPTIONAL) set to 'false' to get PNR_Reply as a PHP object.
      * @return string|\stdClass|null
      * @throws Exception
      */
     public function retrievePnr($recordLocator, $responseAsString = true)
     {
-
-
-        $response = $this->sessionHandler->sendMessage(
+        return $this->sessionHandler->sendMessage(
             'retrievePnr',
             $this->requestCreator->createRequest(
                 'retrievePnr',
@@ -103,17 +118,17 @@ class Client
     /**
      * @param HandlerInterface|null $sessionHandler
      * @param Params\SessionHandlerParams $params
-     * @param string $libVersion Version string for the library (for Received From)
+     * @param string $libIdentifier Library identifier & version string (for Received From)
      * @return HandlerInterface
      */
-    protected function loadSessionHandler($sessionHandler, $params, $libVersion)
+    protected function loadSessionHandler($sessionHandler, $params, $libIdentifier)
     {
         $newSessionHandler = null;
 
         if ($sessionHandler instanceof HandlerInterface) {
             $newSessionHandler = $sessionHandler;
         } else {
-            $newSessionHandler = HandlerFactory::createHandler($params, $libVersion);
+            $newSessionHandler = HandlerFactory::createHandler($params, $libIdentifier);
         }
 
         return $newSessionHandler;

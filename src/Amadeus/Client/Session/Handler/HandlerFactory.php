@@ -22,24 +22,55 @@
 
 namespace Amadeus\Client\Session\Handler;
 
+use Amadeus\Client;
 use Amadeus\Client\Params\SessionHandlerParams;
 
+/**
+ * HandlerFactory generates the correct Session Handler based on the incoming params.
+ *
+ * @package Amadeus\Client\Session\Handler
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ */
 class HandlerFactory
 {
     /**
      * @param SessionHandlerParams $handlerParams
-     * @param string $libVersion
+     * @param string $libIdentifier
      * @return HandlerInterface
      * @throws \InvalidArgumentException when the parameters to create the handler do not make sense.
      */
-    public static function createHandler($handlerParams, $libVersion)
+    public static function createHandler($handlerParams, $libIdentifier)
     {
         $theHandler = null;
 
+        $handlerParams->receivedFrom = self::makeReceivedFrom(
+            $handlerParams->receivedFrom,
+            $libIdentifier
+        );
+
         switch ($handlerParams->soapHeaderVersion) {
-
+            case Client::HEADER_V4:
+                $theHandler = new SoapHeader4($handlerParams);
+                break;
+            case Client::HEADER_V2:
+            case Client::HEADER_V1:
+            default:
+                //TODO implement Client::HEADER_V2 & Client::HEADER_V1
+                throw new \InvalidArgumentException(
+                    'No Session Handler found for soapHeaderVersion ' . $handlerParams->soapHeaderVersion
+                );
         }
-        //TODO create session handler based on the soapheader version
 
+        return $theHandler;
+    }
+
+    /**
+     * @param string $original
+     * @param string $libIdentifier
+     * @return string
+     */
+    protected static function makeReceivedFrom($original, $libIdentifier)
+    {
+        return $original . " : " . $libIdentifier;
     }
 }

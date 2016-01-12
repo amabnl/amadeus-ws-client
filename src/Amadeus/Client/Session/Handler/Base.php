@@ -22,27 +22,44 @@
 
 namespace Amadeus\Client\Session\Handler;
 
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
+use Psr\Log\NullLogger;
+
 /**
  * Base Session Handler
  *
  * Session handler will manage everything related to the session with the Amadeus Web Services server:
  * - be configurable to handle different versions of authentication mechanisms depending on the WSDL received
  * - decide if a separate authentication message is needed and if so, send it
- * -
  *
  * @package Amadeus\Client\Session\Handler
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Base implements HandlerInterface
+abstract class Base implements HandlerInterface, LoggerAwareInterface
 {
+
+    use LoggerAwareTrait;
+
     /**
-     * @param $messageName
-     * @param $messageBody
-     * @param $asString
+     * @var \SoapClient
      */
-    public function sendMessage($messageName, $messageBody, $asString)
+    protected $soapClient;
+
+
+    /**
+     * @param mixed $level
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    protected function log($level, $message, $context = [])
     {
-        // TODO: Implement sendMessage() method.
+        if (is_null($this->logger)) {
+            $this->setLogger(new NullLogger());
+        }
+
+        return $this->logger->log($level, $message, $context);
     }
 
 }

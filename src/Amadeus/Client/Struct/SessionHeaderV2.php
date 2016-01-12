@@ -20,17 +20,16 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator;
-
-use Amadeus\Client\RequestOptions\RequestOptionsInterface;
+namespace Amadeus\Client\Struct;
 
 /**
- * RequestCreatorInterface is an interface for creating requests for various messages based on certain parameters
+ * Class SessionHeaderV2
  *
- * @package Amadeus\Client\RequestCreator
+ * @todo NOT YET IMPLEMENTED
+ * @package Amadeus\Client\Struct
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface RequestCreatorInterface
+class SessionHeaderV2
 {
-    public function createRequest($messageName, RequestOptionsInterface $params);
+    //TODO
 }

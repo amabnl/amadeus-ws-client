@@ -20,17 +20,19 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator;
-
-use Amadeus\Client\RequestOptions\RequestOptionsInterface;
+namespace Amadeus\Client\Session\Handler;
 
 /**
- * RequestCreatorInterface is an interface for creating requests for various messages based on certain parameters
  *
- * @package Amadeus\Client\RequestCreator
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface RequestCreatorInterface
+class Classmap
 {
-    public function createRequest($messageName, RequestOptionsInterface $params);
+    /**
+     * The PHP -> WSDL translation classmap for the Amadeus WS Client
+     *
+     * @var array
+     */
+    public static $map = [
+
+    ];
 }

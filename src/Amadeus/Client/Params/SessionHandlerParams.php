@@ -23,6 +23,7 @@
 namespace Amadeus\Client\Params;
 
 use Amadeus\Client;
+use Psr\Log\LoggerInterface;
 
 class SessionHandlerParams
 {
@@ -34,6 +35,10 @@ class SessionHandlerParams
      */
     public $wsdl;
 
+    /**
+     * Which Soap Header version to be used
+     * @var string
+     */
     public $soapHeaderVersion = Client::HEADER_V4;
 
     /**
@@ -46,7 +51,7 @@ class SessionHandlerParams
      *
      * @var bool
      */
-    public $isStateful = true;
+    public $stateful = true;
 
     /**
      * A custom "Received From" string - if not provided, will default to amabnl/amadeus-ws-client
@@ -54,4 +59,43 @@ class SessionHandlerParams
      * @var string
      */
     public $receivedFrom;
+
+    /**
+     * @var LoggerInterface
+     */
+    public $logger;
+
+
+    /**
+     * @param array $params
+     */
+    public function __construct($params = [])
+    {
+        $this->loadFromArray($params);
+    }
+
+
+    /**
+     * Load parameters from an associative array
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadFromArray(array $params) {
+        if (count($params) > 0) {
+            $this->wsdl = (isset($params['wsdl'])) ? $params['wsdl'] : null;
+            $this->soapHeaderVersion = (isset($params['soapHeaderVersion'])) ? $params['soapHeaderVersion'] : null;
+            $this->stateful = (isset($params['stateful'])) ? $params['stateful'] : true;
+            $this->receivedFrom = (isset($params['receivedFrom'])) ? $params['receivedFrom'] : null;
+            $this->logger = ($params['logger'] instanceof LoggerInterface) ? $params['logger'] : null;
+
+            if (isset($params['authParams'])) {
+                if ($params['authParams'] instanceof AuthParams) {
+                    $this->authParams = $params['authParams'];
+                } elseif (is_array($params['authParams'])) {
+                    $this->authParams = new AuthParams($params['authParams']);
+                }
+            }
+        }
+    }
 }

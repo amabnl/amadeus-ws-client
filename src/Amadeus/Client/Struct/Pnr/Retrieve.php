@@ -22,13 +22,15 @@
 
 namespace Amadeus\Client\Struct\Pnr;
 
+use Amadeus\Client\Struct\BaseWsMessage;
+
 /**
  * Structure class for representing the PNR_Retrieve request message
  *
  * @package Amadeus\Client\Struct\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Retrieve
+class Retrieve extends BaseWsMessage
 {
 	/**
 	 * Definition for retrieval type: by record locator

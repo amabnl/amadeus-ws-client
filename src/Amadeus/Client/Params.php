@@ -51,4 +51,25 @@ class Params
      */
     public $sessionHandlerParams;
 
+    /**
+     * @param array $params
+     */
+    public function __construct($params = [])
+    {
+        $this->loadFromArray($params);
+    }
+
+    /**
+     * Load parameters from an associative array
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadFromArray(array $params) {
+        if (count($params) > 0) {
+            $this->requestCreator = $params['requestCreator'];
+            $this->sessionHandler = $params['sessionHandler'];
+            $this->sessionHandlerParams = $params['sessionHandlerParams'];
+        }
+    }
 }

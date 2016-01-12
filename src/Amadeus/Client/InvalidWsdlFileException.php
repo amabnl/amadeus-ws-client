@@ -20,17 +20,15 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator;
-
-use Amadeus\Client\RequestOptions\RequestOptionsInterface;
+namespace Amadeus\Client;
 
 /**
- * RequestCreatorInterface is an interface for creating requests for various messages based on certain parameters
+ * InvalidWsdlFileException exception when there are problems opening the WSDL file
  *
- * @package Amadeus\Client\RequestCreator
+ * @package Amadeus\Client
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface RequestCreatorInterface
+class InvalidWsdlFileException extends Exception
 {
-    public function createRequest($messageName, RequestOptionsInterface $params);
+
 }

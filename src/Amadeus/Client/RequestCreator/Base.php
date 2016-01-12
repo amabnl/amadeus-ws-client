@@ -36,10 +36,10 @@ class Base implements RequestCreatorInterface
 {
     /**
      * @param string $messageName
-     * @param array|RequestOptionsInterface $params
+     * @param RequestOptionsInterface $params
      * @return mixed the created request
      */
-    public function createRequest($messageName, $params)
+    public function createRequest($messageName, RequestOptionsInterface $params)
     {
         if (method_exists($this, $messageName)) {
             if(!is_array($params)) {

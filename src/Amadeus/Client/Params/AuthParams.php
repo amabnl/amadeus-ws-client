@@ -22,20 +22,88 @@
 
 namespace Amadeus\Client\Params;
 
-
+/**
+ * AuthParams defines necessary authentication parameters for Amadeus Web Service client authentication.
+ *
+ * @package Amadeus\Client\Params
+ */
 class AuthParams
 {
-
+    /**
+     * The Amadeus Office ID to sign in to
+     *
+     * @var string
+     */
     public $officeId;
 
-    public $originatorTypeCode;
+    /**
+     * Originator Typecode
+     *
+     * @var string
+     */
+    public $originatorTypeCode = "U";
 
+    /**
+     * Originator
+     *
+     * @var string
+     */
     public $originator;
 
+    /**
+     * Organization ID
+     *
+     * @var string
+     */
     public $organizationId;
 
+    /**
+     * Password Length
+     *
+     * @var int
+     */
     public $passwordLength;
 
+    /**
+     * Password Data (base-64 encoded password)
+     *
+     * @var string
+     */
     public $passwordData;
+
+    /**
+     * Custom Nonce base to use when generating nonces for authentication
+     *
+     * Only applies to Soap Header V4
+     *
+     * @var string
+     */
+    public $nonceBase = "ofGvk2gWUIP1nDo4KZ";
+
+    /**
+     * @param array $params
+     */
+    public function __construct($params = [])
+    {
+        $this->loadFromArray($params);
+    }
+
+    /**
+     * Load parameters from an associative array
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadFromArray(array $params) {
+        if (count($params) > 0) {
+            $this->officeId = $params['officeId'];
+            $this->originatorTypeCode = (isset($params['originatorTypeCode'])) ? $params['originatorTypeCode'] : "U";
+            $this->originator = $params['originator'];
+            $this->organizationId = $params['organizationId'];
+            $this->passwordLength = $params['passwordLength'];
+            $this->passwordData = $params['passwordData'];
+            $this->nonceBase = (isset($params['nonceBase'])) ? $params['nonceBase'] : null;
+        }
+    }
 
 }
