@@ -34,3 +34,6 @@ Update composer to get the client:
 composer.phar update
  ```
 
+# Usage
+
+[See docs/usage](docs/usage.rst)

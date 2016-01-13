@@ -25,6 +25,7 @@ namespace Amadeus\Client\Struct;
 /**
  * SessionHeaderV4
  *
+ * @todo to implement in Amadeus\Client\Session\Handler\SoapHeader4::createSoapHeaders
  * @package Amadeus\Client\Struct
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
@@ -56,11 +57,8 @@ class SessionHeaderV4
     public $AMA_SecurityHostedUser;
 
 
-
-
     public function __construct()
     {
 
     }
-
 }

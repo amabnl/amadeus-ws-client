@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client;
 
+use Amadeus\Client\Params\SessionHandlerParams;
 use Amadeus\Client\RequestCreator\RequestCreatorInterface;
 use Amadeus\Client\Session\Handler\HandlerInterface;
 
@@ -29,6 +30,7 @@ use Amadeus\Client\Session\Handler\HandlerInterface;
  * Params
  *
  * @package Amadeus\Client
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class Params
 {
@@ -69,7 +71,14 @@ class Params
         if (count($params) > 0) {
             $this->requestCreator = $params['requestCreator'];
             $this->sessionHandler = $params['sessionHandler'];
-            $this->sessionHandlerParams = $params['sessionHandlerParams'];
+
+            if (isset($params['sessionHandlerParams'])) {
+                if ($params['sessionHandlerParams'] instanceof SessionHandlerParams) {
+                    $this->sessionHandlerParams = $params['sessionHandlerParams'];
+                } elseif (is_array($params['sessionHandlerParams'])) {
+                    $this->sessionHandlerParams = new SessionHandlerParams($params['sessionHandlerParams']);
+                }
+            }
         }
     }
 }

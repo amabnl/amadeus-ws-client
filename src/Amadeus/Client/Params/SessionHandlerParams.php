@@ -25,6 +25,12 @@ namespace Amadeus\Client\Params;
 use Amadeus\Client;
 use Psr\Log\LoggerInterface;
 
+/**
+ * SessionHandlerParams contains all parameters for setting up the session handler
+ *
+ * @package Amadeus\Client\Params
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ */
 class SessionHandlerParams
 {
 
@@ -65,7 +71,6 @@ class SessionHandlerParams
      */
     public $logger;
 
-
     /**
      * @param array $params
      */
@@ -73,7 +78,6 @@ class SessionHandlerParams
     {
         $this->loadFromArray($params);
     }
-
 
     /**
      * Load parameters from an associative array

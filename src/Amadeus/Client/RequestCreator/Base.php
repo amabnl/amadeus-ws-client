@@ -27,7 +27,7 @@ use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\Struct\Pnr\Retrieve;
 
 /**
- * Class Base
+ * Base request creator - the default request creator.
  *
  * @package Amadeus\Client\RequestCreator
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>

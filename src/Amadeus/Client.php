@@ -111,7 +111,7 @@ class Client
                 'retrievePnr',
                 new PnrRetrieveRequestOptions($recordLocator)
             ),
-            $responseAsString
+            ['asString' => $responseAsString]
         );
     }
 

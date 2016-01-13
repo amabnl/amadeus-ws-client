@@ -53,9 +53,8 @@ class Retrieve extends BaseWsMessage
 	/**
 	 * Construct PNR_Retrieve message
 	 * 
-	 * @param string $retrievalType
+	 * @param int $retrievalType
 	 * @param string|null $recordLocator (OPTIONAL)
-	 * @return void
 	 */
 	public function __construct($retrievalType = self::RETR_TYPE_BY_RECLOC, $recordLocator = null)
 	{

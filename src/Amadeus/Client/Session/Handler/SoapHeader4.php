@@ -131,7 +131,7 @@ class SoapHeader4 extends Base
      * @throws \InvalidArgumentException
      * @throws Client\Exception
      */
-    public function sendMessage($messageName, BaseWsMessage $messageBody, $messageOptions)
+    public function sendMessage($messageName, BaseWsMessage $messageBody, $messageOptions = [])
     {
         $result = null;
 
@@ -226,14 +226,12 @@ class SoapHeader4 extends Base
                 )
             );
 
-            $messageId = '';
-
             array_push(
                 $headersToSet,
                 new \SoapHeader(
                     'http://www.w3.org/2005/08/addressing',
                     'MessageID',
-                    $messageId
+                    $this->generateGuid()
                 )
             );
 
@@ -312,6 +310,31 @@ class SoapHeader4 extends Base
             $this->wsdlDomDoc = new \DOMDocument('1.0', 'UTF-8');
             $this->wsdlDomDoc->loadXML($wsdlContent);
             $this->wsdlDomXpath = new \DOMXPath($this->wsdlDomDoc);
+        }
+    }
+
+    /**
+     * Generate a GUID
+     *
+     * @todo use composer package ramsey/uuid instead?
+     * @return string
+     */
+    protected function generateGuid()
+    {
+        if (function_exists('com_create_guid')){
+            return com_create_guid();
+        }else{
+            mt_srand((double)microtime()*10000);
+            $charId = strtoupper(md5(uniqid(rand(), true)));
+            $hyphen = chr(45);// "-"
+            $uuid = chr(123)// "{"
+                .substr($charId, 0, 8).$hyphen
+                .substr($charId, 8, 4).$hyphen
+                .substr($charId,12, 4).$hyphen
+                .substr($charId,16, 4).$hyphen
+                .substr($charId,20,12)
+                .chr(125);// "}"
+            return $uuid;
         }
     }
 

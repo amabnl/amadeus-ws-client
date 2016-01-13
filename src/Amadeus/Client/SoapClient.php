@@ -22,20 +22,17 @@
 
 namespace Amadeus\Client;
 
-use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait;
-use Psr\Log\LoggerInterface;
-use Psr\Log\LogLevel;
-use Psr\Log\NullLogger;
+use Psr\Log;
 
 /**
  * Amadeus Web Services SoapClient class
  *
  * @package Amadeus\Client
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class SoapClient extends \SoapClient implements LoggerAwareInterface
+class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
 {
-    use LoggerAwareTrait;
+    use Log\LoggerAwareTrait;
 
     const REMOVE_EMPTY_XSLT_LOCATION = 'SoapClient/removeempty.xslt';
 
@@ -44,12 +41,12 @@ class SoapClient extends \SoapClient implements LoggerAwareInterface
      *
      * @param string $wsdl Location of WSDL file
      * @param array $options initialisation options
-     * @param LoggerInterface|null $logger Error logging object
+     * @param Log\LoggerInterface|null $logger Error logging object
      */
-    public function __construct($wsdl, $options, LoggerInterface $logger = null)
+    public function __construct($wsdl, $options, Log\LoggerInterface $logger = null)
     {
-        if (!($logger instanceof LoggerInterface)) {
-            $logger = new NullLogger();
+        if (!($logger instanceof Log\LoggerInterface)) {
+            $logger = new Log\NullLogger();
         }
         $this->setLogger($logger);
 
@@ -91,7 +88,7 @@ class SoapClient extends \SoapClient implements LoggerAwareInterface
         $xsltFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::REMOVE_EMPTY_XSLT_LOCATION;
         if (!is_readable($xsltFile)) {
             $this->logger->log(
-                LogLevel::ERROR,
+                Log\LogLevel::ERROR,
                 "__doRequest(): XSLT file '" . $xsltFile . "' is not readable!"
             );
         }
@@ -103,7 +100,7 @@ class SoapClient extends \SoapClient implements LoggerAwareInterface
         $transform = $processor->transformToXml($dom);
         if ($transform === false) {
             $this->logger->log(
-                LogLevel::ERROR,
+                Log\LogLevel::ERROR,
                 __METHOD__ . "__doRequest(): XSLTProcessor::transformToXml "
                 . "returned FALSE: could not perform transformation!!"
             );
