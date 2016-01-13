@@ -106,7 +106,7 @@ class Client
     public function retrievePnr($recordLocator, $responseAsString = true)
     {
         return $this->sessionHandler->sendMessage(
-            'retrievePnr',
+            'PNR_Retrieve',
             $this->requestCreator->createRequest(
                 'retrievePnr',
                 new PnrRetrieveRequestOptions($recordLocator)
