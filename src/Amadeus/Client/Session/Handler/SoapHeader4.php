@@ -139,6 +139,7 @@ class SoapHeader4 extends Base
 
         try {
             $result = $this->getSoapClient()->$messageName($messageBody);
+            $this->logRequestAndResponse($messageName);
         } catch(\SoapFault $ex) {
             $this->log(
                 LogLevel::ERROR,
@@ -420,5 +421,22 @@ class SoapHeader4 extends Base
         $options['classmap'] = Classmap::$map;
 
         return $options;
+    }
+
+
+    /**
+     * @param string $messageName
+     * @uses $this->log
+     */
+    protected function logRequestAndResponse($messageName)
+    {
+        $this->log(
+            LogLevel::INFO,
+            'Called ' . $messageName . 'with request: ' . $this->getSoapClient()->__getLastRequest()
+        );
+        $this->log(
+            LogLevel::INFO,
+            'Response:  ' . $this->getSoapClient()->__getLastResponse()
+        );
     }
 }
