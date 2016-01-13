@@ -54,16 +54,6 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
     }
 
     /**
-     * Destroy this SoapClient
-     *
-     * Stops error logging
-     */
-    public function __destruct()
-    {
-        $this->setLogger(null);
-    }
-
-    /**
      * __doRequest override of SoapClient
      *
      * @param string $request The XML SOAP request.
