@@ -146,6 +146,7 @@ class SoapHeader4 extends Base
                 "SOAPFAULT while sending message " . $messageName . ": " .
                 $ex->getMessage()
             );
+            $this->logRequestAndResponse($messageName);
             //TODO We must be able to handle certain soapfaults inside the client, so maybe pass through after logging?
             throw new Client\Exception('SOAPFAULT');
         } catch (\Exception $ex) {
@@ -154,6 +155,7 @@ class SoapHeader4 extends Base
                 "EXCEPTION while sending message " . $messageName . ": " .
                 $ex->getMessage()
             );
+            $this->logRequestAndResponse($messageName);
             //TODO We must be able to handle certain soapfaults inside the client, so maybe pass through after logging?
             throw new Client\Exception('EXCEPTION');
         }
