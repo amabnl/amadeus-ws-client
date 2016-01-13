@@ -41,13 +41,15 @@ class Base implements RequestCreatorInterface
      */
     public function createRequest($messageName, RequestOptionsInterface $params)
     {
-        if (method_exists($this, $messageName)) {
+        $methodName = 'create' . ucfirst($messageName);
+
+        if (method_exists($this, $methodName)) {
             if(!is_array($params)) {
                 $params = [$params];
             }
-            return $this->__call('create' . ucfirst($messageName), $params);
+            return $this->__call('create' . ucfirst($methodName), $params);
         } else {
-            throw new \RuntimeException('Message ' . $messageName . ' is not implemented in ' . __CLASS__);
+            throw new \RuntimeException('Message ' . $methodName . ' is not implemented in ' . __CLASS__);
         }
     }
 
