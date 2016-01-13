@@ -24,6 +24,7 @@ namespace Amadeus\Client\Session\Handler;
 
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client;
+use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
 
@@ -116,11 +117,14 @@ class SoapHeader4 extends Base
 
     /**
      * @param Client\Params\SessionHandlerParams $params
-     * @return void
      */
     public function __construct(Client\Params\SessionHandlerParams $params)
     {
         $this->params = $params;
+        if($params->logger instanceof LoggerInterface) {
+            $this->setlogger($params->logger);
+            $this->log(LogLevel::INFO, __METHOD__. "(): Logger started.");
+        }
     }
 
     /**
