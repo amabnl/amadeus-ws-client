@@ -47,7 +47,7 @@ class Base implements RequestCreatorInterface
             if(!is_array($params)) {
                 $params = [$params];
             }
-            return $this->__call($methodName, $params);
+            return $this->$methodName($params);
         } else {
             throw new \RuntimeException('Message ' . $methodName . ' is not implemented in ' . __CLASS__);
         }
