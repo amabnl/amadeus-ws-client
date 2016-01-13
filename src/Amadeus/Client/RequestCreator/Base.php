@@ -44,9 +44,6 @@ class Base implements RequestCreatorInterface
         $methodName = 'create' . ucfirst($messageName);
 
         if (method_exists($this, $methodName)) {
-            if(!is_array($params)) {
-                $params = [$params];
-            }
             return $this->$methodName($params);
         } else {
             throw new \RuntimeException('Message ' . $methodName . ' is not implemented in ' . __CLASS__);
