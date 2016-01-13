@@ -63,7 +63,7 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
      * @param int|null $oneWay
      * @uses parent::__doRequest
      * @return string The XML SOAP response.
-     * @throws Exception When PHP XSL extension is not enabled.
+     * @throws Exception When PHP XSL extension is not enabled or WSDL file isn't readable.
      */
     public function __doRequest($request, $location, $action, $version, $oneWay = null)
     {
@@ -71,17 +71,28 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
             throw new Exception('PHP XSL extension is not enabled.');
         }
 
-        $dom = new \DOMDocument('1.0', 'UTF-8');
-        $dom->loadXML($request);
-        $xslt = new \DOMDocument('1.0', 'UTF-8');
+        $newRequest = $this->transformIncomingRequest( $request);
+
+        return parent::__doRequest($newRequest, $location, $action, $version, $oneWay);
+    }
+
+    /**
+     * @param string $request
+     * @return string
+     * @throws Exception when XSLT file isn't readable
+     */
+    protected function transformIncomingRequest($request)
+    {
+        $newRequest = null;
 
         $xsltFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::REMOVE_EMPTY_XSLT_LOCATION;
         if (!is_readable($xsltFile)) {
-            $this->logger->log(
-                Log\LogLevel::ERROR,
-                "__doRequest(): XSLT file '" . $xsltFile . "' is not readable!"
-            );
+            throw new Exception('XSLT file "' . $xsltFile . '" is not readable!');
         }
+
+        $dom = new \DOMDocument('1.0', 'UTF-8');
+        $dom->loadXML($request);
+        $xslt = new \DOMDocument('1.0', 'UTF-8');
 
         $xslt->load($xsltFile);
 
@@ -94,14 +105,16 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
                 __METHOD__ . "__doRequest(): XSLTProcessor::transformToXml "
                 . "returned FALSE: could not perform transformation!!"
             );
-        }
-        $newDom = new \DOMDocument('1.0', 'UTF-8');
-        $newDom->loadXML($transform);
+            $newRequest = $request;
+        } else {
+            $newDom = new \DOMDocument('1.0', 'UTF-8');
+            $newDom->loadXML($transform);
 
-        $newRequest = $newDom->saveXML();
+            $newRequest = $newDom->saveXML();
+        }
 
         unset($processor, $xslt, $dom, $transform);
 
-        return parent::__doRequest($newRequest, $location, $action, $version, $oneWay);
+        return $newRequest;
     }
 }

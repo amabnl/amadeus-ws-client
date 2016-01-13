@@ -91,11 +91,11 @@ class SoapHeader4 extends Base
      * SoapClient options used during initialisation
      * @var array
      */
-    protected $soapClientOptions = array(
+    protected $soapClientOptions = [
         'trace' 		=> 1,
         'exceptions' 	=> 1,
         'soap_version' 	=> SOAP_1_1
-    );
+    ];
 
     /**
      * Dom Document where the WSDL's contents will be loaded
