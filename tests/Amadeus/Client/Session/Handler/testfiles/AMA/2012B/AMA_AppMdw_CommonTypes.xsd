@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ama_ct="http://xml.amadeus.com/2010/06/Types_v1" xmlns:ota="http://www.opentravel.org/OTA/2003/05/OTA2010B" xmlns:iata="http://www.iata.org/IATA/2007/00/IATA2010.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" elementFormDefault="qualified" version="3.000" id="AMA2012B">
+	<xs:import namespace="http://xml.amadeus.com/2010/06/Types_v1" schemaLocation="../2011Y/AMA_CommonTypes_Proxy.xsd"/>
+	<xs:import namespace="http://www.opentravel.org/OTA/2003/05/OTA2010B" schemaLocation="../../OTA/2010B/OTA_Proxy.xsd"/>
+	<xs:simpleType name="AlphaNumericString_Length1">
+		<xs:restriction base="xs:string">
+			<xs:length value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length2">
+		<xs:restriction base="xs:string">
+			<xs:length value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length3">
+		<xs:restriction base="xs:string">
+			<xs:length value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length5">
+		<xs:restriction base="xs:string">
+			<xs:length value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length6">
+		<xs:restriction base="xs:string">
+			<xs:length value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length9">
+		<xs:restriction base="xs:string">
+			<xs:length value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length10">
+		<xs:restriction base="xs:string">
+			<xs:length value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length17">
+		<xs:restriction base="xs:string">
+			<xs:length value="17"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length20">
+		<xs:restriction base="xs:string">
+			<xs:length value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length30">
+		<xs:restriction base="xs:string">
+			<xs:length value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length35">
+		<xs:restriction base="xs:string">
+			<xs:length value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length50">
+		<xs:restriction base="xs:string">
+			<xs:length value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length100">
+		<xs:restriction base="xs:string">
+			<xs:length value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length199">
+		<xs:restriction base="xs:string">
+			<xs:length value="199"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length200">
+		<xs:restriction base="xs:string">
+			<xs:length value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length256">
+		<xs:restriction base="xs:string">
+			<xs:length value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length500">
+		<xs:restriction base="xs:string">
+			<xs:length value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To2">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="2"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To3">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="3"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To4">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To5">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="5"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To6">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To9">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To10">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="10"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To17">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="17"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To20">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To25">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To30">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To35">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="35"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To50">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="50"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To100">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To199">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="199"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To200">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="200"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To256">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length1To500">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+			<xs:maxLength value="500"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Lenght1ToN">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="String_Length3To20">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="3"/>
+			<xs:maxLength value="20"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="AddressType">
+		<xs:annotation>
+			<xs:documentation>Address is a generic type to convey a phone number,
+				an email address...
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="Format" type="String_Length1To3" use="required">
+			<xs:annotation>
+				<xs:documentation>format of the recipient address
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="Value" type="String_Length1To500" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="AddressWithModeType">
+		<xs:complexContent>
+			<xs:extension base="AddressType">
+				<xs:attribute name="Mode" type="String_Length1To3" use="optional">
+					<xs:annotation>
+						<xs:documentation>CRT or PNT when a TID is used. TO, CC, or BCC
+							when an EML address is used.
+						</xs:documentation>
+					</xs:annotation>
+				</xs:attribute>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="OwnershipType">
+		<xs:annotation>
+			<xs:documentation>Owner of the Query, containing: organization
+				(mandatory), application (mandatory)
+			</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="OrganizationCode" type="String_Length1To10" use="required"/>
+		<xs:attribute name="ApplicationLabel" type="String_Length1To10" use="required"/>
+		<xs:attribute name="CompanyCode" type="String_Length1To10" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="TextType">
+		<xs:attribute name="Encoding" type="String_Length1To10" use="required"/>
+		<xs:attribute name="Value" type="String_Length1To199" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="FTP_Type">
+		<xs:attribute name="Filename" type="String_Length1To199" use="required"/>
+		<xs:attribute name="Path" type="String_Length1To199" use="required"/>
+		<xs:attribute name="FileHash" type="String_Length1To100" use="optional"/>
+		<xs:attribute name="FTPID" type="String_Length1To25" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="FTP_TypeWithLayoutType">
+		<xs:complexContent>
+			<xs:extension base="FTP_Type">
+				<xs:attribute name="LayoutType" type="String_Length1To5" use="optional"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="LocationType">
+		<xs:annotation>
+			<xs:documentation>Location of a device</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Location">
+				<xs:annotation>
+					<xs:documentation>Global location of the device (airport, city, etc.)</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="Airport">
+							<xs:annotation>
+								<xs:documentation>Airport location description</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="ota:AirportLocationGroup"/>
+								<xs:attribute ref="BuildingCode">
+									<xs:annotation>
+										<xs:documentation>Code used to identify a building</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="City">
+							<xs:annotation>
+								<xs:documentation>City location description</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attributeGroup ref="ota:LocationGroup"/>
+								<xs:attribute ref="BuildingCode">
+									<xs:annotation>
+										<xs:documentation>Code used to identify a building</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="LocationCategory" type="CategoryType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Detailed description of the location</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:attribute name="BuildingCode" type="ota:StringLength1to8"/>
+	<xs:complexType name="CategoryType">
+		<xs:attributeGroup ref="ama_ct:CodeGroup"/>
+		<xs:attribute name="IndexNumber" type="ota:StringLength1to8"/>
+	</xs:complexType>
+	<xs:complexType name="ApplicationType">
+		<xs:annotation>
+			<xs:documentation>Application identification</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ApplicationLabel" type="ota:StringLength1to64" use="required"/>
+		<xs:attribute name="IndexNumber" type="ota:NumericStringLength1to8"/>
+	</xs:complexType>
+</xs:schema>

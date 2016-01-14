@@ -20,24 +20,24 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Session\Handler;
+namespace Amadeus\Client\Struct\HeaderV4;
 
-/**
- * Class Map for mapping PHP objects to WSDL objects.
- *
- * @package Amadeus\Client\Session\Handler
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
- */
-class Classmap
+
+class UserId
 {
-    /**
-     * The PHP -> WSDL translation classmap for the Amadeus WS Client
-     *
-     * @var array
-     */
-    public static $map = [
-        'AMA_SecurityHostedUser' => 'Amadeus\Client\Struct\HeaderV4\SecurityHostedUser',
-        'UserID' => 'Amadeus\Client\Struct\HeaderV4\UserId'
-    ];
+    public $RequestorType;
 
+    public $PseudoCityCode;
+
+    public $POS_Type;
+
+    public $AgentDutyCode;
+
+    public function __construct($params = [])
+    {
+        $this->RequestorType = $params['RequestorType'];
+        $this->PseudoCityCode = $params['PseudoCityCode'];
+        $this->POS_Type = $params['POS_Type'];
+        $this->AgentDutyCode = (isset($params['AgentDutyCode'])) ? $params['AgentDutyCode'] : null;
+    }
 }

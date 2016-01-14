@@ -49,8 +49,8 @@ class Security
 
         $this->UsernameToken->Password = new \SoapVar(
             [
-                "_" => $password,
-                "Type" => "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest"
+                '_' => $password,
+                'Type' => 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest'
             ],
             SOAP_ENC_OBJECT
         );

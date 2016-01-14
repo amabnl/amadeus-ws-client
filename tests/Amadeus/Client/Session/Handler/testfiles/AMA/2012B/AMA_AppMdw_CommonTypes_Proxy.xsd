@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 (http://www.altova.com) by Amadeus s.a.s. (Amadeus s.a.s.) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://xml.amadeus.com/2010/06/AppMdw_CommonTypes_v3" targetNamespace="http://xml.amadeus.com/2010/06/AppMdw_CommonTypes_v3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.000" id="AMA2012B">
+	<xs:include schemaLocation="AMA_AppMdw_CommonTypes.xsd"/>
+</xs:schema>

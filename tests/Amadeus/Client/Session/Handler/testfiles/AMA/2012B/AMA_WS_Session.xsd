@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 (http://www.altova.com) by AMADEUS SAS (AMADEUS SAS) -->
+<!--
+		"Amadeus Proprietary and Confidential Information: unauthorized use
+		and disclosure strictly forbidden. 2010 - Amadeus s.a.s - All Rights
+		Reserved."
+	-->
+<!-- New version for conversation management-->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://xml.amadeus.com/2010/06/Session_v3" targetNamespace="http://xml.amadeus.com/2010/06/Session_v3" elementFormDefault="qualified" attributeFormDefault="unqualified" version="3.000" id="AMA2012B">
+	<xs:element name="Session">
+		<xs:complexType>
+			<xs:sequence minOccurs="0">
+				<xs:element name="SessionId" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>This element defines the unique identifier of the session.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SequenceNumber" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>This element defines the sequence number of the message in the session.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="SecurityToken" type="xs:string">
+					<xs:annotation>
+						<xs:documentation>This element defines a token to secure the session id.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="TransactionStatusCode" type="xs:NMTOKEN" use="required">
+				<xs:annotation>
+					<xs:documentation>This attributes defines the status code of the session in a stateful flow.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

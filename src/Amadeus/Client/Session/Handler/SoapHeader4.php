@@ -41,13 +41,13 @@ class SoapHeader4 extends Base
      *
      * @var string
      */
-    const XPATH_OPERATION_ACTION = '//wsdl:operation[./@name="%s"]/soap:operation/@soapAction';
+    const XPATH_OPERATION_ACTION = 'string(//wsdl:operation[./@name="%s"]/soap:operation/@soapAction)';
     /**
      * XPATH query to retrieve the server endpoint from the WSDL.
      *
      * @var string
      */
-    const XPATH_ENDPOINT = '/wsdl:definitions/wsdl:service/wsdl:port/soap:address/@location';
+    const XPATH_ENDPOINT = 'string(/wsdl:definitions/wsdl:service/wsdl:port/soap:address/@location)';
 
     /**
      * Status variable to know if the session is currently logged in
@@ -286,7 +286,9 @@ class SoapHeader4 extends Base
     {
         $this->loadWsdlXpath($wsdlFilePath);
 
-        return $this->wsdlDomXpath->evaluate(sprintf(self::XPATH_OPERATION_ACTION, $messageName));
+        $action = $this->wsdlDomXpath->evaluate(sprintf(self::XPATH_OPERATION_ACTION, $messageName));
+
+        return $action;
     }
 
     /**

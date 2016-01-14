@@ -54,6 +54,7 @@ class SecurityHostedUser
             $data["AgentDutyCode"] = $agentDutyCode;
         }
 
-        $this->UserID = new \SoapVar($data, SOAP_ENC_OBJECT, 'UserID', 'http://xml.amadeus.com/2010/06/Security_v1');
+        //$this->UserID = new \SoapVar($data, SOAP_ENC_OBJECT, null, 'http://xml.amadeus.com/2010/06/Security_v1');
+        $this->UserID = new UserId($data);
     }
 }

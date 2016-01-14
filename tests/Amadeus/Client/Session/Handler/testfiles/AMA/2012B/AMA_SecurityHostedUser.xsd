@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 (http://www.altova.com) by AMADEUS SAS (AMADEUS SAS) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ota="http://www.opentravel.org/OTA/2003/05/OTA2010B" xmlns:iata="http://www.iata.org/IATA/2007/00/IATA2010.1" xmlns:ama_ct="http://xml.amadeus.com/2010/06/Types_v1" xmlns="http://xml.amadeus.com/2010/06/Security_v1" xmlns:ama_appmdw_v3="http://xml.amadeus.com/2010/06/AppMdw_CommonTypes_v3" targetNamespace="http://xml.amadeus.com/2010/06/Security_v1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.000" id="AMA2012B">
+	<xs:import namespace="http://xml.amadeus.com/2010/06/Types_v1" schemaLocation="../2011Y/AMA_CommonTypes_Proxy.xsd"/>
+	<xs:import namespace="http://xml.amadeus.com/2010/06/AppMdw_CommonTypes_v3" schemaLocation="AMA_AppMdw_CommonTypes_Proxy.xsd"/>
+	<xs:import namespace="http://www.opentravel.org/OTA/2003/05/OTA2010B" schemaLocation="../../OTA/2010B/OTA_SimpleTypes_Proxy.xsd"/>
+	<xs:element name="AMA_SecurityHostedUser">
+		<xs:annotation>
+			<xs:documentation>Header entry to identify a user hosted in Amadeus security server</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="UserID">
+					<xs:annotation>
+						<xs:documentation>Specifies a user identifier</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="ama_ct:PointOfSaleType">
+								<xs:attribute name="RequestorType" type="ota:AlphaLength1" use="required">
+									<xs:annotation>
+										<xs:documentation>Identifies the type of requestor. It can be 'U' for 'UserId' or 'Z' for 'SignId'.</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="FullLocation" type="ama_appmdw_v3:LocationType" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Full Location of the workstation</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="WorkstationID" type="ota:StringLength1to64" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Contains a workstation Identifier. It is used to retrieve the physical origin of the request (mainly for printing purposes).</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Application" type="ama_appmdw_v3:ApplicationType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

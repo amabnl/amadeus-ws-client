@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://xml.amadeus.com" xmlns:awsse="http://xml.amadeus.com/2010/06/Session_v3" xmlns:awsl="http://wsdl.amadeus.com/2010/06/ws/Link_v1" xmlns:amasec="http://xml.amadeus.com/2010/06/Security_v1" xmlns:pnr_reply_11_3="http://xml.amadeus.com/PNRACC_11_3_1A" xmlns:pnr_retrieve_11_3="http://xml.amadeus.com/PNRRET_11_3_1A" xmlns:security_signout_4_1="http://xml.amadeus.com/VLSSOQ_04_1_1A" xmlns:security_signoutreply_4_1="http://xml.amadeus.com/VLSSOR_04_1_1A" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsam="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" targetNamespace="http://xml.amadeus.com">
+	<wsdl:types>
+		<xs:schema>
+			<xs:import schemaLocation="AMA/2012B/AMA_WS_Session.xsd" namespace="http://xml.amadeus.com/2010/06/Session_v3"/>
+			<xs:import schemaLocation="AMA_WSLink.xsd" namespace="http://wsdl.amadeus.com/2010/06/ws/Link_v1"/>
+			<xs:import schemaLocation="AMA/2012B/AMA_SecurityHostedUser.xsd" namespace="http://xml.amadeus.com/2010/06/Security_v1"/>
+			<xs:import schemaLocation="PNR_Reply_11_3_1A.xsd" namespace="http://xml.amadeus.com/PNRACC_11_3_1A"/>
+			<xs:import schemaLocation="PNR_Retrieve_11_3_1A.xsd" namespace="http://xml.amadeus.com/PNRRET_11_3_1A"/>
+			<xs:import schemaLocation="Security_SignOut_04_1_1A.xsd" namespace="http://xml.amadeus.com/VLSSOQ_04_1_1A"/>
+			<xs:import schemaLocation="Security_SignOutReply_04_1_1A.xsd" namespace="http://xml.amadeus.com/VLSSOR_04_1_1A"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="Session_3.000">
+		<wsdl:part name="session" element="awsse:Session"/>
+	</wsdl:message>
+	<wsdl:message name="TransactionFlowLink_1.0">
+		<wsdl:part name="link" element="awsl:TransactionFlowLink"/>
+	</wsdl:message>
+	<wsdl:message name="AMA_SecurityHostedUser_1.000">
+		<wsdl:part name="security" element="amasec:AMA_SecurityHostedUser"/>
+	</wsdl:message>
+	<wsdl:message name="PNR_Reply_11_3">
+		<wsdl:part name="PNR_Reply_11_3" element="pnr_reply_11_3:PNR_Reply"/>
+	</wsdl:message>
+	<wsdl:message name="PNR_Retrieve_11_3">
+		<wsdl:part name="PNR_Retrieve_11_3" element="pnr_retrieve_11_3:PNR_Retrieve"/>
+	</wsdl:message>
+	<wsdl:message name="Security_SignOut_4_1">
+		<wsdl:part name="Security_SignOut_4_1" element="security_signout_4_1:Security_SignOut"/>
+	</wsdl:message>
+	<wsdl:message name="Security_SignOutReply_4_1">
+		<wsdl:part name="Security_SignOutReply_4_1" element="security_signoutreply_4_1:Security_SignOutReply"/>
+	</wsdl:message>
+	<wsdl:portType name="AmadeusWebServicesPT">
+		<wsdl:operation name="PNR_Retrieve">
+			<wsdl:input message="tns:PNR_Retrieve_11_3"/>
+			<wsdl:output message="tns:PNR_Reply_11_3"/>
+		</wsdl:operation>
+		<wsdl:operation name="Security_SignOut">
+			<wsdl:input message="tns:Security_SignOut_4_1"/>
+			<wsdl:output message="tns:Security_SignOutReply_4_1"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="AmadeusWebServicesBinding" type="tns:AmadeusWebServicesPT">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="PNR_Retrieve">
+			<soap:operation soapAction="http://webservices.amadeus.com/PNRRET_11_3_1A"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+				<soap:header message="tns:Session_3.000" part="session" use="literal"/>
+				<soap:header message="tns:TransactionFlowLink_1.0" part="link" use="literal"/>
+				<soap:header message="tns:AMA_SecurityHostedUser_1.000" part="security" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+				<soap:header message="tns:Session_3.000" part="session" use="literal"/>
+				<soap:header message="tns:TransactionFlowLink_1.0" part="link" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="Security_SignOut">
+			<soap:operation soapAction="http://webservices.amadeus.com/VLSSOQ_04_1_1A"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+				<soap:header message="tns:Session_3.000" part="session" use="literal"/>
+				<soap:header message="tns:TransactionFlowLink_1.0" part="link" use="literal"/>
+				<soap:header message="tns:AMA_SecurityHostedUser_1.000" part="security" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+				<soap:header message="tns:Session_3.000" part="session" use="literal"/>
+				<soap:header message="tns:TransactionFlowLink_1.0" part="link" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="AmadeusWebServices">
+		<wsdl:port name="AmadeusWebServicesPort" binding="tns:AmadeusWebServicesBinding">
+			<soap:address location="https://dummy.webservices.endpoint.com/SOAPADDRESS"/>
+			<wsp:PolicyReference URI="#AmadeusPolicy"/>
+		</wsdl:port>
+	</wsdl:service>
+	<wsp:Policy wsu:Id="AmadeusPolicy">
+		<wsp:PolicyReference URI="#MessagingPolicy"/>
+	</wsp:Policy>
+	<wsp:Policy wsu:Id="MessagingPolicy">
+		<wsam:Addressing wsp:Optional="true">
+			<wsp:Policy>
+				<wsam:AnonymousResponses/>
+			</wsp:Policy>
+		</wsam:Addressing>
+	</wsp:Policy>
+</wsdl:definitions>
