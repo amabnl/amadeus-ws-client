@@ -47,13 +47,17 @@ class Security
 
         $this->UsernameToken->Username = $userName;
 
-        $this->UsernameToken->Password = new \SoapVar(
+        $this->UsernameToken->Password = [
+            '_' => $password,
+            'Type' => 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest'
+        ];
+        /*$this->UsernameToken->Password = new \SoapVar(
             [
                 '_' => $password,
                 'Type' => 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest'
             ],
             SOAP_ENC_OBJECT
-        );
+        );*/
 
         $this->UsernameToken->Nonce = $nonce;
 
