@@ -28,6 +28,9 @@ class Password
     public $_;
     public $Type;
 
+    /**
+     * @param string $paramValue
+     */
     public function __construct($paramValue)
     {
         $this->_ = $paramValue;
