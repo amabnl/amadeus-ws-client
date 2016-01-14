@@ -27,6 +27,12 @@ use Psr\Log;
 /**
  * Amadeus Web Services SoapClient class
  *
+ * This SoapClient will perform an XSLT transformation on the request to be sent to the amadeus server:
+ * it will remove any empty XML tags except for some specific tags that may be required to be present and empty.
+ *
+ * If you do not remove empty XML tags, you will get SoapFaults back from the server when unexpected empty elements
+ * are present in your request.
+ *
  * @package Amadeus\Client
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */

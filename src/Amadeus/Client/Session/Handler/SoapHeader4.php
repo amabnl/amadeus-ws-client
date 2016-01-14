@@ -317,6 +317,14 @@ class SoapHeader4 extends Base
             $this->wsdlDomDoc = new \DOMDocument('1.0', 'UTF-8');
             $this->wsdlDomDoc->loadXML($wsdlContent);
             $this->wsdlDomXpath = new \DOMXPath($this->wsdlDomDoc);
+            $this->wsdlDomXpath->registerNamespace(
+                'wsdl',
+                'http://schemas.xmlsoap.org/wsdl/'
+            );
+            $this->wsdlDomXpath->registerNamespace(
+                'soap',
+                'http://schemas.xmlsoap.org/wsdl/soap/'
+            );
         }
     }
 
@@ -334,13 +342,21 @@ class SoapHeader4 extends Base
             mt_srand((double)microtime()*10000);
             $charId = strtoupper(md5(uniqid(rand(), true)));
             $hyphen = chr(45);// "-"
-            $uuid = chr(123)// "{"
+
+            /*$uuid = chr(123)// "{"
                 .substr($charId, 0, 8).$hyphen
                 .substr($charId, 8, 4).$hyphen
                 .substr($charId,12, 4).$hyphen
                 .substr($charId,16, 4).$hyphen
                 .substr($charId,20,12)
-                .chr(125);// "}"
+                .chr(125);// "}"*/
+
+            $uuid = substr($charId, 0, 8).$hyphen
+                .substr($charId, 8, 4).$hyphen
+                .substr($charId,12, 4).$hyphen
+                .substr($charId,16, 4).$hyphen
+                .substr($charId,20,12);
+
             return $uuid;
         }
     }

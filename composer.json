@@ -2,17 +2,21 @@
   "name": "amabnl/amadeus-ws-client",
   "type": "library",
   "description": "SOAP Web Service client library for interacting with the Amadeus GDS through its SOAP interface",
-  "keywords": ["amadeus", "GDS", "webservice", "soap", "wsdl", "client", "xml"],
+  "keywords": ["amadeus", "gds", "service", "webservice", "soap", "wsdl", "client", "xml", "travel", "airline"],
   "minimum-stability": "stable",
-  "license": "Apache",
+  "homepage": "https://github.com/amabnl/amadeus-ws-client",
+  "license": "Apache-2.0",
   "authors": [
     {
       "name": "Dieter Devlieghere",
-      "email": "dieter.devlieghere@benelux.amadeus.com"
+      "email": "dieter.devlieghere@benelux.amadeus.com",
+      "homepage": "http://dermika.be",
+      "role": "Lead Developer"
     }
   ],
   "require": {
     "php": ">=5.4.11",
+    "ext-xsl": "*",
     "psr/log": "1.0.0"
   },
   "require-dev": {

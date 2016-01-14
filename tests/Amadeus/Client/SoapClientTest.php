@@ -1,31 +1,38 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: dieter
- * Date: 13/01/2016
- * Time: 17:01
+ * amadeus-ws-client
+ *
+ * Copyright 2015 Amadeus Benelux NV
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @package Test\Amadeus
+ * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
 namespace Test\Amadeus\Client;
 
 use Amadeus\Client\SoapClient;
+use Test\Amadeus\BaseTestCase;
 
-
-class SoapClientTest extends \PHPUnit_Framework_TestCase
+/**
+ * SoapClientTest
+ *
+ * @package Test\Amadeus\Client
+ */
+class SoapClientTest extends BaseTestCase
 {
-    /**
-     * Get a protected or private method from given class
-     *
-     * @param string $helper
-     * @param string $name
-     * @return \ReflectionMethod
-     */
-    protected static function getMethod($helper, $name)
-    {
-        $method = new \ReflectionMethod($helper, $name);
-        $method->setAccessible(true);
-        return $method;
-    }
+
 
     public function testCanTransformRequestWithXslt()
     {

@@ -20,4 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-require_once __DIR__ . '/../vendor/autoload.php';
+namespace Test\Amadeus;
+
+/**
+ * BaseTestCase
+ *
+ * @package Test\Amadeus
+ */
+class BaseTestCase extends \PHPUnit_Framework_TestCase
+{
+    /**
+     * Get a protected or private method from given class
+     *
+     * @param string $helper
+     * @param string $name
+     * @return \ReflectionMethod
+     */
+    protected static function getMethod($helper, $name)
+    {
+        $method = new \ReflectionMethod($helper, $name);
+        $method->setAccessible(true);
+        return $method;
+    }
+
+}
