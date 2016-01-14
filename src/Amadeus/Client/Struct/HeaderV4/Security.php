@@ -53,6 +53,6 @@ class Security
             $ns
         );
 
-        $this->UsernameToken = new \SoapVar([$userNameToken], SOAP_ENC_OBJECT, null, null, 'UsernameToken', $ns);
+        $this->UsernameToken = new \SoapVar($userNameToken, SOAP_ENC_OBJECT, null, null, 'UsernameToken', $ns);
     }
 }
