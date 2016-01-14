@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 (http://www.altova.com) by Amadeus s.a.s. (Amadeus s.a.s.) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.iata.org/IATA/2007/00/IATA2010.1" targetNamespace="http://www.iata.org/IATA/2007/00/IATA2010.1" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="chameleon/IATA_CommonTypes.xsd"/>
+	<xs:element name="Warnings" type="WarningsType"/>
+	<xs:element name="Errors" type="ErrorsType"/>
+</xs:schema>

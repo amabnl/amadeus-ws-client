@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05/OTA2010B" targetNamespace="http://www.opentravel.org/OTA/2003/05/OTA2010B" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="OTA_SimpleTypes.xsd"/>
+</xs:schema>

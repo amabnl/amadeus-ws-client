@@ -37,7 +37,9 @@ class Classmap
      */
     public static $map = [
         'AMA_SecurityHostedUser' => 'Amadeus\Client\Struct\HeaderV4\SecurityHostedUser',
-        'UserID' => 'Amadeus\Client\Struct\HeaderV4\UserId'
+        'UserID' => 'Amadeus\Client\Struct\HeaderV4\UserId',
+        'Security' => 'Amadeus\Client\Struct\HeaderV4\Security',
+        'UsernameToken' => 'Amadeus\Client\Struct\HeaderV4\UsernameToken'
     ];
 
 }

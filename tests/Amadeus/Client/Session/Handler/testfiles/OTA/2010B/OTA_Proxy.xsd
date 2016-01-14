@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 (http://www.altova.com) by Amadeus s.a.s. (Amadeus s.a.s.) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.opentravel.org/OTA/2003/05/OTA2010B" targetNamespace="http://www.opentravel.org/OTA/2003/05/OTA2010B" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="chameleon/OTA_CommonTypes.xsd"/>
+	<xs:element name="Success" type="SuccessType"/>
+	<xs:element name="Warnings" type="WarningsType"/>
+	<xs:element name="Errors" type="ErrorsType"/>
+</xs:schema>

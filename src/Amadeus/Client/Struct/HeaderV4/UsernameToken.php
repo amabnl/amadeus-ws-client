@@ -49,4 +49,5 @@ class UsernameToken
      * @var \SoapVar
      */
     public $Created;
+
 }

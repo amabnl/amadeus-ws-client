@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 (http://www.altova.com) by Amadeus s.a.s. (Amadeus s.a.s.) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.000" id="AMA2011Y">
+  <xs:annotation>
+    <xs:documentation xml:lang="en">.</xs:documentation>
+  </xs:annotation>
+  <xs:simpleType name="CodePatternType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Used for codes. It may contain merely codes or integer codes associated to a value in AMA_CodeTable.xls.
+Pattern is composed on 3 parts: Standard (AMA or OTA or IATA), ListCode (3 upper case letters) and Code (1 to 3 digits). Code is mandatory. ListName is mandatory if Standard is precised, else it is optional. Standard is optional.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9A-Z]{1,3}((\.[0-9A-Z]{3,4})((\.(AMA|OTA|IATA|UIC)){0,1}){0,1})" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+

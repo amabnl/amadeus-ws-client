@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2007 rel. 3 sp1 (http://www.altova.com) by Amadeus s.a.s. (Amadeus s.a.s.) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ota="http://www.opentravel.org/OTA/2003/05/OTA2010B" xmlns:iata="http://www.iata.org/IATA/2007/00/IATA2010.1" elementFormDefault="qualified" version="1.002" id="AMA2011Y">
+  <xs:annotation>
+    <xs:documentation xml:lang="en">.</xs:documentation>
+  </xs:annotation>
+  <xs:import namespace="http://www.opentravel.org/OTA/2003/05/OTA2010B" schemaLocation="../../../OTA/2010B/OTA_Proxy.xsd" />
+  <xs:import namespace="http://www.iata.org/IATA/2007/00/IATA2010.1" schemaLocation="../../../IATA/2010.1/IATA_Proxy.xsd" />
+  <xs:include schemaLocation="AMA_SimpleTypes.xsd" />
+  <xs:attributeGroup name="ErrorWarningAttributeGroup">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Used to identify an application error by either text, code, or by an online description and also to give the status, tag, and/or identification of the record that may have caused the error.</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="ShortText" type="ota:StringLength1to64" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">An abbreviated version of the error in textual format.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Code" type="ota:NumericStringLength1to8" use="required">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Code must be specified. This refers to a table of coded values exchanged between applications to identify errors or warnings. Refer to Amadeus Code List Error Codes.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="DocURL" type="xs:anyURI" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">If present, this URL refers to an online description of the error that occurred.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Status" type="ota:StringLength1to64" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">If present, recommended values are those enumerated in the AMA_ErrorRS, (NotProcessed | Incomplete | Complete | Unknown) however, the data type is designated as string data, recognizing that trading partners may identify additional status conditions not included in the enumeration.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Tag" type="xs:string" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">If present, this attribute may identify an unknown or misspelled tag that caused an error in processing. It is recommended that the Tag attribute use XPath notation to identify the location of a tag in the event that more than one tag of the same name is present in the document. Alternatively, the tag name alone can be used to identify missing data [Type=ReqFieldMissing].</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="RecordID" type="ota:StringLength1to64" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">If present, this attribute allows for batch processing and the identification of the record that failed amongst a group of records. This value may contain a concatenation of a unique failed transaction ID with specific record(s) associated with that transaction.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="CodeGroup">
+    <xs:annotation>
+      <xs:documentation>Used for codes. It may contain merely codes or integer codes associated to a value in AMA_CodeTable.xls</xs:documentation>
+    </xs:annotation>
+    <xs:attribute name="Code" type="ota:StringLength1to64" use="required">
+      <xs:annotation>
+        <xs:documentation>The code value - Sample: 21</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Owner" type="ota:StringLength1to16">
+      <xs:annotation>
+        <xs:documentation>Which owner defined this code, may be one of OTA, IATA or AMA</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ListName" type="ota:StringLength1to64">
+      <xs:annotation>
+        <xs:documentation>The name of the code list this code refers too - sample: Transportation Code</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ListCode" type="ota:StringLength1to8">
+      <xs:annotation>
+        <xs:documentation>The code of the code list this code refers too - sample: TRP</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Desc" type="ota:StringLength1to128">
+      <xs:annotation>
+        <xs:documentation>The textual value that describes the code - Sample: Train</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:complexType name="CodeType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Used to convey any code. It may contain merely codes or integer codes associated to a value in AMA_CodeTable.xls</xs:documentation>
+    </xs:annotation>
+    <xs:attributeGroup ref="CodeGroup" />
+  </xs:complexType>
+  <xs:complexType name="WarningType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Standard way to indicate successful processing of an Amadeus message, but one in which warnings are generated.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="ota:FreeTextType">
+        <xs:attribute name="Type" type="ota:StringLength0to255" use="required">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">The Error element MUST contain the Type attribute that uses a recommended set of values to indicate the error type.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attributeGroup ref="ErrorWarningAttributeGroup">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Details of the error.</xs:documentation>
+          </xs:annotation>
+        </xs:attributeGroup>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="ErrorType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Standard way to indicate that an error occurred during the processing of an Amadeus message. If the message successfully processes, but there are business errors, those errors should be passed in the warning element.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleContent>
+      <xs:extension base="ota:FreeTextType">
+        <xs:attribute name="Type" type="ota:OTA_CodeType" use="required">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">The Error element MUST contain the Type attribute that uses a recommended set of values to indicate the error type.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+        <xs:attributeGroup ref="ErrorWarningAttributeGroup">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Details of the error.</xs:documentation>
+          </xs:annotation>
+        </xs:attributeGroup>
+        <xs:attribute name="NodeList" type="xs:string" use="optional">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">An XPath expression that selects all the nodes whose data caused this error. Further, this expression should have an additional contraint which contains the data of the node. This will provide the offending data back to systems that cannot maintain the original message.</xs:documentation>
+          </xs:annotation>
+        </xs:attribute>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+  <xs:complexType name="GenericWarningsType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A collection of errors that occurred during the processing of a message.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Warnings" type="WarningsType" minOccurs="0" />
+      <xs:element ref="ota:Warnings" minOccurs="0" />
+      <xs:element ref="iata:Warnings" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="GenericErrorsType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A collection of errors that occurred during the processing of a message.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Errors" type="ErrorsType" minOccurs="0" />
+      <xs:element ref="ota:Errors" minOccurs="0" />
+      <xs:element ref="iata:Errors" minOccurs="0" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ErrorsType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A collection of Amadeus errors that occurred during the processing of a message.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Error" type="ErrorType" maxOccurs="99" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="WarningsType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">A collection of Amadeus errors that occurred during the processing of a message.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Warning" type="ErrorType" maxOccurs="99" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReplyType">
+    <xs:annotation>
+      <xs:documentation>Basic structure of any webservice reply. Extend this type to implement a reply.</xs:documentation>
+    </xs:annotation>
+    <xs:choice>
+      <xs:sequence>
+        <xs:element ref="ota:Success" />
+        <xs:element name="GenericWarnings" type="GenericWarningsType" minOccurs="0" />
+      </xs:sequence>
+      <xs:element name="GenericErrors" type="GenericErrorsType" />
+    </xs:choice>
+    <xs:attributeGroup ref="ota:OTA_PayloadStdAttributes" />
+  </xs:complexType>
+  <xs:complexType name="PointOfSaleType">
+    <xs:annotation>
+      <xs:documentation>Contains all data of a Point of Sale.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="RequestorID" type="iata:UniqueID_Type" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Standard identification of the requestor.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="BookingChannel" minOccurs="0">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="CompanyName" type="ota:CompanyNameType" minOccurs="0" />
+          </xs:sequence>
+          <xs:attribute name="Type" type="ota:StringLength1to128">
+            <xs:annotation>
+              <xs:documentation>Channel type used by the POS.</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+    <xs:attribute name="POS_Type" type="ota:OTA_CodeType" use="required">
+      <xs:annotation>
+        <xs:documentation>Specifies a code for the type of the POS (i.e. last updator, owner...). Refer to the Amadeus POS type (POS) codeset list.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="PseudoCityCode" type="ota:StringLength1to16" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">An identification code assigned to an office/agency by a reservation system.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="AgentSign" type="ota:StringLength0to128">
+      <xs:annotation>
+        <xs:documentation>Agent sign of the user.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="AgentDutyCode" type="ota:StringLength0to8">
+      <xs:annotation>
+        <xs:documentation>Duty code of the user.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ERSP_UserID" type="ota:StringLength1to16" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">Electronic Reservation Service Provider (ERSP) assigned identifier used to identify the individual using the ERSP system.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="FirstDepartPoint" type="ota:StringLength3" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">The point of first departure in a trip.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="TrueCityCode" type="ota:StringLength3" use="optional">
+      <xs:annotation>
+        <xs:documentation>The true city code of the requesting party.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ISO_Country" type="ota:ISO3166" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">The country code of the requesting party.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="ISO_Currency" type="ota:AlphaLength3" use="optional">
+      <xs:annotation>
+        <xs:documentation xml:lang="en">The currency code of the requesting party.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Language" type="ota:StringLength0to128">
+      <xs:annotation>
+        <xs:documentation>Language preference.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Date" type="ota:DateOrDateTimeType">
+      <xs:annotation>
+        <xs:documentation>The date corresponding to this point of sale action.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="Time" type="ota:DateOrDateTimeType">
+      <xs:annotation>
+        <xs:documentation>The time corresponding to this point of sale action.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+    <xs:attribute name="TimeZone" type="iata:TimeType">
+      <xs:annotation>
+        <xs:documentation>To precise the time zone of the point of sale. LOC for local time or UTC.</xs:documentation>
+      </xs:annotation>
+    </xs:attribute>
+  </xs:complexType>
+  <xs:complexType name="PointsOfSaleType">
+    <xs:annotation>
+      <xs:documentation>Contains several Points of Sale.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="PointOfSale" type="PointOfSaleType" maxOccurs="10" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CriteriaSetType">
+    <xs:annotation>
+      <xs:documentation>Criteria Set (key/value map)</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="Criteria" maxOccurs="99">
+        <xs:complexType>
+          <xs:attribute name="Key" type="ota:StringLength1to32" use="required" />
+          <xs:attribute name="Value" type="ota:StringLength1to255" use="required" />
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RawDataType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute name="Encoding" type="ota:StringLength1to16" use="optional" />
+        <xs:attribute name="Compression" type="ota:StringLength1to32" use="optional" />
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+</xs:schema>
+
