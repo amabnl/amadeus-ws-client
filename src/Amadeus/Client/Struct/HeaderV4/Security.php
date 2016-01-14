@@ -47,7 +47,7 @@ class Security
 
         $this->UsernameToken->Username = $userName;
 
-        $passwordNode = '<Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordDigest">'.$password.'</oas:Password>';
+        $passwordNode = '<Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordDigest">'.$password.'</Password>';
 
         $this->UsernameToken->Password = new \SoapVar($passwordNode, XSD_ANYXML, null, null, null);
 
