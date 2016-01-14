@@ -50,4 +50,32 @@ class UsernameToken
      */
     public $Created;
 
+    /**
+     * @param $userName
+     * @param $password
+     * @param $nonce
+     * @param $created
+     * @param $ns
+     */
+    public function __construct($userName, $password, $nonce, $created, $ns)
+    {
+        $this->Username = new \SoapVar($userName, XSD_STRING, null, null, 'Username', $ns);
+
+        $passwordNode = '<Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordDigest">'.$password.'</Password>';
+
+        $this->Password = new \SoapVar($passwordNode, XSD_ANYXML, null, null, null, $ns);
+
+        /*$this->UsernameToken->Password = new \SoapVar(
+            [
+                '_' => $password,
+                'Type' => 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest'
+            ],
+            SOAP_ENC_OBJECT
+        );*/
+
+        $this->Nonce = new \SoapVar($nonce, XSD_STRING, null, null, 'Nonce', $ns);
+
+        $this->Created = new \SoapVar($created, XSD_STRING, null, null, 'Created', $ns);
+    }
+
 }

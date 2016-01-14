@@ -43,24 +43,16 @@ class Security
      */
     public function __construct($userName, $password, $nonce, $created)
     {
-        $this->UsernameToken = new UsernameToken();
+        $ns = 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd';
 
-        $this->UsernameToken->Username = $userName;
+        $userNameToken = new UsernameToken(
+            $userName,
+            $password,
+            $nonce,
+            $created,
+            $ns
+        );
 
-        $passwordNode = '<Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordDigest">'.$password.'</Password>';
-
-        $this->UsernameToken->Password = new \SoapVar($passwordNode, XSD_ANYXML, null, null, null);
-
-        /*$this->UsernameToken->Password = new \SoapVar(
-            [
-                '_' => $password,
-                'Type' => 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest'
-            ],
-            SOAP_ENC_OBJECT
-        );*/
-
-        $this->UsernameToken->Nonce = $nonce;
-
-        $this->UsernameToken->Created = $created;
+        $this->UsernameToken = new \SoapVar([$userNameToken], SOAP_ENC_OBJECT, null, null, 'UsernameToken', $ns);
     }
 }
