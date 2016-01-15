@@ -432,7 +432,8 @@ class SoapHeader4 extends Base
     protected function createDateTimeStringForAuth($creationDateTime, $micro)
     {
         $creationDateTime->setTimezone(new \DateTimeZone('UTC'));
-        return $creationDateTime->format("Y-m-d\TH:i:s:") . $micro . 'Z';
+        //return $creationDateTime->format("Y-m-d\TH:i:s:") . $micro . 'Z';
+        return $creationDateTime->format("Y-m-d\TH:i:s") . 'Z';
     }
 
     /**
