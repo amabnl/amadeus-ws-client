@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
+	<!--
+	    This XSLT transformation will remove empty nodes from the outgoing request.
+	    The Amadeus web services server seems to be very sensitive about the presence of empty nodes,
+	    resulting in soapfaults when they are not removed.
+
+	    On the other hand, in some contexts, empty nodes are REQUIRED.
+
+	    This XSLT transformation by default removes all empty nodes except for the ones that are mentioned in the first row.
+	    Exceptions currently are:
+	    - Security_SignOut
+	    - marker1
+	    - dumbo
+	    - boardOffPoints
+
+	    Author: Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+	 -->
 	<xsl:template
 			match="node()[descendant-or-self::*[local-name(.) = 'Security_SignOut'] or descendant-or-self::*[local-name(.) = 'marker1'] or descendant-or-self::*[local-name(.) = 'dumbo'] or descendant-or-self::*[local-name(.) = 'boardOffPoints'] or descendant-or-self::*[@*] or descendant-or-self::*[string-length(normalize-space(.)) &gt; 0]]">
 		<xsl:copy>
