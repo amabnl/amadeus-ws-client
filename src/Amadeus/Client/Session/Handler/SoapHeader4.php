@@ -371,7 +371,8 @@ class SoapHeader4 extends Base
     protected function generateUniqueNonce($nonceBase, $creationString)
     {
         return sha1(
-            $nonceBase . $creationString
+            $nonceBase . $creationString,
+            true
         );
     }
 
@@ -395,7 +396,7 @@ class SoapHeader4 extends Base
      */
     protected function generatePasswordDigest($password, $creationString, $messageNonce)
     {
-        return base64_encode(sha1($messageNonce . $creationString . sha1($password)));
+        return base64_encode(sha1($messageNonce . $creationString . sha1($password, true), true));
     }
 
     /**
