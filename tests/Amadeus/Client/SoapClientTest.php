@@ -121,4 +121,54 @@ MjAwMDY2MzQ0MmY1MzAzYjU5MDc2YTMrerREZMGVmNzk0Mw==</ns2:Password>
 
         $this->assertXmlStringEqualsXmlString($expected, $result);
     }
+
+    public function testCanParseStuff()
+    {
+        $input = '<?xml version="1.0" encoding="UTF-8"?>
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="http://xml.amadeus.com/PNRRET_11_3_1A" xmlns:ns3="http://www.w3.org/2005/08/addressing" xmlns:ns4="http://xml.amadeus.com/2010/06/Security_v1">
+	<SOAP-ENV:Header>
+		<oas:Security xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd" xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+			<oas:UsernameToken oas1:Id="UsernameToken-1">
+				<oas:Username>WSBENACS</oas:Username>
+				<oas:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsssoap-message-security-1.0#Base64Binary">SxnySEw+ZSVy1GXRwGEBlFnZaJw=</oas:Nonce>
+				<oas:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordDigest">pyXXutmMTWKPYgelVmUG3hN6aoY=</oas:Password>
+				<oas1:Created>2016-01-15T13:13:13:326Z</oas1:Created>
+			</oas:UsernameToken>
+		</oas:Security>
+		<ns3:MessageID>FF93A63C-9002-942A-13D5-90BCA97D3C15</ns3:MessageID>
+		<ns3:To>https://nodeD1.test.webservices.amadeus.com/1ASIWACSBEN</ns3:To>
+		<ns3:Action>http://webservices.amadeus.com/PNRRET_11_3_1A</ns3:Action>
+		<ns4:AMA_SecurityHostedUser>
+			<ns4:UserID POS_Type="1" PseudoCityCode="BRUBG21HE" RequestorType="U"/>
+		</ns4:AMA_SecurityHostedUser>
+	</SOAP-ENV:Header>
+	<SOAP-ENV:Body>
+		<ns1:PNR_Retrieve>
+			<ns1:retrievalFacts>
+				<ns1:retrieve>
+					<ns1:type>2</ns1:type>
+				</ns1:retrieve>
+				<ns1:reservationOrProfileIdentifier>
+					<ns1:reservation>
+						<ns1:controlNumber>ABC123</ns1:controlNumber>
+					</ns1:reservation>
+				</ns1:reservationOrProfileIdentifier>
+			</ns1:retrievalFacts>
+		</ns1:PNR_Retrieve>
+	</SOAP-ENV:Body>
+</SOAP-ENV:Envelope>';
+
+        $client = new SoapClient(
+            dirname(__FILE__) . DIRECTORY_SEPARATOR . 'testfiles' . DIRECTORY_SEPARATOR . 'dummywsdl.wsdl',
+            [
+                'trace' 		=> 1,
+                'exceptions' 	=> 1,
+                'soap_version' 	=> SOAP_1_1
+            ]
+        );
+
+        $meth = self::getMethod($client, 'transformIncomingRequest');
+
+        $result = $meth->invoke($client, $input);
+    }
 }
