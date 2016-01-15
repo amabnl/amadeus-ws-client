@@ -211,6 +211,33 @@ class SoapHeader4 extends Base
             //TODO: Handle new or existing session
             //TODO: Handle stateful & stateless.
 
+            array_push(
+                $headersToSet,
+                new \SoapHeader(
+                    'http://www.w3.org/2005/08/addressing',
+                    'MessageID',
+                    $this->generateGuid()
+                )
+            );
+
+            array_push(
+                $headersToSet,
+                new \SoapHeader(
+                    'http://www.w3.org/2005/08/addressing',
+                    'Action',
+                    $this->getActionFromWsdl($params->wsdl, $messageName)
+                )
+            );
+
+            array_push(
+                $headersToSet,
+                new \SoapHeader(
+                    'http://www.w3.org/2005/08/addressing',
+                    'To',
+                    $this->getEndpointFromWsdl($params->wsdl)
+                )
+            );
+
             $password = base64_decode($params->authParams->passwordData);
             $creation = new \DateTime('now', new \DateTimeZone('UTC'));
             $t = microtime(true);
@@ -253,32 +280,7 @@ class SoapHeader4 extends Base
                 )
             );*/
 
-            array_push(
-                $headersToSet,
-                new \SoapHeader(
-                    'http://www.w3.org/2005/08/addressing',
-                    'MessageID',
-                    $this->generateGuid()
-                )
-            );
 
-            array_push(
-                $headersToSet,
-                new \SoapHeader(
-                    'http://www.w3.org/2005/08/addressing',
-                    'To',
-                    $this->getEndpointFromWsdl($params->wsdl)
-                )
-            );
-
-            array_push(
-                $headersToSet,
-                new \SoapHeader(
-                    'http://www.w3.org/2005/08/addressing',
-                    'Action',
-                    $this->getActionFromWsdl($params->wsdl, $messageName)
-                )
-            );
 
             array_push(
                 $headersToSet,
