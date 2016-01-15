@@ -185,6 +185,7 @@ class SoapHeader4Test extends BaseTestCase
             ["AMADEUS", "2015-09-30T14:12:15Z", "secretnonce10111", "+LzcaRc+ndGAcZIXmq/N7xGes+k="],
             ["AMADEUS", "2015-09-30T14:15:11Z", base64_decode("NjPfanrqSdmXuFWgPoQlAsHOUbjOBg=="), "k/upHztkhZzrsqAKsOBUa45+j1w="],
             [base64_decode('VnA3ZjN1T0k='), "2016-01-15T10:16:41:553Z", base64_decode("ZjViYjdiZGJmOTMwY2FhYzQ5Zjk2NTEzMjhmYTdjMjUzN2NlMzI2ZQ=="), "CELeKeKpVxMV3xvxhfVvvl/ayIA="],
+            [base64_decode('VnA3ZjN1T0k='), "2016-01-15T11:06:30:321Z", base64_decode("oD07B/1XeFLCsuKhB2NXdwtvMJY="), "hbgT0fpvlBCRF+J/EV/4XwCRxdw="],
         ];
     }
 
