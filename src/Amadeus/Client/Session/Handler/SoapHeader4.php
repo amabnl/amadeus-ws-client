@@ -288,7 +288,10 @@ class SoapHeader4 extends Base
                     'http://xml.amadeus.com/2010/06/Security_v1',
                     'AMA_SecurityHostedUser',
                     new Client\Struct\HeaderV4\SecurityHostedUser(
-                        $params->authParams->officeId
+                        $params->authParams->officeId,
+                        'U',
+                        1,
+                        'SU'
                     )
                 )
             );
