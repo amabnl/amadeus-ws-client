@@ -43,7 +43,7 @@ class Security
      */
     public function __construct($userName, $password, $nonce, $created)
     {
-        $ns = 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd';
+        $ns = 'wsse:http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd';
 
         $userNameToken = new UsernameToken(
             $userName,
