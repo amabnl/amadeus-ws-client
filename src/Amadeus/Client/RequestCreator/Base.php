@@ -22,9 +22,19 @@
 
 namespace Amadeus\Client\RequestCreator;
 
+use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
+use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
+use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
+use Amadeus\Client\RequestOptions\OfferVerifyOptions;
+use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveRequestOptions;
+use Amadeus\Client\RequestOptions\QueueListOptions;
+use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
+use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
+use Amadeus\Client\RequestOptions\QueueRemoveItemOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
-use Amadeus\Client\Struct\Pnr\Retrieve;
+use Amadeus\Client\Struct;
 
 /**
  * Base request creator - the default request creator.
@@ -52,23 +62,157 @@ class Base implements RequestCreatorInterface
 
     protected function createSecurityAuthenticate()
     {
-
+        //TODO Only needed for SoapHeader 1 and 2 messages.
     }
 
     /**
      * Create request object for PNR_Retrieve message
      *
      * @param PnrRetrieveRequestOptions $params
-     * @return Retrieve
+     * @return Struct\Pnr\Retrieve
      */
     protected function createRetrievePnr(PnrRetrieveRequestOptions $params)
     {
-        $retrieveRequest = new Retrieve(
-            Retrieve::RETR_TYPE_BY_RECLOC,
+        $retrieveRequest = new Struct\Pnr\Retrieve(
+            Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
             $params->recordLocator
         );
 
         return $retrieveRequest;
     }
+
+    /**
+     * @param PnrRetrieveAndDisplayOptions $params
+     * @return Struct\Pnr\RetrieveAndDisplay
+     */
+    protected function createPnrRetrieveAndDisplay(PnrRetrieveAndDisplayOptions $params)
+    {
+        $req = new Struct\Pnr\RetrieveAndDisplay();
+
+        //TODO
+
+        return $req;
+    }
+
+    /**
+     * @param PnrAddMultiElementsOptions $params
+     * @return Struct\Pnr\AddMultiElements
+     */
+    protected function createPnrAddMultiElements(PnrAddMultiElementsOptions $params)
+    {
+        $req = new Struct\Pnr\AddMultiElements();
+
+        //TODO
+
+        return $req;
+    }
+
+    /**
+     * @param QueueListOptions $params
+     * @return Struct\Queue\QueueList
+     */
+    protected function createQueueList(QueueListOptions $params)
+    {
+        $queueListRequest = new Struct\Queue\QueueList(
+            $params->queue->queue,
+            $params->queue->category
+        );
+
+        return $queueListRequest;
+    }
+
+    /**
+     * @param QueuePlacePnrOptions $params
+     * @return Struct\Queue\PlacePnr
+     */
+    protected function createQueuePlacePnr(QueuePlacePnrOptions $params)
+    {
+        $req = new Struct\Queue\PlacePnr();
+
+        //TODO
+
+        return $req;
+    }
+
+    /**
+     * @param QueueRemoveItemOptions $params
+     * @return Struct\Queue\RemoveItem
+     */
+    protected function createQueueRemoveItem(QueueRemoveItemOptions $params)
+    {
+        $req = new Struct\Queue\RemoveItem(
+            $params->queue,
+            $params->recordLocator,
+            $params->originatorOfficeId
+        );
+
+        return $req;
+    }
+
+    /**
+     * @param QueueMoveItemOptions $params
+     * @return Struct\Queue\MoveItem
+     */
+    protected function createQueueMoveItem(QueueMoveItemOptions $params)
+    {
+        $req = new Struct\Queue\MoveItem();
+
+        //TODO
+
+        return $req;
+    }
+
+    /**
+     * @param OfferVerifyOptions $params
+     * @return Struct\Offer\Verify
+     */
+    protected function createOfferVerify(OfferVerifyOptions $params)
+    {
+        $req = new Struct\Offer\Verify();
+
+        //TODO
+
+        return $req;
+    }
+
+    /**
+     * @param OfferConfirmAirOptions $params
+     * @return Struct\Offer\ConfirmAir
+     */
+    protected function createOfferConfirmAir(OfferConfirmAirOptions $params)
+    {
+        $req = new Struct\Offer\ConfirmAir();
+
+        //TODO
+
+        return $req;
+    }
+
+    /**
+     * @param OfferConfirmHotelOptions $params
+     * @return Struct\Offer\ConfirmHotel
+     */
+    protected function createOfferConfirmHotel(OfferConfirmHotelOptions $params)
+    {
+        $req = new Struct\Offer\ConfirmHotel();
+
+        //TODO
+
+        return $req;
+    }
+
+    /**
+     * @param OfferConfirmCarOptions $params
+     * @return Struct\Offer\ConfirmCar
+     */
+    protected function createOfferConfirmCar(OfferConfirmCarOptions $params)
+    {
+        $req = new Struct\Offer\ConfirmCar();
+
+        //TODO
+
+        return $req;
+    }
+
 
 }

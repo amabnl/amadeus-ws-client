@@ -23,17 +23,30 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PnrRetrieveRequestOptions
- *
- * The options available when doing a PNR_Retrieve call.
+ * QueueMoveItemOptions
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveRequestOptions extends Base
+class QueueMoveItemOptions extends Base
 {
     /**
      * @var string
      */
     public $recordLocator;
+
+    /**
+     * @var string
+     */
+    public $officeId;
+
+    /**
+     * @var Queue
+     */
+    public $sourceQueue;
+
+    /**
+     * @var Queue
+     */
+    public $destinationQueue;
 }

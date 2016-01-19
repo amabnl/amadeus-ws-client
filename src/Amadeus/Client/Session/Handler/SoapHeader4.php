@@ -144,6 +144,8 @@ class SoapHeader4 extends Base
         try {
             $result = $this->getSoapClient()->$messageName($messageBody);
             $this->logRequestAndResponse($messageName);
+
+            $this->handlePostMessage($messageName, $messageOptions, $result);
         } catch(\SoapFault $ex) {
             $this->log(
                 LogLevel::ERROR,
@@ -168,7 +170,10 @@ class SoapHeader4 extends Base
     }
 
     /**
-     * If authenticated, increment sequence number for next message
+     * Handles authentication & sessions
+     *
+     * If authenticated, increment sequence number for next message and set session info to soapheader
+     * If not, set auth info to soapheader
      *
      * @todo decide if you want to end the session
      * @uses $this->isAuthenticated
@@ -185,6 +190,22 @@ class SoapHeader4 extends Base
         $headers = $this->createSoapHeaders($this->sessionData, $this->params, $messageName, $messageOptions);
 
         $this->getSoapClient()->__setSoapHeaders($headers);
+    }
+
+
+    /**
+     * Handles post message actions
+     *
+     * - look for session info and set status variables
+     * - ends terminated sessions
+     *
+     * @param string $messageName
+     * @param array $messageOptions
+     * @param mixed $result
+     */
+    protected function handlePostMessage($messageName, $messageOptions, $result)
+    {
+
     }
 
     /**

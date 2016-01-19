@@ -22,18 +22,23 @@
 
 namespace Amadeus\Client\RequestOptions;
 
+use Amadeus\Client\LoadParamsFromArray;
+
 /**
- * PnrRetrieveRequestOptions
- *
- * The options available when doing a PNR_Retrieve call.
+ * OfferConfirmAirOptions
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveRequestOptions extends Base
+class OfferConfirmAirOptions extends Base
 {
     /**
-     * @var string
+     * @var int
      */
-    public $recordLocator;
+    public $tatooNumber;
+
+    /**
+     * @var Offer\PassengerReAssocOptions[]
+     */
+    public $passengerReassociation = [];
 }

@@ -20,20 +20,33 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Queue;
 
 /**
- * PnrRetrieveRequestOptions
+ * Class SortCriteria
  *
- * The options available when doing a PNR_Retrieve call.
- *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Queue
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveRequestOptions extends Base
+class SortCriteria
 {
     /**
-     * @var string
+     * @var Dumbo
      */
-    public $recordLocator;
+    public $dumbo;
+    /**
+     * @var SortOption[]
+     */
+    public $sortOption = [];
+
+    /**
+     * Create SortCriteria
+     *
+     * @param string $sortOption
+     */
+    public function __construct($sortOption)
+    {
+        $this->dumbo = new Dumbo();
+        $this->sortOption[] = new SortOption($sortOption);
+    }
 }

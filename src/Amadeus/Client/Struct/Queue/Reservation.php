@@ -20,20 +20,16 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Queue;
+
+use Amadeus\Client\Struct\Pnr;
 
 /**
- * PnrRetrieveRequestOptions
+ * Reservation struct is the same as under Pnr.
  *
- * The options available when doing a PNR_Retrieve call.
- *
- * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Queue
  */
-class PnrRetrieveRequestOptions extends Base
+class Reservation extends Pnr\Reservation
 {
-    /**
-     * @var string
-     */
-    public $recordLocator;
+
 }

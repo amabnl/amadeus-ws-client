@@ -23,17 +23,43 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PnrRetrieveRequestOptions
+ * Amadeus Queue - definition of a GDS Queue (Queue, Category and optional Office ID)
  *
- * The options available when doing a PNR_Retrieve call.
- *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveRequestOptions extends Base
+class Queue
 {
     /**
+     * @var int
+     */
+    public $queue;
+    /**
+     * OPTIONAL
+     *
+     * @var int
+     */
+    public $category = 0;
+
+    /**
+     * OPTIONAL
+     *
      * @var string
      */
-    public $recordLocator;
+    public $officeId = null;
+
+
+    /**
+     * Construct Queue with initialization array
+     *
+     * @param array $params Initialization parameters
+     */
+    public function __construct($params = [])
+    {
+        foreach ($params as $propName => $propValue) {
+            if (property_exists($this, $propName)) {
+                $this->$propName = $propValue;
+            }
+        }
+    }
 }

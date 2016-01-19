@@ -23,17 +23,24 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PnrRetrieveRequestOptions
- *
- * The options available when doing a PNR_Retrieve call.
+ * PnrRetrieveAndDisplayOptions
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveRequestOptions extends Base
+class PnrRetrieveAndDisplayOptions extends Base
 {
     /**
+     * 6-character Amadeus Record Locator
+     *
      * @var string
      */
-    public $recordLocator;
+    public $recordlocator;
+
+    /**
+     * 'A', 'O' or 'P' (all, only offers, only PNR)
+     *
+     * @var string
+     */
+    public $retrieveOption;
 }

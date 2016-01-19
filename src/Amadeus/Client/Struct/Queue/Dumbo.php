@@ -20,20 +20,15 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Queue;
 
 /**
- * PnrRetrieveRequestOptions
+ * Structure class for the Dumbo message part for Queue_* messages
  *
- * The options available when doing a PNR_Retrieve call.
- *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Queue
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveRequestOptions extends Base
+class Dumbo
 {
-    /**
-     * @var string
-     */
-    public $recordLocator;
+
 }

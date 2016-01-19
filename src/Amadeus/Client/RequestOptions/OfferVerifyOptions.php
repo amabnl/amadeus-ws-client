@@ -23,17 +23,31 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PnrRetrieveRequestOptions
- *
- * The options available when doing a PNR_Retrieve call.
+ * OfferVerifyOptions
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveRequestOptions extends Base
+class OfferVerifyOptions extends Base
 {
     /**
+     * Reference to the offer nr.
+     *
+     * @var int
+     */
+    public $offerReference;
+
+    /**
+     * AIR, CCR, HHL
+     *
+     * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=3979&serviceVersionId=3443&isQuery=true#
+     *
+     * Value	Description
+     * AIR		Air segment
+     * CCR		Automated Car auxiliary segment
+     * HHL		Automated Hotel auxiliary segment
+     *
      * @var string
      */
-    public $recordLocator;
+    public $segmentName;
 }

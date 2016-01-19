@@ -20,20 +20,18 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Queue;
 
-/**
- * PnrRetrieveRequestOptions
- *
- * The options available when doing a PNR_Retrieve call.
- *
- * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
- */
-class PnrRetrieveRequestOptions extends Base
+
+class QueueDetails
 {
     /**
-     * @var string
+     * @var int
      */
-    public $recordLocator;
+    public $number;
+
+    public function __construct($queueNumber)
+    {
+        $this->number = $queueNumber;
+    }
 }

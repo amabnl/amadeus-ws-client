@@ -22,18 +22,19 @@
 
 namespace Amadeus\Client\RequestOptions;
 
+use Amadeus\Client\LoadParamsFromArray;
+
 /**
- * PnrRetrieveRequestOptions
+ * Base request options class
  *
- * The options available when doing a PNR_Retrieve call.
+ * Provides ability to load properties via associative array in constructor.
+ *
+ * Will try to map keys in array to property names and fill in matching properties.
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveRequestOptions extends Base
+abstract class Base extends LoadParamsFromArray implements RequestOptionsInterface
 {
-    /**
-     * @var string
-     */
-    public $recordLocator;
+
 }

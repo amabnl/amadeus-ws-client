@@ -25,7 +25,17 @@ namespace Amadeus;
 use Amadeus\Client\Exception;
 use Amadeus\Client\Params;
 use Amadeus\Client\RequestCreator\RequestCreatorInterface;
+use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
+use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
+use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
+use Amadeus\Client\RequestOptions\OfferVerifyOptions;
+use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveRequestOptions;
+use Amadeus\Client\RequestOptions\QueueListOptions;
+use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
+use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
+use Amadeus\Client\RequestOptions\QueueRemoveItemOptions;
 use Amadeus\Client\Session\Handler\HandlerFactory;
 use Amadeus\Client\Session\Handler\HandlerInterface;
 
@@ -78,6 +88,8 @@ class Client
     protected $requestCreator;
 
     /**
+     * Construct Amadeus Web Services client
+     *
      * @param Params $params
      */
     public function __construct($params)
@@ -91,31 +103,307 @@ class Client
     }
 
     /**
-     * Retrieve an Amadeus PNR by record locator
+     * PNR_Retrieve - Retrieve an Amadeus PNR by record locator
      *
      * By default, the result will be the PNR_Reply XML as string.
      * That way you can easily parse the PNR's contents with XPath.
      *
      * Set $responseAsString FALSE to get the response as a PHP object.
      *
+     * https://webservices.amadeus.com/extranet/viewService.do?id=27&flavourId=1&menuId=functional
+     *
      * @param string $recordLocator Amadeus Record Locator for PNR
-     * @param bool $responseAsString (OPTIONAL) set to 'false' to get PNR_Reply as a PHP object.
+     * @param array|null $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_Reply as a PHP object.
      * @return string|\stdClass|null
      * @throws Exception
      */
-    public function retrievePnr($recordLocator, $responseAsString = true)
+    public function pnrRetrieve($recordLocator, $messageOptions = null)
     {
+        if (is_null($messageOptions)) {
+            $messageOptions = $this->makeMessageOptions(true);
+        }
+
         return $this->sessionHandler->sendMessage(
             'PNR_Retrieve',
             $this->requestCreator->createRequest(
-                'retrievePnr',
-                new PnrRetrieveRequestOptions($recordLocator)
+                'pnrRetrieve',
+                new PnrRetrieveRequestOptions(['recordLocator'=>$recordLocator])
             ),
-            ['asString' => $responseAsString]
+            $messageOptions
         );
     }
 
     /**
+     * PNR_AddMultiElements - Create a new PNR or update an existing PNR.
+     *
+     * https://webservices.amadeus.com/extranet/viewService.do?id=25&flavourId=1&menuId=functional
+     *
+     * @param PnrAddMultiElementsOptions $options
+     * @param array $messageOptions
+     * @return mixed
+     */
+    public function pnrAddMultiElements($options, $messageOptions = null)
+    {
+        if (is_null($messageOptions)) {
+            $messageOptions = $this->makeMessageOptions(true);
+        }
+
+        return $this->sessionHandler->sendMessage(
+            'PNR_AddMultiElements',
+            $this->requestCreator->createRequest(
+                'pnrAddMultiElements',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * PNR_RetrieveAndDisplay - Retrieve an Amadeus PNR by record locator including extra info
+     *
+     * This extra info is info you cannot see in the regular PNR, like Offers.
+     *
+     * By default, the result will be the PNR_RetrieveAndDisplayReply XML as string.
+     * That way you can easily parse the PNR's contents with XPath.
+     *
+     * Set $messageOptions['asString'] = FALSE to get the response as a PHP object.
+     *
+     * https://webservices.amadeus.com/extranet/viewService.do?id=1922&flavourId=1&menuId=functional
+     *
+     * @param PnrRetrieveAndDisplayOptions $options Amadeus Record Locator for PNR
+     * @param array|null $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_RetrieveAndDisplayReply as a PHP object.
+     * @return string|\stdClass|null
+     * @throws Exception
+     **/
+    public function pnrRetrieveAndDisplay($options, $messageOptions = null)
+    {
+        if (is_null($messageOptions)) {
+            $messageOptions = $this->makeMessageOptions(true);
+        }
+
+        return $this->sessionHandler->sendMessage(
+            'PNR_RetrieveAndDisplay',
+            $this->requestCreator->createRequest(
+                'pnrRetrieveAndDisplay',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * Queue_List - get a list of all PNR's on a given queue
+     *
+     * https://webservices.amadeus.com/extranet/viewService.do?id=52&flavourId=1&menuId=functional
+     *
+     * @param QueueListOptions $options
+     * @param array|null $messageOptions
+     * @return mixed
+     */
+    public function queueList(QueueListOptions $options, $messageOptions = null)
+    {
+        if (is_null($messageOptions)) {
+            $messageOptions = $this->makeMessageOptions();
+        }
+
+        return $this->sessionHandler->sendMessage(
+            'Queue_List',
+            $this->requestCreator->createRequest(
+                'queueList',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * Queue_PlacePNR - Place a PNR on a given queue
+     *
+     * @param QueuePlacePnrOptions $options
+     * @param array|null $messageOptions
+     * @return mixed
+     */
+    public function queuePlacePnr(QueuePlacePnrOptions $options, $messageOptions = null)
+    {
+        if (is_null($messageOptions)) {
+            $messageOptions = $this->makeMessageOptions();
+        }
+
+        return $this->sessionHandler->sendMessage(
+            'Queue_PlacePNR',
+            $this->requestCreator->createRequest(
+                'queuePlacePnr',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * Queue_RemoveItem - remove an item (a PNR) from a given queue
+     *
+     * @param QueueRemoveItemOptions $options
+     * @param array|null $messageOptions
+     * @return mixed
+     */
+    public function queueRemoveItem(QueueRemoveItemOptions $options, $messageOptions = null)
+    {
+        if (is_null($messageOptions)) {
+            $messageOptions = $this->makeMessageOptions();
+        }
+
+        return $this->sessionHandler->sendMessage(
+            'Queue_RemoveItem',
+            $this->requestCreator->createRequest(
+                'queueRemoveItem',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * Queue_MoveItem - move an item (a PNR) from one queue to another.
+     *
+     * @param QueueMoveItemOptions $options
+     * @param array|null $messageOptions
+     * @return mixed
+     */
+    public function queueMoveItem(QueueMoveItemOptions $options, $messageOptions = null)
+    {
+        if (is_null($messageOptions)) {
+            $messageOptions = $this->makeMessageOptions();
+        }
+
+        return $this->sessionHandler->sendMessage(
+            'Queue_MoveItem',
+            $this->requestCreator->createRequest(
+                'queueMoveItem',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * Offer_VerifyOffer
+     *
+     * To be called in the context of an open PNR
+     *
+     * @param OfferVerifyOptions $options
+     * @param array|null $messageOptions
+     * @return mixed
+     */
+    public function offerVerify(OfferVerifyOptions $options, $messageOptions = null)
+    {
+        if (is_null($messageOptions)) {
+            $messageOptions = $this->makeMessageOptions();
+        }
+
+        return $this->sessionHandler->sendMessage(
+            'Offer_VerifyOffer',
+            $this->requestCreator->createRequest(
+                'offerVerify',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * Offer_ConfirmAirOffer
+     *
+     * @param OfferConfirmAirOptions $options
+     * @param array|null $messageOptions
+     * @return mixed
+     */
+    public function offerConfirmAir(OfferConfirmAirOptions $options, $messageOptions = null)
+    {
+        if (is_null($messageOptions)) {
+            $messageOptions = $this->makeMessageOptions();
+        }
+
+        return $this->sessionHandler->sendMessage(
+            'Offer_ConfirmAirOffer',
+            $this->requestCreator->createRequest(
+                'offerConfirmAir',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * Offer_ConfirmHotelOffer
+     *
+     * @param OfferConfirmHotelOptions $options
+     * @param array|null $messageOptions
+     * @return mixed
+     */
+    public function offerConfirmHotel(OfferConfirmHotelOptions $options, $messageOptions = null)
+    {
+        if (is_null($messageOptions)) {
+            $messageOptions = $this->makeMessageOptions();
+        }
+
+        return $this->sessionHandler->sendMessage(
+            'Offer_ConfirmHotelOffer',
+            $this->requestCreator->createRequest(
+                'offerConfirmHotel',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * Offer_ConfirmCarOffer
+     *
+     * @param OfferConfirmCarOptions $options
+     * @param array|null $messageOptions
+     * @return mixed
+     */
+    public function offerConfirmCar(OfferConfirmCarOptions $options, $messageOptions = null)
+    {
+        if (is_null($messageOptions)) {
+            $messageOptions = $this->makeMessageOptions();
+        }
+
+        return $this->sessionHandler->sendMessage(
+            'Offer_ConfirmCarOffer',
+            $this->requestCreator->createRequest(
+                'offerConfirmCar',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * Make message options
+     *
+     * Message options are meta options when sending a message to the amadeus web services
+     * - (if stateful) should we end the current session after sending this call?
+     * - do you want the response as a PHP object or as a string?
+     * - ... ?
+     *
+     * @param bool $asString Switch if the response should be returned as a string (true) or a PHP object (false).
+     * @param bool $endSession Switch if you want to terminate the current session after making the call.
+     * @return array
+     */
+    protected function makeMessageOptions($asString = false, $endSession = false)
+    {
+        return [
+            'asString' => $asString,
+            'endSession' => $endSession
+        ];
+    }
+
+    /**
+     * Load the session handler
+     *
+     * Either load the provided session handler or create one depending on incoming parameters.
+     *
      * @param HandlerInterface|null $sessionHandler
      * @param Params\SessionHandlerParams $params
      * @param string $libIdentifier Library identifier & version string (for Received From)
@@ -135,6 +423,10 @@ class Client
     }
 
     /**
+     * Load a request creator
+     *
+     * A request creator is responsible for generating the correct request to send.
+     *
      * @param RequestCreatorInterface|null $requestCreator
      * @return RequestCreatorInterface
      * @throws \RuntimeException

@@ -20,20 +20,33 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client;
 
 /**
- * PnrRetrieveRequestOptions
+ * LoadParamsFromArray
  *
- * The options available when doing a PNR_Retrieve call.
+ * Povides the ability to load parameters in the constructor through an associative array
  *
- * @package Amadeus\Client\RequestOptions
+ * The keys in the associative array should be property names, and if that matches, the values will be set
+ * to those properties.
+ *
+ * @package Amadeus\Client
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveRequestOptions extends Base
+class LoadParamsFromArray
 {
     /**
-     * @var string
+     * Construct Request Options object with initialization array
+     *
+     * @param array $params Initialization parameters
      */
-    public $recordLocator;
+    public function __construct($params = [])
+    {
+        foreach ($params as $propName => $propValue) {
+            if (property_exists($this, $propName)) {
+                $this->$propName = $propValue;
+                //TODO support for objects that must be instantiated???
+            }
+        }
+    }
 }

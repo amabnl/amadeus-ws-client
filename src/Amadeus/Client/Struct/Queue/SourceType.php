@@ -20,20 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Queue;
 
 /**
- * PnrRetrieveRequestOptions
- *
- * The options available when doing a PNR_Retrieve call.
- *
- * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * Class SourceType
+ * @package Amadeus\Client\Struct\Queue
  */
-class PnrRetrieveRequestOptions extends Base
+class SourceType
 {
+    const SOURCETYPE_SAME_AS_ORIGINATOR = 3;
+    const SOURCETYPE_OFFICE_SPECIFIED = 4;
+
     /**
-     * @var string
+     * @var int
      */
-    public $recordLocator;
+    public $sourceQualifier1;
+
+    /**
+     * @param int $sourceType
+     */
+    public function __construct($sourceType)
+    {
+        $this->sourceQualifier1 = $sourceType;
+    }
 }

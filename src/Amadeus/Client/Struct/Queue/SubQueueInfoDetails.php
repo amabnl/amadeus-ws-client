@@ -20,20 +20,40 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Queue;
 
-/**
- * PnrRetrieveRequestOptions
- *
- * The options available when doing a PNR_Retrieve call.
- *
- * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
- */
-class PnrRetrieveRequestOptions extends Base
+
+class SubQueueInfoDetails
 {
+    /**
+     * Identification Type: Category
+     *
+     * See Amadeus Core WS Documentation
+     * [Identification type, coded codesets (Ref: 9893 IA 02.2.14)]
+     * @var string
+     */
+    const IDTYPE_CATEGORY = "C";
+
     /**
      * @var string
      */
-    public $recordLocator;
+    public $identificationType;
+    /**
+     * @var string
+     */
+    public $itemNumber;
+    /**
+     * @var string
+     */
+    public $itemDescription;
+
+    /**
+     * @param string $categoryNumber
+     * @param string|null $type
+     */
+    public function __construct($categoryNumber, $type)
+    {
+        $this->identificationType = $type;
+        $this->itemNumber = $categoryNumber;
+    }
 }

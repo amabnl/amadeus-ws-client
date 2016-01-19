@@ -20,20 +20,34 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\RequestOptions\Offer;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * PnrRetrieveRequestOptions
+ * PassengerDef
  *
- * The options available when doing a PNR_Retrieve call.
- *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\RequestOptions\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveRequestOptions extends Base
+class PassengerDef extends LoadParamsFromArray
 {
     /**
+    * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2326&serviceVersionId=2298&isQuery=true#
+    *
+    * Offer_CreateOffer/airPricingRecommendation/paxReference/passengerReference/type
+    * Reference qualifier codesets
+    * Value   Description
+    * P       Passenger/traveller reference number
+    * PA      Adult Passenger
+    * PI      Infant Passenger
+     *
      * @var string
+    */
+    public $passengerType = "P";
+
+    /**
+     * @var int
      */
-    public $recordLocator;
+    public $passengerTatoo;
 }
