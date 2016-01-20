@@ -20,26 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\Struct\Pnr\RetrieveAndDisplay;
 
 /**
- * Class Reservation
+ * DynamicOutputOption
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Pnr\RetrieveAndDisplay
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class DynamicOutputOption
 {
     /**
-     * @var string
+     * @var StatusDetails
      */
-    public $controlNumber;
+    public $statusDetails;
 
     /**
-     * @param string|null $recordLocator
+     * @param string $action
      */
-    public function __construct($recordLocator = null)
+    public function __construct($action)
     {
-        $this->controlNumber = $recordLocator;
+        $this->statusDetails = new StatusDetails($action);
     }
+
 }

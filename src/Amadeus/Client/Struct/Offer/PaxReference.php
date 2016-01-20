@@ -20,26 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\Struct\Offer;
+
+use Amadeus\Client\RequestOptions\Offer\PassengerDef;
 
 /**
- * Class Reservation
+ * PaxReference
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class PaxReference
 {
     /**
-     * @var string
+     * @var PassengerReference[]
      */
-    public $controlNumber;
+    public $passengerReference = [];
 
     /**
-     * @param string|null $recordLocator
+     * @param PassengerDef[]|null $paxRefs
      */
-    public function __construct($recordLocator = null)
+    public function __construct($paxRefs = null)
     {
-        $this->controlNumber = $recordLocator;
+        if (!is_null($paxRefs)) {
+            foreach ($paxRefs as $paxRef) {
+                $this->passengerReference[] = new PassengerReference(
+                    $paxRef->passengerTatoo,
+                    $paxRef->passengerType
+                );
+            }
+        }
     }
 }

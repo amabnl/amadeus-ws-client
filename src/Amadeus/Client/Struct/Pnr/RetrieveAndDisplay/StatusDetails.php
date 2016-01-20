@@ -20,26 +20,52 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\Struct\Pnr\RetrieveAndDisplay;
 
 /**
- * Class Reservation
+ * StatusDetails
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Pnr\RetrieveAndDisplay
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class StatusDetails
 {
     /**
+     * ALL: Return a full display
+     * PNR_RetrieveAndDisplay/dynamicOutputOption/statusDetails/action
+     *
      * @var string
      */
-    public $controlNumber;
+    const OPTION_ALL = "ALL";
 
     /**
-     * @param string|null $recordLocator
+     * OFR: Return only Offer Data
+     * PNR_RetrieveAndDisplay/dynamicOutputOption/statusDetails/action
+     *
+     * @var string
      */
-    public function __construct($recordLocator = null)
+    const OPTION_OFFERS = "OFR";
+
+    /**
+     * PNR: Return only PNR Data (Without Offer)
+     * PNR_RetrieveAndDisplay/dynamicOutputOption/statusDetails/action
+     *
+     * @var string
+     */
+    const OPTION_PNR = "PNR";
+
+    /**
+     * self::OPTION_*
+     *
+     * @var string
+     */
+    public $action;
+
+    /**
+     * @param string $action
+     */
+    public function __construct($action)
     {
-        $this->controlNumber = $recordLocator;
+        $this->action = $action;
     }
 }

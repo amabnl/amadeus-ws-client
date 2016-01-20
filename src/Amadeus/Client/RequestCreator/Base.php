@@ -87,9 +87,19 @@ class Base implements RequestCreatorInterface
      */
     protected function createPnrRetrieveAndDisplay(PnrRetrieveAndDisplayOptions $params)
     {
-        $req = new Struct\Pnr\RetrieveAndDisplay();
+        /**
+         * Translate Options value to the value needed to construct the message
+         */
+        $wsClientOptionTranslation = [
+            'A' => Struct\Pnr\RetrieveAndDisplay\StatusDetails::OPTION_ALL,
+            'O' => Struct\Pnr\RetrieveAndDisplay\StatusDetails::OPTION_OFFERS,
+            'P' => Struct\Pnr\RetrieveAndDisplay\StatusDetails::OPTION_PNR
+        ];
 
-        //TODO
+        $req = new Struct\Pnr\RetrieveAndDisplay(
+            $params->recordlocator,
+            $wsClientOptionTranslation[$params->retrieveOption]
+        );
 
         return $req;
     }
@@ -173,9 +183,10 @@ class Base implements RequestCreatorInterface
      */
     protected function createOfferVerify(OfferVerifyOptions $params)
     {
-        $req = new Struct\Offer\Verify();
-
-        //TODO
+        $req = new Struct\Offer\Verify(
+            $params->offerReference,
+            $params->segmentName
+        );
 
         return $req;
     }
@@ -186,9 +197,7 @@ class Base implements RequestCreatorInterface
      */
     protected function createOfferConfirmAir(OfferConfirmAirOptions $params)
     {
-        $req = new Struct\Offer\ConfirmAir();
-
-        //TODO
+        $req = new Struct\Offer\ConfirmAir($params);
 
         return $req;
     }

@@ -22,41 +22,24 @@
 
 namespace Amadeus\Client\Struct\Pnr;
 
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\DynamicOutputOption;
-use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\StatusDetails;
-
 /**
- * Structure class for representing the PNR_RetrieveAndDisplay request message
+ * ReservationInfo
  *
  * @package Amadeus\Client\Struct\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RetrieveAndDisplay extends BaseWsMessage
+class ReservationInfo
 {
     /**
-     * @var ReservationInfo
+     * @var Reservation
      */
-    public $reservationInfo;
-
-    /**
-     * @var RetrieveAndDisplay\PersonalFacts
-     */
-    public $personalFacts;
-
-    /**
-     * @var RetrieveAndDisplay\DynamicOutputOption
-     */
-    public $dynamicOutputOption;
+    public $reservation;
 
     /**
      * @param string $recordLocator
-     * @param string $option
      */
-    public function __construct($recordLocator, $option = StatusDetails::OPTION_ALL)
+    public function __construct($recordLocator)
     {
-        $this->reservationInfo = new ReservationInfo($recordLocator);
-
-        $this->dynamicOutputOption = new DynamicOutputOption($option);
+        $this->reservation = new Reservation($recordLocator);
     }
 }

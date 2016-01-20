@@ -20,43 +20,48 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
-
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\DynamicOutputOption;
-use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\StatusDetails;
+namespace Amadeus\Client\Struct\Offer;
 
 /**
- * Structure class for representing the PNR_RetrieveAndDisplay request message
+ * PassengerReference
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RetrieveAndDisplay extends BaseWsMessage
+class PassengerReference
 {
     /**
-     * @var ReservationInfo
+     * P	Passenger/traveller reference number
      */
-    public $reservationInfo;
+    const TYPE_PAXREF = "P";
+    /**
+     * PA	Adult Passenger
+     */
+    const TYPE_ADULT = "PA";
+    /**
+     * PI	Infant Passenger
+     */
+    const TYPE_INFANT = "PI";
 
     /**
-     * @var RetrieveAndDisplay\PersonalFacts
+     * self::TYPE_*
+     *
+     * @var string
      */
-    public $personalFacts;
+    public $type;
 
     /**
-     * @var RetrieveAndDisplay\DynamicOutputOption
+     * @var int
      */
-    public $dynamicOutputOption;
+    public $value;
 
     /**
-     * @param string $recordLocator
-     * @param string $option
+     * @param int $tatoo
+     * @param string $type
      */
-    public function __construct($recordLocator, $option = StatusDetails::OPTION_ALL)
+    public function __construct($tatoo, $type)
     {
-        $this->reservationInfo = new ReservationInfo($recordLocator);
-
-        $this->dynamicOutputOption = new DynamicOutputOption($option);
+        $this->value = $tatoo;
+        $this->type = $type;
     }
 }

@@ -20,43 +20,29 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\Struct\Offer;
 
 use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\DynamicOutputOption;
-use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\StatusDetails;
 
 /**
- * Structure class for representing the PNR_RetrieveAndDisplay request message
+ * Verify
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RetrieveAndDisplay extends BaseWsMessage
+class Verify extends BaseWsMessage
 {
     /**
-     * @var ReservationInfo
+     * @var OfferTatoo
      */
-    public $reservationInfo;
+    public $offerTatoo;
 
     /**
-     * @var RetrieveAndDisplay\PersonalFacts
+     * @param string $referenceNr
+     * @param string $segmentName
      */
-    public $personalFacts;
-
-    /**
-     * @var RetrieveAndDisplay\DynamicOutputOption
-     */
-    public $dynamicOutputOption;
-
-    /**
-     * @param string $recordLocator
-     * @param string $option
-     */
-    public function __construct($recordLocator, $option = StatusDetails::OPTION_ALL)
+    public function __construct($referenceNr, $segmentName)
     {
-        $this->reservationInfo = new ReservationInfo($recordLocator);
-
-        $this->dynamicOutputOption = new DynamicOutputOption($option);
+        $this->offerTatoo = new OfferTatoo($referenceNr, $segmentName);
     }
 }

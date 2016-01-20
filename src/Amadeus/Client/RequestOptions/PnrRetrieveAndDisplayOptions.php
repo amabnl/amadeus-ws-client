@@ -30,6 +30,8 @@ namespace Amadeus\Client\RequestOptions;
  */
 class PnrRetrieveAndDisplayOptions extends Base
 {
+
+
     /**
      * 6-character Amadeus Record Locator
      *

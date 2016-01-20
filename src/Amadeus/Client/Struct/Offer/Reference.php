@@ -20,43 +20,38 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
-
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\DynamicOutputOption;
-use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\StatusDetails;
+namespace Amadeus\Client\Struct\Offer;
 
 /**
- * Structure class for representing the PNR_RetrieveAndDisplay request message
+ * Reference
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RetrieveAndDisplay extends BaseWsMessage
+class Reference
 {
     /**
-     * @var ReservationInfo
+     * Offer Other element Tattoo reference number
      */
-    public $reservationInfo;
+    const TYPE_OFFER_TATOO = "OOT";
 
     /**
-     * @var RetrieveAndDisplay\PersonalFacts
+     * @var string
      */
-    public $personalFacts;
+    public $type = self::TYPE_OFFER_TATOO;
 
     /**
-     * @var RetrieveAndDisplay\DynamicOutputOption
+     * Identification number.
+     *
+     * @var string
      */
-    public $dynamicOutputOption;
+    public $value;
 
     /**
-     * @param string $recordLocator
-     * @param string $option
+     * @param string $referenceNr
      */
-    public function __construct($recordLocator, $option = StatusDetails::OPTION_ALL)
+    public function __construct($referenceNr)
     {
-        $this->reservationInfo = new ReservationInfo($recordLocator);
-
-        $this->dynamicOutputOption = new DynamicOutputOption($option);
+        $this->value = $referenceNr;
     }
 }

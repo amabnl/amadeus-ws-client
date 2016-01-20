@@ -20,43 +20,42 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
-
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\DynamicOutputOption;
-use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\StatusDetails;
+namespace Amadeus\Client\Struct\Offer;
 
 /**
- * Structure class for representing the PNR_RetrieveAndDisplay request message
+ * PricingRecordId
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RetrieveAndDisplay extends BaseWsMessage
+class PricingRecordId
 {
     /**
-     * @var ReservationInfo
+     * PQR	Product Quotation Record Reference
+     *
+     * @var string
      */
-    public $reservationInfo;
+    const REFTYPE_PRODQUOTREC = "PQR";
 
     /**
-     * @var RetrieveAndDisplay\PersonalFacts
+     * Code giving specific meaning to a reference segment or a reference number.
+     *
+     * @var string
      */
-    public $personalFacts;
+    public $referenceType = self::REFTYPE_PRODQUOTREC;
 
     /**
-     * @var RetrieveAndDisplay\DynamicOutputOption
+     * Identification number.
+     *
+     * @var string
      */
-    public $dynamicOutputOption;
+    public $uniqueReference;
 
     /**
-     * @param string $recordLocator
-     * @param string $option
+     * @param string $referenceNr
      */
-    public function __construct($recordLocator, $option = StatusDetails::OPTION_ALL)
+    public function __construct($referenceNr)
     {
-        $this->reservationInfo = new ReservationInfo($recordLocator);
-
-        $this->dynamicOutputOption = new DynamicOutputOption($option);
+        $this->uniqueReference = $referenceNr;
     }
 }

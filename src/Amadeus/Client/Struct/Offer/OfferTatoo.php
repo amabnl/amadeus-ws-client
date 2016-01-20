@@ -20,43 +20,49 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
-
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\DynamicOutputOption;
-use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\StatusDetails;
+namespace Amadeus\Client\Struct\Offer;
 
 /**
- * Structure class for representing the PNR_RetrieveAndDisplay request message
+ * OfferTatoo
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RetrieveAndDisplay extends BaseWsMessage
+class OfferTatoo
 {
     /**
-     * @var ReservationInfo
+     * AIR	Air segment
      */
-    public $reservationInfo;
+    const SEGMENT_AIR = "AIR";
+    /**
+     * HHL	Automated Hotel auxiliary segment
+     */
+    const SEGMENT_HOTEL = "HHL";
+    /**
+     * CCR	Automated Car auxiliary segment
+     */
+    const SEGMENT_CAR = "CCR";
 
     /**
-     * @var RetrieveAndDisplay\PersonalFacts
+     * @var Reference
      */
-    public $personalFacts;
+    public $reference;
 
     /**
-     * @var RetrieveAndDisplay\DynamicOutputOption
+     * self::SEGMENT_*
+     *
+     * @var string
      */
-    public $dynamicOutputOption;
+    public $segmentName;
 
     /**
-     * @param string $recordLocator
-     * @param string $option
+     * @param int $referenceNr
+     * @param string $segmentName
      */
-    public function __construct($recordLocator, $option = StatusDetails::OPTION_ALL)
+    public function __construct($referenceNr, $segmentName = self::SEGMENT_AIR)
     {
-        $this->reservationInfo = new ReservationInfo($recordLocator);
+        $this->reference = new Reference($referenceNr);
 
-        $this->dynamicOutputOption = new DynamicOutputOption($option);
+        $this->segmentName = $segmentName;
     }
 }

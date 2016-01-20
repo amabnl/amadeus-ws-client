@@ -20,26 +20,25 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\Struct\Pnr\RetrieveAndDisplay;
 
 /**
- * Class Reservation
+ * Class PersonalFacts
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Pnr\RetrieveAndDisplay
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class PersonalFacts
 {
     /**
-     * @var string
+     * @todo implement this structure
+     * @var mixed
      */
-    public $controlNumber;
+    public $name;
 
     /**
-     * @param string|null $recordLocator
+     * @todo implement this structure
+     * @var mixed
      */
-    public function __construct($recordLocator = null)
-    {
-        $this->controlNumber = $recordLocator;
-    }
+    public $ticket;
 }
