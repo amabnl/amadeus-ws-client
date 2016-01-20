@@ -127,9 +127,11 @@ class Base implements RequestCreatorInterface
      */
     protected function createQueuePlacePnr(QueuePlacePnrOptions $params)
     {
-        $req = new Struct\Queue\PlacePnr();
-
-        //TODO
+        $req = new Struct\Queue\PlacePnr(
+            $params->recordLocator,
+            $params->sourceOfficeId,
+            $params->targetQueue
+        );
 
         return $req;
     }
@@ -155,9 +157,12 @@ class Base implements RequestCreatorInterface
      */
     protected function createQueueMoveItem(QueueMoveItemOptions $params)
     {
-        $req = new Struct\Queue\MoveItem();
-
-        //TODO
+        $req = new Struct\Queue\MoveItem(
+            $params->recordLocator,
+            $params->officeId,
+            $params->sourceQueue,
+            $params->destinationQueue
+        );
 
         return $req;
     }

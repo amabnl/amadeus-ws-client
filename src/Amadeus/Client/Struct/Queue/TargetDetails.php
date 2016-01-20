@@ -54,15 +54,18 @@ class TargetDetails
      * @param Queue $targetQueue
      * @param string[] $recordLocators
      * @param string $originatorOffice
-     * @throws \InvalidArgumentException when trying to use remove PNR from different office than originator office
      */
     public function __construct($targetQueue, $recordLocators, $originatorOffice)
     {
-        $sourceType = (!is_null($targetQueue->officeId)) ?
-            SourceType::SOURCETYPE_OFFICE_SPECIFIED :
-            SourceType::SOURCETYPE_SAME_AS_ORIGINATOR;
+        $theRealOffice = $originatorOffice;
+        $sourceType = SourceType::SOURCETYPE_SAME_AS_ORIGINATOR;
 
-        $this->targetOffice = new TargetOffice($sourceType, $originatorOffice, $targetQueue->officeId);
+        if (!is_null($targetQueue->officeId) && $targetQueue->officeId != $originatorOffice) {
+            $sourceType = SourceType::SOURCETYPE_OFFICE_SPECIFIED;
+            $theRealOffice = $targetQueue->officeId;
+        }
+
+        $this->targetOffice = new TargetOffice($sourceType, $theRealOffice, $targetQueue->officeId);
 
         $this->queueNumber = new QueueNumber($targetQueue->queue);
         $this->categoryDetails = new CategoryDetails($targetQueue->category);

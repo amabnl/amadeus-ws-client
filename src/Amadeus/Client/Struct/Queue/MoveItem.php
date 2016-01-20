@@ -26,12 +26,12 @@ use Amadeus\Client\RequestOptions\Queue;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * Structure class for representing the Queue_PlacePnr request message
+ * Class MoveItem
  *
  * @package Amadeus\Client\Struct\Queue
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PlacePnr extends BaseWsMessage
+class MoveItem extends BaseWsMessage
 {
     /**
      * @var PlacementOption
@@ -42,20 +42,31 @@ class PlacePnr extends BaseWsMessage
      */
     public $targetDetails = [];
     /**
+     * @var MessageText
+     */
+    public $messageText;
+    /**
      * @var RecordLocator
      */
     public $recordLocator;
+    /**
+     * @var NumberOfPnrs
+     */
+    public $numberOfPNRs;
+
 
     /**
      * @param string $recordLocator
-     * @param string $sourceOfficeId
-     * @param Queue $targetQueue
+     * @param string $sourceOffice
+     * @param Queue $sourceQueue
+     * @param Queue $destinationQueue
      */
-    public function __construct($recordLocator, $sourceOfficeId, $targetQueue)
+    public function __construct($recordLocator, $sourceOffice, $sourceQueue, $destinationQueue)
     {
-        $this->placementOption = new PlacementOption(SelectionDetails::PLACEPNR_OPTION_QUEUE);
+        $this->placementOption = new PlacementOption(SelectionDetails::MOVE_OPTION_COPY_QUEUE_REMOVE);
 
-        $this->targetDetails[] = new TargetDetails($targetQueue, [], $sourceOfficeId);
+        $this->targetDetails[] = new TargetDetails($sourceQueue, [], $sourceOffice);
+        $this->targetDetails[] = new TargetDetails($destinationQueue, [], $sourceOffice);
 
         $this->recordLocator = new RecordLocator($recordLocator);
     }

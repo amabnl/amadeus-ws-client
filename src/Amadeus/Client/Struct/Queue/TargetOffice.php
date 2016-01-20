@@ -42,16 +42,9 @@ class TargetOffice
      * @param int $sourceType
      * @param string $originatorOffice
      * @param string|null $specificOffice
-     * @throws \InvalidArgumentException when trying to use remove PNR from different office than originator office
      */
     public function __construct($sourceType, $originatorOffice, $specificOffice = null)
     {
-        if ($sourceType === SourceType::SOURCETYPE_OFFICE_SPECIFIED) {
-            throw new \InvalidArgumentException(
-                __NAMESPACE__.'\SourceType::SOURCETYPE_OFFICE_SPECIFIED is not yet implemented'
-            );
-        }
-
         $this->sourceType = new SourceType($sourceType);
 
         $this->originatorDetails = new OriginatorDetails($originatorOffice);

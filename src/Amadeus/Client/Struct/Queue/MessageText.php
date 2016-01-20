@@ -22,41 +22,22 @@
 
 namespace Amadeus\Client\Struct\Queue;
 
-use Amadeus\Client\RequestOptions\Queue;
-use Amadeus\Client\Struct\BaseWsMessage;
-
 /**
- * Structure class for representing the Queue_PlacePnr request message
+ * Class MessageText
  *
  * @package Amadeus\Client\Struct\Queue
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PlacePnr extends BaseWsMessage
+class MessageText
 {
     /**
-     * @var PlacementOption
+     * @var mixed
+     * @todo expand the structure freeTextDetails when needed.
      */
-    public $placementOption;
-    /**
-     * @var TargetDetails[]
-     */
-    public $targetDetails = [];
-    /**
-     * @var RecordLocator
-     */
-    public $recordLocator;
+    public $freeTextDetails;
 
     /**
-     * @param string $recordLocator
-     * @param string $sourceOfficeId
-     * @param Queue $targetQueue
+     * @var string[]
      */
-    public function __construct($recordLocator, $sourceOfficeId, $targetQueue)
-    {
-        $this->placementOption = new PlacementOption(SelectionDetails::PLACEPNR_OPTION_QUEUE);
-
-        $this->targetDetails[] = new TargetDetails($targetQueue, [], $sourceOfficeId);
-
-        $this->recordLocator = new RecordLocator($recordLocator);
-    }
+    public $freeText = [];
 }
