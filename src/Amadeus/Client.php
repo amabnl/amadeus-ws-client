@@ -37,6 +37,7 @@ use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
 use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
 use Amadeus\Client\RequestOptions\QueueRemoveItemOptions;
 use Amadeus\Client\Session\Handler\HandlerFactory;
+use Amadeus\Client\RequestCreator\Factory as RequestCreatorFactory;
 use Amadeus\Client\Session\Handler\HandlerInterface;
 
 /**
@@ -464,7 +465,7 @@ class Client
         if ($requestCreator instanceof RequestCreatorInterface) {
             $newRequestCreator = $requestCreator;
         } else {
-            $newRequestCreator = new Client\RequestCreator\Base($params, $libIdentifier);
+            $newRequestCreator = RequestCreatorFactory::createRequestCreator($params, $libIdentifier);
         }
 
         return $newRequestCreator;
