@@ -20,31 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Class Reservation
+ * MiscellaneousRemark
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class MiscellaneousRemark
 {
     /**
-     * @var string
+     * @var Remarks
      */
-    public $companyId;
+    public $remarks;
 
     /**
-     * @var string
+     * @param string $text The remark body
+     * @param string $type Remarks::TYPE_*
+     * @param string $cat 1 character category indicator
      */
-    public $controlNumber;
-
-    /**
-     * @param string|null $recordLocator
-     */
-    public function __construct($recordLocator = null)
+    public function __construct($text, $type = null, $cat = null)
     {
-        $this->controlNumber = $recordLocator;
+        $this->remarks = new Remarks($text, $type, $cat);
     }
 }

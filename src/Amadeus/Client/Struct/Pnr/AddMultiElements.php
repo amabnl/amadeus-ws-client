@@ -22,7 +22,14 @@
 
 namespace Amadeus\Client\Struct\Pnr;
 
+use Amadeus\Client\RequestOptions\Pnr\Element;
+use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
+use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\InvalidArgumentException;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsIndiv;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster;
 
 /**
  * Structure class for representing the PNR_AddMultiElements request message
@@ -32,5 +39,124 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class AddMultiElements extends BaseWsMessage
 {
+    /**
+     * @var AddMultiElements\ReservationInfo
+     */
+    public $reservationInfo;
+    /**
+     * @var AddMultiElements\PnrActions
+     */
+    public $pnrActions;
+    /**
+     * @var array
+     * @todo expand this structure
+     */
+    public $travellerInfo = [];
+    /**
+     * @var array
+     * @todo expand this structure
+     */
+    public $originDestinationDetails = [];
+    /**
+     * @var AddMultiElements\DataElementsMaster
+     */
+    public $dataElementsMaster;
 
+    /**
+     * Create PNR_AddMultiElements object
+     */
+    public function __construct(RequestOptionsInterface $params = null)
+    {
+        if (!is_null($params)) {
+            if ($params instanceof PnrCreatePnrOptions) {
+                $this->loadCreatePnr($params);
+            }
+        }
+    }
+
+    /**
+     * Make PNR_AddMultiElements structure from a PnrCreatePnrOptions input.
+     *
+     * @throws InvalidArgumentException When invalid input is provided
+     * @param PnrCreatePnrOptions $params
+     */
+    protected function loadCreatePnr(PnrCreatePnrOptions $params)
+    {
+        $this->pnrActions = new AddMultiElements\PnrActions(
+            $params->actionCode
+        );
+
+        if ($params->travellerGroup !== null) {
+            $this->addTravellerGroup($params->travellerGroup);
+        } else {
+            $this->addTravellers($params->travellers);
+        }
+
+
+        $this->addSegments($params->tripSegments);
+
+        $this->addElements(
+            $params->elements, $params->receivedFrom
+        );
+    }
+
+    /**
+     * @param Element[] $elements
+     * @param string|null $receivedFromString
+     */
+    protected function addElements($elements, $receivedFromString = null)
+    {
+        if ($this->dataElementsMaster === null) {
+            $this->dataElementsMaster = new DataElementsMaster();
+        }
+
+        foreach ($elements as $element) {
+            if ($element instanceof Element) {
+                $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement($element);
+            }
+        }
+
+        if ($receivedFromString !== null) {
+            $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(new ReceivedFrom($receivedFromString));
+        }
+    }
+
+    /**
+     * @param Element $element
+     * @throws InvalidArgumentException
+     * @return DataElementsIndiv
+     */
+    protected function createElement($element)
+    {
+        $createdElement = null;
+
+        $reflect = new \ReflectionClass($element);
+        $elementType = $reflect->getShortName();
+
+        switch ($elementType) {
+            case 'Contact':
+                //TODO
+                break;
+            case 'FormOfPayment':
+                //TODO
+                break;
+            case 'MiscellaneousRemark':
+                //TODO
+                break;
+            case 'ReceivedFrom':
+                //TODO
+                break;
+            case 'ServiceRequest':
+                //TODO
+                break;
+            case 'Ticketing':
+                //TODO
+                break;
+            default:
+                throw new InvalidArgumentException('Element type ' . $elementType . 'is not supported');
+
+        }
+
+        return $createdElement;
+    }
 }

@@ -31,4 +31,5 @@ namespace Amadeus\Client\RequestOptions;
 class PnrAddMultiElementsOptions extends Base
 {
 
+
 }

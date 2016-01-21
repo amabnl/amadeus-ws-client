@@ -40,7 +40,7 @@ class PnrRetrieveAndDisplayOptions extends Base
     public $recordlocator;
 
     /**
-     * 'A', 'O' or 'P' (all, only offers, only PNR)
+     * 'ALL', 'OFR' or 'PNR' (all, only offers, only PNR)
      *
      * @var string
      */

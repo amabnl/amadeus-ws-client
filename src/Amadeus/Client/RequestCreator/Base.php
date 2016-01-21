@@ -22,11 +22,14 @@
 
 namespace Amadeus\Client\RequestCreator;
 
+use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
+use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveRequestOptions;
 use Amadeus\Client\RequestOptions\QueueListOptions;
@@ -45,8 +48,22 @@ use Amadeus\Client\Struct;
 class Base implements RequestCreatorInterface
 {
     /**
+     * @var RequestCreatorParams
+     */
+    protected $params;
+
+    /**
+     * @param $params
+     */
+    public function __construct(RequestCreatorParams $params)
+    {
+        $this->params = $params;
+    }
+
+    /**
      * @param string $messageName
      * @param RequestOptionsInterface $params
+     * @throws Struct\InvalidArgumentException When invalid input is detected during message creation.
      * @return mixed the created request
      */
     public function createRequest($messageName, RequestOptionsInterface $params)
@@ -87,19 +104,17 @@ class Base implements RequestCreatorInterface
      */
     protected function createPnrRetrieveAndDisplay(PnrRetrieveAndDisplayOptions $params)
     {
-        /**
-         * Translate Options value to the value needed to construct the message
-         */
-        $wsClientOptionTranslation = [
-            'A' => Struct\Pnr\RetrieveAndDisplay\StatusDetails::OPTION_ALL,
-            'O' => Struct\Pnr\RetrieveAndDisplay\StatusDetails::OPTION_OFFERS,
-            'P' => Struct\Pnr\RetrieveAndDisplay\StatusDetails::OPTION_PNR
-        ];
-
         $req = new Struct\Pnr\RetrieveAndDisplay(
             $params->recordlocator,
-            $wsClientOptionTranslation[$params->retrieveOption]
+            $params->retrieveOption
         );
+
+        return $req;
+    }
+
+    protected function createPnrCreatePnr(PnrCreatePnrOptions $params)
+    {
+        $req = $this->makeAddMultiElementsForPnrCreate($params);
 
         return $req;
     }
@@ -113,8 +128,9 @@ class Base implements RequestCreatorInterface
         $req = new Struct\Pnr\AddMultiElements();
 
         //TODO
+        throw new \RuntimeException(__METHOD__ . "() IS NOT YET IMPLEMENTED");
 
-        return $req;
+        //return $req;
     }
 
     /**
@@ -224,6 +240,27 @@ class Base implements RequestCreatorInterface
         $req = new Struct\Offer\ConfirmCar();
 
         //TODO
+
+        return $req;
+    }
+
+    /**
+     * @param PnrCreatePnrOptions $params
+     * @return Struct\Pnr\AddMultiElements
+     */
+    protected function makeAddMultiElementsForPnrCreate($params)
+    {
+        $params->receivedFrom = $this->params->receivedFrom;
+
+        $req = new Struct\Pnr\AddMultiElements(
+            $params
+        );
+
+        //TODO
+
+        /*$receivedFrom = new ReceivedFrom(
+            $this->params->receivedFrom
+        );*/
 
         return $req;
     }

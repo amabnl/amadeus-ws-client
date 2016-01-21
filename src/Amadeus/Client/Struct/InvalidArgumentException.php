@@ -20,31 +20,22 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\Struct;
 
 /**
- * Class Reservation
+ * InvalidArgumentException
  *
- * @package Amadeus\Client\Struct\Pnr
+ * This exception will be thrown when the Request we are trying to build cannot be built because of invalid
+ * input provided.
+ *
+ * For example: an office ID which isn't valid, too many travellers in a PNR, ...
+ * For a successful certification process, it's important that we do not call Amadeus web services messages
+ * with data that we can already know is incorrect.
+ *
+ * @package Amadeus\Client\Struct
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class InvalidArgumentException extends \InvalidArgumentException
 {
-    /**
-     * @var string
-     */
-    public $companyId;
 
-    /**
-     * @var string
-     */
-    public $controlNumber;
-
-    /**
-     * @param string|null $recordLocator
-     */
-    public function __construct($recordLocator = null)
-    {
-        $this->controlNumber = $recordLocator;
-    }
 }

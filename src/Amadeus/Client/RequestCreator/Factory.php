@@ -23,24 +23,42 @@
 namespace Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\Params\RequestCreatorParams;
-use Amadeus\Client\RequestOptions\RequestOptionsInterface;
-use Amadeus\Client\Struct\InvalidArgumentException;
 
 /**
- * RequestCreatorInterface is an interface for creating requests for various messages based on certain parameters
+ * Factory
  *
  * @package Amadeus\Client\RequestCreator
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface RequestCreatorInterface
+class Factory
 {
-    public function __construct(RequestCreatorParams $params);
+    /**
+     * @param RequestCreatorParams $params
+     * @param string $libIdentifier
+     * @return RequestCreatorInterface
+     * @throws \InvalidArgumentException when the parameters to create the handler do not make sense.
+     */
+    public static function createRequestCreator($params, $libIdentifier)
+    {
+        $theRequestCreator = null;
+
+        $params->receivedFrom = self::makeReceivedFrom(
+            $params->receivedFrom,
+            $libIdentifier
+        );
+
+        $theRequestCreator = new Base($params);
+
+        return $theRequestCreator;
+    }
 
     /**
-     * @param string $messageName
-     * @param RequestOptionsInterface $params
-     * @throws InvalidArgumentException
-     * @return mixed
+     * @param string $original
+     * @param string $libIdentifier
+     * @return string
      */
-    public function createRequest($messageName, RequestOptionsInterface $params);
+    protected static function makeReceivedFrom($original, $libIdentifier)
+    {
+        return $original . " : " . $libIdentifier;
+    }
 }

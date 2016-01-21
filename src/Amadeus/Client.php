@@ -94,11 +94,14 @@ class Client
      */
     public function __construct($params)
     {
-        $this->requestCreator = $this->loadRequestCreator($params->requestCreator);
+        $this->requestCreator = $this->loadRequestCreator(
+            $params->requestCreator,
+            $params->requestCreatorParams,
+            self::receivedFromIdentifier . "-" .self::version
+        );
         $this->sessionHandler = $this->loadSessionHandler(
             $params->sessionHandler,
-            $params->sessionHandlerParams,
-            self::receivedFromIdentifier . "-" .self::version
+            $params->sessionHandlerParams
         );
     }
 
@@ -134,10 +137,33 @@ class Client
     }
 
     /**
+     * Create a PNR using PNR_AddMultiElements
+     *
+     * @param PnrCreatePnrOptions $options
+     * @param null $messageOptions
+     */
+    public function pnrCreatePnr($options, $messageOptions = null)
+    {
+        if (is_null($messageOptions)) {
+            $messageOptions = $this->makeMessageOptions(true);
+        }
+
+        return $this->sessionHandler->sendMessage(
+            'PNR_AddMultiElements',
+            $this->requestCreator->createRequest(
+                'pnrCreatePnr',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
      * PNR_AddMultiElements - Create a new PNR or update an existing PNR.
      *
      * https://webservices.amadeus.com/extranet/viewService.do?id=25&flavourId=1&menuId=functional
      *
+     * @todo implement function.
      * @param PnrAddMultiElementsOptions $options
      * @param array $messageOptions
      * @return mixed
@@ -406,17 +432,16 @@ class Client
      *
      * @param HandlerInterface|null $sessionHandler
      * @param Params\SessionHandlerParams $params
-     * @param string $libIdentifier Library identifier & version string (for Received From)
      * @return HandlerInterface
      */
-    protected function loadSessionHandler($sessionHandler, $params, $libIdentifier)
+    protected function loadSessionHandler($sessionHandler, $params)
     {
         $newSessionHandler = null;
 
         if ($sessionHandler instanceof HandlerInterface) {
             $newSessionHandler = $sessionHandler;
         } else {
-            $newSessionHandler = HandlerFactory::createHandler($params, $libIdentifier);
+            $newSessionHandler = HandlerFactory::createHandler($params);
         }
 
         return $newSessionHandler;
@@ -428,17 +453,18 @@ class Client
      * A request creator is responsible for generating the correct request to send.
      *
      * @param RequestCreatorInterface|null $requestCreator
+     * @param string $libIdentifier Library identifier & version string (for Received From)
      * @return RequestCreatorInterface
      * @throws \RuntimeException
      */
-    protected function loadRequestCreator($requestCreator)
+    protected function loadRequestCreator($requestCreator, $params, $libIdentifier)
     {
         $newRequestCreator = null;
 
         if ($requestCreator instanceof RequestCreatorInterface) {
             $newRequestCreator = $requestCreator;
         } else {
-            $newRequestCreator = new Client\RequestCreator\Base();
+            $newRequestCreator = new Client\RequestCreator\Base($params, $libIdentifier);
         }
 
         return $newRequestCreator;

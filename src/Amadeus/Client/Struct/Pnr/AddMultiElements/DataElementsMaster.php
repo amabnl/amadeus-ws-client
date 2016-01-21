@@ -20,31 +20,25 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Class Reservation
+ * DataElementsMaster
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class DataElementsMaster
 {
     /**
-     * @var string
+     * [DUMMY SEGMENT (Ref: DUM IA 97.2.3 (QUE))]
+     *
+     * @var mixed
      */
-    public $companyId;
-
+    public $marker1 = null;
     /**
-     * @var string
+     * @var DataElementsIndiv[]
+     *
      */
-    public $controlNumber;
-
-    /**
-     * @param string|null $recordLocator
-     */
-    public function __construct($recordLocator = null)
-    {
-        $this->controlNumber = $recordLocator;
-    }
+    public $dataElementsIndiv = [];
 }

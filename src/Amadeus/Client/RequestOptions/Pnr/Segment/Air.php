@@ -20,31 +20,17 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\RequestOptions\Pnr\Segment;
+
+use Amadeus\Client\RequestOptions\Pnr\Segment;
 
 /**
- * Class Reservation
+ * Air
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\RequestOptions\Pnr\Segment
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class Air extends Segment
 {
-    /**
-     * @var string
-     */
-    public $companyId;
-
-    /**
-     * @var string
-     */
-    public $controlNumber;
-
-    /**
-     * @param string|null $recordLocator
-     */
-    public function __construct($recordLocator = null)
-    {
-        $this->controlNumber = $recordLocator;
-    }
+    //TODO
 }

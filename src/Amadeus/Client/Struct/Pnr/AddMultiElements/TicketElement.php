@@ -20,31 +20,34 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Class Reservation
+ * TicketElement
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class TicketElement
 {
     /**
      * @var string
      */
-    public $companyId;
-
+    public $passengerType;
+    /**
+     * @var Ticket
+     */
+    public $ticket;
     /**
      * @var string
      */
-    public $controlNumber;
+    public $printOptions;
 
     /**
-     * @param string|null $recordLocator
+     * @param string $indicator
      */
-    public function __construct($recordLocator = null)
+    public function __construct($indicator)
     {
-        $this->controlNumber = $recordLocator;
+        $this->ticket = new Ticket($indicator);
     }
 }

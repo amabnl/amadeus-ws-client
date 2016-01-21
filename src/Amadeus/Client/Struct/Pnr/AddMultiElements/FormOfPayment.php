@@ -20,31 +20,23 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Class Reservation
+ * FormOfPayment
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class FormOfPayment
 {
-    /**
-     * @var string
-     */
-    public $companyId;
+    public $fop;
 
     /**
-     * @var string
+     * @param string $identification One of the constants Fop::IDENT_*
      */
-    public $controlNumber;
-
-    /**
-     * @param string|null $recordLocator
-     */
-    public function __construct($recordLocator = null)
+    public function __construct($identification = null)
     {
-        $this->controlNumber = $recordLocator;
+        $this->fop = new Fop($identification);
     }
 }

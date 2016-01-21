@@ -59,12 +59,6 @@ class SessionHandlerParams
      */
     public $stateful = true;
 
-    /**
-     * A custom "Received From" string - if not provided, will default to amabnl/amadeus-ws-client
-     *
-     * @var string
-     */
-    public $receivedFrom;
 
     /**
      * @var LoggerInterface

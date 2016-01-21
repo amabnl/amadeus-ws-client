@@ -20,31 +20,29 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\Params;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * Class Reservation
+ * RequestCreatorParams
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Params
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class RequestCreatorParams extends LoadParamsFromArray
 {
     /**
+     * The Originator Office ID is the Amadeus office ID with which we are signed in to the WS session.
+     *
      * @var string
      */
-    public $companyId;
+    public $originatorOfficeId;
 
     /**
+     * A custom "Received From" string - if not provided, will default to amabnl/amadeus-ws-client
+     *
      * @var string
      */
-    public $controlNumber;
-
-    /**
-     * @param string|null $recordLocator
-     */
-    public function __construct($recordLocator = null)
-    {
-        $this->controlNumber = $recordLocator;
-    }
+    public $receivedFrom;
 }

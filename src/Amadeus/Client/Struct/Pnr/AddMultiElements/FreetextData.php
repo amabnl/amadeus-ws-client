@@ -20,31 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Class Reservation
+ * FreetextData
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class FreetextData
 {
     /**
-     * @var string
+     * @var FreetextDetail
      */
-    public $companyId;
-
+    public $freetextDetail;
     /**
      * @var string
      */
-    public $controlNumber;
+    public $longFreetext;
 
     /**
-     * @param string|null $recordLocator
+     * @param string $freeText
      */
-    public function __construct($recordLocator = null)
+    public function __construct($freeText = null)
     {
-        $this->controlNumber = $recordLocator;
+        $this->longFreetext = $freeText;
+        $this->freetextDetail = new FreetextDetail();
     }
 }

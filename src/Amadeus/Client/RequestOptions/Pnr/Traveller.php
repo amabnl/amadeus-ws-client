@@ -20,31 +20,42 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr;
+namespace Amadeus\Client\RequestOptions\Pnr;
 
 /**
- * Class Reservation
+ * Traveller
  *
- * @package Amadeus\Client\Struct\Pnr
+ * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reservation
+class Traveller
 {
     /**
-     * @var string
+     * Unique sequence number for traveller
+     *
+     * @var int
      */
-    public $companyId;
+    public $number;
 
     /**
      * @var string
      */
-    public $controlNumber;
+    public $lastName;
 
     /**
-     * @param string|null $recordLocator
+     * @var \DateTime
      */
-    public function __construct($recordLocator = null)
-    {
-        $this->controlNumber = $recordLocator;
-    }
+    public $dateOfBirth;
+
+    /**
+     * @var bool
+     */
+    public $withInfant = false;
+
+    /**
+     * Passenger type
+     *
+     * @var string
+     */
+    public $type;
 }
