@@ -20,53 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr\Element;
-
-use Amadeus\Client\RequestOptions\Pnr\Element;
-use Amadeus\Client\RequestOptions\Queue;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Ticketing element
+ * DateOfBirth
  *
- * @package Amadeus\Client\RequestOptions\Pnr\Element
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Ticketing extends Element
+class DateOfBirth
 {
     /**
-     * Ticketing indicator for TK TL element
-     *
-     * @var string
+     * @var DateAndTimeDetails
      */
-    const TICKETMODE_TIMELIMIT = "TL";
-    /**
-     * Ticketing indicator for TK OK element
-     *
-     * @var string
-     */
-    const TICKETMODE_OK = "OK";
-    /**
-     * Ticketing indicator for TK XL element
-     *
-     * @var string
-     */
-    const TICKETMODE_CANCEL = "XL";
+    public $dateAndTimeDetails;
 
     /**
-     * self::TICKETMODE_*
-     *
-     * @var string
+     * @param string|null $birthDate
      */
-    public $ticketMode;
-
-    /**
-     * @var \DateTime
-     */
-    public $date;
-
-    /**
-     * @var Queue
-     */
-    public $ticketQueue;
-
+    public function __construct($birthDate = null)
+    {
+        if ($birthDate != null) {
+            $this->dateAndTimeDetails = new DateAndTimeDetails($birthDate);
+        }
+    }
 }

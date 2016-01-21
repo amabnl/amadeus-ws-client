@@ -22,57 +22,29 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
-use Amadeus\Client\RequestOptions;
-
 /**
- * TicketElement
+ * TravellerInformation
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TicketElement
+class TravellerInformation
 {
-    const PASSTYPE_PAX = "PAX";
-    const PASSTYPE_INF = "INF";
-    const PASSTYPE_INFWSEAT = "767";
-    const PASSTYPE_INFNOSEAT = "766";
+    /**
+     * @var Traveller
+     */
+    public $traveller;
+    /**
+     *
+     * @var Passenger[]
+     */
+    public $passenger = [];
 
     /**
-     * self::PASSTYPE_*
-     *
-     * 766	Infant without seat
-     * 767	Infant with seat
-     * C	CBBG - Cabin Baggage
-     * E	EXST - Extra Seat
-     * G	Group
-     * INF	Infant not occupying a seat
-     * MTH	Month
-     * PAX	Passenger
-     * YRS	Year
-     *
-     * @var string
+     * @param string $mainPassengerSurName
      */
-    public $passengerType;
-    /**
-     * @var Ticket
-     */
-    public $ticket;
-    /**
-     * @var string
-     */
-    public $printOptions;
-
-    /**
-     * @param RequestOptions\Pnr\Element\Ticketing $ticketOptions
-     */
-    public function __construct($ticketOptions)
+    public function __construct($mainPassengerSurName)
     {
-        $this->passengerType = self::PASSTYPE_PAX;
-
-        $this->ticket = new Ticket(
-            $ticketOptions->ticketMode,
-            $ticketOptions->date,
-            $ticketOptions->ticketQueue
-        );
+        $this->traveller = new Traveller($mainPassengerSurName);
     }
 }

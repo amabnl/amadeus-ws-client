@@ -23,51 +23,33 @@
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Reference
+ * ElementManagementPassenger
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reference
+class ElementManagementPassenger
 {
-    const QUAL_PASSENGER	= "PR";
+    const SEG_NAME = "NM";
 
-    const QUAL_PASSTAT		= "PT";
-
-    const QUAL_SEGTAT		= "ST";
-
-    const QUAL_OTHER        = "OT";
-
+    const SEG_GROUPNAME = "NG";
 
     /**
-     * Qualifiers:
-     * Value 	Description
-     * 001 	Customer identification number
-     * 002 	Corporate identification number
-     * D 	Dominant segment in a marriage
-     * N 	Non dominant segment in a marriage
-     * OT 	Other element tatoo reference number
-     * PR 	Passenger Client-request-message-defined ref. nbr
-     * PT 	Passenger tatoo reference number
-     * SR 	Segment Client-request-message-defined ref. nbr
-     * SS 	Segment Tatoo+SubTatoo reference number
-     * ST 	Segment Tatoo reference number
+     * @var Reference
+     */
+    public $reference;
+    /**
+     * self::SEG_*
      *
      * @var string
      */
-    public $qualifier;
-    /**
-     * @var string
-     */
-    public $number;
+    public $segmentName;
 
     /**
-     * @param string|null $qualifier
-     * @param string|null $number
+     * @param string $segmentName one of the defined constants SEG_* in this class
      */
-    public function __construct($qualifier = null, $number = null)
+    public function __construct($segmentName = null)
     {
-        $this->qualifier = $qualifier;
-        $this->number = $number;
+        $this->segmentName = $segmentName;
     }
 }

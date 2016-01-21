@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
+use Amadeus\Client\RequestOptions\Queue;
+
 /**
  * Ticket
  *
@@ -32,14 +34,22 @@ class Ticket
 {
     /**
      * Ticketing indicator for TK TL element
+     *
      * @var string
      */
     const TICK_IND_TL = "TL";
     /**
      * Ticketing indicator for TK OK element
+     *
      * @var string
      */
     const TICK_IND_OK = "OK";
+    /**
+     * Ticketing indicator for TK XL element
+     *
+     * @var string
+     */
+    const TICK_IND_XL = "XL";
 
     /**
      * @var string
@@ -81,9 +91,25 @@ class Ticket
 
     /**
      * @param string $indicator
+     * @param \DateTime $date
+     * @param Queue $queue
      */
-    public function __construct($indicator)
+    public function __construct($indicator, $date = null, $queue = null)
     {
         $this->indicator = $indicator;
+
+        if ($indicator !== self::TICK_IND_OK && $date instanceof \DateTime) {
+            //Set Ticket Datetime
+            $this->date = $date->format("dmy");
+
+            $tickTime = $date->format('Gis');
+            if ($tickTime !== "000000") {
+
+            }
+        }
+
+        if ($indicator === self::TICK_IND_TL && $queue instanceof Queue) {
+            //Set Ticket Queue
+        }
     }
 }

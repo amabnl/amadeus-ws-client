@@ -30,6 +30,10 @@ use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\InvalidArgumentException;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsIndiv;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementData;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\FreetextData;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\MiscellaneousRemark;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\TicketElement;
 
 /**
  * Structure class for representing the PNR_AddMultiElements request message
@@ -86,6 +90,8 @@ class AddMultiElements extends BaseWsMessage
             $params->actionCode
         );
 
+        $tatooCounter = 0;
+
         if ($params->travellerGroup !== null) {
             $this->addTravellerGroup($params->travellerGroup);
         } else {
@@ -93,18 +99,21 @@ class AddMultiElements extends BaseWsMessage
         }
 
 
-        $this->addSegments($params->tripSegments);
+        $this->addSegments($params->tripSegments, $tatooCounter);
 
         $this->addElements(
-            $params->elements, $params->receivedFrom
+            $params->elements,
+            $tatooCounter,
+            $params->receivedFrom
         );
     }
 
     /**
      * @param Element[] $elements
+     * @param int $tatooCounter (BYREF)
      * @param string|null $receivedFromString
      */
-    protected function addElements($elements, $receivedFromString = null)
+    protected function addElements($elements, &$tatooCounter, $receivedFromString = null)
     {
         if ($this->dataElementsMaster === null) {
             $this->dataElementsMaster = new DataElementsMaster();
@@ -112,49 +121,64 @@ class AddMultiElements extends BaseWsMessage
 
         foreach ($elements as $element) {
             if ($element instanceof Element) {
-                $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement($element);
+                $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement($element, $tatooCounter);
             }
         }
 
         if ($receivedFromString !== null) {
-            $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(new ReceivedFrom($receivedFromString));
+            $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(new ReceivedFrom($receivedFromString), $tatooCounter);
         }
     }
 
     /**
      * @param Element $element
+     * @param int $tatooCounter (BYREF)
      * @throws InvalidArgumentException
      * @return DataElementsIndiv
      */
-    protected function createElement($element)
+    protected function createElement($element, &$tatooCounter)
     {
         $createdElement = null;
+
+        $tatooCounter++;
 
         $reflect = new \ReflectionClass($element);
         $elementType = $reflect->getShortName();
 
         switch ($elementType) {
             case 'Contact':
+                /** @var Element\Contact $element */
                 //TODO
                 break;
             case 'FormOfPayment':
+                /** @var Element\FormOfPayment $element */
                 //TODO
                 break;
             case 'MiscellaneousRemark':
-                //TODO
+                /** @var Element\MiscellaneousRemark $element */
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_GENERAL_REMARK);
+                $createdElement->miscellaneousRemark = new MiscellaneousRemark(
+                    $element->text,
+                    $element->type,
+                    $element->category
+                );
                 break;
             case 'ReceivedFrom':
-                //TODO
+                /** @var Element\ReceivedFrom $element */
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_RECEIVE_FROM);
+                $createdElement->freetextData = new FreetextData($element->receivedFrom);
                 break;
             case 'ServiceRequest':
+                /** @var Element\ServiceRequest $element */
                 //TODO
                 break;
             case 'Ticketing':
-                //TODO
+                /** @var Element\Ticketing $element */
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_TICKETING_ELEMENT);
+                $createdElement->ticketElement = new TicketElement($element);
                 break;
             default:
                 throw new InvalidArgumentException('Element type ' . $elementType . 'is not supported');
-
         }
 
         return $createdElement;

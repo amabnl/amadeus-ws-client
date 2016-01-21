@@ -32,5 +32,69 @@ use Amadeus\Client\RequestOptions\Pnr\Element;
  */
 class MiscellaneousRemark extends Element
 {
+    /**
+     * Remark type "Confidential remark"
+     *
+     * See documentation Amadeus Core webservices
+     * Functional documentation PNR_AddMultiElements
+     * [Remark Type, coded codesets (Ref: 069C 1A 98.1.3)]
+     * @var string
+     */
+    const TYPE_CONFIDENTIAL = "RC";
+    /**
+     * Remark type "Invoice remark"
+     *
+     * See documentation Amadeus Core webservices
+     * Functional documentation PNR_AddMultiElements
+     * [Remark Type, coded codesets (Ref: 069C 1A 98.1.3)]
+     * @var string
+     */
+    const TYPE_INVOICE = "RI";
+    /**
+     * Remark type "Miscellaneous remark"
+     *
+     * See documentation Amadeus Core webservices
+     * Functional documentation PNR_AddMultiElements
+     * [Remark Type, coded codesets (Ref: 069C 1A 98.1.3)]
+     * @var string
+     */
+    const TYPE_MISCELLANEOUS = "RM";
+    /**
+     * Remark type "Quality control remark"
+     *
+     * See documentation Amadeus Core webservices
+     * Functional documentation PNR_AddMultiElements
+     * [Remark Type, coded codesets (Ref: 069C 1A 98.1.3)]
+     * @var string
+     */
+    const TYPE_QUALCONTROL = "RQ";
+    /**
+     * Remark type "Corporate remark"
+     *
+     * See documentation Amadeus Core webservices
+     * Functional documentation PNR_AddMultiElements
+     * [Remark Type, coded codesets (Ref: 069C 1A 98.1.3)]
+     * @var string
+     */
+    const TYPE_CORP = "RX";
 
+    /**
+     * Remark text
+     *
+     * @var string
+     */
+    public $text;
+
+    /**
+     * Remark type
+     * @var string
+     */
+    public $type = self::TYPE_MISCELLANEOUS;
+
+    /**
+     * 1-character Category indicator
+     *
+     * @var string
+     */
+    public $category;
 }

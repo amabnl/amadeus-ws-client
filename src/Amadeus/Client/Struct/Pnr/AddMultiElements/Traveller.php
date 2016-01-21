@@ -23,51 +23,43 @@
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Reference
+ * Traveller
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reference
+class Traveller
 {
-    const QUAL_PASSENGER	= "PR";
-
-    const QUAL_PASSTAT		= "PT";
-
-    const QUAL_SEGTAT		= "ST";
-
-    const QUAL_OTHER        = "OT";
-
-
     /**
-     * Qualifiers:
-     * Value 	Description
-     * 001 	Customer identification number
-     * 002 	Corporate identification number
-     * D 	Dominant segment in a marriage
-     * N 	Non dominant segment in a marriage
-     * OT 	Other element tatoo reference number
-     * PR 	Passenger Client-request-message-defined ref. nbr
-     * PT 	Passenger tatoo reference number
-     * SR 	Segment Client-request-message-defined ref. nbr
-     * SS 	Segment Tatoo+SubTatoo reference number
-     * ST 	Segment Tatoo reference number
+     * @var string
+     */
+    public $surname;
+    /**
+     * Traveller Qualifiers:
+     * - 766 	Infant without seat
+     * - 767 	Infant with seat
+     * - C 	CBBG - Cabin Baggage
+     * - COR 	CORPORATE NAME
+     * - E 	EXST - Extra Seat
+     * - G 	Group
+     * - INF 	Infant not occupying a seat
+     * - MTH 	Month
+     * - PAX 	Passenger
+     * - YRS 	Year
      *
      * @var string
      */
     public $qualifier;
     /**
-     * @var string
+     * @var int
      */
-    public $number;
+    public $quantity;
 
     /**
-     * @param string|null $qualifier
-     * @param string|null $number
+     * @param string $surName
      */
-    public function __construct($qualifier = null, $number = null)
+    public function __construct($surName)
     {
-        $this->qualifier = $qualifier;
-        $this->number = $number;
+        $this->surname = $surName;
     }
 }

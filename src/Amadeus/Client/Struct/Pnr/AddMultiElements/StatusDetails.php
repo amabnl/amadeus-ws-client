@@ -22,57 +22,33 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
-use Amadeus\Client\RequestOptions;
-
 /**
- * TicketElement
+ * StatusDetails
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TicketElement
+class StatusDetails
 {
-    const PASSTYPE_PAX = "PAX";
-    const PASSTYPE_INF = "INF";
-    const PASSTYPE_INFWSEAT = "767";
-    const PASSTYPE_INFNOSEAT = "766";
+    /**
+     * RX	Corporate Security Option
+     */
+    const IND_CORPSECOPT = "RX";
+    /**
+     * SV	Service Fee
+     */
+    const IND_SERVICEFEE = "SV";
+    /**
+     * TS	Timestamp Option
+     */
+    const IND_TIMESTAMPOPT = "TS";
+    /**
+     * TX	Timestamp Inhibition
+     */
+    const IND_TIMESTAMPINHIB = "TX";
 
-    /**
-     * self::PASSTYPE_*
-     *
-     * 766	Infant without seat
-     * 767	Infant with seat
-     * C	CBBG - Cabin Baggage
-     * E	EXST - Extra Seat
-     * G	Group
-     * INF	Infant not occupying a seat
-     * MTH	Month
-     * PAX	Passenger
-     * YRS	Year
-     *
-     * @var string
-     */
-    public $passengerType;
-    /**
-     * @var Ticket
-     */
-    public $ticket;
     /**
      * @var string
      */
-    public $printOptions;
-
-    /**
-     * @param RequestOptions\Pnr\Element\Ticketing $ticketOptions
-     */
-    public function __construct($ticketOptions)
-    {
-        $this->passengerType = self::PASSTYPE_PAX;
-
-        $this->ticket = new Ticket(
-            $ticketOptions->ticketMode,
-            $ticketOptions->date,
-            $ticketOptions->ticketQueue
-        );
-    }
+    public $indicator;
 }

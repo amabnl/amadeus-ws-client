@@ -25,18 +25,24 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 /**
  * DataElementsIndiv
  *
+ * all the others segments
+ *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class DataElementsIndiv
 {
     /**
+     * To specify the PNR segments/elements references and action to apply
+     *
      * @var ElementManagementData
      */
     public $elementManagementData;
     public $pnrSecurity;
     public $accounting;
     /**
+     * To specify different kinds of remarks
+     *
      * @var MiscellaneousRemark
      */
     public $miscellaneousRemark;
@@ -44,10 +50,14 @@ class DataElementsIndiv
     public $dateAndTimeInformation;
     public $tourCode;
     /**
+     * To specify an Amadeus PNR Ticket element
+     *
      * @var TicketElement
      */
     public $ticketElement;
     /**
+     * To provide free form or coded long text information.
+     *
      * @var FreetextData
      */
     public $freetextData;
@@ -65,15 +75,24 @@ class DataElementsIndiv
     public $commission;
     public $originalIssue;
     /**
+     * To convey details describing the form of payment
+     *
      * @var FormOfPayment
      */
     public $formOfPayment;
     /**
-     * @var array
+     * To convey additional details of the form of payment
+     *
+     * @var FopExtension[]
      */
     public $fopExtension = [];
     /**
-     * @var array
+     * To convey:
+     * - The FOP service details
+     * - The Corporate Security option for Remarks
+     * - The Timestamp indicator for Remarks
+     *
+     * @var ServiceDetails[]
      */
     public $serviceDetails = [];
     public $frequentTravellerVerification;
@@ -82,18 +101,18 @@ class DataElementsIndiv
     public $frequentTravellerData;
     public $accessLevel;
     /**
+     * To provide specific reference identification
      *
      * @var ReferenceForDataElement
      */
     public $referenceForDataElement;
 
-
     /**
      * @param string $segmentName One of the constants ElementManagementData::SEGNAME_*
+     * @param int $tatoo Unique tatoo number for this element
      */
-    public function __construct($segmentName = null)
+    public function __construct($segmentName = null, $tatoo = null)
     {
-        $this->elementManagementData =
-            new ElementManagementData($segmentName);
+        $this->elementManagementData = new ElementManagementData($segmentName, $tatoo);
     }
 }
