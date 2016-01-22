@@ -52,6 +52,8 @@ class Ticket
     const TICK_IND_XL = "XL";
 
     /**
+     * self::TICK_IND_*
+     *
      * @var string
      */
     public $indicator;
@@ -90,9 +92,9 @@ class Ticket
     public $sitaAddress = [];
 
     /**
-     * @param string $indicator
-     * @param \DateTime $date
-     * @param Queue $queue
+     * @param string $indicator self::TICK_IND_*
+     * @param \DateTime|null $date
+     * @param Queue|null $queue
      */
     public function __construct($indicator, $date = null, $queue = null)
     {
@@ -102,14 +104,20 @@ class Ticket
             //Set Ticket Datetime
             $this->date = $date->format("dmy");
 
-            $tickTime = $date->format('Gis');
-            if ($tickTime !== "000000") {
-
+            $tickTime = $date->format('Gi');
+            if ($tickTime !== "0000") {
+                $this->time = $tickTime;
             }
         }
 
         if ($indicator === self::TICK_IND_TL && $queue instanceof Queue) {
+            if ($queue->officeId !== null) {
+                $this->officeId = $queue->officeId;
+            }
+
             //Set Ticket Queue
+            $this->queueNumber = $queue->queue;
+            $this->queueCategory = $queue->category;
         }
     }
 }

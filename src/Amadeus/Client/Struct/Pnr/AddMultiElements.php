@@ -156,7 +156,7 @@ class AddMultiElements extends BaseWsMessage
                 break;
             case 'MiscellaneousRemark':
                 /** @var Element\MiscellaneousRemark $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_GENERAL_REMARK);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_GENERAL_REMARK, $tatooCounter);
                 $createdElement->miscellaneousRemark = new MiscellaneousRemark(
                     $element->text,
                     $element->type,
@@ -165,7 +165,7 @@ class AddMultiElements extends BaseWsMessage
                 break;
             case 'ReceivedFrom':
                 /** @var Element\ReceivedFrom $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_RECEIVE_FROM);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_RECEIVE_FROM, $tatooCounter);
                 $createdElement->freetextData = new FreetextData($element->receivedFrom);
                 break;
             case 'ServiceRequest':
@@ -174,7 +174,7 @@ class AddMultiElements extends BaseWsMessage
                 break;
             case 'Ticketing':
                 /** @var Element\Ticketing $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_TICKETING_ELEMENT);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_TICKETING_ELEMENT, $tatooCounter);
                 $createdElement->ticketElement = new TicketElement($element);
                 break;
             default:

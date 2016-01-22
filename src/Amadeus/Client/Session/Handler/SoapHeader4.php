@@ -128,6 +128,33 @@ class SoapHeader4 extends Base
     }
 
     /**
+     * Get the office that we are using to sign in to.
+     *
+     * @return string
+     */
+    public function getOriginatorOffice()
+    {
+        return $this->params->authParams->officeId;
+    }
+
+    /**
+     * @param bool $stateful
+     */
+    public function setStateful($stateful)
+    {
+        $this->isStateful = $stateful;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getStateful()
+    {
+        return $this->isStateful;
+    }
+
+
+    /**
      * @param string $messageName Method Operation name as defined in the WSDL.
      * @param BaseWsMessage $messageBody
      * @param array $messageOptions options: bool 'asString', bool 'endSession'
@@ -143,27 +170,31 @@ class SoapHeader4 extends Base
 
         try {
             $result = $this->getSoapClient()->$messageName($messageBody);
+
             $this->logRequestAndResponse($messageName);
 
             $this->handlePostMessage($messageName, $messageOptions, $result);
+
         } catch(\SoapFault $ex) {
             $this->log(
                 LogLevel::ERROR,
                 "SOAPFAULT while sending message " . $messageName . ": " .
-                $ex->getMessage()
+                $ex->getMessage() . " code: " .$ex->getCode() . " at " . $ex->getFile() .
+                " line " . $ex->getLine() . ": \n" . $ex->getTraceAsString()
             );
             $this->logRequestAndResponse($messageName);
             //TODO We must be able to handle certain soapfaults inside the client, so maybe pass through after logging?
-            throw new Client\Exception('SOAPFAULT');
+            throw $ex;
         } catch (\Exception $ex) {
             $this->log(
                 LogLevel::ERROR,
                 "EXCEPTION while sending message " . $messageName . ": " .
-                $ex->getMessage()
+                $ex->getMessage() . " at " . $ex->getFile() . " line " . $ex->getLine() . ": \n" .
+                $ex->getTraceAsString()
             );
             $this->logRequestAndResponse($messageName);
-            //TODO We must be able to handle certain soapfaults inside the client, so maybe pass through after logging?
-            throw new Client\Exception('EXCEPTION');
+            //TODO We must be able to handle certain exceptions inside the client, so maybe pass through after logging?
+            throw new Client\Exception($ex->getMessage(), $ex->getCode(), $ex);
         }
 
         return $result;
@@ -197,6 +228,7 @@ class SoapHeader4 extends Base
      * Handles post message actions
      *
      * - look for session info and set status variables
+     * - checks for message errors?
      * - ends terminated sessions
      *
      * @param string $messageName
@@ -206,6 +238,34 @@ class SoapHeader4 extends Base
     protected function handlePostMessage($messageName, $messageOptions, $result)
     {
 
+        if ($messageName === "Security_Authenticate") {
+            //You really don't need the Security_Authenticate call anymore with SoapHeader 4!
+            //TODO
+            throw new \RuntimeException('NOT YET IMPLEMENTED: Extract session data from Security_AuthenticateReply');
+        }
+
+        if ($this->getStateful() === true) {
+            //We need to extract session info
+            $this->sessionData = $this->getSessionDataFromHeader(
+                $this->getSoapClient()->__getLastResponseHeaders()
+            );
+            $this->isAuthenticated = !empty($this->sessionData);
+
+
+        } else {
+            $this->isAuthenticated = false;
+        }
+
+
+    }
+
+    /**
+     * @param $responseHeaders
+     * @return array
+     */
+    protected function getSessionDataFromHeader($responseHeaders)
+    {
+        $this->log(LogLevel::INFO, $responseHeaders);
     }
 
     /**

@@ -30,9 +30,11 @@ namespace Amadeus\Client\RequestOptions;
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveRequestOptions extends Base
+class PnrRetrieveOptions extends Base
 {
     /**
+     * Amadeus Record Locator for PNR
+     *
      * @var string
      */
     public $recordLocator;

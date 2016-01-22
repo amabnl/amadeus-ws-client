@@ -31,7 +31,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
-use Amadeus\Client\RequestOptions\PnrRetrieveRequestOptions;
+use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
 use Amadeus\Client\RequestOptions\QueueListOptions;
 use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
 use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
@@ -85,10 +85,10 @@ class Base implements RequestCreatorInterface
     /**
      * Create request object for PNR_Retrieve message
      *
-     * @param PnrRetrieveRequestOptions $params
+     * @param PnrRetrieveOptions $params
      * @return Struct\Pnr\Retrieve
      */
-    protected function createRetrievePnr(PnrRetrieveRequestOptions $params)
+    protected function createRetrievePnr(PnrRetrieveOptions $params)
     {
         $retrieveRequest = new Struct\Pnr\Retrieve(
             Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,

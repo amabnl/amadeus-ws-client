@@ -30,8 +30,9 @@ use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
-use Amadeus\Client\RequestOptions\PnrRetrieveRequestOptions;
+use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
 use Amadeus\Client\RequestOptions\QueueListOptions;
 use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
 use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
@@ -89,20 +90,40 @@ class Client
     protected $requestCreator;
 
     /**
+     * Set the session as stateful (true) or stateless (false)
+     *
+     * @param bool $newStateful
+     */
+    public function setStateful($newStateful)
+    {
+        $this->sessionHandler->setStateful($newStateful);
+    }
+
+    /**
+     * @return bool
+     */
+    public function getStateful()
+    {
+        return $this->sessionHandler->getStateful();
+    }
+
+    /**
      * Construct Amadeus Web Services client
      *
      * @param Params $params
      */
     public function __construct($params)
     {
-        $this->requestCreator = $this->loadRequestCreator(
-            $params->requestCreator,
-            $params->requestCreatorParams,
-            self::receivedFromIdentifier . "-" .self::version
-        );
         $this->sessionHandler = $this->loadSessionHandler(
             $params->sessionHandler,
             $params->sessionHandlerParams
+        );
+
+        $this->requestCreator = $this->loadRequestCreator(
+            $params->requestCreator,
+            $params->requestCreatorParams,
+            self::receivedFromIdentifier . "-" .self::version,
+            $this->sessionHandler->getOriginatorOffice()
         );
     }
 
@@ -116,12 +137,12 @@ class Client
      *
      * https://webservices.amadeus.com/extranet/viewService.do?id=27&flavourId=1&menuId=functional
      *
-     * @param string $recordLocator Amadeus Record Locator for PNR
+     * @param PnrRetrieveOptions $options
      * @param array|null $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_Reply as a PHP object.
      * @return string|\stdClass|null
      * @throws Exception
      */
-    public function pnrRetrieve($recordLocator, $messageOptions = null)
+    public function pnrRetrieve($options, $messageOptions = null)
     {
         if (is_null($messageOptions)) {
             $messageOptions = $this->makeMessageOptions(true);
@@ -131,7 +152,7 @@ class Client
             'PNR_Retrieve',
             $this->requestCreator->createRequest(
                 'pnrRetrieve',
-                new PnrRetrieveRequestOptions(['recordLocator'=>$recordLocator])
+                $options
             ),
             $messageOptions
         );
@@ -142,6 +163,7 @@ class Client
      *
      * @param PnrCreatePnrOptions $options
      * @param null $messageOptions
+     * @return mixed
      */
     public function pnrCreatePnr($options, $messageOptions = null)
     {
@@ -164,7 +186,7 @@ class Client
      *
      * https://webservices.amadeus.com/extranet/viewService.do?id=25&flavourId=1&menuId=functional
      *
-     * @todo implement function.
+     * @todo implement message creation - maybe split up in separate Create & Modify PNR?
      * @param PnrAddMultiElementsOptions $options
      * @param array $messageOptions
      * @return mixed
@@ -454,18 +476,25 @@ class Client
      * A request creator is responsible for generating the correct request to send.
      *
      * @param RequestCreatorInterface|null $requestCreator
+     * @param Params\RequestCreatorParams $params
      * @param string $libIdentifier Library identifier & version string (for Received From)
+     * @param string $originatorOffice The Office we are signed in with.
      * @return RequestCreatorInterface
      * @throws \RuntimeException
      */
-    protected function loadRequestCreator($requestCreator, $params, $libIdentifier)
+    protected function loadRequestCreator($requestCreator, $params, $libIdentifier, $originatorOffice)
     {
         $newRequestCreator = null;
 
         if ($requestCreator instanceof RequestCreatorInterface) {
             $newRequestCreator = $requestCreator;
         } else {
-            $newRequestCreator = RequestCreatorFactory::createRequestCreator($params, $libIdentifier);
+            $params->originatorOfficeId = $originatorOffice;
+
+            $newRequestCreator = RequestCreatorFactory::createRequestCreator(
+                $params,
+                $libIdentifier
+            );
         }
 
         return $newRequestCreator;

@@ -35,18 +35,12 @@ class HandlerFactory
 {
     /**
      * @param SessionHandlerParams $handlerParams
-     * @param string $libIdentifier
      * @return HandlerInterface
      * @throws \InvalidArgumentException when the parameters to create the handler do not make sense.
      */
-    public static function createHandler($handlerParams, $libIdentifier)
+    public static function createHandler($handlerParams)
     {
         $theHandler = null;
-
-        $handlerParams->receivedFrom = self::makeReceivedFrom(
-            $handlerParams->receivedFrom,
-            $libIdentifier
-        );
 
         switch ($handlerParams->soapHeaderVersion) {
             case Client::HEADER_V4:
@@ -62,15 +56,5 @@ class HandlerFactory
         }
 
         return $theHandler;
-    }
-
-    /**
-     * @param string $original
-     * @param string $libIdentifier
-     * @return string
-     */
-    protected static function makeReceivedFrom($original, $libIdentifier)
-    {
-        return $original . " : " . $libIdentifier;
     }
 }

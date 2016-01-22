@@ -31,13 +31,15 @@ Set up a test client
     <?php
 
     use Amadeus\Client;
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    //Set up the client with necessary parameters:
 
     $params = new ClientParams([
         'sessionHandlerParams' => [
             'soapHeaderVersion' => Client::HEADER_V4,
             'wsdl' => '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20160101_080000.wsdl',
             'stateful' => false,
-            'receivedFrom' => 'my test project',
             'logger' => new Psr\Log\NullLogger(),
             'authParams' => [
                 'officeId' => 'BRUXX1111',
@@ -47,11 +49,19 @@ Set up a test client
                 'passwordData' => 'dGhlIHBhc3N3b3Jk', // base 64 encoded password
                 'nonceBase' => 'random string for generating unique nonce'
             ]
+        ],
+        'requestCreatorParams' => [
+            'originatorOfficeId' => 'BRUXX1111',
+            'receivedFrom' => 'my test project'
         ]
     ]);
 
     $client = new Client($params);
 
-    $pnrContent = $client->retrievePnr('ABC123);
+    $pnrContent = $client->retrievePnr(
+        new PnrRetrieveOptions(['recordLocator' => 'ABC123'])
+    );
+
+
 
 

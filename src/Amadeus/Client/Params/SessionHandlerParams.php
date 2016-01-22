@@ -53,6 +53,8 @@ class SessionHandlerParams
     public $authParams;
 
     /**
+     * The default setting for sending messages (if not specified)
+     *
      * Set to FALSE to enable stateless messages - only applies to SOAP header v4 and higher!
      *
      * @var bool

@@ -49,4 +49,21 @@ interface HandlerInterface
      * @return string|\stdClass
      */
     public function sendMessage($messageName, BaseWsMessage $messageBody, $messageOptions);
+
+    /**
+     * Get the office that we are using to authenticate.
+     *
+     * @return string
+     */
+    public function getOriginatorOffice();
+
+    /**
+     * @param bool $stateful
+     */
+    public function setStateful($stateful);
+
+    /**
+     * @return bool
+     */
+    public function getStateful();
 }
