@@ -45,6 +45,13 @@ class AuthParams
     public $originatorTypeCode = "U";
 
     /**
+     * Duty code
+     *
+     * @var string
+     */
+    public $dutyCode = "SU";
+
+    /**
      * Originator
      *
      * @var string
@@ -101,6 +108,7 @@ class AuthParams
         if (count($params) > 0) {
             $this->officeId = $params['officeId'];
             $this->originatorTypeCode = (isset($params['originatorTypeCode'])) ? $params['originatorTypeCode'] : "U";
+            $this->dutyCode = (isset($params['dutyCode'])) ? $params['dutyCode'] : "SU";
             $this->originator = $params['originator'];
             $this->organizationId = $params['organizationId'];
             $this->passwordLength = $params['passwordLength'];

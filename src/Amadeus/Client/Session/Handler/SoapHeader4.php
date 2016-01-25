@@ -370,9 +370,9 @@ class SoapHeader4 extends Base
                     'AMA_SecurityHostedUser',
                     new Client\Struct\HeaderV4\SecurityHostedUser(
                         $params->authParams->officeId,
-                        'U',
+                        $params->authParams->originatorTypeCode,
                         1,
-                        'SU'
+                        $params->authParams->dutyCode
                     )
                 )
             );
