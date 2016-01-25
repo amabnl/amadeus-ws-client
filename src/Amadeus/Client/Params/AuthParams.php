@@ -59,7 +59,9 @@ class AuthParams
     public $organizationId;
 
     /**
-     * Password Length
+     * Password Length of plain password.
+     *
+     * Only for SoapHeader < 4.
      *
      * @var int
      */
