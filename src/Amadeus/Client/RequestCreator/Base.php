@@ -88,7 +88,7 @@ class Base implements RequestCreatorInterface
      * @param PnrRetrieveOptions $params
      * @return Struct\Pnr\Retrieve
      */
-    protected function createRetrievePnr(PnrRetrieveOptions $params)
+    protected function createPnrRetrieve(PnrRetrieveOptions $params)
     {
         $retrieveRequest = new Struct\Pnr\Retrieve(
             Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
