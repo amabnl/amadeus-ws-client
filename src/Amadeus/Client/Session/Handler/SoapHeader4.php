@@ -343,8 +343,7 @@ class SoapHeader4 extends Base
                 new \SoapHeader(
                     'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
                     'Security',
-                    new \SoapVar($xml, XSD_ANYXML),
-                    true
+                    new \SoapVar($xml, XSD_ANYXML)
                 )
             );
 
@@ -361,8 +360,6 @@ class SoapHeader4 extends Base
                     )
                 )
             );*/
-
-
 
             array_push(
                 $headersToSet,
