@@ -325,13 +325,14 @@ class SoapHeader4 extends Base
             $micro = sprintf("%03d",($t - floor($t)) * 1000);
             $creationString = $this->createDateTimeStringForAuth($creation, $micro);
             $messageNonce = $this->generateUniqueNonce($params->authParams->nonceBase, $creationString);
+            $encodedNonce = base64_encode($messageNonce);
             $digest = $this->generatePasswordDigest($password, $creationString, $messageNonce);
 
-            /*$xml = '
+            $xml = '
 <oas:Security xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd">
     <oas:UsernameToken xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" oas1:Id="UsernameToken-1">
 		<oas:Username>' . $params->authParams->originator . '</oas:Username>
-		<oas:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsssoap-message-security-1.0#Base64Binary">' . base64_encode($messageNonce) . '</oas:Nonce>
+		<oas:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsssoap-message-security-1.0#Base64Binary">' . $encodedNonce . '</oas:Nonce>
 		<oas:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordDigest">' . $digest . '</oas:Password>
 		<oas1:Created>' . $creationString . '</oas1:Created>
     </oas:UsernameToken>
@@ -345,9 +346,9 @@ class SoapHeader4 extends Base
                     new \SoapVar($xml, XSD_ANYXML),
                     true
                 )
-            );*/
+            );
 
-            array_push(
+            /*array_push(
                 $headersToSet,
                 new \SoapHeader(
                     'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd',
@@ -359,7 +360,7 @@ class SoapHeader4 extends Base
                         $creationString
                     )
                 )
-            );
+            );*/
 
 
 
