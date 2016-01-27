@@ -405,7 +405,7 @@ class SoapHeader4 extends Base
     {
         $this->loadWsdlXpath($wsdlFilePath);
 
-        return strtolower($this->wsdlDomXpath->evaluate(self::XPATH_ENDPOINT));
+        return $this->wsdlDomXpath->evaluate(self::XPATH_ENDPOINT);
     }
 
     /**
