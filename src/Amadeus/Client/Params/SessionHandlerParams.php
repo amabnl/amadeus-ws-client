@@ -83,10 +83,11 @@ class SessionHandlerParams
      */
     protected function loadFromArray(array $params) {
         if (count($params) > 0) {
+            if (isset($params['soapHeaderVersion'])) {
+                $this->soapHeaderVersion = $params['soapHeaderVersion'];
+            }
             $this->wsdl = (isset($params['wsdl'])) ? $params['wsdl'] : null;
-            $this->soapHeaderVersion = (isset($params['soapHeaderVersion'])) ? $params['soapHeaderVersion'] : null;
             $this->stateful = (isset($params['stateful'])) ? $params['stateful'] : true;
-            $this->receivedFrom = (isset($params['receivedFrom'])) ? $params['receivedFrom'] : null;
             $this->logger = ($params['logger'] instanceof LoggerInterface) ? $params['logger'] : null;
 
             if (isset($params['authParams'])) {

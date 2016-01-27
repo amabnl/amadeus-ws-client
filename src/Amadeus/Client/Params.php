@@ -78,24 +78,26 @@ class Params
      * @return void
      */
     protected function loadFromArray(array $params) {
-        if (count($params) > 0) {
+        if (isset($params['requestCreator'])) {
             $this->requestCreator = $params['requestCreator'];
+        }
+        if (isset($params['sessionHandler'])) {
             $this->sessionHandler = $params['sessionHandler'];
+        }
 
-            if (isset($params['sessionHandlerParams'])) {
-                if ($params['sessionHandlerParams'] instanceof SessionHandlerParams) {
-                    $this->sessionHandlerParams = $params['sessionHandlerParams'];
-                } elseif (is_array($params['sessionHandlerParams'])) {
-                    $this->sessionHandlerParams = new SessionHandlerParams($params['sessionHandlerParams']);
-                }
+        if (isset($params['sessionHandlerParams'])) {
+            if ($params['sessionHandlerParams'] instanceof SessionHandlerParams) {
+                $this->sessionHandlerParams = $params['sessionHandlerParams'];
+            } elseif (is_array($params['sessionHandlerParams'])) {
+                $this->sessionHandlerParams = new SessionHandlerParams($params['sessionHandlerParams']);
             }
+        }
 
-            if (isset($params['requestCreatorParams'])) {
-                if ($params['requestCreatorParams'] instanceof RequestCreatorParams) {
-                    $this->requestCreatorParams = $params['requestCreatorParams'];
-                } elseif (is_array($params['requestCreatorParams'])) {
-                    $this->requestCreatorParams = new RequestCreatorParams($params['requestCreatorParams']);
-                }
+        if (isset($params['requestCreatorParams'])) {
+            if ($params['requestCreatorParams'] instanceof RequestCreatorParams) {
+                $this->requestCreatorParams = $params['requestCreatorParams'];
+            } elseif (is_array($params['requestCreatorParams'])) {
+                $this->requestCreatorParams = new RequestCreatorParams($params['requestCreatorParams']);
             }
         }
     }

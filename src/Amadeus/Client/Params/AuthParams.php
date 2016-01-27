@@ -113,7 +113,11 @@ class AuthParams
             $this->organizationId = $params['organizationId'];
             $this->passwordLength = $params['passwordLength'];
             $this->passwordData = $params['passwordData'];
-            $this->nonceBase = (isset($params['nonceBase'])) ? $params['nonceBase'] : null;
+
+            if (isset($params['nonceBase'])) {
+                $this->nonceBase = $params['nonceBase'];
+            }
+
         }
     }
 }
