@@ -291,6 +291,8 @@ class SoapHeader4 extends Base
     {
         $headersToSet = [];
 
+        $stateful = $this->getStateful();
+
         if (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) {
             //TODO set headers for end session
         } else {
@@ -324,44 +326,52 @@ class SoapHeader4 extends Base
                 )
             );
 
-            $password = base64_decode($params->authParams->passwordData);
-            $creation = new \DateTime('now', new \DateTimeZone('UTC'));
-            $t = microtime(true);
-            $micro = sprintf("%03d",($t - floor($t)) * 1000);
-            $creationString = $this->createDateTimeStringForAuth($creation, $micro);
-            $messageNonce = $this->generateUniqueNonce($params->authParams->nonceBase, $creationString);
-            $encodedNonce = base64_encode($messageNonce);
-            $digest = $this->generatePasswordDigest($password, $creationString, $messageNonce);
+            //Send authentication info
+            if ($this->isAuthenticated === false) {
+                $password = base64_decode($params->authParams->passwordData);
+                $creation = new \DateTime('now', new \DateTimeZone('UTC'));
+                $t = microtime(true);
+                $micro = sprintf("%03d",($t - floor($t)) * 1000);
+                $creationString = $this->createDateTimeStringForAuth($creation, $micro);
+                $messageNonce = $this->generateUniqueNonce($params->authParams->nonceBase, $creationString);
+                $encodedNonce = base64_encode($messageNonce);
+                $digest = $this->generatePasswordDigest($password, $creationString, $messageNonce);
 
-            $securityHeaderXml = $this->generateSecurityHeaderRawXml(
-                $params->authParams->originator,
-                $encodedNonce,
-                $digest,
-                $creationString
-            );
+                $securityHeaderXml = $this->generateSecurityHeaderRawXml(
+                    $params->authParams->originator,
+                    $encodedNonce,
+                    $digest,
+                    $creationString
+                );
 
-            array_push(
-                $headersToSet,
-                new \SoapHeader(
-                    'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
-                    'Security',
-                    new \SoapVar($securityHeaderXml, XSD_ANYXML)
-                )
-            );
-
-            /*array_push(
-                $headersToSet,
-                new \SoapHeader(
-                    'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd',
-                    'Security',
-                    new Client\Struct\HeaderV4\Security(
-                        $params->authParams->originator,
-                        $digest,
-                        base64_encode($messageNonce),
-                        $creationString
+                array_push(
+                    $headersToSet,
+                    new \SoapHeader(
+                        'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
+                        'Security',
+                        new \SoapVar($securityHeaderXml, XSD_ANYXML)
                     )
-                )
-            );*/
+                );
+
+                /*array_push(
+                    $headersToSet,
+                    new \SoapHeader(
+                        'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd',
+                        'Security',
+                        new Client\Struct\HeaderV4\Security(
+                            $params->authParams->originator,
+                            $digest,
+                            base64_encode($messageNonce),
+                            $creationString
+                        )
+                    )
+                );*/
+            } else if ($stateful === true) {
+                // TODO: We are authenticated and stateful: provide session header
+
+            }
+
+
 
             array_push(
                 $headersToSet,
@@ -376,6 +386,11 @@ class SoapHeader4 extends Base
                     )
                 )
             );
+
+            if ($stateful) {
+                $statusCode = ($this->isAuthenticated === true) ? "InSeries" : "Start";
+
+            }
         }
 
         return $headersToSet;
@@ -587,7 +602,7 @@ class SoapHeader4 extends Base
     {
         $this->log(
             LogLevel::INFO,
-            'Called ' . $messageName . 'with request: ' . $this->getSoapClient()->__getLastRequest()
+            'Called ' . $messageName . ' with request: ' . $this->getSoapClient()->__getLastRequest()
         );
         $this->log(
             LogLevel::INFO,
