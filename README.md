@@ -1,5 +1,7 @@
 # amadeus-ws-client: PHP client for the Amadeus GDS SOAP Web Service interface
 
+[![Build Status](https://travis-ci.org/amabnl/amadeus-ws-client.svg?branch=master)](https://travis-ci.org/amabnl/amadeus-ws-client)
+
 This client library provides access to the Amadeus GDS SOAP Web Service interface. 
 
 To use this client, you must first obtain your personal access to the Web Service interface through an Amadeus Sales channel of your choice.
