@@ -54,13 +54,11 @@ class AddMultiElements extends BaseWsMessage
      */
     public $pnrActions;
     /**
-     * @var array
-     * @todo expand this structure
+     * @var AddMultiElements\TravellerInfo[]
      */
     public $travellerInfo = [];
     /**
-     * @var array
-     * @todo expand this structure
+     * @var AddMultiElements\OriginDestinationDetails[]
      */
     public $originDestinationDetails = [];
     /**

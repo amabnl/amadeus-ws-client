@@ -22,60 +22,13 @@
 
 namespace Amadeus\Client\RequestOptions\Pnr;
 
-use Amadeus\Client\LoadParamsFromArray;
-
 /**
- * Traveller is
+ * Passenger
  *
  * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller extends LoadParamsFromArray
+class Passenger
 {
-    const TRAV_TYPE_ADULT = "ADT";
 
-    const TRAV_TYPE_CHILD = "CHD";
-
-    const TRAV_TYPE_INFANT = "INF";
-
-
-    /**
-     * Unique sequence number for traveller
-     *
-     * @var int
-     */
-    public $number;
-
-    /**
-     * @var bool
-     */
-    public $withInfant = false;
-
-    /**
-     * Type of traveller
-     * @var string
-     */
-    public $travellerType = self::TRAV_TYPE_ADULT;
-
-    /**
-     * @var string
-     */
-    public $firstName;
-
-    /**
-     * @var string
-     */
-    public $lastName;
-
-    /**
-     * @var \DateTime
-     */
-    public $dateOfBirth;
-
-    /**
-     * An optional infant travelling with an adult traveller.
-     *
-     * @var Traveller
-     */
-    public $infant;
 }
