@@ -20,9 +20,10 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator;
+namespace Test\Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\Params\RequestCreatorParams;
+use Amadeus\Client\RequestCreator\Base;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
 use Amadeus\Client\Struct\Pnr\Retrieve;
 use Test\Amadeus\BaseTestCase;

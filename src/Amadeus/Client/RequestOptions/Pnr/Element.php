@@ -22,13 +22,15 @@
 
 namespace Amadeus\Client\RequestOptions\Pnr;
 
+use Amadeus\Client\LoadParamsFromArray;
+
 /**
  * Element
  *
  * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Element
+class Element extends LoadParamsFromArray
 {
 
 }

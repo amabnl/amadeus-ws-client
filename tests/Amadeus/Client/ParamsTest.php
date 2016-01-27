@@ -20,8 +20,9 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client;
+namespace Test\Amadeus\Client;
 
+use Amadeus\Client\Params;
 use Psr\Log\NullLogger;
 use Psr\Log\Test\LoggerInterfaceTest;
 use Test\Amadeus\BaseTestCase;
@@ -82,4 +83,50 @@ class ParamsTest extends BaseTestCase
         $this->assertEquals('BRUXXXXXX', $params->requestCreatorParams->originatorOfficeId);
         $this->assertEquals('some RF string', $params->requestCreatorParams->receivedFrom);
     }
+
+    public function testCanMakeParamsWithBaseNonceFromArray()
+    {
+        $theParamArray = [
+            'sessionHandlerParams' => [
+                'wsdl' => '/var/fake/file/path',
+                'stateful' => true,
+                'logger' => new NullLogger(),
+                'authParams' => [
+                    'officeId' => 'BRUXXXXXX',
+                    'originatorTypeCode' => 'U',
+                    'originator' => 'WSXXXXXX',
+                    'organizationId' => 'NMC-XXXXXX',
+                    'passwordLength' => '4',
+                    'passwordData' => base64_encode('TEST'),
+                    'nonceBase' => 'abloobloo'
+                ]
+            ],
+            'requestCreatorParams' => [
+                'originatorOfficeId' => 'BRUXXXXXX',
+                'receivedFrom' => 'some RF string'
+            ]
+        ];
+
+        $params = new Params($theParamArray);
+        $this->assertEquals('abloobloo', $params->sessionHandlerParams->authParams->nonceBase);
+    }
+
+    public function testCanCreateParamsWithOverrideSessionHandlerAndRequestCreator()
+    {
+        $dummySessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+        $dummyRequestCreator = $this->getMockBuilder('Amadeus\Client\RequestCreator\RequestCreatorInterface')->getMock();
+
+        $theParamArray = [
+            'sessionHandler' => $dummySessionHandler,
+            'requestCreator' => $dummyRequestCreator
+        ];
+
+        $params = new Params($theParamArray);
+
+        $this->assertNull($params->requestCreatorParams);
+        $this->assertNull($params->sessionHandlerParams);
+        $this->assertInstanceOf('Amadeus\Client\Session\Handler\HandlerInterface', $params->sessionHandler);
+        $this->assertInstanceOf('Amadeus\Client\RequestCreator\RequestCreatorInterface', $params->requestCreator);
+    }
 }
+

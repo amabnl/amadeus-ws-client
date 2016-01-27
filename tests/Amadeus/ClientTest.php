@@ -20,8 +20,9 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus;
+namespace Test\Amadeus;
 
+use Amadeus\Client;
 use Amadeus\Client\Params;
 use Psr\Log\NullLogger;
 use Test\Amadeus\BaseTestCase;

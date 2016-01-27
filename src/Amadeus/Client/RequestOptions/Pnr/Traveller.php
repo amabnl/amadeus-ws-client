@@ -22,13 +22,15 @@
 
 namespace Amadeus\Client\RequestOptions\Pnr;
 
+use Amadeus\Client\LoadParamsFromArray;
+
 /**
  * Traveller
  *
  * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller
+class Traveller extends LoadParamsFromArray
 {
     /**
      * Unique sequence number for traveller

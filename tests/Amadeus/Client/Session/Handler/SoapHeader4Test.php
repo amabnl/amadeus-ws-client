@@ -62,9 +62,6 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
             []
         );
 
-
-        $expectedSoapHeaders = [];
-
         $this->assertCount(5, $result);
         foreach ($result as $tmp) {
             $this->assertInstanceOf('\SoapHeader', $tmp);
@@ -95,111 +92,6 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertInstanceOf('Amadeus\Client\Struct\HeaderV4\SecurityHostedUser', $result[4]->data);
         $this->assertEquals('AMA_SecurityHostedUser', $result[4]->name);
         $this->assertEquals('http://xml.amadeus.com/2010/06/Security_v1', $result[4]->namespace);
-
-        //TODO further validate soap headers?
-
-        /*
-         * Array
-            (
-                [0] => SoapHeader Object
-                    (
-                        [namespace] => http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
-                        [name] => Security
-                        [data] => Amadeus\Client\Struct\HeaderV4\Security Object
-                            (
-                                [UsernameToken] => SoapVar Object
-                                    (
-                                        [enc_type] => 301
-                                        [enc_value] => Amadeus\Client\Struct\HeaderV4\UsernameToken Object
-                                            (
-                                                [Username] => SoapVar Object
-                                                    (
-                                                        [enc_type] => 101
-                                                        [enc_value] => DUMMYORIG
-                                                        [enc_name] => Username
-                                                        [enc_namens] => http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
-                                                    )
-
-                                                [Password] => SoapVar Object
-                                                    (
-                                                        [enc_type] => 147
-                                                        [enc_value] => <ns2:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordDigest">CGBrO+mV+zgTb+A8YHrdOG1MOtg=</ns2:Password>
-                                                        [enc_name] => Password
-                                                    )
-
-                                                [Nonce] => SoapVar Object
-                                                    (
-                                                        [enc_type] => 101
-                                                        [enc_value] => D7vbVfxRu3UA+erbh5Mx/k4LW8s=
-                                                        [enc_name] => Nonce
-                                                        [enc_namens] => http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
-                                                    )
-
-                                                [Created] => SoapVar Object
-                                                    (
-                                                        [enc_type] => 101
-                                                        [enc_value] => 2016-01-15T10:22:05:298Z
-                                                        [enc_name] => Created
-                                                        [enc_namens] => http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
-                                                    )
-
-                                            )
-
-                                        [enc_name] => UsernameToken
-                                        [enc_namens] => http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd
-                                    )
-
-                            )
-
-                        [mustUnderstand] =>
-                    )
-
-                [1] => SoapHeader Object
-                    (
-                        [namespace] => http://www.w3.org/2005/08/addressing
-                        [name] => MessageID
-                        [data] => 1C02E9C5-2E87-9D87-CAB6-6494D341ABED
-                        [mustUnderstand] =>
-                    )
-
-                [2] => SoapHeader Object
-                    (
-                        [namespace] => http://www.w3.org/2005/08/addressing
-                        [name] => To
-                        [data] => https://dummy.webservices.endpoint.com/SOAPADDRESS
-                        [mustUnderstand] =>
-                    )
-
-                [3] => SoapHeader Object
-                    (
-                        [namespace] => http://www.w3.org/2005/08/addressing
-                        [name] => Action
-                        [data] => http://webservices.amadeus.com/PNRRET_11_3_1A
-                        [mustUnderstand] =>
-                    )
-
-                [4] => SoapHeader Object
-                    (
-                        [namespace] => http://xml.amadeus.com/2010/06/Security_v1
-                        [name] => AMA_SecurityHostedUser
-                        [data] => Amadeus\Client\Struct\HeaderV4\SecurityHostedUser Object
-                            (
-                                [UserID] => Amadeus\Client\Struct\HeaderV4\UserId Object
-                                    (
-                                        [RequestorType] => U
-                                        [PseudoCityCode] => BRUXX0000
-                                        [POS_Type] => 1
-                                        [AgentDutyCode] =>
-                                    )
-
-                            )
-
-                        [mustUnderstand] =>
-                    )
-
-            )
-*/
-
     }
 
     public function testCanGenerateDigestNew()
@@ -310,6 +202,19 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
 
         $this->assertXmlStringEqualsXmlString($expectedXml, $result);
     }
+
+    public function testCanSetStateful()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $sessionHandler->setStateful(false);
+        $this->assertFalse($sessionHandler->getStateful());
+        $sessionHandler->setStateful(true);
+        $this->assertTrue($sessionHandler->getStateful());
+    }
+
+
     /**
      * @return SessionHandlerParams
      */

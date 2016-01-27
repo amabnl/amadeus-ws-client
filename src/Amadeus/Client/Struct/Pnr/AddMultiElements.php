@@ -24,6 +24,8 @@ namespace Amadeus\Client\Struct\Pnr;
 
 use Amadeus\Client\RequestOptions\Pnr\Element;
 use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
+use Amadeus\Client\RequestOptions\Pnr\Traveller;
+use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\Struct\BaseWsMessage;
@@ -108,6 +110,29 @@ class AddMultiElements extends BaseWsMessage
         );
     }
 
+    protected function addSegments($segments, &$tatooCounter)
+    {
+
+    }
+
+
+    /**
+     * @param Traveller[] $travellers
+     * @param $group
+     */
+    protected function addTravellers($travellers, $group = null)
+    {
+        //TODO
+    }
+
+    /**
+     * @param TravellerGroup $group
+     */
+    protected function addTravellerGroup($group)
+    {
+
+    }
+
     /**
      * @param Element[] $elements
      * @param int $tatooCounter (BYREF)
@@ -126,7 +151,7 @@ class AddMultiElements extends BaseWsMessage
         }
 
         if ($receivedFromString !== null) {
-            $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(new ReceivedFrom($receivedFromString), $tatooCounter);
+            $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(new ReceivedFrom(['receivedFrom' => $receivedFromString]), $tatooCounter);
         }
     }
 
