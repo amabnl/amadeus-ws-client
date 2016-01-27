@@ -89,6 +89,7 @@ class SoapHeader4 extends Base
 
     /**
      * SoapClient options used during initialisation
+     *
      * @var array
      */
     protected $soapClientOptions = [
@@ -195,6 +196,10 @@ class SoapHeader4 extends Base
             $this->logRequestAndResponse($messageName);
             //TODO We must be able to handle certain exceptions inside the client, so maybe pass through after logging?
             throw new Client\Exception($ex->getMessage(), $ex->getCode(), $ex);
+        }
+
+        if ($messageOptions['asString'] === true) {
+            $result = $this->getSoapClient()->__getLastResponse();
         }
 
         return $result;
