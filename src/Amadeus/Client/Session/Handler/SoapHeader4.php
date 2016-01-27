@@ -328,22 +328,19 @@ class SoapHeader4 extends Base
             $encodedNonce = base64_encode($messageNonce);
             $digest = $this->generatePasswordDigest($password, $creationString, $messageNonce);
 
-            $xml = '
-<oas:Security xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd">
-    <oas:UsernameToken xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" oas1:Id="UsernameToken-1">
-		<oas:Username>' . $params->authParams->originator . '</oas:Username>
-		<oas:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">' . $encodedNonce . '</oas:Nonce>
-		<oas:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordDigest">' . $digest . '</oas:Password>
-		<oas1:Created>' . $creationString . '</oas1:Created>
-    </oas:UsernameToken>
-</oas:Security>';
+            $securityHeaderXml = $this->generateSecurityHeaderRawXml(
+                $params->authParams->originator,
+                $encodedNonce,
+                $digest,
+                $creationString
+            );
 
             array_push(
                 $headersToSet,
                 new \SoapHeader(
                     'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
                     'Security',
-                    new \SoapVar($xml, XSD_ANYXML)
+                    new \SoapVar($securityHeaderXml, XSD_ANYXML)
                 )
             );
 
@@ -468,15 +465,39 @@ class SoapHeader4 extends Base
     }
 
     /**
+     * @param string $originator
+     * @param string $nonce
+     * @param string $pwDigest
+     * @param string $creationTimeString
+     * @return string
+     */
+    protected function generateSecurityHeaderRawXml($originator, $nonce, $pwDigest, $creationTimeString)
+    {
+        return $xml = '<oas:Security xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd">
+    <oas:UsernameToken xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" oas1:Id="UsernameToken-1">
+		<oas:Username>' . $originator . '</oas:Username>
+		<oas:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">' . $nonce . '</oas:Nonce>
+		<oas:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordDigest">' . $pwDigest . '</oas:Password>
+		<oas1:Created>' . $creationTimeString . '</oas1:Created>
+    </oas:UsernameToken>
+</oas:Security>';
+    }
+
+
+    /**
      * @param string $nonceBase
      * @param string $creationString
      * @return string
      */
     protected function generateUniqueNonce($nonceBase, $creationString)
     {
-        return sha1(
-            $nonceBase . $creationString,
-            true
+        return substr(
+            sha1(
+                $nonceBase . $creationString,
+                true
+            ),
+            0,
+            16
         );
     }
 
