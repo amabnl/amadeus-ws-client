@@ -60,7 +60,7 @@ class SoapClientTest extends BaseTestCase
   <ns3:To>http://dummy.url</ns3:To>
   <ns3:Action>http://dummy.soapAction</ns3:Action>
   <ns4:AMA_SecurityHostedUser>
-  <ns4:UserID RequestorType="U" PseudoCityCode="BRUBG21HE" POS_Type="1"/>
+   <ns4:UserID RequestorType="U" PseudoCityCode="BRUBG21HE" POS_Type="1"/>
   </ns4:AMA_SecurityHostedUser>
  </SOAP-ENV:Header>
  <SOAP-ENV:Body>
