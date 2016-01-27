@@ -23,7 +23,6 @@
 namespace Test\Amadeus\Client\Struct\Pnr;
 
 use Amadeus\Client\RequestOptions\Pnr\Element\Contact;
-use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\Pnr\Element\Ticketing;
 use Amadeus\Client\RequestOptions\Pnr\Segment\Miscellaneous;
 use Amadeus\Client\RequestOptions\Pnr\Traveller;

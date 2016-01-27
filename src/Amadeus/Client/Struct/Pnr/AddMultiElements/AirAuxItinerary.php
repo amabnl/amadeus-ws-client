@@ -20,62 +20,34 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Traveller is
- *
- * @package Amadeus\Client\RequestOptions\Pnr
+ * AirAuxItinerary
+ * 
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller extends LoadParamsFromArray
+class AirAuxItinerary
 {
-    const TRAV_TYPE_ADULT = "ADT";
-
-    const TRAV_TYPE_CHILD = "CHD";
-
-    const TRAV_TYPE_INFANT = "INF";
-
-
     /**
-     * Unique sequence number for traveller
-     *
-     * @var int
+     * @var TravelProduct
      */
-    public $number;
-
+    public $travelProduct;
     /**
-     * @var bool
+     * @var MessageAction
      */
-    public $withInfant = false;
-
+    public $messageAction;
     /**
-     * Type of traveller
-     * @var string
+     * @var RelatedProduct
      */
-    public $travellerType = self::TRAV_TYPE_ADULT;
+    public $relatedProduct;
 
-    /**
-     * @var string
-     */
-    public $firstName;
+    public $selectionDetailsAir;
 
+    public $reservationInfoSell;
     /**
-     * @var string
+     * @var FreetextItinerary
      */
-    public $lastName;
-
-    /**
-     * @var \DateTime
-     */
-    public $dateOfBirth;
-
-    /**
-     * An optional infant travelling with an adult traveller.
-     *
-     * @var Traveller
-     */
-    public $infant;
+    public $freetextItinerary;
 }
