@@ -23,25 +23,34 @@
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * MessageAction
- * 
+ * Company
+ *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MessageAction
+class Company
 {
     /**
-     * @var Business
+     * The coded description of supplier of a service or product, i.e. airline designator code.
+     *
+     * @var string
      */
-    public $business;
+    public $identification;
 
     /**
-     * MessageAction constructor.
+     * The coded description of supplier of a service or product, i.e. airline designator code.
      *
-     * @param int $businessFunction
+     * @var string
      */
-    public function __construct($businessFunction)
+    public $secondIdentification;
+
+    /**
+     * Company constructor.
+     *
+     * @param string $companyCode
+     */
+    public function __construct($companyCode)
     {
-        $this->business = new Business($businessFunction);
+        $this->identification = $companyCode;
     }
 }

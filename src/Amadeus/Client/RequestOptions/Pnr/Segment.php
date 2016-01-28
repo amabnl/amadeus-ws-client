@@ -23,12 +23,26 @@
 namespace Amadeus\Client\RequestOptions\Pnr;
 
 /**
- * TripSegment
+ * Basic PNR Segment
  *
  * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class Segment
 {
+    const STATUS_CONFIRMED = "HK";
 
+    /**
+     * self::STATUS_*
+     *
+     * @var string
+     */
+    public $status = self::STATUS_CONFIRMED;
+
+    /**
+     * The company code
+     *
+     * @var string
+     */
+    public $company;
 }

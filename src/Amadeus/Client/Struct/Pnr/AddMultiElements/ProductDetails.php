@@ -23,25 +23,18 @@
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * MessageAction
- * 
+ * ProductDetails
+ *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MessageAction
+class ProductDetails
 {
-    /**
-     * @var Business
-     */
-    public $business;
+    public $identification;
 
-    /**
-     * MessageAction constructor.
-     *
-     * @param int $businessFunction
-     */
-    public function __construct($businessFunction)
-    {
-        $this->business = new Business($businessFunction);
-    }
+    public $classOfService;
+
+    public $subtype;
+
+    public $description;
 }

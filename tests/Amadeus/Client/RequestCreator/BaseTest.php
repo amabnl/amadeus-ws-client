@@ -177,4 +177,3 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(SelectionDetails::LIST_OPTION_SORT_CREATION, $message->sortCriteria->sortOption[0]->selectionDetails->option);
     }
 }
-

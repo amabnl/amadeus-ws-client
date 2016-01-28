@@ -252,15 +252,7 @@ class Base implements RequestCreatorInterface
     {
         $params->receivedFrom = $this->params->receivedFrom;
 
-        $req = new Struct\Pnr\AddMultiElements(
-            $params
-        );
-
-        //TODO
-
-        /*$receivedFrom = new ReceivedFrom(
-            $this->params->receivedFrom
-        );*/
+        $req = new Struct\Pnr\AddMultiElements($params);
 
         return $req;
     }

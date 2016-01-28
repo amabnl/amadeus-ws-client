@@ -23,25 +23,45 @@
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * MessageAction
- * 
+ * Product
+ *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MessageAction
+class Product
 {
     /**
-     * @var Business
+     * yymmdd
+     *
+     * @var string
      */
-    public $business;
+    public $depDate;
+    /**
+     * hhss
+     *
+     * @var string
+     */
+    public $depTime;
+    /**
+     * yymmdd
+     *
+     * @var string
+     */
+    public $arrDate;
+    /**
+     * hhss
+     *
+     * @var string
+     */
+    public $arrTime;
 
     /**
-     * MessageAction constructor.
+     * Product constructor.
      *
-     * @param int $businessFunction
+     * @param \DateTime $departureDate
      */
-    public function __construct($businessFunction)
+    public function __construct($departureDate)
     {
-        $this->business = new Business($businessFunction);
+        $this->depDate = $departureDate->format('ymd');
     }
 }

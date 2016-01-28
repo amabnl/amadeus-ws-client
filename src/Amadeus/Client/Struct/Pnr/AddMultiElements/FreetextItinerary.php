@@ -30,5 +30,24 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class FreetextItinerary
 {
+    /**
+     * @var FreetextDetail
+     */
+    public $freetextDetail;
 
+    /**
+     * @var string
+     */
+    public $longFreetext;
+
+    /**
+     * FreetextItinerary constructor.
+     *
+     * @param string $freeText
+     */
+    public function __construct($freeText)
+    {
+        $this->longFreetext = $freeText;
+        $this->freetextDetail = new FreetextDetail(null);
+    }
 }

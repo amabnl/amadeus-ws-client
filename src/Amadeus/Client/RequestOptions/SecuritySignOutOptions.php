@@ -20,28 +20,15 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * MessageAction
- * 
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * SecuritySignOutOptions
+ *
+ * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MessageAction
+class SecuritySignOutOptions extends Base
 {
-    /**
-     * @var Business
-     */
-    public $business;
 
-    /**
-     * MessageAction constructor.
-     *
-     * @param int $businessFunction
-     */
-    public function __construct($businessFunction)
-    {
-        $this->business = new Business($businessFunction);
-    }
 }

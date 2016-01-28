@@ -23,25 +23,32 @@
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * MessageAction
- * 
+ * BoardOffPointDetail
+ *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MessageAction
+class BoardOffPointDetail
 {
     /**
-     * @var Business
+     * Identification of the name of place/location, other than 3164 City name.
+     *
+     * @var string
      */
-    public $business;
+    public $cityCode;
 
     /**
-     * MessageAction constructor.
-     *
-     * @param int $businessFunction
+     * @var string
      */
-    public function __construct($businessFunction)
+    public $cityName;
+
+    /**
+     * BoardOffPointDetail constructor.
+     *
+     * @param string $cityCode
+     */
+    public function __construct($cityCode)
     {
-        $this->business = new Business($businessFunction);
+        $this->cityCode = $cityCode;
     }
 }

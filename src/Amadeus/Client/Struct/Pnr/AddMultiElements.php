@@ -24,18 +24,25 @@ namespace Amadeus\Client\Struct\Pnr;
 
 use Amadeus\Client\RequestOptions\Pnr\Element;
 use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
+use Amadeus\Client\RequestOptions\Pnr\Segment;
 use Amadeus\Client\RequestOptions\Pnr\Traveller;
 use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\InvalidArgumentException;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\AirAuxItinerary;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsIndiv;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementData;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementItinerary;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementPassenger;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\FreetextData;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\ItineraryInfo;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\MiscellaneousRemark;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TicketElement;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInfo;
 
 /**
  * Structure class for representing the PNR_AddMultiElements request message
@@ -98,7 +105,6 @@ class AddMultiElements extends BaseWsMessage
             $this->addTravellers($params->travellers);
         }
 
-
         $this->addSegments($params->tripSegments, $tatooCounter);
 
         $this->addElements(
@@ -108,9 +114,47 @@ class AddMultiElements extends BaseWsMessage
         );
     }
 
+    /**
+     * @param Segment[] $segments
+     * @param int $tatooCounter
+     */
     protected function addSegments($segments, &$tatooCounter)
     {
+        $tmpOrigDest = new OriginDestinationDetails();
 
+        foreach ($segments as $segment) {
+            $tmpOrigDest->itineraryInfo[] = $this->createSegment($segment, $tatooCounter);
+        }
+
+        $this->originDestinationDetails[] = $tmpOrigDest;
+    }
+
+    /**
+     * @param Segment $segment
+     * @param $tatooCounter
+     * @return ItineraryInfo
+     */
+    protected function createSegment($segment, &$tatooCounter)
+    {
+        $createdSegment = null;
+
+        $tatooCounter++;
+
+        $reflect = new \ReflectionClass($segment);
+        $segmentType = $reflect->getShortName();
+
+        switch ($segmentType) {
+            case 'Miscellaneous':
+                /** @var Segment\Miscellaneous $segment */
+                $createdSegment = new ItineraryInfo($tatooCounter, ElementManagementItinerary::SEGMENT_MISCELLANEOUS);
+                $createdSegment->airAuxItinerary = new AirAuxItinerary($segmentType, $segment);
+                break;
+            default:
+                throw new InvalidArgumentException('Segment type ' . $segmentType . 'is not supported');
+                break;
+        }
+
+        return $createdSegment;
     }
 
 
@@ -120,7 +164,24 @@ class AddMultiElements extends BaseWsMessage
      */
     protected function addTravellers($travellers, $group = null)
     {
-        //TODO
+        foreach ($travellers as $traveller) {
+            $this->travellerInfo[] = $this->createTraveller($traveller, $group);
+        }
+    }
+
+    /**
+     * @param Traveller $traveller
+     * @param mixed $group
+     * @return TravellerInfo
+     */
+    protected function createTraveller($traveller, $group)
+    {
+        $createdTraveller = new TravellerInfo(
+            ElementManagementPassenger::SEG_NAME,
+            $traveller->lastName
+        );
+
+        return $createdTraveller;
     }
 
     /**
@@ -128,7 +189,7 @@ class AddMultiElements extends BaseWsMessage
      */
     protected function addTravellerGroup($group)
     {
-
+        throw new \RuntimeException("Group PNR's are not yet implemented");
     }
 
     /**

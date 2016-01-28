@@ -30,5 +30,68 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class TravelProduct
 {
+    /**
+     * date and time details
+     *
+     * @var Product
+     */
+    public $product;
+    /**
+     * boardpoint details
+     *
+     * @var BoardOffPointDetail
+     */
+    public $boardpointDetail;
+    /**
+     * offpoint details
+     *
+     * @var BoardOffPointDetail
+     */
+    public $offpointDetail;
+    /**
+     * airline or system code
+     *
+     * @var Company
+     */
+    public $company;
+    /**
+     * product details - number and class
+     *
+     * @var ProductDetails
+     */
+    public $productDetails;
+    /**
+     * Product type details. Here: availability context.
+     *
+     * @var FlightTypeDetails
+     */
+    public $flightTypeDetails;
 
+    /**
+     * B	Boarding pass may not be issued until
+     * N	No action required
+     * NB	No a boarding pass may not be issued
+     * P01	Explosion indicator for SSR input
+     * P02	Validated indicator of Frequent Flyer SSR
+     * Y	Yes a boarding pass may be issued
+     *
+     * @var
+     */
+    public $processingIndicator;
+
+    /**
+     * TravelProduct constructor.
+     *
+     * @param \DateTime $date
+     * @param string $cityCode
+     * @param string $company
+     */
+    public function __construct($date, $cityCode, $company)
+    {
+        $this->product = new Product($date);
+
+        $this->boardpointDetail = new BoardOffPointDetail($cityCode);
+
+        $this->company = new Company($company);
+    }
 }

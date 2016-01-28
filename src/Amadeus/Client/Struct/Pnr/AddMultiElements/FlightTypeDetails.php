@@ -23,25 +23,22 @@
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * MessageAction
- * 
+ * FlightTypeDetails
+ *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MessageAction
+class FlightTypeDetails
 {
     /**
-     * @var Business
-     */
-    public $business;
-
-    /**
-     * MessageAction constructor.
+     * Number indicating the position in a sequence.
      *
-     * @param int $businessFunction
+     * LA	Local availibility
+     * S1	Availability of Sub O&D 1
+     * S2	Availability of Sub O&D 2
+     *
+     * @var string
      */
-    public function __construct($businessFunction)
-    {
-        $this->business = new Business($businessFunction);
-    }
+    public $flightIndicator;
+
 }
