@@ -13,11 +13,12 @@
 	    - marker1
 	    - dumbo
 	    - boardOffPoints
+	    - originDestination
 
 	    Author: Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
 	 -->
 	<xsl:template
-			match="node()[descendant-or-self::*[local-name(.) = 'Security_SignOut'] or descendant-or-self::*[local-name(.) = 'marker1'] or descendant-or-self::*[local-name(.) = 'dumbo'] or descendant-or-self::*[local-name(.) = 'boardOffPoints'] or descendant-or-self::*[@*] or descendant-or-self::*[string-length(normalize-space(.)) &gt; 0]]">
+			match="node()[descendant-or-self::*[local-name(.) = 'Security_SignOut'] or descendant-or-self::*[local-name(.) = 'marker1'] or descendant-or-self::*[local-name(.) = 'dumbo'] or descendant-or-self::*[local-name(.) = 'boardOffPoints'] or descendant-or-self::*[local-name(.) = 'originDestination'] or descendant-or-self::*[@*] or descendant-or-self::*[string-length(normalize-space(.)) &gt; 0]]">
 		<xsl:copy>
 			<xsl:apply-templates select="@*"/>
 			<xsl:apply-templates select="node()"/>
