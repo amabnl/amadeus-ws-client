@@ -20,62 +20,22 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Traveller is
- *
- * @package Amadeus\Client\RequestOptions\Pnr
+ * OriginDestination
+ * 
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller extends LoadParamsFromArray
+class OriginDestination
 {
-    const TRAV_TYPE_ADULT = "ADT";
-
-    const TRAV_TYPE_CHILD = "CHD";
-
-    const TRAV_TYPE_INFANT = "INF";
-
-
-    /**
-     * Unique sequence number for traveller
-     *
-     * @var int
-     */
-    public $number;
-
-    /**
-     * @var bool
-     */
-    public $withInfant = false;
-
-    /**
-     * Type of traveller
-     * @var string
-     */
-    public $travellerType = self::TRAV_TYPE_ADULT;
-
     /**
      * @var string
      */
-    public $firstName;
-
+    public $origin;
     /**
      * @var string
      */
-    public $lastName;
-
-    /**
-     * @var \DateTime
-     */
-    public $dateOfBirth;
-
-    /**
-     * An optional infant travelling with an adult traveller.
-     *
-     * @var Traveller
-     */
-    public $infant;
+    public $destination;
 }

@@ -23,37 +23,12 @@
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * TravellerInfo
- *
+ * FreetextItinerary
+ * 
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TravellerInfo
+class FreetextItinerary
 {
-    /**
-     * @var ElementManagementPassenger
-     */
-    public $elementManagementPassenger;
-    /**
-     * Up to 2 PassengerData elements
-     *
-     * @var PassengerData[]
-     */
-    public $passengerData = [];
-    /**
-     * @todo expand this structure
-     * @var array
-     */
-    public $enhancedPassengerData = [];
 
-    /**
-     * @param string $pasSegName ElementManagementPassenger::SEG_*
-     * @param string $mainPasSurName Main passenger's Surname
-     */
-    public function __construct($pasSegName = null, $mainPasSurName = null)
-    {
-        $this->elementManagementPassenger = new ElementManagementPassenger($pasSegName);
-
-        $this->passengerData[] = new PassengerData($mainPasSurName);
-    }
 }
