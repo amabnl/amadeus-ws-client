@@ -62,6 +62,8 @@ class Product
      */
     public function __construct($departureDate)
     {
-        $this->depDate = $departureDate->format('ymd');
+        if ($departureDate instanceof \DateTime) {
+            $this->depDate = $departureDate->format('ymd');
+        }
     }
 }
