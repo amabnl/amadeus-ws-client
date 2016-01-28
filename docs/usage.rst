@@ -53,8 +53,7 @@ Set up a test client
             'authParams' => [
                 'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
                 'originator' => 'WSBENXXX', // Also known as 'User ID' for Soap Header 4 WSDL's
-                'passwordData' => 'dGhlIHBhc3N3b3Jk', // **base 64 encoded** password
-                'nonceBase' => 'random string for generating unique nonce' //optional but recommended - to avoid collisions with other users of this library.
+                'passwordData' => 'dGhlIHBhc3N3b3Jk' // **base 64 encoded** password
             ]
         ],
         'requestCreatorParams' => [

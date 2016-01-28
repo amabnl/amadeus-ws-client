@@ -20,4 +20,6 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
+namespace Test;
+
 require_once __DIR__ . '/../vendor/autoload.php';
