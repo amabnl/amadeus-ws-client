@@ -24,7 +24,10 @@ namespace Test\Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestCreator\Base;
+use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+use Amadeus\Client\Struct\Offer\Reference;
+use Amadeus\Client\Struct\Offer\Verify;
 use Amadeus\Client\Struct\Pnr\Retrieve;
 use Test\Amadeus\BaseTestCase;
 
@@ -59,5 +62,28 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('ABC123', $message->retrievalFacts->reservationOrProfileIdentifier->reservation->controlNumber);
 
         $this->assertNull($message->settings);
+    }
+
+    public function testCanCreateOfferVerifyMessage()
+    {
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string'
+        ]);
+
+        $rq = new Base($par);
+
+        $message = $rq->createRequest(
+            'offerVerify',
+            new OfferVerifyOptions(['offerReference' => 1, 'segmentName' => 'AIR'])
+        );
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\Offer\Verify', $message);
+        /** @var Verify $message */
+        $this->assertInstanceOf('Amadeus\Client\Struct\Offer\OfferTatoo', $message->offerTatoo);
+        $this->assertEquals('AIR', $message->offerTatoo->segmentName);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Offer\Reference', $message->offerTatoo->reference);
+        $this->assertEquals(Reference::TYPE_OFFER_TATOO, $message->offerTatoo->reference->type);
+        $this->assertEquals(1, $message->offerTatoo->reference->value);
     }
 }
