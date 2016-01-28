@@ -105,7 +105,7 @@ class Base implements RequestCreatorInterface
     protected function createPnrRetrieveAndDisplay(PnrRetrieveAndDisplayOptions $params)
     {
         $req = new Struct\Pnr\RetrieveAndDisplay(
-            $params->recordlocator,
+            $params->recordLocator,
             $params->retrieveOption
         );
 

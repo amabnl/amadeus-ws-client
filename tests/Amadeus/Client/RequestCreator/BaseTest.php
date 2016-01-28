@@ -25,10 +25,17 @@ namespace Test\Amadeus\Client\RequestCreator;
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestCreator\Base;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
+use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+use Amadeus\Client\RequestOptions\Queue;
+use Amadeus\Client\RequestOptions\QueueListOptions;
 use Amadeus\Client\Struct\Offer\Reference;
 use Amadeus\Client\Struct\Offer\Verify;
 use Amadeus\Client\Struct\Pnr\Retrieve;
+use Amadeus\Client\Struct\Pnr\RetrieveAndDisplay;
+use Amadeus\Client\Struct\Queue\QueueList;
+use Amadeus\Client\Struct\Queue\SelectionDetails;
+use Amadeus\Client\Struct\Queue\SubQueueInfoDetails;
 use Test\Amadeus\BaseTestCase;
 
 /**
@@ -38,6 +45,25 @@ use Test\Amadeus\BaseTestCase;
  */
 class BaseTest extends BaseTestCase
 {
+    public function testUnknownMessageWillThrowRuntimeException()
+    {
+        $this->setExpectedException(
+            '\RuntimeException',
+            'Message createFareDisplayCurrencyIATARates is not implemented'
+        );
+
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string'
+        ]);
+
+        $rq = new Base($par);
+
+        $rq->createRequest(
+            'fareDisplayCurrencyIATARates',
+            $this->getMockBuilder('Amadeus\Client\RequestOptions\RequestOptionsInterface')->getMock()
+        );
+    }
     public function testCanCreatePnrRetrieveMessage()
     {
         $par = new RequestCreatorParams([
@@ -64,6 +90,28 @@ class BaseTest extends BaseTestCase
         $this->assertNull($message->settings);
     }
 
+    public function testCanCreatePnrRetrieveAndDisplayMessage()
+    {
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string'
+        ]);
+
+        $rq = new Base($par);
+
+        $message = $rq->createRequest(
+            'pnrRetrieveAndDisplay',
+            new PnrRetrieveAndDisplayOptions(['recordLocator' => 'ABC123', 'retrieveOption' => 'OFR'])
+        );
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\RetrieveAndDisplay', $message);
+        /** @var RetrieveAndDisplay $message */
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\ReservationInfo', $message->reservationInfo);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\Reservation', $message->reservationInfo->reservation);
+        $this->assertEquals('ABC123', $message->reservationInfo->reservation->controlNumber);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\RetrieveAndDisplay\DynamicOutputOption', $message->dynamicOutputOption);
+    }
+
     public function testCanCreateOfferVerifyMessage()
     {
         $par = new RequestCreatorParams([
@@ -86,4 +134,47 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(Reference::TYPE_OFFER_TATOO, $message->offerTatoo->reference->type);
         $this->assertEquals(1, $message->offerTatoo->reference->value);
     }
+
+    public function testCanCreateQueueListMessage()
+    {
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string'
+        ]);
+
+        $rq = new Base($par);
+
+        $message = $rq->createRequest(
+            'queueList',
+            new QueueListOptions([
+                'queue' => new Queue([
+                    'queue' => 50,
+                    'category' => 1
+                ])
+            ])
+        );
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\Queue\QueueList', $message);
+        /** @var QueueList $message */
+        $this->assertNull($message->date);
+        $this->assertNull($message->scanRange);
+        $this->assertNull($message->scroll);
+        $this->assertEmpty($message->searchCriteria);
+        $this->assertNull($message->targetOffice);
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\Queue\QueueNumber', $message->queueNumber);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Queue\QueueDetails', $message->queueNumber->queueDetails);
+        $this->assertEquals(50, $message->queueNumber->queueDetails->number);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Queue\CategoryDetails', $message->categoryDetails);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Queue\SubQueueInfoDetails', $message->categoryDetails->subQueueInfoDetails);
+        $this->assertEquals(1, $message->categoryDetails->subQueueInfoDetails->itemNumber);
+        $this->assertEquals(SubQueueInfoDetails::IDTYPE_CATEGORY, $message->categoryDetails->subQueueInfoDetails->identificationType);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Queue\SortCriteria', $message->sortCriteria);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Queue\Dumbo', $message->sortCriteria->dumbo);
+        $this->assertInternalType('array', $message->sortCriteria->sortOption);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Queue\SortOption', $message->sortCriteria->sortOption[0]);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Queue\SelectionDetails', $message->sortCriteria->sortOption[0]->selectionDetails);
+        $this->assertEquals(SelectionDetails::LIST_OPTION_SORT_CREATION, $message->sortCriteria->sortOption[0]->selectionDetails->option);
+    }
 }
+
