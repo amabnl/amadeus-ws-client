@@ -34,6 +34,7 @@ use Amadeus\Client\Struct\InvalidArgumentException;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\AirAuxItinerary;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsIndiv;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\DateOfBirth;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementItinerary;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementPassenger;
@@ -45,6 +46,8 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\FreetextDetail;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ItineraryInfo;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\MiscellaneousRemark;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\Passenger;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\PassengerData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TicketElement;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInfo;
 
@@ -187,6 +190,23 @@ class AddMultiElements extends BaseWsMessage
             ElementManagementPassenger::SEG_NAME,
             $traveller->lastName
         );
+
+        if ($traveller->withInfant === true || $traveller->infant !== null) {
+            throw new \RuntimeException('Adding Infants is not yet supported');
+        }
+
+        if ($traveller->dateOfBirth instanceof \DateTime) {
+            $createdTraveller->passengerData[0]->dateOfBirth = new DateOfBirth(
+                $traveller->dateOfBirth->format('dmy')
+            );
+        }
+
+        if ($traveller->firstName !== null || $traveller->travellerType !== null) {
+            $createdTraveller->passengerData[0]->travellerInformation->passenger[] = new Passenger(
+                $traveller->firstName,
+                $traveller->travellerType
+            );
+        }
 
         return $createdTraveller;
     }

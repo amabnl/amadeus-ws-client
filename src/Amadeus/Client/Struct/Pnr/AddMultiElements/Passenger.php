@@ -244,4 +244,15 @@ class Passenger
      * @var string
      */
 	public $identificationCode;
+
+    /**
+     * Passenger constructor.
+     * @param $firstName
+     * @param $type
+     */
+	public function __construct($firstName, $type)
+    {
+        $this->firstName = $firstName;
+        $this->type = $type;
+    }
 }
