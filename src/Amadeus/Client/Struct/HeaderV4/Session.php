@@ -20,31 +20,37 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\Struct\HeaderV4;
 
 /**
- * FreetextData
+ * Session Header structure
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\HeaderV4
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FreetextData
+class Session
 {
-    /**
-     * @var FreetextDetail
-     */
-    public $freetextDetail;
-    /**
-     * @var string
-     */
-    public $longFreetext;
+    public $TransactionStatusCode;
+
+    public $SessionId;
+
+    public $SequenceNumber;
+
+    public $SecurityToken;
 
     /**
-     * @param string $freeText
+     * Session constructor.
+     *
+     * @param array $sessionData
+     * @param string $statusCode
      */
-    public function __construct($freeText = null, $type = null)
+    public function __construct($sessionData, $statusCode)
     {
-        $this->longFreetext = $freeText;
-        $this->freetextDetail = new FreetextDetail($type);
+        $this->SessionId = $sessionData[''];
+        $this->SequenceNumber = $sessionData[''];
+        $this->SecurityToken = $sessionData[''];
+
+        $this->TransactionStatusCode = $statusCode;
     }
+
 }

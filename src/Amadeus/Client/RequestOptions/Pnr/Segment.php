@@ -22,13 +22,15 @@
 
 namespace Amadeus\Client\RequestOptions\Pnr;
 
+use Amadeus\Client\LoadParamsFromArray;
+
 /**
  * Basic PNR Segment
  *
  * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Segment
+class Segment extends LoadParamsFromArray
 {
     const STATUS_CONFIRMED = "HK";
 

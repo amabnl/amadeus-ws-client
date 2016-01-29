@@ -66,6 +66,9 @@ class AirAuxItinerary
             case 'Miscellaneous':
                 $this->loadMiscellaneous($segmentContent);
                 break;
+            case 'Air':
+                $this->loadAir($segmentContent);
+                break;
             default:
                 throw new InvalidArgumentException('Segment type ' . $segmentType . 'is not supported');
                 break;
@@ -87,5 +90,13 @@ class AirAuxItinerary
         $this->relatedProduct = new RelatedProduct($segment->status);
 
         $this->freetextItinerary = new FreetextItinerary($segment->freeText);
+    }
+
+    /**
+     * @param Segment\Air $segment
+     */
+    protected function loadAir(Segment\Air $segment)
+    {
+        throw new \RuntimeException('NOT YET IMPLEMENTED');
     }
 }

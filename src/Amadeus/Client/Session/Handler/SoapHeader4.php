@@ -260,8 +260,6 @@ class SoapHeader4 extends Base
         } else {
             $this->isAuthenticated = false;
         }
-
-
     }
 
     /**
@@ -270,7 +268,9 @@ class SoapHeader4 extends Base
      */
     protected function getSessionDataFromHeader($responseHeaders)
     {
-        $this->log(LogLevel::INFO, $responseHeaders);
+        $this->log(LogLevel::WARNING, __METHOD__ . "() TODO: IMPLEMENT THIS METHOD");
+        $this->log(LogLevel::INFO, var_export($responseHeaders, true));
+
     }
 
     /**
@@ -367,11 +367,36 @@ class SoapHeader4 extends Base
                     )
                 );*/
             } else if ($stateful === true) {
-                // TODO: We are authenticated and stateful: provide session header
+                //We are authenticated and stateful: provide session header to continue or terminate session
+
+                /* // Sample session:
+                 <awsse:Session xmlns:awsse="http://xml.amadeus.com/2010/06/Session_v3"
+                    TransactionStatusCode="InSeries">
+                     <awsse:SessionId>01HFHCODVI</awsse:SessionId>
+                     <awsse:SequenceNumber>2</awsse:SequenceNumber>
+                     <awsse:SecurityToken>1SP31VH87S9T310EWJIH27JLRI</awsse:SecurityToken>
+                     </awsse:Session>
+                    </soapenv:Header>
+                */
+
+                $statusCode =
+                    (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) ?
+                        "End" :
+                        "InSeries";
+
+                array_push(
+                    $headersToSet,
+                    new \SoapHeader(
+                        'http://xml.amadeus.com/2010/06/Session_v3',
+                        'Session',
+                        new Client\Struct\HeaderV4\Session(
+                            $this->sessionData,
+                            $statusCode
+                        )
+                    )
+                );
 
             }
-
-
 
             array_push(
                 $headersToSet,
@@ -386,11 +411,6 @@ class SoapHeader4 extends Base
                     )
                 )
             );
-
-            if ($stateful) {
-                $statusCode = ($this->isAuthenticated === true) ? "InSeries" : "Start";
-
-            }
         }
 
         return $headersToSet;
@@ -588,7 +608,7 @@ class SoapHeader4 extends Base
     protected function makeSoapClientOptions()
     {
         $options = $this->soapClientOptions;
-        $options['classmap'] = Classmap::$map;
+        $options['classmap'] = array_merge(Classmap::$soapheader4map, Classmap::$map);
 
         return $options;
     }

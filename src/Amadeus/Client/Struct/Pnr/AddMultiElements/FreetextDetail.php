@@ -49,6 +49,22 @@ class FreetextDetail
      */
     const TYPE_RECEIVE_FROM = "P22";
 
+    const TYPE_PHONE_GENERAL = "5";
+
+    const TYPE_PHONE_HOME = "4";
+
+    const TYPE_PHONE_BUSINESS = "3";
+
+    const TYPE_PHONE_MOBILE = "7";
+
+    const TYPE_FAX = "P01";
+
+    const TYPE_EMAIL = "P02";
+
+    const TYPE_INTERNETADDRESS = "P03";
+
+    const TYPE_OTHER_SERVICE_INFO_OSI = "28";
+
     /**
      * @var string
      */
@@ -114,7 +130,7 @@ class FreetextDetail
      * @param string $type
      * @param string $subQual
      */
-    public function __construct($type = self::TYPE_RECEIVE_FROM, $subQual = self::QUALIFIER_LITERALTEXT)
+    public function __construct($type, $subQual = self::QUALIFIER_LITERALTEXT)
     {
         $this->type = $type;
         $this->subjectQualifier = $subQual;

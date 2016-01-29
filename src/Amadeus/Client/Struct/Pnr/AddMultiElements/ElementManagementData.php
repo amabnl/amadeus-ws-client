@@ -61,6 +61,33 @@ class ElementManagementData
     const SEGNAME_TICKETING_ELEMENT = "TK";
 
     /**
+     * AP and related elements
+     * @var string
+     */
+    const SEGNAME_CONTACT_ELEMENT = "AP";
+
+    /**
+     * OSI - Other Service Information
+     *
+     * @var string
+     */
+    const SEGNAME_OTHER_SERVICE_INFORMATION = "OS";
+
+    /**
+     * AI - Accounting Information
+     *
+     * @var string
+     */
+    const SEGNAME_ACCOUNTING_INFORMATION = "AI";
+
+    /**
+     * SSR - Special Service Request
+     *
+     * @var string
+     */
+    const SEGNAME_SPECIAL_SERVICE_REQUEST = "SSR";
+
+    /**
      * @var Reference
      */
     public $reference;

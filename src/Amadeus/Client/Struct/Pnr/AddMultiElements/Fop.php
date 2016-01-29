@@ -81,7 +81,7 @@ class Fop
      */
     public function __construct($identification = null)
     {
-        if (!is_null($identification) && strlen($identification) == 2) {
+        if (!is_null($identification) && strlen($identification) == 2 && self::isValidFopType($identification)) {
             $this->identification = $identification;
         }
     }

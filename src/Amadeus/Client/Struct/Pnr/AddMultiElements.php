@@ -37,7 +37,11 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementItinerary;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementPassenger;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\Fop;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\FopExtension;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\FormOfPayment;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\FreetextData;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\FreetextDetail;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ItineraryInfo;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\MiscellaneousRemark;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails;
@@ -149,6 +153,9 @@ class AddMultiElements extends BaseWsMessage
                 $createdSegment = new ItineraryInfo($tatooCounter, ElementManagementItinerary::SEGMENT_MISCELLANEOUS);
                 $createdSegment->airAuxItinerary = new AirAuxItinerary($segmentType, $segment);
                 break;
+            case 'Air':
+                throw new \RuntimeException('NOT YET IMPLEMENTED');
+                break;
             default:
                 throw new InvalidArgumentException('Segment type ' . $segmentType . 'is not supported');
                 break;
@@ -232,11 +239,27 @@ class AddMultiElements extends BaseWsMessage
         switch ($elementType) {
             case 'Contact':
                 /** @var Element\Contact $element */
-                //TODO
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_CONTACT_ELEMENT, $tatooCounter);
+                $createdElement->freetextData = new FreetextData(
+                    $element->value,
+                    $element->type
+                );
                 break;
             case 'FormOfPayment':
                 /** @var Element\FormOfPayment $element */
-                //TODO
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_FORM_OF_PAYMENT, $tatooCounter);
+                $createdElement->formOfPayment = new FormOfPayment($element->type);
+                if ($element->type === Fop::IDENT_CREDITCARD) {
+                    $createdElement->formOfPayment->fop->creditCardCode = $element->creditCardType;
+                    $createdElement->formOfPayment->fop->accountNumber = $element->creditCardNumber;
+                    $createdElement->formOfPayment->fop->expiryDate = $element->creditCardExpiry;
+                } elseif ($element->type === Fop::IDENT_MISC && $element->freeText != "NONREF") {
+                    $createdElement->formOfPayment->fop->freetext = $element->freeText;
+                } elseif ($element->type === Fop::IDENT_MISC && $element->freeText == "NONREF") {
+                    $createdElement->fopExtension = new FopExtension(1);
+                } elseif ($element->type === Fop::IDENT_CHECK) {
+                    throw new \RuntimeException("FOP CHECK NOT YET IMPLEMENTED");
+                }
                 break;
             case 'MiscellaneousRemark':
                 /** @var Element\MiscellaneousRemark $element */
@@ -250,7 +273,10 @@ class AddMultiElements extends BaseWsMessage
             case 'ReceivedFrom':
                 /** @var Element\ReceivedFrom $element */
                 $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_RECEIVE_FROM, $tatooCounter);
-                $createdElement->freetextData = new FreetextData($element->receivedFrom);
+                $createdElement->freetextData = new FreetextData(
+                    $element->receivedFrom,
+                    FreetextDetail::TYPE_RECEIVE_FROM
+                );
                 break;
             case 'ServiceRequest':
                 /** @var Element\ServiceRequest $element */

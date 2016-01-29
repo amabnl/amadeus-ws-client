@@ -31,15 +31,26 @@ namespace Amadeus\Client\Session\Handler;
 class Classmap
 {
     /**
+     * The PHP -> WSDL translation classmap for Soap Header 4 specific message parts
+     *
+     * @var array
+     */
+    public static $soapheader4map = [
+        'AMA_SecurityHostedUser' => 'Amadeus\Client\Struct\HeaderV4\SecurityHostedUser',
+        'UserID' => 'Amadeus\Client\Struct\HeaderV4\UserId',
+        'Security' => 'Amadeus\Client\Struct\HeaderV4\Security',
+        'UsernameToken' => 'Amadeus\Client\Struct\HeaderV4\UsernameToken',
+        'Session' => 'Amadeus\Client\Struct\HeaderV4\Session',
+    ];
+
+    /**
      * The PHP -> WSDL translation classmap for the Amadeus WS Client
+     *
+     * Contains all non-soapheader-specific mapping
      *
      * @var array
      */
     public static $map = [
-        'AMA_SecurityHostedUser' => 'Amadeus\Client\Struct\HeaderV4\SecurityHostedUser',
-        'UserID' => 'Amadeus\Client\Struct\HeaderV4\UserId',
-        'Security' => 'Amadeus\Client\Struct\HeaderV4\Security',
-        'UsernameToken' => 'Amadeus\Client\Struct\HeaderV4\UsernameToken'
-    ];
 
+    ];
 }
