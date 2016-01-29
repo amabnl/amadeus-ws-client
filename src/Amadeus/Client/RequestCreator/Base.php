@@ -105,7 +105,7 @@ class Base implements RequestCreatorInterface
     protected function createPnrRetrieveAndDisplay(PnrRetrieveAndDisplayOptions $params)
     {
         $req = new Struct\Pnr\RetrieveAndDisplay(
-            $params->recordlocator,
+            $params->recordLocator,
             $params->retrieveOption
         );
 
@@ -252,15 +252,7 @@ class Base implements RequestCreatorInterface
     {
         $params->receivedFrom = $this->params->receivedFrom;
 
-        $req = new Struct\Pnr\AddMultiElements(
-            $params
-        );
-
-        //TODO
-
-        /*$receivedFrom = new ReceivedFrom(
-            $this->params->receivedFrom
-        );*/
+        $req = new Struct\Pnr\AddMultiElements($params);
 
         return $req;
     }

@@ -20,29 +20,37 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\HeaderV4;
 
 /**
- * PnrRetrieveAndDisplayOptions
+ * Session Header structure
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\HeaderV4
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveAndDisplayOptions extends Base
+class Session
 {
+    public $TransactionStatusCode;
 
+    public $SessionId;
+
+    public $SequenceNumber;
+
+    public $SecurityToken;
 
     /**
-     * 6-character Amadeus Record Locator
+     * Session constructor.
      *
-     * @var string
+     * @param array $sessionData
+     * @param string $statusCode
      */
-    public $recordLocator;
+    public function __construct($sessionData, $statusCode)
+    {
+        $this->SessionId = $sessionData[''];
+        $this->SequenceNumber = $sessionData[''];
+        $this->SecurityToken = $sessionData[''];
 
-    /**
-     * 'ALL', 'OFR' or 'PNR' (all, only offers, only PNR)
-     *
-     * @var string
-     */
-    public $retrieveOption;
+        $this->TransactionStatusCode = $statusCode;
+    }
+
 }

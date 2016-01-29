@@ -37,6 +37,7 @@ use Amadeus\Client\RequestOptions\QueueListOptions;
 use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
 use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
 use Amadeus\Client\RequestOptions\QueueRemoveItemOptions;
+use Amadeus\Client\RequestOptions\SecuritySignOutOptions;
 use Amadeus\Client\Session\Handler\HandlerFactory;
 use Amadeus\Client\RequestCreator\Factory as RequestCreatorFactory;
 use Amadeus\Client\Session\Handler\HandlerInterface;
@@ -77,7 +78,7 @@ class Client
      *
      * @var string
      */
-    const receivedFromIdentifier = "amabnl/amadeus-ws-client";
+    const receivedFromIdentifier = "amabnl-amadeus-ws-client";
 
     /**
      * @var HandlerInterface
@@ -124,6 +125,26 @@ class Client
             $params->requestCreatorParams,
             self::receivedFromIdentifier . "-" .self::version,
             $this->sessionHandler->getOriginatorOffice()
+        );
+    }
+
+    /**
+     * Terminate a session - only applicable to non-stateless mode.
+     *
+     * @return \stdClass
+     * @throws Exception
+     */
+    public function securitySignOut()
+    {
+        $messageOptions = $this->makeMessageOptions();
+
+        return $this->sessionHandler->sendMessage(
+            'Security_SignOut',
+            $this->requestCreator->createRequest(
+                'securitySignOut',
+                new SecuritySignOutOptions()
+            ),
+            $messageOptions
         );
     }
 

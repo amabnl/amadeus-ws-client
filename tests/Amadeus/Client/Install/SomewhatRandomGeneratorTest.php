@@ -20,29 +20,32 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Test\Amadeus\Client\Install;
+
+use Amadeus\Client\Install\SomewhatRandomGenerator;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * PnrRetrieveAndDisplayOptions
+ * SomewhatRandomGeneratorTest
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Install
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveAndDisplayOptions extends Base
+class SomewhatRandomGeneratorTest extends BaseTestCase
 {
+    public function testCanGenerateRandomStringDefaultLength()
+    {
+        $somewhat = SomewhatRandomGenerator::generateSomewhatRandomString();
 
+        $this->assertInternalType('string', $somewhat);
+        $this->assertEquals(22, mb_strlen($somewhat));
+    }
 
-    /**
-     * 6-character Amadeus Record Locator
-     *
-     * @var string
-     */
-    public $recordLocator;
+    public function testCanGenerateRandomStringProvidedLength()
+    {
+        $somewhat = SomewhatRandomGenerator::generateSomewhatRandomString(10);
 
-    /**
-     * 'ALL', 'OFR' or 'PNR' (all, only offers, only PNR)
-     *
-     * @var string
-     */
-    public $retrieveOption;
+        $this->assertInternalType('string', $somewhat);
+        $this->assertEquals(10, mb_strlen($somewhat));
+    }
 }

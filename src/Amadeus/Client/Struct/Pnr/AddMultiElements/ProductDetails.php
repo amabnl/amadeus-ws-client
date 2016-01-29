@@ -20,29 +20,21 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * PnrRetrieveAndDisplayOptions
+ * ProductDetails
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveAndDisplayOptions extends Base
+class ProductDetails
 {
+    public $identification;
 
+    public $classOfService;
 
-    /**
-     * 6-character Amadeus Record Locator
-     *
-     * @var string
-     */
-    public $recordLocator;
+    public $subtype;
 
-    /**
-     * 'ALL', 'OFR' or 'PNR' (all, only offers, only PNR)
-     *
-     * @var string
-     */
-    public $retrieveOption;
+    public $description;
 }

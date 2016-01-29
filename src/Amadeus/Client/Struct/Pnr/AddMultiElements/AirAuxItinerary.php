@@ -22,6 +22,12 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
+<<<<<<< HEAD
+=======
+use Amadeus\Client\RequestOptions\Pnr\Segment;
+use Amadeus\Client\Struct\InvalidArgumentException;
+
+>>>>>>> develop
 /**
  * AirAuxItinerary
  * 
@@ -50,4 +56,53 @@ class AirAuxItinerary
      * @var FreetextItinerary
      */
     public $freetextItinerary;
+<<<<<<< HEAD
+=======
+
+    /**
+     * AirAuxItinerary constructor.
+     *
+     * @param string $segmentType
+     * @param Segment $segmentContent
+     */
+    public function __construct($segmentType, $segmentContent)
+    {
+        switch($segmentType) {
+            case 'Miscellaneous':
+                $this->loadMiscellaneous($segmentContent);
+                break;
+            case 'Air':
+                $this->loadAir($segmentContent);
+                break;
+            default:
+                throw new InvalidArgumentException('Segment type ' . $segmentType . 'is not supported');
+                break;
+        }
+    }
+
+    /**
+     * @param Segment\Miscellaneous $segment
+     */
+    protected function loadMiscellaneous(Segment\Miscellaneous $segment)
+    {
+        $this->travelProduct = new TravelProduct(
+            $segment->date,
+            $segment->cityCode,
+            $segment->company
+        );
+        $this->messageAction = new MessageAction(Business::FUNC_MISC);
+
+        $this->relatedProduct = new RelatedProduct($segment->status);
+
+        $this->freetextItinerary = new FreetextItinerary($segment->freeText);
+    }
+
+    /**
+     * @param Segment\Air $segment
+     */
+    protected function loadAir(Segment\Air $segment)
+    {
+        throw new \RuntimeException('NOT YET IMPLEMENTED');
+    }
+>>>>>>> develop
 }

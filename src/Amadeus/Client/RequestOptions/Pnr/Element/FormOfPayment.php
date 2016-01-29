@@ -32,5 +32,39 @@ use Amadeus\Client\RequestOptions\Pnr\Element;
  */
 class FormOfPayment extends Element
 {
+    const TYPE_CASH = "CA";
+    const TYPE_CHECK = "CK";
+    const TYPE_CREDITCARD = "CC";
+    const TYPE_MISC = "MS";
 
+    /**
+     * self::TYPE_*
+     *
+     * @var string
+     */
+    public $type;
+    /**
+     * for self::TYPE_CREDITCARD
+     *
+     * @var string
+     */
+    public $creditCardType;
+    /**
+     * for self::TYPE_CREDITCARD
+     *
+     * @var string
+     */
+    public $creditCardNumber;
+    /**
+     * for self::TYPE_CREDITCARD
+     *
+     * @var string
+     */
+    public $creditCardExpiry;
+
+    /**
+     * Free text for self::TYPE_MISC
+     * @var string
+     */
+    public $freeText;
 }

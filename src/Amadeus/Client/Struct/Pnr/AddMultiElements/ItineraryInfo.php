@@ -43,4 +43,18 @@ class ItineraryInfo
      * @var
      */
     public $referenceForSegment;
+<<<<<<< HEAD
+=======
+
+    /**
+     * ItineraryInfo constructor.
+     *
+     * @param int $tatooNr
+     * @param string $segmentName
+     */
+    public function __construct($tatooNr, $segmentName)
+    {
+        $this->elementManagementItinerary = new ElementManagementItinerary($tatooNr, $segmentName);
+    }
+>>>>>>> develop
 }

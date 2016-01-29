@@ -214,6 +214,15 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertTrue($sessionHandler->getStateful());
     }
 
+    public function testCanReadSessionEndFromResponse()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $method = self::getMethod($sessionHandler, 'generateSecurityHeaderRawXml');
+
+    }
+
 
     /**
      * @return SessionHandlerParams

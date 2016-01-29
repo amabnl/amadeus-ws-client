@@ -22,13 +22,29 @@
 
 namespace Amadeus\Client\RequestOptions\Pnr;
 
+use Amadeus\Client\LoadParamsFromArray;
+
 /**
- * TripSegment
+ * Basic PNR Segment
  *
  * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Segment
+class Segment extends LoadParamsFromArray
 {
+    const STATUS_CONFIRMED = "HK";
 
+    /**
+     * self::STATUS_*
+     *
+     * @var string
+     */
+    public $status = self::STATUS_CONFIRMED;
+
+    /**
+     * The company code
+     *
+     * @var string
+     */
+    public $company;
 }

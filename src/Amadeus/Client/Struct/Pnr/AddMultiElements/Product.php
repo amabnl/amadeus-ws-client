@@ -20,29 +20,50 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * PnrRetrieveAndDisplayOptions
+ * Product
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveAndDisplayOptions extends Base
+class Product
 {
-
-
     /**
-     * 6-character Amadeus Record Locator
+     * yymmdd
      *
      * @var string
      */
-    public $recordLocator;
-
+    public $depDate;
     /**
-     * 'ALL', 'OFR' or 'PNR' (all, only offers, only PNR)
+     * hhss
      *
      * @var string
      */
-    public $retrieveOption;
+    public $depTime;
+    /**
+     * yymmdd
+     *
+     * @var string
+     */
+    public $arrDate;
+    /**
+     * hhss
+     *
+     * @var string
+     */
+    public $arrTime;
+
+    /**
+     * Product constructor.
+     *
+     * @param \DateTime $departureDate
+     */
+    public function __construct($departureDate)
+    {
+        if ($departureDate instanceof \DateTime) {
+            $this->depDate = $departureDate->format('dmy');
+        }
+    }
 }

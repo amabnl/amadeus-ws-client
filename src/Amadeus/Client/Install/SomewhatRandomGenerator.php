@@ -20,29 +20,36 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Install;
 
 /**
- * PnrRetrieveAndDisplayOptions
+ * SomewhatRandomGenerator
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Install
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveAndDisplayOptions extends Base
+class SomewhatRandomGenerator
 {
-
-
     /**
-     * 6-character Amadeus Record Locator
+     * Generates a somewhat random string of a given length
      *
-     * @var string
+     * @param $length
+     * @return string
      */
-    public $recordLocator;
+    public static function generateSomewhatRandomString($length = 22)
+    {
+        $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
+        srand((double)microtime()*1000000);
+        $i = 0;
+        $somewhatRandom = '' ;
 
-    /**
-     * 'ALL', 'OFR' or 'PNR' (all, only offers, only PNR)
-     *
-     * @var string
-     */
-    public $retrieveOption;
+        while ($i < $length) {
+            $num = rand() % 60;
+            $tmp = substr($chars, $num, 1);
+            $somewhatRandom = $somewhatRandom . $tmp;
+            $i++;
+        }
+
+        return $somewhatRandom;
+    }
 }

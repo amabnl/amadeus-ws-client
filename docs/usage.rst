@@ -48,13 +48,12 @@ Set up a test client
         'sessionHandlerParams' => [
             'soapHeaderVersion' => Client::HEADER_V4, //This is the default value, can be omitted.
             'wsdl' => '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20160101_080000.wsdl', //Points to the location of the WSDL file for your WSAP. Make sure the associated XSD's are also available.
-            'stateful' => false,
+            'stateful' => false, //Enable stateful messages by default - can be changed at will to switch between stateless & stateful.
             'logger' => new Psr\Log\NullLogger(),
             'authParams' => [
                 'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
                 'originator' => 'WSBENXXX', // Also known as 'User ID' for Soap Header 4 WSDL's
-                'passwordData' => 'dGhlIHBhc3N3b3Jk', // **base 64 encoded** password
-                'nonceBase' => 'random string for generating unique nonce' //optional but recommended - to avoid collisions with other users of this library.
+                'passwordData' => 'dGhlIHBhc3N3b3Jk' // **base 64 encoded** password
             ]
         ],
         'requestCreatorParams' => [
@@ -74,6 +73,7 @@ Messages supported
 ******************
 
 This is the list of messages that are at least partially supported at this time:
+
 - Security_SignOut
 - PNR_Retrieve
 - PNR_RetrieveAndDisplay

@@ -42,9 +42,9 @@ class FreetextData
     /**
      * @param string $freeText
      */
-    public function __construct($freeText = null)
+    public function __construct($freeText = null, $type = null)
     {
         $this->longFreetext = $freeText;
-        $this->freetextDetail = new FreetextDetail();
+        $this->freetextDetail = new FreetextDetail($type);
     }
 }

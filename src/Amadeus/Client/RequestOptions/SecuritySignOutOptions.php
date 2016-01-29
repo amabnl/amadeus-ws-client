@@ -23,26 +23,12 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PnrRetrieveAndDisplayOptions
+ * SecuritySignOutOptions
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveAndDisplayOptions extends Base
+class SecuritySignOutOptions extends Base
 {
 
-
-    /**
-     * 6-character Amadeus Record Locator
-     *
-     * @var string
-     */
-    public $recordLocator;
-
-    /**
-     * 'ALL', 'OFR' or 'PNR' (all, only offers, only PNR)
-     *
-     * @var string
-     */
-    public $retrieveOption;
 }

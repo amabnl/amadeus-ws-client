@@ -20,29 +20,25 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * PnrRetrieveAndDisplayOptions
+ * FlightTypeDetails
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveAndDisplayOptions extends Base
+class FlightTypeDetails
 {
-
-
     /**
-     * 6-character Amadeus Record Locator
+     * Number indicating the position in a sequence.
+     *
+     * LA	Local availibility
+     * S1	Availability of Sub O&D 1
+     * S2	Availability of Sub O&D 2
      *
      * @var string
      */
-    public $recordLocator;
+    public $flightIndicator;
 
-    /**
-     * 'ALL', 'OFR' or 'PNR' (all, only offers, only PNR)
-     *
-     * @var string
-     */
-    public $retrieveOption;
 }

@@ -20,29 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * PnrRetrieveAndDisplayOptions
+ * BoardOffPointDetail
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveAndDisplayOptions extends Base
+class BoardOffPointDetail
 {
-
-
     /**
-     * 6-character Amadeus Record Locator
+     * Identification of the name of place/location, other than 3164 City name.
      *
      * @var string
      */
-    public $recordLocator;
+    public $cityCode;
 
     /**
-     * 'ALL', 'OFR' or 'PNR' (all, only offers, only PNR)
-     *
      * @var string
      */
-    public $retrieveOption;
+    public $cityName;
+
+    /**
+     * BoardOffPointDetail constructor.
+     *
+     * @param string $cityCode
+     */
+    public function __construct($cityCode)
+    {
+        $this->cityCode = $cityCode;
+    }
 }

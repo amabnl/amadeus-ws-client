@@ -32,5 +32,20 @@ use Amadeus\Client\RequestOptions\Pnr\Segment;
  */
 class Miscellaneous extends Segment
 {
+    /**
+     * @var \DateTime
+     */
+    public $date;
+
+    /**
+     * @var string
+     */
+    public $cityCode;
+
+    /**
+     * @var string
+     */
+    public $freeText;
+
 
 }

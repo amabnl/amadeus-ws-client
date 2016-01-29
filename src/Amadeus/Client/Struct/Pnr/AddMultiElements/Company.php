@@ -20,29 +20,37 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * PnrRetrieveAndDisplayOptions
+ * Company
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrRetrieveAndDisplayOptions extends Base
+class Company
 {
-
-
     /**
-     * 6-character Amadeus Record Locator
+     * The coded description of supplier of a service or product, i.e. airline designator code.
      *
      * @var string
      */
-    public $recordLocator;
+    public $identification;
 
     /**
-     * 'ALL', 'OFR' or 'PNR' (all, only offers, only PNR)
+     * The coded description of supplier of a service or product, i.e. airline designator code.
      *
      * @var string
      */
-    public $retrieveOption;
+    public $secondIdentification;
+
+    /**
+     * Company constructor.
+     *
+     * @param string $companyCode
+     */
+    public function __construct($companyCode)
+    {
+        $this->identification = $companyCode;
+    }
 }

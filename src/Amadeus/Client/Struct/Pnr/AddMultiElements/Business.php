@@ -23,29 +23,62 @@
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * MessageAction
- * 
+ * Business
+ *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MessageAction
+class Business
 {
-<<<<<<< HEAD
+    const FUNC_MISC = 32;
 
-=======
+    const FUNC_AIR = 1;
+
+    const FUNC_AIRTAXI = 10;
+
+    const FUNC_TOUR_AIRLINE = 11;
+
+    const FUNC_SURFACE = 12;
+
+    const FUNC_TOUR_TOUROPERATOR = 13;
+
+    const FUNC_CAR = 2;
+
+    const FUNC_HOTEL = 3;
+
+    const FUNC_RAIL = 6;
+
+    const FUNC_TOUR = 7;
+
+    const FUNC_HOTEL_AIRLINE = 8;
+
+    const FUNC_CAR_AIRLINE = 9;
+
     /**
-     * @var Business
+     * 1	Air Provider
+     * 10	Air taxi (ATX)
+     * 11	Tour (TUR), requested through airline rather than
+     * 12	Surface (SUR)
+     * 13	Tour (TTO), requested from tour operator
+     * 2	Car Provider (CCR) Hotel Provider (HHL)
+     * 3	Hotel Provider (HHL)
+     * 32	Miscellaneous
+     * 6	Rail
+     * 7	Tour
+     * 8	Hotel, requested through airline rather than hotel
+     * 9	Car, requested through airline rather than car ope
+     *
+     * @var int
      */
-    public $business;
+    public $function;
 
     /**
-     * MessageAction constructor.
+     * Business constructor.
      *
      * @param int $businessFunction
      */
     public function __construct($businessFunction)
     {
-        $this->business = new Business($businessFunction);
+        $this->function = $businessFunction;
     }
->>>>>>> develop
 }
