@@ -220,7 +220,26 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
         $method = self::getMethod($sessionHandler, 'generateSecurityHeaderRawXml');
+    }
 
+    public function testCanReadSessionDataFromResponse()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+        $method = self::getMethod($sessionHandler, 'getSessionDataFromHeader');
+
+        $expected = [
+            'sessionId' => '01ZWHV5EMT',
+            'sequenceNumber' => 1,
+            'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'
+        ];
+
+        $xml = $this->getTestFile("dummyPnrResponse.txt");
+
+        $actual = $method->invoke($sessionHandler, $xml);
+
+        $this->assertInternalType('array', $actual);
+        $this->assertEquals($expected, $actual);
     }
 
 
@@ -275,5 +294,15 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $doc->loadXML($xmlString);
 
         return $doc->firstChild;
+    }
+
+    /**
+     * @param $fileName
+     * @return string
+     */
+    protected function getTestFile($fileName)
+    {
+        $fullPath = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR."testfiles".DIRECTORY_SEPARATOR.$fileName);
+        return file_get_contents($fullPath);
     }
 }

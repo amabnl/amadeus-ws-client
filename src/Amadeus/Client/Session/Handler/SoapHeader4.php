@@ -68,8 +68,9 @@ class SoapHeader4 extends Base
      */
     protected $isStateful = true;
     /**
-     * The context
+     * The context of the currently active session
      *
+     * @todo implement this feature - currently the application using the client must know the context itself.
      * @var mixed
      */
     protected $context;
@@ -86,7 +87,6 @@ class SoapHeader4 extends Base
         'sequenceNumber' => null,
         'securityToken' => null
     ];
-
     /**
      * SoapClient options used during initialisation
      *
@@ -154,6 +154,36 @@ class SoapHeader4 extends Base
         return $this->isStateful;
     }
 
+    /**
+     * Get the session parameters of the active session
+     *
+     * @return array|null
+     */
+    public function getSessionData()
+    {
+        return $this->sessionData;
+    }
+
+    /**
+     * Get the last raw XML message that was sent out
+     *
+     * @return string|null
+     */
+    public function getLastRequest()
+    {
+        return $this->getSoapClient()->__getLastRequest();
+    }
+
+    /**
+     * Get the last raw XML message that was received
+     *
+     * @return string|null
+     */
+    public function getLastResponse()
+    {
+        return $this->getSoapClient()->__getLastResponse();
+    }
+
 
     /**
      * @param string $messageName Method Operation name as defined in the WSDL.
@@ -162,6 +192,7 @@ class SoapHeader4 extends Base
      * @return mixed
      * @throws \InvalidArgumentException
      * @throws Client\Exception
+     * @throws \SoapFault
      */
     public function sendMessage($messageName, BaseWsMessage $messageBody, $messageOptions = [])
     {
@@ -199,7 +230,7 @@ class SoapHeader4 extends Base
         }
 
         if ($messageOptions['asString'] === true) {
-            $result = $this->getSoapClient()->__getLastResponse();
+            $result = $this->getLastResponse();
         }
 
         return $result;
@@ -211,7 +242,6 @@ class SoapHeader4 extends Base
      * If authenticated, increment sequence number for next message and set session info to soapheader
      * If not, set auth info to soapheader
      *
-     * @todo decide if you want to end the session
      * @uses $this->isAuthenticated
      * @uses $this->sessionData
      * @param string $messageName
@@ -245,32 +275,58 @@ class SoapHeader4 extends Base
 
         if ($messageName === "Security_Authenticate") {
             //You really don't need the Security_Authenticate call anymore with SoapHeader 4!
-            //TODO
             throw new \RuntimeException('NOT YET IMPLEMENTED: Extract session data from Security_AuthenticateReply');
         }
 
+        //CHECK FOR SESSION DATA:
         if ($this->getStateful() === true) {
             //We need to extract session info
             $this->sessionData = $this->getSessionDataFromHeader(
-                $this->getSoapClient()->__getLastResponseHeaders()
+                $this->getLastResponse()
             );
-            $this->isAuthenticated = !empty($this->sessionData);
-
+            $this->isAuthenticated = (!empty($this->sessionData['sessionId']) &&
+                !empty($this->sessionData['sequenceNumber']) &&
+                !empty($this->sessionData['securityToken']));
 
         } else {
             $this->isAuthenticated = false;
         }
+
+        //TODO: check for errors in response?
     }
 
     /**
-     * @param $responseHeaders
+     * @param string $responseMsg the full response XML received.
      * @return array
      */
-    protected function getSessionDataFromHeader($responseHeaders)
+    protected function getSessionDataFromHeader($responseMsg)
     {
-        $this->log(LogLevel::WARNING, __METHOD__ . "() TODO: IMPLEMENT THIS METHOD");
-        $this->log(LogLevel::INFO, var_export($responseHeaders, true));
+        $newSessionData = [
+            'sessionId' => null,
+            'sequenceNumber' => null,
+            'securityToken' => null
+        ];
 
+        $responseDomDoc = new \DOMDocument('1.0', 'UTF-8');
+        $responseDomDoc->loadXML($responseMsg);
+        $responseDomXpath = new \DOMXPath($responseDomDoc);
+        $responseDomXpath->registerNamespace('awsse', 'http://xml.amadeus.com/2010/06/Session_v3');
+
+        $queryTransactionStatusCode = "string(//awsse:Session/@TransactionStatusCode/text())";
+
+        $transactionStatusCode = $responseDomXpath->evaluate($queryTransactionStatusCode);
+
+        if (mb_strtolower($transactionStatusCode) !== "end") {
+            $querySessionId = "string(//awsse:Session/awsse:SessionId/text())";
+            $querySequenceNumber = "string(//awsse:Session/awsse:SequenceNumber/text())";
+            $querySecurityToken = "string(//awsse:Session/awsse:SecurityToken/text())";
+
+            $newSessionData['sessionId'] = $responseDomXpath->evaluate($querySessionId);
+            $newSessionData['sequenceNumber'] = $responseDomXpath->evaluate($querySequenceNumber);
+            $newSessionData['securityToken'] = $responseDomXpath->evaluate($querySecurityToken);
+        }
+
+        return $newSessionData;
     }
 
     /**

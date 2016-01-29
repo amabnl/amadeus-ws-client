@@ -109,6 +109,26 @@ class Client
     }
 
     /**
+     * Get the last raw XML message that was sent out
+     *
+     * @return string|null
+     */
+    public function getLastRequest()
+    {
+        $this->sessionHandler->getLastRequest();
+    }
+
+    /**
+     * Get the last raw XML message that was received
+     *
+     * @return string|null
+     */
+    public function getLastResponse()
+    {
+        $this->sessionHandler->getLastRequest();
+    }
+
+    /**
      * Construct Amadeus Web Services client
      *
      * @param Params $params

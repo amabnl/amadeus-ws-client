@@ -58,12 +58,37 @@ interface HandlerInterface
     public function getOriginatorOffice();
 
     /**
+     * Set the Stateful mode off or on.
+     *
      * @param bool $stateful
      */
     public function setStateful($stateful);
 
     /**
+     * Get the session parameters of the active session
+     *
+     * @return array|null
+     */
+    public function getSessionData();
+
+    /**
+     * Get the current stateful mode (true is stateful, false is stateless)
+     *
      * @return bool
      */
     public function getStateful();
+
+    /**
+     * Get the last raw XML message that was sent out
+     *
+     * @return string|null
+     */
+    public function getLastRequest();
+
+    /**
+     * Get the last raw XML message that was received
+     *
+     * @return string|null
+     */
+    public function getLastResponse();
 }
