@@ -68,6 +68,13 @@ class SessionHandlerParams
     public $logger;
 
     /**
+     * Overridden soap client
+     *
+     * @var \SoapClient
+     */
+    public $overrideSoapClient;
+
+    /**
      * @param array $params
      */
     public function __construct($params = [])
@@ -96,6 +103,10 @@ class SessionHandlerParams
                 } elseif (is_array($params['authParams'])) {
                     $this->authParams = new AuthParams($params['authParams']);
                 }
+            }
+
+            if ($params['overrideSoapClient'] instanceof \SoapClient) {
+                $this->overrideSoapClient = $params['overrideSoapClient'];
             }
         }
     }

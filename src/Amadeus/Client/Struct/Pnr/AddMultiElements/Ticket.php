@@ -104,7 +104,7 @@ class Ticket
             //Set Ticket Datetime
             $this->date = $date->format("dmy");
 
-            $tickTime = $date->format('Gi');
+            $tickTime = $date->format('Hi');
             if ($tickTime !== "0000") {
                 $this->time = $tickTime;
             }

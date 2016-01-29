@@ -43,4 +43,18 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         return $method;
     }
 
+    /**
+     * Get a protected or private property from given class
+     *
+     * @param string $helper
+     * @param string $name
+     * @return \ReflectionProperty
+     */
+    protected static function getProperty($helper, $name)
+    {
+        $property = new \ReflectionProperty($helper, $name);
+        $property->setAccessible(true);
+        return $property;
+    }
+
 }

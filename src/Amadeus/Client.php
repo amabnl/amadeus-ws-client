@@ -48,6 +48,20 @@ use Amadeus\Client\Session\Handler\HandlerInterface;
  * TODO:
  * - have a solution for session pooling for stateful sessions
  * - support older versions of SoapHeader (1, 2)
+ * - implement calls for full online booking flow:
+ *      Fare_MasterPricerTravelBoardSearch,
+ *      Air_SellFromRecommendation
+ *      Fare_PricePnrWithBookingClass
+ *      Ticket_CreateTSTFromPricing
+ *      SalesReports_DisplayQueryReport
+ *      Air_MultiAvailability
+ *      Command_Cryptic
+ *
+ *
+ * - implement more PNR_AddMultiElements:
+ *      ABU segment
+ *      OSI segment
+ *      SSR segment
  *
  * @package Amadeus
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -156,7 +170,7 @@ class Client
      */
     public function securitySignOut()
     {
-        $messageOptions = $this->makeMessageOptions();
+        $messageOptions = $this->makeMessageOptions(false, true);
 
         return $this->sessionHandler->sendMessage(
             'Security_SignOut',

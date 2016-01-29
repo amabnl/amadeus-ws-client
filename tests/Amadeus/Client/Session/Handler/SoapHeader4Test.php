@@ -214,12 +214,67 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertTrue($sessionHandler->getStateful());
     }
 
+    public function testCanHandleDummyPostMessage()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+        $sessionHandler->setStateful(true);
+
+        $method = self::getMethod($sessionHandler, 'handlePostMessage');
+
+        $actual = $method->invoke($sessionHandler, 'PNR_Retrieve', $this->getTestFile('dummyPnrResponse.txt'), null, null);
+
+        $this->assertNull($actual);
+
+        $authProp = self::getProperty($sessionHandler, 'isAuthenticated');
+        $authPropValue = $authProp->getValue($sessionHandler);
+        $this->assertTrue($authPropValue);
+
+        $sessionProp = self::getProperty($sessionHandler, 'sessionData');
+        $sessionPropValue = $sessionProp->getValue($sessionHandler);
+        $this->assertEquals(['sessionId' => '01ZWHV5EMT', 'sequenceNumber' => '1', 'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'], $sessionPropValue);
+    }
+
+    public function testCanHandleDummyPostMessageSessionEnd()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+        $sessionHandler->setStateful(true);
+
+        $method = self::getMethod($sessionHandler, 'handlePostMessage');
+
+        $actual = $method->invoke($sessionHandler, 'PNR_Retrieve', $this->getTestFile('dummyPnrResponseEnd.txt'), null, null);
+
+        $this->assertNull($actual);
+
+        $authProp = self::getProperty($sessionHandler, 'isAuthenticated');
+        $authPropValue = $authProp->getValue($sessionHandler);
+        $this->assertFalse($authPropValue);
+
+        $sessionProp = self::getProperty($sessionHandler, 'sessionData');
+        $sessionPropValue = $sessionProp->getValue($sessionHandler);
+        $this->assertEquals(['sessionId' => null, 'sequenceNumber' => null, 'securityToken' => null], $sessionPropValue);
+    }
+
     public function testCanReadSessionEndFromResponse()
     {
         $sessionHandlerParams = $this->makeSessionHandlerParams();
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
-        $method = self::getMethod($sessionHandler, 'generateSecurityHeaderRawXml');
+        $method = self::getMethod($sessionHandler, 'getSessionDataFromHeader');
+
+        $expected = [
+            'sessionId' => null,
+            'sequenceNumber' => null,
+            'securityToken' => null
+        ];
+
+        $xml = $this->getTestFile("dummyPnrResponseEnd.txt");
+
+        $actual = $method->invoke($sessionHandler, $xml);
+
+        $this->assertInternalType('array', $actual);
+        $this->assertEquals($expected, $actual);
     }
 
     public function testCanReadSessionDataFromResponse()
@@ -246,7 +301,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
     /**
      * @return SessionHandlerParams
      */
-    protected function makeSessionHandlerParams()
+    protected function makeSessionHandlerParams($overrideSoapClient = null)
     {
         $wsdlpath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'testfiles' . DIRECTORY_SEPARATOR . 'testwsdl.wsdl';
 
@@ -256,6 +311,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
             'soapHeaderVersion' => Client::HEADER_V4,
             'receivedFrom' => 'unittests',
             'logger' => new NullLogger(),
+            'overrideSoapClient' => $overrideSoapClient,
             'authParams' => [
                 'officeId' => 'BRUXX0000',
                 'originatorTypeCode' => 'U',
