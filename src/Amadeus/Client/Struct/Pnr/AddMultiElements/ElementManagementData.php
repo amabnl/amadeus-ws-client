@@ -106,7 +106,7 @@ class ElementManagementData
      */
     public function __construct($segmentName = null, $tatoo = null)
     {
-        if (!is_null($segmentName) && strlen($segmentName) == 2) {
+        if (!is_null($segmentName)) {
             $this->segmentName = $segmentName;
         }
         if (!is_null($tatoo) && is_int($tatoo)) {

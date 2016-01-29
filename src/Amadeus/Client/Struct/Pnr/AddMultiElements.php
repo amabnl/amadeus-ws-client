@@ -292,7 +292,7 @@ class AddMultiElements extends BaseWsMessage
                 break;
             case 'ReceivedFrom':
                 /** @var Element\ReceivedFrom $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_RECEIVE_FROM, $tatooCounter);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_RECEIVE_FROM);
                 $createdElement->freetextData = new FreetextData(
                     $element->receivedFrom,
                     FreetextDetail::TYPE_RECEIVE_FROM
