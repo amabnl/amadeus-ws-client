@@ -78,7 +78,7 @@ class Client
      *
      * @var string
      */
-    const receivedFromIdentifier = "amabnl/amadeus-ws-client";
+    const receivedFromIdentifier = "amabnl-amadeus-ws-client";
 
     /**
      * @var HandlerInterface
