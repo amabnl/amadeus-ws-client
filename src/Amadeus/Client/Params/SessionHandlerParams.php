@@ -105,7 +105,7 @@ class SessionHandlerParams
                 }
             }
 
-            if ($params['overrideSoapClient'] instanceof \SoapClient) {
+            if (isset($params['overrideSoapClient']) && $params['overrideSoapClient'] instanceof \SoapClient) {
                 $this->overrideSoapClient = $params['overrideSoapClient'];
             }
         }

@@ -129,6 +129,7 @@ class SoapHeader4 extends Base
         if ($params->overrideSoapClient instanceof \SoapClient) {
             $this->soapClient = $params->overrideSoapClient;
         }
+        $this->setStateful($params->stateful);
     }
 
     /**
