@@ -41,14 +41,16 @@ class Session
     /**
      * Session constructor.
      *
-     * @param array $sessionData
+     * @param array|null $sessionData
      * @param string $statusCode
      */
     public function __construct($sessionData, $statusCode)
     {
-        $this->SessionId = $sessionData[''];
-        $this->SequenceNumber = $sessionData[''];
-        $this->SecurityToken = $sessionData[''];
+        if (is_array($sessionData)) {
+            $this->SessionId = $sessionData['sessionId'];
+            $this->SequenceNumber = $sessionData['sequenceNumber'];
+            $this->SecurityToken = $sessionData['securityToken'];
+        }
 
         $this->TransactionStatusCode = $statusCode;
     }

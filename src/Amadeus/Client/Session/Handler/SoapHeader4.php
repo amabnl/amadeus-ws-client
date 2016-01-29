@@ -410,6 +410,21 @@ class SoapHeader4 extends Base
                     new \SoapVar($securityHeaderXml, XSD_ANYXML)
                 )
             );
+
+            if ($stateful === true) {
+                //Not authenticated but stateful: start session!
+                array_push(
+                    $headersToSet,
+                    new \SoapHeader(
+                        'http://xml.amadeus.com/2010/06/Session_v3',
+                        'Session',
+                        new Client\Struct\HeaderV4\Session(
+                            null,
+                            "Start"
+                        )
+                    )
+                );
+            }
         } else if ($stateful === true) {
             //We are authenticated and stateful: provide session header to continue or terminate session
             $statusCode =
