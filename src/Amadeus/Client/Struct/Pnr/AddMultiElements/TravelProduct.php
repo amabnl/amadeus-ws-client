@@ -30,9 +30,6 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class TravelProduct
 {
-<<<<<<< HEAD
-
-=======
     /**
      * date and time details
      *
@@ -97,5 +94,4 @@ class TravelProduct
 
         $this->company = new Company($company);
     }
->>>>>>> develop
 }

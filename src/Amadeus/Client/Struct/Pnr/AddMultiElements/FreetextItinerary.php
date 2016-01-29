@@ -30,9 +30,6 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class FreetextItinerary
 {
-<<<<<<< HEAD
-
-=======
     /**
      * @var FreetextDetail
      */
@@ -53,5 +50,4 @@ class FreetextItinerary
         $this->longFreetext = $freeText;
         $this->freetextDetail = new FreetextDetail(null);
     }
->>>>>>> develop
 }

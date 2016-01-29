@@ -30,9 +30,6 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class MessageAction
 {
-<<<<<<< HEAD
-
-=======
     /**
      * @var Business
      */
@@ -47,5 +44,4 @@ class MessageAction
     {
         $this->business = new Business($businessFunction);
     }
->>>>>>> develop
 }

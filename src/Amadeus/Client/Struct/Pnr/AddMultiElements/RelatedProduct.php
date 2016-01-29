@@ -30,9 +30,6 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class RelatedProduct
 {
-<<<<<<< HEAD
-
-=======
     const STATUS_CONFIRMED = "HK";
 
     public $quantity;
@@ -113,5 +110,4 @@ class RelatedProduct
         $this->status = $status;
         $this->quantity = $quantity;
     }
->>>>>>> develop
 }

@@ -22,12 +22,9 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
-<<<<<<< HEAD
-=======
 use Amadeus\Client\RequestOptions\Pnr\Segment;
 use Amadeus\Client\Struct\InvalidArgumentException;
 
->>>>>>> develop
 /**
  * AirAuxItinerary
  * 
@@ -56,8 +53,6 @@ class AirAuxItinerary
      * @var FreetextItinerary
      */
     public $freetextItinerary;
-<<<<<<< HEAD
-=======
 
     /**
      * AirAuxItinerary constructor.
@@ -104,5 +99,4 @@ class AirAuxItinerary
     {
         throw new \RuntimeException('NOT YET IMPLEMENTED');
     }
->>>>>>> develop
 }

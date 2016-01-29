@@ -30,14 +30,12 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class ElementManagementItinerary
 {
-<<<<<<< HEAD
-=======
     const SEGMENT_MISCELLANEOUS = "RU";
 
     const SEGMENT_AIR = "AIR";
 
     const SEGMENT_HOTEL_AUX = "HU";
->>>>>>> develop
+
     /**
      * @var Reference
      */
@@ -93,8 +91,6 @@ class ElementManagementItinerary
       * @var string
       */
     public $segmentName;
-<<<<<<< HEAD
-=======
 
     /**
      * ElementManagementItinerary constructor.
@@ -107,5 +103,4 @@ class ElementManagementItinerary
         $this->segmentName = $segmentName;
         $this->reference = new Reference(Reference::QUAL_OTHER, $tatooNr);
     }
->>>>>>> develop
 }

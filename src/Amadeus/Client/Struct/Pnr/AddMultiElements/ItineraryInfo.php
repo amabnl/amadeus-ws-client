@@ -43,8 +43,6 @@ class ItineraryInfo
      * @var
      */
     public $referenceForSegment;
-<<<<<<< HEAD
-=======
 
     /**
      * ItineraryInfo constructor.
@@ -56,5 +54,4 @@ class ItineraryInfo
     {
         $this->elementManagementItinerary = new ElementManagementItinerary($tatooNr, $segmentName);
     }
->>>>>>> develop
 }
