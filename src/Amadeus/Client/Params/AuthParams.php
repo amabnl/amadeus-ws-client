@@ -52,11 +52,11 @@ class AuthParams
     public $dutyCode = "SU";
 
     /**
-     * Originator
+     * User ID / Originator
      *
      * @var string
      */
-    public $originator;
+    public $userId;
 
     /**
      * Organization ID
@@ -109,15 +109,14 @@ class AuthParams
             $this->officeId = $params['officeId'];
             $this->originatorTypeCode = (isset($params['originatorTypeCode'])) ? $params['originatorTypeCode'] : "U";
             $this->dutyCode = (isset($params['dutyCode'])) ? $params['dutyCode'] : "SU";
-            $this->originator = $params['originator'];
-            $this->organizationId = $params['organizationId'];
-            $this->passwordLength = $params['passwordLength'];
+            $this->userId = $params['userId'];
+            $this->organizationId = (isset($params['organizationId'])) ? $params['organizationId'] : null;
+            $this->passwordLength = (isset($params['passwordLength'])) ? $params['passwordLength'] : null;
             $this->passwordData = $params['passwordData'];
 
             if (isset($params['nonceBase'])) {
                 $this->nonceBase = $params['nonceBase'];
             }
-
         }
     }
 }

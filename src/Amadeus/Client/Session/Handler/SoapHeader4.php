@@ -68,8 +68,9 @@ class SoapHeader4 extends Base
      */
     protected $isStateful = true;
     /**
-     * The context
+     * The context of the currently active session
      *
+     * @todo implement this feature - currently the application using the client must know the context itself.
      * @var mixed
      */
     protected $context;
@@ -86,7 +87,6 @@ class SoapHeader4 extends Base
         'sequenceNumber' => null,
         'securityToken' => null
     ];
-
     /**
      * SoapClient options used during initialisation
      *
@@ -126,6 +126,10 @@ class SoapHeader4 extends Base
             $this->setlogger($params->logger);
             $this->log(LogLevel::INFO, __METHOD__. "(): Logger started.");
         }
+        if ($params->overrideSoapClient instanceof \SoapClient) {
+            $this->soapClient = $params->overrideSoapClient;
+        }
+        $this->setStateful($params->stateful);
     }
 
     /**
@@ -154,6 +158,36 @@ class SoapHeader4 extends Base
         return $this->isStateful;
     }
 
+    /**
+     * Get the session parameters of the active session
+     *
+     * @return array|null
+     */
+    public function getSessionData()
+    {
+        return $this->sessionData;
+    }
+
+    /**
+     * Get the last raw XML message that was sent out
+     *
+     * @return string|null
+     */
+    public function getLastRequest()
+    {
+        return $this->getSoapClient()->__getLastRequest();
+    }
+
+    /**
+     * Get the last raw XML message that was received
+     *
+     * @return string|null
+     */
+    public function getLastResponse()
+    {
+        return $this->getSoapClient()->__getLastResponse();
+    }
+
 
     /**
      * @param string $messageName Method Operation name as defined in the WSDL.
@@ -162,6 +196,7 @@ class SoapHeader4 extends Base
      * @return mixed
      * @throws \InvalidArgumentException
      * @throws Client\Exception
+     * @throws \SoapFault
      */
     public function sendMessage($messageName, BaseWsMessage $messageBody, $messageOptions = [])
     {
@@ -174,7 +209,7 @@ class SoapHeader4 extends Base
 
             $this->logRequestAndResponse($messageName);
 
-            $this->handlePostMessage($messageName, $messageOptions, $result);
+            $this->handlePostMessage($messageName, $this->getLastResponse(), $messageOptions, $result);
 
         } catch(\SoapFault $ex) {
             $this->log(
@@ -199,7 +234,7 @@ class SoapHeader4 extends Base
         }
 
         if ($messageOptions['asString'] === true) {
-            $result = $this->getSoapClient()->__getLastResponse();
+            $result = $this->getLastResponse();
         }
 
         return $result;
@@ -211,7 +246,6 @@ class SoapHeader4 extends Base
      * If authenticated, increment sequence number for next message and set session info to soapheader
      * If not, set auth info to soapheader
      *
-     * @todo decide if you want to end the session
      * @uses $this->isAuthenticated
      * @uses $this->sessionData
      * @param string $messageName
@@ -219,12 +253,13 @@ class SoapHeader4 extends Base
      */
     protected function prepareForNextMessage($messageName, $messageOptions)
     {
-        if ($this->isAuthenticated && is_int($this->sessionData['sequenceNumber'])) {
+        if ($this->isAuthenticated === true && is_int($this->sessionData['sequenceNumber'])) {
             $this->sessionData['sequenceNumber']++;
         }
 
         $headers = $this->createSoapHeaders($this->sessionData, $this->params, $messageName, $messageOptions);
 
+        $this->getSoapClient()->__setSoapHeaders(null);
         $this->getSoapClient()->__setSoapHeaders($headers);
     }
 
@@ -237,40 +272,68 @@ class SoapHeader4 extends Base
      * - ends terminated sessions
      *
      * @param string $messageName
+     * @param string $lastResponse
      * @param array $messageOptions
      * @param mixed $result
      */
-    protected function handlePostMessage($messageName, $messageOptions, $result)
+    protected function handlePostMessage($messageName, $lastResponse, $messageOptions, $result)
     {
 
         if ($messageName === "Security_Authenticate") {
             //You really don't need the Security_Authenticate call anymore with SoapHeader 4!
-            //TODO
             throw new \RuntimeException('NOT YET IMPLEMENTED: Extract session data from Security_AuthenticateReply');
         }
 
+        //CHECK FOR SESSION DATA:
         if ($this->getStateful() === true) {
             //We need to extract session info
-            $this->sessionData = $this->getSessionDataFromHeader(
-                $this->getSoapClient()->__getLastResponseHeaders()
-            );
-            $this->isAuthenticated = !empty($this->sessionData);
-
+            $this->sessionData = $this->getSessionDataFromHeader($lastResponse);
+            $this->isAuthenticated = (!empty($this->sessionData['sessionId']) &&
+                !empty($this->sessionData['sequenceNumber']) &&
+                !empty($this->sessionData['securityToken']));
 
         } else {
             $this->isAuthenticated = false;
         }
+
+        //TODO: check for errors in response?
     }
 
     /**
-     * @param $responseHeaders
+     * @param string $responseMsg the full response XML received.
      * @return array
      */
-    protected function getSessionDataFromHeader($responseHeaders)
+    protected function getSessionDataFromHeader($responseMsg)
     {
-        $this->log(LogLevel::WARNING, __METHOD__ . "() TODO: IMPLEMENT THIS METHOD");
-        $this->log(LogLevel::INFO, var_export($responseHeaders, true));
+        $newSessionData = [
+            'sessionId' => null,
+            'sequenceNumber' => null,
+            'securityToken' => null
+        ];
 
+        $responseDomDoc = new \DOMDocument('1.0', 'UTF-8');
+        $responseDomDoc->loadXML($responseMsg);
+        $responseDomXpath = new \DOMXPath($responseDomDoc);
+        $responseDomXpath->registerNamespace('awsse', 'http://xml.amadeus.com/2010/06/Session_v3');
+
+        $queryTransactionStatusCode = "string(//awsse:Session/@TransactionStatusCode)";
+
+        $transactionStatusCode = $responseDomXpath->evaluate($queryTransactionStatusCode);
+
+        if (mb_strtolower($transactionStatusCode) !== "end") {
+            $querySessionId = "string(//awsse:Session/awsse:SessionId/text())";
+            $querySequenceNumber = "string(//awsse:Session/awsse:SequenceNumber/text())";
+            $querySecurityToken = "string(//awsse:Session/awsse:SecurityToken/text())";
+
+            $newSessionData['sessionId'] = $responseDomXpath->evaluate($querySessionId);
+            $newSessionData['sequenceNumber'] = $responseDomXpath->evaluate($querySequenceNumber);
+            if (!empty($newSessionData['sequenceNumber'])) {
+                $newSessionData['sequenceNumber'] = (int) $newSessionData['sequenceNumber'];
+            }
+            $newSessionData['securityToken'] = $responseDomXpath->evaluate($querySecurityToken);
+        }
+
+        return $newSessionData;
     }
 
     /**
@@ -291,113 +354,85 @@ class SoapHeader4 extends Base
     {
         $headersToSet = [];
 
+        //CHECK STATEFUL
         $stateful = $this->getStateful();
 
-        if (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) {
-            //TODO set headers for end session
-        } else {
-            //TODO: Handle new or existing session
-            //TODO: Handle stateful & stateless.
+        //Message ID header
+        array_push(
+            $headersToSet,
+            new \SoapHeader(
+                'http://www.w3.org/2005/08/addressing',
+                'MessageID',
+                $this->generateGuid()
+            )
+        );
 
+        //Action header
+        array_push(
+            $headersToSet,
+            new \SoapHeader(
+                'http://www.w3.org/2005/08/addressing',
+                'Action',
+                $this->getActionFromWsdl($params->wsdl, $messageName)
+            )
+        );
+
+        //To header
+        array_push(
+            $headersToSet,
+            new \SoapHeader(
+                'http://www.w3.org/2005/08/addressing',
+                'To',
+                $this->getEndpointFromWsdl($params->wsdl)
+            )
+        );
+
+        //Send authentication info
+        if ($this->isAuthenticated === false) {
+
+            //Generate nonce, msg creation string & password digest:
+            $password = base64_decode($params->authParams->passwordData);
+            $creation = new \DateTime('now', new \DateTimeZone('UTC'));
+            $t = microtime(true);
+            $micro = sprintf("%03d",($t - floor($t)) * 1000);
+            $creationString = $this->createDateTimeStringForAuth($creation, $micro);
+            $messageNonce = $this->generateUniqueNonce($params->authParams->nonceBase, $creationString);
+            $encodedNonce = base64_encode($messageNonce);
+            $digest = $this->generatePasswordDigest($password, $creationString, $messageNonce);
+
+            $securityHeaderXml = $this->generateSecurityHeaderRawXml(
+                $params->authParams->userId,
+                $encodedNonce,
+                $digest,
+                $creationString
+            );
+
+            //Authentication header
             array_push(
                 $headersToSet,
                 new \SoapHeader(
-                    'http://www.w3.org/2005/08/addressing',
-                    'MessageID',
-                    $this->generateGuid()
+                    'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
+                    'Security',
+                    new \SoapVar($securityHeaderXml, XSD_ANYXML)
                 )
             );
 
-            array_push(
-                $headersToSet,
-                new \SoapHeader(
-                    'http://www.w3.org/2005/08/addressing',
-                    'Action',
-                    $this->getActionFromWsdl($params->wsdl, $messageName)
-                )
-            );
-
-            array_push(
-                $headersToSet,
-                new \SoapHeader(
-                    'http://www.w3.org/2005/08/addressing',
-                    'To',
-                    $this->getEndpointFromWsdl($params->wsdl)
-                )
-            );
-
-            //Send authentication info
-            if ($this->isAuthenticated === false) {
-                $password = base64_decode($params->authParams->passwordData);
-                $creation = new \DateTime('now', new \DateTimeZone('UTC'));
-                $t = microtime(true);
-                $micro = sprintf("%03d",($t - floor($t)) * 1000);
-                $creationString = $this->createDateTimeStringForAuth($creation, $micro);
-                $messageNonce = $this->generateUniqueNonce($params->authParams->nonceBase, $creationString);
-                $encodedNonce = base64_encode($messageNonce);
-                $digest = $this->generatePasswordDigest($password, $creationString, $messageNonce);
-
-                $securityHeaderXml = $this->generateSecurityHeaderRawXml(
-                    $params->authParams->originator,
-                    $encodedNonce,
-                    $digest,
-                    $creationString
-                );
-
-                array_push(
-                    $headersToSet,
-                    new \SoapHeader(
-                        'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
-                        'Security',
-                        new \SoapVar($securityHeaderXml, XSD_ANYXML)
-                    )
-                );
-
-                /*array_push(
-                    $headersToSet,
-                    new \SoapHeader(
-                        'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd',
-                        'Security',
-                        new Client\Struct\HeaderV4\Security(
-                            $params->authParams->originator,
-                            $digest,
-                            base64_encode($messageNonce),
-                            $creationString
-                        )
-                    )
-                );*/
-            } else if ($stateful === true) {
-                //We are authenticated and stateful: provide session header to continue or terminate session
-
-                /* // Sample session:
-                 <awsse:Session xmlns:awsse="http://xml.amadeus.com/2010/06/Session_v3"
-                    TransactionStatusCode="InSeries">
-                     <awsse:SessionId>01HFHCODVI</awsse:SessionId>
-                     <awsse:SequenceNumber>2</awsse:SequenceNumber>
-                     <awsse:SecurityToken>1SP31VH87S9T310EWJIH27JLRI</awsse:SecurityToken>
-                     </awsse:Session>
-                    </soapenv:Header>
-                */
-
-                $statusCode =
-                    (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) ?
-                        "End" :
-                        "InSeries";
-
+            if ($stateful === true) {
+                //Not authenticated but stateful: start session!
                 array_push(
                     $headersToSet,
                     new \SoapHeader(
                         'http://xml.amadeus.com/2010/06/Session_v3',
                         'Session',
                         new Client\Struct\HeaderV4\Session(
-                            $this->sessionData,
-                            $statusCode
+                            null,
+                            "Start"
                         )
                     )
                 );
-
             }
 
+            //AMA_SecurityHostedUser header
             array_push(
                 $headersToSet,
                 new \SoapHeader(
@@ -408,6 +443,24 @@ class SoapHeader4 extends Base
                         $params->authParams->originatorTypeCode,
                         1,
                         $params->authParams->dutyCode
+                    )
+                )
+            );
+        } else if ($stateful === true) {
+            //We are authenticated and stateful: provide session header to continue or terminate session
+            $statusCode =
+                (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) ?
+                    "End" :
+                    "InSeries";
+
+            array_push(
+                $headersToSet,
+                new \SoapHeader(
+                    'http://xml.amadeus.com/2010/06/Session_v3',
+                    'Session',
+                    new Client\Struct\HeaderV4\Session(
+                        $sessionData,
+                        $statusCode
                     )
                 )
             );
@@ -474,30 +527,21 @@ class SoapHeader4 extends Base
     /**
      * Generate a GUID
      *
-     * @todo use composer package ramsey/uuid instead?
      * @return string
      */
     protected function generateGuid()
     {
-        if (function_exists('com_create_guid')){
+        if (function_exists('com_create_guid')) {
             return com_create_guid();
-        }else{
+        } else {
             mt_srand((double)microtime()*10000);
             $charId = strtoupper(md5(uniqid(rand(), true)));
             $hyphen = chr(45);// "-"
 
-            /*$uuid = chr(123)// "{"
-                .substr($charId, 0, 8).$hyphen
-                .substr($charId, 8, 4).$hyphen
-                .substr($charId,12, 4).$hyphen
-                .substr($charId,16, 4).$hyphen
-                .substr($charId,20,12)
-                .chr(125);// "}"*/
-
-            $uuid = substr($charId, 0, 8).$hyphen
-                .substr($charId, 8, 4).$hyphen
-                .substr($charId,12, 4).$hyphen
-                .substr($charId,16, 4).$hyphen
+            $uuid = substr($charId, 0, 8) . $hyphen
+                .substr($charId, 8, 4) . $hyphen
+                .substr($charId,12, 4) . $hyphen
+                .substr($charId,16, 4) . $hyphen
                 .substr($charId,20,12);
 
             return $uuid;

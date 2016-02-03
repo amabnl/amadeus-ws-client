@@ -82,6 +82,11 @@ class Base implements RequestCreatorInterface
         //TODO Only needed for SoapHeader 1 and 2 messages.
     }
 
+    protected function createSecuritySignOut()
+    {
+        return new Struct\Security\SignOut();
+    }
+
     /**
      * Create request object for PNR_Retrieve message
      *

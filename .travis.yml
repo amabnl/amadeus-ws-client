@@ -9,11 +9,14 @@ php:
 install:
  - composer require satooshi/php-coveralls:~1.0@stable
  - composer update
+ - curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
 
 before_script:
  - mkdir -p build/logs
 
-script: phpunit --coverage-clover build/logs/clover.xml
+script:
+- php phpcs.phar -h
+- phpunit --coverage-clover build/logs/clover.xml
 
 after_success:
  - travis_retry php vendor/bin/coveralls

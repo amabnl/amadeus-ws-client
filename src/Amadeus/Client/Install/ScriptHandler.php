@@ -41,7 +41,7 @@ class ScriptHandler
      *
      * @var string
      */
-    protected static $nonceFilePath = "conf".DIRECTORY_SEPARATOR."noncebase.txt";
+    protected static $nonceFilePath;
 
     /**
      * Package root
@@ -67,6 +67,7 @@ class ScriptHandler
     public static function checkAndGenerateNonceBase(Event $event)
     {
         self::$root = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+        self::$nonceFilePath = "conf" . DIRECTORY_SEPARATOR . "noncebase.txt";
 
         if (self::haveNonceBase($event) === false) {
             self::generateAndSaveNonceBase($event);

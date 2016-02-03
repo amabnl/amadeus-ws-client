@@ -20,38 +20,17 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\HeaderV4;
+namespace Amadeus\Client\Struct\Security;
+
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * Session Header structure
+ * SignOut
  *
- * @package Amadeus\Client\Struct\HeaderV4
+ * @package Amadeus\Client\Struct\Security
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Session
+class SignOut extends BaseWsMessage
 {
-    public $TransactionStatusCode;
 
-    public $SessionId;
-
-    public $SequenceNumber;
-
-    public $SecurityToken;
-
-    /**
-     * Session constructor.
-     *
-     * @param array|null $sessionData
-     * @param string $statusCode
-     */
-    public function __construct($sessionData, $statusCode)
-    {
-        if (is_array($sessionData)) {
-            $this->SessionId = $sessionData['sessionId'];
-            $this->SequenceNumber = $sessionData['sequenceNumber'];
-            $this->SecurityToken = $sessionData['securityToken'];
-        }
-
-        $this->TransactionStatusCode = $statusCode;
-    }
 }

@@ -94,12 +94,58 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertEquals('http://xml.amadeus.com/2010/06/Security_v1', $result[4]->namespace);
     }
 
-    public function testCanGenerateDigestNew()
+    public function testCanCreateSoapHeadersWhenStatefulAndAuthenticated()
     {
         $sessionHandlerParams = $this->makeSessionHandlerParams();
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
+        $sessionHandler->setStateful(true);
 
-        $meth = self::getMethod($sessionHandler, 'generatePasswordDigest');
+        $prop = self::getProperty($sessionHandler, 'isAuthenticated');
+        $prop->setValue($sessionHandler, true);
+
+        /*$propSess = self::getProperty($sessionHandler, 'sessionData');
+        $propSess->setValue([
+            'sessionId' => '01ZWHV5EMT',
+            'sequenceNumber' => 1,
+            'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'
+        ]);*/
+
+        $meth = self::getMethod($sessionHandler, 'createSoapHeaders');
+
+        /** @var \SoapHeader[] $result */
+        $result = $meth->invoke(
+            $sessionHandler,
+            ['sessionId' => '01ZWHV5EMT', 'sequenceNumber' => 2, 'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'],
+            $sessionHandlerParams,
+            'PNR_Retrieve',
+            []
+        );
+
+        $this->assertCount(4, $result);
+        foreach ($result as $tmp) {
+            $this->assertInstanceOf('\SoapHeader', $tmp);
+        }
+
+        $this->assertInternalType('string', $result[0]->data);
+        $this->assertTrue($this->isValidGuid($result[0]->data));
+        $this->assertEquals('MessageID', $result[0]->name);
+        $this->assertEquals('http://www.w3.org/2005/08/addressing', $result[0]->namespace);
+
+        $this->assertInternalType('string', $result[1]->data);
+        $this->assertEquals('http://webservices.amadeus.com/PNRRET_11_3_1A', $result[1]->data);
+        $this->assertEquals('Action', $result[1]->name);
+        $this->assertEquals('http://www.w3.org/2005/08/addressing', $result[1]->namespace);
+
+        $this->assertInternalType('string', $result[2]->data);
+        $this->assertEquals('https://dummy.webservices.endpoint.com/SOAPADDRESS', $result[2]->data);
+        $this->assertEquals('To', $result[2]->name);
+        $this->assertEquals('http://www.w3.org/2005/08/addressing', $result[2]->namespace);
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\HeaderV4\Session', $result[3]->data);
+        $this->assertEquals('InSeries', $result[3]->data->TransactionStatusCode);
+        $this->assertEquals('01ZWHV5EMT', $result[3]->data->SessionId);
+        $this->assertEquals(2, $result[3]->data->SequenceNumber);
+        $this->assertEquals('3WY60GB9B0FX2SLIR756QZ4G2', $result[3]->data->SecurityToken);
     }
 
 
@@ -214,20 +260,100 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertTrue($sessionHandler->getStateful());
     }
 
+    public function testCanHandleDummyPostMessage()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+        $sessionHandler->setStateful(true);
+
+        $method = self::getMethod($sessionHandler, 'handlePostMessage');
+
+        $actual = $method->invoke($sessionHandler, 'PNR_Retrieve', $this->getTestFile('dummyPnrResponse.txt'), null, null);
+
+        $this->assertNull($actual);
+
+        $authProp = self::getProperty($sessionHandler, 'isAuthenticated');
+        $authPropValue = $authProp->getValue($sessionHandler);
+        $this->assertTrue($authPropValue);
+
+        $sessionProp = self::getProperty($sessionHandler, 'sessionData');
+        $sessionPropValue = $sessionProp->getValue($sessionHandler);
+        $this->assertEquals(['sessionId' => '01ZWHV5EMT', 'sequenceNumber' => '1', 'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'], $sessionPropValue);
+    }
+
+    public function testCanHandleDummyPostMessageSessionEnd()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+        $sessionHandler->setStateful(true);
+
+        $method = self::getMethod($sessionHandler, 'handlePostMessage');
+
+        $actual = $method->invoke($sessionHandler, 'PNR_Retrieve', $this->getTestFile('dummyPnrResponseEnd.txt'), null, null);
+
+        $this->assertNull($actual);
+
+        $authProp = self::getProperty($sessionHandler, 'isAuthenticated');
+        $authPropValue = $authProp->getValue($sessionHandler);
+        $this->assertFalse($authPropValue);
+
+        $sessionProp = self::getProperty($sessionHandler, 'sessionData');
+        $sessionPropValue = $sessionProp->getValue($sessionHandler);
+        $this->assertEquals(['sessionId' => null, 'sequenceNumber' => null, 'securityToken' => null], $sessionPropValue);
+    }
+
     public function testCanReadSessionEndFromResponse()
     {
         $sessionHandlerParams = $this->makeSessionHandlerParams();
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
-        $method = self::getMethod($sessionHandler, 'generateSecurityHeaderRawXml');
+        $method = self::getMethod($sessionHandler, 'getSessionDataFromHeader');
 
+        $expected = [
+            'sessionId' => null,
+            'sequenceNumber' => null,
+            'securityToken' => null
+        ];
+
+        $xml = $this->getTestFile("dummyPnrResponseEnd.txt");
+
+        $actual = $method->invoke($sessionHandler, $xml);
+
+        $this->assertInternalType('array', $actual);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testCanReadSessionDataFromResponse()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+        $method = self::getMethod($sessionHandler, 'getSessionDataFromHeader');
+
+        $expected = [
+            'sessionId' => '01ZWHV5EMT',
+            'sequenceNumber' => 1,
+            'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'
+        ];
+
+        $xml = $this->getTestFile("dummyPnrResponse.txt");
+
+        $actual = $method->invoke($sessionHandler, $xml);
+
+        $this->assertInternalType('array', $actual);
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testCanSetHeadersWhenAuthenticated()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
     }
 
 
     /**
      * @return SessionHandlerParams
      */
-    protected function makeSessionHandlerParams()
+    protected function makeSessionHandlerParams($overrideSoapClient = null)
     {
         $wsdlpath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'testfiles' . DIRECTORY_SEPARATOR . 'testwsdl.wsdl';
 
@@ -237,10 +363,11 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
             'soapHeaderVersion' => Client::HEADER_V4,
             'receivedFrom' => 'unittests',
             'logger' => new NullLogger(),
+            'overrideSoapClient' => $overrideSoapClient,
             'authParams' => [
                 'officeId' => 'BRUXX0000',
                 'originatorTypeCode' => 'U',
-                'originator' => 'DUMMYORIG',
+                'userId' => 'DUMMYORIG',
                 'organizationId' => 'DUMMYORG',
                 'passwordLength' => 12,
                 'passwordData' => 'dGhlIHBhc3N3b3Jk'
@@ -275,5 +402,15 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $doc->loadXML($xmlString);
 
         return $doc->firstChild;
+    }
+
+    /**
+     * @param $fileName
+     * @return string
+     */
+    protected function getTestFile($fileName)
+    {
+        $fullPath = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR."testfiles".DIRECTORY_SEPARATOR.$fileName);
+        return file_get_contents($fullPath);
     }
 }
