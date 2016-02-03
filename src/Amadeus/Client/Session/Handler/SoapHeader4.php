@@ -259,6 +259,7 @@ class SoapHeader4 extends Base
 
         $headers = $this->createSoapHeaders($this->sessionData, $this->params, $messageName, $messageOptions);
 
+        $this->getSoapClient()->__setSoapHeaders(null);
         $this->getSoapClient()->__setSoapHeaders($headers);
     }
 
