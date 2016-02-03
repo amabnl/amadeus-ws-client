@@ -1,6 +1,6 @@
-=====
-Usage
-=====
+===================
+About / Get Started
+===================
 ***********************
 Get access from Amadeus
 ***********************
@@ -52,7 +52,7 @@ Set up a test client
             'logger' => new Psr\Log\NullLogger(),
             'authParams' => [
                 'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
-                'originator' => 'WSBENXXX', // Also known as 'User ID' for Soap Header 4 WSDL's
+                'userId' => 'WSBENXXX', //Also known as 'Originator' for Soap Header 1 & 2 WSDL's
                 'passwordData' => 'dGhlIHBhc3N3b3Jk' // **base 64 encoded** password
             ]
         ],
@@ -63,7 +63,7 @@ Set up a test client
 
     $client = new Client($params);
 
-    $pnrContent = $client->retrievePnr(
+    $pnrContent = $client->pnrRetrieve(
         new PnrRetrieveOptions(['recordLocator' => 'ABC123'])
     );
 

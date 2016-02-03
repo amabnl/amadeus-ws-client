@@ -30,7 +30,11 @@ namespace Amadeus\Client\RequestOptions;
  */
 class PnrRetrieveAndDisplayOptions extends Base
 {
+    const RETRIEVEOPTION_ALL = "ALL";
 
+    const RETRIEVEOPTION_OFFERS = "OFR";
+
+    const RETRIEVEOPTION_PNR = "PNR";
 
     /**
      * 6-character Amadeus Record Locator
@@ -44,5 +48,5 @@ class PnrRetrieveAndDisplayOptions extends Base
      *
      * @var string
      */
-    public $retrieveOption;
+    public $retrieveOption = self::RETRIEVEOPTION_ALL;
 }

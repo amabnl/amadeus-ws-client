@@ -46,7 +46,7 @@ use Amadeus\Client\Session\Handler\HandlerInterface;
  * Amadeus Web Service Client.
  *
  * TODO:
- * - have a solution for session pooling for stateful sessions
+ * - have a solution for session pooling for stateful sessions (soapheader 1 & 2)
  * - support older versions of SoapHeader (1, 2)
  * - implement calls for full online booking flow:
  *      Fare_MasterPricerTravelBoardSearch,
@@ -170,7 +170,7 @@ class Client
      */
     public function securitySignOut()
     {
-        $messageOptions = $this->makeMessageOptions(false, true);
+        $messageOptions = $this->makeMessageOptions([], false, true);
 
         return $this->sessionHandler->sendMessage(
             'Security_SignOut',
@@ -193,15 +193,13 @@ class Client
      * https://webservices.amadeus.com/extranet/viewService.do?id=27&flavourId=1&menuId=functional
      *
      * @param PnrRetrieveOptions $options
-     * @param array|null $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_Reply as a PHP object.
+     * @param array $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_Reply as a PHP object.
      * @return string|\stdClass|null
      * @throws Exception
      */
-    public function pnrRetrieve($options, $messageOptions = null)
+    public function pnrRetrieve($options, $messageOptions = [])
     {
-        if (is_null($messageOptions)) {
-            $messageOptions = $this->makeMessageOptions(true);
-        }
+        $messageOptions = $this->makeMessageOptions($messageOptions, true);
 
         return $this->sessionHandler->sendMessage(
             'PNR_Retrieve',
@@ -217,14 +215,12 @@ class Client
      * Create a PNR using PNR_AddMultiElements
      *
      * @param PnrCreatePnrOptions $options
-     * @param null $messageOptions
+     * @param array $messageOptions
      * @return mixed
      */
-    public function pnrCreatePnr($options, $messageOptions = null)
+    public function pnrCreatePnr($options, $messageOptions = [])
     {
-        if (is_null($messageOptions)) {
-            $messageOptions = $this->makeMessageOptions(true);
-        }
+        $messageOptions = $this->makeMessageOptions($messageOptions, true);
 
         return $this->sessionHandler->sendMessage(
             'PNR_AddMultiElements',
@@ -246,11 +242,9 @@ class Client
      * @param array $messageOptions
      * @return mixed
      */
-    public function pnrAddMultiElements($options, $messageOptions = null)
+    public function pnrAddMultiElements($options, $messageOptions = [])
     {
-        if (is_null($messageOptions)) {
-            $messageOptions = $this->makeMessageOptions(true);
-        }
+        $messageOptions = $this->makeMessageOptions($messageOptions, true);
 
         return $this->sessionHandler->sendMessage(
             'PNR_AddMultiElements',
@@ -275,15 +269,13 @@ class Client
      * https://webservices.amadeus.com/extranet/viewService.do?id=1922&flavourId=1&menuId=functional
      *
      * @param PnrRetrieveAndDisplayOptions $options Amadeus Record Locator for PNR
-     * @param array|null $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_RetrieveAndDisplayReply as a PHP object.
+     * @param array $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_RetrieveAndDisplayReply as a PHP object.
      * @return string|\stdClass|null
      * @throws Exception
      **/
-    public function pnrRetrieveAndDisplay($options, $messageOptions = null)
+    public function pnrRetrieveAndDisplay($options, $messageOptions = [])
     {
-        if (is_null($messageOptions)) {
-            $messageOptions = $this->makeMessageOptions(true);
-        }
+        $messageOptions = $this->makeMessageOptions($messageOptions, true);
 
         return $this->sessionHandler->sendMessage(
             'PNR_RetrieveAndDisplay',
@@ -301,14 +293,12 @@ class Client
      * https://webservices.amadeus.com/extranet/viewService.do?id=52&flavourId=1&menuId=functional
      *
      * @param QueueListOptions $options
-     * @param array|null $messageOptions
+     * @param array $messageOptions
      * @return mixed
      */
-    public function queueList(QueueListOptions $options, $messageOptions = null)
+    public function queueList(QueueListOptions $options, $messageOptions = [])
     {
-        if (is_null($messageOptions)) {
-            $messageOptions = $this->makeMessageOptions();
-        }
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         return $this->sessionHandler->sendMessage(
             'Queue_List',
@@ -324,14 +314,12 @@ class Client
      * Queue_PlacePNR - Place a PNR on a given queue
      *
      * @param QueuePlacePnrOptions $options
-     * @param array|null $messageOptions
+     * @param array $messageOptions
      * @return mixed
      */
-    public function queuePlacePnr(QueuePlacePnrOptions $options, $messageOptions = null)
+    public function queuePlacePnr(QueuePlacePnrOptions $options, $messageOptions = [])
     {
-        if (is_null($messageOptions)) {
-            $messageOptions = $this->makeMessageOptions();
-        }
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         return $this->sessionHandler->sendMessage(
             'Queue_PlacePNR',
@@ -347,14 +335,12 @@ class Client
      * Queue_RemoveItem - remove an item (a PNR) from a given queue
      *
      * @param QueueRemoveItemOptions $options
-     * @param array|null $messageOptions
+     * @param array $messageOptions
      * @return mixed
      */
-    public function queueRemoveItem(QueueRemoveItemOptions $options, $messageOptions = null)
+    public function queueRemoveItem(QueueRemoveItemOptions $options, $messageOptions = [])
     {
-        if (is_null($messageOptions)) {
-            $messageOptions = $this->makeMessageOptions();
-        }
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         return $this->sessionHandler->sendMessage(
             'Queue_RemoveItem',
@@ -370,14 +356,12 @@ class Client
      * Queue_MoveItem - move an item (a PNR) from one queue to another.
      *
      * @param QueueMoveItemOptions $options
-     * @param array|null $messageOptions
+     * @param array $messageOptions
      * @return mixed
      */
-    public function queueMoveItem(QueueMoveItemOptions $options, $messageOptions = null)
+    public function queueMoveItem(QueueMoveItemOptions $options, $messageOptions = [])
     {
-        if (is_null($messageOptions)) {
-            $messageOptions = $this->makeMessageOptions();
-        }
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         return $this->sessionHandler->sendMessage(
             'Queue_MoveItem',
@@ -395,14 +379,12 @@ class Client
      * To be called in the context of an open PNR
      *
      * @param OfferVerifyOptions $options
-     * @param array|null $messageOptions
+     * @param array $messageOptions
      * @return mixed
      */
-    public function offerVerify(OfferVerifyOptions $options, $messageOptions = null)
+    public function offerVerify(OfferVerifyOptions $options, $messageOptions = [])
     {
-        if (is_null($messageOptions)) {
-            $messageOptions = $this->makeMessageOptions();
-        }
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         return $this->sessionHandler->sendMessage(
             'Offer_VerifyOffer',
@@ -418,14 +400,12 @@ class Client
      * Offer_ConfirmAirOffer
      *
      * @param OfferConfirmAirOptions $options
-     * @param array|null $messageOptions
+     * @param array $messageOptions
      * @return mixed
      */
-    public function offerConfirmAir(OfferConfirmAirOptions $options, $messageOptions = null)
+    public function offerConfirmAir(OfferConfirmAirOptions $options, $messageOptions = [])
     {
-        if (is_null($messageOptions)) {
-            $messageOptions = $this->makeMessageOptions();
-        }
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         return $this->sessionHandler->sendMessage(
             'Offer_ConfirmAirOffer',
@@ -441,14 +421,12 @@ class Client
      * Offer_ConfirmHotelOffer
      *
      * @param OfferConfirmHotelOptions $options
-     * @param array|null $messageOptions
+     * @param array $messageOptions
      * @return mixed
      */
-    public function offerConfirmHotel(OfferConfirmHotelOptions $options, $messageOptions = null)
+    public function offerConfirmHotel(OfferConfirmHotelOptions $options, $messageOptions = [])
     {
-        if (is_null($messageOptions)) {
-            $messageOptions = $this->makeMessageOptions();
-        }
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         return $this->sessionHandler->sendMessage(
             'Offer_ConfirmHotelOffer',
@@ -464,14 +442,12 @@ class Client
      * Offer_ConfirmCarOffer
      *
      * @param OfferConfirmCarOptions $options
-     * @param array|null $messageOptions
+     * @param array $messageOptions
      * @return mixed
      */
-    public function offerConfirmCar(OfferConfirmCarOptions $options, $messageOptions = null)
+    public function offerConfirmCar(OfferConfirmCarOptions $options, $messageOptions = [])
     {
-        if (is_null($messageOptions)) {
-            $messageOptions = $this->makeMessageOptions();
-        }
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         return $this->sessionHandler->sendMessage(
             'Offer_ConfirmCarOffer',
@@ -491,16 +467,27 @@ class Client
      * - do you want the response as a PHP object or as a string?
      * - ... ?
      *
+     * @param array $incoming The Message options chosen by the caller - if any.
      * @param bool $asString Switch if the response should be returned as a string (true) or a PHP object (false).
      * @param bool $endSession Switch if you want to terminate the current session after making the call.
      * @return array
      */
-    protected function makeMessageOptions($asString = false, $endSession = false)
+    protected function makeMessageOptions(array $incoming, $asString = false, $endSession = false)
     {
-        return [
+        $options = [
             'asString' => $asString,
             'endSession' => $endSession
         ];
+
+        if (array_key_exists('asString', $incoming)) {
+            $options['asString'] = $incoming['asString'];
+        }
+
+        if (array_key_exists('endSession', $incoming)) {
+            $options['endSession'] = $incoming['endSession'];
+        }
+
+        return $options;
     }
 
     /**

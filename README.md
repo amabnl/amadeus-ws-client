@@ -38,4 +38,5 @@ composer.phar update
 
 # Usage
 
-[See docs/usage](docs/usage.rst)
+- [About & Get Started](docs/about-get-started.rst)
+- [Examples](docs/samples.rst)
