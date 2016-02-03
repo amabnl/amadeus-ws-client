@@ -396,7 +396,7 @@ class SoapHeader4 extends Base
             $digest = $this->generatePasswordDigest($password, $creationString, $messageNonce);
 
             $securityHeaderXml = $this->generateSecurityHeaderRawXml(
-                $params->authParams->originator,
+                $params->authParams->userId,
                 $encodedNonce,
                 $digest,
                 $creationString

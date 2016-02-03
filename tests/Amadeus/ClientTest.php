@@ -44,14 +44,11 @@ class ClientTest extends BaseTestCase
                 'authParams' => [
                     'officeId' => 'BRUXXXXXX',
                     'originatorTypeCode' => 'U',
-                    'originator' => 'WSXXXXXX',
-                    'organizationId' => 'NMC-XXXXXX',
-                    'passwordLength' => '4',
+                    'userId' => 'WSXXXXXX',
                     'passwordData' => base64_encode('TEST')
                 ]
             ],
             'requestCreatorParams' => [
-                'originatorOfficeId' => 'BRUXXXXXX',
                 'receivedFrom' => 'some RF string'
             ]
         ]);
@@ -60,6 +57,4 @@ class ClientTest extends BaseTestCase
 
         $this->assertTrue($client->getStateful());
     }
-
-
 }
