@@ -43,6 +43,11 @@ class HandlerFactory
     {
         $theHandler = null;
 
+        if (!($handlerParams instanceof SessionHandlerParams) ||
+            !($handlerParams->authParams instanceof Client\Params\AuthParams)) {
+            throw new \InvalidArgumentException('Invalid parameters');
+        }
+
         $handlerParams = self::loadNonceBase($handlerParams);
 
         switch ($handlerParams->soapHeaderVersion) {

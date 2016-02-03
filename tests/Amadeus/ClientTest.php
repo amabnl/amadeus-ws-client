@@ -58,6 +58,92 @@ class ClientTest extends BaseTestCase
         $this->assertTrue($client->getStateful());
     }
 
+    public function testCanCreateClientWithOverriddenSessionHandlerAndRequestCreator()
+    {
+        $par = new Params([
+            'sessionHandler' => $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock(),
+            'requestCreator' => $this->getMockBuilder('Amadeus\Client\RequestCreator\RequestCreatorInterface')->getMock()
+        ]);
+
+        $client = new Client($par);
+
+        $this->assertInstanceOf('Amadeus\Client', $client);
+    }
+
+
+    /**
+     * @dataProvider dataProviderMakeMessageOptions
+     */
+    public function testCanMakeMessageOptions($expected, $params)
+    {
+        $client = new Client($this->makeDummyParams());
+
+        $meth = self::getMethod($client, 'makeMessageOptions');
+
+        $result = $meth->invokeArgs($client, $params);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testCanSetStateful()
+    {
+        $client = new Client($this->makeDummyParams());
+
+        $current = $client->getStateful();
+
+        $this->assertTrue($current);
+
+        $client->setStateful(false);
+        $current = $client->getStateful();
+
+        $this->assertFalse($current);
+    }
+
+    public function testWillGetNullFromGetLastReqResWhenNoCallsWerMade()
+    {
+        $client = new Client($this->makeDummyParams());
+
+        $last = $client->getLastRequest();
+
+        $this->assertNull($last);
+
+        $last = $client->getLastResponse();
+
+        $this->assertNull($last);
+
+
+    }
+
+    public function testCanDoDummyPnrRetrieveCall()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'A dummy message result';
+
+        $expectedPnrResult = new Client\Struct\Pnr\Retrieve(Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,'ABC123');
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_Retrieve', $expectedPnrResult, ['asString' => true, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->pnrRetrieve(new Client\RequestOptions\PnrRetrieveOptions(['recordLocator'=>'ABC123']));
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+
+
     public function dataProviderMakeMessageOptions()
     {
         return [
@@ -103,27 +189,13 @@ class ClientTest extends BaseTestCase
     }
 
     /**
-     * @dataProvider dataProviderMakeMessageOptions
-     */
-    public function testCanMakeMessageOptions($expected, $params)
-    {
-        $client = new Client($this->makeDummyParams());
-
-        $meth = self::getMethod($client, 'makeMessageOptions');
-
-        $result = $meth->invokeArgs($client, $params);
-
-        $this->assertEquals($expected, $result);
-    }
-
-    /**
      * @return Params
      */
     protected function makeDummyParams()
     {
         return new Params([
             'sessionHandlerParams' => [
-                'wsdl' => '/var/fake/file/path',
+                'wsdl' => realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "Client" . DIRECTORY_SEPARATOR . "testfiles" . DIRECTORY_SEPARATOR . "dummywsdl.wsdl"),
                 'stateful' => true,
                 'logger' => new NullLogger(),
                 'authParams' => [
@@ -144,7 +216,7 @@ class ClientTest extends BaseTestCase
     protected function makeClientWithMockedSessionHandler()
     {
         $par = new Params();
-        $par->sessionHandler = $this->getMockBuilder('Amadeus\Client\Session\HandlerHandlerInterface')->getMock();
+        $par->sessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
         $par->requestCreatorParams = new Params\RequestCreatorParams([
             'receivedFrom' => 'some RF string',
             'originatorOfficeId' => 'BRUXXXXXX'

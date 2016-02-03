@@ -234,10 +234,22 @@ class SoapHeader4 extends Base
         }
 
         if ($messageOptions['asString'] === true) {
-            $result = $this->getLastResponse();
+            $result = $this->extractMessageBody($messageName, $this->getLastResponse());
         }
 
         return $result;
+    }
+
+    /**
+     * Extracts the message content from the soap envelope (i.e. everything under the soap body)
+     *
+     * @param string $messageName
+     * @param string $lastResponseEnvelope
+     * @return string
+     */
+    protected function extractMessageBody($messageName, $lastResponseEnvelope)
+    {
+        throw new \RuntimeException(__METHOD__."() is not yet implemented");
     }
 
     /**
