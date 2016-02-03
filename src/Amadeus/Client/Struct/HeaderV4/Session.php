@@ -54,5 +54,4 @@ class Session
 
         $this->TransactionStatusCode = $statusCode;
     }
-
 }

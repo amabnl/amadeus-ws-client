@@ -94,12 +94,58 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertEquals('http://xml.amadeus.com/2010/06/Security_v1', $result[4]->namespace);
     }
 
-    public function testCanGenerateDigestNew()
+    public function testCanCreateSoapHeadersWhenStatefulAndAuthenticated()
     {
         $sessionHandlerParams = $this->makeSessionHandlerParams();
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
+        $sessionHandler->setStateful(true);
 
-        $meth = self::getMethod($sessionHandler, 'generatePasswordDigest');
+        $prop = self::getProperty($sessionHandler, 'isAuthenticated');
+        $prop->setValue($sessionHandler, true);
+
+        /*$propSess = self::getProperty($sessionHandler, 'sessionData');
+        $propSess->setValue([
+            'sessionId' => '01ZWHV5EMT',
+            'sequenceNumber' => 1,
+            'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'
+        ]);*/
+
+        $meth = self::getMethod($sessionHandler, 'createSoapHeaders');
+
+        /** @var \SoapHeader[] $result */
+        $result = $meth->invoke(
+            $sessionHandler,
+            ['sessionId' => '01ZWHV5EMT', 'sequenceNumber' => 2, 'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'],
+            $sessionHandlerParams,
+            'PNR_Retrieve',
+            []
+        );
+
+        $this->assertCount(4, $result);
+        foreach ($result as $tmp) {
+            $this->assertInstanceOf('\SoapHeader', $tmp);
+        }
+
+        $this->assertInternalType('string', $result[0]->data);
+        $this->assertTrue($this->isValidGuid($result[0]->data));
+        $this->assertEquals('MessageID', $result[0]->name);
+        $this->assertEquals('http://www.w3.org/2005/08/addressing', $result[0]->namespace);
+
+        $this->assertInternalType('string', $result[1]->data);
+        $this->assertEquals('http://webservices.amadeus.com/PNRRET_11_3_1A', $result[1]->data);
+        $this->assertEquals('Action', $result[1]->name);
+        $this->assertEquals('http://www.w3.org/2005/08/addressing', $result[1]->namespace);
+
+        $this->assertInternalType('string', $result[2]->data);
+        $this->assertEquals('https://dummy.webservices.endpoint.com/SOAPADDRESS', $result[2]->data);
+        $this->assertEquals('To', $result[2]->name);
+        $this->assertEquals('http://www.w3.org/2005/08/addressing', $result[2]->namespace);
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\HeaderV4\Session', $result[3]->data);
+        $this->assertEquals('InSeries', $result[3]->data->TransactionStatusCode);
+        $this->assertEquals('01ZWHV5EMT', $result[3]->data->SessionId);
+        $this->assertEquals(2, $result[3]->data->SequenceNumber);
+        $this->assertEquals('3WY60GB9B0FX2SLIR756QZ4G2', $result[3]->data->SecurityToken);
     }
 
 
@@ -295,6 +341,12 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
 
         $this->assertInternalType('array', $actual);
         $this->assertEquals($expected, $actual);
+    }
+
+    public function testCanSetHeadersWhenAuthenticated()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
     }
 
 

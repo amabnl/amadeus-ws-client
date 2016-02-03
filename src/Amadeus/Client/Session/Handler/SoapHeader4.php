@@ -253,7 +253,7 @@ class SoapHeader4 extends Base
      */
     protected function prepareForNextMessage($messageName, $messageOptions)
     {
-        if ($this->isAuthenticated && is_int($this->sessionData['sequenceNumber'])) {
+        if ($this->isAuthenticated === true && is_int($this->sessionData['sequenceNumber'])) {
             $this->sessionData['sequenceNumber']++;
         }
 
@@ -326,6 +326,9 @@ class SoapHeader4 extends Base
 
             $newSessionData['sessionId'] = $responseDomXpath->evaluate($querySessionId);
             $newSessionData['sequenceNumber'] = $responseDomXpath->evaluate($querySequenceNumber);
+            if (!empty($newSessionData['sequenceNumber'])) {
+                $newSessionData['sequenceNumber'] = (int) $newSessionData['sequenceNumber'];
+            }
             $newSessionData['securityToken'] = $responseDomXpath->evaluate($querySecurityToken);
         }
 
@@ -350,6 +353,7 @@ class SoapHeader4 extends Base
     {
         $headersToSet = [];
 
+        //CHECK STATEFUL
         $stateful = $this->getStateful();
 
         //Message ID header
@@ -426,6 +430,21 @@ class SoapHeader4 extends Base
                     )
                 );
             }
+
+            //AMA_SecurityHostedUser header
+            array_push(
+                $headersToSet,
+                new \SoapHeader(
+                    'http://xml.amadeus.com/2010/06/Security_v1',
+                    'AMA_SecurityHostedUser',
+                    new Client\Struct\HeaderV4\SecurityHostedUser(
+                        $params->authParams->officeId,
+                        $params->authParams->originatorTypeCode,
+                        1,
+                        $params->authParams->dutyCode
+                    )
+                )
+            );
         } else if ($stateful === true) {
             //We are authenticated and stateful: provide session header to continue or terminate session
             $statusCode =
@@ -439,27 +458,12 @@ class SoapHeader4 extends Base
                     'http://xml.amadeus.com/2010/06/Session_v3',
                     'Session',
                     new Client\Struct\HeaderV4\Session(
-                        $this->sessionData,
+                        $sessionData,
                         $statusCode
                     )
                 )
             );
         }
-
-        //AMA_SecurityHostedUser header
-        array_push(
-            $headersToSet,
-            new \SoapHeader(
-                'http://xml.amadeus.com/2010/06/Security_v1',
-                'AMA_SecurityHostedUser',
-                new Client\Struct\HeaderV4\SecurityHostedUser(
-                    $params->authParams->officeId,
-                    $params->authParams->originatorTypeCode,
-                    1,
-                    $params->authParams->dutyCode
-                )
-            )
-        );
 
         return $headersToSet;
     }
