@@ -22,13 +22,15 @@
 
 namespace Amadeus\Client\Struct\Security;
 
+use Amadeus\Client\Struct\BaseWsMessage;
+
 /**
  * SignOut
  *
  * @package Amadeus\Client\Struct\Security
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class SignOut
+class SignOut extends BaseWsMessage
 {
 
 }
