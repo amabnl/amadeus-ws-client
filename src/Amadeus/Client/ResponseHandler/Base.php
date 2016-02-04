@@ -110,7 +110,7 @@ class Base implements ResponseHandlerInterface
             '91F' => "Invalid queue number",
             '921' => "target not specified",
             '922' => "Targetted queue has wrong queue type",
-            '926' => "queue category empty",
+            '926' => "Queue category empty",
             '928' => "Queue category not assigned",
             '92A' => "Queue category full",
         ];

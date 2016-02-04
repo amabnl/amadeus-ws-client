@@ -404,14 +404,6 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertEquals($expected, $actual);
     }
 
-    public function testCanSetHeadersWhenAuthenticated()
-    {
-        $sessionHandlerParams = $this->makeSessionHandlerParams();
-        $sessionHandler = new SoapHeader4($sessionHandlerParams);
-        $this->markTestIncomplete('todo');
-
-    }
-
     /**
      * @return SessionHandlerParams
      */
