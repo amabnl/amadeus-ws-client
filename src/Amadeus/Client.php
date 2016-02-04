@@ -140,7 +140,7 @@ class Client
      */
     public function getLastResponse()
     {
-        $this->sessionHandler->getLastRequest();
+        $this->sessionHandler->getLastResponse();
     }
 
     /**
