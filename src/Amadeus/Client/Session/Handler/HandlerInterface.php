@@ -76,7 +76,7 @@ interface HandlerInterface
      *
      * @return bool
      */
-    public function getStateful();
+    public function isStateful();
 
     /**
      * Get the last raw XML message that was sent out

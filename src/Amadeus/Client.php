@@ -25,22 +25,12 @@ namespace Amadeus;
 use Amadeus\Client\Exception;
 use Amadeus\Client\Params;
 use Amadeus\Client\RequestCreator\RequestCreatorInterface;
-use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
-use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
-use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
-use Amadeus\Client\RequestOptions\OfferVerifyOptions;
-use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
-use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
-use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
-use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
-use Amadeus\Client\RequestOptions\QueueListOptions;
-use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
-use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
-use Amadeus\Client\RequestOptions\QueueRemoveItemOptions;
-use Amadeus\Client\RequestOptions\SecuritySignOutOptions;
+use Amadeus\Client\RequestOptions;
+use Amadeus\Client\ResponseHandler\ResponseHandlerInterface;
 use Amadeus\Client\Session\Handler\HandlerFactory;
 use Amadeus\Client\RequestCreator\Factory as RequestCreatorFactory;
 use Amadeus\Client\Session\Handler\HandlerInterface;
+use Amadeus\Client\ResponseHandler\Base as ResponseHandlerBase;
 
 /**
  * Amadeus Web Service Client.
@@ -95,14 +85,25 @@ class Client
     const receivedFromIdentifier = "amabnl-amadeus-ws-client";
 
     /**
+     * Session Handler will be sending all the messages and handling all session-related things.
+     *
      * @var HandlerInterface
      */
     protected $sessionHandler;
 
     /**
+     * Request Creator is will create the correct message structure to send to the SOAP server.
+     *
      * @var RequestCreatorInterface
      */
     protected $requestCreator;
+
+    /**
+     * Response Handler will check the received response for errors.
+     *
+     * @var ResponseHandlerInterface
+     */
+    protected $responseHandler;
 
     /**
      * Set the session as stateful (true) or stateless (false)
@@ -117,9 +118,9 @@ class Client
     /**
      * @return bool
      */
-    public function getStateful()
+    public function isStateful()
     {
-        return $this->sessionHandler->getStateful();
+        return $this->sessionHandler->isStateful();
     }
 
     /**
@@ -160,6 +161,10 @@ class Client
             self::receivedFromIdentifier . "-" .self::version,
             $this->sessionHandler->getOriginatorOffice()
         );
+
+        $this->responseHandler = $this->loadResponseHandler(
+            $params->responseHandler
+        );
     }
 
     /**
@@ -176,7 +181,7 @@ class Client
             'Security_SignOut',
             $this->requestCreator->createRequest(
                 'securitySignOut',
-                new SecuritySignOutOptions()
+                new RequestOptions\SecuritySignOutOptions()
             ),
             $messageOptions
         );
@@ -192,7 +197,7 @@ class Client
      *
      * https://webservices.amadeus.com/extranet/viewService.do?id=27&flavourId=1&menuId=functional
      *
-     * @param PnrRetrieveOptions $options
+     * @param RequestOptions\PnrRetrieveOptions $options
      * @param array $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_Reply as a PHP object.
      * @return string|\stdClass|null
      * @throws Exception
@@ -214,7 +219,7 @@ class Client
     /**
      * Create a PNR using PNR_AddMultiElements
      *
-     * @param PnrCreatePnrOptions $options
+     * @param RequestOptions\PnrCreatePnrOptions $options
      * @param array $messageOptions
      * @return mixed
      */
@@ -238,7 +243,7 @@ class Client
      * https://webservices.amadeus.com/extranet/viewService.do?id=25&flavourId=1&menuId=functional
      *
      * @todo implement message creation - maybe split up in separate Create & Modify PNR?
-     * @param PnrAddMultiElementsOptions $options
+     * @param RequestOptions\PnrAddMultiElementsOptions $options
      * @param array $messageOptions
      * @return mixed
      */
@@ -268,7 +273,7 @@ class Client
      *
      * https://webservices.amadeus.com/extranet/viewService.do?id=1922&flavourId=1&menuId=functional
      *
-     * @param PnrRetrieveAndDisplayOptions $options Amadeus Record Locator for PNR
+     * @param RequestOptions\PnrRetrieveAndDisplayOptions $options Amadeus Record Locator for PNR
      * @param array $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_RetrieveAndDisplayReply as a PHP object.
      * @return string|\stdClass|null
      * @throws Exception
@@ -292,32 +297,38 @@ class Client
      *
      * https://webservices.amadeus.com/extranet/viewService.do?id=52&flavourId=1&menuId=functional
      *
-     * @param QueueListOptions $options
+     * @param RequestOptions\QueueListOptions $options
      * @param array $messageOptions
      * @return mixed
      */
-    public function queueList(QueueListOptions $options, $messageOptions = [])
+    public function queueList(RequestOptions\QueueListOptions $options, $messageOptions = [])
     {
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            'Queue_List',
+        $msgName = 'Queue_List';
+
+        $wsResult = $this->sessionHandler->sendMessage(
+            $msgName,
             $this->requestCreator->createRequest(
                 'queueList',
                 $options
             ),
             $messageOptions
         );
+
+        $this->responseHandler->analyzeResponse($this->getLastResponse(), $msgName);
+
+        return $wsResult;
     }
 
     /**
      * Queue_PlacePNR - Place a PNR on a given queue
      *
-     * @param QueuePlacePnrOptions $options
+     * @param RequestOptions\QueuePlacePnrOptions $options
      * @param array $messageOptions
      * @return mixed
      */
-    public function queuePlacePnr(QueuePlacePnrOptions $options, $messageOptions = [])
+    public function queuePlacePnr(RequestOptions\QueuePlacePnrOptions $options, $messageOptions = [])
     {
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
@@ -334,11 +345,11 @@ class Client
     /**
      * Queue_RemoveItem - remove an item (a PNR) from a given queue
      *
-     * @param QueueRemoveItemOptions $options
+     * @param RequestOptions\QueueRemoveItemOptions $options
      * @param array $messageOptions
      * @return mixed
      */
-    public function queueRemoveItem(QueueRemoveItemOptions $options, $messageOptions = [])
+    public function queueRemoveItem(RequestOptions\QueueRemoveItemOptions $options, $messageOptions = [])
     {
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
@@ -355,11 +366,11 @@ class Client
     /**
      * Queue_MoveItem - move an item (a PNR) from one queue to another.
      *
-     * @param QueueMoveItemOptions $options
+     * @param RequestOptions\QueueMoveItemOptions $options
      * @param array $messageOptions
      * @return mixed
      */
-    public function queueMoveItem(QueueMoveItemOptions $options, $messageOptions = [])
+    public function queueMoveItem(RequestOptions\QueueMoveItemOptions $options, $messageOptions = [])
     {
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
@@ -378,11 +389,11 @@ class Client
      *
      * To be called in the context of an open PNR
      *
-     * @param OfferVerifyOptions $options
+     * @param RequestOptions\OfferVerifyOptions $options
      * @param array $messageOptions
      * @return mixed
      */
-    public function offerVerify(OfferVerifyOptions $options, $messageOptions = [])
+    public function offerVerify(RequestOptions\OfferVerifyOptions $options, $messageOptions = [])
     {
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
@@ -399,11 +410,11 @@ class Client
     /**
      * Offer_ConfirmAirOffer
      *
-     * @param OfferConfirmAirOptions $options
+     * @param RequestOptions\OfferConfirmAirOptions $options
      * @param array $messageOptions
      * @return mixed
      */
-    public function offerConfirmAir(OfferConfirmAirOptions $options, $messageOptions = [])
+    public function offerConfirmAir(RequestOptions\OfferConfirmAirOptions $options, $messageOptions = [])
     {
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
@@ -420,11 +431,11 @@ class Client
     /**
      * Offer_ConfirmHotelOffer
      *
-     * @param OfferConfirmHotelOptions $options
+     * @param RequestOptions\OfferConfirmHotelOptions $options
      * @param array $messageOptions
      * @return mixed
      */
-    public function offerConfirmHotel(OfferConfirmHotelOptions $options, $messageOptions = [])
+    public function offerConfirmHotel(RequestOptions\OfferConfirmHotelOptions $options, $messageOptions = [])
     {
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
@@ -441,11 +452,11 @@ class Client
     /**
      * Offer_ConfirmCarOffer
      *
-     * @param OfferConfirmCarOptions $options
+     * @param RequestOptions\OfferConfirmCarOptions $options
      * @param array $messageOptions
      * @return mixed
      */
-    public function offerConfirmCar(OfferConfirmCarOptions $options, $messageOptions = [])
+    public function offerConfirmCar(RequestOptions\OfferConfirmCarOptions $options, $messageOptions = [])
     {
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
@@ -453,6 +464,27 @@ class Client
             'Offer_ConfirmCarOffer',
             $this->requestCreator->createRequest(
                 'offerConfirmCar',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * Fare_MasterPricerTravelBoardSearch
+     *
+     * @param RequestOptions\FareMasterPricerTbSearch $options
+     * @param array $messageOptions
+     * @return mixed
+     */
+    public function fareMasterPricerTravelBoardSearch(RequestOptions\FareMasterPricerTbSearch $options, $messageOptions = [])
+    {
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        return $this->sessionHandler->sendMessage(
+            'Fare_MasterPricerTravelBoardSearch',
+            $this->requestCreator->createRequest(
+                'fareMasterPricerTravelBoardSearch',
                 $options
             ),
             $messageOptions
@@ -540,5 +572,26 @@ class Client
         }
 
         return $newRequestCreator;
+    }
+
+    /**
+     * Load a response handler
+     *
+     * @param ResponseHandlerInterface|null $responseHandler
+     *
+     * @return ResponseHandlerInterface
+     * @throws \RuntimeException
+     */
+    protected function loadResponseHandler($responseHandler)
+    {
+        $newResponseHandler = null;
+
+        if ($responseHandler instanceof ResponseHandlerInterface) {
+            $newResponseHandler = $responseHandler;
+        } else {
+            $newResponseHandler = new ResponseHandlerBase();
+        }
+
+        return $newResponseHandler;
     }
 }

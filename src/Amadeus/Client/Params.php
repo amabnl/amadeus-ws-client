@@ -25,7 +25,8 @@ namespace Amadeus\Client;
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\Params\SessionHandlerParams;
 use Amadeus\Client\RequestCreator\RequestCreatorInterface;
-use Amadeus\Client\Session\Handler\HandlerInterface;
+use Amadeus\Client\ResponseHandler\ResponseHandlerInterface;
+use Amadeus\Client\Session;
 
 /**
  * Params
@@ -45,9 +46,16 @@ class Params
     /**
      * For injecting a custom session handler
      *
-     * @var HandlerInterface
+     * @var Session\Handler\HandlerInterface
      */
     public $sessionHandler;
+
+    /**
+     * For injecting a custom response handler
+     *
+     * @var ResponseHandlerInterface
+     */
+    public $responseHandler;
 
     /**
      * Parameters required to create the Session Handler
@@ -62,6 +70,8 @@ class Params
      * @var Params\RequestCreatorParams
      */
     public $requestCreatorParams;
+
+
 
     /**
      * @param array $params
@@ -78,11 +88,14 @@ class Params
      * @return void
      */
     protected function loadFromArray(array $params) {
-        if (isset($params['requestCreator'])) {
+        if (isset($params['requestCreator']) && $params['requestCreator'] instanceof RequestCreatorInterface) {
             $this->requestCreator = $params['requestCreator'];
         }
-        if (isset($params['sessionHandler'])) {
+        if (isset($params['sessionHandler']) && $params['sessionHandler'] instanceof Session\Handler\HandlerInterface) {
             $this->sessionHandler = $params['sessionHandler'];
+        }
+        if (isset($params['responseHandler']) && $params['responseHandler'] instanceof ResponseHandlerInterface) {
+            $this->responseHandler = $params['responseHandler'];
         }
 
         if (isset($params['sessionHandlerParams'])) {

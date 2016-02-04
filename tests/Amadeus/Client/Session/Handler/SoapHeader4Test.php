@@ -36,7 +36,7 @@ use Test\Amadeus\BaseTestCase;
 class SoapHeader4Test extends BaseTestCase
 {
 
-    public function testCanCreateSoapHeaders()
+    public function testCanCreateSoapHeadersForStatelessCall()
     {
         $expectedSecurityNodeStructureXml = '<oas:Security xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd"
 xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
@@ -94,6 +94,74 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertEquals('http://xml.amadeus.com/2010/06/Security_v1', $result[4]->namespace);
     }
 
+    /**
+     * Testing soap header generation when we're about to make the first call in stateful mode.
+     */
+    public function testCanCreateSoapHeadersForStatefullCallAuth()
+    {
+        $expectedSecurityNodeStructureXml = '<oas:Security xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd"
+xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+ <oas:UsernameToken oas1:Id="UsernameToken-1">
+ <oas:Username>WSYYYXXX</oas:Username>
+ <oas:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsssoap-message-security-1.0#Base64Binary">c2VjcmV0bm9uY2UxMDExMQ==</oas:Nonce>
+ <oas:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wssusername-token-profile-1.0#PasswordDigest">+LzcaRc+ndGAcZIXmq/N7xGes+k=</oas:Password>
+ <oas1:Created>2015-09-30T14:12:15Z</oas1:Created>
+ </oas:UsernameToken>
+ </oas:Security>';
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+        $sessionHandler->setStateful(true);
+
+        $meth = self::getMethod($sessionHandler, 'createSoapHeaders');
+
+        /** @var \SoapHeader[] $result */
+        $result = $meth->invoke(
+            $sessionHandler,
+            ['sessionId' => null, 'sequenceNumber' => null, 'securityToken' => null],
+            $sessionHandlerParams,
+            'PNR_Retrieve',
+            []
+        );
+
+        $this->assertCount(6, $result);
+        foreach ($result as $tmp) {
+            $this->assertInstanceOf('\SoapHeader', $tmp);
+        }
+
+        $this->assertInternalType('string', $result[0]->data);
+        $this->assertTrue($this->isValidGuid($result[0]->data));
+        $this->assertEquals('MessageID', $result[0]->name);
+        $this->assertEquals('http://www.w3.org/2005/08/addressing', $result[0]->namespace);
+
+        $this->assertInternalType('string', $result[1]->data);
+        $this->assertEquals('http://webservices.amadeus.com/PNRRET_11_3_1A', $result[1]->data);
+        $this->assertEquals('Action', $result[1]->name);
+        $this->assertEquals('http://www.w3.org/2005/08/addressing', $result[1]->namespace);
+
+        $this->assertInternalType('string', $result[2]->data);
+        $this->assertEquals('https://dummy.webservices.endpoint.com/SOAPADDRESS', $result[2]->data);
+        $this->assertEquals('To', $result[2]->name);
+        $this->assertEquals('http://www.w3.org/2005/08/addressing', $result[2]->namespace);
+
+        $this->assertInstanceOf('\SoapVar', $result[3]->data);
+        $this->assertEquals(XSD_ANYXML, $result[3]->data->enc_type);
+        $this->assertEqualXMLStructure($this->toDomElement($expectedSecurityNodeStructureXml), $this->toDomElement($result[3]->data->enc_value), true);
+        $this->assertEquals('Security', $result[3]->name);
+        $this->assertEquals('http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
+            $result[3]->namespace);
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\HeaderV4\Session', $result[4]->data);
+        $this->assertEquals('Start', $result[4]->data->TransactionStatusCode);
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\HeaderV4\SecurityHostedUser', $result[5]->data);
+        $this->assertEquals('AMA_SecurityHostedUser', $result[5]->name);
+        $this->assertEquals('http://xml.amadeus.com/2010/06/Security_v1', $result[5]->namespace);
+    }
+
+    /**
+     * Testing soap header generation when we're about to make the subsequent calls in stateful mode with an active session.
+     */
     public function testCanCreateSoapHeadersWhenStatefulAndAuthenticated()
     {
         $sessionHandlerParams = $this->makeSessionHandlerParams();
@@ -102,13 +170,6 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
 
         $prop = self::getProperty($sessionHandler, 'isAuthenticated');
         $prop->setValue($sessionHandler, true);
-
-        /*$propSess = self::getProperty($sessionHandler, 'sessionData');
-        $propSess->setValue([
-            'sessionId' => '01ZWHV5EMT',
-            'sequenceNumber' => 1,
-            'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'
-        ]);*/
 
         $meth = self::getMethod($sessionHandler, 'createSoapHeaders');
 
@@ -255,9 +316,9 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
         $sessionHandler->setStateful(false);
-        $this->assertFalse($sessionHandler->getStateful());
+        $this->assertFalse($sessionHandler->isStateful());
         $sessionHandler->setStateful(true);
-        $this->assertTrue($sessionHandler->getStateful());
+        $this->assertTrue($sessionHandler->isStateful());
     }
 
     public function testCanHandleDummyPostMessage()
@@ -347,8 +408,9 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
     {
         $sessionHandlerParams = $this->makeSessionHandlerParams();
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
-    }
+        $this->markTestIncomplete('todo');
 
+    }
 
     /**
      * @return SessionHandlerParams
@@ -402,15 +464,5 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $doc->loadXML($xmlString);
 
         return $doc->firstChild;
-    }
-
-    /**
-     * @param $fileName
-     * @return string
-     */
-    protected function getTestFile($fileName)
-    {
-        $fullPath = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR."testfiles".DIRECTORY_SEPARATOR.$fileName);
-        return file_get_contents($fullPath);
     }
 }

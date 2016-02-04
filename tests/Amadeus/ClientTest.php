@@ -55,7 +55,7 @@ class ClientTest extends BaseTestCase
 
         $client = new Client($par);
 
-        $this->assertTrue($client->getStateful());
+        $this->assertTrue($client->isStateful());
     }
 
     public function testCanCreateClientWithOverriddenSessionHandlerAndRequestCreator()
@@ -89,12 +89,12 @@ class ClientTest extends BaseTestCase
     {
         $client = new Client($this->makeDummyParams());
 
-        $current = $client->getStateful();
+        $current = $client->isStateful();
 
         $this->assertTrue($current);
 
         $client->setStateful(false);
-        $current = $client->getStateful();
+        $current = $client->isStateful();
 
         $this->assertFalse($current);
     }
@@ -118,7 +118,7 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $messageResult = 'A dummy message result';
+        $messageResult = 'A dummy message result'; // Not an actual XML reply.
 
         $expectedPnrResult = new Client\Struct\Pnr\Retrieve(Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,'ABC123');
 

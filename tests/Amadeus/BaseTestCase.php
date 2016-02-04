@@ -57,4 +57,16 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         return $property;
     }
 
+    /**
+     * @param $fileName
+     * @return string
+     */
+    protected function getTestFile($fileName)
+    {
+        $reflector = new \ReflectionClass(get_class($this));
+        $path = dirname($reflector->getFileName());
+
+        $fullPath = realpath($path.DIRECTORY_SEPARATOR."testfiles".DIRECTORY_SEPARATOR.$fileName);
+        return file_get_contents($fullPath);
+    }
 }

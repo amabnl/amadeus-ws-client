@@ -153,7 +153,7 @@ class SoapHeader4 extends Base
     /**
      * @return bool
      */
-    public function getStateful()
+    public function isStateful()
     {
         return $this->isStateful;
     }
@@ -234,22 +234,10 @@ class SoapHeader4 extends Base
         }
 
         if ($messageOptions['asString'] === true) {
-            $result = $this->extractMessageBody($messageName, $this->getLastResponse());
+            $result = Client\Util\MsgBodyExtractor::extract($this->getLastResponse());
         }
 
         return $result;
-    }
-
-    /**
-     * Extracts the message content from the soap envelope (i.e. everything under the soap body)
-     *
-     * @param string $messageName
-     * @param string $lastResponseEnvelope
-     * @return string
-     */
-    protected function extractMessageBody($messageName, $lastResponseEnvelope)
-    {
-        throw new \RuntimeException(__METHOD__."() is not yet implemented");
     }
 
     /**
@@ -297,7 +285,7 @@ class SoapHeader4 extends Base
         }
 
         //CHECK FOR SESSION DATA:
-        if ($this->getStateful() === true) {
+        if ($this->isStateful() === true) {
             //We need to extract session info
             $this->sessionData = $this->getSessionDataFromHeader($lastResponse);
             $this->isAuthenticated = (!empty($this->sessionData['sessionId']) &&
@@ -367,7 +355,7 @@ class SoapHeader4 extends Base
         $headersToSet = [];
 
         //CHECK STATEFUL
-        $stateful = $this->getStateful();
+        $stateful = $this->isStateful();
 
         //Message ID header
         array_push(

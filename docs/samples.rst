@@ -43,7 +43,7 @@ After doing multiple calls with a stateful session, there are two ways to end th
 *********************
 Handling the response
 *********************
-Sometimes it's useful if there result from the SOAP call gets returned as a PHP object,
+Sometimes it's useful if the result from the SOAP call gets returned as a PHP object,
 sometimes a string containing the XML document of the SOAP-BODY is more useful.
 
 For example, when trying to extract specific information from a PNR, it can be useful to load the
@@ -99,6 +99,8 @@ Creating a PNR (simplified example containing only the most basic PNR elements n
         'value' => '+3222222222'
     ]);
 
+    //The required Received From (RF) element will automatically be added by the library.
+
     $createdPnr = $client->pnrCreatePnr($opt);
 
 Retrieving a PNR:
@@ -125,6 +127,12 @@ Queue
 *****
 Get a list of all PNR's on a given queue:
 
+Place a PNR on a queue:
+
+Remove a PNR from a queue:
+
+Move a PNR from one queue to another:
+
 .. code-block:: php
 
 
@@ -132,3 +140,9 @@ Get a list of all PNR's on a given queue:
 *****
 Offer
 *****
+
+Verify if an offer is still valid:
+
+Confirm a given AIR offer:
+
+Confirm a given HOTEL offer:
