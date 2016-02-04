@@ -130,7 +130,7 @@ class Client
      */
     public function getLastRequest()
     {
-        $this->sessionHandler->getLastRequest();
+        return $this->sessionHandler->getLastRequest();
     }
 
     /**
@@ -140,7 +140,7 @@ class Client
      */
     public function getLastResponse()
     {
-        $this->sessionHandler->getLastResponse();
+        return $this->sessionHandler->getLastResponse();
     }
 
     /**
