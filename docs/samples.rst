@@ -127,14 +127,62 @@ Queue
 *****
 Get a list of all PNR's on a given queue:
 
+.. code-block:: php
+
+    $queueContent = $client->queueList(
+        new Client\RequestOptions\QueueListOptions([
+                'queue' => new Client\RequestOptions\Queue([
+                    'queue' => 50,
+                    'category' => 0
+                ])
+            ])
+    );
+
 Place a PNR on a queue:
 
+.. code-block:: php
+
+    $queueContent = $client->queuePlacePnr(
+        new Client\RequestOptions\QueuePlacePnrOptions([
+                'targetQueue' => new Client\RequestOptions\Queue([
+                    'queue' => 50,
+                    'category' => 0
+                ]),
+                'recordLocator' => 'ABC123'
+            ])
+    );
+
 Remove a PNR from a queue:
+
+.. code-block:: php
+
+    $queueContent = $client->queueRemoveItem(
+        new Client\RequestOptions\QueueRemoveItemOptions([
+                'queue' => new Client\RequestOptions\Queue([
+                    'queue' => 50,
+                    'category' => 0
+                ]),
+                'recordLocator' => 'ABC123'
+            ])
+    );
 
 Move a PNR from one queue to another:
 
 .. code-block:: php
 
+$queueContent = $client->queueMoveItem(
+        new Client\RequestOptions\QueueMoveItemOptions([
+                'sourceQueue' => new Client\RequestOptions\Queue([
+                    'queue' => 50,
+                    'category' => 0
+                ]),
+                'destinationQueue' => new Client\RequestOptions\Queue([
+                    'queue' => 60,
+                    'category' => 3
+                ]),
+                'recordLocator' => 'ABC123'
+            ])
+    );
 
 
 *****
