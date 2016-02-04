@@ -142,7 +142,7 @@ Place a PNR on a queue:
 
 .. code-block:: php
 
-    $queueContent = $client->queuePlacePnr(
+    $placeResult = $client->queuePlacePnr(
         new Client\RequestOptions\QueuePlacePnrOptions([
                 'targetQueue' => new Client\RequestOptions\Queue([
                     'queue' => 50,
@@ -156,7 +156,7 @@ Remove a PNR from a queue:
 
 .. code-block:: php
 
-    $queueContent = $client->queueRemoveItem(
+    $removeResult = $client->queueRemoveItem(
         new Client\RequestOptions\QueueRemoveItemOptions([
                 'queue' => new Client\RequestOptions\Queue([
                     'queue' => 50,
@@ -170,7 +170,7 @@ Move a PNR from one queue to another:
 
 .. code-block:: php
 
-$queueContent = $client->queueMoveItem(
+    $moveResult = $client->queueMoveItem(
         new Client\RequestOptions\QueueMoveItemOptions([
                 'sourceQueue' => new Client\RequestOptions\Queue([
                     'queue' => 50,
