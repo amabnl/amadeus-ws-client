@@ -1,6 +1,6 @@
 # amadeus-ws-client: PHP client for the Amadeus GDS SOAP Web Service interface
 
-[![Build Status](https://travis-ci.org/amabnl/amadeus-ws-client.svg?branch=develop)](https://travis-ci.org/amabnl/amadeus-ws-client) [![Coverage Status](https://coveralls.io/repos/github/amabnl/amadeus-ws-client/badge.svg?branch=develop)](https://coveralls.io/github/amabnl/amadeus-ws-client?branch=develop)
+[![Build Status](https://travis-ci.org/amabnl/amadeus-ws-client.svg?branch=master)](https://travis-ci.org/amabnl/amadeus-ws-client) [![Coverage Status](https://coveralls.io/repos/github/amabnl/amadeus-ws-client/badge.svg?branch=master)](https://coveralls.io/github/amabnl/amadeus-ws-client?branch=master)
 
 This client library provides access to the Amadeus GDS SOAP Web Service interface. 
 
