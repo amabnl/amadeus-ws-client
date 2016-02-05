@@ -404,6 +404,53 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertEquals($expected, $actual);
     }
 
+    public function testCanSendMessage()
+    {
+        $overrideSoapClient = $this->getMock(
+            'Amadeus\Client\SoapClient',
+            ['__getLastRequest', '__getLastResponse', 'PNR_Retrieve'],
+            [],
+            '',
+            false
+        );
+
+        $dummyPnrRequest = $this->getTestFile('dummyPnrRequest.txt');
+        $dummyPnrReply = $this->getTestFile('sessionheadertestresponse.txt');
+        $dummyPnrReplyExtractedMessage = $this->getTestFile('dummyPnrReplyExtractedMessage.txt');
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastRequest')
+            ->will($this->returnValue($dummyPnrRequest));
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastResponse')
+            ->will($this->returnValue($dummyPnrReply));
+
+        $overrideSoapClient
+            ->expects($this->any())
+            ->method('PNR_Retrieve')
+            ->will($this->returnValue(''));
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
+            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
+            'ABC123'
+        );
+
+        $messageResponse = $sessionHandler->sendMessage(
+            'PNR_Retrieve',
+            $pnrRetrieveMessage,
+            ['asString'=>true,'endSession'=>false]
+        );
+
+        $this->assertInternalType('string', $messageResponse);
+        $this->assertEquals($dummyPnrReplyExtractedMessage, $messageResponse);
+    }
+
     /**
      * @return SessionHandlerParams
      */

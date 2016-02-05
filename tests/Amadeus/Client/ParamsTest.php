@@ -115,10 +115,12 @@ class ParamsTest extends BaseTestCase
     {
         $dummySessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
         $dummyRequestCreator = $this->getMockBuilder('Amadeus\Client\RequestCreator\RequestCreatorInterface')->getMock();
+        $dummyResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
         $theParamArray = [
             'sessionHandler' => $dummySessionHandler,
-            'requestCreator' => $dummyRequestCreator
+            'requestCreator' => $dummyRequestCreator,
+            'responseHandler' => $dummyResponseHandler,
         ];
 
         $params = new Params($theParamArray);
@@ -127,6 +129,20 @@ class ParamsTest extends BaseTestCase
         $this->assertNull($params->sessionHandlerParams);
         $this->assertInstanceOf('Amadeus\Client\Session\Handler\HandlerInterface', $params->sessionHandler);
         $this->assertInstanceOf('Amadeus\Client\RequestCreator\RequestCreatorInterface', $params->requestCreator);
+        $this->assertInstanceOf('Amadeus\Client\ResponseHandler\ResponseHandlerInterface', $params->responseHandler);
+    }
+
+    public function testCanLoadFromArrayParamObjects()
+    {
+        $theParamArray = [
+            'sessionHandlerParams' => new Params\SessionHandlerParams(),
+            'requestCreatorParams' => new Params\RequestCreatorParams()
+        ];
+
+        $params = new Params($theParamArray);
+
+        $this->assertInstanceOf('Amadeus\Client\Params\SessionHandlerParams', $params->sessionHandlerParams);
+        $this->assertInstanceOf('Amadeus\Client\Params\RequestCreatorParams', $params->requestCreatorParams);
     }
 }
 
