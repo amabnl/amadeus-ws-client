@@ -69,6 +69,15 @@ The library supports this through the message option 'asString':
         ['asString' => false]
     );
 
+******
+Errors
+******
+The Amadeus web services can be tricky with regards to error detection. In most verbs, you have to look for the presence of error nodes in the response to see if everything went allright.
+
+We try to ease your pain a little by analyzing the messages we support and look for error nodes. If any are found, we throw them as exceptions.
+
+To override this behaviour, look at the ``Amadeus\Client\ResponseHandler\ResponseHandlerInterface``.
+
 ***
 PNR
 ***
