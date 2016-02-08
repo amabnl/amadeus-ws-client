@@ -24,6 +24,17 @@ This library is initially built to support the current Soap Header v4, which is 
 
 Legacy applications using already certified WSAP's can still be running on legacy Soap Header versions - most notably Soap Header 1 & 2. This library currently doesn't support those yet, but we plan to add that in the future.
 
+***************************************
+Support for different versions of verbs
+***************************************
+Amadeus periodically releases new versions of the verbs available on their web services.
+
+On requesting access to the Amadeus web services, you'll receive a WSDL which contains messages in the lastest stable version Amadeus has released.
+
+**There could be differences** in new versions of verbs: the request could be constructed differently (or have more options), you may get a slightly different response depending on the version you have received.
+
+Therefore it's advised to test all options you will use and see if this library works for you! If it doesn't, you can inject a custom :code:`Amadeus\Client\RequestCreator\RequestCreatorInterface` which you can use to construct the messages as needed. This can be injected by passing a ``'requestCreator'`` in the client's params.
+
 ******************************
 Install library in PHP project
 ******************************
