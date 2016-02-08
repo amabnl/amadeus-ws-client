@@ -20,12 +20,12 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Install;
+namespace Amadeus\Client\Util;
 
 /**
  * SomewhatRandomGenerator
  *
- * @package Amadeus\Client\Install
+ * @package Amadeus\Client\Util
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class SomewhatRandomGenerator

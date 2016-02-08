@@ -86,9 +86,11 @@ class AuthParams
      *
      * Only applies to Soap Header V4
      *
+     * If you do not provide one, the Session HandlerFactory will generate a random string.
+     *
      * @var string
      */
-    public $nonceBase = "ofGvk2gWUIP1nDo4KZ";
+    public $nonceBase;
 
     /**
      * @param array $params

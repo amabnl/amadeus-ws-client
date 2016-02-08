@@ -20,9 +20,9 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Test\Amadeus\Client\Install;
+namespace Test\Amadeus\Client\Util;
 
-use Amadeus\Client\Install\SomewhatRandomGenerator;
+use Amadeus\Client\Util\SomewhatRandomGenerator;
 use Test\Amadeus\BaseTestCase;
 
 /**
