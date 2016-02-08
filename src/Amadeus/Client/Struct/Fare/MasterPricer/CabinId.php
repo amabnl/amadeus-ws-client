@@ -22,43 +22,42 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
-use Amadeus\Client\RequestOptions\Fare\MPDate;
-
 /**
- * TimeDetails
+ * CabinId
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TimeDetails
+class CabinId
 {
-    /**
-     * @var FirstDateTimeDetail
-     */
-    public $firstDateTimeDetail;
-    /**
-     * @var RangeOfDate
-     */
-    public $rangeOfDate;
-    /**
-     * @var TripDetails
-     */
-    public $tripDetails;
+    const CABIN_ECONOMY = "Y";
+    const CABIN_ECONOMY_STANDARD = "M";
+    const CABIN_ECONOMY_PREMIUM = "W";
+    const CABIN_BUSINESS = "C";
+    const CABIN_FIRST_SUPERSONIC = "F";
 
     /**
-     * TimeDetails constructor.
+     * MC	Major cabin
+     * MD	Mandatory cabin for all segments
+     * RC	Recommended cabin to be used at least one segment
      *
-     * @param MPDate $theDate
+     * @var string
      */
-    public function __construct(MPDate $theDate)
-    {
-        $this->firstDateTimeDetail = new FirstDateTimeDetail($theDate->date->format('dmy'));
+    public $cabinQualifier;
 
-        if ($theDate->time instanceof \DateTime) {
-            $this->firstDateTimeDetail->time = $theDate->time->format('Hi');
-        }
-        if (is_int($theDate->timeWindow)) {
-            $this->firstDateTimeDetail->timeWindow = $theDate->timeWindow;
-        }
+    /**
+     * self::CABIN_*
+     *
+     * @var string
+     */
+    public $cabin;
+
+    /**
+     * CabinId constructor.
+     *
+     * @param string $cabinCode self::CABIN_*
+     */
+    public function __construct($cabinCode)
+    {
+        $this->cabin = $cabinCode;
     }
 }

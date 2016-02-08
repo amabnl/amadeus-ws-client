@@ -35,7 +35,7 @@ class MPDate extends LoadParamsFromArray
     /**
      * Departure or arrival date
      *
-     * We only use the date portion
+     * We only use the date portion!
      *
      * @var \DateTime
      */
@@ -43,7 +43,7 @@ class MPDate extends LoadParamsFromArray
     /**
      * Departure or arrival time
      *
-     * We only use the date portion
+     * We only use the time portion!
      *
      * @var \DateTime
      */

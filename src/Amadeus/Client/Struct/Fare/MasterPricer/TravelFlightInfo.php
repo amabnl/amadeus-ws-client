@@ -22,43 +22,37 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
-use Amadeus\Client\RequestOptions\Fare\MPDate;
-
 /**
- * TimeDetails
+ * TravelFlightInfo
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TimeDetails
+class TravelFlightInfo
 {
     /**
-     * @var FirstDateTimeDetail
+     * @var CabinId
      */
-    public $firstDateTimeDetail;
-    /**
-     * @var RangeOfDate
-     */
-    public $rangeOfDate;
-    /**
-     * @var TripDetails
-     */
-    public $tripDetails;
+    public $cabinId;
+
+    public $companyIdentity = [];
+
+    public $flightDetail;
+
+    public $inclusionDetail = [];
+
+    public $exclusionDetail = [];
+
+    public $unitNumberDetail = [];
 
     /**
-     * TimeDetails constructor.
+     * TravelFlightInfo constructor.
      *
-     * @param MPDate $theDate
+     * @param string|null $cabinCode
      */
-    public function __construct(MPDate $theDate)
+    public function __construct($cabinCode = null)
     {
-        $this->firstDateTimeDetail = new FirstDateTimeDetail($theDate->date->format('dmy'));
-
-        if ($theDate->time instanceof \DateTime) {
-            $this->firstDateTimeDetail->time = $theDate->time->format('Hi');
-        }
-        if (is_int($theDate->timeWindow)) {
-            $this->firstDateTimeDetail->timeWindow = $theDate->timeWindow;
+        if (!is_null($cabinCode)) {
+            $this->cabinId = new CabinId($cabinCode);
         }
     }
 }

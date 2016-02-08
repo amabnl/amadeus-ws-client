@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
+use Amadeus\Client\RequestOptions\Fare\MPLocation;
+
 /**
  * ArrivalLocalization
  *
@@ -42,4 +44,13 @@ class ArrivalLocalization
      * @var AttributeDetails[]
      */
     public $attributeDetails = [];
+
+    /**
+     * ArrivalLocalization constructor.
+     * @param MPLocation $location
+     */
+    public function __construct(MPLocation $location)
+    {
+        $this->arrivalPointDetails = new LocationDetails($location);
+    }
 }

@@ -60,4 +60,14 @@ class FirstDateTimeDetail
      * @var int
      */
     public $timeWindow;
+
+    /**
+     * FirstDateTimeDetail constructor.
+     *
+     * @param string $date DDMMYY
+     */
+    public function __construct($date)
+    {
+        $this->date = $date;
+    }
 }

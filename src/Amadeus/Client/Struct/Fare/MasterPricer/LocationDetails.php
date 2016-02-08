@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
+use Amadeus\Client\RequestOptions\Fare\MPLocation;
+
 /**
  * LocationDetails
  *
@@ -73,4 +75,30 @@ class LocationDetails
      * @var string
      */
     public $longitude;
+
+    /**
+     * LocationDetails constructor.
+     *
+     * @param MPLocation $location
+     */
+    public function __construct(MPLocation $location)
+    {
+        if (!empty($location->airport)) {
+            $this->locationId = $location->airport;
+            $this->airportCityQualifier = "A";
+        } elseif (!empty(($location->city))) {
+            $this->locationId = $location->city;
+            $this->airportCityQualifier = "C";
+        }
+
+        if (!empty($location->longitude) && !empty($location->latitude)) {
+            $this->longitude = $location->longitude;
+            $this->latitude = $location->latitude;
+        }
+
+        if (!empty($location->radiusDistance) && !empty($location->radiusUnit)) {
+            $this->distance = $location->radiusDistance;
+            $this->distanceUnit = $location->radiusUnit;
+        }
+    }
 }

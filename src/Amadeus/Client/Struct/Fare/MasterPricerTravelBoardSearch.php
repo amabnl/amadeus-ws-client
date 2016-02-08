@@ -22,11 +22,11 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
+use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\Fare\MPPassenger;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Fare\MasterPricer\NumberOfUnit;
-use Amadeus\Client\Struct\Fare\MasterPricer\UnitNumberDetail;
+use Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
  * MasterPricerTravelBoardSearch
@@ -69,7 +69,7 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
      */
     public $fareFamilies;
     /**
-     * @var FareOptions
+     * @var MasterPricer\FareOptions
      */
     public $fareOptions;
     /**
@@ -81,7 +81,7 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
      */
     public $taxInfo;
     /**
-     * @var mixed
+     * @var MasterPricer\TravelFlightInfo
      */
     public $travelFlightInfo;
 
@@ -127,36 +127,85 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
     protected function loadOptions(FareMasterPricerTbSearch $options)
     {
         if (is_int($options->nrOfRequestedPassengers) || is_int($options->nrOfRequestedResults)) {
-            $this->numberOfUnit = new NumberOfUnit();
+            $this->numberOfUnit = new MasterPricer\NumberOfUnit();
             if (is_int($options->nrOfRequestedPassengers)) {
-                $this->numberOfUnit->unitNumberDetail[] = new UnitNumberDetail(
+                $this->numberOfUnit->unitNumberDetail[] = new MasterPricer\UnitNumberDetail(
                     $options->nrOfRequestedPassengers,
-                    UnitNumberDetail::TYPE_PASS
+                    MasterPricer\UnitNumberDetail::TYPE_PASS
                 );
             }
             if (is_int($options->nrOfRequestedResults)) {
-                $this->numberOfUnit->unitNumberDetail[] = new UnitNumberDetail(
+                $this->numberOfUnit->unitNumberDetail[] = new MasterPricer\UnitNumberDetail(
                     $options->nrOfRequestedResults,
-                    UnitNumberDetail::TYPE_RESULTS
+                    MasterPricer\UnitNumberDetail::TYPE_RESULTS
                 );
             }
         }
 
         $passengerCounter = 1;
+        $infantCounter = 1;
         foreach ($options->passengers as $passenger) {
-            $this->loadPassenger($passenger, $passengerCounter);
+            $this->loadPassenger($passenger, $passengerCounter, $infantCounter);
+        }
+
+        $segmentCounter = 1;
+        foreach ($options->itinerary as $itinerary) {
+            $this->loadItinerary($itinerary, $segmentCounter);
+        }
+
+        if (!empty($options->cabinClass)) {
+            $this->travelFlightInfo = new MasterPricer\TravelFlightInfo($options->cabinClass);
         }
     }
 
     /**
      * @param MPPassenger $passenger
      * @param int $counter BYREF
+     * @param int $infantCounter BYREF
      */
-    protected function loadPassenger($passenger, &$counter)
+    protected function loadPassenger($passenger, &$counter, &$infantCounter)
     {
-        $this->paxReference = new MasterPricer\PaxReference(
+        $isInfant = ($passenger->type === 'INF');
 
+        $this->paxReference = new MasterPricer\PaxReference(
+            $isInfant ? $infantCounter : $counter,
+            $isInfant,
+            $passenger->type
         );
+
+        if ($isInfant) {
+            $infantCounter++;
+        } else {
+            $counter++;
+        }
+
+        if ($passenger->count > 1) {
+            for ($i = 2; $i <= $passenger->count; $i++) {
+                $this->paxReference->traveller[] = new MasterPricer\Traveller($counter);
+
+                if ($isInfant) {
+                    $infantCounter++;
+                } else {
+                    $counter++;
+                }
+            }
+        }
     }
 
+    /**
+     * @param MPItinerary $itinerary
+     * @param int $counter BYREF
+     */
+    protected function loadItinerary($itinerary, &$counter)
+    {
+        $tmpItin = new MasterPricer\Itinerary($counter);
+
+        $tmpItin->departureLocalization = new MasterPricer\DepartureLocalization($itinerary->departureLocation);
+        $tmpItin->arrivalLocalization = new MasterPricer\ArrivalLocalization($itinerary->arrivalLocation);
+        $tmpItin->timeDetails = new MasterPricer\TimeDetails($itinerary->date);
+
+        $this->itinerary[] = $tmpItin;
+
+        $counter++;
+    }
 }

@@ -82,24 +82,6 @@ class FareMasterPricerTbSearch extends Base
     /**
      * Requested flight itinerary
      *
-     * e.g. 2 segments: BRU-MAD, MAD-BRU
-     * array(
-     * 	1 =>
-     * 	  array(
-     * 		'from' => 'BRU'
-     * 		'to' => 'MAD'
-     * 		'date' => '280511'
-     * 		'time' => '1000'
-     * 	  ),
-     *  2 =>
-     * 	  array(
-     * 		'from' => 'MAD'
-     * 		'to' => 'BRU'
-     * 		'date' => '030611'
-     * 		'time' => '1800'
-     * 	  )
-     * );
-     *
      * @var Fare\MPItinerary[]
      */
     public $itinerary = [];
