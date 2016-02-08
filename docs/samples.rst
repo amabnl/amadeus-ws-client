@@ -1,6 +1,6 @@
-=======
-Samples
-=======
+========
+EXAMPLES
+========
 Some examples of how you can do specific things and send specific messages.
 
 ***********************************************
@@ -171,12 +171,12 @@ Move a PNR from one queue to another:
 .. code-block:: php
 
     $moveResult = $client->queueMoveItem(
-        new Client\RequestOptions\QueueMoveItemOptions([
-                'sourceQueue' => new Client\RequestOptions\Queue([
+        new Amadeus\Client\RequestOptions\QueueMoveItemOptions([
+                'sourceQueue' => new Amadeus\Client\RequestOptions\Queue([
                     'queue' => 50,
                     'category' => 0
                 ]),
-                'destinationQueue' => new Client\RequestOptions\Queue([
+                'destinationQueue' => new Amadeus\Client\RequestOptions\Queue([
                     'queue' => 60,
                     'category' => 3
                 ]),
@@ -184,6 +184,32 @@ Move a PNR from one queue to another:
             ])
     );
 
+****
+Fare
+****
+
+MasterPricerTravelboardSearch:
+
+Make a simple Masterpricer availability & fare search:
+
+.. code-block:: php
+
+    $opt = new Amadeus\Client\RequestOptions\FareMasterPricerTbSearch();
+    $opt->nrOfRequestedResults = 200;
+    $opt->nrOfRequestedPassengers = 1;
+    $opt->passengers[] = new Amadeus\Client\RequestOptions\Fare\MPPassenger([
+        'type' => MPPassenger::TYPE_ADULT,
+        'count' => 1
+    ]);
+    $opt->itinerary[] = new Amadeus\Client\RequestOptions\Fare\MPItinerary([
+        'departureLocation' => new Amadeus\Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
+        'arrivalLocation' => new Amadeus\Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
+        'date' => new Amadeus\Client\RequestOptions\Fare\MPDate([
+            'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+        ])
+    ]);
+
+    $recommendations = $client->fareMasterPricerTravelBoardSearch($opt);
 
 *****
 Offer
