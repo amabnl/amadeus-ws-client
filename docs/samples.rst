@@ -217,9 +217,11 @@ Move a PNR from one queue to another:
 ****
 Fare
 ****
+
 ----------------------------------
 Fare_MasterPricerTravelboardSearch
 ----------------------------------
+
 Make a simple Masterpricer availability & fare search:
 
 .. code-block:: php
