@@ -30,5 +30,59 @@ namespace Amadeus\Client\RequestOptions;
  */
 class FareMasterPricerTbSearch extends Base
 {
-    //TODO
+    const FLIGHTTYPE_DIRECT = "D";
+    const FLIGHTTYPE_NONSTOP = "N";
+    const FLIGHTTYPE_CONNECTING = "C";
+
+    const CABIN_ECONOMY = "Y";
+    const CABIN_ECONOMY_STANDARD = "M";
+    const CABIN_ECONOMY_PREMIUM = "W";
+    const CABIN_BUSINESS = "C";
+    const CABIN_FIRST_SUPERSONIC = "F";
+
+
+    /**
+     * @var int
+     */
+    public $nrOfRequestedPassengers;
+    /**
+     * @var int
+     */
+    public $nrOfRequestedResults;
+
+    /**
+     * List of airline codes that the search is restricted to.
+     *
+     * e.g. ['LH', 'BA']
+     * @var array
+     */
+    public $mandatoryAirlines = [];
+
+    /**
+     * Itinerary-level flight options
+     *
+     * Choose from self::FLIGHTTYPE_*
+     *
+     * @var array
+     */
+    public $requestedFlightOptions = [];
+
+    /**
+     * self::CABIN_*
+     *
+     * @var
+     */
+    public $cabinClass;
+    /**
+     * Passenger info
+     *
+     * @var Fare\MPPassenger[]
+     */
+    public $passengers = [];
+    /**
+     * Requested flight itinerary
+     *
+     * @var Fare\MPItinerary[]
+     */
+    public $itinerary = [];
 }

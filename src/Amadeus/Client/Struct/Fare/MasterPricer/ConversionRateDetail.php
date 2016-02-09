@@ -20,32 +20,17 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Test\Amadeus\Client\Install;
-
-use Amadeus\Client\Install\SomewhatRandomGenerator;
-use Test\Amadeus\BaseTestCase;
+namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * SomewhatRandomGeneratorTest
+ * ConversionRateDetail
  *
- * @package Amadeus\Client\Install
+ * @package Amadeus\Client\Struct\Fare\MasterPricer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class SomewhatRandomGeneratorTest extends BaseTestCase
+class ConversionRateDetail
 {
-    public function testCanGenerateRandomStringDefaultLength()
-    {
-        $somewhat = SomewhatRandomGenerator::generateSomewhatRandomString();
+    public $conversionType;
 
-        $this->assertInternalType('string', $somewhat);
-        $this->assertEquals(22, mb_strlen($somewhat));
-    }
-
-    public function testCanGenerateRandomStringProvidedLength()
-    {
-        $somewhat = SomewhatRandomGenerator::generateSomewhatRandomString(10);
-
-        $this->assertInternalType('string', $somewhat);
-        $this->assertEquals(10, mb_strlen($somewhat));
-    }
+    public $currency;
 }

@@ -23,6 +23,7 @@
 namespace Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\Params\RequestCreatorParams;
+use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
@@ -247,6 +248,15 @@ class Base implements RequestCreatorInterface
         //TODO
 
         return $req;
+    }
+
+    /**
+     * @param FareMasterPricerTbSearch $params
+     * @return Struct\Fare\MasterPricerTravelBoardSearch
+     */
+    protected function createFareMasterPricerTravelBoardSearch(FareMasterPricerTbSearch $params)
+    {
+        return new Struct\Fare\MasterPricerTravelBoardSearch($params);
     }
 
     /**

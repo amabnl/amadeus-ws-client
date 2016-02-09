@@ -77,7 +77,7 @@ class ParamsTest extends BaseTestCase
 
         //Defaults:
         $this->assertEquals('SU', $params->sessionHandlerParams->authParams->dutyCode);
-        $this->assertEquals('ofGvk2gWUIP1nDo4KZ', $params->sessionHandlerParams->authParams->nonceBase);
+        $this->assertNull($params->sessionHandlerParams->authParams->nonceBase);
 
         $this->assertInstanceOf('Amadeus\Client\Params\RequestCreatorParams', $params->requestCreatorParams);
         $this->assertEquals('BRUXXXXXX', $params->requestCreatorParams->originatorOfficeId);

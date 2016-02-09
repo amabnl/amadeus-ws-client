@@ -24,7 +24,7 @@ namespace Amadeus\Client\Session\Handler;
 
 use Amadeus\Client;
 use Amadeus\Client\Params\SessionHandlerParams;
-use Amadeus\Client\Install\SomewhatRandomGenerator;
+use Amadeus\Client\Util\SomewhatRandomGenerator;
 
 /**
  * HandlerFactory generates the correct Session Handler based on the incoming params.
@@ -76,16 +76,8 @@ class HandlerFactory
      */
     protected static function loadNonceBase($handlerParams)
     {
-        $fullPath = dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))));
-        $fullPath .= DIRECTORY_SEPARATOR . "conf" . DIRECTORY_SEPARATOR . "noncebase.txt";
-
-        if (!file_exists($fullPath) || !is_readable($fullPath)) {
-            //FALLBACK: USE A NEW NONCE BASE EACH TIME
+        if (empty($handlerParams->authParams->nonceBase)) {
             $handlerParams->authParams->nonceBase = SomewhatRandomGenerator::generateSomewhatRandomString();
-        } else {
-            if (!isset($handlerParams->authParams->nonceBase) || empty($handlerParams->authParams->nonceBase)) {
-                $handlerParams->authParams->nonceBase = file_get_contents($fullPath);
-            }
         }
 
         return $handlerParams;

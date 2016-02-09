@@ -20,36 +20,18 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Install;
+namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * SomewhatRandomGenerator
+ * ConversionRate
  *
- * @package Amadeus\Client\Install
+ * @package Amadeus\Client\Struct\Fare\MasterPricer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class SomewhatRandomGenerator
+class ConversionRate
 {
     /**
-     * Generates a somewhat random string of a given length
-     *
-     * @param $length
-     * @return string
+     * @var ConversionRateDetail[]
      */
-    public static function generateSomewhatRandomString($length = 22)
-    {
-        $chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
-        srand((double)microtime()*1000000);
-        $i = 0;
-        $somewhatRandom = '' ;
-
-        while ($i < $length) {
-            $num = rand() % 60;
-            $tmp = substr($chars, $num, 1);
-            $somewhatRandom = $somewhatRandom . $tmp;
-            $i++;
-        }
-
-        return $somewhatRandom;
-    }
+    public $conversionRateDetail = [];
 }
