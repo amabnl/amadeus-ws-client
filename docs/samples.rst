@@ -1,7 +1,7 @@
 ========
 EXAMPLES
 ========
-Some examples of how you can do specific things and send specific messages.
+Here are some examples of how you can handle some problems you might encounter and how to send specific messages.
 
 ***********************************************
 Switching between stateful & stateless messages
@@ -81,30 +81,33 @@ To override this behaviour, look at the ``Amadeus\Client\ResponseHandler\Respons
 ***
 PNR
 ***
+--------------------
+PNR_AddMultiElements
+--------------------
 Creating a PNR (simplified example containing only the most basic PNR elements needed to save the PNR):
 
 .. code-block:: php
 
-    $opt = new Client\RequestOptions\PnrCreatePnrOptions();
+    $opt = new Amadeus\Client\RequestOptions\PnrCreatePnrOptions();
     $opt->actionCode = 11; //11	End transact with retrieve (ER)
-    $opt->travellers[] = new Client\RequestOptions\Pnr\Traveller([
+    $opt->travellers[] = new Amadeus\Client\RequestOptions\Pnr\Traveller([
         'number' => 1,
         'firstName' => 'FirstName',
         'lastName' => 'LastName'
     ]);
-    $opt->tripSegments[] = new Client\RequestOptions\Pnr\Segment\Miscellaneous([
-        'status ' => Client\RequestOptions\Pnr\Segment::STATUS_CONFIRMED,
+    $opt->tripSegments[] = new Amadeus\Client\RequestOptions\Pnr\Segment\Miscellaneous([
+        'status ' => Amadeus\Client\RequestOptions\Pnr\Segment::STATUS_CONFIRMED,
         'company' => '1A',
         'date' => \DateTime::createFromFormat('Ymd', '20161022', new \DateTimeZone('UTC')),
         'cityCode' => 'BRU',
         'freeText' => 'DUMMY MISCELLANEOUS SEGMENT'
     ]);
 
-    $opt->elements[] = new Client\RequestOptions\Pnr\Element\Ticketing([
+    $opt->elements[] = new Amadeus\Client\RequestOptions\Pnr\Element\Ticketing([
         'ticketMode' => 'OK'
     ]);
-    $opt->elements[] = new Client\RequestOptions\Pnr\Element\Contact([
-        'type' => Client\RequestOptions\Pnr\Element\Contact::TYPE_PHONE_MOBILE,
+    $opt->elements[] = new Amadeus\Client\RequestOptions\Pnr\Element\Contact([
+        'type' => Amadeus\Client\RequestOptions\Pnr\Element\Contact::TYPE_PHONE_MOBILE,
         'value' => '+3222222222'
     ]);
 
@@ -112,20 +115,26 @@ Creating a PNR (simplified example containing only the most basic PNR elements n
 
     $createdPnr = $client->pnrCreatePnr($opt);
 
+------------
+PNR_Retrieve
+------------
 Retrieving a PNR:
 
 .. code-block:: php
 
     $pnrContent = $client->pnrRetrieve(
-        new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])
+        new Amadeus\Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])
     );
 
+----------------------
+PNR_RetrieveAndDisplay
+----------------------
 Retrieving a PNR with offers:
 
 .. code-block:: php
 
     $pnrContent = $client->pnrRetrieveAndDisplay(
-        new Client\RequestOptions\PnrRetrieveAndDisplayOptions([
+        new Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions([
             'recordLocator' => 'ABC123',
             'retrieveOption' => Client\RequestOptions\PnrRetrieveAndDisplayOptions::RETRIEVEOPTION_ALL
         ])
@@ -134,88 +143,106 @@ Retrieving a PNR with offers:
 *****
 Queue
 *****
+----------
+Queue_List
+----------
 Get a list of all PNR's on a given queue:
 
 .. code-block:: php
 
     $queueContent = $client->queueList(
-        new Client\RequestOptions\QueueListOptions([
-                'queue' => new Client\RequestOptions\Queue([
-                    'queue' => 50,
-                    'category' => 0
-                ])
+        new Amadeus\Client\RequestOptions\QueueListOptions([
+            'queue' => new Client\RequestOptions\Queue([
+                'queue' => 50,
+                'category' => 0
             ])
+        ])
     );
 
+--------------
+Queue_PlacePNR
+--------------
 Place a PNR on a queue:
 
 .. code-block:: php
 
     $placeResult = $client->queuePlacePnr(
-        new Client\RequestOptions\QueuePlacePnrOptions([
-                'targetQueue' => new Client\RequestOptions\Queue([
-                    'queue' => 50,
-                    'category' => 0
-                ]),
-                'recordLocator' => 'ABC123'
-            ])
+        new Amadeus\Client\RequestOptions\QueuePlacePnrOptions([
+            'targetQueue' => new Client\RequestOptions\Queue([
+                'queue' => 50,
+                'category' => 0
+            ]),
+            'recordLocator' => 'ABC123'
+        ])
     );
 
+----------------
+Queue_RemoveItem
+----------------
 Remove a PNR from a queue:
 
 .. code-block:: php
 
     $removeResult = $client->queueRemoveItem(
-        new Client\RequestOptions\QueueRemoveItemOptions([
-                'queue' => new Client\RequestOptions\Queue([
-                    'queue' => 50,
-                    'category' => 0
-                ]),
-                'recordLocator' => 'ABC123'
-            ])
+        new Amadeus\Client\RequestOptions\QueueRemoveItemOptions([
+            'queue' => new Amadeus\Client\RequestOptions\Queue([
+                'queue' => 50,
+                'category' => 0
+            ]),
+            'recordLocator' => 'ABC123'
+        ])
     );
 
+--------------
+Queue_MoveItem
+--------------
 Move a PNR from one queue to another:
 
 .. code-block:: php
 
     $moveResult = $client->queueMoveItem(
         new Amadeus\Client\RequestOptions\QueueMoveItemOptions([
-                'sourceQueue' => new Amadeus\Client\RequestOptions\Queue([
-                    'queue' => 50,
-                    'category' => 0
-                ]),
-                'destinationQueue' => new Amadeus\Client\RequestOptions\Queue([
-                    'queue' => 60,
-                    'category' => 3
-                ]),
-                'recordLocator' => 'ABC123'
-            ])
+            'sourceQueue' => new Amadeus\Client\RequestOptions\Queue([
+                'queue' => 50,
+                'category' => 0
+            ]),
+            'destinationQueue' => new Amadeus\Client\RequestOptions\Queue([
+                'queue' => 60,
+                'category' => 3
+            ]),
+            'recordLocator' => 'ABC123'
+        ])
     );
 
 ****
 Fare
 ****
-
-MasterPricerTravelboardSearch:
-
+----------------------------------
+Fare_MasterPricerTravelboardSearch
+----------------------------------
 Make a simple Masterpricer availability & fare search:
 
 .. code-block:: php
 
-    $opt = new Amadeus\Client\RequestOptions\FareMasterPricerTbSearch();
-    $opt->nrOfRequestedResults = 200;
-    $opt->nrOfRequestedPassengers = 1;
-    $opt->passengers[] = new Amadeus\Client\RequestOptions\Fare\MPPassenger([
-        'type' => MPPassenger::TYPE_ADULT,
-        'count' => 1
-    ]);
-    $opt->itinerary[] = new Amadeus\Client\RequestOptions\Fare\MPItinerary([
-        'departureLocation' => new Amadeus\Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
-        'arrivalLocation' => new Amadeus\Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
-        'date' => new Amadeus\Client\RequestOptions\Fare\MPDate([
-            'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
-        ])
+
+    $opt = new Amadeus\Client\RequestOptions\FareMasterPricerTbSearch([
+        'nrOfRequestedResults' => 200,
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new Amadeus\Client\RequestOptions\Fare\MPPassenger([
+                'type' => Amadeus\Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new Amadeus\Client\RequestOptions\Fare\MPItinerary([
+                'departureLocation' => new Amadeus\Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
+                'arrivalLocation' => new Amadeus\Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
+                'date' => new Amadeus\Client\RequestOptions\Fare\MPDate([
+                    'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ])
+        ]
     ]);
 
     $recommendations = $client->fareMasterPricerTravelBoardSearch($opt);
@@ -223,9 +250,17 @@ Make a simple Masterpricer availability & fare search:
 *****
 Offer
 *****
-
+-----------------
+Offer_VerifyOffer
+-----------------
 Verify if an offer is still valid:
 
+---------------------
+Offer_ConfirmAirOffer
+---------------------
 Confirm a given AIR offer:
 
+-----------------------
+Offer_ConfirmHotelOffer
+-----------------------
 Confirm a given HOTEL offer:
