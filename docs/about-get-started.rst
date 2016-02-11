@@ -94,6 +94,7 @@ This is the list of messages that are at least partially supported at this time:
 - Queue_RemoveItem
 - Queue_MoveItem
 - Fare_MasterPricerTravelBoardSearch
+- Air_SellFromRecommendation
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
 - Offer_ConfirmHotelOffer

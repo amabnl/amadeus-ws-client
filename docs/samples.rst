@@ -249,6 +249,45 @@ Make a simple Masterpricer availability & fare search:
 
     $recommendations = $client->fareMasterPricerTravelBoardSearch($opt);
 
+***
+Air
+***
+--------------------------
+Air_SellFromRecommendation
+--------------------------
+
+To book the chosen recommendation from the Fare_MasterPricerTravelBoardSearch result:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
+    use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Segment;
+
+    $opt = new AirSellFromRecommendationOptions([
+        'itinerary' => [
+            new Itinerary([
+                'from' => 'BRU',
+                'to' => 'LON',
+                'segments' => [
+                    new Segment([
+                        'departureDate' => \DateTime::createFromFormat('Ymd','20170120', new \DateTimeZone('UTC')),
+                        'from' => 'BRU',
+                        'to' => 'LGW',
+                        'companyCode' => 'SN',
+                        'flightNumber' => '123',
+                        'bookingClass' => 'Y',
+                        'nrOfPassengers' => 1,
+                        'statusCode' => Segment::STATUS_SELL_SEGMENT
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $sellResult = $client->airSellFromRecommendation($opt);
+
+
 *****
 Offer
 *****

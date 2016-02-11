@@ -20,28 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Offer;
-
-use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
+namespace Amadeus\Client\Struct\Air;
 
 /**
- * ConfirmCar
+ * MessageActionDetails
  *
- * @package Amadeus\Client\Struct\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions\Air
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class ConfirmCar extends BaseWsMessage
+class MessageActionDetails
 {
-    //TODO
+    /**
+     * @var MessageFunctionDetails
+     */
+    public $messageFunctionDetails;
 
     /**
-     * ConfirmCar constructor.
+     * MessageActionDetails constructor.
      *
-     * @param OfferConfirmCarOptions $params
+     * @param string $messageFunction
      */
-    public function __construct($params)
+    public function __construct($messageFunction)
     {
-        //TODO
+        $this->messageFunctionDetails = new MessageFunctionDetails($messageFunction);
     }
 }

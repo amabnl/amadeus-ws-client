@@ -20,28 +20,34 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Offer;
-
-use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
+namespace Amadeus\Client\Struct\Air;
 
 /**
- * ConfirmCar
+ * MarriageDetails
  *
- * @package Amadeus\Client\Struct\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Air
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class ConfirmCar extends BaseWsMessage
+class MarriageDetails
 {
-    //TODO
-
     /**
-     * ConfirmCar constructor.
+     * A	Married on-line
+     * B	Non-Dominant flight
+     * C	Potential marriage candidate
+     * F	First host cascading
+     * I	Married interline
+     * L	Last host cascading
+     * M	Middle host cascading (not first or last)
      *
-     * @param OfferConfirmCarOptions $params
+     * @var string
      */
-    public function __construct($params)
-    {
-        //TODO
-    }
+    public $relation;
+    /**
+     * @var string
+     */
+    public $marriageIdentifier;
+    /**
+     * @var string
+     */
+    public $lineNumber;
 }

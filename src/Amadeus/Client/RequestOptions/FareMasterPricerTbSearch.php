@@ -51,6 +51,11 @@ class FareMasterPricerTbSearch extends Base
     public $nrOfRequestedResults;
 
     /**
+     * @var bool
+     */
+    public $doTicketabilityPreCheck = true;
+
+    /**
      * List of airline codes that the search is restricted to.
      *
      * e.g. ['LH', 'BA']

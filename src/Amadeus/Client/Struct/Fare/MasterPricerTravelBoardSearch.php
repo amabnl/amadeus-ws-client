@@ -142,6 +142,14 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
             }
         }
 
+        if ($options->doTicketabilityPreCheck === true) {
+            $this->fareOptions = new MasterPricer\FareOptions();
+            $this->fareOptions->pricingTickInfo = new MasterPricer\PricingTickInfo();
+            $this->fareOptions->pricingTickInfo->pricingTicketing = new MasterPricer\PricingTicketing(
+                MasterPricer\PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK
+            );
+        }
+
         $passengerCounter = 1;
         $infantCounter = 1;
         foreach ($options->passengers as $passenger) {

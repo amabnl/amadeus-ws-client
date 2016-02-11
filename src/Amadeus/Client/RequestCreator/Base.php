@@ -23,6 +23,7 @@
 namespace Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\Params\RequestCreatorParams;
+use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
@@ -243,20 +244,28 @@ class Base implements RequestCreatorInterface
      */
     protected function createOfferConfirmCar(OfferConfirmCarOptions $params)
     {
-        $req = new Struct\Offer\ConfirmCar();
-
-        //TODO
-
-        return $req;
+        return new Struct\Offer\ConfirmCar($params);
     }
 
     /**
+     * createFareMasterPricerTravelBoardSearch
+     *
      * @param FareMasterPricerTbSearch $params
      * @return Struct\Fare\MasterPricerTravelBoardSearch
      */
     protected function createFareMasterPricerTravelBoardSearch(FareMasterPricerTbSearch $params)
     {
         return new Struct\Fare\MasterPricerTravelBoardSearch($params);
+    }
+
+    /**
+     *
+     * @param AirSellFromRecommendationOptions $params
+     * @return Struct\Air\SellFromRecommendation
+     */
+    protected function createAirSellFromRecommendation(AirSellFromRecommendationOptions $params)
+    {
+        return new Struct\Air\SellFromRecommendation($params);
     }
 
     /**

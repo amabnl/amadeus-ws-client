@@ -492,6 +492,27 @@ class Client
     }
 
     /**
+     * Air_SellFromRecommendation
+     *
+     * @param RequestOptions\AirSellFromRecommendationOptions $options
+     * @param array $messageOptions
+     * @return mixed
+     */
+    public function airSellFromRecommendation(RequestOptions\AirSellFromRecommendationOptions $options, $messageOptions = [])
+    {
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        return $this->sessionHandler->sendMessage(
+            'Air_SellFromRecommendation',
+            $this->requestCreator->createRequest(
+                'airSellFromRecommendation',
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
      * Make message options
      *
      * Message options are meta options when sending a message to the amadeus web services

@@ -20,28 +20,30 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Offer;
+namespace Amadeus\Client\RequestOptions\Air\SellFromRecommendation;
 
-use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * ConfirmCar
+ * Itinerary
  *
- * @package Amadeus\Client\Struct\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions\Air\SellFromRecommendation
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class ConfirmCar extends BaseWsMessage
+class Itinerary extends LoadParamsFromArray
 {
-    //TODO
+    /**
+     * @var string
+     */
+    public $from;
+    /**
+     * @var string
+     */
+    public $to;
 
     /**
-     * ConfirmCar constructor.
-     *
-     * @param OfferConfirmCarOptions $params
+     * @var Segment[]
      */
-    public function __construct($params)
-    {
-        //TODO
-    }
+    public $segments;
+
 }

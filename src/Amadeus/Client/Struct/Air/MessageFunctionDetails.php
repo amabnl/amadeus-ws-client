@@ -20,28 +20,36 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Offer;
-
-use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
+namespace Amadeus\Client\Struct\Air;
 
 /**
- * ConfirmCar
+ * MessageFunctionDetails
  *
- * @package Amadeus\Client\Struct\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions\Air
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class ConfirmCar extends BaseWsMessage
+class MessageFunctionDetails
 {
-    //TODO
+    const MSGFUNC_LOWEST_FARE = "183";
+    const MSGFUNC_CANCEL_IF_UNSUCCESSFUL = "M1";
+    const MSGFUNC_BOOK_IF_UNSUCCESSFUL = "M2";
 
     /**
-     * ConfirmCar constructor.
-     *
-     * @param OfferConfirmCarOptions $params
+     * @var string
      */
-    public function __construct($params)
+    public $messageFunction;
+    /**
+     * @var string
+     */
+    public $additionalMessageFunction;
+
+    /**
+     * MessageFunctionDetails constructor.
+     *
+     * @param string $messageFunction
+     */
+    public function __construct($messageFunction)
     {
-        //TODO
+        $this->messageFunction = $messageFunction;
     }
 }

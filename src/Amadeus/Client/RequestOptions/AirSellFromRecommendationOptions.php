@@ -20,28 +20,33 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Offer;
+namespace Amadeus\Client\RequestOptions;
 
-use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * ConfirmCar
+ * AirSellFromRecommendation
  *
- * @package Amadeus\Client\Struct\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class ConfirmCar extends BaseWsMessage
+class AirSellFromRecommendationOptions extends LoadParamsFromArray
 {
-    //TODO
+    const ALG_CANCEL_IF_UNSUCCESSFUL = "M1";
+    const ALG_BOOK_IF_UNSUCCESSFUL = "M2";
 
     /**
-     * ConfirmCar constructor.
+     * self::ALG_*
      *
-     * @param OfferConfirmCarOptions $params
+     * M1	Trigger Sell Optimization Algorithm, option cancel all if unsuccessful.
+     * M2	Trigger Sell Optimization Algorithm, option keep all confirmed if unsuccessful.
+     *
+     * @var string
      */
-    public function __construct($params)
-    {
-        //TODO
-    }
+    public $algorithm = self::ALG_CANCEL_IF_UNSUCCESSFUL;
+    /**
+     * @var Air\SellFromRecommendation\Itinerary[]
+     */
+    public $itinerary;
+
 }

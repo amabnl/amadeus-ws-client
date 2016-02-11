@@ -20,28 +20,53 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Offer;
-
-use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
+namespace Amadeus\Client\Struct\Air;
 
 /**
- * ConfirmCar
+ * FlightDate
  *
- * @package Amadeus\Client\Struct\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Air
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class ConfirmCar extends BaseWsMessage
+class FlightDate
 {
-    //TODO
+    /**
+     * DDMMYY
+     *
+     * @var string
+     */
+    public $departureDate;
+    /**
+     * HHMM
+     *
+     * @var string
+     */
+    public $departureTime;
+    /**
+     * DDMMYY
+     *
+     * @var string
+     */
+    public $arrivalDate;
+    /**
+     * HHMM
+     *
+     * @var string
+     */
+    public $arrivalTime;
+    /**
+     * @var string
+     */
+    public $dateVariation;
 
     /**
-     * ConfirmCar constructor.
+     * FlightDate constructor.
      *
-     * @param OfferConfirmCarOptions $params
+     * @param string $departureDate in format DDMMYY
      */
-    public function __construct($params)
+    public function __construct($departureDate)
     {
-        //TODO
+        $this->departureDate = $departureDate;
     }
+
 }
