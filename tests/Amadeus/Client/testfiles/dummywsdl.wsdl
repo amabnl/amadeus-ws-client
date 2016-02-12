@@ -16,7 +16,7 @@
 			<wsdl:output message="tns:PNR_Reply_14_2"/>
 		</wsdl:operation>
 	</wsdl:portType>
-	<wsdl:binding name="AmadeusWebServicesBinding" type="tns:NewPortType">
+	<wsdl:binding name="AmadeusWebServicesBinding" type="tns:AmadeusWebServicesPT">
 		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
 		<wsdl:operation name="PNR_Retrieve">
 			<soap:operation soapAction="http://webservices.amadeus.com/PNRRET_14_2_1A"/>
