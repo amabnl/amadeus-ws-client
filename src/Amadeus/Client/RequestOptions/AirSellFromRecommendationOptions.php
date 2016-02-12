@@ -30,7 +30,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * @package Amadeus\Client\RequestOptions
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class AirSellFromRecommendationOptions extends LoadParamsFromArray
+class AirSellFromRecommendationOptions extends Base
 {
     const ALG_CANCEL_IF_UNSUCCESSFUL = "M1";
     const ALG_BOOK_IF_UNSUCCESSFUL = "M2";

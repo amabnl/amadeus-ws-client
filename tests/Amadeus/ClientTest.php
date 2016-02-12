@@ -38,7 +38,7 @@ class ClientTest extends BaseTestCase
     {
         $par = new Params([
             'sessionHandlerParams' => [
-                'wsdl' => '/var/fake/file/path',
+                'wsdl' => $this->makePathToDummyWSDL(),
                 'stateful' => true,
                 'logger' => new NullLogger(),
                 'authParams' => [
@@ -110,8 +110,6 @@ class ClientTest extends BaseTestCase
         $last = $client->getLastResponse();
 
         $this->assertNull($last);
-
-
     }
 
     public function testCanDoDummyPnrRetrieveCall()
@@ -127,6 +125,10 @@ class ClientTest extends BaseTestCase
             ->method('sendMessage')
             ->with('PNR_Retrieve', $expectedPnrResult, ['asString' => true, 'endSession' => false])
             ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_Retrieve' => '14.2']));
 
         $par = new Params();
         $par->sessionHandler = $mockSessionHandler;
@@ -161,6 +163,10 @@ class ClientTest extends BaseTestCase
             ->expects($this->once())
             ->method('getLastResponse')
             ->will($this->returnValue($lastResponse));
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Queue_List' => "11.1"]));
 
         $par = new Params();
         $par->sessionHandler = $mockSessionHandler;
@@ -261,5 +267,13 @@ class ClientTest extends BaseTestCase
         ]);
 
         return new Client($par);
+    }
+
+    protected function makePathToDummyWSDL()
+    {
+        return realpath(
+            dirname(__FILE__).DIRECTORY_SEPARATOR."Client".
+            DIRECTORY_SEPARATOR."testfiles".DIRECTORY_SEPARATOR."dummywsdl.wsdl"
+        );
     }
 }

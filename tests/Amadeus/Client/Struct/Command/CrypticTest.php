@@ -20,28 +20,26 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Air;
+namespace Test\Amadeus\Client\Struct\Command;
+
+use Amadeus\Client\Struct\Command\Cryptic;
+use Amadeus\Client\Struct\Command\MessageFunctionDetails;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * Message
+ * CrypticTest
  *
- * @package Amadeus\Client\Struct\Air
+ * @package Test\Amadeus\Client\Struct\Command
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class Message
+class CrypticTest extends BaseTestCase
 {
-    /**
-     * @var MessageFunctionDetails
-     */
-    public $messageFunctionDetails;
-
-    /**
-     * Message constructor.
-     *
-     * @param string $messageFunction
-     */
-    public function __construct($messageFunction)
+    public function testCanConstructCrypticMessage()
     {
-        $this->messageFunctionDetails = new MessageFunctionDetails($messageFunction);
+        $request = new Cryptic('DAC LGW');
+
+        $this->assertEquals('DAC LGW', $request->longTextString->textStringDetails);
+        $this->assertEquals(MessageFunctionDetails::FUNC_MULTIFUNCTION, $request->messageAction->messageFunctionDetails->messageFunction);
     }
+
 }

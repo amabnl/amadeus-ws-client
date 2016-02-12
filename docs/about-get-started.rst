@@ -24,16 +24,22 @@ This library is initially built to support the current Soap Header v4, which is 
 
 Legacy applications using already certified WSAP's can still be running on legacy Soap Header versions - most notably Soap Header 1 & 2. This library currently doesn't support those yet, but we plan to add that in the future.
 
-***************************************
-Support for different versions of verbs
-***************************************
-Amadeus periodically releases new versions of the verbs available on their web services.
+******************************************
+Support for different versions of messages
+******************************************
+Amadeus periodically releases new versions of the messages (also called "verbs") available on their web services.
 
-On requesting access to the Amadeus web services, you'll receive a WSDL which contains messages in the lastest stable version Amadeus has released.
+On requesting access to the Amadeus web services, you'll receive a WSDL which contains messages in the lastest stable version Amadeus has released (unless you request for specific older versions of messages).
 
-**There could be differences** in new versions of verbs: the request could be constructed differently (or have more options), you may get a slightly different response depending on the version you have received.
+**There could be differences** in various versions of messages: the request could be constructed differently (or have more options), you may get a slightly different response depending on the version you have received.
 
-Therefore it's advised to test all options you will use and see if this library works for you! If it doesn't, you can inject a custom :code:`Amadeus\Client\RequestCreator\RequestCreatorInterface` which you can use to construct the messages as needed. This can be injected by passing a ``'requestCreator'`` in the client's params.
+The client library will read the messages and versions from the WSDL and will use that to try to construct the appropriate message for each version.
+However, we will introduce support for different message types as we encounter issues with different messages. When you run into problems, always check
+the message constructed by this library against the documentation *for your message version*.
+
+If you run into a situation where a specific message for your version is different from the message constructed by the library, you can either override the base message creator
+:code:`Amadeus\Client\RequestCreator\Base` or implement your own :code:`Amadeus\Client\RequestCreator\RequestCreatorInterface`. If you feel like contributing, you can also implement
+it yourself in a fork and provide a pull request. If you do that, please do it in a way analogous to what has been done for the :code:`Fare_PricePNRWithBookingClass` call.
 
 ******************************
 Install library in PHP project
@@ -94,9 +100,15 @@ This is the list of messages that are at least partially supported at this time:
 - Queue_RemoveItem
 - Queue_MoveItem
 - Fare_MasterPricerTravelBoardSearch
+- Fare_PricePNRWithBookingClass
 - Air_SellFromRecommendation
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
 - Offer_ConfirmHotelOffer
+- Command_Cryptic
+- Info_EncodeDecodeCity
+- MiniRule_GetFromPricingRec
+- Ticket_CreateTSTFromPricing
+- Ticket_DisplayTST
 
 We plan to support an entire basic booking flow (MasterPricer, SellFromRecommendation, Pricing, ...) later on.

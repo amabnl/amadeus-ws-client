@@ -20,36 +20,26 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Params;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Command;
 
 /**
- * RequestCreatorParams
+ * Structure for the longTextString message part for Command_* messages
  *
- * @package Amadeus\Client\Params
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Command
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class RequestCreatorParams extends LoadParamsFromArray
+class LongTextString
 {
     /**
-     * The Originator Office ID is the Amadeus office ID with which we are signed in to the WS session.
-     *
      * @var string
      */
-    public $originatorOfficeId;
+    public $textStringDetails;
 
     /**
-     * A custom "Received From" string - if not provided, will default to amabnl/amadeus-ws-client
-     *
-     * @var string
+     * @param string|null $textString
      */
-    public $receivedFrom;
-
-    /**
-     * The messages and versions that are provided in the WSDL
-     *
-     * @var array
-     */
-    public $messagesAndVersions = [];
+    public function __construct($textString = null)
+    {
+        $this->textStringDetails = $textString;
+    }
 }

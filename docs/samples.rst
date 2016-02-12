@@ -1,11 +1,13 @@
 ========
 EXAMPLES
 ========
+
 Here are some examples of how you can handle some problems you might encounter and how to send specific messages.
 
 ***********************************************
 Switching between stateful & stateless messages
 ***********************************************
+
 If you do not require an active context in your session, you're better off using stateless messages.
 
 However, for many operations, you'll need an active context (a PNR context, a pricing context, ...).
@@ -43,6 +45,7 @@ After doing multiple calls with a stateful session, there are two ways to end th
 *********************
 Handling the response
 *********************
+
 Sometimes it's useful if the result from the SOAP call gets returned as a PHP object,
 sometimes a string containing the XML document of the SOAP-BODY is more useful.
 
@@ -72,6 +75,7 @@ The library supports this through the message option 'asString':
 ******
 Errors
 ******
+
 The Amadeus web services can be tricky with regards to error detection. In most verbs, you have to look for the presence of error nodes in the response to see if everything went allright.
 
 We try to ease your pain a little by analyzing the messages we support and look for error nodes. If any are found, we throw them as exceptions.
@@ -81,9 +85,11 @@ To override this behaviour, look at the ``Amadeus\Client\ResponseHandler\Respons
 ***
 PNR
 ***
+
 --------------------
 PNR_AddMultiElements
 --------------------
+
 Creating a PNR (simplified example containing only the most basic PNR elements needed to save the PNR):
 
 .. code-block:: php
@@ -118,6 +124,7 @@ Creating a PNR (simplified example containing only the most basic PNR elements n
 ------------
 PNR_Retrieve
 ------------
+
 Retrieving a PNR:
 
 .. code-block:: php
@@ -126,9 +133,11 @@ Retrieving a PNR:
         new Amadeus\Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])
     );
 
+
 ----------------------
 PNR_RetrieveAndDisplay
 ----------------------
+
 Retrieving a PNR with offers:
 
 .. code-block:: php
@@ -140,12 +149,15 @@ Retrieving a PNR with offers:
         ])
     );
 
+
 *****
 Queue
 *****
+
 ----------
 Queue_List
 ----------
+
 Get a list of all PNR's on a given queue:
 
 .. code-block:: php
@@ -162,6 +174,7 @@ Get a list of all PNR's on a given queue:
 --------------
 Queue_PlacePNR
 --------------
+
 Place a PNR on a queue:
 
 .. code-block:: php
@@ -179,6 +192,7 @@ Place a PNR on a queue:
 ----------------
 Queue_RemoveItem
 ----------------
+
 Remove a PNR from a queue:
 
 .. code-block:: php
@@ -196,6 +210,7 @@ Remove a PNR from a queue:
 --------------
 Queue_MoveItem
 --------------
+
 Move a PNR from one queue to another:
 
 .. code-block:: php
@@ -226,7 +241,6 @@ Make a simple Masterpricer availability & fare search:
 
 .. code-block:: php
 
-
     $opt = new Amadeus\Client\RequestOptions\FareMasterPricerTbSearch([
         'nrOfRequestedResults' => 200,
         'nrOfRequestedPassengers' => 1,
@@ -249,9 +263,25 @@ Make a simple Masterpricer availability & fare search:
 
     $recommendations = $client->fareMasterPricerTravelBoardSearch($opt);
 
+-----------------------------
+Fare_PricePNRWithBookingClass
+-----------------------------
+
+Do a pricing on the PNR in context:
+
+.. code-block:: php
+
+    $opt = new Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions([
+        'validatingCarrier' => 'SN'
+    ]);
+
+    $pricingResponse = $client->farePricePnrWithBookingClass($opt);
+
+
 ***
 Air
 ***
+
 --------------------------
 Air_SellFromRecommendation
 --------------------------
@@ -286,6 +316,16 @@ To book the chosen recommendation from the Fare_MasterPricerTravelBoardSearch re
     ]);
 
     $sellResult = $client->airSellFromRecommendation($opt);
+
+******
+Ticket
+******
+
+---------------------------
+Ticket_CreateTSTFromPricing
+---------------------------
+
+Create a TST from a Pricing made by a Fare_PricePNRWithBookingClass call:
 
 
 *****

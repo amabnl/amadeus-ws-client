@@ -25,6 +25,7 @@ namespace Test\Amadeus\Client\Struct\Air;
 use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Itinerary;
 use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Segment;
 use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
+use Amadeus\Client\Struct\Air\MessageFunctionDetails;
 use Amadeus\Client\Struct\Air\RelatedproductInformation;
 use Amadeus\Client\Struct\Air\SellFromRecommendation;
 use Test\Amadeus\BaseTestCase;
@@ -63,7 +64,11 @@ class SellFromRecommendationTest extends BaseTestCase
         $msg = new SellFromRecommendation($opt);
 
         $this->assertEquals(1, count($msg->itineraryDetails));
+        $this->assertEquals(MessageFunctionDetails::MSGFUNC_LOWEST_FARE, $msg->messageActionDetails->messageFunctionDetails->messageFunction);
+        $this->assertEquals(MessageFunctionDetails::MSGFUNC_CANCEL_IF_UNSUCCESSFUL, $msg->messageActionDetails->messageFunctionDetails->additionalMessageFunction);
         $this->assertInstanceOf('Amadeus\Client\Struct\Air\ItineraryDetails', $msg->itineraryDetails[0]);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Air\Message', $msg->itineraryDetails[0]->message);
+        $this->assertEquals(MessageFunctionDetails::MSGFUNC_LOWEST_FARE, $msg->itineraryDetails[0]->message->messageFunctionDetails->messageFunction);
         $this->assertEquals('BRU', $msg->itineraryDetails[0]->originDestinationDetails->origin);
         $this->assertEquals('LON', $msg->itineraryDetails[0]->originDestinationDetails->destination);
         $this->assertEquals(1, count($msg->itineraryDetails[0]->segmentInformation));

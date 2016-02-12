@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * MasterPricerTravelBoardSearch
+ * Fare_MasterPricerTravelBoardSearch message structure
  *
  * @package Amadeus\Client\Struct\Fare
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>

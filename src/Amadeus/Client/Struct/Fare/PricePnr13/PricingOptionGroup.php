@@ -20,28 +20,38 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Air;
+namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
 /**
- * Message
+ * PricingOptionGroup
  *
- * @package Amadeus\Client\Struct\Air
+ * @package Amadeus\Client\Struct\Fare\PricePnr13
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class Message
+class PricingOptionGroup
 {
-    /**
-     * @var MessageFunctionDetails
-     */
-    public $messageFunctionDetails;
+    public $pricingOptionKey;
 
-    /**
-     * Message constructor.
-     *
-     * @param string $messageFunction
-     */
-    public function __construct($messageFunction)
-    {
-        $this->messageFunctionDetails = new MessageFunctionDetails($messageFunction);
-    }
+    public $optionDetail;
+
+    public $carrierInformation;
+
+    public $currency;
+
+    public $penDisInformation;
+
+    public $monetaryInformation;
+
+    public $taxInformation;
+
+    public $dateInformation;
+
+    public $frequentFlyerInformation;
+
+    public $formOfPaymentInformation;
+
+    public $locationInformation;
+
+    public $paxSegTstReference;
+
 }
