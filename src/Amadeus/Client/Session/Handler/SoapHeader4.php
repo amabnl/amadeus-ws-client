@@ -171,8 +171,10 @@ class SoapHeader4 extends Base
         foreach ($operations as $operation) {
             if (!empty($operation->value)) {
                 $fullVersion = $this->wsdlDomXpath->evaluate(sprintf(self::XPATH_VERSION_FOR_OPERATION, $operation->value));
-                $extractedVersion = $this->extractMessageVersion($fullVersion);
-                $msgAndVer[$operation->value] = $extractedVersion;
+                if (!empty($fullVersion)) {
+                    $extractedVersion = $this->extractMessageVersion($fullVersion);
+                    $msgAndVer[$operation->value] = $extractedVersion;
+                }
             }
         }
 
