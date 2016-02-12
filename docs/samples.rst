@@ -328,6 +328,13 @@ Ticket_CreateTSTFromPricing
 Create a TST from a Pricing made by a Fare_PricePNRWithBookingClass call:
 
 
+-----------------
+Ticket_DisplayTST
+-----------------
+
+View the TST's of a PNR:
+
+
 *****
 Offer
 *****
