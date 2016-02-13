@@ -23,13 +23,12 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PnrAddMultiElementsOptions
+ * PnrAddMultiElmentsBase
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrAddMultiElementsOptions extends PnrAddMultiElementsBase
+class PnrAddMultiElementsBase extends Base
 {
-
 
 }

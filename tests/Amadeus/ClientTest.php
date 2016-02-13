@@ -145,6 +145,104 @@ class ClientTest extends BaseTestCase
     }
 
 
+    public function testCanDoDummyPnrRetrieveAndDisplayCall()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'A dummy message result'; // Not an actual XML reply.
+
+        $expectedPnrResult = new Client\Struct\Pnr\RetrieveAndDisplay('ABC123');
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_RetrieveAndDisplay', $expectedPnrResult, ['asString' => true, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_RetrieveAndDisplay' => '14.2']));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->pnrRetrieveAndDisplay(new Client\RequestOptions\PnrRetrieveAndDisplayOptions(['recordLocator'=>'ABC123']));
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+
+    public function testCanDoCreatePnrCall()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'A dummy message result'; // Not an actual XML reply.
+
+        $options = new Client\RequestOptions\PnrCreatePnrOptions();
+        $options->actionCode = 11; //11 End transact with retrieve (ER)
+        $options->travellers[] = new Client\RequestOptions\Pnr\Traveller([
+            'number' => 1,
+            'firstName' => 'FirstName',
+            'lastName' => 'LastName'
+        ]);
+        $options->tripSegments[] = new Client\RequestOptions\Pnr\Segment\Miscellaneous([
+            'status ' => Client\RequestOptions\Pnr\Segment::STATUS_CONFIRMED,
+            'company' => '1A',
+            'date' => \DateTime::createFromFormat('Ymd', '20161022', new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'DUMMY MISCELLANEOUS SEGMENT'
+        ]);
+
+        $options->elements[] = new Client\RequestOptions\Pnr\Element\Ticketing([
+            'ticketMode' => 'OK'
+        ]);
+        $options->elements[] = new Client\RequestOptions\Pnr\Element\Contact([
+            'type' => Client\RequestOptions\Pnr\Element\Contact::TYPE_PHONE_MOBILE,
+            'value' => '+3222222222'
+        ]);
+
+        $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($options);
+
+        $receivedFromElement = new Client\Struct\Pnr\AddMultiElements\DataElementsIndiv(Client\Struct\Pnr\AddMultiElements\ElementManagementData::SEGNAME_RECEIVE_FROM);
+        $receivedFromElement->freetextData = new Client\Struct\Pnr\AddMultiElements\FreetextData(
+            'some RF string amabnl-amadeus-ws-client-0.0.1dev',
+            Client\Struct\Pnr\AddMultiElements\FreetextDetail::TYPE_RECEIVE_FROM
+        );
+
+        $expectedPnrResult->dataElementsMaster->dataElementsIndiv[] = $receivedFromElement;
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_AddMultiElements', $expectedPnrResult, ['asString' => true, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_AddMultiElements' => '14.2']));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->pnrCreatePnr($options);
+
+        $this->assertEquals($messageResult, $response);
+
+    }
+
+
     public function testCanDoDummyQueueListCall()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -186,12 +284,176 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoPlacePNRCall()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'dumyplacepnrmessage';
+
+        $expectedMessageResult = new Client\Struct\Queue\PlacePnr('ABC123', 'BRUXX0000', new Client\RequestOptions\Queue(['queue'=> 50, 'category' => 0]));
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Queue_PlacePNR', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Queue_PlacePNR' => "11.1"]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->queuePlacePnr(
+            new Client\RequestOptions\QueuePlacePnrOptions([
+                'recordLocator' => 'ABC123',
+                'sourceOfficeId' => 'BRUXX0000',
+                'targetQueue' => new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0])
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoQueueRemoveItemCall()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'dumyremveitemmessage';
+
+        $expectedMessageResult = new Client\Struct\Queue\RemoveItem(new Client\RequestOptions\Queue(['queue'=> 50, 'category' => 0]), 'ABC123', 'BRUXX0000');
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Queue_RemoveItem', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Queue_RemoveItem' => "11.1"]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->queueRemoveItem(
+            new Client\RequestOptions\QueueRemoveItemOptions([
+                'recordLocator' => 'ABC123',
+                'originatorOfficeId' => 'BRUXX0000',
+                'queue' => new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0])
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoQueueMoveItemCall()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'dummymoveitemmessage';
+
+        $expectedMessageResult = new Client\Struct\Queue\MoveItem('ABC123', 'BRUXX0000', new Client\RequestOptions\Queue(['queue'=> 50, 'category' => 0]), new Client\RequestOptions\Queue(['queue'=> 60, 'category' => 5]));
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Queue_MoveItem', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Queue_MoveItem' => "11.1"]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->queueMoveItem(
+            new Client\RequestOptions\QueueMoveItemOptions([
+                'recordLocator' => 'ABC123',
+                'officeId' => 'BRUXX0000',
+                'sourceQueue' => new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0]),
+                'destinationQueue' => new Client\RequestOptions\Queue(['queue' => 60, 'category' => 5])
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanCrypticCall()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'dummycrypticresponse';
+
+        $expectedMessageResult = new Client\Struct\Command\Cryptic('DAC BRU');
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Command_Cryptic', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Command_Cryptic' => "5.1"]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->commandCryptic(
+            new Client\RequestOptions\CommandCrypticOptions([
+                'entry' => 'DAC BRU'
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoSignOutCall()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $lastResponse = '';
-        $messageResult = '';
+        $messageResult = new \stdClass();
+        $messageResult->processStatus = new \stdClass();
+        $messageResult->processStatus->statusCode = 'P';
 
         $expectedMessageResult = new Client\Struct\Security\SignOut();
 
@@ -203,6 +465,10 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->never())
             ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Security_SignOut' => "4.1"]));
 
         $par = new Params();
         $par->sessionHandler = $mockSessionHandler;

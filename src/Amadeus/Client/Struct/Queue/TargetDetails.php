@@ -65,7 +65,7 @@ class TargetDetails
             $theRealOffice = $targetQueue->officeId;
         }
 
-        $this->targetOffice = new TargetOffice($sourceType, $theRealOffice, $targetQueue->officeId);
+        $this->targetOffice = new TargetOffice($sourceType, $theRealOffice);
 
         $this->queueNumber = new QueueNumber($targetQueue->queue);
         $this->categoryDetails = new CategoryDetails($targetQueue->category);

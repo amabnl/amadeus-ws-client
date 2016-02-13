@@ -33,6 +33,7 @@ use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
+use Amadeus\Client\RequestOptions\PnrAddMultiElementsBase;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
@@ -133,25 +134,17 @@ class Base implements RequestCreatorInterface
         return $req;
     }
 
-    protected function createPnrCreatePnr(PnrCreatePnrOptions $params)
-    {
-        $req = $this->makeAddMultiElementsForPnrCreate($params);
-
-        return $req;
-    }
-
     /**
-     * @param PnrAddMultiElementsOptions $params
+     * @param PnrAddMultiElementsBase $params
      * @return Struct\Pnr\AddMultiElements
      */
-    protected function createPnrAddMultiElements(PnrAddMultiElementsOptions $params)
+    protected function createPnrAddMultiElements(PnrAddMultiElementsBase $params)
     {
-        $req = new Struct\Pnr\AddMultiElements();
+        $params->receivedFrom = $this->params->receivedFrom;
 
-        //TODO
-        throw new \RuntimeException(__METHOD__ . "() IS NOT YET IMPLEMENTED");
+        $req = new Struct\Pnr\AddMultiElements($params);
 
-        //return $req;
+        return $req;
     }
 
     /**
@@ -283,25 +276,12 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * @param PnrCreatePnrOptions $params
-     * @return Struct\Pnr\AddMultiElements
-     */
-    protected function makeAddMultiElementsForPnrCreate(PnrCreatePnrOptions $params)
-    {
-        $params->receivedFrom = $this->params->receivedFrom;
-
-        $req = new Struct\Pnr\AddMultiElements($params);
-
-        return $req;
-    }
-
-    /**
      * makeCommandCryptic
      *
      * @param CommandCrypticOptions $params
      * @return Struct\Command\Cryptic
      */
-    protected function makeCommandCryptic(CommandCrypticOptions $params)
+    protected function createCommandCryptic(CommandCrypticOptions $params)
     {
         return new Struct\Command\Cryptic($params->entry);
     }

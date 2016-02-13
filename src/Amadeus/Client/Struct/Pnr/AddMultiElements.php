@@ -27,6 +27,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\Pnr\Segment;
 use Amadeus\Client\RequestOptions\Pnr\Traveller;
 use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
+use Amadeus\Client\RequestOptions\PnrAddMultiElementsBase;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\Struct\BaseWsMessage;
@@ -83,7 +84,7 @@ class AddMultiElements extends BaseWsMessage
     /**
      * Create PNR_AddMultiElements object
      */
-    public function __construct(RequestOptionsInterface $params = null)
+    public function __construct(PnrAddMultiElementsBase $params = null)
     {
         if (!is_null($params)) {
             if ($params instanceof PnrCreatePnrOptions) {
