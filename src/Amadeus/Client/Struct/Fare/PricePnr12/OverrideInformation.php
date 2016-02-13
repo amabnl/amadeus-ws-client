@@ -20,36 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Params;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Fare\PricePnr12;
 
 /**
- * RequestCreatorParams
+ * OverrideInformation
  *
- * @package Amadeus\Client\Params
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Fare\PricePnr12
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class RequestCreatorParams extends LoadParamsFromArray
+class OverrideInformation
 {
     /**
-     * The Originator Office ID is the Amadeus office ID with which we are signed in to the WS session.
-     *
-     * @var string
+     * @var AttributeDetails[]
      */
-    public $originatorOfficeId;
+    public $attributeDetails = [];
 
     /**
-     * A custom "Received From" string - if not provided, will default to amabnl/amadeus-ws-client
+     * OverrideInformation cons/tructor.
      *
-     * @var string
+     * @param string|null $mainOverrideType
+     * @param string|null $mainOverrideDesc
      */
-    public $receivedFrom;
-
-    /**
-     * The messages and versions that are provided in the WSDL
-     *
-     * @var array
-     */
-    public $messagesAndVersions = [];
+    public function __construct($mainOverrideType = null, $mainOverrideDesc = null)
+    {
+        if (!is_null($mainOverrideType)) {
+            $this->attributeDetails[] = new AttributeDetails($mainOverrideType, $mainOverrideDesc);
+        }
+    }
 }

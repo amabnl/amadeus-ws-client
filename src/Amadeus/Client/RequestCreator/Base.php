@@ -22,9 +22,12 @@
 
 namespace Amadeus\Client\RequestCreator;
 
+use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
+use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
@@ -55,22 +58,33 @@ class Base implements RequestCreatorInterface
     protected $params;
 
     /**
+     * Associative array of messages (as keys) and versions (as values) that are present in the WSDL.
+     *
+     * @var array
+     */
+    protected $messagesAndVersions = [];
+
+    /**
      * @param $params
      */
     public function __construct(RequestCreatorParams $params)
     {
         $this->params = $params;
+        $this->messagesAndVersions = $params->messagesAndVersions;
     }
 
     /**
-     * @param string $messageName
+     * @param string $messageName the message name as named in the WSDL
      * @param RequestOptionsInterface $params
      * @throws Struct\InvalidArgumentException When invalid input is detected during message creation.
+     * @throws InvalidMessageException when trying to create a request for a message that is not in your WSDL.
      * @return mixed the created request
      */
     public function createRequest($messageName, RequestOptionsInterface $params)
     {
-        $methodName = 'create' . ucfirst($messageName);
+        $this->checkMessageIsInWsdl($messageName);
+
+        $methodName = 'create' . str_replace("_", "", $messageName);
 
         if (method_exists($this, $methodName)) {
             return $this->$methodName($params);
@@ -204,7 +218,7 @@ class Base implements RequestCreatorInterface
      * @param OfferVerifyOptions $params
      * @return Struct\Offer\Verify
      */
-    protected function createOfferVerify(OfferVerifyOptions $params)
+    protected function createOfferVerifyOffer(OfferVerifyOptions $params)
     {
         $req = new Struct\Offer\Verify(
             $params->offerReference,
@@ -272,7 +286,7 @@ class Base implements RequestCreatorInterface
      * @param PnrCreatePnrOptions $params
      * @return Struct\Pnr\AddMultiElements
      */
-    protected function makeAddMultiElementsForPnrCreate($params)
+    protected function makeAddMultiElementsForPnrCreate(PnrCreatePnrOptions $params)
     {
         $params->receivedFrom = $this->params->receivedFrom;
 
@@ -281,5 +295,54 @@ class Base implements RequestCreatorInterface
         return $req;
     }
 
+    /**
+     * makeCommandCryptic
+     *
+     * @param CommandCrypticOptions $params
+     * @return Struct\Command\Cryptic
+     */
+    protected function makeCommandCryptic(CommandCrypticOptions $params)
+    {
+        return new Struct\Command\Cryptic($params->entry);
+    }
 
+    /**
+     * makeFarePricePnrWithBookingClass
+     *
+     * @param FarePricePnrWithBookingClassOptions $params
+     * @return Struct\Fare\PricePNRWithBookingClass12|Struct\Fare\PricePNRWithBookingClass13
+     */
+    protected function makeFarePricePnrWithBookingClass(FarePricePnrWithBookingClassOptions $params)
+    {
+        $version = $this->getActiveVersionFor('Fare_PricePNRWithBookingClass');
+        if ($version < 13) {
+            return new Struct\Fare\PricePNRWithBookingClass12($params);
+        } else {
+            return new Struct\Fare\PricePNRWithBookingClass13($params);
+        }
+    }
+
+    /**
+     * Check if a given message is in the active WSDL. Throws exception if it isn't.
+     *
+     * @throws InvalidMessageException if message is not in WSDL.
+     * @param string $messageName
+     */
+    protected function checkMessageIsInWsdl($messageName)
+    {
+        if (!array_key_exists($messageName, $this->messagesAndVersions)) {
+            throw new InvalidMessageException('Message "' . $messageName . '" is not in WDSL');
+        }
+    }
+
+    /**
+     * Get the version number active in the WSDL for the given message
+     *
+     * @param $messageName
+     * @return float|string
+     */
+    protected function getActiveVersionFor($messageName)
+    {
+        return $this->messagesAndVersions[$messageName];
+    }
 }

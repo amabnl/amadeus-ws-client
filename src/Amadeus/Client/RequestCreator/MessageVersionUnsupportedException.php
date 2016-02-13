@@ -20,28 +20,20 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Air;
+namespace Amadeus\Client\RequestCreator;
+
+use Amadeus\Client;
 
 /**
- * Message
+ * MessageVersionUnsupportedException is thrown when a message requires a version-specific message, but the particular
+ * version active in the current WSDL is not yet supported.
  *
- * @package Amadeus\Client\Struct\Air
+ * Pull request material!
+ *
+ * @package Amadeus\Client\RequestCreator
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class Message
+class MessageVersionUnsupportedException extends Client\Exception
 {
-    /**
-     * @var MessageFunctionDetails
-     */
-    public $messageFunctionDetails;
 
-    /**
-     * Message constructor.
-     *
-     * @param string $messageFunction
-     */
-    public function __construct($messageFunction)
-    {
-        $this->messageFunctionDetails = new MessageFunctionDetails($messageFunction);
-    }
 }

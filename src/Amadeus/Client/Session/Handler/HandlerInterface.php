@@ -58,6 +58,15 @@ interface HandlerInterface
     public function getOriginatorOffice();
 
     /**
+     * Extract the Messages and versions from the loaded WSDL file.
+     *
+     * Result is an associative array: keys are message names, values are versions.
+     *
+     * @return array
+     */
+    public function getMessagesAndVersions();
+
+    /**
      * Set the Stateful mode off or on.
      *
      * @param bool $stateful

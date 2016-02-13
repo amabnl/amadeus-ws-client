@@ -20,47 +20,42 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Air;
+namespace Amadeus\Client\Struct\Fare\PricePnr12;
 
-use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Itinerary;
+use Amadeus\Client\RequestOptions\Fare\PricePnrBcFareBasis;
 
 /**
- * ItineraryDetails
+ * PricingFareBase
  *
- * @package Amadeus\Client\Struct\Air
+ * @package Amadeus\Client\Struct\Fare\PricePnr12
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class ItineraryDetails
+class PricingFareBase
 {
     /**
-     * @var OriginDestinationDetails
+     * @var FareBasisOptions
      */
-    public $originDestinationDetails;
+    public $fareBasisOptions;
+    /**
+     * @var FareBasisSegReference[]
+     */
+    public $fareBasisSegReference = [];
+    /**
+     * @var array
+     */
+    public $fareBasisDates = [];
 
     /**
-     * @var Message
-     */
-    public $message;
-
-    /**
-     * @var SegmentInformation[]
-     */
-    public $segmentInformation = [];
-
-    /**
-     * ItineraryDetails constructor.
+     * PricingFareBase constructor.
      *
-     * @param Itinerary $itinerary
+     * @param PricePnrBcFareBasis $options
      */
-    public function __construct(Itinerary $itinerary)
+    public function __construct(PricePnrBcFareBasis $options)
     {
-        $this->originDestinationDetails = new OriginDestinationDetails(
-           $itinerary->from,
-           $itinerary->to
-        );
-        $this->message = new Message(MessageFunctionDetails::MSGFUNC_LOWEST_FARE);
-        foreach ($itinerary->segments as $segment) {
-            $this->segmentInformation[] = new SegmentInformation($segment);
+        $this->fareBasisOptions = new FareBasisOptions($options->fareBasisPrimaryCode, $options->fareBasisCode);
+
+        foreach ($options->segmentReference as $segNum=>$segQual) {
+            $this->fareBasisSegReference[] = new FareBasisSegReference($segNum, $segQual);
         }
     }
 }

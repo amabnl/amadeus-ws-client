@@ -1,0 +1,611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://xml.amadeus.com/PNRRET_14_2_1A" xmlns="http://xml.amadeus.com/PNRRET_14_2_1A" elementFormDefault="qualified">
+  <xs:element name="PNR_Retrieve">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">PNR Retrieval Message
+PNR Retrieval Message
+This message allows to retrieve a PNR by specifying some criteria.</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="settings" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Informations on the PNR options requested and the printer identification</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="options" type="OptionalPNRActionsType">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">optional information on what needs to be returned in the PNR , hardcopy print or PNR  mode.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="printer" minOccurs="0" type="PrinterIdentificationType">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">Identification of the printer when hardcopy is requested</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="retrievalFacts">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Set of informations needed for the retreival of the PNR</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="retrieve" type="RetrievePNRType">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">retrieval type , options , and references related to the PNR content .</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="reservationOrProfileIdentifier" minOccurs="0" type="ReservationControlInformationType">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">Informations needed for retreive by record locator or retreive by customer profile.</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="personalFacts" minOccurs="0">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">informations related to the travellers</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="travellerInformation" type="TravellerInformationType">
+                      <xs:annotation>
+                        <xs:documentation xml:lang="en">Informations needed for retreive by office and name or retreive by service and name .</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="productInformation" minOccurs="0" type="TravelProductInformationType">
+                      <xs:annotation>
+                        <xs:documentation xml:lang="en">Informations on the travel product</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                    <xs:element name="ticket" minOccurs="0" type="TicketNumberType">
+                      <xs:annotation>
+                        <xs:documentation xml:lang="en">Ticket number that can be used  optionally when retreive by record locator is done .</xs:documentation>
+                      </xs:annotation>
+                    </xs:element>
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="frequentFlyer" minOccurs="0" type="FrequentTravellerIdentificationCodeType">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">Informations needed for a retreive by frequent flyer .</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+              <xs:element name="accounting" minOccurs="0" type="AccountingInformationElementType">
+                <xs:annotation>
+                  <xs:documentation xml:lang="en">Informations needed for a retreive by account number</xs:documentation>
+                </xs:annotation>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="AccountingElementType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">ACCOUNTING ELEMENT</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="number" type="AlphaNumericString_Length1To30">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">account number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="AccountingInformationElementType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Accounting information element</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="account" type="AccountingElementType">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">accounting element needed when retreive by account number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="CompanyIdentificationTypeI">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">COMPANY IDENTIFICATION</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="code" type="AlphaNumericString_Length1To3">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Airline/ provider code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FrequentTravellerIdentificationCodeType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Frequent traveller information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="frequentTraveller" type="FrequentTravellerIdentificationTypeI">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">frequent traveler identification needed when retreive by frequent traveller</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="FrequentTravellerIdentificationTypeI">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">FREQUENT TRAVELLER IDENTIFICATION</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="companyId" type="AlphaNumericString_Length2To2">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">airline code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="membershipNumber" type="AlphaNumericString_Length1To27">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">frequent traveller reference number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="LocationTypeI">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">LOCATION</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="cityCode" type="AlphaString_Length3To3">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Board point or off point</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="OptionalPNRActionsType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">PNR options</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="optionCode" maxOccurs="40" type="NumericInteger_Length1To3">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">51 - return all RTSVC 52 - return line numbers 53 - return RLRs 55 - do not return individual names of a group 101 - hard copy print 201 - return RTSVC for car 231 - return RTSVC for hotel 261 - return RTSVC for air 300 - TY mode</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PrinterIdentificationDetailsType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Printer identification</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="name" type="AlphaNumericString_Length5To6">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">name of the printer</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="network" minOccurs="0" type="AlphaNumericString_Length2To2">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">network id of the printer</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="PrinterIdentificationType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Printer identification</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="identifierDetail" minOccurs="0" type="PrinterIdentificationDetailsType">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">printer identification</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="office" minOccurs="0" type="AlphaNumericString_Length9To9">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">amadeus office id</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="teletypeAddress" minOccurs="0" type="AlphaNumericString_Length7To7">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">IATA teletype address</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductDateTimeTypeI">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">PRODUCT DATE OR TIME</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="depDate" type="Date_DDMMYY">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Departure/ pick-up/ check-in date</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="depTime" minOccurs="0" type="Time24_HHMM">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Only for retrieve by flight/departure time, needed.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="arrDate" minOccurs="0" type="Date_DDMMYY">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Return/ drop-off/ check-out date</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ProductIdentificationDetailsTypeI">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">PRODUCT IDENTIFICATION DETAILS</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="identification" type="NumericInteger_Length1To4">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Flight number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="subtype" minOccurs="0" type="AlphaString_Length1To1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Flight number alpha suffix</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReservationControlInformationDetailsType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">To specify the information required to identify a reservation.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="companyId" minOccurs="0" type="AlphaNumericString_Length1To3">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">for the PNR record locator: 1A for the reservation number: provider code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="controlNumber" type="AlphaNumericString_Length1To20">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">this is the place to store the identifier</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="controlType" minOccurs="0" type="AMA_EDICodesetType_Length1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">if "N" is filled, it indicates that the number is a reservation number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ReservationControlInformationType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">To specify a reference to a reservation.</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="reservation" minOccurs="0" maxOccurs="2" type="ReservationControlInformationDetailsType">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">this segment is used to store the reservation number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="RetrievePNRType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Retrieve PNR</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="type" type="NumericInteger_Length1To2">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">1 - redisplay  2 - retrieve by record locator  3 - retrieve by office and name  4 - retrieve by service and name  5 - retrieve by frequent traveller  6 - retrieve by account number  7 - retrieve by customer profile  8 - retrieve by Insurance policy number  9 - retrieve by numeric record locator 10 - Retrieve Previous PNR</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="service" minOccurs="0" type="AlphaString_Length3To3">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">information needed for redisplay if RTSVC (AIR, HTL, CAR). Needed for retrieve by service and name . Optional for retrieve by office and name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="tattoo" minOccurs="0" type="AlphaNumericString_Length1To5">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Element tattoo. Optional for redisplay when RTSVC.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="office" minOccurs="0" type="AlphaNumericString_Length9To9">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">PNR owner office id</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="targetSystem" minOccurs="0" type="AlphaNumericString_Length2To2">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Target system for retrieve PNR via claim. Only for retrieve by record locator and retrieve by service and name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="option1" minOccurs="0" type="AlphaString_Length1To1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">X - RTAXR V - RV Optional for redisplay and retrieval types 2, 3 and 4. N/A otherwise.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="option2" minOccurs="0" type="AlphaString_Length1To1">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">A - active PNRs only Optional for retrieve by office and name. N/A otherwise.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TicketNumberType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">TICKET NUMBER</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="airline" type="NumericInteger_Length3To3">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">airline code</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="ticketNumber" type="NumericInteger_Length10To10">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">airline ticket number</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TravelProductInformationType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Travel product information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="product" minOccurs="0" type="ProductDateTimeTypeI">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Defaults to current date</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="boardpointDetail" minOccurs="0" type="LocationTypeI">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Needed for retrieval by flight, optional otherwise.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="offpointDetail" minOccurs="0" type="LocationTypeI">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">needed only if board point is provided.</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="company" minOccurs="0" type="CompanyIdentificationTypeI">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">company identification</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="productDetails" minOccurs="0" type="ProductIdentificationDetailsTypeI">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">needed only for retrieve by flight</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TravellerDetailsTypeI">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">TRAVELLER DETAILS</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="firstName" type="AlphaString_Length1To56">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">Traveler first name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TravellerInformationType">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Traveller information</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="traveller" type="TravellerSurnameInformationTypeI">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">traveler surname information</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="passenger" minOccurs="0" type="TravellerDetailsTypeI">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">N/A for retrieve by record locator</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="TravellerSurnameInformationTypeI">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">TRAVELLER SURNAME INFORMATION</xs:documentation>
+    </xs:annotation>
+    <xs:sequence>
+      <xs:element name="surname" type="AlphaString_Length1To57">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">traveler last name or group name</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="NumericInteger_Length1To3">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: n..3</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:pattern value="-?[0-9]{1,3}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length9To9">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an9</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="9" />
+      <xs:maxLength value="9" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length7To7">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an7</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="7" />
+      <xs:maxLength value="7" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NumericInteger_Length1To2">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: n..2</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:pattern value="-?[0-9]{1,2}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaString_Length3To3">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: a3</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="3" />
+      <xs:maxLength value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length1To5">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an..5</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="5" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length2To2">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an2</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="2" />
+      <xs:maxLength value="2" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaString_Length1To1">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: a1</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="1" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NumericInteger_Length3To3">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: n3</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:pattern value="-?[0-9]{3,3}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NumericInteger_Length10To10">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: n10</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:pattern value="-?[0-9]{10,10}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length5To6">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an5..6</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="5" />
+      <xs:maxLength value="6" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length1To3">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an..3</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="3" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length1To20">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an..20</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaString_Length1To57">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: a..57</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="57" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaString_Length1To56">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: a..56</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="56" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="NumericInteger_Length1To4">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: n..4</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:integer">
+      <xs:pattern value="-?[0-9]{1,4}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length1To27">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an..27</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="27" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AlphaNumericString_Length1To30">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Format limitations: an..30</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:minLength value="1" />
+      <xs:maxLength value="30" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Date_DDMMYY">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Date format: DDMMYY</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="(0[1-9]|[1-2][0-9]|3[0-1])(0[1-9]|1[0-2])[0-9]{2}" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Time24_HHMM">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Time format: 24H. All digits are mandatory . Example: from 0000 to 2359</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="([0-1][0-9]|2[0-3])[0-5][0-9]" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AMA_EDICodesetType_Length1">
+    <xs:annotation>
+      <xs:documentation xml:lang="en">Used for codes in the AMADEUS code tables. Code Length is one alphanumeric character.</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:pattern value="[0-9A-Z]" />
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+<!--DRAFT: This document is under development and is not approved for 
+publication or reference. The Amadeus IT Group SA assumes no 
+responsibility for the application of the information contained 
+in this document or consequences arising from its application.-->
+<!-- SchemaRules="2010/01"-->
+<!--Created with SchemaBuilder 5.1.0 by Amadeus S.A.S.-->
+<!--"Amadeus Proprietary and Confidential Information: unauthorized use and disclosure strictly forbidden. 2010 - Amadeus s.a.s - All Rights Reserved."-->
+<!--Build Key:
+1F8B08000000000000009553C96EDB3010BDF32B885C7A28ACA5498AC2000F4A6C07056AC770DC5B018116C736118A5439541A35C8BF7728C9594E6D2FD2CC909CE5BD3737F3D57C536CE7B3F276253E65F9C524CF26F905DFB6804A763CCFA7E75FA6979FF9CD72FB31CBA659C68A6511BA0670A10D585983A04079255157DB184E1E51B19D4458D11936B202710CA199A6E9636D12594B052D2695AB53B66BAD3230D35EA40821687BC054E90A597584EAFE8EBEB514C1B7C02AA780AEA0B0CE46AFAEC192379ED58DB45D2C276C6B0C059ACEEBC33188B36228C7D7DE355E4390BEE3D22A7EEDEC5E2BCAA1A5E15FEDDEF95A06EDEC94B756B6E1E8BCFE0D8AB708FD75A5B1320E5B0F1C83D755301DA7373BAD2847C209B78C4FF8A9182632C1E81BC337B10FE41BEADE3F804ACE9882BD6C4DB8F14D844B89BD34084CB97667E00E7EB6602B58CB501DC713B057FF0426D8D73B4F91A0E7F2E9013CD2546479304069C89207AAD03DB33DD1B7690D61E62293BDDFD3D93F8ED65F1218574933426EDC41451A3DD42E405AFF4A6958BD975548E7C37FEB9CC174BE2D671A83B4E19A58232E89C57429FD3D44F6873BD8F38E3FBEB903E5B587BE29AD6EADE9580DFE002330BDBDD06014DE391F5EA02410907A2C30E2FB3E3623056833AAC8FE175C8DD336AC200CD4F4C2F3CE853768F57E1473C2861122BA18972A4BB37C8CE1C2F9C268CA3DAA37EA425780335215D526810E88622D7D8879BF5B5DE9D08D83042F2D9A5EAB848F20DC5F00DB16CBF44981D1348624313D2774CA627BEAED2A9170AE4FFB33E4A4480F55BFD5DA56EC114DB86D43D38685330ABC8801C62693E500E307E4FA75672613368024F282BDA92F8A7551AE579B32BFB8247DD7525BB15EE50C1E1BA2AB9458CEE637EFF9E1D28314278F6E6F36F32D6B6835341E896036F22272B21E74248BCC1E13D9C3179F941BA01D850760276AC4DAFA3128CD38031BC916F939FB0338B89F5805050000
+-->
+

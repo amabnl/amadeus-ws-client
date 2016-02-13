@@ -20,36 +20,30 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Params;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Fare\PricePnr12;
 
 /**
- * RequestCreatorParams
+ * CarrierInformation
  *
- * @package Amadeus\Client\Params
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Fare\PricePnr12
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class RequestCreatorParams extends LoadParamsFromArray
+class CarrierInformation
 {
     /**
-     * The Originator Office ID is the Amadeus office ID with which we are signed in to the WS session.
+     * 7YY	Industry fares for all carriers
      *
      * @var string
      */
-    public $originatorOfficeId;
+    public $carrierCode;
 
     /**
-     * A custom "Received From" string - if not provided, will default to amabnl/amadeus-ws-client
+     * CarrierInformation constructor.
      *
-     * @var string
+     * @param $carrier
      */
-    public $receivedFrom;
-
-    /**
-     * The messages and versions that are provided in the WSDL
-     *
-     * @var array
-     */
-    public $messagesAndVersions = [];
+    public function __construct($carrier)
+    {
+        $this->carrierCode = $carrier;
+    }
 }

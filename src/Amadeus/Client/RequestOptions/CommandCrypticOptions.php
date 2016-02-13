@@ -20,36 +20,20 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Params;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * RequestCreatorParams
+ * CommandCrypticOptions
  *
- * @package Amadeus\Client\Params
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class RequestCreatorParams extends LoadParamsFromArray
+class CommandCrypticOptions extends Base
 {
     /**
-     * The Originator Office ID is the Amadeus office ID with which we are signed in to the WS session.
+     * The cryptic entry to be performed.
      *
      * @var string
      */
-    public $originatorOfficeId;
-
-    /**
-     * A custom "Received From" string - if not provided, will default to amabnl/amadeus-ws-client
-     *
-     * @var string
-     */
-    public $receivedFrom;
-
-    /**
-     * The messages and versions that are provided in the WSDL
-     *
-     * @var array
-     */
-    public $messagesAndVersions = [];
+    public $entry;
 }

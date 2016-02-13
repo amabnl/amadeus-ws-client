@@ -451,6 +451,22 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertEquals($dummyPnrReplyExtractedMessage, $messageResponse);
     }
 
+    public function testCanExtractMessagesAndVersions()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $expected = [
+            'PNR_Retrieve' => '11.3',
+            'Security_SignOut' => '4.1',
+        ];
+
+        $actual = $sessionHandler->getMessagesAndVersions();
+
+        $this->assertEquals($expected, $actual);
+
+    }
+
     /**
      * @return SessionHandlerParams
      */

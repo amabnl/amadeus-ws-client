@@ -20,36 +20,36 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Params;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Fare\PricePnr12;
 
 /**
- * RequestCreatorParams
+ * FareBasisOptions
  *
- * @package Amadeus\Client\Params
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Fare\PricePnr12
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class RequestCreatorParams extends LoadParamsFromArray
+class FareBasisOptions
 {
     /**
-     * The Originator Office ID is the Amadeus office ID with which we are signed in to the WS session.
+     * HD	Half round trip fares with reversing the direction
+     * HR	Half round trip fares without reversing the direction
      *
      * @var string
      */
-    public $originatorOfficeId;
+    public $movementType;
+    /**
+     * @var FareBasisDetails
+     */
+    public $fareBasisDetails;
 
     /**
-     * A custom "Received From" string - if not provided, will default to amabnl/amadeus-ws-client
+     * FareBasisOptions constructor.
      *
-     * @var string
+     * @param string|null $primaryCode
+     * @param string|null $code
      */
-    public $receivedFrom;
-
-    /**
-     * The messages and versions that are provided in the WSDL
-     *
-     * @var array
-     */
-    public $messagesAndVersions = [];
+    public function __construct($primaryCode = null, $code = null)
+    {
+        $this->fareBasisDetails = new FareBasisDetails($primaryCode, $code);
+    }
 }

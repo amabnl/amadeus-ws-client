@@ -20,28 +20,17 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Air;
+namespace Amadeus\Client\Struct\Ticket;
+
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * Message
+ * Ticket_CreateTSTFromPricing
  *
- * @package Amadeus\Client\Struct\Air
+ * @package Amadeus\Client\Struct\Ticket
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class Message
+class CreateTSTFromPricing extends BaseWsMessage
 {
-    /**
-     * @var MessageFunctionDetails
-     */
-    public $messageFunctionDetails;
 
-    /**
-     * Message constructor.
-     *
-     * @param string $messageFunction
-     */
-    public function __construct($messageFunction)
-    {
-        $this->messageFunctionDetails = new MessageFunctionDetails($messageFunction);
-    }
 }

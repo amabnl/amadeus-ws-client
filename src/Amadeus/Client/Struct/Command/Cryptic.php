@@ -20,36 +20,45 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Params;
+namespace Amadeus\Client\Struct\Command;
 
-use Amadeus\Client\LoadParamsFromArray;
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * RequestCreatorParams
+ * Command_Cryptic message structure
  *
- * @package Amadeus\Client\Params
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Command
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class RequestCreatorParams extends LoadParamsFromArray
+class Cryptic extends BaseWsMessage
 {
     /**
-     * The Originator Office ID is the Amadeus office ID with which we are signed in to the WS session.
-     *
-     * @var string
+     * @var mixed
      */
-    public $originatorOfficeId;
+    public $originatorDetailSection;
+    /**
+     * @var MessageAction
+     */
+    public $messageAction;
+    /**
+     * @var mixed
+     */
+    public $numberOfUnits;
+    /**
+     * @var mixed
+     */
+    public $intelligentWorkstationInfo;
+    /**
+     * @var LongTextString
+     */
+    public $longTextString;
 
     /**
-     * A custom "Received From" string - if not provided, will default to amabnl/amadeus-ws-client
-     *
-     * @var string
+     * @param string $command
      */
-    public $receivedFrom;
-
-    /**
-     * The messages and versions that are provided in the WSDL
-     *
-     * @var array
-     */
-    public $messagesAndVersions = [];
+    public function __construct($command = null)
+    {
+        $this->messageAction = new MessageAction();
+        $this->longTextString = new LongTextString($command);
+    }
 }

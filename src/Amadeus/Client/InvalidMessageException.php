@@ -20,28 +20,17 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Air;
+namespace Amadeus\Client;
 
 /**
- * Message
+ * InvalidMessageException is thrown when trying to call a message that is not active in your WSDL.
  *
- * @package Amadeus\Client\Struct\Air
+ * If you would call such a message anyway, you'd get the error "No agreement on destination".
+ *
+ * @package Amadeus\Client
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class Message
+class InvalidMessageException extends Exception
 {
-    /**
-     * @var MessageFunctionDetails
-     */
-    public $messageFunctionDetails;
 
-    /**
-     * Message constructor.
-     *
-     * @param string $messageFunction
-     */
-    public function __construct($messageFunction)
-    {
-        $this->messageFunctionDetails = new MessageFunctionDetails($messageFunction);
-    }
 }

@@ -20,36 +20,32 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Params;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\RequestOptions\Fare;
 
 /**
- * RequestCreatorParams
+ * PricePnrBcFareBasis - Pricing options when pricing by fare basis (pricing type 'FBA')
  *
- * @package Amadeus\Client\Params
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions\Fare
+ * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class RequestCreatorParams extends LoadParamsFromArray
+class PricePnrBcFareBasis
 {
-    /**
-     * The Originator Office ID is the Amadeus office ID with which we are signed in to the WS session.
-     *
-     * @var string
-     */
-    public $originatorOfficeId;
+    const SEGREFTYPE_SEGMENT = 'S';
+    const SEGREFTYPE_CONNECTING = 'X';
 
     /**
-     * A custom "Received From" string - if not provided, will default to amabnl/amadeus-ws-client
-     *
      * @var string
      */
-    public $receivedFrom;
+    public $fareBasisPrimaryCode;
+    /**
+     * @var string
+     */
+    public $fareBasisCode;
 
     /**
-     * The messages and versions that are provided in the WSDL
+     * The key is the segment tatoo number, the value is the segment type (self::SEGREFTYPE_*)
      *
      * @var array
      */
-    public $messagesAndVersions = [];
+    public $segmentReference = [];
 }
