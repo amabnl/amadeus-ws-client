@@ -10,6 +10,12 @@ The Amadeus documentation portal can be found at https://webservices.amadeus.com
  
 ![](http://i.imgur.com/7ZcCgnj.jpg)
 
+# Requirements
+
+* PHP 5.4+
+* SOAP and XSL extensions activated
+* A WSDL & authentication details from Amadeus
+
 # Installation
 
 Install amadeus-ws-client through [Composer](http://getcomposer.org).
