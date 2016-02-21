@@ -447,6 +447,60 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendMiniRuleGetFromPricingRec()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'dummycrypticresponse';
+
+        $expectedMessageResult = new Client\Struct\MiniRule\GetFromPricingRec(
+            new Client\RequestOptions\MiniRuleGetFromPricingRecOptions([
+                    'pricings' => [
+                        new Client\RequestOptions\MiniRule\Pricing([
+                            'type' => Client\RequestOptions\MiniRule\Pricing::TYPE_OFFER,
+                            'id' => Client\RequestOptions\MiniRule\Pricing::ALL_PRICINGS
+                        ])
+                    ]
+                ]
+            )
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('MiniRule_GetFromPricingRec', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['MiniRule_GetFromPricingRec' => "5.1"]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->miniRuleGetFromPricingRec(
+            new Client\RequestOptions\MiniRuleGetFromPricingRecOptions([
+                'pricings' => [
+                    new Client\RequestOptions\MiniRule\Pricing([
+                        'type' => Client\RequestOptions\MiniRule\Pricing::TYPE_OFFER,
+                        'id' => Client\RequestOptions\MiniRule\Pricing::ALL_PRICINGS
+                    ])
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoSignOutCall()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

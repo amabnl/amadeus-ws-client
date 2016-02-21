@@ -352,3 +352,46 @@ Confirm a given AIR offer:
 Offer_ConfirmHotelOffer
 -----------------------
 Confirm a given HOTEL offer:
+
+********
+MiniRule
+********
+--------------------------
+MiniRule_GetFromPricingRec
+--------------------------
+
+Get MiniRules for a pricing in context (either a TST pricing, Offers or a pricing quotation):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingRecOptions;
+    use Amadeus\Client\RequestOptions\MiniRule\Pricing;
+    use Amadeus\Client;
+
+    $opt = new MiniRuleGetFromPricingRecOptions([
+        'pricings' => [
+            new Pricing('type' => 'TST', 'id' => 'ALL')
+        ]
+    ]);
+
+    $miniRules = $client->miniRuleGetFromPricingRec($opt);
+
+
+
+***************
+Command_Cryptic
+***************
+
+Send any cryptic Amadeus Selling Platform entry which does not have a structured equivalent in webservices:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\CommandCrypticOptions;
+    use Amadeus\Client;
+
+    $opt = new CommandCrypticOptions([
+        'entry' => 'DAC LON'
+    ]);
+
+    $crypticResponse = $client->commandCryptic($opt);
+

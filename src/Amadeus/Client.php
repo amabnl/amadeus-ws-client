@@ -549,6 +549,28 @@ class Client
     }
 
     /**
+     * MiniRule_GetFromPricingRec
+     *
+     * @param RequestOptions\MiniRuleGetFromPricingRecOptions $options
+     * @param array $messageOptions
+     * @return mixed
+     */
+    public function miniRuleGetFromPricingRec(Client\RequestOptions\MiniRuleGetFromPricingRecOptions $options, $messageOptions = [])
+    {
+        $msgName = 'MiniRule_GetFromPricingRec';
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        return $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
      * Make message options
      *
      * Message options are meta options when sending a message to the amadeus web services

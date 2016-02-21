@@ -28,6 +28,7 @@ use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingRecOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
@@ -284,6 +285,17 @@ class Base implements RequestCreatorInterface
     protected function createCommandCryptic(CommandCrypticOptions $params)
     {
         return new Struct\Command\Cryptic($params->entry);
+    }
+
+    /**
+     * makeMiniRuleGetFromPricingRec
+     *
+     * @param MiniRuleGetFromPricingRecOptions $params
+     * @return Struct\MiniRule\GetFromPricingRec
+     */
+    protected function createMiniRuleGetFromPricingRec(MiniRuleGetFromPricingRecOptions $params)
+    {
+        return new Struct\MiniRule\GetFromPricingRec($params);
     }
 
     /**
