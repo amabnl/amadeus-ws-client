@@ -5,3 +5,4 @@ composer.phar
 !/conf
 /conf/*
 !conf/.gitkeep
+phpunit.xml

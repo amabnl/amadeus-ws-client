@@ -54,27 +54,51 @@ class BaseTest extends BaseTestCase
 
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
-            'receivedFrom' => 'some RF string'
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['Fare_DisplayCurrencyIATARates' => '12.1']
         ]);
 
         $rq = new Base($par);
 
         $rq->createRequest(
-            'fareDisplayCurrencyIATARates',
+            'Fare_DisplayCurrencyIATARates',
             $this->getMockBuilder('Amadeus\Client\RequestOptions\RequestOptionsInterface')->getMock()
         );
     }
+
+    public function testMessageNotInWsdlWillThrowInvalidMessageException()
+    {
+        $this->setExpectedException(
+            '\Amadeus\Client\InvalidMessageException',
+            'not in WDSL'
+        );
+
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['Fare_DisplayCurrencyIATARates' => '12.1']
+        ]);
+
+        $rq = new Base($par);
+
+        $rq->createRequest(
+            'Fare_DisplayFaresForCityPair',
+            $this->getMockBuilder('Amadeus\Client\RequestOptions\RequestOptionsInterface')->getMock()
+        );
+    }
+
     public function testCanCreatePnrRetrieveMessage()
     {
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
-            'receivedFrom' => 'some RF string'
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['PNR_Retrieve' => '14.2']
         ]);
 
         $rq = new Base($par);
 
         $message = $rq->createRequest(
-            'pnrRetrieve',
+            'PNR_Retrieve',
             new PnrRetrieveOptions(['recordLocator' => 'ABC123'])
         );
 
@@ -94,13 +118,14 @@ class BaseTest extends BaseTestCase
     {
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
-            'receivedFrom' => 'some RF string'
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['PNR_RetrieveAndDisplay' => '12.1']
         ]);
 
         $rq = new Base($par);
 
         $message = $rq->createRequest(
-            'pnrRetrieveAndDisplay',
+            'PNR_RetrieveAndDisplay',
             new PnrRetrieveAndDisplayOptions(['recordLocator' => 'ABC123', 'retrieveOption' => 'OFR'])
         );
 
@@ -116,13 +141,14 @@ class BaseTest extends BaseTestCase
     {
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
-            'receivedFrom' => 'some RF string'
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['Offer_VerifyOffer' => '10.1']
         ]);
 
         $rq = new Base($par);
 
         $message = $rq->createRequest(
-            'offerVerify',
+            'Offer_VerifyOffer',
             new OfferVerifyOptions(['offerReference' => 1, 'segmentName' => 'AIR'])
         );
 
@@ -139,13 +165,14 @@ class BaseTest extends BaseTestCase
     {
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
-            'receivedFrom' => 'some RF string'
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['Queue_List' => '11.1']
         ]);
 
         $rq = new Base($par);
 
         $message = $rq->createRequest(
-            'queueList',
+            'Queue_List',
             new QueueListOptions([
                 'queue' => new Queue([
                     'queue' => 50,

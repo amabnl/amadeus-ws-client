@@ -24,7 +24,6 @@ namespace Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
-use Amadeus\Client\Struct\InvalidArgumentException;
 
 /**
  * RequestCreatorInterface is an interface for creating requests for various messages based on certain parameters
@@ -34,12 +33,20 @@ use Amadeus\Client\Struct\InvalidArgumentException;
  */
 interface RequestCreatorInterface
 {
+    /**
+     * Create Request Creator object and provide initialization params
+     *
+     * @param RequestCreatorParams $params
+     */
     public function __construct(RequestCreatorParams $params);
 
     /**
+     * Create a request for a given message with a given set of parameters for that message
+     *
      * @param string $messageName
      * @param RequestOptionsInterface $params
-     * @throws InvalidArgumentException
+     * @throws \Amadeus\Client\Struct\InvalidArgumentException when providing invalid parameters
+     * @throws \Amadeus\Client\InvalidMessageException when trying to create a request for a message that is not in your WSDL.
      * @return mixed
      */
     public function createRequest($messageName, RequestOptionsInterface $params);

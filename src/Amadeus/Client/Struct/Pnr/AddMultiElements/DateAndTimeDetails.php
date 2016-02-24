@@ -30,7 +30,11 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class DateAndTimeDetails
 {
+    const QUAL_DATEOFBIRTH = 706;
+
     /**
+     * self::QUAL_*
+     *
      * PNR_AddMultiElements/travellerInfo/passengerData/dateOfBirth/dateAndTimeDetails/qualifier
      *
      * Date/Time/Period qualifer codesets
@@ -115,9 +119,11 @@ class DateAndTimeDetails
 
     /**
      * @param string|null $date
+     * @param string|null $qualifier
      */
-    public function __construct($date = null)
+    public function __construct($date = null, $qualifier = null)
     {
         $this->date = $date;
+        $this->qualifier = $qualifier;
     }
 }

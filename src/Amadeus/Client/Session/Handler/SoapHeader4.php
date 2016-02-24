@@ -48,6 +48,18 @@ class SoapHeader4 extends Base
      * @var string
      */
     const XPATH_ENDPOINT = 'string(/wsdl:definitions/wsdl:service/wsdl:port/soap:address/@location)';
+    /**
+     * XPATH query to retrieve all operations from the WSDL
+     *
+     * @var string
+     */
+    const XPATH_ALL_OPERATIONS = '/wsdl:definitions/wsdl:portType/wsdl:operation/@name';
+    /**
+     * XPATH query to retrieve the full operation name + version from the WSDL for a given operation.
+     *
+     * @var string
+     */
+    const XPATH_VERSION_FOR_OPERATION = "string(/wsdl:definitions/wsdl:message[contains(./@name, '%s_')]/@name)";
 
     /**
      * Status variable to know if the session is currently logged in
@@ -143,6 +155,33 @@ class SoapHeader4 extends Base
     }
 
     /**
+     * Extract the Messages and versions from the loaded WSDL file.
+     *
+     * Result is an associative array: keys are message names, values are versions.
+     *
+     * @return array
+     */
+    public function getMessagesAndVersions()
+    {
+        $this->loadWsdlXpath($this->params->wsdl);
+
+        $msgAndVer = [];
+        $operations = $this->wsdlDomXpath->query(self::XPATH_ALL_OPERATIONS);
+
+        foreach ($operations as $operation) {
+            if (!empty($operation->value)) {
+                $fullVersion = $this->wsdlDomXpath->evaluate(sprintf(self::XPATH_VERSION_FOR_OPERATION, $operation->value));
+                if (!empty($fullVersion)) {
+                    $extractedVersion = $this->extractMessageVersion($fullVersion);
+                    $msgAndVer[$operation->value] = $extractedVersion;
+                }
+            }
+        }
+
+        return $msgAndVer;
+    }
+
+    /**
      * @param bool $stateful
      */
     public function setStateful($stateful)
@@ -151,6 +190,8 @@ class SoapHeader4 extends Base
     }
 
     /**
+     * Check whether we are running in stateful mode (true) or in stateless mode (false)
+     *
      * @return bool
      */
     public function isStateful()
@@ -617,6 +658,22 @@ class SoapHeader4 extends Base
     {
         $creationDateTime->setTimezone(new \DateTimeZone('UTC'));
         return $creationDateTime->format("Y-m-d\TH:i:s:") . $micro . 'Z';
+    }
+
+    /**
+     * extractMessageVersion
+     *
+     * extracts "4.1" from a string like "Security_SignOut_4_1"
+     *
+     * @param string $fullVersionString
+     * @return string
+     */
+    protected function extractMessageVersion($fullVersionString)
+    {
+        $secondUnderscore = strpos($fullVersionString, '_', strpos($fullVersionString, '_')+1);
+        $num = substr($fullVersionString, $secondUnderscore+1);
+
+        return str_replace('_', '.', $num);
     }
 
     /**

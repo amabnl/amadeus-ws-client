@@ -28,7 +28,7 @@ namespace Amadeus\Client\RequestOptions;
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrCreatePnrOptions extends Base
+class PnrCreatePnrOptions extends PnrAddMultiElementsBase
 {
     /**
      * How to handle the PNR after creating

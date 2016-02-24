@@ -44,6 +44,17 @@ class BaseTest extends BaseTestCase
         $respHandler->analyzeResponse($xml, 'Queue_List');
     }
 
+    public function testWillThrowGenericErrorForUnknownError()
+    {
+        $this->setExpectedException('\Amadeus\Client\Exception', " QUEUE ERROR '666' (Error message unavailable)", 666);
+
+        $xml = $this->getTestFile('emptyqueueresponsedummy666error.txt');
+
+        $respHandler = new ResponseHandler\Base();
+
+        $respHandler->analyzeResponse($xml, 'Queue_List');
+    }
+
     public function testWillThrowRuntimeExceptionWhenHandlingResponseFromUnknownMessage()
     {
         $this->setExpectedException('\RuntimeException', 'is not implemented');

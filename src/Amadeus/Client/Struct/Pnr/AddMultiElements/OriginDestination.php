@@ -30,6 +30,9 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class OriginDestination
 {
+    const LOCATION_ARNK = "ARNK";
+
+    const LOCATION_ALL = "ZZZ";
     /**
      * @var string
      */
@@ -38,4 +41,16 @@ class OriginDestination
      * @var string
      */
     public $destination;
+
+    /**
+     * OriginDestination constructor.
+     *
+     * @param string|null $origin
+     * @param string|null $destination
+     */
+    public function __construct($origin = null, $destination = null)
+    {
+        $this->origin = $origin;
+        $this->destination = $destination;
+    }
 }

@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
+use Amadeus\Client\RequestOptions\Pnr\Reference as ReferenceOption;
+
 /**
  * ReferenceForDataElement
  *
@@ -34,4 +36,19 @@ class ReferenceForDataElement
      * @var Reference[]
      */
     public $reference = [];
+
+    /**
+     * ReferenceForDataElement constructor.
+     *
+     * @param ReferenceOption[] $references
+     */
+    public function __construct(array $references)
+    {
+        foreach ($references as $reference) {
+            $this->reference[] = new Reference(
+                $reference->type,
+                $reference->id
+            );
+        }
+    }
 }

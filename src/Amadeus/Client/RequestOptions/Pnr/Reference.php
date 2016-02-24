@@ -22,13 +22,41 @@
 
 namespace Amadeus\Client\RequestOptions\Pnr;
 
+use Amadeus\Client\LoadParamsFromArray;
+
 /**
  * Reference - For making passenger & segment association to a PNR segment or PNR element
  *
  * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Reference
+class Reference extends LoadParamsFromArray
 {
-    //todo
+    const TYPE_PASSENGER_TATOO = "PT";
+
+    const TYPE_SEGMENT_TATOO = "ST";
+
+    /**
+     * self::TYPE_*
+     *
+     * Possible values:
+     * 001	Customer identification number
+     * 002	Corporate identification number
+     * D	Dominant segment in a marriage
+     * N	Non dominant segment in a marriage
+     * OT	Other element tatoo reference number
+     * PR	Passenger Client-request-message-defined ref. nbr
+     * PT	Passenger tatoo reference number
+     * SR	Segment Client-request-message-defined ref. nbr
+     * SS	Segment Tatoo+SubTatoo reference number
+     * ST	Segment Tatoo reference number
+     *
+     * @var
+     */
+    public $type;
+
+    /**
+     * @var
+     */
+    public $id;
 }

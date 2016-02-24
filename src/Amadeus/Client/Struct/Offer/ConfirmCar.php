@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\Struct\Offer;
 
+use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
@@ -33,4 +34,14 @@ use Amadeus\Client\Struct\BaseWsMessage;
 class ConfirmCar extends BaseWsMessage
 {
     //TODO
+
+    /**
+     * ConfirmCar constructor.
+     *
+     * @param OfferConfirmCarOptions $params
+     */
+    public function __construct($params)
+    {
+        //TODO
+    }
 }

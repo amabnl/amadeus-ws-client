@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * MasterPricerTravelBoardSearch
+ * Fare_MasterPricerTravelBoardSearch message structure
  *
  * @package Amadeus\Client\Struct\Fare
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -140,6 +140,14 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
                     MasterPricer\UnitNumberDetail::TYPE_RESULTS
                 );
             }
+        }
+
+        if ($options->doTicketabilityPreCheck === true) {
+            $this->fareOptions = new MasterPricer\FareOptions();
+            $this->fareOptions->pricingTickInfo = new MasterPricer\PricingTickInfo();
+            $this->fareOptions->pricingTickInfo->pricingTicketing = new MasterPricer\PricingTicketing(
+                MasterPricer\PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK
+            );
         }
 
         $passengerCounter = 1;

@@ -63,6 +63,11 @@ class FormOfPayment extends Element
     public $creditCardExpiry;
 
     /**
+     * @var int
+     */
+    public $creditCardCvcCode;
+
+    /**
      * Free text for self::TYPE_MISC
      * @var string
      */

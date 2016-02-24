@@ -45,4 +45,11 @@ class RequestCreatorParams extends LoadParamsFromArray
      * @var string
      */
     public $receivedFrom;
+
+    /**
+     * The messages and versions that are provided in the WSDL
+     *
+     * @var array
+     */
+    public $messagesAndVersions = [];
 }

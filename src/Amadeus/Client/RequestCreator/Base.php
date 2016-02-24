@@ -22,13 +22,20 @@
 
 namespace Amadeus\Client\RequestCreator;
 
+use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params\RequestCreatorParams;
+use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
+use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
+use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingRecOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
+use Amadeus\Client\RequestOptions\PnrAddMultiElementsBase;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
@@ -54,22 +61,33 @@ class Base implements RequestCreatorInterface
     protected $params;
 
     /**
+     * Associative array of messages (as keys) and versions (as values) that are present in the WSDL.
+     *
+     * @var array
+     */
+    protected $messagesAndVersions = [];
+
+    /**
      * @param $params
      */
     public function __construct(RequestCreatorParams $params)
     {
         $this->params = $params;
+        $this->messagesAndVersions = $params->messagesAndVersions;
     }
 
     /**
-     * @param string $messageName
+     * @param string $messageName the message name as named in the WSDL
      * @param RequestOptionsInterface $params
      * @throws Struct\InvalidArgumentException When invalid input is detected during message creation.
+     * @throws InvalidMessageException when trying to create a request for a message that is not in your WSDL.
      * @return mixed the created request
      */
     public function createRequest($messageName, RequestOptionsInterface $params)
     {
-        $methodName = 'create' . ucfirst($messageName);
+        $this->checkMessageIsInWsdl($messageName);
+
+        $methodName = 'create' . str_replace("_", "", $messageName);
 
         if (method_exists($this, $methodName)) {
             return $this->$methodName($params);
@@ -118,25 +136,17 @@ class Base implements RequestCreatorInterface
         return $req;
     }
 
-    protected function createPnrCreatePnr(PnrCreatePnrOptions $params)
-    {
-        $req = $this->makeAddMultiElementsForPnrCreate($params);
-
-        return $req;
-    }
-
     /**
-     * @param PnrAddMultiElementsOptions $params
+     * @param PnrAddMultiElementsBase $params
      * @return Struct\Pnr\AddMultiElements
      */
-    protected function createPnrAddMultiElements(PnrAddMultiElementsOptions $params)
+    protected function createPnrAddMultiElements(PnrAddMultiElementsBase $params)
     {
-        $req = new Struct\Pnr\AddMultiElements();
+        $params->receivedFrom = $this->params->receivedFrom;
 
-        //TODO
-        throw new \RuntimeException(__METHOD__ . "() IS NOT YET IMPLEMENTED");
+        $req = new Struct\Pnr\AddMultiElements($params);
 
-        //return $req;
+        return $req;
     }
 
     /**
@@ -203,7 +213,7 @@ class Base implements RequestCreatorInterface
      * @param OfferVerifyOptions $params
      * @return Struct\Offer\Verify
      */
-    protected function createOfferVerify(OfferVerifyOptions $params)
+    protected function createOfferVerifyOffer(OfferVerifyOptions $params)
     {
         $req = new Struct\Offer\Verify(
             $params->offerReference,
@@ -217,24 +227,20 @@ class Base implements RequestCreatorInterface
      * @param OfferConfirmAirOptions $params
      * @return Struct\Offer\ConfirmAir
      */
-    protected function createOfferConfirmAir(OfferConfirmAirOptions $params)
+    protected function createOfferConfirmAirOffer(OfferConfirmAirOptions $params)
     {
-        $req = new Struct\Offer\ConfirmAir($params);
-
-        return $req;
+        return new Struct\Offer\ConfirmAir($params);
     }
+
+
 
     /**
      * @param OfferConfirmHotelOptions $params
      * @return Struct\Offer\ConfirmHotel
      */
-    protected function createOfferConfirmHotel(OfferConfirmHotelOptions $params)
+    protected function createOfferConfirmHotelOffer(OfferConfirmHotelOptions $params)
     {
-        $req = new Struct\Offer\ConfirmHotel();
-
-        //TODO
-
-        return $req;
+        return new Struct\Offer\ConfirmHotel($params);
     }
 
     /**
@@ -243,14 +249,12 @@ class Base implements RequestCreatorInterface
      */
     protected function createOfferConfirmCar(OfferConfirmCarOptions $params)
     {
-        $req = new Struct\Offer\ConfirmCar();
-
-        //TODO
-
-        return $req;
+        return new Struct\Offer\ConfirmCar($params);
     }
 
     /**
+     * createFareMasterPricerTravelBoardSearch
+     *
      * @param FareMasterPricerTbSearch $params
      * @return Struct\Fare\MasterPricerTravelBoardSearch
      */
@@ -260,17 +264,85 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * @param PnrCreatePnrOptions $params
-     * @return Struct\Pnr\AddMultiElements
+     *
+     * @param AirSellFromRecommendationOptions $params
+     * @return Struct\Air\SellFromRecommendation
      */
-    protected function makeAddMultiElementsForPnrCreate($params)
+    protected function createAirSellFromRecommendation(AirSellFromRecommendationOptions $params)
     {
-        $params->receivedFrom = $this->params->receivedFrom;
-
-        $req = new Struct\Pnr\AddMultiElements($params);
-
-        return $req;
+        return new Struct\Air\SellFromRecommendation($params);
     }
 
+    /**
+     * makeCommandCryptic
+     *
+     * @param CommandCrypticOptions $params
+     * @return Struct\Command\Cryptic
+     */
+    protected function createCommandCryptic(CommandCrypticOptions $params)
+    {
+        return new Struct\Command\Cryptic($params->entry);
+    }
 
+    /**
+     * Info_EncodeDecodeCity
+     *
+     * @param InfoEncodeDecodeCityOptions $params
+     * @return Struct\Info\EncodeDecodeCity
+     */
+    protected function createInfoEncodeDecodeCity(InfoEncodeDecodeCityOptions $params)
+    {
+        return new Struct\Info\EncodeDecodeCity($params);
+    }
+
+    /**
+     * makeMiniRuleGetFromPricingRec
+     *
+     * @param MiniRuleGetFromPricingRecOptions $params
+     * @return Struct\MiniRule\GetFromPricingRec
+     */
+    protected function createMiniRuleGetFromPricingRec(MiniRuleGetFromPricingRecOptions $params)
+    {
+        return new Struct\MiniRule\GetFromPricingRec($params);
+    }
+
+    /**
+     * makeFarePricePnrWithBookingClass
+     *
+     * @param FarePricePnrWithBookingClassOptions $params
+     * @return Struct\Fare\PricePNRWithBookingClass12|Struct\Fare\PricePNRWithBookingClass13
+     */
+    protected function createFarePricePnrWithBookingClass(FarePricePnrWithBookingClassOptions $params)
+    {
+        $version = $this->getActiveVersionFor('Fare_PricePNRWithBookingClass');
+        if ($version < 13) {
+            return new Struct\Fare\PricePNRWithBookingClass12($params);
+        } else {
+            return new Struct\Fare\PricePNRWithBookingClass13($params);
+        }
+    }
+
+    /**
+     * Check if a given message is in the active WSDL. Throws exception if it isn't.
+     *
+     * @throws InvalidMessageException if message is not in WSDL.
+     * @param string $messageName
+     */
+    protected function checkMessageIsInWsdl($messageName)
+    {
+        if (!array_key_exists($messageName, $this->messagesAndVersions)) {
+            throw new InvalidMessageException('Message "' . $messageName . '" is not in WDSL');
+        }
+    }
+
+    /**
+     * Get the version number active in the WSDL for the given message
+     *
+     * @param $messageName
+     * @return float|string
+     */
+    protected function getActiveVersionFor($messageName)
+    {
+        return $this->messagesAndVersions[$messageName];
+    }
 }

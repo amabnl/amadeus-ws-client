@@ -27,6 +27,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\Pnr\Segment;
 use Amadeus\Client\RequestOptions\Pnr\Traveller;
 use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
+use Amadeus\Client\RequestOptions\PnrAddMultiElementsBase;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\Struct\BaseWsMessage;
@@ -34,6 +35,7 @@ use Amadeus\Client\Struct\InvalidArgumentException;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\AirAuxItinerary;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsIndiv;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\DateAndTimeDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DateOfBirth;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementItinerary;
@@ -45,9 +47,12 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\FreetextData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\FreetextDetail;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ItineraryInfo;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\MiscellaneousRemark;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\NewFopsDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\Passenger;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\PassengerData;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForDataElement;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\ServiceRequest;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TicketElement;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInfo;
 
@@ -83,7 +88,7 @@ class AddMultiElements extends BaseWsMessage
     /**
      * Create PNR_AddMultiElements object
      */
-    public function __construct(RequestOptionsInterface $params = null)
+    public function __construct(PnrAddMultiElementsBase $params = null)
     {
         if (!is_null($params)) {
             if ($params instanceof PnrCreatePnrOptions) {
@@ -197,7 +202,7 @@ class AddMultiElements extends BaseWsMessage
 
         if ($traveller->dateOfBirth instanceof \DateTime) {
             $createdTraveller->passengerData[0]->dateOfBirth = new DateOfBirth(
-                $traveller->dateOfBirth->format('dmy')
+                $traveller->dateOfBirth->format('dmY')
             );
         }
 
@@ -230,14 +235,23 @@ class AddMultiElements extends BaseWsMessage
             $this->dataElementsMaster = new DataElementsMaster();
         }
 
+        //Only add a default RF element if there is no explicitly provided RF element!
+        $explicitRf = false;
+
         foreach ($elements as $element) {
             if ($element instanceof Element) {
                 $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement($element, $tatooCounter);
             }
+
+            if ($element instanceof ReceivedFrom) {
+                $explicitRf = true;
+            }
         }
 
-        if ($receivedFromString !== null) {
-            $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(new ReceivedFrom(['receivedFrom' => $receivedFromString]), $tatooCounter);
+        if ($receivedFromString !== null && !$explicitRf) {
+            $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(
+                new ReceivedFrom(['receivedFrom' => $receivedFromString]), $tatooCounter
+            );
         }
     }
 
@@ -273,10 +287,16 @@ class AddMultiElements extends BaseWsMessage
                     $createdElement->formOfPayment->fop->creditCardCode = $element->creditCardType;
                     $createdElement->formOfPayment->fop->accountNumber = $element->creditCardNumber;
                     $createdElement->formOfPayment->fop->expiryDate = $element->creditCardExpiry;
+                    if (!is_null($element->creditCardCvcCode)) {
+                        $ext = new FopExtension(1);
+                        $ext->newFopsDetails = new NewFopsDetails();
+                        $ext->newFopsDetails->cvData = $element->creditCardCvcCode;
+                        $createdElement->fopExtension[] = $ext;
+                    }
                 } elseif ($element->type === Fop::IDENT_MISC && $element->freeText != "NONREF") {
                     $createdElement->formOfPayment->fop->freetext = $element->freeText;
-                } elseif ($element->type === Fop::IDENT_MISC && $element->freeText == "NONREF") {
-                    $createdElement->fopExtension = new FopExtension(1);
+                } elseif ($element->type === Fop::IDENT_MISC && $element->freeText === "NONREF") {
+                    $createdElement->fopExtension[] = new FopExtension(1);
                 } elseif ($element->type === Fop::IDENT_CHECK) {
                     throw new \RuntimeException("FOP CHECK NOT YET IMPLEMENTED");
                 }
@@ -300,7 +320,8 @@ class AddMultiElements extends BaseWsMessage
                 break;
             case 'ServiceRequest':
                 /** @var Element\ServiceRequest $element */
-                //TODO
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST, $tatooCounter);
+                $createdElement->serviceRequest = new ServiceRequest($element);
                 break;
             case 'Ticketing':
                 /** @var Element\Ticketing $element */
@@ -309,6 +330,10 @@ class AddMultiElements extends BaseWsMessage
                 break;
             default:
                 throw new InvalidArgumentException('Element type ' . $elementType . 'is not supported');
+        }
+
+        if (!empty($element->references)) {
+            $createdElement->referenceForDataElement = new ReferenceForDataElement($element->references);
         }
 
         return $createdElement;

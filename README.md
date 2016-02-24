@@ -10,18 +10,18 @@ The Amadeus documentation portal can be found at https://webservices.amadeus.com
  
 ![](http://i.imgur.com/7ZcCgnj.jpg)
 
+# Requirements
+
+* PHP 5.4+
+* SOAP and XSL extensions activated
+* A WSDL & authentication details from Amadeus
+
 # Installation
 
 Install amadeus-ws-client through [Composer](http://getcomposer.org).
 
 ```bash
-curl -sS https://getcomposer.org/installer | php
-```
-
-Now require the amadeus web service client: 
-
-```bash
-composer.phar require amabnl/amadeus-ws-client
+composer require amabnl/amadeus-ws-client
 ```
 
 After installing, you need to require Composer's autoloader:
@@ -33,7 +33,7 @@ require 'vendor/autoload.php';
 Update composer to get the client:
 
  ```bash
-composer.phar update
+composer update
  ```
 
 # Usage
