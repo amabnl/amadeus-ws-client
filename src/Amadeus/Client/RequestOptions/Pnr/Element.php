@@ -25,7 +25,7 @@ namespace Amadeus\Client\RequestOptions\Pnr;
 use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * Element
+ * Base Element
  *
  * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -33,4 +33,8 @@ use Amadeus\Client\LoadParamsFromArray;
 class Element extends LoadParamsFromArray
 {
 
+    /**
+     * @var Reference[]
+     */
+    public $references = [];
 }

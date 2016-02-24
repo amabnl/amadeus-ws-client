@@ -31,7 +31,34 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 class NewFopsDetails
 {
     /**
+     * @var int
+     */
+    public $cvData;
+
+    /**
      * @var string
      */
     public $printedFreeFlow;
+
+    public $reportedFreeflow;
+
+    public $onoData;
+
+    public $gwtData;
+
+    public $chdData;
+
+    public $delegationCode;
+
+    public $mcoDocNumber;
+
+    public $mcoCouponNumber;
+
+    public $mcoIataNumber;
+
+    public $mcoPlaceOfIssue;
+
+    public $mcoDateOfIssue;
+
+    public $iataNumber;
 }

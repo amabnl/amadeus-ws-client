@@ -20,33 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Info;
 
-use Amadeus\Client\LoadParamsFromArray;
+use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * AirSellFromRecommendation
+ * EncodeDecodeCity
  *
- * @package Amadeus\Client\RequestOptions
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Info
  */
-class AirSellFromRecommendationOptions extends Base
+class EncodeDecodeCity extends BaseWsMessage
 {
-    const ALG_CANCEL_IF_UNSUCCESSFUL = "M1";
-    const ALG_BOOK_IF_UNSUCCESSFUL = "M2";
+
 
     /**
-     * self::ALG_*
+     * EncodeDecodeCity constructor.
      *
-     * M1	Trigger Sell Optimization Algorithm, option cancel all if unsuccessful.
-     * M2	Trigger Sell Optimization Algorithm, option keep all confirmed if unsuccessful.
-     *
-     * @var string
+     * @param InfoEncodeDecodeCityOptions $params
      */
-    public $algorithm = self::ALG_CANCEL_IF_UNSUCCESSFUL;
-    /**
-     * @var Air\SellFromRecommendation\Itinerary[]
-     */
-    public $itinerary = [];
+    public function __construct(InfoEncodeDecodeCityOptions $params)
+    {
 
+    }
 }

@@ -104,11 +104,29 @@ This is the list of messages that are at least partially supported at this time:
 - Air_SellFromRecommendation
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
-- Offer_ConfirmHotelOffer
 - Command_Cryptic
-- Info_EncodeDecodeCity
 - MiniRule_GetFromPricingRec
 - Ticket_CreateTSTFromPricing
-- Ticket_DisplayTST
 
 We plan to support an entire basic booking flow (MasterPricer, SellFromRecommendation, Pricing, ...) later on.
+
+On the to-do list / work in progress:
+
+- Air_FlightInfo
+- Air_RetrieveSeatMap
+- DocIssuance_IssueTicket
+- Fare_InformativePricingWithoutPNR
+- Fare_InformativeBestPricingWithoutPNR
+- Fare_PricePNRWithLowerFares
+- Fare_ConvertCurrency
+- Fare_CheckRules
+- Fare_MasterPricerCalendar
+- Fare_DisplayFaresForCityPair
+- Fare_DisplayBookingCodeInformation
+- Fare_CalculateMileage
+- Info_EncodeDecodeCity
+- Offer_ConfirmHotelOffer
+- PriceXplorer_ExtremeSearch
+- PointOfRef_Search
+- Ticket_DisplayTST
+

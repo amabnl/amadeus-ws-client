@@ -46,6 +46,9 @@ class DataElementsIndiv
      * @var MiscellaneousRemark
      */
     public $miscellaneousRemark;
+    /**
+     * @var ServiceRequest
+     */
     public $serviceRequest;
     public $dateAndTimeInformation;
     public $tourCode;

@@ -138,7 +138,7 @@ Retrieving a PNR:
 PNR_RetrieveAndDisplay
 ----------------------
 
-Retrieving a PNR with offers:
+Retrieving a PNR with PNR content AND all offers:
 
 .. code-block:: php
 
@@ -370,7 +370,10 @@ Get MiniRules for a pricing in context (either a TST pricing, Offers or a pricin
 
     $opt = new MiniRuleGetFromPricingRecOptions([
         'pricings' => [
-            new Pricing('type' => 'TST', 'id' => 'ALL')
+            new Pricing([
+                'type' => Pricing::TYPE_TST,
+                'id' => Pricing::ALL_PRICINGS
+            ])
         ]
     ]);
 

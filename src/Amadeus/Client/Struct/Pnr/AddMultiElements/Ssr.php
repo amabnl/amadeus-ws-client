@@ -20,17 +20,16 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr\Element;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
-use Amadeus\Client\RequestOptions\Pnr\Element;
+use Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest as ServiceRequestOptions;
 
 /**
- * ServiceRequest element (SSR)
+ * Ssr
  *
- * @package Amadeus\Client\RequestOptions\Pnr\Element
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  */
-class ServiceRequest extends Element
+class Ssr
 {
     /**
      * Holds confirmed
@@ -58,7 +57,7 @@ class ServiceRequest extends Element
     const STATUS_NEED = "NN";
 
     /**
-     * OTHS / DOCS / ...
+     * OTHS / DOCS / ....
      *
      * @var string
      */
@@ -67,34 +66,26 @@ class ServiceRequest extends Element
     /**
      * self::STATUS_*
      *
-     * FS	Sold (on free sales basis)
-     * HK	Holds confirmed
-     * HN	Have requested
-     * KK	Confirming
-     * NN	Need. Reply required indicating action taken using appropriate code
-     * SS	Sold
-     *
      * @var string
      */
     public $status;
 
     /**
-     * How many
+     * Amount
      *
      * @var int
      */
     public $quantity;
 
     /**
-     * 2-character company code
-     *
-     * The coded description of supplier of a service or product, i.e. airline designator code.
+     * Airline or other provider code.
      *
      * @var string
      */
-    public $company;
+    public $companyId;
 
     /**
+     *
      * B	Boarding pass may not be issued until
      * ICS	Informational segment for codeshare
      * N	No action required
@@ -110,17 +101,35 @@ class ServiceRequest extends Element
     /**
      * @var string
      */
-    public $boardPoint;
+    public $boardpoint;
 
     /**
      * @var string
      */
-    public $offPoint;
+    public $offpoint;
 
     /**
-     * Up to 2 elements
+     * Max 2 elements
      *
      * @var string[]
      */
-    public $freeText = [];
+    public $freetext = [];
+
+
+    /**
+     * Ssr constructor.
+     *
+     * @param ServiceRequestOptions $options
+     */
+    public function __construct(ServiceRequestOptions $options)
+    {
+        $this->status = $options->status;
+        $this->type = $options->type;
+        $this->quantity = $options->quantity;
+        $this->companyId = $options->company;
+        $this->indicator = $options->indicator;
+        $this->boardpoint = $options->boardPoint;
+        $this->offPoint = $options->offPoint;
+        $this->freetext = $options->freeText;
+    }
 }

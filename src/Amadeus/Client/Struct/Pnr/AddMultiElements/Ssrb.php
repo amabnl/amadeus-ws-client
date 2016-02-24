@@ -20,33 +20,36 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * AirSellFromRecommendation
+ * Ssrb
  *
- * @package Amadeus\Client\RequestOptions
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  */
-class AirSellFromRecommendationOptions extends Base
+class Ssrb
 {
-    const ALG_CANCEL_IF_UNSUCCESSFUL = "M1";
-    const ALG_BOOK_IF_UNSUCCESSFUL = "M2";
-
     /**
-     * self::ALG_*
-     *
-     * M1	Trigger Sell Optimization Algorithm, option cancel all if unsuccessful.
-     * M2	Trigger Sell Optimization Algorithm, option keep all confirmed if unsuccessful.
+     * To specify additional information relating to the special requirement type.
      *
      * @var string
      */
-    public $algorithm = self::ALG_CANCEL_IF_UNSUCCESSFUL;
-    /**
-     * @var Air\SellFromRecommendation\Itinerary[]
-     */
-    public $itinerary = [];
+    public $data;
 
+    /**
+     * Seat characteristic
+     *
+     * A	Aisle seat
+     * H	Seat with facilities for Handicapped/incappacited
+     * I	Seat suitable for adult with an infant
+     * K	Bulkhead seat (B in custumer profile)
+     * MA	Medicaly OK for travel
+     * N	No smoking seat
+     * S	Smoking seat
+     * U	Seat suitable for unaccompanied minor
+     * W	Window seat
+     *
+     * @var string
+     */
+    public $seatType;
 }

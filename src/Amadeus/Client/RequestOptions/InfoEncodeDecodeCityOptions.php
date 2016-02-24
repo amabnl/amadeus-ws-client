@@ -22,31 +22,12 @@
 
 namespace Amadeus\Client\RequestOptions;
 
-use Amadeus\Client\LoadParamsFromArray;
-
 /**
- * AirSellFromRecommendation
+ * InfoEncodeDecodeCityOptions
  *
  * @package Amadeus\Client\RequestOptions
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class AirSellFromRecommendationOptions extends Base
+class InfoEncodeDecodeCityOptions extends Base
 {
-    const ALG_CANCEL_IF_UNSUCCESSFUL = "M1";
-    const ALG_BOOK_IF_UNSUCCESSFUL = "M2";
-
-    /**
-     * self::ALG_*
-     *
-     * M1	Trigger Sell Optimization Algorithm, option cancel all if unsuccessful.
-     * M2	Trigger Sell Optimization Algorithm, option keep all confirmed if unsuccessful.
-     *
-     * @var string
-     */
-    public $algorithm = self::ALG_CANCEL_IF_UNSUCCESSFUL;
-    /**
-     * @var Air\SellFromRecommendation\Itinerary[]
-     */
-    public $itinerary = [];
 
 }

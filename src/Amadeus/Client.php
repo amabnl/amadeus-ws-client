@@ -204,7 +204,7 @@ class Client
      * @return string|\stdClass|null
      * @throws Exception
      */
-    public function pnrRetrieve($options, $messageOptions = [])
+    public function pnrRetrieve(RequestOptions\PnrRetrieveOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_Retrieve';
         $messageOptions = $this->makeMessageOptions($messageOptions, true);
@@ -226,7 +226,7 @@ class Client
      * @param array $messageOptions
      * @return mixed
      */
-    public function pnrCreatePnr($options, $messageOptions = [])
+    public function pnrCreatePnr(RequestOptions\PnrCreatePnrOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_AddMultiElements';
         $messageOptions = $this->makeMessageOptions($messageOptions, true);
@@ -251,7 +251,7 @@ class Client
      * @param array $messageOptions
      * @return mixed
      */
-    public function pnrAddMultiElements($options, $messageOptions = [])
+    public function pnrAddMultiElements(RequestOptions\PnrAddMultiElementsOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_AddMultiElements';
         $messageOptions = $this->makeMessageOptions($messageOptions, true);
@@ -283,7 +283,7 @@ class Client
      * @return string|\stdClass|null
      * @throws Exception
      **/
-    public function pnrRetrieveAndDisplay($options, $messageOptions = [])
+    public function pnrRetrieveAndDisplay(RequestOptions\PnrRetrieveAndDisplayOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_RetrieveAndDisplay';
         $messageOptions = $this->makeMessageOptions($messageOptions, true);
@@ -505,6 +505,28 @@ class Client
     }
 
     /**
+     * Fare_PricePnrWithBookingClass
+     *
+     * @param RequestOptions\FarePricePnrWithBookingClassOptions $options
+     * @param array $messageOptions
+     * @return mixed
+     */
+    public function farePricePnrWithBookingClass(RequestOptions\FarePricePnrWithBookingClassOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Fare_PricePNRWithBookingClass';
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        return $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
      * Air_SellFromRecommendation
      *
      * @param RequestOptions\AirSellFromRecommendationOptions $options
@@ -533,7 +555,7 @@ class Client
      * @param array $messageOptions
      * @return mixed
      */
-    public function commandCryptic(Client\RequestOptions\CommandCrypticOptions $options, $messageOptions = [])
+    public function commandCryptic(RequestOptions\CommandCrypticOptions $options, $messageOptions = [])
     {
         $msgName = 'Command_Cryptic';
         $messageOptions = $this->makeMessageOptions($messageOptions);
@@ -555,9 +577,31 @@ class Client
      * @param array $messageOptions
      * @return mixed
      */
-    public function miniRuleGetFromPricingRec(Client\RequestOptions\MiniRuleGetFromPricingRecOptions $options, $messageOptions = [])
+    public function miniRuleGetFromPricingRec(RequestOptions\MiniRuleGetFromPricingRecOptions $options, $messageOptions = [])
     {
         $msgName = 'MiniRule_GetFromPricingRec';
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        return $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * Info_EncodeDecodeCity
+     *
+     * @param RequestOptions\InfoEncodeDecodeCityOptions $options
+     * @param array $messageOptions
+     * @return mixed
+     */
+    public function infoEncodeDecodeCity(RequestOptions\InfoEncodeDecodeCityOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Info_EncodeDecodeCity';
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
         return $this->sessionHandler->sendMessage(

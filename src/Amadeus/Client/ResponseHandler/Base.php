@@ -64,6 +64,16 @@ class Base implements ResponseHandlerInterface
     }
 
     /**
+     * @param string $response PNR_AddMultiElements XML string
+     * @return bool
+     * @throws Exception
+     */
+    protected function analyzePnrAddMultiElementsResponse($response)
+    {
+
+    }
+
+    /**
      * @param string $response Queue_List XML string
      * @return bool
      * @throws Exception

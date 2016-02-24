@@ -28,6 +28,7 @@ use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
 use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingRecOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
@@ -226,24 +227,20 @@ class Base implements RequestCreatorInterface
      * @param OfferConfirmAirOptions $params
      * @return Struct\Offer\ConfirmAir
      */
-    protected function createOfferConfirmAir(OfferConfirmAirOptions $params)
+    protected function createOfferConfirmAirOffer(OfferConfirmAirOptions $params)
     {
-        $req = new Struct\Offer\ConfirmAir($params);
-
-        return $req;
+        return new Struct\Offer\ConfirmAir($params);
     }
+
+
 
     /**
      * @param OfferConfirmHotelOptions $params
      * @return Struct\Offer\ConfirmHotel
      */
-    protected function createOfferConfirmHotel(OfferConfirmHotelOptions $params)
+    protected function createOfferConfirmHotelOffer(OfferConfirmHotelOptions $params)
     {
-        $req = new Struct\Offer\ConfirmHotel();
-
-        //TODO
-
-        return $req;
+        return new Struct\Offer\ConfirmHotel($params);
     }
 
     /**
@@ -288,6 +285,17 @@ class Base implements RequestCreatorInterface
     }
 
     /**
+     * Info_EncodeDecodeCity
+     *
+     * @param InfoEncodeDecodeCityOptions $params
+     * @return Struct\Info\EncodeDecodeCity
+     */
+    protected function createInfoEncodeDecodeCity(InfoEncodeDecodeCityOptions $params)
+    {
+        return new Struct\Info\EncodeDecodeCity($params);
+    }
+
+    /**
      * makeMiniRuleGetFromPricingRec
      *
      * @param MiniRuleGetFromPricingRecOptions $params
@@ -304,7 +312,7 @@ class Base implements RequestCreatorInterface
      * @param FarePricePnrWithBookingClassOptions $params
      * @return Struct\Fare\PricePNRWithBookingClass12|Struct\Fare\PricePNRWithBookingClass13
      */
-    protected function makeFarePricePnrWithBookingClass(FarePricePnrWithBookingClassOptions $params)
+    protected function createFarePricePnrWithBookingClass(FarePricePnrWithBookingClassOptions $params)
     {
         $version = $this->getActiveVersionFor('Fare_PricePNRWithBookingClass');
         if ($version < 13) {
