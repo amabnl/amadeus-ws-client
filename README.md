@@ -36,6 +36,14 @@ Update composer to get the client:
 composer update
  ```
 
+# Warning: under active development
+
+This library is under active development. The public API's could change any time at the moment!
+
+We will release a 0.1 version when we feel the library is stable enough, after which we will be following semantic versioning.
+
+For now, if you want the bleeding edge, point your composer.json towards dev-develop. If you only want what we have verified as working, go for dev-master.
+
 # Usage
 
 - [About & Get Started](docs/about-get-started.rst)
