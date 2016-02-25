@@ -121,6 +121,19 @@ Creating a PNR (simplified example containing only the most basic PNR elements n
 
     $createdPnr = $client->pnrCreatePnr($opt);
 
+
+Save a PNR which you started (with actionCode 0 for example) and is now ready to be saved:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+
+    $pnrReply = $client->pnrAddMultiElements(
+        new PnrAddMultiElementsOptions([
+            'actionCode' => 11 //ET / END AND RETRIEVE
+        ])
+    );
+
 ------------
 PNR_Retrieve
 ------------
@@ -241,20 +254,26 @@ Make a simple Masterpricer availability & fare search:
 
 .. code-block:: php
 
-    $opt = new Amadeus\Client\RequestOptions\FareMasterPricerTbSearch([
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+
+    $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedResults' => 200,
         'nrOfRequestedPassengers' => 1,
         'passengers' => [
-            new Amadeus\Client\RequestOptions\Fare\MPPassenger([
-                'type' => Amadeus\Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
                 'count' => 1
             ])
         ],
         'itinerary' => [
-            new Amadeus\Client\RequestOptions\Fare\MPItinerary([
-                'departureLocation' => new Amadeus\Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
-                'arrivalLocation' => new Amadeus\Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
-                'date' => new Amadeus\Client\RequestOptions\Fare\MPDate([
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'BRU']),
+                'arrivalLocation' => new MPLocation(['city' => 'LON']),
+                'date' => new MPDate([
                     'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
                 ])
             ])
@@ -271,11 +290,13 @@ Do a pricing on the PNR in context:
 
 .. code-block:: php
 
-    $opt = new Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions([
-        'validatingCarrier' => 'SN'
-    ]);
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 
-    $pricingResponse = $client->farePricePnrWithBookingClass($opt);
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'validatingCarrier' => 'SN'
+        ])
+    );
 
 
 ***
@@ -327,6 +348,21 @@ Ticket_CreateTSTFromPricing
 
 Create a TST from a Pricing made by a Fare_PricePNRWithBookingClass call:
 
+.. code-block:: php
+
+    use Amadeus\Client;
+    use Amadeus\Client\RequestOptions\TicketCreateTstFromPricingOptions;
+    use Amadeus\Client\RequestOptions\Ticket\Pricing;
+
+    $createTstResponse = $client->ticketCreateTSTFromPricing(
+        new TicketCreateTstFromPricingOptions([
+            'pricings' => [
+                new Pricing([
+                    'tstNumber' => 1
+                ])
+            ]
+        ])
+    );
 
 -----------------
 Ticket_DisplayTST
@@ -342,6 +378,17 @@ Offer
 Offer_VerifyOffer
 -----------------
 Verify if an offer is still valid:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\OfferVerifyOptions;
+
+    $offerVerifyResponse = $client->offerVerify(
+        new OfferVerifyOptions([
+            'offerReference' => 1,
+            'segmentName' => 'AIR'
+        ])
+    );
 
 ---------------------
 Offer_ConfirmAirOffer
@@ -368,17 +415,16 @@ Get MiniRules for a pricing in context (either a TST pricing, Offers or a pricin
     use Amadeus\Client\RequestOptions\MiniRule\Pricing;
     use Amadeus\Client;
 
-    $opt = new MiniRuleGetFromPricingRecOptions([
-        'pricings' => [
-            new Pricing([
-                'type' => Pricing::TYPE_TST,
-                'id' => Pricing::ALL_PRICINGS
-            ])
-        ]
-    ]);
-
-    $miniRules = $client->miniRuleGetFromPricingRec($opt);
-
+    $miniRules = $client->miniRuleGetFromPricingRec(
+        new MiniRuleGetFromPricingRecOptions([
+            'pricings' => [
+                new Pricing([
+                    'type' => Pricing::TYPE_TST,
+                    'id' => Pricing::ALL_PRICINGS
+                ])
+            ]
+        ])
+    );
 
 
 ***************

@@ -23,15 +23,16 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PnrAddMultiElmentsBase
+ * PnrCancelOptions
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrAddMultiElementsBase extends Base
+class PnrCancelOptions extends Base
 {
+    public $recordLocator;
+
     /**
-     * How to handle the PNR after creating
+     * How to handle the PNR after doing the Cancel operation
      *
      * 0	No special processing
      * 10	End transact (ET)
@@ -51,8 +52,5 @@ class PnrAddMultiElementsBase extends Base
      */
     public $actionCode = 0;
 
-    /**
-     * @var string
-     */
-    public $receivedFrom;
+
 }

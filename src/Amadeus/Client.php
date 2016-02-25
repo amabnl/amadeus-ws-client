@@ -299,6 +299,28 @@ class Client
     }
 
     /**
+     * PNR_Cancel
+     *
+     * @param RequestOptions\PnrCancelOptions $options
+     * @param array $messageOptions
+     * @return mixed
+     */
+    public function pnrCancel(RequestOptions\PnrCancelOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PNR_Cancel';
+        $messageOptions = $this->makeMessageOptions($messageOptions, true);
+
+        return $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
      * Queue_List - get a list of all PNR's on a given queue
      *
      * https://webservices.amadeus.com/extranet/viewService.do?id=52&flavourId=1&menuId=functional
@@ -602,6 +624,29 @@ class Client
     public function infoEncodeDecodeCity(RequestOptions\InfoEncodeDecodeCityOptions $options, $messageOptions = [])
     {
         $msgName = 'Info_EncodeDecodeCity';
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        return $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+
+    /**
+     * Ticket_CreateTSTFromPricing
+     *
+     * @param RequestOptions\TicketCreateTstFromPricingOptions $options
+     * @param array $messageOptions
+     * @return mixed
+     */
+    public function ticketCreateTSTFromPricing(RequestOptions\TicketCreateTstFromPricingOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Ticket_CreateTSTFromPricing';
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
         return $this->sessionHandler->sendMessage(

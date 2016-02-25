@@ -28,6 +28,7 @@ use Amadeus\Client\RequestOptions\Pnr\Segment;
 use Amadeus\Client\RequestOptions\Pnr\Traveller;
 use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsBase;
+use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\Struct\BaseWsMessage;
@@ -93,7 +94,37 @@ class AddMultiElements extends BaseWsMessage
         if (!is_null($params)) {
             if ($params instanceof PnrCreatePnrOptions) {
                 $this->loadCreatePnr($params);
+            } else if ($params instanceof PnrAddMultiElementsOptions) {
+                $this->loadBare($params);
             }
+        }
+    }
+
+    /**
+     * PNR_AddMultiElements call which only adds requested data to the message
+     *
+     * For doing specific actions like ignoring or saving PNR.
+     *
+     * @param $params
+     */
+    protected function loadBare(PnrAddMultiElementsOptions $params)
+    {
+        if (!is_null($params->actionCode)) {
+            $this->pnrActions = new AddMultiElements\PnrActions(
+                $params->actionCode
+            );
+        }
+
+        if (!is_null($params->receivedFrom)) {
+            if ($this->dataElementsMaster === null) {
+                $this->dataElementsMaster = new DataElementsMaster();
+            }
+
+            $tatooCounter = 1;
+
+            $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(
+                new ReceivedFrom(['receivedFrom' => $params->receivedFrom]), $tatooCounter
+            );
         }
     }
 

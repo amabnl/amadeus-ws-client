@@ -242,6 +242,123 @@ class ClientTest extends BaseTestCase
 
     }
 
+    public function testCanDoAddMultiElementsSavePNR()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'A dummy message result'; // Not an actual XML reply.
+
+        $options = new Client\RequestOptions\PnrAddMultiElementsOptions();
+        $options->actionCode = 11; //11 End transact with retrieve (ER)
+
+        $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($options);
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_AddMultiElements', $expectedPnrResult, ['asString' => true, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_AddMultiElements' => '14.2']));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->pnrAddMultiElements($options);
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoAddMultiElementsSavePNRWithRf()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'A dummy message result'; // Not an actual XML reply.
+
+        $options = new Client\RequestOptions\PnrAddMultiElementsOptions();
+        $options->actionCode = 11; //11 End transact with retrieve (ER)
+        $options->receivedFrom = 'a unit test machine thingie';
+
+        $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($options);
+
+        $expectedPnrResult->dataElementsMaster = new Client\Struct\Pnr\AddMultiElements\DataElementsMaster();
+
+        $receivedFromElement = new Client\Struct\Pnr\AddMultiElements\DataElementsIndiv(Client\Struct\Pnr\AddMultiElements\ElementManagementData::SEGNAME_RECEIVE_FROM);
+        $receivedFromElement->freetextData = new Client\Struct\Pnr\AddMultiElements\FreetextData(
+            'a unit test machine thingie',
+            Client\Struct\Pnr\AddMultiElements\FreetextDetail::TYPE_RECEIVE_FROM
+        );
+
+        $expectedPnrResult->dataElementsMaster->dataElementsIndiv[] = $receivedFromElement;
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_AddMultiElements', $expectedPnrResult, ['asString' => true, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_AddMultiElements' => '14.2']));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->pnrAddMultiElements($options);
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoDummyPnrCancelCall()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'A dummy message result'; // Not an actual XML reply.
+
+        $expectedPnrResult = new Client\Struct\Pnr\Cancel();
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_Cancel', $expectedPnrResult, ['asString' => true, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_Cancel' => '14.2']));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->pnrCancel(
+            new Client\RequestOptions\PnrCancelOptions()
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
 
     public function testCanDoDummyQueueListCall()
     {
@@ -538,6 +655,57 @@ class ClientTest extends BaseTestCase
             new Client\RequestOptions\OfferVerifyOptions([
                 'offerReference' => 1,
                 'segmentName' => 'AIR'
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoTicketCreateTSTFromPricing()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'dummyTicketCreateTSTFromPricingmessage';
+
+        $expectedMessageResult = new Client\Struct\Ticket\CreateTSTFromPricing(
+            new Client\RequestOptions\TicketCreateTstFromPricingOptions([
+                'pricings' => [
+                    new Client\RequestOptions\Ticket\Pricing([
+                        'tstNumber' => 1
+                    ])
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_CreateTSTFromPricing', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_CreateTSTFromPricing' => "04.1"]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->ticketCreateTSTFromPricing(
+            new Client\RequestOptions\TicketCreateTstFromPricingOptions([
+                'pricings' => [
+                    new Client\RequestOptions\Ticket\Pricing([
+                        'tstNumber' => 1
+                    ])
+                ]
             ])
         );
 

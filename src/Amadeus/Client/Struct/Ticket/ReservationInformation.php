@@ -20,43 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Ticket;
 
 /**
- * PnrCreatePnrOptions
+ * ReservationInformation
  *
- * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Ticket
  */
-class PnrCreatePnrOptions extends PnrAddMultiElementsBase
+class ReservationInformation
 {
+    /**
+     * @var string
+     */
+    public $controlNumber;
 
     /**
-     * A group of travellers
+     * ReservationInformation constructor.
      *
-     * @var Pnr\TravellerGroup
+     * @param string $recordLocator
      */
-    public $travellerGroup;
-
-    /**
-     * Non-group travellers (max 9)
-     *
-     * @var Pnr\Traveller[]
-     */
-    public $travellers = [];
-
-    /**
-     * (originDestinationDetails)
-     *
-     * @var Pnr\Segment[]
-     */
-    public $tripSegments = [];
-
-    /**
-     * (dataElementsMaster\dataElementsIndiv)
-     *
-     * @var Pnr\Element[]
-     */
-    public $elements = [];
-
+    public function __construct($recordLocator)
+    {
+        $this->controlNumber = $recordLocator;
+    }
 }

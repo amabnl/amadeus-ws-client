@@ -20,43 +20,34 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\RequestOptions\Ticket;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * PnrCreatePnrOptions
+ * PassengerReference
  *
- * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions\Ticket
  */
-class PnrCreatePnrOptions extends PnrAddMultiElementsBase
+class PassengerReference extends LoadParamsFromArray
 {
+    const TYPE_PASSENGER = "P";
+
+    const TYPE_ADULT = "PA";
+
+    const TYPE_INFANT = "PI";
+
+    const TYPE_SEGMENT = "S";
 
     /**
-     * A group of travellers
-     *
-     * @var Pnr\TravellerGroup
+     * @var int
      */
-    public $travellerGroup;
+    public $id;
 
     /**
-     * Non-group travellers (max 9)
+     * self::TYPE_*
      *
-     * @var Pnr\Traveller[]
+     * @var string
      */
-    public $travellers = [];
-
-    /**
-     * (originDestinationDetails)
-     *
-     * @var Pnr\Segment[]
-     */
-    public $tripSegments = [];
-
-    /**
-     * (dataElementsMaster\dataElementsIndiv)
-     *
-     * @var Pnr\Element[]
-     */
-    public $elements = [];
-
+    public $type;
 }

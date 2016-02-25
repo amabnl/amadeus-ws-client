@@ -22,34 +22,15 @@
 
 namespace Amadeus\Client\RequestOptions;
 
-use Amadeus\Client\LoadParamsFromArray;
-
 /**
- * MessageOptions are meta options when sending messages
+ * TicketCreateTstFromPricingOptions
  *
- * @todo use this class instead of messageOptions array in Client.
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MessageOptions extends LoadParamsFromArray
+class TicketCreateTstFromPricingOptions extends Base
 {
     /**
-     * Get the response as a string (true) or a PHP Object (false)
-     *
-     * If true, we'll get the response message from the soap body in the soapclient's __getLastResponse()
-     *
-     * @var bool
+     * @var Ticket\Pricing[]
      */
-    public $asString = false;
-    /**
-     * If you want to end a stateful session, set this to true.
-     * @var bool
-     */
-    public $endSession = false;
-
-    public function __construct()
-    {
-        parent::__construct([]);
-        throw new \RuntimeException('NOT YET IMPLEMENTED');
-    }
+    public $pricings = [];
 }

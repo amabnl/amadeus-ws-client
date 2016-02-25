@@ -37,6 +37,7 @@ use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsBase;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+use Amadeus\Client\RequestOptions\PnrCancelOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
@@ -45,6 +46,7 @@ use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
 use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
 use Amadeus\Client\RequestOptions\QueueRemoveItemOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
+use Amadeus\Client\RequestOptions\TicketCreateTstFromPricingOptions;
 use Amadeus\Client\Struct;
 
 /**
@@ -142,11 +144,23 @@ class Base implements RequestCreatorInterface
      */
     protected function createPnrAddMultiElements(PnrAddMultiElementsBase $params)
     {
-        $params->receivedFrom = $this->params->receivedFrom;
+        if ($params instanceof PnrCreatePnrOptions && empty($params->receivedFrom)) {
+            //Automagically add RF if not present:
+            $params->receivedFrom = $this->params->receivedFrom;
+        }
 
         $req = new Struct\Pnr\AddMultiElements($params);
 
         return $req;
+    }
+
+    /**
+     * @param PnrCancelOptions $params
+     * @return Struct\Pnr\Cancel
+     */
+    protected function createPNRCancel(PnrCancelOptions $params)
+    {
+        return new Struct\Pnr\Cancel($params);
     }
 
     /**
@@ -320,6 +334,16 @@ class Base implements RequestCreatorInterface
         } else {
             return new Struct\Fare\PricePNRWithBookingClass13($params);
         }
+    }
+
+    /**
+     * @param TicketCreateTstFromPricingOptions $params
+     *
+     * @return Struct\Ticket\CreateTSTFromPricing
+     */
+    protected function createTicketCreateTSTFromPricing(TicketCreateTstFromPricingOptions $params)
+    {
+        return new Struct\Ticket\CreateTSTFromPricing($params);
     }
 
     /**

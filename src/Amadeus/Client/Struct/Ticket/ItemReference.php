@@ -20,43 +20,38 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Ticket;
 
 /**
- * PnrCreatePnrOptions
+ * ItemReference
  *
- * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Ticket
  */
-class PnrCreatePnrOptions extends PnrAddMultiElementsBase
+class ItemReference
 {
+    const REFTYPE_TST = 'TST';
 
     /**
-     * A group of travellers
+     * self::REFTYPE_*
      *
-     * @var Pnr\TravellerGroup
+     * @var string
      */
-    public $travellerGroup;
+    public $referenceType;
 
     /**
-     * Non-group travellers (max 9)
-     *
-     * @var Pnr\Traveller[]
+     * @var int
      */
-    public $travellers = [];
+    public $uniqueReference;
 
     /**
-     * (originDestinationDetails)
+     * ItemReference constructor.
      *
-     * @var Pnr\Segment[]
+     * @param int $reference
+     * @param string $type
      */
-    public $tripSegments = [];
-
-    /**
-     * (dataElementsMaster\dataElementsIndiv)
-     *
-     * @var Pnr\Element[]
-     */
-    public $elements = [];
-
+    public function __construct($reference, $type = self::REFTYPE_TST)
+    {
+        $this->uniqueReference = $reference;
+        $this->referenceType = $type;
+    }
 }

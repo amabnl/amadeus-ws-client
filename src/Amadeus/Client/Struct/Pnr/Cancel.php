@@ -20,43 +20,16 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Pnr;
+
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * PnrCreatePnrOptions
+ * PNR_Cancel message structure
  *
- * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Pnr
  */
-class PnrCreatePnrOptions extends PnrAddMultiElementsBase
+class Cancel extends BaseWsMessage
 {
-
-    /**
-     * A group of travellers
-     *
-     * @var Pnr\TravellerGroup
-     */
-    public $travellerGroup;
-
-    /**
-     * Non-group travellers (max 9)
-     *
-     * @var Pnr\Traveller[]
-     */
-    public $travellers = [];
-
-    /**
-     * (originDestinationDetails)
-     *
-     * @var Pnr\Segment[]
-     */
-    public $tripSegments = [];
-
-    /**
-     * (dataElementsMaster\dataElementsIndiv)
-     *
-     * @var Pnr\Element[]
-     */
-    public $elements = [];
 
 }

@@ -20,43 +20,54 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Ticket;
 
 /**
- * PnrCreatePnrOptions
+ * RefDetails
  *
- * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Ticket
  */
-class PnrCreatePnrOptions extends PnrAddMultiElementsBase
+class RefDetails
 {
+    /**
+     * Passenger/traveller reference number
+     */
+    const QUAL_PASSENGER = "P";
+    /**
+     * Passenger reference number - Adult
+     */
+    const QUAL_ADULT = "PA";
+    /**
+     * Passenger reference number - Infant
+     */
+    const QUAL_INFANT = "PI";
+    /**
+     * Segment/service reference number
+     */
+    const QUAL_SEGMENT_REFERENCE = "S";
+
 
     /**
-     * A group of travellers
+     * self::QUAL_*
      *
-     * @var Pnr\TravellerGroup
+     * @var string
      */
-    public $travellerGroup;
+    public $refQualifier;
 
     /**
-     * Non-group travellers (max 9)
-     *
-     * @var Pnr\Traveller[]
+     * @var int
      */
-    public $travellers = [];
+    public $refNumber;
 
     /**
-     * (originDestinationDetails)
+     * RefDetails constructor.
      *
-     * @var Pnr\Segment[]
+     * @param int $segNum
+     * @param string $segQual self::QUAL_*
      */
-    public $tripSegments = [];
-
-    /**
-     * (dataElementsMaster\dataElementsIndiv)
-     *
-     * @var Pnr\Element[]
-     */
-    public $elements = [];
-
+    public function __construct($segNum, $segQual)
+    {
+        $this->refNumber = $segNum;
+        $this->refQualifier = $segQual;
+    }
 }
