@@ -117,12 +117,12 @@ Creating a PNR (simplified example containing only the most basic PNR elements n
         'value' => '+3222222222'
     ]);
 
-    //The required Received From (RF) element will automatically be added by the library.
+    //The required Received From (RF) element will automatically be added by the library if you didn't provide one.
 
     $createdPnr = $client->pnrCreatePnr($opt);
 
 
-Save a PNR which you started (with actionCode 0 for example) and is now ready to be saved:
+Save a PNR which you have in context (created with actionCode 0 for example) and is now ready to be saved:
 
 .. code-block:: php
 
@@ -142,8 +142,10 @@ Retrieving a PNR:
 
 .. code-block:: php
 
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
     $pnrContent = $client->pnrRetrieve(
-        new Amadeus\Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])
+        new PnrRetrieveOptions(['recordLocator' => 'ABC123'])
     );
 
 
@@ -155,13 +157,83 @@ Retrieving a PNR with PNR content AND all offers:
 
 .. code-block:: php
 
+    use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
+
     $pnrContent = $client->pnrRetrieveAndDisplay(
-        new Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions([
+        new PnrRetrieveAndDisplayOptions([
             'recordLocator' => 'ABC123',
-            'retrieveOption' => Client\RequestOptions\PnrRetrieveAndDisplayOptions::RETRIEVEOPTION_ALL
+            'retrieveOption' => PnrRetrieveAndDisplayOptions::RETRIEVEOPTION_ALL
         ])
     );
 
+----------
+PNR_Cancel
+----------
+
+Cancel the entire itinerary of the PNR in context and do an end transact to save the changes:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCancelOptions;
+
+    $cancelReply = $client->pnrCancel(
+        new PnrCancelOptions([
+            'cancelItinerary' => true,
+            'actionCode' => 10
+        ])
+    );
+
+
+Cancel a PNR element with tatoo number 5 and do an End and Retrieve (ER) to receive the resulting PNR_Reply:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCancelOptions;
+
+    $cancelReply = $client->pnrCancel(
+        new PnrCancelOptions([
+            'elementsByTatoo' => [15],
+            'actionCode' => 11
+        ])
+    );
+
+Same as before, but this time without having a PNR in context (you must provide the PNR's record locator)
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCancelOptions;
+
+    $cancelReply = $client->pnrCancel(
+        new PnrCancelOptions([
+            'recordLocator' => 'ABC123,
+            'elementsByTatoo' => [15],
+            'actionCode' => 11
+        ])
+    );
+
+Cancel the Offer with Offer reference 1:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCancelOptions;
+
+    $cancelReply = $client->pnrCancel(
+        new PnrCancelOptions([
+            'offers' => [1]
+        ])
+    );
+
+Remove passenger with passenger reference 2 from the PNR:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCancelOptions;
+
+    $cancelReply = $client->pnrCancel(
+        new PnrCancelOptions([
+            'passengers' => [2]
+        ])
+    );
 
 *****
 Queue
@@ -175,9 +247,12 @@ Get a list of all PNR's on a given queue:
 
 .. code-block:: php
 
+    use Amadeus\Client\RequestOptions\QueueListOptions;
+    use Amadeus\Client\RequestOptions\Queue;
+
     $queueContent = $client->queueList(
-        new Amadeus\Client\RequestOptions\QueueListOptions([
-            'queue' => new Client\RequestOptions\Queue([
+        new QueueListOptions([
+            'queue' => new Queue([
                 'queue' => 50,
                 'category' => 0
             ])
@@ -192,9 +267,12 @@ Place a PNR on a queue:
 
 .. code-block:: php
 
+    use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
+    use Amadeus\Client\RequestOptions\Queue;
+
     $placeResult = $client->queuePlacePnr(
-        new Amadeus\Client\RequestOptions\QueuePlacePnrOptions([
-            'targetQueue' => new Client\RequestOptions\Queue([
+        new QueuePlacePnrOptions([
+            'targetQueue' => new Queue([
                 'queue' => 50,
                 'category' => 0
             ]),
@@ -210,9 +288,12 @@ Remove a PNR from a queue:
 
 .. code-block:: php
 
+    use Amadeus\Client\RequestOptions\QueueRemoveItemOptions;
+    use Amadeus\Client\RequestOptions\Queue;
+
     $removeResult = $client->queueRemoveItem(
-        new Amadeus\Client\RequestOptions\QueueRemoveItemOptions([
-            'queue' => new Amadeus\Client\RequestOptions\Queue([
+        new QueueRemoveItemOptions([
+            'queue' => new Queue([
                 'queue' => 50,
                 'category' => 0
             ]),
@@ -228,13 +309,16 @@ Move a PNR from one queue to another:
 
 .. code-block:: php
 
+    use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
+    use Amadeus\Client\RequestOptions\Queue;
+
     $moveResult = $client->queueMoveItem(
-        new Amadeus\Client\RequestOptions\QueueMoveItemOptions([
-            'sourceQueue' => new Amadeus\Client\RequestOptions\Queue([
+        new QueueMoveItemOptions([
+            'sourceQueue' => new Queue([
                 'queue' => 50,
                 'category' => 0
             ]),
-            'destinationQueue' => new Amadeus\Client\RequestOptions\Queue([
+            'destinationQueue' => new Queue([
                 'queue' => 60,
                 'category' => 3
             ]),
@@ -350,7 +434,6 @@ Create a TST from a Pricing made by a Fare_PricePNRWithBookingClass call:
 
 .. code-block:: php
 
-    use Amadeus\Client;
     use Amadeus\Client\RequestOptions\TicketCreateTstFromPricingOptions;
     use Amadeus\Client\RequestOptions\Ticket\Pricing;
 
@@ -413,7 +496,6 @@ Get MiniRules for a pricing in context (either a TST pricing, Offers or a pricin
 
     use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingRecOptions;
     use Amadeus\Client\RequestOptions\MiniRule\Pricing;
-    use Amadeus\Client;
 
     $miniRules = $client->miniRuleGetFromPricingRec(
         new MiniRuleGetFromPricingRecOptions([

@@ -42,7 +42,7 @@ This library is under active development. The public API's could change any time
 
 We will release a 0.1 version when we feel the library is stable enough, after which we will be following semantic versioning.
 
-For now, if you want the bleeding edge, point your composer.json towards dev-develop. If you only want what we have verified as working, go for dev-master.
+For now, if you want the bleeding edge, point your composer.json towards `dev-develop`. If you only want what we have verified as working, go for `dev-master`.
 
 # Usage
 

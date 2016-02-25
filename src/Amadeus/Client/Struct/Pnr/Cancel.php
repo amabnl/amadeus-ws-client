@@ -22,7 +22,9 @@
 
 namespace Amadeus\Client\Struct\Pnr;
 
+use Amadeus\Client\RequestOptions\PnrCancelOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\PnrActions;
 
 /**
  * PNR_Cancel message structure
@@ -31,5 +33,30 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class Cancel extends BaseWsMessage
 {
+    /**
+     * @var ReservationInfo
+     */
+    public $reservationInfo;
 
+    /**
+     * @var PnrActions
+     */
+    public $pnrActions;
+
+    /**
+     * @var Cancel\Elements
+     */
+    public $cancelElements = [];
+
+    /**
+     * Cancel constructor.
+     *
+     * @param PnrCancelOptions $params
+     */
+    public function __construct(PnrCancelOptions $params)
+    {
+        if (is_string($params->recordLocator) && strlen($params->recordLocator) >= 6) {
+            $this->reservationInfo = new ReservationInfo($params->recordLocator);
+        }
+    }
 }

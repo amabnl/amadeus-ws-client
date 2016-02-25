@@ -29,7 +29,13 @@ namespace Amadeus\Client\RequestOptions;
  */
 class PnrCancelOptions extends Base
 {
+    /**
+     * Only provide the Record Locator if the PNR is not yet in context!!
+     *
+     * @var string
+     */
     public $recordLocator;
+
 
     /**
      * How to handle the PNR after doing the Cancel operation
@@ -53,4 +59,40 @@ class PnrCancelOptions extends Base
     public $actionCode = 0;
 
 
+    /**
+     * All Passengers by name element number to be removed
+     *
+     * @var int[]
+     */
+    public $passengers = [];
+
+    /**
+     * All elements by Tatoo number to be removed
+     *
+     * @var int[]
+     */
+    public $elementsByTatoo = [];
+
+    /**
+     * Set to true if you want to cancel the entire itinerary of the PNR.
+     *
+     * This is the equivalent of the XI entry in SEL and will effectively cancel the PNR.
+     *
+     * @var bool
+     */
+    public $cancelItinerary = false;
+
+    /**
+     * Offers by Offer Reference to be removed
+     *
+     * @var int[]
+     */
+    public $offers = [];
+
+    /**
+     * All GROUP Passengers by name element number to be removed
+     *
+     * @var int[]
+     */
+    public $groupPassengers = [];
 }
