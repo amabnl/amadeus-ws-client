@@ -98,11 +98,17 @@ class Base implements RequestCreatorInterface
         }
     }
 
+    /**
+     * @return Struct\Security\Authenticate
+     */
     protected function createSecurityAuthenticate()
     {
-        //TODO Only needed for SoapHeader 1 and 2 messages.
+        return new Struct\Security\Authenticate();
     }
 
+    /**
+     * @return Struct\Security\SignOut
+     */
     protected function createSecuritySignOut()
     {
         return new Struct\Security\SignOut();
@@ -261,7 +267,7 @@ class Base implements RequestCreatorInterface
      * @param OfferConfirmCarOptions $params
      * @return Struct\Offer\ConfirmCar
      */
-    protected function createOfferConfirmCar(OfferConfirmCarOptions $params)
+    protected function createOfferConfirmCarOffer(OfferConfirmCarOptions $params)
     {
         return new Struct\Offer\ConfirmCar($params);
     }

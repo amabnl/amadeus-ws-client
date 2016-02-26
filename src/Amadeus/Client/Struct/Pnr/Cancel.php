@@ -25,6 +25,8 @@ namespace Amadeus\Client\Struct\Pnr;
 use Amadeus\Client\RequestOptions\PnrCancelOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\PnrActions;
+use Amadeus\Client\Struct\Pnr\Cancel\Element;
+use Amadeus\Client\Struct\Pnr\Cancel\Elements;
 
 /**
  * PNR_Cancel message structure
@@ -44,7 +46,7 @@ class Cancel extends BaseWsMessage
     public $pnrActions;
 
     /**
-     * @var Cancel\Elements
+     * @var Cancel\Elements[]
      */
     public $cancelElements = [];
 
@@ -57,6 +59,52 @@ class Cancel extends BaseWsMessage
     {
         if (is_string($params->recordLocator) && strlen($params->recordLocator) >= 6) {
             $this->reservationInfo = new ReservationInfo($params->recordLocator);
+        }
+
+        $this->pnrActions = new PnrActions($params->actionCode);
+
+        if ($params->cancelItinerary === true) {
+            $this->cancelElements[] = new Cancel\Elements(Elements::ENTRY_ITINERARY);
+        }
+
+        if (!empty($params->elementsByTatoo)) {
+            $tmp = new Cancel\Elements(Elements::ENTRY_ELEMENT);
+
+            foreach ($params->elementsByTatoo as $tatoo) {
+                $tmp->element[] = new Element($tatoo, Element::IDENT_OTHER_TATOO);
+            }
+
+            $this->cancelElements[] = $tmp;
+        }
+
+        if (!empty($params->groupPassengers)) {
+            $tmp = new Cancel\Elements(Elements::ENTRY_NAME_INTEGRATION);
+
+            foreach ($params->groupPassengers as $offerRef) {
+                $tmp->element[] = new Element($offerRef, Element::IDENT_PASSENGER_TATOO);
+            }
+
+            $this->cancelElements[] = $tmp;
+        }
+
+        if (!empty($params->passengers)) {
+            $tmp = new Cancel\Elements(Elements::ENTRY_ELEMENT);
+
+            foreach ($params->passengers as $offerRef) {
+                $tmp->element[] = new Element($offerRef, Element::IDENT_PASSENGER_TATOO);
+            }
+
+            $this->cancelElements[] = $tmp;
+        }
+
+        if (!empty($params->offers)) {
+            $tmp = new Cancel\Elements(Elements::ENTRY_ELEMENT);
+
+            foreach ($params->offers as $offerRef) {
+                $tmp->element[] = new Element($offerRef, Element::IDENT_OFFER_TATOO);
+            }
+
+            $this->cancelElements[] = $tmp;
         }
     }
 }

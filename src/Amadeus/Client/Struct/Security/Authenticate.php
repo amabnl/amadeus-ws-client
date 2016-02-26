@@ -20,46 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\Cancel;
+namespace Amadeus\Client\Struct\Security;
 
 /**
- * Elements
+ * Authenticate
  *
- * @package Amadeus\Client\Struct\Pnr\Cancel
+ * @package Amadeus\Client\Struct\Security
  */
-class Elements
+class Authenticate
 {
-    const ENTRY_XD = "D";
-
-    const ENTRY_ELEMENT = "E";
-
-    const ENTRY_ITINERARY = "I";
-
-    const ENTRY_NAME_INTEGRATION = "G";
-
-    const ENTRY_PRIORITY_LINE = "P";
-
-    const ENTRY_ES = "S";
-
-    /**
-     * self::ENTRYTYPE_*
-     *
-     * @var string
-     */
-    public $entryType;
-
-    /**
-     * @var Element[]
-     */
-    public $element = [];
-
-    /**
-     * Elements constructor.
-     *
-     * @param string $entryType self::ENTRY_*
-     */
-    public function __construct($entryType)
-    {
-        $this->entryType = $entryType;
-    }
+    //TODO for SoapHeader 1 & 2
 }
