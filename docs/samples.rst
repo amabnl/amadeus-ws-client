@@ -184,7 +184,7 @@ Cancel the entire itinerary of the PNR in context and do an end transact to save
     );
 
 
-Cancel a PNR element with tatoo number 5 and do an End and Retrieve (ER) to receive the resulting PNR_Reply:
+Cancel a PNR element with tatoo number 15 and do an End and Retrieve (ER) to receive the resulting PNR_Reply:
 
 .. code-block:: php
 
