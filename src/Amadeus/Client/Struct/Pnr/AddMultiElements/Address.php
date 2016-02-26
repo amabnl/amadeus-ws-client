@@ -20,47 +20,46 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\Cancel;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Elements
+ * Address
  *
- * @package Amadeus\Client\Struct\Pnr\Cancel
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Elements
+class Address
 {
-    const ENTRY_XD = "D";
+    const OPT_ADDRESS_LINE_1 = "A1";
 
-    const ENTRY_ELEMENT = "E";
-
-    const ENTRY_ITINERARY = "I";
-
-    const ENTRY_NAME_INTEGRATION = "G";
-
-    const ENTRY_PRIORITY_LINE = "P";
-
-    const ENTRY_ES = "S";
 
     /**
-     * self::ENTRYTYPE_*
+     * A1	Address line1
+     * A2	Address line 2
+     * CI	City
+     * CO	Country
+     * CY	Company
+     * NA	Name
+     * PO	P.O. BOX
+     * ST	State
+     * ZP	Postal code
      *
      * @var string
      */
-    public $entryType;
+    public $optionA1 = self::OPT_ADDRESS_LINE_1;
 
     /**
-     * @var Element[]
+     * @var string
      */
-    public $element = [];
+    public $optionTextA1;
 
     /**
-     * Elements constructor.
+     * Address constructor.
      *
-     * @param string $entryType self::ENTRY_*
+     * @param string $addressLineOne
      */
-    public function __construct($entryType)
+    public function __construct($addressLineOne)
     {
-        $this->entryType = $entryType;
+       $this->optionTextA1 = $addressLineOne;
     }
 }

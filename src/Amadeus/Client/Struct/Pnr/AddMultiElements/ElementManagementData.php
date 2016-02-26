@@ -36,6 +36,7 @@ class ElementManagementData
      * See documentation Amadeus Core webservices
      * Functional documentation PNR_AddMultiElements
      * [PNR segment or element name, coded codesets (Ref: 110P 1A 98.98.2)]
+     *
      * @var string
      */
     const SEGNAME_RECEIVE_FROM		= "RF";
@@ -45,52 +46,76 @@ class ElementManagementData
      * See documentation Amadeus Core webservices
      * Functional documentation PNR_AddMultiElements
      * [PNR segment or element name, coded codesets (Ref: 110P 1A 98.98.2)]
+     *
      * @var string
      */
     const SEGNAME_GENERAL_REMARK	= "RM";
     /**
      * Segment name "Form Of Payment"
+     *
      * @var string
      */
     const SEGNAME_FORM_OF_PAYMENT	= "FP";
     /**
-     *
      * Segment name "Ticketing Element"
+     *
      * @var string
      */
     const SEGNAME_TICKETING_ELEMENT = "TK";
-
     /**
      * AP and related elements
+     *
      * @var string
      */
     const SEGNAME_CONTACT_ELEMENT = "AP";
-
     /**
      * OSI - Other Service Information
      *
      * @var string
      */
     const SEGNAME_OTHER_SERVICE_INFORMATION = "OS";
-
     /**
      * AI - Accounting Information
      *
      * @var string
      */
     const SEGNAME_ACCOUNTING_INFORMATION = "AI";
-
     /**
      * SSR - Special Service Request
      *
      * @var string
      */
     const SEGNAME_SPECIAL_SERVICE_REQUEST = "SSR";
+    /**
+     * AB - Billing Address element
+     *
+     * @var string
+     */
+    const SEGNAME_ADDRESS_BILLING_STRUCTURED = "AB";
+    /**
+     * ABU - Unstructured Billing Address element
+     *
+     * @var string
+     */
+    const SEGNAME_ADDRESS_BILLING_UNSTRUCTURED = "ABU";
+    /**
+     * AM - Mailing address element
+     *
+     * @var string
+     */
+    const SEGNAME_ADDRESS_MAILING_STRUCTURED = "AM";
+    /**
+     * AMU - Unstructured Mailing Address Element
+     *
+     * @var string
+     */
+    const SEGNAME_ADDRESS_MAILING_UNSTRUCTURED = "AMU";
 
     /**
      * @var Reference
      */
     public $reference;
+
     /**
      * [PNR segment or element name, coded codesets (Ref: 110P 1A 98.98.2)]
      *
@@ -101,8 +126,8 @@ class ElementManagementData
     /**
      * Create new ElementManagementData
      *
-     * @param string $segmentName one of the constants SEGNAME_* defined in this class
-     * @param int $tatoo optional tatoo nr to reference this element
+     * @param string|null $segmentName one of the constants SEGNAME_* defined in this class
+     * @param int|null $tatoo Optional tatoo nr to reference this element
      */
     public function __construct($segmentName = null, $tatoo = null)
     {

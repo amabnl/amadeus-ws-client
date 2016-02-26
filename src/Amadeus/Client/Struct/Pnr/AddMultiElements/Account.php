@@ -20,47 +20,47 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\Cancel;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Elements
+ * Account
  *
- * @package Amadeus\Client\Struct\Pnr\Cancel
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  */
-class Elements
+class Account
 {
-    const ENTRY_XD = "D";
-
-    const ENTRY_ELEMENT = "E";
-
-    const ENTRY_ITINERARY = "I";
-
-    const ENTRY_NAME_INTEGRATION = "G";
-
-    const ENTRY_PRIORITY_LINE = "P";
-
-    const ENTRY_ES = "S";
-
     /**
-     * self::ENTRYTYPE_*
-     *
      * @var string
      */
-    public $entryType;
+    public $number;
 
     /**
-     * @var Element[]
+     * @var string
      */
-    public $element = [];
+    public $costNumber;
 
     /**
-     * Elements constructor.
+     * @var string
+     */
+    public $companyNumber;
+
+    /**
+     * @var string
+     */
+    public $clientReference;
+
+    /**
+     * @var string
+     */
+    public $gSTTaxDetails;
+
+    /**
+     * Account constructor.
      *
-     * @param string $entryType self::ENTRY_*
+     * @param null $number
      */
-    public function __construct($entryType)
+    public function __construct($number = null)
     {
-        $this->entryType = $entryType;
+        $this->number = $number;
     }
 }

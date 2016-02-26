@@ -26,6 +26,7 @@ namespace Amadeus\Client\Struct\Pnr\Cancel;
  * Element
  *
  * @package Amadeus\Client\Struct\Pnr\Cancel
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class Element
 {

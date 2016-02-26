@@ -20,47 +20,42 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\Cancel;
+namespace Amadeus\Client\RequestOptions\Pnr\Element;
+
+use Amadeus\Client\RequestOptions\Pnr\Element;
 
 /**
- * Elements
+ * AccountingInfo
  *
- * @package Amadeus\Client\Struct\Pnr\Cancel
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions\Pnr\Element
  */
-class Elements
+class AccountingInfo extends Element
 {
-    const ENTRY_XD = "D";
-
-    const ENTRY_ELEMENT = "E";
-
-    const ENTRY_ITINERARY = "I";
-
-    const ENTRY_NAME_INTEGRATION = "G";
-
-    const ENTRY_PRIORITY_LINE = "P";
-
-    const ENTRY_ES = "S";
-
     /**
-     * self::ENTRYTYPE_*
+     * Account Number
      *
      * @var string
      */
-    public $entryType;
+    public $accountNumber;
 
     /**
-     * @var Element[]
-     */
-    public $element = [];
-
-    /**
-     * Elements constructor.
+     * Cost Center Number
      *
-     * @param string $entryType self::ENTRY_*
+     * @var string
      */
-    public function __construct($entryType)
-    {
-        $this->entryType = $entryType;
-    }
+    public $costCenter;
+
+    /**
+     * Company ID Number
+     *
+     * @var string
+     */
+    public $companyIdNumber;
+
+    /**
+     * Client Reference Number
+     *
+     * @var string
+     */
+    public $clientRefNumber;
 }

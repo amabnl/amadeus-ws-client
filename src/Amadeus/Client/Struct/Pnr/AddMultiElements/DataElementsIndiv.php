@@ -39,6 +39,9 @@ class DataElementsIndiv
      */
     public $elementManagementData;
     public $pnrSecurity;
+    /**
+     * @var Accounting
+     */
     public $accounting;
     /**
      * To specify different kinds of remarks
@@ -64,6 +67,9 @@ class DataElementsIndiv
      * @var FreetextData
      */
     public $freetextData;
+    /**
+     * @var StructuredAddress
+     */
     public $structuredAddress;
     public $optionElement;
     public $printer;

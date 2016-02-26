@@ -20,47 +20,37 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\Cancel;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+
+use Amadeus\Client\RequestOptions\Pnr\Element\AccountingInfo;
 
 /**
- * Elements
+ * Accounting
  *
- * @package Amadeus\Client\Struct\Pnr\Cancel
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  */
-class Elements
+class Accounting
 {
-    const ENTRY_XD = "D";
-
-    const ENTRY_ELEMENT = "E";
-
-    const ENTRY_ITINERARY = "I";
-
-    const ENTRY_NAME_INTEGRATION = "G";
-
-    const ENTRY_PRIORITY_LINE = "P";
-
-    const ENTRY_ES = "S";
+    /**
+     * @var Account
+     */
+    public $account;
 
     /**
-     * self::ENTRYTYPE_*
-     *
      * @var string
      */
-    public $entryType;
+    public $accountNumberOfUnits;
 
     /**
-     * @var Element[]
-     */
-    public $element = [];
-
-    /**
-     * Elements constructor.
+     * Accounting constructor.
      *
-     * @param string $entryType self::ENTRY_*
+     * @param AccountingInfo $params
      */
-    public function __construct($entryType)
+    public function __construct(AccountingInfo $params)
     {
-        $this->entryType = $entryType;
+        $this->account = new Account($params->accountNumber);
+        $this->account->costNumber = $params->costCenter;
+        $this->account->clientReference = $params->clientRefNumber;
+        $this->account->companyNumber = $params->companyIdNumber;
     }
 }

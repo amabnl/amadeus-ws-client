@@ -20,47 +20,65 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\Cancel;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Elements
+ * OptionalData
  *
- * @package Amadeus\Client\Struct\Pnr\Cancel
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Elements
+class OptionalData
 {
-    const ENTRY_XD = "D";
+    const OPT_ADDRESS_LINE_1 = "A1";
 
-    const ENTRY_ELEMENT = "E";
+    const OPT_ADDRESS_LINE_2 = "A2";
 
-    const ENTRY_ITINERARY = "I";
+    const OPT_CITY = "CI";
 
-    const ENTRY_NAME_INTEGRATION = "G";
+    const OPT_COUNTRY = "CO";
 
-    const ENTRY_PRIORITY_LINE = "P";
+    const OPT_COMPANY = "CY";
 
-    const ENTRY_ES = "S";
+    const OPT_NAME = "NA";
+
+    const OPT_PO_BOX = "PO";
+
+    const OPT_STATE = "ST";
+
+    const OPT_ZIP_CODE = "ZP";
 
     /**
-     * self::ENTRYTYPE_*
+     * self::OPT_*
+     *
+     * A1	Address line1
+     * A2	Address line 2
+     * CI	City
+     * CO	Country
+     * CY	Company
+     * NA	Name
+     * PO	P.O. BOX
+     * ST	State
+     * ZP	Postal code
      *
      * @var string
      */
-    public $entryType;
+    public $option;
 
     /**
-     * @var Element[]
+     * @var string
      */
-    public $element = [];
+    public $optionText;
 
     /**
-     * Elements constructor.
+     * OptionalData constructor.
      *
-     * @param string $entryType self::ENTRY_*
+     * @param string $text
+     * @param string $option self::OPT_*
      */
-    public function __construct($entryType)
+    public function __construct($text, $option)
     {
-        $this->entryType = $entryType;
+        $this->optionText = $text;
+        $this->option = $option;
     }
 }
