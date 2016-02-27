@@ -41,6 +41,7 @@ use Amadeus\Client\RequestOptions\PnrCancelOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+use Amadeus\Client\RequestOptions\PriceXplorerExtremeSearchOptions;
 use Amadeus\Client\RequestOptions\QueueListOptions;
 use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
 use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
@@ -350,6 +351,16 @@ class Base implements RequestCreatorInterface
     protected function createTicketCreateTSTFromPricing(TicketCreateTstFromPricingOptions $params)
     {
         return new Struct\Ticket\CreateTSTFromPricing($params);
+    }
+
+    /**
+     * @param PriceXplorerExtremeSearchOptions $params
+     *
+     * @return Struct\PriceXplorer\ExtremeSearch
+     */
+    protected function createPriceXplorerExtremeSearch(PriceXplorerExtremeSearchOptions $params)
+    {
+        return new Struct\PriceXplorer\ExtremeSearch($params);
     }
 
     /**

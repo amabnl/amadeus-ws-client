@@ -109,6 +109,8 @@ This is the list of messages that are at least partially supported at this time:
 - MiniRule_GetFromPricingRec
 - Ticket_CreateTSTFromPricing
 - Command_Cryptic
+- PriceXplorer_ExtremeSearch
+
 
 We plan to support an entire basic booking flow (MasterPricer, SellFromRecommendation, Pricing, ...) later on.
 
@@ -128,7 +130,6 @@ On the to-do list / work in progress:
 - Fare_CalculateMileage
 - Info_EncodeDecodeCity
 - Offer_ConfirmHotelOffer
-- PriceXplorer_ExtremeSearch
 - PointOfRef_Search
 - Ticket_DisplayTST
 

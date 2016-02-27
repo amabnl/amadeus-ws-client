@@ -175,7 +175,7 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
     {
         $isInfant = ($passenger->type === 'INF');
 
-        $this->paxReference = new MasterPricer\PaxReference(
+        $paxRef = new MasterPricer\PaxReference(
             $isInfant ? $infantCounter : $counter,
             $isInfant,
             $passenger->type
@@ -189,7 +189,7 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
 
         if ($passenger->count > 1) {
             for ($i = 2; $i <= $passenger->count; $i++) {
-                $this->paxReference->traveller[] = new MasterPricer\Traveller($counter);
+                $paxRef->traveller[] = new MasterPricer\Traveller($counter);
 
                 if ($isInfant) {
                     $infantCounter++;
@@ -198,6 +198,8 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
                 }
             }
         }
+
+        $this->paxReference[] = $paxRef;
     }
 
     /**

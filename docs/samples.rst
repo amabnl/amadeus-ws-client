@@ -536,3 +536,24 @@ Send any cryptic Amadeus Selling Platform entry which does not have a structured
 
     $crypticResponse = $client->commandCryptic($opt);
 
+**************************
+PriceXplorer_ExtremeSearch
+**************************
+
+Request a basic Extreme Search result:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PriceXplorerExtremeSearchOptions;
+
+    $opt = new PriceXplorerExtremeSearchOptions([
+        'resultAggregationOption' => PriceXplorerExtremeSearchOptions::AGGR_COUNTRY,
+        'origin' => 'BRU',
+        'destinations' => ['SYD', 'CBR'],
+        'earliestDepartureDate' => \DateTime::createFromFormat('Y-m-d','2016-08-25', new \DateTimeZone('UTC')),
+        'latestDepartureDate' => \DateTime::createFromFormat('Y-m-d','2016-09-28', new \DateTimeZone('UTC')),
+        'searchOffice' => 'LONBG2222'
+    ]);
+
+    $extremeSearchResult = $client->priceXplorerExtremeSearch($opt);
+

@@ -658,6 +658,28 @@ class Client
     }
 
     /**
+     * PriceXplorer_ExtremeSearch
+     *
+     * @param RequestOptions\PriceXplorerExtremeSearchOptions $options
+     * @param array $messageOptions
+     * @return mixed
+     */
+    public function priceXplorerExtremeSearch(RequestOptions\PriceXplorerExtremeSearchOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PriceXplorer_ExtremeSearch';
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        return $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
      * Make message options
      *
      * Message options are meta options when sending a message to the amadeus web services
