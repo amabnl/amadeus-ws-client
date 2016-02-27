@@ -20,36 +20,47 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Pnr\Cancel;
 
 /**
- * MessageOptions are meta options when sending messages
+ * Elements
  *
- * @todo use this class instead of messageOptions array in Client.
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Pnr\Cancel
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MessageOptions extends LoadParamsFromArray
+class Elements
 {
-    /**
-     * Get the response as a string (true) or a PHP Object (false)
-     *
-     * If true, we'll get the response message from the soap body in the soapclient's __getLastResponse()
-     *
-     * @var bool
-     */
-    public $asString = false;
-    /**
-     * If you want to end a stateful session, set this to true.
-     * @var bool
-     */
-    public $endSession = false;
+    const ENTRY_XD = "D";
 
-    public function __construct()
+    const ENTRY_ELEMENT = "E";
+
+    const ENTRY_ITINERARY = "I";
+
+    const ENTRY_NAME_INTEGRATION = "G";
+
+    const ENTRY_PRIORITY_LINE = "P";
+
+    const ENTRY_ES = "S";
+
+    /**
+     * self::ENTRYTYPE_*
+     *
+     * @var string
+     */
+    public $entryType;
+
+    /**
+     * @var Element[]
+     */
+    public $element = [];
+
+    /**
+     * Elements constructor.
+     *
+     * @param string $entryType self::ENTRY_*
+     */
+    public function __construct($entryType)
     {
-        parent::__construct([]);
-        throw new \RuntimeException('NOT YET IMPLEMENTED');
+        $this->entryType = $entryType;
     }
 }

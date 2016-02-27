@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\Struct\Ticket;
 
+use Amadeus\Client\RequestOptions\TicketCreateTstFromPricingOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
@@ -32,5 +33,51 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class CreateTSTFromPricing extends BaseWsMessage
 {
+    /**
+     * PNR record locator information for this transaction.
+     *
+     * This PNR record locator is used for tracing purpose, no internal retrieve.
+     *
+     * @var PnrLocatorData
+     */
+    public $pnrLocatorData;
 
+    /**
+     * List of fares to take into account for TST creation.
+     *
+     * A fare has been calculated for several .
+     * As we can have 10 TST per Pax, 99 passenger per PNR, and a TST split with the Infant,
+     * the max number of TST is 1980.
+     *
+     * @var PsaList[]
+     */
+    public $psaList = [];
+
+    /**
+     * CreateTSTFromPricing constructor.
+     *
+     * @param TicketCreateTstFromPricingOptions $params
+     */
+    public function __construct(TicketCreateTstFromPricingOptions $params)
+    {
+        foreach ($params->pricings as $pricing) {
+            $tmp =  new PsaList(
+                $pricing->tstNumber,
+                ItemReference::REFTYPE_TST
+            );
+
+            if (!empty($pricing->passengerReferences)) {
+                $tmp->paxReference = new PaxReference();
+
+                foreach ($pricing->passengerReferences as $passengerReference) {
+                    $tmp->paxReference->refDetails[] = new RefDetails(
+                        $passengerReference->id,
+                        $passengerReference->type
+                    );
+                }
+            }
+
+            $this->psaList[] = $tmp;
+        }
+    }
 }

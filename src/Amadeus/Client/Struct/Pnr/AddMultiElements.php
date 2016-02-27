@@ -28,10 +28,12 @@ use Amadeus\Client\RequestOptions\Pnr\Segment;
 use Amadeus\Client\RequestOptions\Pnr\Traveller;
 use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsBase;
+use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\InvalidArgumentException;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\Accounting;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\AirAuxItinerary;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsIndiv;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster;
@@ -53,6 +55,7 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\Passenger;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\PassengerData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForDataElement;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ServiceRequest;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\StructuredAddress;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TicketElement;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInfo;
 
@@ -93,7 +96,37 @@ class AddMultiElements extends BaseWsMessage
         if (!is_null($params)) {
             if ($params instanceof PnrCreatePnrOptions) {
                 $this->loadCreatePnr($params);
+            } else if ($params instanceof PnrAddMultiElementsOptions) {
+                $this->loadBare($params);
             }
+        }
+    }
+
+    /**
+     * PNR_AddMultiElements call which only adds requested data to the message
+     *
+     * For doing specific actions like ignoring or saving PNR.
+     *
+     * @param $params
+     */
+    protected function loadBare(PnrAddMultiElementsOptions $params)
+    {
+        if (!is_null($params->actionCode)) {
+            $this->pnrActions = new AddMultiElements\PnrActions(
+                $params->actionCode
+            );
+        }
+
+        if (!is_null($params->receivedFrom)) {
+            if ($this->dataElementsMaster === null) {
+                $this->dataElementsMaster = new DataElementsMaster();
+            }
+
+            $tatooCounter = 1;
+
+            $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(
+                new ReceivedFrom(['receivedFrom' => $params->receivedFrom]), $tatooCounter
+            );
         }
     }
 
@@ -312,7 +345,7 @@ class AddMultiElements extends BaseWsMessage
                 break;
             case 'ReceivedFrom':
                 /** @var Element\ReceivedFrom $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_RECEIVE_FROM);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_RECEIVE_FROM, $tatooCounter);
                 $createdElement->freetextData = new FreetextData(
                     $element->receivedFrom,
                     FreetextDetail::TYPE_RECEIVE_FROM
@@ -327,6 +360,20 @@ class AddMultiElements extends BaseWsMessage
                 /** @var Element\Ticketing $element */
                 $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_TICKETING_ELEMENT, $tatooCounter);
                 $createdElement->ticketElement = new TicketElement($element);
+                break;
+            case 'AccountingInfo':
+                /** @var Element\AccountingInfo $element */
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_ACCOUNTING_INFORMATION, $tatooCounter);
+                $createdElement->accounting = new Accounting($element);
+                break;
+            case 'Address':
+                /** @var Element\Address $element */
+                $createdElement = new DataElementsIndiv($element->type, $tatooCounter);
+                if ($element->type === ElementManagementData::SEGNAME_ADDRESS_BILLING_UNSTRUCTURED || $element->type === ElementManagementData::SEGNAME_ADDRESS_MAILING_UNSTRUCTURED) {
+                    $createdElement->freetextData = new FreetextData($element->freeText, FreetextDetail::TYPE_MAILING_ADDRESS);
+                } else {
+                    $createdElement->structuredAddress = new StructuredAddress($element);
+                }
                 break;
             default:
                 throw new InvalidArgumentException('Element type ' . $elementType . 'is not supported');

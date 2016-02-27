@@ -94,7 +94,9 @@ This is the list of messages that are at least partially supported at this time:
 - Security_SignOut
 - PNR_Retrieve
 - PNR_RetrieveAndDisplay
-- PNR_AddMultiElements *(Currently there is one call to create a PNR, later support will be added for modifying PNR's)*
+- PNR_AddMultiElements (pnrCreate to create a PNR from scratch)
+- PNR_AddMultiElements (possibility to do actionCode operations on a PNR in context without further actions)
+- PNR_Cancel
 - Queue_List
 - Queue_PlacePNR
 - Queue_RemoveItem
@@ -104,9 +106,11 @@ This is the list of messages that are at least partially supported at this time:
 - Air_SellFromRecommendation
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
-- Command_Cryptic
 - MiniRule_GetFromPricingRec
 - Ticket_CreateTSTFromPricing
+- Command_Cryptic
+- PriceXplorer_ExtremeSearch
+
 
 We plan to support an entire basic booking flow (MasterPricer, SellFromRecommendation, Pricing, ...) later on.
 
@@ -126,7 +130,6 @@ On the to-do list / work in progress:
 - Fare_CalculateMileage
 - Info_EncodeDecodeCity
 - Offer_ConfirmHotelOffer
-- PriceXplorer_ExtremeSearch
 - PointOfRef_Search
 - Ticket_DisplayTST
 

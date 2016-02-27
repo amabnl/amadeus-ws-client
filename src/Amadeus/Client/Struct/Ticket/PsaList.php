@@ -1,0 +1,66 @@
+<?php
+/**
+ * amadeus-ws-client
+ *
+ * Copyright 2015 Amadeus Benelux NV
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @package Amadeus
+ * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
+ */
+
+namespace Amadeus\Client\Struct\Ticket;
+
+/**
+ * PsaList
+ *
+ * @package Amadeus\Client\Struct\Ticket
+ */
+class PsaList
+{
+    /**
+     * Reference of the fare selected.
+     *
+     * A fare may have been calculated by Fare Quote for several passengers
+     * but there is still the possibility to create a TST only for a part of these passengers.
+     *
+     * @var ItemReference
+     */
+    public $itemReference;
+
+    /**
+     * Reference information on passengers.
+     *
+     * @var PaxReference
+     */
+    public $paxReference;
+
+    /**
+     * PsaList constructor.
+     *
+     * @param int $itemRef
+     * @param string $itemRefType
+     * @param null $paxRef
+     * @param null $paxRefType
+     */
+    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST, $paxRef = null, $paxRefType = null)
+    {
+        $this->itemReference = new ItemReference($itemRef, $itemRefType);
+
+        if (!is_null($paxRef)) {
+            $this->paxReference = new PaxReference();
+            $this->paxReference->refDetails[] = new RefDetails($paxRef, $paxRefType);
+        }
+    }
+}

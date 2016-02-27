@@ -65,6 +65,8 @@ class FreetextDetail
 
     const TYPE_OTHER_SERVICE_INFO_OSI = "28";
 
+    const TYPE_MAILING_ADDRESS = "P08";
+
     /**
      * @var string
      */

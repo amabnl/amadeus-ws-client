@@ -35,7 +35,6 @@ use Test\Amadeus\BaseTestCase;
  */
 class SoapHeader4Test extends BaseTestCase
 {
-
     public function testCanCreateSoapHeadersForStatelessCall()
     {
         $expectedSecurityNodeStructureXml = '<oas:Security xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd"

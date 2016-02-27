@@ -95,7 +95,7 @@ class SessionHandlerParams
             }
             $this->wsdl = (isset($params['wsdl'])) ? $params['wsdl'] : null;
             $this->stateful = (isset($params['stateful'])) ? $params['stateful'] : true;
-            $this->logger = ($params['logger'] instanceof LoggerInterface) ? $params['logger'] : null;
+            $this->logger = (isset($params['logger']) && $params['logger'] instanceof LoggerInterface) ? $params['logger'] : null;
 
             if (isset($params['authParams'])) {
                 if ($params['authParams'] instanceof AuthParams) {
