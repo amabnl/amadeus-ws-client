@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\RequestOptions\Pnr\Element;
 
+use Amadeus\Client\RequestOptions\Pnr\Element;
+
 /**
  * Address
  *
@@ -29,7 +31,7 @@ namespace Amadeus\Client\RequestOptions\Pnr\Element;
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Element
  */
-class Address
+class Address extends Element
 {
     const TYPE_BILLING_UNSTRUCTURED = "ABU";
 

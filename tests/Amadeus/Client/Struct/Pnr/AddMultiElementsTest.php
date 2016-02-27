@@ -22,8 +22,12 @@
 
 namespace Test\Amadeus\Client\Struct\Pnr;
 
+use Amadeus\Client\RequestOptions\Pnr\Element\AccountingInfo;
+use Amadeus\Client\RequestOptions\Pnr\Element\Address;
 use Amadeus\Client\RequestOptions\Pnr\Element\Contact;
 use Amadeus\Client\RequestOptions\Pnr\Element\FormOfPayment;
+use Amadeus\Client\RequestOptions\Pnr\Element\MiscellaneousRemark;
+use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest;
 use Amadeus\Client\RequestOptions\Pnr\Element\Ticketing;
 use Amadeus\Client\RequestOptions\Pnr\Reference;
@@ -345,11 +349,152 @@ class AddMultiElementsTest extends BaseTestCase
             'company' => '1A'
         ]);
 
+
         $requestStruct = new AddMultiElements($createPnrOptions);
 
         $this->assertEquals(1, count($requestStruct->travellerInfo));
         $this->assertEquals(1, count($requestStruct->travellerInfo[0]->passengerData));
         $this->assertEquals(706, $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->qualifier);
         $this->assertEquals('08011947', $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->date);
+    }
+
+    public function testMakePnrWithGenericRemarkAndExplicitReceivedFrom()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'company' => '1A'
+        ]);
+        $createPnrOptions->elements[] = new MiscellaneousRemark([
+            'text' => 'MARKUP: 20.00 EUR'
+        ]);
+        $createPnrOptions->elements[] = new ReceivedFrom([
+            'receivedFrom' => 'my magical robot'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_GENERAL_REMARK, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals('MARKUP: 20.00 EUR', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->miscellaneousRemark->remarks->freetext);
+        $this->assertEquals(MiscellaneousRemark::TYPE_MISCELLANEOUS, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->miscellaneousRemark->remarks->type);
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_RECEIVE_FROM, $requestStruct->dataElementsMaster->dataElementsIndiv[1]->elementManagementData->segmentName);
+        $this->assertEquals('my magical robot', $requestStruct->dataElementsMaster->dataElementsIndiv[1]->freetextData->longFreetext);
+        $this->assertEquals(AddMultiElements\FreetextDetail::TYPE_RECEIVE_FROM, $requestStruct->dataElementsMaster->dataElementsIndiv[1]->freetextData->freetextDetail->type);
+    }
+
+    public function testCanCreateAccountingInfoElement()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'company' => '1A'
+        ]);
+        $createPnrOptions->elements[] = new AccountingInfo([
+            'accountNumber' => 'BUZA'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_ACCOUNTING_INFORMATION, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals('BUZA', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->accounting->account->number);
+    }
+
+    public function testCanCreateUnstructuredAddress()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'company' => '1A'
+        ]);
+        $createPnrOptions->elements[] = new Address([
+            'type' => Address::TYPE_BILLING_UNSTRUCTURED,
+            'freeText' => 'Amadeus Benelux NV,Medialaan 30,1800 Vilvoorde'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_ADDRESS_BILLING_UNSTRUCTURED, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals('Amadeus Benelux NV,Medialaan 30,1800 Vilvoorde', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->longFreetext);
+        $this->assertEquals(AddMultiElements\FreetextDetail::TYPE_MAILING_ADDRESS, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->type);
+        $this->assertEquals(AddMultiElements\FreetextDetail::QUALIFIER_LITERALTEXT, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->subjectQualifier);
+    }
+
+    public function testCanCreateStructuredAddress()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'company' => '1A'
+        ]);
+        $createPnrOptions->elements[] = new Address([
+            'type' => Address::TYPE_MAILING_STRUCTURED,
+            'name' => 'Mister Amadeus',
+            'addressLine1' => 'Amadeus Benelux NV',
+            'addressLine2' => 'Medialaan 30',
+            'city' => 'Vilvoorde',
+            'state' => 'Vlaams-Brabant',
+            'country' => 'Belgium',
+            'zipCode' => '1800',
+
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_ADDRESS_MAILING_STRUCTURED, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals(AddMultiElements\Address::OPT_ADDRESS_LINE_1, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->address->optionA1);
+        $this->assertEquals('Amadeus Benelux NV', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->address->optionTextA1);
+        $this->assertEquals(6, count($requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData));
+        $this->assertEquals(AddMultiElements\OptionalData::OPT_ADDRESS_LINE_2, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[0]->option);
+        $this->assertEquals('Medialaan 30', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[0]->optionText);
+        $this->assertEquals(AddMultiElements\OptionalData::OPT_CITY, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[1]->option);
+        $this->assertEquals('Vilvoorde', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[1]->optionText);
+        $this->assertEquals(AddMultiElements\OptionalData::OPT_COUNTRY, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[2]->option);
+        $this->assertEquals('Belgium', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[2]->optionText);
+        $this->assertEquals(AddMultiElements\OptionalData::OPT_NAME, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[3]->option);
+        $this->assertEquals('Mister Amadeus', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[3]->optionText);
+        $this->assertEquals(AddMultiElements\OptionalData::OPT_STATE, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[4]->option);
+        $this->assertEquals('Vlaams-Brabant', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[4]->optionText);
+        $this->assertEquals(AddMultiElements\OptionalData::OPT_ZIP_CODE, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[5]->option);
+        $this->assertEquals('1800', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[5]->optionText);
     }
 }

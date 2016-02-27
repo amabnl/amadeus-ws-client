@@ -52,7 +52,7 @@ class StructuredAddress
     public $address;
 
     /**
-     * @var OptionalData
+     * @var OptionalData[]
      */
     public $optionalData = [];
 

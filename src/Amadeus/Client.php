@@ -49,9 +49,7 @@ use Amadeus\Client\ResponseHandler\Base as ResponseHandlerBase;
  *
  *
  * - implement more PNR_AddMultiElements:
- *      ABU segment
  *      OSI segment
- *      SSR segment
  *
  * @package Amadeus
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>

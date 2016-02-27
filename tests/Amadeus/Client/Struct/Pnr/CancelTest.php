@@ -108,4 +108,26 @@ class CancelTest extends BaseTestCase
         $this->assertEquals(Cancel\Element::IDENT_PASSENGER_TATOO, $message->cancelElements[0]->element[0]->identifier);
         $this->assertEquals(3, $message->cancelElements[0]->element[0]->number);
     }
+
+    public function testCanMakeCancelGroupPassengerMessage()
+    {
+        $message = new Cancel(
+            new PnrCancelOptions([
+                'actionCode' => 0,
+                'groupPassengers' => [5,6]
+            ])
+        );
+
+        $this->assertEquals(0, $message->pnrActions->optionCode);
+        $this->assertNull($message->reservationInfo);
+        $this->assertEquals(1, count($message->cancelElements));
+        $this->assertEquals(Cancel\Elements::ENTRY_NAME_INTEGRATION, $message->cancelElements[0]->entryType);
+        $this->assertEquals(2, count($message->cancelElements[0]->element));
+        $this->assertEquals(Cancel\Element::IDENT_PASSENGER_TATOO, $message->cancelElements[0]->element[0]->identifier);
+        $this->assertEquals(5, $message->cancelElements[0]->element[0]->number);
+        $this->assertEquals(Cancel\Element::IDENT_PASSENGER_TATOO, $message->cancelElements[0]->element[1]->identifier);
+        $this->assertEquals(6, $message->cancelElements[0]->element[1]->number);
+    }
+
+
 }

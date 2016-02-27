@@ -476,7 +476,17 @@ Verify if an offer is still valid:
 ---------------------
 Offer_ConfirmAirOffer
 ---------------------
-Confirm a given AIR offer:
+Confirm a given AIR offer by providing office reference / tatoo:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
+
+    $response = $client->offerConfirmAir(
+        new OfferConfirmAirOptions([
+            'tatooNumber' => 1
+        ])
+    );
 
 -----------------------
 Offer_ConfirmHotelOffer

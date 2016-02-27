@@ -369,7 +369,7 @@ class AddMultiElements extends BaseWsMessage
             case 'Address':
                 /** @var Element\Address $element */
                 $createdElement = new DataElementsIndiv($element->type, $tatooCounter);
-                if ($element->type === ElementManagementData::SEGNAME_ADDRESS_BILLING_UNSTRUCTURED || ElementManagementData::SEGNAME_ADDRESS_MAILING_UNSTRUCTURED) {
+                if ($element->type === ElementManagementData::SEGNAME_ADDRESS_BILLING_UNSTRUCTURED || $element->type === ElementManagementData::SEGNAME_ADDRESS_MAILING_UNSTRUCTURED) {
                     $createdElement->freetextData = new FreetextData($element->freeText, FreetextDetail::TYPE_MAILING_ADDRESS);
                 } else {
                     $createdElement->structuredAddress = new StructuredAddress($element);

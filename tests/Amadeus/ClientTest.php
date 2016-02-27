@@ -214,12 +214,11 @@ class ClientTest extends BaseTestCase
 
         $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($options);
 
-        $receivedFromElement = new Client\Struct\Pnr\AddMultiElements\DataElementsIndiv(Client\Struct\Pnr\AddMultiElements\ElementManagementData::SEGNAME_RECEIVE_FROM);
+        $receivedFromElement = new Client\Struct\Pnr\AddMultiElements\DataElementsIndiv(Client\Struct\Pnr\AddMultiElements\ElementManagementData::SEGNAME_RECEIVE_FROM, 4);
         $receivedFromElement->freetextData = new Client\Struct\Pnr\AddMultiElements\FreetextData(
             'some RF string amabnl-amadeus-ws-client-0.0.1dev',
             Client\Struct\Pnr\AddMultiElements\FreetextDetail::TYPE_RECEIVE_FROM
         );
-
         $expectedPnrResult->dataElementsMaster->dataElementsIndiv[] = $receivedFromElement;
 
         $mockSessionHandler
@@ -297,7 +296,7 @@ class ClientTest extends BaseTestCase
 
         $expectedPnrResult->dataElementsMaster = new Client\Struct\Pnr\AddMultiElements\DataElementsMaster();
 
-        $receivedFromElement = new Client\Struct\Pnr\AddMultiElements\DataElementsIndiv(Client\Struct\Pnr\AddMultiElements\ElementManagementData::SEGNAME_RECEIVE_FROM);
+        $receivedFromElement = new Client\Struct\Pnr\AddMultiElements\DataElementsIndiv(Client\Struct\Pnr\AddMultiElements\ElementManagementData::SEGNAME_RECEIVE_FROM, 2);
         $receivedFromElement->freetextData = new Client\Struct\Pnr\AddMultiElements\FreetextData(
             'a unit test machine thingie',
             Client\Struct\Pnr\AddMultiElements\FreetextDetail::TYPE_RECEIVE_FROM
