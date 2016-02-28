@@ -36,6 +36,11 @@ class CompanyDetails
     public $marketingCompany;
 
     /**
+     * @var string
+     */
+    public $operatingCompany;
+
+    /**
      * CompanyDetails constructor.
      *
      * @param string $company

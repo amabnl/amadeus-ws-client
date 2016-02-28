@@ -22,7 +22,12 @@
 
 namespace Amadeus\Client\Struct\Pnr\Retrieve;
 
-
+/**
+ * ReservationOrProfileIdentifier
+ *
+ * @package Amadeus\Client\Struct\Pnr\Retrieve
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ */
 class ReservationOrProfileIdentifier
 {
     /**
@@ -35,7 +40,6 @@ class ReservationOrProfileIdentifier
      */
     public function __construct($recLoc = null)
     {
-        $this->reservation =
-            new Reservation($recLoc);
+        $this->reservation = new Reservation($recLoc);
     }
 }

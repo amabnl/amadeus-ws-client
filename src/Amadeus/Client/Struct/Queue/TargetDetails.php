@@ -22,9 +22,14 @@
 
 namespace Amadeus\Client\Struct\Queue;
 
-
 use Amadeus\Client\RequestOptions\Queue;
 
+/**
+ * TargetDetails
+ *
+ * @package Amadeus\Client\Struct\Queue
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ */
 class TargetDetails
 {
     /**
@@ -73,6 +78,5 @@ class TargetDetails
         foreach ($recordLocators as $recLoc) {
             $this->recordLocator[] = new RecordLocator($recLoc);
         }
-
     }
 }

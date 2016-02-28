@@ -68,5 +68,4 @@ class FlightDate
     {
         $this->departureDate = $departureDate;
     }
-
 }

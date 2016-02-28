@@ -26,6 +26,7 @@ namespace Amadeus\Client\Struct\Queue;
  * Class CategoryDetails
  *
  * @package Amadeus\Client\Struct\Queue
+ * @author  Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class CategoryDetails
 {
@@ -34,6 +35,12 @@ class CategoryDetails
      */
     public $subQueueInfoDetails;
 
+    /**
+     * CategoryDetails constructor.
+     *
+     * @param string|int $categoryNumber
+     * @param string $type
+     */
     public function __construct($categoryNumber, $type = SubQueueInfoDetails::IDTYPE_CATEGORY)
     {
         $this->subQueueInfoDetails = new SubQueueInfoDetails($categoryNumber, $type);

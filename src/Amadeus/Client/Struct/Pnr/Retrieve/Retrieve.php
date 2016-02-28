@@ -61,8 +61,8 @@ class Retrieve
 
     /**
      * Construct retrieve element
+     *
      * @param string $retrievalType
-     * @return void
      */
     public function __construct($retrievalType)
     {

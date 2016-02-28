@@ -22,7 +22,12 @@
 
 namespace Amadeus\Client\Struct\Queue;
 
-
+/**
+ * QueueDetails
+ *
+ * @package Amadeus\Client\Struct\Queue
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ */
 class QueueDetails
 {
     /**
@@ -30,6 +35,11 @@ class QueueDetails
      */
     public $number;
 
+    /**
+     * QueueDetails constructor.
+     *
+     * @param int $queueNumber
+     */
     public function __construct($queueNumber)
     {
         $this->number = $queueNumber;

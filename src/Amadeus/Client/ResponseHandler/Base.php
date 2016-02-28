@@ -143,7 +143,7 @@ class Base implements ResponseHandlerInterface
     {
         $domDoc = new \DOMDocument('1.0', 'UTF-8');
         $domDoc->loadXML($response);
-        $uri = $domDoc->documentElement->lookupnamespaceURI(null);
+        $uri = $domDoc->documentElement->lookupNamespaceUri(null);
 
         $domXpath = new \DOMXPath($domDoc);
         $domXpath->registerNamespace(self::XMLNS_PREFIX, $uri);

@@ -22,8 +22,6 @@
 
 namespace Amadeus\Client\RequestOptions;
 
-use Amadeus\Client\LoadParamsFromArray;
-
 /**
  * AirSellFromRecommendation
  *

@@ -21,6 +21,7 @@
  */
 
 namespace Amadeus\Client\RequestOptions\Fare;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
  * PricePnrBcFareBasis - Pricing options when pricing by fare basis (pricing type 'FBA')
@@ -28,7 +29,7 @@ namespace Amadeus\Client\RequestOptions\Fare;
  * @package Amadeus\Client\RequestOptions\Fare
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class PricePnrBcFareBasis
+class PricePnrBcFareBasis extends LoadParamsFromArray
 {
     const SEGREFTYPE_SEGMENT = 'S';
     const SEGREFTYPE_CONNECTING = 'X';

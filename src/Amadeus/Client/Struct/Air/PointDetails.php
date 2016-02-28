@@ -36,6 +36,11 @@ class PointDetails
     public $trueLocationId;
 
     /**
+     * @var string
+     */
+    public $trueLocation;
+
+    /**
      * PointDetails constructor.
      *
      * @param string $locationId

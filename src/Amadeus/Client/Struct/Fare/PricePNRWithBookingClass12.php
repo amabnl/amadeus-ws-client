@@ -22,7 +22,6 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
-use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\PricePnr12\AttributeDetails;
@@ -60,9 +59,9 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
 
     public $discountInformation;
     /**
-     * @var PricePnr12\PricingFareBase
+     * @var PricePnr12\PricingFareBase[]
      */
-    public $pricingFareBase;
+    public $pricingFareBase = [];
 
     public $flightInformation;
 

@@ -55,10 +55,4 @@ class SessionHeaderV4
      * @var HeaderV4\SecurityHostedUser
      */
     public $AMA_SecurityHostedUser;
-
-
-    public function __construct()
-    {
-
-    }
 }

@@ -42,12 +42,24 @@ class MarriageDetails
      * @var string
      */
     public $relation;
+
     /**
      * @var string
      */
     public $marriageIdentifier;
+
     /**
      * @var string
      */
     public $lineNumber;
+
+    /**
+     * @var string
+     */
+    public $otherRelation;
+
+    /**
+     * @var string
+     */
+    public $carrierCode;
 }

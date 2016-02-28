@@ -24,6 +24,7 @@ namespace Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params\RequestCreatorParams;
+use Amadeus\Client\RequestOptions\AirFlightInfoOptions;
 use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
@@ -292,6 +293,16 @@ class Base implements RequestCreatorInterface
     protected function createAirSellFromRecommendation(AirSellFromRecommendationOptions $params)
     {
         return new Struct\Air\SellFromRecommendation($params);
+    }
+
+    /**
+     *
+     * @param AirFlightInfoOptions $params
+     * @return Struct\Air\FlightInfo
+     */
+    protected function createAirFlightInfo(AirFlightInfoOptions $params)
+    {
+        return new Struct\Air\FlightInfo($params);
     }
 
     /**

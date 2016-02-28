@@ -22,7 +22,12 @@
 
 namespace Amadeus\Client\Struct\HeaderV4;
 
-
+/**
+ * UserId
+ *
+ * @package Amadeus\Client\Struct\HeaderV4
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ */
 class UserId
 {
     public $RequestorType;
@@ -33,6 +38,11 @@ class UserId
 
     public $AgentDutyCode;
 
+    /**
+     * UserId constructor.
+     *
+     * @param array $params
+     */
     public function __construct($params = [])
     {
         $this->RequestorType = $params['RequestorType'];

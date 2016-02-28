@@ -115,7 +115,7 @@ class ExtremeSearchTest extends BaseTestCase
         $this->assertEquals(SelectionDetails::OPT_OUTBOUND_DEP_DAYS, $message->departureDays[1]->selectionInfo->selectionDetails[0]->option);
     }
 
-    public function testCanMakeXSCallAggregationOpions()
+    public function testCanMakeXSCallAggregationOptions()
     {
         $opt = new PriceXplorerExtremeSearchOptions([
             'resultAggregationOption' => PriceXplorerExtremeSearchOptions::AGGR_COUNTRY,

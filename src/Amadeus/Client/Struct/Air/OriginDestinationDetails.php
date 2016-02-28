@@ -22,13 +22,15 @@
 
 namespace Amadeus\Client\Struct\Air;
 
+use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestination as AddMultiElementsOriginDestination;
+
 /**
  * OriginDestinationDetails
  *
  * @package Amadeus\Client\Struct\Air
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class OriginDestinationDetails extends \Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestination
+class OriginDestinationDetails extends AddMultiElementsOriginDestination
 {
 
 }

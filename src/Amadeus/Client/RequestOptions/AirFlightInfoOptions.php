@@ -20,30 +20,43 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr\Segment;
-
-use Amadeus\Client\RequestOptions\Pnr\Segment;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * Miscellaneous
+ * AirFlightInfoOptions
  *
- * @package Amadeus\Client\RequestOptions\Pnr\Segment
+ * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Miscellaneous extends Segment
+class AirFlightInfoOptions extends Base
 {
+    /**
+     * @var string
+     */
+    public $airlineCode;
+
+    /**
+     * @var string
+     */
+    public $flightNumber;
+
+    /**
+     * @var string
+     */
+    public $flightNumberSuffix;
+
     /**
      * @var \DateTime
      */
-    public $date;
+    public $departureDate;
 
     /**
      * @var string
      */
-    public $cityCode;
+    public $departureLocation;
 
     /**
      * @var string
      */
-    public $freeText;
+    public $arrivalLocation;
 }

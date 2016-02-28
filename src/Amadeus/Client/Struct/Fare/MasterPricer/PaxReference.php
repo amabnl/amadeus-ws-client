@@ -47,7 +47,6 @@ class PaxReference
      * @param int $mainTravellerRef
      * @param boolean $isInfant	(OPTIONAL)
      * @param string $passengerType (OPTIONAL)
-     * @return void
      */
     public function __construct($mainTravellerRef, $isInfant = false, $passengerType = null)
     {

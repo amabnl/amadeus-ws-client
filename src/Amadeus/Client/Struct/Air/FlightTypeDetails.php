@@ -112,9 +112,9 @@ class FlightTypeDetails
      * Y	Capacity was overridden
      * Z	Limit sales ignored
      *
-     * @var string
+     * @var string[]
      */
-    public $flightIndicator;
+    public $flightIndicator = [];
 
     /**
      * FlightTypeDetails constructor.
@@ -123,6 +123,6 @@ class FlightTypeDetails
      */
     public function __construct($indicator)
     {
-        $this->flightIndicator = $indicator;
+        $this->flightIndicator[] = $indicator;
     }
 }

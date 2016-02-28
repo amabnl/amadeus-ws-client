@@ -140,5 +140,4 @@ class TravelProductInformation
         $this->companyDetails = new CompanyDetails($company);
         $this->flightIdentification = new FlightIdentification($flightNumber, $bookingClass);
     }
-
 }

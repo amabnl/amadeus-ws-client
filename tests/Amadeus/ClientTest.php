@@ -25,7 +25,6 @@ namespace Test\Amadeus;
 use Amadeus\Client;
 use Amadeus\Client\Params;
 use Psr\Log\NullLogger;
-use Test\Amadeus\BaseTestCase;
 
 /**
  * ClientTest
@@ -961,6 +960,57 @@ class ClientTest extends BaseTestCase
                         ]
                     ])
                 ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendAirFlightInfo()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'dummyairflightinformessage';
+
+        $expectedMessageResult = new Client\Struct\Air\FlightInfo(
+            new Client\RequestOptions\AirFlightInfoOptions([
+                'airlineCode' => 'SN',
+                'flightNumber' => '652',
+                'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18'),
+                'departureLocation' => 'BRU',
+                'arrivalLocation' => 'LIS'
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Air_FlightInfo', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Air_FlightInfo' => "7.1"]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->airFlightInfo(
+            new Client\RequestOptions\AirFlightInfoOptions([
+                'airlineCode' => 'SN',
+                'flightNumber' => '652',
+                'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18'),
+                'departureLocation' => 'BRU',
+                'arrivalLocation' => 'LIS'
             ])
         );
 

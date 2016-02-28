@@ -41,7 +41,6 @@ class RequestedSegmentRef
 
     /**
      * @param int $segRef
-     * @return void
      */
     public function __construct($segRef)
     {

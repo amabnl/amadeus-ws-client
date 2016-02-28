@@ -135,7 +135,7 @@ class SoapHeader4 extends Base
     {
         $this->params = $params;
         if($params->logger instanceof LoggerInterface) {
-            $this->setlogger($params->logger);
+            $this->setLogger($params->logger);
             $this->log(LogLevel::INFO, __METHOD__. "(): Logger started.");
         }
         if ($params->overrideSoapClient instanceof \SoapClient) {

@@ -450,6 +450,153 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertEquals($dummyPnrReplyExtractedMessage, $messageResponse);
     }
 
+    public function testCanHandleMessageThrowingSoapFault()
+    {
+        $this->setExpectedException('\SoapFault');
+
+        $overrideSoapClient = $this->getMock(
+            'Amadeus\Client\SoapClient',
+            ['__getLastRequest', '__getLastResponse', 'PNR_Retrieve'],
+            [],
+            '',
+            false
+        );
+
+        $dummyPnrRequest = $this->getTestFile('dummyPnrRequest.txt');
+        $dummyPnrReply = $this->getTestFile('sessionheadertestresponse.txt');
+        $dummyPnrReplyExtractedMessage = $this->getTestFile('dummyPnrReplyExtractedMessage.txt');
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastRequest')
+            ->will($this->returnValue($dummyPnrRequest));
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastResponse')
+            ->will($this->returnValue($dummyPnrReply));
+
+        $overrideSoapClient
+            ->expects($this->any())
+            ->method('PNR_Retrieve')
+            ->will($this->throwException(new \SoapFault("Sender", "SECURED PNR")));
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
+            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
+            'ABC123'
+        );
+
+        $sessionHandler->sendMessage(
+            'PNR_Retrieve',
+            $pnrRetrieveMessage,
+            ['asString'=>true,'endSession'=>false]
+        );
+    }
+
+    public function testCanHandleMessageThrowingNonSoapFaultException()
+    {
+        $this->setExpectedException('\Amadeus\Client\Exception');
+
+        $overrideSoapClient = $this->getMock(
+            'Amadeus\Client\SoapClient',
+            ['__getLastRequest', '__getLastResponse', 'PNR_Retrieve'],
+            [],
+            '',
+            false
+        );
+
+        $dummyPnrRequest = $this->getTestFile('dummyPnrRequest.txt');
+        $dummyPnrReply = $this->getTestFile('sessionheadertestresponse.txt');
+        $dummyPnrReplyExtractedMessage = $this->getTestFile('dummyPnrReplyExtractedMessage.txt');
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastRequest')
+            ->will($this->returnValue($dummyPnrRequest));
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastResponse')
+            ->will($this->returnValue($dummyPnrReply));
+
+        $overrideSoapClient
+            ->expects($this->once())
+            ->method('PNR_Retrieve')
+            ->will($this->throwException(new \InvalidArgumentException("Something is invalid, don't ask me")));
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
+            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
+            'ABC123'
+        );
+
+        $sessionHandler->sendMessage(
+            'PNR_Retrieve',
+            $pnrRetrieveMessage,
+            ['asString'=>true,'endSession'=>false]
+        );
+    }
+
+    public function testCanExtractSessionDataAfterCall()
+    {
+        $overrideSoapClient = $this->getMock(
+            'Amadeus\Client\SoapClient',
+            ['__getLastRequest', '__getLastResponse', 'PNR_Retrieve'],
+            [],
+            '',
+            false
+        );
+
+        $dummyPnrRequest = $this->getTestFile('dummyPnrRequest.txt');
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastRequest')
+            ->will($this->returnValue($dummyPnrRequest));
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastResponse')
+            ->will($this->returnValue($this->getTestFile('acspnr.xml')));
+
+        $overrideSoapClient
+            ->expects($this->any())
+            ->method('PNR_Retrieve')
+            ->will($this->returnValue($this->getTestFile('acspnr.xml')));
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
+        $sessionHandlerParams->stateful = true;
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
+            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
+            'ABC123'
+        );
+
+        $messageResponse = $sessionHandler->sendMessage(
+            'PNR_Retrieve',
+            $pnrRetrieveMessage,
+            ['asString'=>true,'endSession'=>false]
+        );
+
+        $this->assertEquals($this->getTestFile('acspnrreply.xml'), $messageResponse);
+
+        $sessionData = $sessionHandler->getSessionData();
+
+        $expectedSession = [
+            'sessionId' => '002C3V0DMO',
+            'sequenceNumber' => '1',
+            'securityToken' => '1UPC20RZJXARQ20H3J0TMJQU4H',
+        ];
+
+        $this->assertEquals($expectedSession, $sessionData);
+
+    }
+
     public function testCanExtractMessagesAndVersions()
     {
         $sessionHandlerParams = $this->makeSessionHandlerParams();

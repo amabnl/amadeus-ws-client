@@ -83,6 +83,10 @@ class SellFromRecommendationTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Struct\Air\RelatedproductInformation', $msg->itineraryDetails[0]->segmentInformation[0]->relatedproductInformation);
         $this->assertEquals(RelatedproductInformation::STATUS_SELL_SEGMENT, $msg->itineraryDetails[0]->segmentInformation[0]->relatedproductInformation->statusCode);
         $this->assertEquals(1, $msg->itineraryDetails[0]->segmentInformation[0]->relatedproductInformation->quantity);
+    }
+
+    public function testCanMakeSellFromRecommendationWithConnectingFlights()
+    {
 
     }
 

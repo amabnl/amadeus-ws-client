@@ -26,6 +26,7 @@ namespace Amadeus\Client\Struct\Queue;
  * Class QueueNumber
  *
  * @package Amadeus\Client\Struct\Queue
+ * @author  Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class QueueNumber
 {
@@ -34,6 +35,11 @@ class QueueNumber
      */
     public $queueDetails;
 
+    /**
+     * QueueNumber constructor.
+     *
+     * @param int $queueNumber
+     */
     public function __construct($queueNumber)
     {
         $this->queueDetails = new QueueDetails($queueNumber);

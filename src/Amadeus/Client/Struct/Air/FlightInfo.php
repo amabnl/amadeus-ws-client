@@ -20,30 +20,30 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr\Segment;
-
-use Amadeus\Client\RequestOptions\Pnr\Segment;
+namespace Amadeus\Client\Struct\Air;
+use Amadeus\Client\RequestOptions\AirFlightInfoOptions;
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * Miscellaneous
+ * FlightInfo
  *
- * @package Amadeus\Client\RequestOptions\Pnr\Segment
+ * @package Amadeus\Client\Struct\Air
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Miscellaneous extends Segment
+class FlightInfo extends BaseWsMessage
 {
     /**
-     * @var \DateTime
+     * @var GeneralFlightInfo
      */
-    public $date;
+    public $generalFlightInfo;
 
     /**
-     * @var string
+     * FlightInfo constructor.
+     *
+     * @param AirFlightInfoOptions $params
      */
-    public $cityCode;
-
-    /**
-     * @var string
-     */
-    public $freeText;
+    public function __construct(AirFlightInfoOptions $params)
+    {
+        $this->generalFlightInfo = new GeneralFlightInfo($params);
+    }
 }

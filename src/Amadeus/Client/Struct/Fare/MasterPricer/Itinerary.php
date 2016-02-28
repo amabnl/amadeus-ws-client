@@ -81,7 +81,6 @@ class Itinerary
 
     /**
      * @param int $reqSegRef
-     * @return void
      */
     public function __construct($reqSegRef = null)
     {

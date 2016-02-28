@@ -39,14 +39,8 @@ use Amadeus\Client\ResponseHandler\Base as ResponseHandlerBase;
  * - have a solution for session pooling for stateful sessions (soapheader 1 & 2)
  * - support older versions of SoapHeader (1, 2)
  * - implement calls for full online booking flow:
- *      Fare_MasterPricerTravelBoardSearch,
- *      Air_SellFromRecommendation
- *      Fare_PricePnrWithBookingClass
- *      Ticket_CreateTSTFromPricing
  *      SalesReports_DisplayQueryReport
  *      Air_MultiAvailability
- *      Command_Cryptic
- *
  *
  * - implement more PNR_AddMultiElements:
  *      OSI segment
@@ -556,6 +550,28 @@ class Client
     public function airSellFromRecommendation(RequestOptions\AirSellFromRecommendationOptions $options, $messageOptions = [])
     {
         $msgName = 'Air_SellFromRecommendation';
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        return $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
+     * Air_FlightInfo
+     *
+     * @param RequestOptions\AirFlightInfoOptions $options
+     * @param array $messageOptions
+     * @return mixed
+     */
+    public function airFlightInfo(RequestOptions\AirFlightInfoOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Air_FlightInfo';
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
         return $this->sessionHandler->sendMessage(

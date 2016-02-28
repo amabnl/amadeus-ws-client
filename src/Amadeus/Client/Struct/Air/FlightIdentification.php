@@ -55,10 +55,10 @@ class FlightIdentification
      * FlightIdentification constructor.
      *
      * @param string $flightNumber
-     * @param string $bookingClass
-     * @param string $operationalSuffix
+     * @param string|null $bookingClass
+     * @param string|null $operationalSuffix
      */
-    public function __construct($flightNumber, $bookingClass, $operationalSuffix = null)
+    public function __construct($flightNumber, $bookingClass = null, $operationalSuffix = null)
     {
         $this->flightNumber = $flightNumber;
         $this->bookingClass = $bookingClass;

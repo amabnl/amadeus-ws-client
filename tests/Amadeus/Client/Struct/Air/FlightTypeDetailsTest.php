@@ -20,30 +20,23 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr\Segment;
+namespace Amadeus\Client\Struct\Air;
 
-use Amadeus\Client\RequestOptions\Pnr\Segment;
+use Test\Amadeus\BaseTestCase;
+
 
 /**
- * Miscellaneous
+ * FlightTypeDetails
  *
- * @package Amadeus\Client\RequestOptions\Pnr\Segment
+ * @package Amadeus\Client\Struct\Air
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Miscellaneous extends Segment
+class FlightTypeDetailsTest extends BaseTestCase
 {
-    /**
-     * @var \DateTime
-     */
-    public $date;
+    public function testCanMakeFlightTypeDetails()
+    {
+        $obj = new FlightTypeDetails('ET');
 
-    /**
-     * @var string
-     */
-    public $cityCode;
-
-    /**
-     * @var string
-     */
-    public $freeText;
+        $this->assertEquals('ET', $obj->flightIndicator[0]);
+    }
 }

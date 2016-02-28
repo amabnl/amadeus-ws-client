@@ -22,7 +22,12 @@
 
 namespace Amadeus\Client\Struct\HeaderV4;
 
-
+/**
+ * Password
+ *
+ * @package Amadeus\Client\Struct\HeaderV4
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ */
 class Password
 {
     public $_;

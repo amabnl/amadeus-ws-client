@@ -40,7 +40,8 @@ class FreetextData
     public $longFreetext;
 
     /**
-     * @param string $freeText
+     * @param string|null $freeText
+     * @param string|null $type
      */
     public function __construct($freeText = null, $type = null)
     {

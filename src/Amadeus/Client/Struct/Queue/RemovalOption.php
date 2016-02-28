@@ -22,7 +22,12 @@
 
 namespace Amadeus\Client\Struct\Queue;
 
-
+/**
+ * RemovalOption
+ *
+ * @package Amadeus\Client\Struct\Queue
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ */
 class RemovalOption
 {
     /**
