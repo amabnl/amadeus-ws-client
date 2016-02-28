@@ -422,6 +422,27 @@ To book the chosen recommendation from the Fare_MasterPricerTravelBoardSearch re
 
     $sellResult = $client->airSellFromRecommendation($opt);
 
+--------------
+Air_FlightInfo
+--------------
+
+Get flight info for a specific flight:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirFlightInfoOptions;
+
+    $flightInfo = $client->airFlightInfo(
+        new AirFlightInfoOptions([
+            'airlineCode' => 'SN',
+            'flightNumber' => '652',
+            'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18'),
+            'departureLocation' => 'BRU',
+            'arrivalLocation' => 'LIS'
+        ])
+    );
+
+
 ******
 Ticket
 ******

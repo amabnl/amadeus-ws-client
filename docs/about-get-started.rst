@@ -104,6 +104,7 @@ This is the list of messages that are at least partially supported at this time:
 - Fare_MasterPricerTravelBoardSearch
 - Fare_PricePNRWithBookingClass
 - Air_SellFromRecommendation
+- Air_FlightInfo
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
 - MiniRule_GetFromPricingRec
@@ -116,7 +117,6 @@ We plan to support an entire basic booking flow (MasterPricer, SellFromRecommend
 
 On the to-do list / work in progress:
 
-- Air_FlightInfo
 - Air_RetrieveSeatMap
 - DocIssuance_IssueTicket
 - Fare_InformativePricingWithoutPNR
