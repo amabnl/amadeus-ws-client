@@ -103,6 +103,7 @@ This is the list of messages that are at least partially supported at this time:
 - Queue_MoveItem
 - Fare_MasterPricerTravelBoardSearch
 - Fare_PricePNRWithBookingClass
+- Fare_ConvertCurrency
 - Fare_CheckRules
 - Air_SellFromRecommendation
 - Air_FlightInfo
@@ -113,9 +114,6 @@ This is the list of messages that are at least partially supported at this time:
 - Command_Cryptic
 - PriceXplorer_ExtremeSearch
 
-
-We plan to support an entire basic booking flow (MasterPricer, SellFromRecommendation, Pricing, ...) later on.
-
 On the to-do list / work in progress:
 
 - Air_RetrieveSeatMap
@@ -123,7 +121,6 @@ On the to-do list / work in progress:
 - Fare_InformativePricingWithoutPNR
 - Fare_InformativeBestPricingWithoutPNR
 - Fare_PricePNRWithLowerFares
-- Fare_ConvertCurrency
 - Fare_MasterPricerCalendar
 - Fare_DisplayFaresForCityPair
 - Fare_DisplayBookingCodeInformation
@@ -133,3 +130,5 @@ On the to-do list / work in progress:
 - PointOfRef_Search
 - Ticket_DisplayTST
 - SalesReports_DisplayQueryReport
+
+- Support for SoapHeader V2

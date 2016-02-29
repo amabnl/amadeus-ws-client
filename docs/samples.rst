@@ -399,6 +399,42 @@ Get Fare Rules information for a pricing in context:
     );
 
 
+--------------------
+Fare_ConvertCurrency
+--------------------
+
+Convert 200 Euro to US Dollars in today's exchange rate:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareConvertCurrencyOptions;
+
+    $rulesResponse = $client->fareConvertCurrency(
+        new FareConvertCurrencyOptions([
+            'from' => 'EUR',
+            'to' => 'USD',
+            'amount' => '200',
+            'rateOfConversion' => FareConvertCurrencyOptions::RATE_TYPE_BANKERS_SELLER_RATE
+        ])
+    );
+
+Convert 200 Euro to US Dollars in the exchange rate of 25th December 2015 *(this option only works up until 12 months in the past)*:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareConvertCurrencyOptions;
+
+    $rulesResponse = $client->fareConvertCurrency(
+        new FareConvertCurrencyOptions([
+            'from' => 'EUR',
+            'to' => 'USD',
+            'amount' => '200',
+            'date' => \DateTime::createFromFormat('Y-m-d', '2015-12-25', new \DateTimeZone('UTC')),
+            'rateOfConversion' => FareConvertCurrencyOptions::RATE_TYPE_BANKERS_SELLER_RATE
+        ])
+    );
+
+
 ***
 Air
 ***

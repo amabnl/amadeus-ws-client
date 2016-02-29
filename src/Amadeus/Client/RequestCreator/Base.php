@@ -28,6 +28,7 @@ use Amadeus\Client\RequestOptions\AirFlightInfoOptions;
 use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
+use Amadeus\Client\RequestOptions\FareConvertCurrencyOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
@@ -296,6 +297,17 @@ class Base implements RequestCreatorInterface
     protected function createFareCheckRules(FareCheckRulesOptions $params)
     {
         return new Struct\Fare\CheckRules($params);
+    }
+
+    /**
+     * createFareConvertCurrency
+     *
+     * @param FareConvertCurrencyOptions $params
+     * @return Struct\Fare\ConvertCurrency
+     */
+    protected function createFareConvertCurrency(FareConvertCurrencyOptions $params)
+    {
+        return new Struct\Fare\ConvertCurrency($params);
     }
 
 

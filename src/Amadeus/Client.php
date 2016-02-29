@@ -563,6 +563,28 @@ class Client
     }
 
     /**
+     * Fare_ConvertCurrency
+     *
+     * @param RequestOptions\FareConvertCurrencyOptions $options
+     * @param array $messageOptions
+     * @return mixed
+     */
+    public function fareConvertCurrency(RequestOptions\FareConvertCurrencyOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Fare_ConvertCurrency';
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        return $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
      * Air_SellFromRecommendation
      *
      * @param RequestOptions\AirSellFromRecommendationOptions $options
