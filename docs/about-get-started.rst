@@ -103,6 +103,7 @@ This is the list of messages that are at least partially supported at this time:
 - Queue_MoveItem
 - Fare_MasterPricerTravelBoardSearch
 - Fare_PricePNRWithBookingClass
+- Fare_CheckRules
 - Air_SellFromRecommendation
 - Air_FlightInfo
 - Offer_VerifyOffer
@@ -123,7 +124,6 @@ On the to-do list / work in progress:
 - Fare_InformativeBestPricingWithoutPNR
 - Fare_PricePNRWithLowerFares
 - Fare_ConvertCurrency
-- Fare_CheckRules
 - Fare_MasterPricerCalendar
 - Fare_DisplayFaresForCityPair
 - Fare_DisplayBookingCodeInformation
@@ -132,4 +132,4 @@ On the to-do list / work in progress:
 - Offer_ConfirmHotelOffer
 - PointOfRef_Search
 - Ticket_DisplayTST
-
+- SalesReports_DisplayQueryReport

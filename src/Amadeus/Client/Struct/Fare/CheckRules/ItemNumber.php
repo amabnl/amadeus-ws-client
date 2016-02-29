@@ -20,40 +20,34 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\Struct\Fare\CheckRules;
 
 /**
- * PsaList
+ * ItemNumber
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\Struct\Fare\CheckRules
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PsaList
+class ItemNumber
 {
     /**
-     * Reference of the fare selected.
-     *
-     * A fare may have been calculated by Fare Quote for several passengers
-     * but there is still the possibility to create a TST only for a part of these passengers.
-     *
-     * @var ItemReference
+     * @var ItemNumberDetails[]
      */
-    public $itemReference;
+    public $itemNumberDetails = [];
 
     /**
-     * Reference information on passengers.
+     * ItemNumber constructor.
      *
-     * @var PaxReference
+     * @param array|string|null $itemNum
      */
-    public $paxReference;
-
-    /**
-     * PsaList constructor.
-     *
-     * @param int $itemRef
-     * @param string $itemRefType
-     */
-    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST)
+    public function __construct($itemNum = null)
     {
-        $this->itemReference = new ItemReference($itemRef, $itemRefType);
+        if (is_array($itemNum)) {
+            foreach ($itemNum as $item) {
+                $this->itemNumberDetails[] = new ItemNumberDetails($item);
+            }
+        } elseif (!is_null($itemNum)) {
+            $this->itemNumberDetails[] = new ItemNumberDetails($itemNum);
+        }
     }
 }

@@ -20,43 +20,50 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\MasterPricer;
-
-use Amadeus\Client\RequestOptions\Fare\MPLocation;
+namespace Amadeus\Client\Struct\Fare\CheckRules;
 
 /**
- * ArrivalLocalization
+ * ItemNumberDetails
  *
- * @package Amadeus\Client\Struct\Fare\MasterPricer
+ * @package Amadeus\Client\Struct\Fare\CheckRules
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ArrivalLocalization
+class ItemNumberDetails
 {
     /**
-     * @var LocationDetails
+     * @var string
      */
-    public $arrivalPointDetails;
-    /**
-     * @var MultiCity[]
-     */
-    public $arrivalMultiCity = [];
-    /**
-     * @var AttributeDetails[]
-     */
-    public $attributeDetails = [];
+    public $number;
 
     /**
-     * ArrivalLocalization constructor.
-     * @param MPLocation $location
+     * Possible values:
+     *
+     * 700	Frequent Traveler account to be decremented
+     * 701	Teletype address
+     * 702	Queue Identifier
+     * 703	Sub-queue category
+     * 704	First booked segment
+     * 705	Last booked segment
+     * A	Account number
+     * C	Customer number
+     * D	Document number
+     * FC	Fare Component
+     * P	Product number
+     * T	Total of Fare Required
+     *
+     * @var string
      */
-    public function __construct(MPLocation $location)
+    public $type;
+
+    /**
+     * ItemNumberDetails constructor.
+     *
+     * @param string $itemNumber
+     * @param string|null $type
+     */
+    public function __construct($itemNumber, $type = null)
     {
-        if (empty($location->multiCity)) {
-            $this->arrivalPointDetails = new LocationDetails($location);
-        } else {
-            foreach ($location->multiCity as $city) {
-                $this->arrivalMultiCity[] = new MultiCity($city);
-            }
-        }
+        $this->number = $itemNumber;
+        $this->type = $type;
     }
 }

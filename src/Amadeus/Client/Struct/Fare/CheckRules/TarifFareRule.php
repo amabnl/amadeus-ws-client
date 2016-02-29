@@ -20,70 +20,42 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Fare;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Fare\CheckRules;
 
 /**
- * MasterPricer Location request options
+ * TarifFareRule
  *
- * @package Amadeus\Client\RequestOptions\Fare
+ * @package Amadeus\Client\Struct\Fare\CheckRules
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MPLocation extends LoadParamsFromArray
+class TarifFareRule
 {
-    const RADIUSUNIT_KILOMETERS = 'K';
+    const RULESECTIONS_ALL = 700;
 
     /**
-     * Airport code
-     *
-     * Use ATA/IATA defined 3 letter city code
-     *
      * @var string
      */
-    public $airport;
+    public $tariffClassId;
 
     /**
-     * City code
-     *
-     * Use ATA/IATA defined 3 letter city code
-     *
-     * @var string
+     * @var mixed
      */
-    public $city;
+    public $companyDetails;
 
     /**
-     * List of one or more cities
+     * 700	All Paragraphs
      *
      * @var string[]
      */
-    public $multiCity = [];
+    public $ruleSectionId = [];
 
     /**
-     * Latitude in degrees
+     * TarifFareRule constructor.
      *
-     * @var string
+     * @param array $categoryList
      */
-    public $latitude;
-
-    /**
-     * Longitude in degrees
-     *
-     * @var string
-     */
-    public $longitude;
-
-    /**
-     * Radius around airport or city requested
-     *
-     * @var int
-     */
-    public $radiusDistance;
-
-    /**
-     * self::RADIUSUNIT_*
-     *
-     * @var string
-     */
-    public $radiusUnit;
+    public function __construct(array $categoryList = [])
+    {
+        $this->ruleSectionId = $categoryList;
+    }
 }

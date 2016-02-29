@@ -20,70 +20,33 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Fare;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Fare\CheckRules;
 
 /**
- * MasterPricer Location request options
+ * AdditionalFareDetails
  *
- * @package Amadeus\Client\RequestOptions\Fare
+ * @package Amadeus\Client\Struct\Fare\CheckRules
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MPLocation extends LoadParamsFromArray
+class AdditionalFareDetails
 {
-    const RADIUSUNIT_KILOMETERS = 'K';
-
     /**
-     * Airport code
-     *
-     * Use ATA/IATA defined 3 letter city code
-     *
      * @var string
      */
-    public $airport;
+    public $rateClass;
 
     /**
-     * City code
-     *
-     * Use ATA/IATA defined 3 letter city code
-     *
      * @var string
      */
-    public $city;
+    public $commodityCategory;
 
     /**
-     * List of one or more cities
-     *
+     * @var string
+     */
+    public $pricingGroup;
+
+    /**
      * @var string[]
      */
-    public $multiCity = [];
-
-    /**
-     * Latitude in degrees
-     *
-     * @var string
-     */
-    public $latitude;
-
-    /**
-     * Longitude in degrees
-     *
-     * @var string
-     */
-    public $longitude;
-
-    /**
-     * Radius around airport or city requested
-     *
-     * @var int
-     */
-    public $radiusDistance;
-
-    /**
-     * self::RADIUSUNIT_*
-     *
-     * @var string
-     */
-    public $radiusUnit;
+    public $secondRateClass;
 }

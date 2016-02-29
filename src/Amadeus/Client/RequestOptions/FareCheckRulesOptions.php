@@ -20,40 +20,33 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * PsaList
+ * FareCheckRulesOptions
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\RequestOptions
  */
-class PsaList
+class FareCheckRulesOptions extends Base
 {
     /**
-     * Reference of the fare selected.
+     * List of pricing references or line numbers for which to get the fare rules
      *
-     * A fare may have been calculated by Fare Quote for several passengers
-     * but there is still the possibility to create a TST only for a part of these passengers.
-     *
-     * @var ItemReference
+     * @var int[]
      */
-    public $itemReference;
+    public $recommendations = [];
 
     /**
-     * Reference information on passengers.
+     * Whether to request a list of categories for the requested fare
      *
-     * @var PaxReference
+     * @var bool
      */
-    public $paxReference;
+    public $categoryList = false;
 
     /**
-     * PsaList constructor.
+     * The list of fare rule categories to be requested for this fare
      *
-     * @param int $itemRef
-     * @param string $itemRefType
+     * @var array
      */
-    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST)
-    {
-        $this->itemReference = new ItemReference($itemRef, $itemRefType);
-    }
+    public $categories = [];
 }

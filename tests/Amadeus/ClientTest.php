@@ -1147,6 +1147,49 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanFareCheckRules()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $messageResult = 'dummyfarecheckrulesmessage';
+
+        $expectedMessageResult = new Client\Struct\Fare\CheckRules(
+            new Client\RequestOptions\FareCheckRulesOptions([
+                'recommendations' => [1]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Fare_CheckRules', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Fare_CheckRules' => "7.1"]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->fareCheckRules(
+            new Client\RequestOptions\FareCheckRulesOptions([
+                'recommendations' => [1]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanFarePricePnrWithBookingClassVersion12()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

@@ -20,40 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\Struct\Fare;
 
 /**
- * PsaList
+ * MsgType
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\Struct\Fare
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PsaList
+class MsgType
 {
     /**
-     * Reference of the fare selected.
-     *
-     * A fare may have been calculated by Fare Quote for several passengers
-     * but there is still the possibility to create a TST only for a part of these passengers.
-     *
-     * @var ItemReference
+     * @var MessageFunctionDetails
      */
-    public $itemReference;
+    public $messageFunctionDetails;
 
     /**
-     * Reference information on passengers.
+     * Create msgType
      *
-     * @var PaxReference
+     * @param string|null $messageFunction
      */
-    public $paxReference;
-
-    /**
-     * PsaList constructor.
-     *
-     * @param int $itemRef
-     * @param string $itemRefType
-     */
-    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST)
+    public function __construct($messageFunction = null)
     {
-        $this->itemReference = new ItemReference($itemRef, $itemRefType);
+        $this->messageFunctionDetails = new MessageFunctionDetails($messageFunction);
     }
 }

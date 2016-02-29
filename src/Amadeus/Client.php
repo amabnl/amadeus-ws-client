@@ -541,6 +541,28 @@ class Client
     }
 
     /**
+     * Fare_CheckRules
+     *
+     * @param RequestOptions\FareCheckRulesOptions $options
+     * @param array $messageOptions
+     * @return mixed
+     */
+    public function fareCheckRules(RequestOptions\FareCheckRulesOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Fare_CheckRules';
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        return $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+    }
+
+    /**
      * Air_SellFromRecommendation
      *
      * @param RequestOptions\AirSellFromRecommendationOptions $options

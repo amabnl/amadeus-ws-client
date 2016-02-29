@@ -79,5 +79,9 @@ class CreateTSTFromPricing extends BaseWsMessage
 
             $this->psaList[] = $tmp;
         }
+
+        if (!is_null($params->informationalRecordLocator)) {
+            $this->pnrLocatorData = new PnrLocatorData($params->informationalRecordLocator);
+        }
     }
 }

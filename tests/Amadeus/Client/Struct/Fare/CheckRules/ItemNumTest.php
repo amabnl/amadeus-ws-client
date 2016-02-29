@@ -20,39 +20,24 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\HeaderV4;
+namespace Test\Amadeus\Client\Struct\Fare\CheckRules;
+
+use Amadeus\Client\Struct\Fare\CheckRules\ItemNumber;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * Security
+ * ItemNumTest
  *
- * @package Amadeus\Client\Struct\HeaderV4
+ * @package Test\Amadeus\Client\Struct\Fare\CheckRules
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Security
+class ItemNumTest extends BaseTestCase
 {
-    /**
-     * @var \SoapVar
-     */
-    public $UsernameToken;
-
-    /**
-     * @param string $userName
-     * @param string $password
-     * @param string $nonce
-     * @param string $created \DateTime formatted as yyyy-mm-ddTHH:MM:SS.sssZ
-     */
-    public function __construct($userName, $password, $nonce, $created)
+    public function testCanMakeItemNumWithInteger()
     {
-        $ns = 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd';
+        $num = new ItemNumber(2);
 
-        $userNameToken = new UsernameToken(
-            $userName,
-            $password,
-            $nonce,
-            $created,
-            $ns
-        );
-
-        $this->UsernameToken = new \SoapVar($userNameToken, SOAP_ENC_OBJECT, null, null, 'UsernameToken', $ns);
+        $this->assertEquals(1, count($num->itemNumberDetails));
+        $this->assertEquals(2, $num->itemNumberDetails[0]->number);
     }
 }

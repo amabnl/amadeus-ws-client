@@ -382,6 +382,22 @@ Do a pricing on the PNR in context:
         ])
     );
 
+---------------
+Fare_CheckRules
+---------------
+
+Get Fare Rules information for a pricing in context:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
+
+    $rulesResponse = $client->fareCheckRules(
+        new FareCheckRulesOptions([
+            'recommendations' => [1] //Pricing nr 1
+        ])
+    );
+
 
 ***
 Air

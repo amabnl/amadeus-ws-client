@@ -107,14 +107,14 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
     {
         $opt = new FareMasterPricerTbSearch();
         $opt->nrOfRequestedResults = 200;
-        $opt->nrOfRequestedPassengers = 3;
+        $opt->nrOfRequestedPassengers = 4;
         $opt->passengers[] = new MPPassenger([
             'type' => MPPassenger::TYPE_ADULT,
             'count' => 2
         ]);
         $opt->passengers[] = new MPPassenger([
             'type' => MPPassenger::TYPE_INFANT,
-            'count' => 1
+            'count' => 2
         ]);
         $opt->itinerary[] = new MPItinerary([
             'departureLocation' => new MPLocation(['city' => 'BRU']),
@@ -130,9 +130,14 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertNull($message->paxReference[0]->traveller[1]->infantIndicator);
         $this->assertEquals(2, $message->paxReference[0]->traveller[1]->ref);
 
+        //Infants have their own numbers
         $this->assertEquals('INF', $message->paxReference[1]->ptc[0]);
         $this->assertEquals(1, $message->paxReference[1]->traveller[0]->ref);
         $this->assertEquals(1, $message->paxReference[1]->traveller[0]->infantIndicator);
+
+        $this->assertEquals(2, $message->paxReference[1]->traveller[1]->ref);
+        $this->assertEquals(1, $message->paxReference[1]->traveller[1]->infantIndicator);
+
     }
 
     public function testCanMakeMasterPricerMessageWithCityLocationAndGeoCoordinatesAndRadius()
@@ -166,7 +171,65 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
 
         $this->assertEquals('50.9139922', $message->itinerary[0]->arrivalLocalization->arrivalPointDetails->latitude);
         $this->assertEquals('4.406143', $message->itinerary[0]->arrivalLocalization->arrivalPointDetails->longitude);
-
     }
 
+    public function testCanMakeMasterPricerMessageWithDateAndTimeAndTimeWindow()
+    {
+        $opt = new FareMasterPricerTbSearch();
+        $opt->nrOfRequestedResults = 200;
+        $opt->nrOfRequestedPassengers = 1;
+        $opt->passengers[] = new MPPassenger([
+            'type' => MPPassenger::TYPE_ADULT,
+            'count' => 1
+        ]);
+        $opt->itinerary[] = new MPItinerary([
+            'departureLocation' => new MPLocation(['city' => 'BRU']),
+            'arrivalLocation' => new MPLocation(['city' => 'LON']),
+            'date' => new MPDate([
+                'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC')),
+                'time' => new \DateTime('2017-01-15T14:00:00+0000', new \DateTimeZone('UTC')),
+                'timeWindow' => 3
+            ])
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertEquals('150117', $message->itinerary[0]->timeDetails->firstDateTimeDetail->date);
+        $this->assertEquals('1400', $message->itinerary[0]->timeDetails->firstDateTimeDetail->time);
+        $this->assertEquals(3, $message->itinerary[0]->timeDetails->firstDateTimeDetail->timeWindow);
+    }
+
+    public function testCanMakeMasterPricerMessageWithMultiCity()
+    {
+        $opt = new FareMasterPricerTbSearch();
+        $opt->nrOfRequestedResults = 200;
+        $opt->nrOfRequestedPassengers = 1;
+        $opt->passengers[] = new MPPassenger([
+            'type' => MPPassenger::TYPE_ADULT,
+            'count' => 1
+        ]);
+        $opt->itinerary[] = new MPItinerary([
+            'departureLocation' => new MPLocation([
+                'multiCity' => ['BRU', 'OST']
+            ]),
+            'arrivalLocation' => new MPLocation([
+                'multiCity' => ['LON', 'MAN']
+            ]),
+            'date' => new MPDate([
+                'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC')),
+            ])
+        ]);
+
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertEquals(2, count($message->itinerary[0]->departureLocalization->depMultiCity));
+        $this->assertEquals('BRU', $message->itinerary[0]->departureLocalization->depMultiCity[0]->locationId);
+        $this->assertEquals('OST', $message->itinerary[0]->departureLocalization->depMultiCity[1]->locationId);
+        $this->assertNull($message->itinerary[0]->departureLocalization->departurePoint);
+        $this->assertEquals(2, count($message->itinerary[0]->arrivalLocalization->arrivalMultiCity));
+        $this->assertEquals('LON', $message->itinerary[0]->arrivalLocalization->arrivalMultiCity[0]->locationId);
+        $this->assertEquals('MAN', $message->itinerary[0]->arrivalLocalization->arrivalMultiCity[1]->locationId);
+        $this->assertNull($message->itinerary[0]->arrivalLocalization->arrivalPointDetails);
+    }
 }

@@ -20,39 +20,24 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\HeaderV4;
+namespace Test\Amadeus\Client\Struct\HeaderV4;
+
+use Amadeus\Client\Struct\HeaderV4\Password;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * Security
+ * PasswordTest
  *
- * @package Amadeus\Client\Struct\HeaderV4
+ * @package Test\Amadeus\Client\Struct\HeaderV4
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Security
+class PasswordTest extends BaseTestCase
 {
-    /**
-     * @var \SoapVar
-     */
-    public $UsernameToken;
-
-    /**
-     * @param string $userName
-     * @param string $password
-     * @param string $nonce
-     * @param string $created \DateTime formatted as yyyy-mm-ddTHH:MM:SS.sssZ
-     */
-    public function __construct($userName, $password, $nonce, $created)
+    public function testCanCreate()
     {
-        $ns = 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd';
+        $pwNode = new Password(base64_encode('test'));
 
-        $userNameToken = new UsernameToken(
-            $userName,
-            $password,
-            $nonce,
-            $created,
-            $ns
-        );
-
-        $this->UsernameToken = new \SoapVar($userNameToken, SOAP_ENC_OBJECT, null, null, 'UsernameToken', $ns);
+        $this->assertEquals(base64_encode('test'), $pwNode->_);
+        $this->assertEquals('http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest', $pwNode->Type);
     }
 }
