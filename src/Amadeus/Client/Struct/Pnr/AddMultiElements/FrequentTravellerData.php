@@ -22,45 +22,25 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
+use Amadeus\Client\RequestOptions\Pnr\Element\FrequentFlyer;
+
 /**
- * Traveller
+ * FrequentTravellerData
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller
+class FrequentTravellerData
 {
-    const QUAL_GROUP = "G";
-    /**
-     * @var string
-     */
-    public $surname;
-    /**
-     * Traveller Qualifiers:
-     * - 766 	Infant without seat
-     * - 767 	Infant with seat
-     * - C 	CBBG - Cabin Baggage
-     * - COR 	CORPORATE NAME
-     * - E 	EXST - Extra Seat
-     * - G 	Group
-     * - INF 	Infant not occupying a seat
-     * - MTH 	Month
-     * - PAX 	Passenger
-     * - YRS 	Year
-     *
-     * @var string
-     */
-    public $qualifier;
-    /**
-     * @var int
-     */
-    public $quantity;
+    public $frequentTraveller;
 
     /**
-     * @param string $surName
+     * FrequentTravellerData constructor.
+     *
+     * @param FrequentFlyer $params
      */
-    public function __construct($surName)
+    public function __construct(FrequentFlyer $params)
     {
-        $this->surname = $surName;
+        $this->frequentTraveller = new FrequentTraveller($params);
     }
 }

@@ -119,17 +119,19 @@ class Ssr
     /**
      * Ssr constructor.
      *
-     * @param ServiceRequestOptions $options
+     * @param ServiceRequestOptions|null $options
      */
-    public function __construct(ServiceRequestOptions $options)
+    public function __construct(ServiceRequestOptions $options = null)
     {
-        $this->status = $options->status;
-        $this->type = $options->type;
-        $this->quantity = $options->quantity;
-        $this->companyId = $options->company;
-        $this->indicator = $options->indicator;
-        $this->boardpoint = $options->boardPoint;
-        $this->offPoint = $options->offPoint;
-        $this->freetext = $options->freeText;
+        if (!is_null($options)) {
+            $this->status = $options->status;
+            $this->type = $options->type;
+            $this->quantity = $options->quantity;
+            $this->companyId = $options->company;
+            $this->indicator = $options->indicator;
+            $this->boardpoint = $options->boardPoint;
+            $this->offPoint = $options->offPoint;
+            $this->freetext = $options->freeText;
+        }
     }
 }

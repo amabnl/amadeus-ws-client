@@ -20,47 +20,50 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
 
 /**
- * Traveller
+ * GlobalBookingInfo
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Offer\ConfirmHotel
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller
+class GlobalBookingInfo
 {
-    const QUAL_GROUP = "G";
-    /**
-     * @var string
-     */
-    public $surname;
-    /**
-     * Traveller Qualifiers:
-     * - 766 	Infant without seat
-     * - 767 	Infant with seat
-     * - C 	CBBG - Cabin Baggage
-     * - COR 	CORPORATE NAME
-     * - E 	EXST - Extra Seat
-     * - G 	Group
-     * - INF 	Infant not occupying a seat
-     * - MTH 	Month
-     * - PAX 	Passenger
-     * - YRS 	Year
-     *
-     * @var string
-     */
-    public $qualifier;
-    /**
-     * @var int
-     */
-    public $quantity;
+    public $markerGlobalBookingInfo;
 
     /**
-     * @param string $surName
+     * @var ExternalBookingId
      */
-    public function __construct($surName)
-    {
-        $this->surname = $surName;
-    }
+    public $externalBookingId;
+
+    /**
+     * @var BookingSource
+     */
+    public $bookingSource;
+
+    /**
+     * @var BillableInfo
+     */
+    public $billableInfo;
+
+    /**
+     * @var TextOptions
+     */
+    public $textOptions;
+
+    /**
+     * @var SavingAmountInfo
+     */
+    public $savingAmountInfo;
+
+    /**
+     * @var RepresentativeParties[]
+     */
+    public $representativeParties = [];
+
+    /**
+     * @var KeyValueTree[]
+     */
+    public $keyValueTree = [];
 }

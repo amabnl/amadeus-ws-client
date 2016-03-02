@@ -26,6 +26,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element\AccountingInfo;
 use Amadeus\Client\RequestOptions\Pnr\Element\Address;
 use Amadeus\Client\RequestOptions\Pnr\Element\Contact;
 use Amadeus\Client\RequestOptions\Pnr\Element\FormOfPayment;
+use Amadeus\Client\RequestOptions\Pnr\Element\FrequentFlyer;
 use Amadeus\Client\RequestOptions\Pnr\Element\MiscellaneousRemark;
 use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest;
@@ -33,6 +34,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element\Ticketing;
 use Amadeus\Client\RequestOptions\Pnr\Reference;
 use Amadeus\Client\RequestOptions\Pnr\Segment\Miscellaneous;
 use Amadeus\Client\RequestOptions\Pnr\Traveller;
+use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\Queue;
 use Amadeus\Client\Struct\Pnr\AddMultiElements;
@@ -85,7 +87,8 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInfo', $requestStruct->travellerInfo[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementPassenger', $requestStruct->travellerInfo[0]->elementManagementPassenger);
         $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[0]->elementManagementPassenger->segmentName);
-        $this->assertNull($requestStruct->travellerInfo[0]->elementManagementPassenger->reference);
+        $this->assertEquals(1, $requestStruct->travellerInfo[0]->elementManagementPassenger->reference->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $requestStruct->travellerInfo[0]->elementManagementPassenger->reference->qualifier);
         $this->assertInternalType('array', $requestStruct->travellerInfo[0]->passengerData);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\PassengerData', $requestStruct->travellerInfo[0]->passengerData[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInformation', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation);
@@ -179,7 +182,8 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInfo', $requestStruct->travellerInfo[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementPassenger', $requestStruct->travellerInfo[0]->elementManagementPassenger);
         $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[0]->elementManagementPassenger->segmentName);
-        $this->assertNull($requestStruct->travellerInfo[0]->elementManagementPassenger->reference);
+        $this->assertEquals(1, $requestStruct->travellerInfo[0]->elementManagementPassenger->reference->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $requestStruct->travellerInfo[0]->elementManagementPassenger->reference->qualifier);
         $this->assertInternalType('array', $requestStruct->travellerInfo[0]->passengerData);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\PassengerData', $requestStruct->travellerInfo[0]->passengerData[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInformation', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation);
@@ -468,13 +472,13 @@ class AddMultiElementsTest extends BaseTestCase
         $createPnrOptions->elements[] = new Address([
             'type' => Address::TYPE_MAILING_STRUCTURED,
             'name' => 'Mister Amadeus',
-            'addressLine1' => 'Amadeus Benelux NV',
-            'addressLine2' => 'Medialaan 30',
+            'addressLine1' => 'Medialaan 30',
+            'addressLine2' => 'no actual line 2',
+            'company' => 'Amadeus Benelux NV',
             'city' => 'Vilvoorde',
             'state' => 'Vlaams-Brabant',
             'country' => 'Belgium',
-            'zipCode' => '1800',
-
+            'zipCode' => '1800'
         ]);
 
         $requestStruct = new AddMultiElements($createPnrOptions);
@@ -482,10 +486,10 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
         $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_ADDRESS_MAILING_STRUCTURED, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
         $this->assertEquals(AddMultiElements\Address::OPT_ADDRESS_LINE_1, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->address->optionA1);
-        $this->assertEquals('Amadeus Benelux NV', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->address->optionTextA1);
-        $this->assertEquals(6, count($requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData));
+        $this->assertEquals('Medialaan 30', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->address->optionTextA1);
+        $this->assertEquals(7, count($requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData));
         $this->assertEquals(AddMultiElements\OptionalData::OPT_ADDRESS_LINE_2, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[0]->option);
-        $this->assertEquals('Medialaan 30', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[0]->optionText);
+        $this->assertEquals('no actual line 2', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[0]->optionText);
         $this->assertEquals(AddMultiElements\OptionalData::OPT_CITY, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[1]->option);
         $this->assertEquals('Vilvoorde', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[1]->optionText);
         $this->assertEquals(AddMultiElements\OptionalData::OPT_COUNTRY, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[2]->option);
@@ -496,5 +500,132 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals('Vlaams-Brabant', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[4]->optionText);
         $this->assertEquals(AddMultiElements\OptionalData::OPT_ZIP_CODE, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[5]->option);
         $this->assertEquals('1800', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[5]->optionText);
+        $this->assertEquals(AddMultiElements\OptionalData::OPT_COMPANY, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[6]->option);
+        $this->assertEquals('Amadeus Benelux NV', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->structuredAddress->optionalData[6]->optionText);
+    }
+
+    public function testCanCreateFrequentFlyer()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'company' => '1A'
+        ]);
+        $createPnrOptions->elements[] = new FrequentFlyer([
+            'airline' => 'SN',
+            'number' => '1111111111'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals('FQTV', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->serviceRequest->ssr->type);
+        $this->assertEquals('SN', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->serviceRequest->ssr->companyId);
+        $this->assertEquals('SN', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->frequentTravellerData->frequentTraveller->companyId);
+        $this->assertEquals('1111111111', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->frequentTravellerData->frequentTraveller->membershipNumber);
+    }
+
+    public function testCanCreateGroupPnr()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellerGroup = new TravellerGroup([
+            'name' => 'Group Name',
+            'nrOfTravellers' => 25,
+            'travellers' => [
+                new Traveller([
+                    'number' => 1,
+                    'lastName' => 'Bowie',
+                    'firstName' => 'David'
+                ]),
+                new Traveller([
+                    'number' => 2,
+                    'lastName' => 'Bowie',
+                    'firstName' => 'Ziggy'
+                ]),
+                new Traveller([
+                    'number' => 3,
+                    'lastName' => 'Jones',
+                    'firstName' => 'David'
+                ])
+            ]
+        ]);
+
+        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING;
+        $createPnrOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'company' => '1A'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(4, count($requestStruct->travellerInfo));
+        $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_GROUPNAME, $requestStruct->travellerInfo[0]->elementManagementPassenger->segmentName);
+        $this->assertEquals('Group Name', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->surname);
+        $this->assertEquals(AddMultiElements\Traveller::QUAL_GROUP, $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->qualifier);
+        $this->assertEquals(25, $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->quantity);
+
+        $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[1]->elementManagementPassenger->segmentName);
+        $this->assertEquals(1, $requestStruct->travellerInfo[1]->elementManagementPassenger->reference->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $requestStruct->travellerInfo[1]->elementManagementPassenger->reference->qualifier);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[1]->passengerData));
+        $this->assertEquals('Bowie', $requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->traveller->surname);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->passenger));
+        $this->assertEquals('David', $requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->passenger[0]->firstName);
+        $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->passenger[0]->type);
+
+        $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[2]->elementManagementPassenger->segmentName);
+        $this->assertEquals(2, $requestStruct->travellerInfo[2]->elementManagementPassenger->reference->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $requestStruct->travellerInfo[2]->elementManagementPassenger->reference->qualifier);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[2]->passengerData));
+        $this->assertEquals('Bowie', $requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->traveller->surname);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->passenger));
+        $this->assertEquals('Ziggy', $requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->passenger[0]->firstName);
+        $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->passenger[0]->type);
+
+        $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[3]->elementManagementPassenger->segmentName);
+        $this->assertEquals(3, $requestStruct->travellerInfo[3]->elementManagementPassenger->reference->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $requestStruct->travellerInfo[3]->elementManagementPassenger->reference->qualifier);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[3]->passengerData));
+        $this->assertEquals('Jones', $requestStruct->travellerInfo[3]->passengerData[0]->travellerInformation->traveller->surname);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[3]->passengerData[0]->travellerInformation->passenger));
+        $this->assertEquals('David', $requestStruct->travellerInfo[3]->passengerData[0]->travellerInformation->passenger[0]->firstName);
+        $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $requestStruct->travellerInfo[3]->passengerData[0]->travellerInformation->passenger[0]->type);
+    }
+
+    public function testCanCreatePnrWithChild()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'lastName' => 'Child',
+            'firstName' => 'Johnny',
+            'travellerType' => Traveller::TRAV_TYPE_CHILD,
+            'dateOfBirth' => \DateTime::createFromFormat('Y-m-d', '2010-01-31')
+        ]);
+
+        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING;
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(1, count($requestStruct->travellerInfo));
+        $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[0]->elementManagementPassenger->segmentName);
+        $this->assertNull($requestStruct->travellerInfo[0]->elementManagementPassenger->reference);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[0]->passengerData));
+        $this->assertEquals(706, $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->qualifier);
+        $this->assertEquals('31012010', $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->date);
+        $this->assertEquals('CHD', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->type);
     }
 }

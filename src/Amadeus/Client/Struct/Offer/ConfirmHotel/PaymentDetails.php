@@ -20,47 +20,56 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
 
 /**
- * Traveller
+ * PaymentDetails
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Offer\ConfirmHotel
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller
+class PaymentDetails
 {
-    const QUAL_GROUP = "G";
+    const SERVICE_HOTEL = 3;
+
+    const PAYMENT_GUARANTEED = 1;
+    const PAYMENT_DEPOSIT = 2;
+
+    const FOP_CREDIT_CARD = 1;
+    const FOP_TRAVEL_AGENT_IDENT = 10;
+    const FOP_CORPORATE_IDENT = 12;
+    const FOP_ADDRESS = 14;
+    const FOP_WIRE_PAYMENT = 28;
+    const FOP_MISC_CHARGE_ORDER = 4;
+    const FOP_CHECK = 6;
+    const FOP_BUSINESS_ACCOUNT = 9;
+    const FOP_ADVANCE_DEPOSIT = "ADV";
+    const FOP_CRQCHECK_GUARANTEE = "HI";
+    const FOP_HOTEL_GUEST_IDENT = "ID";
+
     /**
-     * @var string
-     */
-    public $surname;
-    /**
-     * Traveller Qualifiers:
-     * - 766 	Infant without seat
-     * - 767 	Infant with seat
-     * - C 	CBBG - Cabin Baggage
-     * - COR 	CORPORATE NAME
-     * - E 	EXST - Extra Seat
-     * - G 	Group
-     * - INF 	Infant not occupying a seat
-     * - MTH 	Month
-     * - PAX 	Passenger
-     * - YRS 	Year
+     * self::FOP_*
      *
      * @var string
      */
-    public $qualifier;
-    /**
-     * @var int
-     */
-    public $quantity;
+    public $formOfPaymentCode;
 
     /**
-     * @param string $surName
+     * self::PAYMENT_*
+     *
+     * @var string
      */
-    public function __construct($surName)
-    {
-        $this->surname = $surName;
-    }
+    public $paymentType;
+
+    /**
+     * self::SERVICE_*
+     *
+     * @var string
+     */
+    public $serviceToPay = self::SERVICE_HOTEL;
+
+    /**
+     * @var string
+     */
+    public $referenceNumber;
 }

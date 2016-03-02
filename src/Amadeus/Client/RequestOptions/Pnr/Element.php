@@ -34,6 +34,8 @@ class Element extends LoadParamsFromArray
 {
 
     /**
+     * Passenger / Segment associations
+     *
      * @var Reference[]
      */
     public $references = [];

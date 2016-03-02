@@ -99,4 +99,10 @@ class Address extends Element
      * @var string
      */
     public $country;
+    /**
+     * Company - for structured address
+     *
+     * @var string
+     */
+    public $company;
 }

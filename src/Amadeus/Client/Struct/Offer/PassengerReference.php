@@ -43,6 +43,34 @@ class PassengerReference
      */
     const TYPE_INFANT = "PI";
 
+    const TYPE_BOOKING_HOLDER_OCCUPANT = "BHO";
+
+    const TYPE_BOOKING_HOLDER_NON_OCCUPANT = "BHN";
+
+    const TYPE_BOOKING_OCCUPANT = "BOP";
+
+    const TYPE_GROUP_NAME = "GRN";
+
+    const TYPE_ROOM_MAIN_NON_OCCUPANT = "RMN";
+
+    const TYPE_ROOM_MAIN_OCCUPANT = "RMO";
+
+    const TYPE_ROOM_OCCUPANT = "ROP";
+
+    /**
+     * Hotel Offer types:
+     *
+     * BHN	Booking Holder Non occupant pax tattoo
+     * BHO	Booking Holder Occupant pax tattoo
+     * BOP	Booking Occupant Pax tattoo
+     * GRN	GRoup Name tattoo
+     * P	Holder Pax tattoo (no information on occupancy)
+     * RMN	Room Main pax tattoo, Non occupant.
+     * RMO	Room Main pax tattoo, Occupant.
+     * ROP	Room Occupant Pax tattoo
+     */
+
+
     /**
      * self::TYPE_*
      *

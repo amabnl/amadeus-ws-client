@@ -57,11 +57,12 @@ Set up a test client
     <?php
 
     use Amadeus\Client;
+    use Amadeus\Client\Params;
     use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
 
     //Set up the client with necessary parameters:
 
-    $params = new ClientParams([
+    $params = new Params([
         'sessionHandlerParams' => [
             'soapHeaderVersion' => Client::HEADER_V4, //This is the default value, can be omitted.
             'wsdl' => '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20160101_080000.wsdl', //Points to the location of the WSDL file for your WSAP. Make sure the associated XSD's are also available.
@@ -117,6 +118,7 @@ This is the list of messages that are at least partially supported at this time:
 On the to-do list / work in progress:
 
 - Air_RetrieveSeatMap
+- Air_MultiAvailability
 - DocIssuance_IssueTicket
 - Fare_InformativePricingWithoutPNR
 - Fare_InformativeBestPricingWithoutPNR
@@ -127,8 +129,11 @@ On the to-do list / work in progress:
 - Fare_CalculateMileage
 - Info_EncodeDecodeCity
 - Offer_ConfirmHotelOffer
+- Offer_ConfirmCarOffer
 - PointOfRef_Search
+- PointOfRef_CategoryList
 - Ticket_DisplayTST
+- Ticket_DeleteTST
 - SalesReports_DisplayQueryReport
 
 - Support for SoapHeader V2

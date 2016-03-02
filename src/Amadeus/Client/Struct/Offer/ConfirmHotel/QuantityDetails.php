@@ -20,47 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
 
 /**
- * Traveller
+ * QuantityDetails
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Offer\ConfirmHotel
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller
+class QuantityDetails
 {
-    const QUAL_GROUP = "G";
-    /**
-     * @var string
-     */
-    public $surname;
-    /**
-     * Traveller Qualifiers:
-     * - 766 	Infant without seat
-     * - 767 	Infant with seat
-     * - C 	CBBG - Cabin Baggage
-     * - COR 	CORPORATE NAME
-     * - E 	EXST - Extra Seat
-     * - G 	Group
-     * - INF 	Infant not occupying a seat
-     * - MTH 	Month
-     * - PAX 	Passenger
-     * - YRS 	Year
-     *
-     * @var string
-     */
-    public $qualifier;
-    /**
-     * @var int
-     */
-    public $quantity;
+    const QUAL_AGE = "AGE";
 
     /**
-     * @param string $surName
+     * @var string
      */
-    public function __construct($surName)
+    public $qualifier = self::QUAL_AGE;
+
+    /**
+     * @var string
+     */
+    public $value;
+
+    /**
+     * QuantityDetails constructor.
+     *
+     * @param string $value
+     */
+    public function __construct($value)
     {
-        $this->surname = $surName;
+        $this->value = $value;
     }
 }

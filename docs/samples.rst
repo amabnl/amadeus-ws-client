@@ -20,6 +20,24 @@ You can easily switch from stateful to stateless messages at runtime with:
 
     $client->setStateful(true); //Enable stateful messages
 
+
+It's also possible to specify the default stateful setting at construction time of the client *(it is enabled by default)*:
+
+.. code-block:: php
+
+    use Amadeus\Client;
+    use Amadeus\Client\Params;
+
+    $params = new Params([
+        'sessionHandlerParams' => [
+            //... other parameters omitted for clarity ...
+            'stateful' => false,
+        ],
+    ]);
+
+    $client = new Client($params);
+
+
 *************************
 Ending a stateful session
 *************************
@@ -94,15 +112,22 @@ Creating a PNR (simplified example containing only the most basic PNR elements n
 
 .. code-block:: php
 
-    $opt = new Amadeus\Client\RequestOptions\PnrCreatePnrOptions();
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+    use Amadeus\Client\RequestOptions\Pnr\Segment;
+    use Amadeus\Client\RequestOptions\Pnr\Segment\Miscellaneous;
+    use Amadeus\Client\RequestOptions\Pnr\Element\Ticketing;
+    use Amadeus\Client\RequestOptions\Pnr\Element\Contact;
+
+    $opt = new PnrCreatePnrOptions();
     $opt->actionCode = 11; //11	End transact with retrieve (ER)
-    $opt->travellers[] = new Amadeus\Client\RequestOptions\Pnr\Traveller([
+    $opt->travellers[] = new Traveller([
         'number' => 1,
         'firstName' => 'FirstName',
         'lastName' => 'LastName'
     ]);
-    $opt->tripSegments[] = new Amadeus\Client\RequestOptions\Pnr\Segment\Miscellaneous([
-        'status ' => Amadeus\Client\RequestOptions\Pnr\Segment::STATUS_CONFIRMED,
+    $opt->tripSegments[] = new Miscellaneous([
+        'status ' => Segment::STATUS_CONFIRMED,
         'company' => '1A',
         'date' => \DateTime::createFromFormat('Ymd', '20161022', new \DateTimeZone('UTC')),
         'cityCode' => 'BRU',
@@ -110,10 +135,10 @@ Creating a PNR (simplified example containing only the most basic PNR elements n
     ]);
 
     $opt->elements[] = new Amadeus\Client\RequestOptions\Pnr\Element\Ticketing([
-        'ticketMode' => 'OK'
+        'ticketMode' => Ticketing::TICKETMODE_OK
     ]);
-    $opt->elements[] = new Amadeus\Client\RequestOptions\Pnr\Element\Contact([
-        'type' => Amadeus\Client\RequestOptions\Pnr\Element\Contact::TYPE_PHONE_MOBILE,
+    $opt->elements[] = new Contact([
+        'type' => Contact::TYPE_PHONE_MOBILE,
         'value' => '+3222222222'
     ]);
 
@@ -133,6 +158,8 @@ Save a PNR which you have in context (created with actionCode 0 for example) and
             'actionCode' => 11 //ET / END AND RETRIEVE
         ])
     );
+
+`More examples of PNR creation and modification <samples/pnr-create-modify.rst>`_
 
 ------------
 PNR_Retrieve

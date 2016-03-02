@@ -20,47 +20,15 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
 
 /**
- * Traveller
+ * BillableInfo
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Offer\ConfirmHotel
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller
+class BillableInfo
 {
-    const QUAL_GROUP = "G";
-    /**
-     * @var string
-     */
-    public $surname;
-    /**
-     * Traveller Qualifiers:
-     * - 766 	Infant without seat
-     * - 767 	Infant with seat
-     * - C 	CBBG - Cabin Baggage
-     * - COR 	CORPORATE NAME
-     * - E 	EXST - Extra Seat
-     * - G 	Group
-     * - INF 	Infant not occupying a seat
-     * - MTH 	Month
-     * - PAX 	Passenger
-     * - YRS 	Year
-     *
-     * @var string
-     */
-    public $qualifier;
-    /**
-     * @var int
-     */
-    public $quantity;
-
-    /**
-     * @param string $surName
-     */
-    public function __construct($surName)
-    {
-        $this->surname = $surName;
-    }
+    //TODO
 }

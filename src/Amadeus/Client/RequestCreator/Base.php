@@ -103,14 +103,6 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * @return Struct\Security\Authenticate
-     */
-    protected function createSecurityAuthenticate()
-    {
-        return new Struct\Security\Authenticate();
-    }
-
-    /**
      * @return Struct\Security\SignOut
      */
     protected function createSecuritySignOut()

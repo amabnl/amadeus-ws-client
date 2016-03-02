@@ -20,47 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
 
 /**
- * Traveller
+ * BookingSource
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Offer\ConfirmHotel
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller
+class BookingSource
 {
-    const QUAL_GROUP = "G";
     /**
-     * @var string
+     * @var OriginIdentification
      */
-    public $surname;
-    /**
-     * Traveller Qualifiers:
-     * - 766 	Infant without seat
-     * - 767 	Infant with seat
-     * - C 	CBBG - Cabin Baggage
-     * - COR 	CORPORATE NAME
-     * - E 	EXST - Extra Seat
-     * - G 	Group
-     * - INF 	Infant not occupying a seat
-     * - MTH 	Month
-     * - PAX 	Passenger
-     * - YRS 	Year
-     *
-     * @var string
-     */
-    public $qualifier;
-    /**
-     * @var int
-     */
-    public $quantity;
+    public $originIdentification;
 
     /**
-     * @param string $surName
+     * BookingSource constructor.
+     *
+     * @param string $originatorId
      */
-    public function __construct($surName)
+    public function __construct($originatorId)
     {
-        $this->surname = $surName;
+        $this->originIdentification = new OriginIdentification($originatorId);
     }
 }

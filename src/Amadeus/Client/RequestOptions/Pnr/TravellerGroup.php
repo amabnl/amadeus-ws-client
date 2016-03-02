@@ -22,13 +22,15 @@
 
 namespace Amadeus\Client\RequestOptions\Pnr;
 
+use Amadeus\Client\LoadParamsFromArray;
+
 /**
  * TravellerGroup
  *
  * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TravellerGroup
+class TravellerGroup extends LoadParamsFromArray
 {
     /**
      * Group name
@@ -38,8 +40,14 @@ class TravellerGroup
     public $name;
 
     /**
+     * How many travellers in group
+     *
+     * @var int
+     */
+    public $nrOfTravellers;
+
+    /**
      * @var Traveller[]
      */
     public $travellers;
-
 }

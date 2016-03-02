@@ -108,6 +108,13 @@ class StructuredAddress
                 OptionalData::OPT_ZIP_CODE
             );
         };
+
+        if (!empty($params->company)) {
+            $this->optionalData[] = new OptionalData(
+                $params->company,
+                OptionalData::OPT_COMPANY
+            );
+        };
     }
 
     /**

@@ -20,47 +20,30 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\RequestOptions\Pnr\Element;
+
+use Amadeus\Client\RequestOptions\Pnr\Element;
 
 /**
- * Traveller
+ * FrequentFlyer
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\RequestOptions\Pnr\Element
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller
+class FrequentFlyer extends Element
 {
-    const QUAL_GROUP = "G";
     /**
-     * @var string
-     */
-    public $surname;
-    /**
-     * Traveller Qualifiers:
-     * - 766 	Infant without seat
-     * - 767 	Infant with seat
-     * - C 	CBBG - Cabin Baggage
-     * - COR 	CORPORATE NAME
-     * - E 	EXST - Extra Seat
-     * - G 	Group
-     * - INF 	Infant not occupying a seat
-     * - MTH 	Month
-     * - PAX 	Passenger
-     * - YRS 	Year
+     * FQTV Airline
      *
      * @var string
      */
-    public $qualifier;
-    /**
-     * @var int
-     */
-    public $quantity;
+    public $airline;
 
     /**
-     * @param string $surName
+     * Frequent Flyer number
+     *
+     * @var string
      */
-    public function __construct($surName)
-    {
-        $this->surname = $surName;
-    }
+    public $number;
+
 }

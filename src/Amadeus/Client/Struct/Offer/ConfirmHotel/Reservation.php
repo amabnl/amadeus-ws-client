@@ -20,47 +20,48 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
 
 /**
- * Traveller
+ * Reservation
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Offer\ConfirmHotel
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller
+class Reservation
 {
-    const QUAL_GROUP = "G";
     /**
-     * @var string
-     */
-    public $surname;
-    /**
-     * Traveller Qualifiers:
-     * - 766 	Infant without seat
-     * - 767 	Infant with seat
-     * - C 	CBBG - Cabin Baggage
-     * - COR 	CORPORATE NAME
-     * - E 	EXST - Extra Seat
-     * - G 	Group
-     * - INF 	Infant not occupying a seat
-     * - MTH 	Month
-     * - PAX 	Passenger
-     * - YRS 	Year
+     * 1A	Amadeus
      *
      * @var string
      */
-    public $qualifier;
-    /**
-     * @var int
-     */
-    public $quantity;
+    public $companyId;
 
     /**
-     * @param string $surName
+     * @var string
      */
-    public function __construct($surName)
+    public $controlNumber;
+
+    /**
+     * 2	Confirmation Reference
+     * P	PNR Identification
+     * X	Cancellation Reference
+     *
+     * @var string
+     */
+    public $controlType;
+
+    /**
+     * Reservation constructor.
+     *
+     * @param string $recordLocator
+     * @param string|null $company
+     * @param string|null $controlType
+     */
+    public function __construct($recordLocator, $company = null, $controlType = null)
     {
-        $this->surname = $surName;
+        $this->controlNumber = $recordLocator;
+        $this->companyId = $company;
+        $this->controlType = $controlType;
     }
 }
