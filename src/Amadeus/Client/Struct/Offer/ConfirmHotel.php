@@ -38,6 +38,7 @@ use Amadeus\Client\Struct\Offer\ConfirmHotel\PaymentInfo;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\PnrInfo;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\ReferenceDetails;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\RepresentativeParties;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\Reservation;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomList;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomRateDetails;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomStayData;
@@ -84,7 +85,7 @@ class ConfirmHotel extends BaseWsMessage
     public function __construct(OfferConfirmHotelOptions $params)
     {
         if (!empty($params->recordLocator)) {
-            $this->pnrInfo = new PnrInfo($params->recordLocator);
+            $this->pnrInfo = new PnrInfo($params->recordLocator, null, Reservation::CONTROLTYPE_PNR_IDENTIFICATION);
         }
 
         if (!empty($params->offerReference)) {

@@ -21,7 +21,7 @@ You can easily switch from stateful to stateless messages at runtime with:
     $client->setStateful(true); //Enable stateful messages
 
 
-It's also possible to specify the default stateful setting at construction time of the client *(it is enabled by default)*:
+It's also possible to specify the default stateful setting at construction time of the client **(stateful is enabled by default)**:
 
 .. code-block:: php
 
@@ -32,7 +32,7 @@ It's also possible to specify the default stateful setting at construction time 
         'sessionHandlerParams' => [
             //... other parameters omitted for clarity ...
             'stateful' => false,
-        ],
+        ]
     ]);
 
     $client = new Client($params);

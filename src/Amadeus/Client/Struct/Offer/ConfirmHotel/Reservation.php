@@ -30,6 +30,7 @@ namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
  */
 class Reservation
 {
+    const CONTROLTYPE_PNR_IDENTIFICATION = "P";
     /**
      * 1A	Amadeus
      *
