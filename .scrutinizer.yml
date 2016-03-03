@@ -3,19 +3,6 @@ filter:
         - tests/*
 checks:
     php: true
-        use_self_instead_of_fqcn: true
-        return_doc_comments: true
-        phpunit_assertions: true
-        parameter_doc_comments: true
-        fix_use_statements:
-        remove_unused: true
-        preserve_multiple: false
-        preserve_blanklines: false
-        order_alphabetically: false
-        line_length:
-        max_length: '140'
-        no_goto: true
-        fix_line_ending: true
 coding_style:
   php:
       indentation:
