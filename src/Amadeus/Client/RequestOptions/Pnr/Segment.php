@@ -47,4 +47,11 @@ class Segment extends LoadParamsFromArray
      * @var string
      */
     public $company;
+
+    /**
+     * Passenger associations
+     *
+     * @var Reference[]
+     */
+    public $references = [];
 }

@@ -107,6 +107,11 @@ class DataElementsIndiv
     public $frequentTravellerVerification;
     public $ticketingCarrier;
     public $farePrintOverride;
+    /**
+     * Frequent Flyer info
+     *
+     * @var FrequentTravellerData
+     */
     public $frequentTravellerData;
     public $accessLevel;
     /**

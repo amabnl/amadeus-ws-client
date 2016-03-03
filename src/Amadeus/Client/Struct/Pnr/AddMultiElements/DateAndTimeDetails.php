@@ -32,6 +32,8 @@ class DateAndTimeDetails
 {
     const QUAL_DATEOFBIRTH = 706;
 
+    const QUAL_NOT_VALID_BEFORE = "B";
+
     /**
      * self::QUAL_*
      *

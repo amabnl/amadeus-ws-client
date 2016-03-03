@@ -57,11 +57,12 @@ Set up a test client
     <?php
 
     use Amadeus\Client;
+    use Amadeus\Client\Params;
     use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
 
     //Set up the client with necessary parameters:
 
-    $params = new ClientParams([
+    $params = new Params([
         'sessionHandlerParams' => [
             'soapHeaderVersion' => Client::HEADER_V4, //This is the default value, can be omitted.
             'wsdl' => '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20160101_080000.wsdl', //Points to the location of the WSDL file for your WSAP. Make sure the associated XSD's are also available.
@@ -103,6 +104,8 @@ This is the list of messages that are at least partially supported at this time:
 - Queue_MoveItem
 - Fare_MasterPricerTravelBoardSearch
 - Fare_PricePNRWithBookingClass
+- Fare_ConvertCurrency
+- Fare_CheckRules
 - Air_SellFromRecommendation
 - Air_FlightInfo
 - Offer_VerifyOffer
@@ -112,24 +115,25 @@ This is the list of messages that are at least partially supported at this time:
 - Command_Cryptic
 - PriceXplorer_ExtremeSearch
 
-
-We plan to support an entire basic booking flow (MasterPricer, SellFromRecommendation, Pricing, ...) later on.
-
 On the to-do list / work in progress:
 
 - Air_RetrieveSeatMap
+- Air_MultiAvailability
 - DocIssuance_IssueTicket
 - Fare_InformativePricingWithoutPNR
 - Fare_InformativeBestPricingWithoutPNR
 - Fare_PricePNRWithLowerFares
-- Fare_ConvertCurrency
-- Fare_CheckRules
 - Fare_MasterPricerCalendar
 - Fare_DisplayFaresForCityPair
 - Fare_DisplayBookingCodeInformation
 - Fare_CalculateMileage
 - Info_EncodeDecodeCity
 - Offer_ConfirmHotelOffer
+- Offer_ConfirmCarOffer
 - PointOfRef_Search
+- PointOfRef_CategoryList
 - Ticket_DisplayTST
+- Ticket_DeleteTST
+- SalesReports_DisplayQueryReport
 
+- Support for SoapHeader V2

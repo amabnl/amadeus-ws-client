@@ -31,7 +31,7 @@ namespace Amadeus\Client\Struct\HeaderV4;
 class Security
 {
     /**
-     * @var UsernameToken
+     * @var \SoapVar
      */
     public $UsernameToken;
 

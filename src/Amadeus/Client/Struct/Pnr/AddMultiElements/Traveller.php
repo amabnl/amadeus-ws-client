@@ -30,6 +30,7 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class Traveller
 {
+    const QUAL_GROUP = "G";
     /**
      * @var string
      */

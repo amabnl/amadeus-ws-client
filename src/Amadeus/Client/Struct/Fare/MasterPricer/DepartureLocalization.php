@@ -64,6 +64,12 @@ class DepartureLocalization
      */
     public function __construct(MPLocation $location)
     {
-        $this->departurePoint = new LocationDetails($location);
+        if (empty($location->multiCity)) {
+            $this->departurePoint = new LocationDetails($location);
+        } else {
+            foreach ($location->multiCity as $city) {
+                $this->depMultiCity[] = new MultiCity($city);
+            }
+        }
     }
 }

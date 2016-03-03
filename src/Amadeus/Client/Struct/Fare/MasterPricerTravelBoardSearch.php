@@ -189,7 +189,8 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
 
         if ($passenger->count > 1) {
             for ($i = 2; $i <= $passenger->count; $i++) {
-                $paxRef->traveller[] = new MasterPricer\Traveller($counter);
+                $tmpCount = ($isInfant) ? $infantCounter : $counter;
+                $paxRef->traveller[] = new MasterPricer\Traveller($tmpCount, $isInfant);
 
                 if ($isInfant) {
                     $infantCounter++;

@@ -51,6 +51,12 @@ class ArrivalLocalization
      */
     public function __construct(MPLocation $location)
     {
-        $this->arrivalPointDetails = new LocationDetails($location);
+        if (empty($location->multiCity)) {
+            $this->arrivalPointDetails = new LocationDetails($location);
+        } else {
+            foreach ($location->multiCity as $city) {
+                $this->arrivalMultiCity[] = new MultiCity($city);
+            }
+        }
     }
 }

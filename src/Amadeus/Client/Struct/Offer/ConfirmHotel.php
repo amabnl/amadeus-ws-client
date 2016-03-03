@@ -22,7 +22,11 @@
 
 namespace Amadeus\Client\Struct\Offer;
 
+use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\PnrInfo;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomStayData;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\TattooReference;
 
 /**
  * ConfirmHotel
@@ -32,5 +36,47 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class ConfirmHotel extends BaseWsMessage
 {
-    //TODO
+    /**
+     * @var ConfirmHotel\PnrInfo
+     */
+    public $pnrInfo;
+
+    /**
+     * @var mixed
+     */
+    public $groupIndicator;
+
+    /**
+     * @var mixed
+     */
+    public $travelAgentRef;
+
+    /**
+     * @var ConfirmHotel\RoomStayData[]
+     */
+    public $roomStayData = [];
+
+    /**
+     * @var mixed
+     */
+    public $arrivalFlightDetailsGrp;
+
+    /**
+     * ConfirmHotel constructor.
+     *
+     * @param OfferConfirmHotelOptions $params
+     */
+    public function __construct(OfferConfirmHotelOptions $params)
+    {
+        if (!empty($params->recordLocator)) {
+            $this->pnrInfo = new PnrInfo($params->recordLocator);
+        }
+
+        if (!empty($params->offerReference)) {
+            $this->roomStayData[] = new RoomStayData();
+            $this->roomStayData[0]->tattooReference = new TattooReference($params->offerReference);
+        }
+
+        //if (!empty($params->))
+    }
 }

@@ -46,17 +46,21 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\FopExtension;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\FormOfPayment;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\FreetextData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\FreetextDetail;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\FrequentTravellerData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ItineraryInfo;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\MiscellaneousRemark;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\NewFopsDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\Passenger;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\PassengerData;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\Reference;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForDataElement;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForSegment;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ServiceRequest;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\StructuredAddress;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TicketElement;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInfo;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\Traveller as PnrAddMultiTraveller;
 
 /**
  * Structure class for representing the PNR_AddMultiElements request message
@@ -198,9 +202,19 @@ class AddMultiElements extends BaseWsMessage
             case 'Air':
                 throw new \RuntimeException('NOT YET IMPLEMENTED');
                 break;
+            case 'Ghost':
+                throw new \RuntimeException('NOT YET IMPLEMENTED');
+                break;
             default:
                 throw new InvalidArgumentException('Segment type ' . $segmentType . 'is not supported');
                 break;
+        }
+
+        if (count($segment->references) > 0) {
+            $createdSegment->referenceForSegment = new ReferenceForSegment();
+            foreach ($segment->references as $singleRef) {
+                $createdSegment->referenceForSegment->reference[] = new Reference($singleRef->type, $singleRef->id);
+            }
         }
 
         return $createdSegment;
@@ -209,26 +223,31 @@ class AddMultiElements extends BaseWsMessage
 
     /**
      * @param Traveller[] $travellers
-     * @param $group
      */
-    protected function addTravellers($travellers, $group = null)
+    protected function addTravellers($travellers)
     {
         foreach ($travellers as $traveller) {
-            $this->travellerInfo[] = $this->createTraveller($traveller, $group);
+            $this->travellerInfo[] = $this->createTraveller($traveller);
         }
     }
 
     /**
      * @param Traveller $traveller
-     * @param mixed $group
      * @return TravellerInfo
      */
-    protected function createTraveller($traveller, $group)
+    protected function createTraveller($traveller)
     {
         $createdTraveller = new TravellerInfo(
             ElementManagementPassenger::SEG_NAME,
             $traveller->lastName
         );
+
+        if (!is_null($traveller->number)) {
+            $createdTraveller->elementManagementPassenger->reference = new Reference(
+                Reference::QUAL_PASSENGER,
+                $traveller->number
+            );
+        }
 
         if ($traveller->withInfant === true || $traveller->infant !== null) {
             throw new \RuntimeException('Adding Infants is not yet supported');
@@ -255,7 +274,14 @@ class AddMultiElements extends BaseWsMessage
      */
     protected function addTravellerGroup($group)
     {
-        throw new \RuntimeException("Group PNR's are not yet implemented");
+        $groupInfo = new TravellerInfo(ElementManagementPassenger::SEG_GROUPNAME, $group->name);
+
+        $groupInfo->passengerData[0]->travellerInformation->traveller->quantity = $group->nrOfTravellers;
+        $groupInfo->passengerData[0]->travellerInformation->traveller->qualifier = PnrAddMultiTraveller::QUAL_GROUP;
+
+        $this->travellerInfo[] = $groupInfo;
+
+        $this->addTravellers($group->travellers);
     }
 
     /**
@@ -375,6 +401,14 @@ class AddMultiElements extends BaseWsMessage
                 } else {
                     $createdElement->structuredAddress = new StructuredAddress($element);
                 }
+                break;
+            case 'FrequentFlyer':
+                /** @var Element\FrequentFlyer $element */
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST, $tatooCounter);
+                $createdElement->serviceRequest = new ServiceRequest();
+                $createdElement->serviceRequest->ssr->type = 'FQTV';
+                $createdElement->serviceRequest->ssr->companyId = $element->airline;
+                $createdElement->frequentTravellerData = new FrequentTravellerData($element);
                 break;
             default:
                 throw new InvalidArgumentException('Element type ' . $elementType . 'is not supported');

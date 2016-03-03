@@ -51,16 +51,9 @@ class PsaList
      *
      * @param int $itemRef
      * @param string $itemRefType
-     * @param null $paxRef
-     * @param null $paxRefType
      */
-    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST, $paxRef = null, $paxRefType = null)
+    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST)
     {
         $this->itemReference = new ItemReference($itemRef, $itemRefType);
-
-        if (!is_null($paxRef)) {
-            $this->paxReference = new PaxReference();
-            $this->paxReference->refDetails[] = new RefDetails($paxRef, $paxRefType);
-        }
     }
 }

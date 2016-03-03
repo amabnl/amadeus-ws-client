@@ -33,7 +33,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element;
 class ServiceRequest extends Element
 {
     /**
-     * Holds confirmed
+     * Hold confirmed
      */
     const STATUS_HOLD_CONFIRMED = "HK";
     /**

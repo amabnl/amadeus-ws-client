@@ -53,6 +53,13 @@ class MPLocation extends LoadParamsFromArray
     public $city;
 
     /**
+     * List of one or more cities
+     *
+     * @var string[]
+     */
+    public $multiCity = [];
+
+    /**
      * Latitude in degrees
      *
      * @var string

@@ -30,5 +30,53 @@ namespace Amadeus\Client\RequestOptions;
  */
 class OfferConfirmHotelOptions extends Base
 {
-    //TODO
+    const PAYMENT_GUARANTEED = 1;
+    const PAYMENT_DEPOSIT = 2;
+
+    const FOP_CREDIT_CARD = 1;
+    const FOP_TRAVEL_AGENT_IDENT = 10;
+    const FOP_CORPORATE_IDENT = 12;
+    const FOP_ADDRESS = 14;
+    const FOP_WIRE_PAYMENT = 28;
+    const FOP_MISC_CHARGE_ORDER = 4;
+    const FOP_CHECK = 6;
+    const FOP_BUSINESS_ACCOUNT = 9;
+    const FOP_ADVANCE_DEPOSIT = "ADV";
+    const FOP_CRQCHECK_GUARANTEE = "HI";
+    const FOP_HOTEL_GUEST_IDENT = "ID";
+
+    /**
+     * PNR record locator
+     *
+     * @var string
+     */
+    public $recordLocator;
+
+    /**
+     * The offer reference number of the offer to confirm
+     *
+     * @var int
+     */
+    public $offerReference;
+
+    /**
+     * List of passengers who are associated with this hotel offer
+     *
+     * @var int[]
+     */
+    public $passengers = [];
+
+    /**
+     * self::PAYMENT_*
+     *
+     * @var int
+     */
+    public $paymentType = self::PAYMENT_GUARANTEED;
+
+    /**
+     * self::FOP_*
+     *
+     * @var string
+     */
+    public $formOfPayment;
 }

@@ -27,6 +27,8 @@ use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestOptions\AirFlightInfoOptions;
 use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
+use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
+use Amadeus\Client\RequestOptions\FareConvertCurrencyOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
@@ -98,14 +100,6 @@ class Base implements RequestCreatorInterface
         } else {
             throw new \RuntimeException('Message ' . $methodName . ' is not implemented in ' . __CLASS__);
         }
-    }
-
-    /**
-     * @return Struct\Security\Authenticate
-     */
-    protected function createSecurityAuthenticate()
-    {
-        return new Struct\Security\Authenticate();
     }
 
     /**
@@ -284,6 +278,30 @@ class Base implements RequestCreatorInterface
     {
         return new Struct\Fare\MasterPricerTravelBoardSearch($params);
     }
+
+
+    /**
+     * createFareCheckRules
+     *
+     * @param FareCheckRulesOptions $params
+     * @return Struct\Fare\CheckRules
+     */
+    protected function createFareCheckRules(FareCheckRulesOptions $params)
+    {
+        return new Struct\Fare\CheckRules($params);
+    }
+
+    /**
+     * createFareConvertCurrency
+     *
+     * @param FareConvertCurrencyOptions $params
+     * @return Struct\Fare\ConvertCurrency
+     */
+    protected function createFareConvertCurrency(FareConvertCurrencyOptions $params)
+    {
+        return new Struct\Fare\ConvertCurrency($params);
+    }
+
 
     /**
      *

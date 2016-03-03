@@ -22,12 +22,43 @@
 
 namespace Amadeus\Client\Struct\Security;
 
+use Amadeus\Client\Struct\BaseWsMessage;
+
 /**
  * Authenticate
  *
+ * @todo Implement this message when we support SoapHeader v. 1 or 2
  * @package Amadeus\Client\Struct\Security
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Authenticate
+class Authenticate extends BaseWsMessage
 {
-    //TODO for SoapHeader 1 & 2
+    /**
+     * @var ConversationClt
+     */
+    public $conversationClt;
+    /**
+     * @var UserIdentifier
+     */
+    public $userIdentifier;
+    /**
+     * @var DutyCode
+     */
+    public $dutyCode;
+    /**
+     * @var SystemDetails
+     */
+    public $systemDetails;
+    /**
+     * @var PasswordInfo
+     */
+    public $passwordInfo;
+    /**
+     * @var mixed
+     */
+    public $fullLocation;
+    /**
+     * @var ApplicationId
+     */
+    public $applicationId;
 }
