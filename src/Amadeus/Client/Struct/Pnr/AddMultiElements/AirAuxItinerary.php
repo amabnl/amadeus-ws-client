@@ -87,7 +87,7 @@ class AirAuxItinerary
         );
         $this->messageAction = new MessageAction(Business::FUNC_MISC);
 
-        $this->relatedProduct = new RelatedProduct($segment->status);
+        $this->relatedProduct = new RelatedProduct($segment->status, $segment->quantity);
 
         $this->freetextItinerary = new FreetextItinerary($segment->freeText);
     }

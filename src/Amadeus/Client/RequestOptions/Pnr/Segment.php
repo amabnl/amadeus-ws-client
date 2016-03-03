@@ -42,6 +42,13 @@ class Segment extends LoadParamsFromArray
     public $status = self::STATUS_CONFIRMED;
 
     /**
+     * How many travellers?
+     *
+     * @var int
+     */
+    public $quantity = 1;
+
+    /**
      * The company code
      *
      * @var string
