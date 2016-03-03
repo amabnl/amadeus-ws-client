@@ -39,8 +39,9 @@ class ItineraryInfo
      * @var AirAuxItinerary
      */
     public $airAuxItinerary;
+
     /**
-     * @var
+     * @var ReferenceForSegment
      */
     public $referenceForSegment;
 

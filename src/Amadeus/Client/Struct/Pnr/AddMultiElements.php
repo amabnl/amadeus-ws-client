@@ -55,6 +55,7 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\Passenger;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\PassengerData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\Reference;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForDataElement;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForSegment;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ServiceRequest;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\StructuredAddress;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TicketElement;
@@ -207,6 +208,13 @@ class AddMultiElements extends BaseWsMessage
             default:
                 throw new InvalidArgumentException('Segment type ' . $segmentType . 'is not supported');
                 break;
+        }
+
+        if (count($segment->references) > 0) {
+            $createdSegment->referenceForSegment = new ReferenceForSegment();
+            foreach ($segment->references as $singleRef) {
+                $createdSegment->referenceForSegment->reference[] = new Reference($singleRef->type, $singleRef->id);
+            }
         }
 
         return $createdSegment;

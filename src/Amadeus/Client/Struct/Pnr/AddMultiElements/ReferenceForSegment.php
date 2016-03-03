@@ -20,38 +20,18 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * Basic PNR Segment
+ * ReferenceForSegment
  *
- * @package Amadeus\Client\RequestOptions\Pnr
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Segment extends LoadParamsFromArray
+class ReferenceForSegment
 {
-    const STATUS_CONFIRMED = "HK";
-
     /**
-     * self::STATUS_*
-     *
-     * @var string
-     */
-    public $status = self::STATUS_CONFIRMED;
-
-    /**
-     * The company code
-     *
-     * @var string
-     */
-    public $company;
-
-    /**
-     * Passenger associations
-     *
      * @var Reference[]
      */
-    public $references = [];
+    public $reference = [];
 }

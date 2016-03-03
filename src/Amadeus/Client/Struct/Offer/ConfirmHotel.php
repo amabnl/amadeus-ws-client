@@ -76,5 +76,7 @@ class ConfirmHotel extends BaseWsMessage
             $this->roomStayData[] = new RoomStayData();
             $this->roomStayData[0]->tattooReference = new TattooReference($params->offerReference);
         }
+
+        //if (!empty($params->))
     }
 }
