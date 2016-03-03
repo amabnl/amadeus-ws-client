@@ -30,7 +30,6 @@ namespace Amadeus\Client\RequestOptions;
  */
 class PnrCreatePnrOptions extends PnrAddMultiElementsBase
 {
-
     /**
      * A group of travellers
      *
@@ -58,5 +57,4 @@ class PnrCreatePnrOptions extends PnrAddMultiElementsBase
      * @var Pnr\Element[]
      */
     public $elements = [];
-
 }

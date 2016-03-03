@@ -34,7 +34,11 @@ class Reference extends LoadParamsFromArray
 {
     const TYPE_PASSENGER_TATOO = "PT";
 
+    const TYPE_PASSENGER_REQUEST = "PR";
+
     const TYPE_SEGMENT_TATOO = "ST";
+
+    const TYPE_SEGMENT_REQUEST = "SR";
 
     /**
      * self::TYPE_*

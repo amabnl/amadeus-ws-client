@@ -122,12 +122,30 @@ class AddMultiElements extends BaseWsMessage
             );
         }
 
-        if (!is_null($params->receivedFrom)) {
+        if (!is_null($params->recordLocator)) {
+            $this->reservationInfo = new AddMultiElements\ReservationInfo($params->recordLocator);
+        }
+
+        $tatooCounter = 0;
+
+        $this->addTravellers($params->travellers);
+
+        if (!empty($params->tripSegments)) {
+            $this->addSegments($params->tripSegments, $tatooCounter);
+        }
+
+        if (!empty($params->elements)) {
+            $this->addElements(
+                $params->elements,
+                $tatooCounter,
+                $params->receivedFrom
+            );
+        } elseif (!is_null($params->receivedFrom)) {
             if ($this->dataElementsMaster === null) {
                 $this->dataElementsMaster = new DataElementsMaster();
             }
 
-            $tatooCounter = 1;
+            $tatooCounter++;
 
             $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(
                 new ReceivedFrom(['receivedFrom' => $params->receivedFrom]), $tatooCounter

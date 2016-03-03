@@ -23,8 +23,23 @@
 namespace Amadeus\Client\Struct\Offer;
 
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
+use Amadeus\Client\RequestOptions\Offer\PaymentDetails as PaymentDetailsOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\InvalidArgumentException;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\CcInfo;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\CreditCardInfo;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\GlobalBookingInfo;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\GroupCreditCardInfo;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\GuaranteeOrDeposit;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\HotelProductReference;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\OccupantList;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\PaymentDetails;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\PaymentInfo;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\PnrInfo;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\ReferenceDetails;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\RepresentativeParties;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomList;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomRateDetails;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomStayData;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\TattooReference;
 
@@ -77,6 +92,45 @@ class ConfirmHotel extends BaseWsMessage
             $this->roomStayData[0]->tattooReference = new TattooReference($params->offerReference);
         }
 
-        //if (!empty($params->))
+        if (!empty($params->passengers)) {
+            if (!isset($this->roomStayData[0])) {
+                $this->roomStayData[] = new RoomStayData();
+            }
+            $this->roomStayData[0]->globalBookingInfo = new GlobalBookingInfo();
+
+            foreach ($params->passengers as $singlePass) {
+                $tmp = new RepresentativeParties();
+                $tmp->occupantList = new OccupantList(
+                    $singlePass,
+                    PassengerReference::TYPE_BOOKING_HOLDER_OCCUPANT
+                );
+                $this->roomStayData[0]->globalBookingInfo->representativeParties[] = $tmp;
+            }
+        }
+
+        if (!empty($params->paymentType) && !empty($params->formOfPayment) && $params->paymentDetails instanceof PaymentDetailsOptions) {
+            if (!isset($this->roomStayData[0])) {
+                $this->roomStayData[] = new RoomStayData();
+            }
+
+            $this->roomStayData[0]->roomList[] = new RoomList();
+
+            $this->roomStayData[0]->roomList[0]->guaranteeOrDeposit = new GuaranteeOrDeposit();
+            $this->roomStayData[0]->roomList[0]->guaranteeOrDeposit->paymentInfo = new PaymentInfo(
+                $params->paymentType,
+                $params->formOfPayment
+            );
+
+            if ($params->formOfPayment === PaymentDetails::FOP_CREDIT_CARD) {
+                $this->roomStayData[0]->roomList[0]->guaranteeOrDeposit->groupCreditCardInfo = new GroupCreditCardInfo(
+                    $params->paymentDetails->ccVendor,
+                    $params->paymentDetails->ccCardHolder,
+                    $params->paymentDetails->ccCardNumber,
+                    $params->paymentDetails->ccExpiry
+                );
+            } else {
+                throw new InvalidArgumentException('Hotel Offer Confirm Form of Payment ' . $params->formOfPayment . ' is not yet supported');
+            }
+        }
     }
 }

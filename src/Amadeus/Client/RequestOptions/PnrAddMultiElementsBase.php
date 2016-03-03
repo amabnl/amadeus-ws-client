@@ -28,10 +28,10 @@ namespace Amadeus\Client\RequestOptions;
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PnrAddMultiElementsBase extends Base
+class PnrAddMultiElementsBase extends PnrBase
 {
     /**
-     * How to handle the PNR after creating
+     * self::ACTION_* How to handle the PNR after creating
      *
      * 0	No special processing
      * 10	End transact (ET)

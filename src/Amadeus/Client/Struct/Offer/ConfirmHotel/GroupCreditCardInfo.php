@@ -34,4 +34,24 @@ class GroupCreditCardInfo
      * @var CreditCardInfo
      */
     public $creditCardInfo;
+
+    /**
+     * GroupCreditCardInfo constructor.
+     *
+     * @param string $vendor
+     * @param string $name
+     * @param string $number
+     * @param string $expiry
+     * @param string|null $secId
+     */
+    public function __construct($vendor, $name, $number, $expiry, $secId = null)
+    {
+        $this->creditCardInfo = new CreditCardInfo(
+            $vendor,
+            $name,
+            $number,
+            $expiry,
+            $secId
+        );
+    }
 }

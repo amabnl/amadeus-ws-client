@@ -30,6 +30,37 @@ namespace Amadeus\Client\RequestOptions;
  */
 class PnrAddMultiElementsOptions extends PnrAddMultiElementsBase
 {
+    /**
+     * PNR record locator
+     *
+     * (only specify when this PNR is not already in context!)
+     *
+     * @var string
+     */
+    public $recordLocator;
 
+    /**
+     * Non-group travellers (max 9)
+     *
+     * Will be added to the existing PNR
+     *
+     * (travellerInfo)
+     *
+     * @var Pnr\Traveller[]
+     */
+    public $travellers = [];
 
+    /**
+     * (originDestinationDetails)
+     *
+     * @var Pnr\Segment[]
+     */
+    public $tripSegments = [];
+
+    /**
+     * (dataElementsMaster\dataElementsIndiv)
+     *
+     * @var Pnr\Element[]
+     */
+    public $elements = [];
 }

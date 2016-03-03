@@ -34,4 +34,24 @@ class CreditCardInfo
      * @var CcInfo
      */
     public $ccInfo;
+
+    /**
+     * CreditCardInfo constructor.
+     *
+     * @param string $vendor
+     * @param string $name
+     * @param string $number
+     * @param string $expiry
+     * @param string|null $secId
+     */
+    public function __construct($vendor, $name, $number, $expiry, $secId = null)
+    {
+        $this->ccInfo = new CcInfo(
+            $vendor,
+            $name,
+            $number,
+            $expiry,
+            $secId
+        );
+    }
 }
