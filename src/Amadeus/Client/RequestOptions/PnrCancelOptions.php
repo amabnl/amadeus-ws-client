@@ -27,7 +27,7 @@ namespace Amadeus\Client\RequestOptions;
  *
  * @package Amadeus\Client\RequestOptions
  */
-class PnrCancelOptions extends Base
+class PnrCancelOptions extends PnrBase
 {
     /**
      * Only provide the Record Locator if the PNR is not yet in context!!

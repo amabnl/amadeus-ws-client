@@ -20,28 +20,39 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * HotelProductReference
+ * PnrBase
  *
- * @package Amadeus\Client\Struct\Offer\ConfirmHotel
+ * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class HotelProductReference
+class PnrBase extends Base
 {
-    /**
-     * Up to 2 elements
-     *
-     * @var ReferenceDetails[]
-     */
-    public $referenceDetails = [];
+    const ACTION_NO_PROCESSING = 0;
 
-    /**
-     * HotelProductReference constructor.
-     */
-    public function __construct()
-    {
-        $this->referenceDetails[] = new ReferenceDetails();
-    }
+    const ACTION_END_TRANSACT = 10;
+
+    const ACTION_END_TRANSACT_RETRIEVE = 11;
+
+    const ACTION_END_TRANSACT_CHANGE_ADV_CODES = 12;
+
+    const ACTION_END_TRANSACT_RETRIEVE_CHANGE_ADV_CODES = 13;
+
+    const ACTION_END_TRANSACT_SPLIT = 14;
+
+    const ACTION_CANCEL_ITIN_END_TRANSACT = 15;
+
+    const ACTION_CANCEL_ITIN_END_TRANSACT_RETRIEVE = 16;
+
+    const ACTION_IGNORE = 20;
+
+    const ACTION_IGNORE_RETRIEVE = 21;
+
+    const ACTION_STOP_EOT_ON_SELL_ERROR = 267;
+
+    const ACTION_WARNING_AT_EOT = 30;
+
+    const ACTION_REPLY_SHORT_MESSAGE = 50;
 }

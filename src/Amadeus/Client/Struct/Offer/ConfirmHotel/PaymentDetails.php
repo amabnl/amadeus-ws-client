@@ -72,4 +72,16 @@ class PaymentDetails
      * @var string
      */
     public $referenceNumber;
+
+    /**
+     * PaymentDetails constructor.
+     *
+     * @param string $paymentType
+     * @param string $formOfPayment
+     */
+    public function __construct($paymentType, $formOfPayment)
+    {
+        $this->paymentType = $paymentType;
+        $this->formOfPaymentCode = $formOfPayment;
+    }
 }

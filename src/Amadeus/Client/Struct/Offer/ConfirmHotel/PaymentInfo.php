@@ -34,4 +34,18 @@ class PaymentInfo
      * @var PaymentDetails
      */
     public $paymentDetails;
+
+    /**
+     * PaymentInfo constructor.
+     *
+     * @param string $paymentType
+     * @param string $formOfPayment
+     */
+    public function __construct($paymentType, $formOfPayment)
+    {
+        $this->paymentDetails = new PaymentDetails(
+            $paymentType,
+            $formOfPayment
+        );
+    }
 }

@@ -60,4 +60,12 @@ class RoomList
     public $supplementaryInfo = [];
 
     public $guestList = [];
+
+    /**
+     * RoomList constructor.
+     */
+    public function __construct()
+    {
+        $this->roomRateDetails = new RoomRateDetails();
+    }
 }

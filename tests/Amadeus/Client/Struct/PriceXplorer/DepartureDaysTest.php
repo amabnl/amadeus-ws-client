@@ -20,28 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
+namespace Test\Amadeus\Client\Struct\PriceXplorer;
+
+use Amadeus\Client\Struct\PriceXplorer\DepartureDays;
+use Amadeus\Client\Struct\PriceXplorer\SelectionDetails;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * HotelProductReference
+ * DepartureDaysTest
  *
- * @package Amadeus\Client\Struct\Offer\ConfirmHotel
+ * @package Test\Amadeus\Client\Struct\PriceXplorer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class HotelProductReference
+class DepartureDaysTest extends BaseTestCase
 {
-    /**
-     * Up to 2 elements
-     *
-     * @var ReferenceDetails[]
-     */
-    public $referenceDetails = [];
-
-    /**
-     * HotelProductReference constructor.
-     */
-    public function __construct()
+    public function testCanConstructWithNoOption()
     {
-        $this->referenceDetails[] = new ReferenceDetails();
+        $obj = new DepartureDays(
+            [1,2,3]
+        );
+
+        $this->assertEquals('123', $obj->daySelection->dayOfWeek);
+        $this->assertEquals(SelectionDetails::OPT_OUTBOUND_DEP_DAYS, $obj->selectionInfo->selectionDetails[0]->option);
+        $this->assertNull($obj->selectionInfo->selectionDetails[0]->optionInformation);
     }
 }

@@ -20,57 +20,55 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
+namespace Amadeus\Client\RequestOptions\Offer;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * CcInfo
+ * PaymentDetails
  *
- * @package Amadeus\Client\Struct\Offer\ConfirmHotel
+ * @package Amadeus\Client\RequestOptions\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CcInfo
+class PaymentDetails extends LoadParamsFromArray
 {
     /**
-     * @var string
-     */
-    public $vendorCode;
-
-    /**
-     * @var string
-     */
-    public $cardNumber;
-
-    /**
-     * @var string
-     */
-    public $expiryDate;
-
-    /**
-     * @var string
-     */
-    public $securityId;
-
-    /**
-     * @var string
-     */
-    public $ccHolderName;
-
-    /**
-     * CcInfo constructor.
+     * 2-character company code for the credit card vendor
      *
-     * @param string $vendor
-     * @param string $name
-     * @param string $number
-     * @param string $expiry
-     * @param string|null $secId
+     * VI = Visa
+     * AX = American Express
+     * BC = BC Card
+     * CA = MasterCard
+     * DS = Discover
+     * DC = Diners Club
+     * T = Carta Si
+     * R = Carte Bleue
+     * E = Visa Electron
+     * JC = Japan Credit Bureau
+     * TO = Maestro
+     * ...
+     *
+     * @var string
      */
-    public function __construct($vendor, $name, $number, $expiry, $secId = null)
-    {
-        $this->vendorCode = $vendor;
-        $this->ccHolderName = $name;
-        $this->cardNumber = $number;
-        $this->expiryDate = $expiry;
-        $this->securityId = $secId;
+    public $ccVendor;
 
-    }
+    /**
+     * The credit card number
+     * @var string
+     */
+    public $ccCardNumber;
+
+    /**
+     * The name on the credit card
+     *
+     * @var string
+     */
+    public $ccCardHolder;
+
+    /**
+     * MMYY - expiry date of credit card
+     *
+     * @var string
+     */
+    public $ccExpiry;
 }

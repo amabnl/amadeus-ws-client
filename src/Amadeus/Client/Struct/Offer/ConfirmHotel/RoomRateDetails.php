@@ -42,4 +42,12 @@ class RoomRateDetails
     public $chargeAndExtras;
 
     public $markerOfExtra;
+
+    /**
+     * RoomRateDetails constructor.
+     */
+    public function __construct()
+    {
+        $this->hotelProductReference = new HotelProductReference();
+    }
 }

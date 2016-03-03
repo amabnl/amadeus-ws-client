@@ -20,28 +20,25 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
+namespace Test\Amadeus\Client\Struct\Offer\ConfirmHotel;
+
+use Amadeus\Client\Struct\Offer\ConfirmHotel\QuantityDetails;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * HotelProductReference
+ * QuantityDetailsTest
  *
- * @package Amadeus\Client\Struct\Offer\ConfirmHotel
+ * @package Test\Amadeus\Client\Struct\Offer\ConfirmHotel
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class HotelProductReference
+class QuantityDetailsTest extends BaseTestCase
 {
-    /**
-     * Up to 2 elements
-     *
-     * @var ReferenceDetails[]
-     */
-    public $referenceDetails = [];
-
-    /**
-     * HotelProductReference constructor.
-     */
-    public function __construct()
+    public function testCanConstruct()
     {
-        $this->referenceDetails[] = new ReferenceDetails();
+        $obj = new QuantityDetails('something');
+
+        $this->assertEquals('something', $obj->value);
+        $this->assertEquals($obj::QUAL_AGE, $obj->qualifier);
     }
 }
+

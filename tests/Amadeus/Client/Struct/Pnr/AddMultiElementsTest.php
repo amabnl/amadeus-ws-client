@@ -35,6 +35,7 @@ use Amadeus\Client\RequestOptions\Pnr\Reference;
 use Amadeus\Client\RequestOptions\Pnr\Segment\Miscellaneous;
 use Amadeus\Client\RequestOptions\Pnr\Traveller;
 use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
+use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\Queue;
 use Amadeus\Client\Struct\Pnr\AddMultiElements;
@@ -58,7 +59,7 @@ class AddMultiElementsTest extends BaseTestCase
             'lastName' => 'Bowie',
             'firstName' => 'David'
         ]);
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -138,7 +139,7 @@ class AddMultiElementsTest extends BaseTestCase
             'lastName' => 'Bowie',
             'firstName' => 'David'
         ]);
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -245,7 +246,7 @@ class AddMultiElementsTest extends BaseTestCase
             'lastName' => 'Bowie',
             'firstName' => 'David'
         ]);
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -275,7 +276,7 @@ class AddMultiElementsTest extends BaseTestCase
             'lastName' => 'Bowie',
             'firstName' => 'David'
         ]);
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -306,7 +307,7 @@ class AddMultiElementsTest extends BaseTestCase
             'lastName' => 'Bowie',
             'firstName' => 'David'
         ]);
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -345,7 +346,7 @@ class AddMultiElementsTest extends BaseTestCase
             'firstName' => 'David',
             'dateOfBirth' => \DateTime::createFromFormat('Y-m-d', '1947-01-08')
         ]);
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -371,7 +372,7 @@ class AddMultiElementsTest extends BaseTestCase
             'lastName' => 'Bowie',
             'firstName' => 'David'
         ]);
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -405,7 +406,7 @@ class AddMultiElementsTest extends BaseTestCase
             'lastName' => 'Bowie',
             'firstName' => 'David'
         ]);
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -432,7 +433,7 @@ class AddMultiElementsTest extends BaseTestCase
             'lastName' => 'Bowie',
             'firstName' => 'David'
         ]);
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -462,7 +463,7 @@ class AddMultiElementsTest extends BaseTestCase
             'lastName' => 'Bowie',
             'firstName' => 'David'
         ]);
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -513,7 +514,7 @@ class AddMultiElementsTest extends BaseTestCase
             'lastName' => 'Bowie',
             'firstName' => 'David'
         ]);
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -561,7 +562,7 @@ class AddMultiElementsTest extends BaseTestCase
             ]
         ]);
 
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_NO_PROCESSING;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -572,6 +573,7 @@ class AddMultiElementsTest extends BaseTestCase
         $requestStruct = new AddMultiElements($createPnrOptions);
 
         $this->assertEquals(4, count($requestStruct->travellerInfo));
+        $this->assertEquals(PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING, $requestStruct->pnrActions->optionCode);
         $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_GROUPNAME, $requestStruct->travellerInfo[0]->elementManagementPassenger->segmentName);
         $this->assertEquals('Group Name', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->surname);
         $this->assertEquals(AddMultiElements\Traveller::QUAL_GROUP, $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->qualifier);
@@ -616,7 +618,7 @@ class AddMultiElementsTest extends BaseTestCase
             'dateOfBirth' => \DateTime::createFromFormat('Y-m-d', '2010-01-31')
         ]);
 
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_NO_PROCESSING;
 
         $requestStruct = new AddMultiElements($createPnrOptions);
 
@@ -643,7 +645,7 @@ class AddMultiElementsTest extends BaseTestCase
             'lastName' => 'Bowie',
             'firstName' => 'David2'
         ]);
-        $createPnrOptions->actionCode = PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE;
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->tripSegments[] = new Miscellaneous([
             'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
             'cityCode' => 'BRU',
@@ -669,5 +671,30 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(1, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->referenceForSegment->reference[0]->number);
         $this->assertEquals('PT', $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->referenceForSegment->reference[1]->qualifier);
         $this->assertEquals(2, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->referenceForSegment->reference[1]->number);
+    }
+
+    public function testCanCreateMessageForManipulateExistingPnr()
+    {
+
+        $ameOptions = new PnrAddMultiElementsOptions([
+            'recordLocator' => 'ABC123',
+            'actionCode' => PnrAddMultiElementsOptions::ACTION_END_TRANSACT,
+            'elements' => [
+                new Address([
+                    'type' => Address::TYPE_BILLING_UNSTRUCTURED,
+                    'freeText' => 'Name,Street 20, Zipcode City'
+                ])
+            ]
+        ]);
+
+        $requestStruct = new AddMultiElements($ameOptions);
+
+        $this->assertEquals('ABC123', $requestStruct->reservationInfo->reservation->controlNumber);
+        $this->assertEquals(PnrActions::ACTIONOPTION_END_TRANSACT, $requestStruct->pnrActions->optionCode);
+        $this->assertEquals(1, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_ADDRESS_BILLING_UNSTRUCTURED, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals('Name,Street 20, Zipcode City', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->longFreetext);
+        $this->assertEquals(AddMultiElements\FreetextDetail::TYPE_MAILING_ADDRESS, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->type);
+        $this->assertEquals(AddMultiElements\FreetextDetail::QUALIFIER_LITERALTEXT, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->subjectQualifier);
     }
 }

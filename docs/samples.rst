@@ -120,7 +120,7 @@ Creating a PNR (simplified example containing only the most basic PNR elements n
     use Amadeus\Client\RequestOptions\Pnr\Element\Contact;
 
     $opt = new PnrCreatePnrOptions();
-    $opt->actionCode = 11; //11	End transact with retrieve (ER)
+    $opt->actionCode = PnrCreatePnrOptions::ACTION_NO_PROCESSING; //0 Do not yet save the PNR and keep in context.
     $opt->travellers[] = new Traveller([
         'number' => 1,
         'firstName' => 'FirstName',
@@ -155,7 +155,7 @@ Save a PNR which you have in context (created with actionCode 0 for example) and
 
     $pnrReply = $client->pnrAddMultiElements(
         new PnrAddMultiElementsOptions([
-            'actionCode' => 11 //ET / END AND RETRIEVE
+            'actionCode' => PnrAddMultiElementsOptions::ACTION_END_TRANSACT_RETRIEVE //ET: END AND RETRIEVE
         ])
     );
 
@@ -206,7 +206,7 @@ Cancel the entire itinerary of the PNR in context and do an end transact to save
     $cancelReply = $client->pnrCancel(
         new PnrCancelOptions([
             'cancelItinerary' => true,
-            'actionCode' => 10
+            'actionCode' => PnrCancelOptions::ACTION_END_TRANSACT
         ])
     );
 
@@ -220,7 +220,7 @@ Cancel a PNR element with tatoo number 15 and do an End and Retrieve (ER) to rec
     $cancelReply = $client->pnrCancel(
         new PnrCancelOptions([
             'elementsByTatoo' => [15],
-            'actionCode' => 11
+            'actionCode' => PnrCancelOptions::ACTION_END_TRANSACT_RETRIEVE
         ])
     );
 
@@ -234,7 +234,7 @@ Same as before, but this time without having a PNR in context (you must provide 
         new PnrCancelOptions([
             'recordLocator' => 'ABC123,
             'elementsByTatoo' => [15],
-            'actionCode' => 11
+            'actionCode' => PnrCancelOptions::ACTION_END_TRANSACT_RETRIEVE
         ])
     );
 

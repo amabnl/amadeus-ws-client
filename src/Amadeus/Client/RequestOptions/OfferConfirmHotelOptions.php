@@ -71,7 +71,7 @@ class OfferConfirmHotelOptions extends Base
      *
      * @var int
      */
-    public $paymentType = self::PAYMENT_GUARANTEED;
+    public $paymentType;
 
     /**
      * self::FOP_*
@@ -79,4 +79,9 @@ class OfferConfirmHotelOptions extends Base
      * @var string
      */
     public $formOfPayment;
+
+    /**
+     * @var Offer\PaymentDetails
+     */
+    public $paymentDetails;
 }

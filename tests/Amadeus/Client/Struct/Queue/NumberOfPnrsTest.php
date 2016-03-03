@@ -20,28 +20,23 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
+namespace Test\Amadeus\Client\Struct\Queue;
+
+use Amadeus\Client\Struct\Queue\NumberOfPnrs;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * HotelProductReference
+ * NumberOfPnrsTest
  *
- * @package Amadeus\Client\Struct\Offer\ConfirmHotel
+ * @package Test\Amadeus\Client\Struct\Queue
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class HotelProductReference
+class NumberOfPnrsTest extends BaseTestCase
 {
-    /**
-     * Up to 2 elements
-     *
-     * @var ReferenceDetails[]
-     */
-    public $referenceDetails = [];
-
-    /**
-     * HotelProductReference constructor.
-     */
-    public function __construct()
+    public function testCanConstruct()
     {
-        $this->referenceDetails[] = new ReferenceDetails();
+        $obj = new NumberOfPnrs(3);
+
+        $this->assertEquals(3, $obj->quantityDetails->numberOfUnit);
     }
 }
