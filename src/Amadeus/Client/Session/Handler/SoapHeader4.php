@@ -24,9 +24,7 @@ namespace Amadeus\Client\Session\Handler;
 
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client;
-use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-
 
 /**
  * SoapHeader4: Session Handler for web service applications using Amadeus WS Soap Header v4.
@@ -55,12 +53,14 @@ class SoapHeader4 extends Base
      * @var bool
      */
     protected $hasContext = false;
+
     /**
      * Switch between stateful & stateless sessions. Default: stateful
      *
      * @var bool
      */
     protected $isStateful = true;
+
     /**
      * The context of the currently active session
      *
@@ -68,6 +68,7 @@ class SoapHeader4 extends Base
      * @var mixed
      */
     protected $context;
+
     /**
      * Session information:
      * - session ID
@@ -82,22 +83,6 @@ class SoapHeader4 extends Base
         'securityToken' => null
     ];
 
-
-    /**
-     * @param Client\Params\SessionHandlerParams $params
-     */
-    public function __construct(Client\Params\SessionHandlerParams $params)
-    {
-        $this->params = $params;
-        if($params->logger instanceof LoggerInterface) {
-            $this->setLogger($params->logger);
-            $this->log(LogLevel::INFO, __METHOD__. "(): Logger started.");
-        }
-        if ($params->overrideSoapClient instanceof \SoapClient) {
-            $this->soapClient = $params->overrideSoapClient;
-        }
-        $this->setStateful($params->stateful);
-    }
 
     /**
      * @param bool $stateful
@@ -126,7 +111,6 @@ class SoapHeader4 extends Base
     {
         return $this->sessionData;
     }
-
 
     /**
      * @param string $messageName Method Operation name as defined in the WSDL.
@@ -234,8 +218,6 @@ class SoapHeader4 extends Base
         } else {
             $this->isAuthenticated = false;
         }
-
-        //TODO: check for errors in response?
     }
 
     /**

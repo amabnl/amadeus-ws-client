@@ -25,6 +25,7 @@ namespace Amadeus\Client\Session\Handler;
 use Amadeus\Client\Params\SessionHandlerParams;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
+use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 use Psr\Log\NullLogger;
 
@@ -99,6 +100,23 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      * @var \DOMXpath
      */
     protected $wsdlDomXpath;
+
+
+    /**
+     * @param SessionHandlerParams $params
+     */
+    public function __construct(SessionHandlerParams $params)
+    {
+        $this->params = $params;
+        if($params->logger instanceof LoggerInterface) {
+            $this->setLogger($params->logger);
+            $this->log(LogLevel::INFO, __METHOD__. "(): Logger started.");
+        }
+        if ($params->overrideSoapClient instanceof \SoapClient) {
+            $this->soapClient = $params->overrideSoapClient;
+        }
+        $this->setStateful($params->stateful);
+    }
 
 
     /**
