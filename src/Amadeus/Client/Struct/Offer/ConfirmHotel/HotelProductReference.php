@@ -33,15 +33,15 @@ class HotelProductReference
     /**
      * Up to 2 elements
      *
-     * @var ReferenceDetails[]
+     * @var ReferenceDetails
      */
-    public $referenceDetails = [];
+    public $referenceDetails;
 
     /**
      * HotelProductReference constructor.
      */
     public function __construct()
     {
-        $this->referenceDetails[] = new ReferenceDetails(ReferenceDetails::TYPE_BOOKING_CODE);
+        $this->referenceDetails = new ReferenceDetails(ReferenceDetails::TYPE_BOOKING_CODE);
     }
 }

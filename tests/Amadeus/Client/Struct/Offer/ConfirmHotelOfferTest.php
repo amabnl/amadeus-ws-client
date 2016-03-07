@@ -62,6 +62,15 @@ class ConfirmHotelOfferTest extends BaseTestCase
         $this->assertEquals(PassengerReference::TYPE_BOOKING_HOLDER_OCCUPANT, $msg->roomStayData[0]->globalBookingInfo->representativeParties[0]->occupantList->passengerReference->type);
         $this->assertEquals(1, $msg->roomStayData[0]->globalBookingInfo->representativeParties[0]->occupantList->passengerReference->value);
 
-        $this->assertEquals(ConfirmHotel\ReferenceDetails::TYPE_BOOKING_CODE, $msg->roomStayData[0]->roomList[0]->roomRateDetails->hotelProductReference[0]->referenceDetails[0]->type);
+        $this->assertEquals(ConfirmHotel\ReferenceDetails::TYPE_BOOKING_CODE, $msg->roomStayData[0]->roomList[0]->roomRateDetails->hotelProductReference[0]->referenceDetails->type);
+
+        $this->assertEquals(ConfirmHotel\PaymentDetails::FOP_CREDIT_CARD, $msg->roomStayData[0]->roomList[0]->guaranteeOrDeposit->paymentInfo->paymentDetails->formOfPaymentCode);
+        $this->assertEquals(ConfirmHotel\PaymentDetails::PAYMENT_GUARANTEED, $msg->roomStayData[0]->roomList[0]->guaranteeOrDeposit->paymentInfo->paymentDetails->paymentType);
+        $this->assertEquals(ConfirmHotel\PaymentDetails::SERVICE_HOTEL, $msg->roomStayData[0]->roomList[0]->guaranteeOrDeposit->paymentInfo->paymentDetails->serviceToPay);
+
+        $this->assertEquals('4444333322221111', $msg->roomStayData[0]->roomList[0]->guaranteeOrDeposit->groupCreditCardInfo->creditCardInfo->ccInfo->cardNumber);
+        $this->assertEquals('David Bowie', $msg->roomStayData[0]->roomList[0]->guaranteeOrDeposit->groupCreditCardInfo->creditCardInfo->ccInfo->ccHolderName);
+        $this->assertEquals('1117', $msg->roomStayData[0]->roomList[0]->guaranteeOrDeposit->groupCreditCardInfo->creditCardInfo->ccInfo->expiryDate);
+        $this->assertEquals('AX', $msg->roomStayData[0]->roomList[0]->guaranteeOrDeposit->groupCreditCardInfo->creditCardInfo->ccInfo->vendorCode);
     }
 }
