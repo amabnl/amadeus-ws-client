@@ -110,6 +110,7 @@ This is the list of messages that are at least partially supported at this time:
 - Air_FlightInfo
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
+- Offer_ConfirmHotelOffer
 - MiniRule_GetFromPricingRec
 - Ticket_CreateTSTFromPricing
 - Command_Cryptic
@@ -128,7 +129,6 @@ On the to-do list / work in progress:
 - Fare_DisplayBookingCodeInformation
 - Fare_CalculateMileage
 - Info_EncodeDecodeCity
-- Offer_ConfirmHotelOffer
 - Offer_ConfirmCarOffer
 - PointOfRef_Search
 - PointOfRef_CategoryList

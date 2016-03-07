@@ -42,6 +42,6 @@ class HotelProductReference
      */
     public function __construct()
     {
-        $this->referenceDetails[] = new ReferenceDetails();
+        $this->referenceDetails[] = new ReferenceDetails(ReferenceDetails::TYPE_BOOKING_CODE);
     }
 }
