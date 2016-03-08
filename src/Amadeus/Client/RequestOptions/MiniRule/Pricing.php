@@ -39,7 +39,7 @@ class Pricing extends LoadParamsFromArray
     /**
      * Offer element tattoo
      */
-    const TYPE_OFFER = "OFR";
+    const TYPE_OFFER = "OF";
 
     /**
      * Transitional Stored Ticket
