@@ -9,6 +9,6 @@ coding_style:
           general:
               size: 1
 build: true
-    environment:
-        php:
-            version: 5.6
+  environment:
+      php:
+          version: 5.6

@@ -33,9 +33,9 @@ class RoomRateDetails
     public $marker;
 
     /**
-     * @var HotelProductReference
+     * @var HotelProductReference[]
      */
-    public $hotelProductReference;
+    public $hotelProductReference = [];
 
     public $specialInfo;
 
@@ -48,6 +48,6 @@ class RoomRateDetails
      */
     public function __construct()
     {
-        $this->hotelProductReference = new HotelProductReference();
+        $this->hotelProductReference[] = new HotelProductReference();
     }
 }

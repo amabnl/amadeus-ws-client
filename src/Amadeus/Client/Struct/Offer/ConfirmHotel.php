@@ -26,20 +26,16 @@ use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
 use Amadeus\Client\RequestOptions\Offer\PaymentDetails as PaymentDetailsOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\InvalidArgumentException;
-use Amadeus\Client\Struct\Offer\ConfirmHotel\CcInfo;
-use Amadeus\Client\Struct\Offer\ConfirmHotel\CreditCardInfo;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\GlobalBookingInfo;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\GroupCreditCardInfo;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\GuaranteeOrDeposit;
-use Amadeus\Client\Struct\Offer\ConfirmHotel\HotelProductReference;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\OccupantList;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\PaymentDetails;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\PaymentInfo;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\PnrInfo;
-use Amadeus\Client\Struct\Offer\ConfirmHotel\ReferenceDetails;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\RepresentativeParties;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\Reservation;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomList;
-use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomRateDetails;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomStayData;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\TattooReference;
 
@@ -84,7 +80,7 @@ class ConfirmHotel extends BaseWsMessage
     public function __construct(OfferConfirmHotelOptions $params)
     {
         if (!empty($params->recordLocator)) {
-            $this->pnrInfo = new PnrInfo($params->recordLocator);
+            $this->pnrInfo = new PnrInfo($params->recordLocator, null, Reservation::CONTROLTYPE_PNR_IDENTIFICATION);
         }
 
         if (!empty($params->offerReference)) {
