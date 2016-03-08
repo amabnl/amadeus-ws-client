@@ -22,7 +22,6 @@
 
 namespace Amadeus\Client\Session\Handler;
 
-use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client;
 use Psr\Log\LogLevel;
 
@@ -112,56 +111,6 @@ class SoapHeader4 extends Base
         return $this->sessionData;
     }
 
-    /**
-     * @param string $messageName Method Operation name as defined in the WSDL.
-     * @param BaseWsMessage $messageBody
-     * @param array $messageOptions options: bool 'asString', bool 'endSession'
-     * @return mixed
-     * @throws \InvalidArgumentException
-     * @throws Client\Exception
-     * @throws \SoapFault
-     */
-    public function sendMessage($messageName, BaseWsMessage $messageBody, $messageOptions = [])
-    {
-        $result = null;
-
-        $this->prepareForNextMessage($messageName, $messageOptions);
-
-        try {
-            $result = $this->getSoapClient()->$messageName($messageBody);
-
-            $this->logRequestAndResponse($messageName);
-
-            $this->handlePostMessage($messageName, $this->getLastResponse(), $messageOptions, $result);
-
-        } catch(\SoapFault $ex) {
-            $this->log(
-                LogLevel::ERROR,
-                "SOAPFAULT while sending message " . $messageName . ": " .
-                $ex->getMessage() . " code: " .$ex->getCode() . " at " . $ex->getFile() .
-                " line " . $ex->getLine() . ": \n" . $ex->getTraceAsString()
-            );
-            $this->logRequestAndResponse($messageName);
-            //TODO We must be able to handle certain soapfaults inside the client, so maybe pass through after logging?
-            throw $ex;
-        } catch (\Exception $ex) {
-            $this->log(
-                LogLevel::ERROR,
-                "EXCEPTION while sending message " . $messageName . ": " .
-                $ex->getMessage() . " at " . $ex->getFile() . " line " . $ex->getLine() . ": \n" .
-                $ex->getTraceAsString()
-            );
-            $this->logRequestAndResponse($messageName);
-            //TODO We must be able to handle certain exceptions inside the client, so maybe pass through after logging?
-            throw new Client\Exception($ex->getMessage(), $ex->getCode(), $ex);
-        }
-
-        if ($messageOptions['asString'] === true) {
-            $result = Client\Util\MsgBodyExtractor::extract($this->getLastResponse());
-        }
-
-        return $result;
-    }
 
     /**
      * Handles authentication & sessions

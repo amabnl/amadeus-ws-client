@@ -70,6 +70,33 @@ class SoapHeader2 extends Base
     }
 
     /**
+     * Prepare to send a next message and checks if authenticated
+     *
+     * @param string $messageName
+     * @param array $messageOptions
+     */
+    protected function prepareForNextMessage($messageName, $messageOptions)
+    {
+        // TODO: Implement prepareForNextMessage() method.
+    }
+
+    /**
+     * Handles post message actions
+     *
+     * Handles session state based on received response
+     *
+     * @param string $messageName
+     * @param string $lastResponse
+     * @param array $messageOptions
+     * @param mixed $result
+     */
+    protected function handlePostMessage($messageName, $lastResponse, $messageOptions, $result)
+    {
+        // TODO: Implement handlePostMessage() method.
+    }
+
+
+    /**
      * Cannot set stateless on Soap Header v2
      *
      * @param bool $stateful
