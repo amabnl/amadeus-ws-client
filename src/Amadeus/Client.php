@@ -126,6 +126,20 @@ class Client
     }
 
     /**
+     * Get session information for authenticated session
+     *
+     * - sessionId
+     * - sequenceNr
+     * - securityToken
+     *
+     * @return array|null
+     */
+    public function getSessionInfo()
+    {
+        return $this->sessionHandler->getSessionData();
+    }
+
+    /**
      * Get the last raw XML message that was received
      *
      * @return string|null
