@@ -59,7 +59,8 @@ class PlacePnrTest extends BaseTestCase
         $this->assertEquals('ABC123', $msg->recordLocator->reservation->controlNumber);
         $this->assertEquals(SelectionDetails::PLACEPNR_OPTION_QUEUE, $msg->placementOption->selectionDetails->option);
         $this->assertEquals(1, count($msg->targetDetails));
-        $this->assertNull($msg->targetDetails[0]->targetOffice);
+        $this->assertNull($msg->targetDetails[0]->targetOffice->originatorDetails->inHouseIdentification1);
+        $this->assertEquals(SourceType::SOURCETYPE_SAME_AS_ORIGINATOR, $msg->targetDetails[0]->targetOffice->sourceType->sourceQualifier1);
         $this->assertEquals(30, $msg->targetDetails[0]->queueNumber->queueDetails->number);
         $this->assertNull($msg->targetDetails[0]->placementDate);
         $this->assertEquals(5, $msg->targetDetails[0]->categoryDetails->subQueueInfoDetails->itemNumber);
