@@ -120,7 +120,7 @@ class TattooReference
      * @param $number
      * @param string $qualifier
      */
-    public function __construct($number, $qualifier = Reference::QUAL_OFFER_TATTOO)
+    public function __construct($number, $qualifier = Reference::QUAL_SEGMENT_TATTOO)
     {
         $this->reference = new Reference($number, $qualifier);
     }
