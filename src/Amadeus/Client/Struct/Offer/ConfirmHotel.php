@@ -26,6 +26,7 @@ use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
 use Amadeus\Client\RequestOptions\Offer\PaymentDetails as PaymentDetailsOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\InvalidArgumentException;
+use Amadeus\Client\Struct\Offer\ConfirmHotel\BookingSource;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\GlobalBookingInfo;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\GroupCreditCardInfo;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\GuaranteeOrDeposit;
@@ -102,6 +103,18 @@ class ConfirmHotel extends BaseWsMessage
                 );
                 $this->roomStayData[0]->globalBookingInfo->representativeParties[] = $tmp;
             }
+        }
+
+        if (!empty($params->originatorId)) {
+            if (!isset($this->roomStayData[0])) {
+                $this->roomStayData[] = new RoomStayData();
+            }
+
+            if(!($this->roomStayData[0]->globalBookingInfo instanceof GlobalBookingInfo)) {
+                $this->roomStayData[0]->globalBookingInfo = new GlobalBookingInfo();
+            }
+
+            $this->roomStayData[0]->globalBookingInfo->bookingSource = new BookingSource($params->originatorId);
         }
 
         if (!empty($params->paymentType) && !empty($params->formOfPayment) && $params->paymentDetails instanceof PaymentDetailsOptions) {

@@ -42,6 +42,7 @@ class ConfirmHotelOfferTest extends BaseTestCase
             'recordLocator' => 'ABC123',
             'offerReference' => 2,
             'passengers' => [1],
+            'originatorId' => '123456',
             'paymentType' => OfferConfirmHotelOptions::PAYMENT_GUARANTEED,
             'formOfPayment' => OfferConfirmHotelOptions::FOP_CREDIT_CARD,
             'paymentDetails' => new PaymentDetails([
@@ -56,11 +57,16 @@ class ConfirmHotelOfferTest extends BaseTestCase
 
         $this->assertEquals('ABC123', $msg->pnrInfo->reservation->controlNumber);
         $this->assertEquals(ConfirmHotel\Reservation::CONTROLTYPE_PNR_IDENTIFICATION, $msg->pnrInfo->reservation->controlType);
+
+        $this->assertEquals(1, count($msg->roomStayData));
         $this->assertEquals(2, $msg->roomStayData[0]->tattooReference->reference->number);
+        $this->assertEquals(ConfirmHotel\TattooReference::SEGMENT_NAME_HOTEL_AUX, $msg->roomStayData[0]->tattooReference->segmentName);
         $this->assertEquals(ConfirmHotel\Reference::QUAL_OFFER_TATTOO, $msg->roomStayData[0]->tattooReference->reference->qualifier);
 
         $this->assertEquals(PassengerReference::TYPE_PAXREF, $msg->roomStayData[0]->globalBookingInfo->representativeParties[0]->occupantList->passengerReference->type);
         $this->assertEquals(1, $msg->roomStayData[0]->globalBookingInfo->representativeParties[0]->occupantList->passengerReference->value);
+
+        $this->assertEquals('123456', $msg->roomStayData[0]->globalBookingInfo->bookingSource->originIdentification->originatorId);
 
         $this->assertEquals(ConfirmHotel\ReferenceDetails::TYPE_BOOKING_CODE, $msg->roomStayData[0]->roomList[0]->roomRateDetails->hotelProductReference[0]->referenceDetails->type);
 
