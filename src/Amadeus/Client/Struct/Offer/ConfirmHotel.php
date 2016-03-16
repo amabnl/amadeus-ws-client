@@ -98,7 +98,7 @@ class ConfirmHotel extends BaseWsMessage
                 $tmp = new RepresentativeParties();
                 $tmp->occupantList = new OccupantList(
                     $singlePass,
-                    PassengerReference::TYPE_BOOKING_HOLDER_OCCUPANT
+                    PassengerReference::TYPE_PAXREF
                 );
                 $this->roomStayData[0]->globalBookingInfo->representativeParties[] = $tmp;
             }
