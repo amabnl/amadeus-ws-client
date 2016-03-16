@@ -57,10 +57,9 @@ class ConfirmHotelOfferTest extends BaseTestCase
         $this->assertEquals('ABC123', $msg->pnrInfo->reservation->controlNumber);
         $this->assertEquals(ConfirmHotel\Reservation::CONTROLTYPE_PNR_IDENTIFICATION, $msg->pnrInfo->reservation->controlType);
         $this->assertEquals(2, $msg->roomStayData[0]->tattooReference->reference->number);
-        //$this->assertEquals(ConfirmHotel\Reference::QUAL_OFFER_TATTOO, $msg->roomStayData[0]->tattooReference->reference->qualifier);
-        $this->assertEquals(ConfirmHotel\Reference::QUAL_SEGMENT_TATTOO, $msg->roomStayData[0]->tattooReference->reference->qualifier);
+        $this->assertEquals(ConfirmHotel\Reference::QUAL_OFFER_TATTOO, $msg->roomStayData[0]->tattooReference->reference->qualifier);
 
-        $this->assertEquals(PassengerReference::TYPE_BOOKING_HOLDER_OCCUPANT, $msg->roomStayData[0]->globalBookingInfo->representativeParties[0]->occupantList->passengerReference->type);
+        $this->assertEquals(PassengerReference::TYPE_PAXREF, $msg->roomStayData[0]->globalBookingInfo->representativeParties[0]->occupantList->passengerReference->type);
         $this->assertEquals(1, $msg->roomStayData[0]->globalBookingInfo->representativeParties[0]->occupantList->passengerReference->value);
 
         $this->assertEquals(ConfirmHotel\ReferenceDetails::TYPE_BOOKING_CODE, $msg->roomStayData[0]->roomList[0]->roomRateDetails->hotelProductReference[0]->referenceDetails->type);
