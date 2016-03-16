@@ -68,7 +68,8 @@ class ConfirmHotelOfferTest extends BaseTestCase
 
         $this->assertEquals('123456', $msg->roomStayData[0]->globalBookingInfo->bookingSource->originIdentification->originatorId);
 
-        $this->assertEquals(ConfirmHotel\ReferenceDetails::TYPE_BOOKING_CODE, $msg->roomStayData[0]->roomList[0]->roomRateDetails->hotelProductReference[0]->referenceDetails->type);
+        //$this->assertEquals(ConfirmHotel\ReferenceDetails::TYPE_BOOKING_CODE, $msg->roomStayData[0]->roomList[0]->roomRateDetails->hotelProductReference[0]->referenceDetails->type);
+        $this->assertNull($msg->roomStayData[0]->roomList[0]->roomRateDetails);
 
         $this->assertEquals(ConfirmHotel\PaymentDetails::FOP_CREDIT_CARD, $msg->roomStayData[0]->roomList[0]->guaranteeOrDeposit->paymentInfo->paymentDetails->formOfPaymentCode);
         $this->assertEquals(ConfirmHotel\PaymentDetails::PAYMENT_GUARANTEED, $msg->roomStayData[0]->roomList[0]->guaranteeOrDeposit->paymentInfo->paymentDetails->paymentType);
