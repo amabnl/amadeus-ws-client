@@ -21,7 +21,7 @@ The Amadeus documentation portal can be found at https://webservices.amadeus.com
 Install amadeus-ws-client through [Composer](http://getcomposer.org).
 
 ```bash
-composer require amabnl/amadeus-ws-client
+composer require amabnl/amadeus-ws-client:dev-master
 ```
 
 After installing, you need to require Composer's autoloader:

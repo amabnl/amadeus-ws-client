@@ -67,6 +67,13 @@ class OfferConfirmHotelOptions extends Base
     public $passengers = [];
 
     /**
+     * The Originator Identifier
+     *
+     * @var string
+     */
+    public $originatorId;
+
+    /**
      * self::PAYMENT_*
      *
      * @var int

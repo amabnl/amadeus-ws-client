@@ -117,11 +117,13 @@ class TattooReference
     /**
      * TattooReference constructor.
      *
-     * @param $number
+     * @param int $number
      * @param string $qualifier
+     * @param string $segName
      */
-    public function __construct($number, $qualifier = Reference::QUAL_OFFER_TATTOO)
+    public function __construct($number, $qualifier = Reference::QUAL_OFFER_TATTOO, $segName = self::SEGMENT_NAME_HOTEL_AUX)
     {
         $this->reference = new Reference($number, $qualifier);
+        $this->segmentName = $segName;
     }
 }
