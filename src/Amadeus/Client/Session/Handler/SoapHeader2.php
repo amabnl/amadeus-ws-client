@@ -35,49 +35,51 @@ use Amadeus\Client\Struct\BaseWsMessage;
 class SoapHeader2 extends Base
 {
     /**
-     * Session information:
-     * - session ID
-     * - sequence number
-     * - security Token
-     *
-     * @var array
+     * Namespace of SoapHeader V2
      */
-    protected $sessionData = [
-        'sessionId' => null,
-        'sequenceNumber' => null,
-        'securityToken' => null
-    ];
+    const CORE_WS_V2_SESSION_NS = 'http://xml.amadeus.com/ws/2009/01/WBS_Session-2.0.xsd';
 
     /**
-     * @param SessionHandlerParams $params
+     * Node for Session ID
      */
-    public function __construct(SessionHandlerParams $params)
-    {
-        parent::__construct($params);
-    }
-
+    const NODENAME_SESSIONID = "SessionId";
     /**
-     * Method to send a message to the web services server
-     *
-     * @param string $messageName The Method name to be called (from the WSDL)
-     * @param BaseWsMessage $messageBody The message's body to be sent to the server
-     * @param array $messageOptions Optional options on how to handle this particular message.
-     * @return string|\stdClass
+     * Node for Session Sequence Number
      */
-    public function sendMessage($messageName, BaseWsMessage $messageBody, $messageOptions)
-    {
-        // TODO: Implement sendMessage() method.
-    }
+    const NODENAME_SEQENCENR = "SequenceNumber";
+    /**
+     * Node for Session Security Token
+     */
+    const NODENAME_SECURITYTOKEN = "SecurityToken";
 
     /**
      * Prepare to send a next message and checks if authenticated
      *
      * @param string $messageName
      * @param array $messageOptions
+     * @throws InvalidSessionException When trying to send a message without session.
      */
     protected function prepareForNextMessage($messageName, $messageOptions)
     {
-        // TODO: Implement prepareForNextMessage() method.
+        if (!$this->isAuthenticated && $messageName !== 'Security_Authenticate') {
+            throw new InvalidSessionException('No active session');
+        }
+
+        $this->getSoapClient()->__setSoapHeaders(null);
+
+        if ($this->isAuthenticated === true && is_int($this->sessionData['sequenceNumber'])) {
+            $this->sessionData['sequenceNumber']++;
+
+            $session = new Client\Struct\HeaderV2\Session(
+                $this->sessionData['sessionId'],
+                $this->sessionData['sequenceNumber'],
+                $this->sessionData['securityToken']
+            );
+
+            $this->getSoapClient()->__setSoapHeaders(
+                new \SoapHeader(self::CORE_WS_V2_SESSION_NS, self::NODENAME_SESSIONID, $session)
+            );
+        }
     }
 
     /**
@@ -92,9 +94,48 @@ class SoapHeader2 extends Base
      */
     protected function handlePostMessage($messageName, $lastResponse, $messageOptions, $result)
     {
-        // TODO: Implement handlePostMessage() method.
+        if ($messageName === "Security_Authenticate") {
+            $this->sessionData = $this->getSessionDataFromHeader($lastResponse);
+            $this->isAuthenticated = (!empty($this->sessionData['sessionId']) &&
+                !empty($this->sessionData['sequenceNumber']) &&
+                !empty($this->sessionData['securityToken']));
+        }
     }
 
+    /**
+     * @param string $responseMsg the full response XML received.
+     * @return array
+     */
+    protected function getSessionDataFromHeader($responseMsg)
+    {
+        $newSessionData = [
+            'sessionId' => null,
+            'sequenceNumber' => null,
+            'securityToken' => null
+        ];
+
+        $responseDomDoc = new \DOMDocument('1.0', 'UTF-8');
+        $ok = $responseDomDoc->loadXML($responseMsg);
+
+        if ($ok) {
+            $sessionId = $responseDomDoc->getElementsByTagName(self::NODENAME_SESSIONID)->item(0)->nodeValue;
+            if ($sessionId) {
+                $newSessionData['sessionId'] = $sessionId;
+            }
+            $sequence = (int)$responseDomDoc->getElementsByTagName(self::NODENAME_SEQENCENR)->item(0)->nodeValue;
+            if ($sequence) {
+                $newSessionData['sequenceNumber'] = $sequence;
+            }
+            $securityToken = $responseDomDoc->getElementsByTagName(self::NODENAME_SECURITYTOKEN)->item(0)->nodeValue;
+            if ($securityToken) {
+                $newSessionData['securityToken'] = $securityToken;
+            }
+        }
+
+        unset($responseDomDoc);
+
+        return $newSessionData;
+    }
 
     /**
      * Cannot set stateless on Soap Header v2
@@ -104,17 +145,9 @@ class SoapHeader2 extends Base
      */
     public function setStateful($stateful)
     {
-        throw new UnsupportedOperationException('Stateful messages are mandatory on SoapHeader 2');
-    }
-
-    /**
-     * Get the session parameters of the active session
-     *
-     * @return array|null
-     */
-    public function getSessionData()
-    {
-        return $this->sessionData;
+        if ($stateful === false) {
+            throw new UnsupportedOperationException('Stateful messages are mandatory on SoapHeader 2');
+        }
     }
 
     /**

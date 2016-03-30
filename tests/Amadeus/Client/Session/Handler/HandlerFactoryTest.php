@@ -49,14 +49,58 @@ class HandlerFactoryTest extends BaseTestCase
 
         HandlerFactory::createHandler($params);
     }
-    public function testCreateSoapHeader2WillThrowException()
+
+    public function testCreateSoapHeader4WillCreateSoapHeader4Handler()
+    {
+        $params = $par = new SessionHandlerParams([
+            'wsdl' => '/dummy/path',
+            'soapHeaderVersion' => Client::HEADER_V4,
+            'receivedFrom' => 'unittests',
+            'logger' => new NullLogger(),
+            'authParams' => [
+                'officeId' => 'BRUXX0000',
+                'originatorTypeCode' => 'U',
+                'userId' => 'DUMMYORIG',
+                'organizationId' => 'DUMMYORG',
+                'passwordLength' => 12,
+                'passwordData' => 'dGhlIHBhc3N3b3Jk'
+            ]
+        ]);
+
+        $createdHandler = HandlerFactory::createHandler($params);
+
+        $this->assertInstanceOf('Amadeus\Client\Session\Handler\SoapHeader4', $createdHandler);
+    }
+
+    public function testCreateSoapHeader2WillCreateSoapHeader2Handler()
+    {
+        $params = $par = new SessionHandlerParams([
+            'wsdl' => '/dummy/path',
+            'soapHeaderVersion' => Client::HEADER_V2,
+            'receivedFrom' => 'unittests',
+            'logger' => new NullLogger(),
+            'authParams' => [
+                'officeId' => 'BRUXX0000',
+                'originatorTypeCode' => 'U',
+                'userId' => 'DUMMYORIG',
+                'organizationId' => 'DUMMYORG',
+                'passwordLength' => 12,
+                'passwordData' => 'dGhlIHBhc3N3b3Jk'
+            ]
+        ]);
+
+        $createdHandler = HandlerFactory::createHandler($params);
+
+        $this->assertInstanceOf('Amadeus\Client\Session\Handler\SoapHeader2', $createdHandler);
+    }
+
+    public function testCreateSoapHeader1WillThrowException()
     {
         $this->setExpectedException('\InvalidArgumentException');
 
         $params = $par = new SessionHandlerParams([
             'wsdl' => '/dummy/path',
-            'stateful' => false,
-            'soapHeaderVersion' => Client::HEADER_V2,
+            'soapHeaderVersion' => Client::HEADER_V1,
             'receivedFrom' => 'unittests',
             'logger' => new NullLogger(),
             'authParams' => [

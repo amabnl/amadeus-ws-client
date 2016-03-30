@@ -46,12 +46,6 @@ class SoapHeader4 extends Base
      */
     const XPATH_ENDPOINT = 'string(/wsdl:definitions/wsdl:service/wsdl:port/soap:address/@location)';
 
-    /**
-     * Status variable to know wether the given session is in a certain context.
-     *
-     * @var bool
-     */
-    protected $hasContext = false;
 
     /**
      * Switch between stateful & stateless sessions. Default: stateful
@@ -59,29 +53,6 @@ class SoapHeader4 extends Base
      * @var bool
      */
     protected $isStateful = true;
-
-    /**
-     * The context of the currently active session
-     *
-     * @todo implement this feature - currently the application using the client must know the context itself.
-     * @var mixed
-     */
-    protected $context;
-
-    /**
-     * Session information:
-     * - session ID
-     * - sequence number
-     * - security Token
-     *
-     * @var array
-     */
-    protected $sessionData = [
-        'sessionId' => null,
-        'sequenceNumber' => null,
-        'securityToken' => null
-    ];
-
 
     /**
      * @param bool $stateful
@@ -100,17 +71,6 @@ class SoapHeader4 extends Base
     {
         return $this->isStateful;
     }
-
-    /**
-     * Get the session parameters of the active session
-     *
-     * @return array|null
-     */
-    public function getSessionData()
-    {
-        return $this->sessionData;
-    }
-
 
     /**
      * Handles authentication & sessions
@@ -202,6 +162,8 @@ class SoapHeader4 extends Base
             }
             $newSessionData['securityToken'] = $responseDomXpath->evaluate($querySecurityToken);
         }
+
+        unset($responseDomDoc, $responseDomXpath);
 
         return $newSessionData;
     }

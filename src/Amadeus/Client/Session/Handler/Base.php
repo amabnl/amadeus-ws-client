@@ -59,6 +59,38 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      */
     const XPATH_VERSION_FOR_OPERATION = "string(/wsdl:definitions/wsdl:message[contains(./@name, '%s_')]/@name)";
 
+
+    /**
+     * Status variable to know wether the given session is in a certain context.
+     *
+     * @todo implement this feature - currently the application using the client must know the context itself.
+     * @var bool
+     */
+    protected $hasContext = false;
+
+    /**
+     * The context of the currently active session
+     *
+     * @todo implement this feature - currently the application using the client must know the context itself.
+     * @var mixed
+     */
+    protected $context;
+
+
+    /**
+     * Session information:
+     * - session ID
+     * - sequence number
+     * - security Token
+     *
+     * @var array
+     */
+    protected $sessionData = [
+        'sessionId' => null,
+        'sequenceNumber' => null,
+        'securityToken' => null
+    ];
+
     /**
      * Status variable to know if the session is currently logged in
      *
@@ -102,6 +134,36 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      * @var \DOMXpath
      */
     protected $wsdlDomXpath;
+
+    /**
+     * Get the session parameters of the active session
+     *
+     * @return array|null
+     */
+    public function getSessionData()
+    {
+        return $this->sessionData;
+    }
+
+    /**
+     * Set the session data to continue a previously started session.
+     *
+     * @param array $sessionData
+     * @return bool
+     */
+    public function setSessionData(array $sessionData)
+    {
+        if (isset($sessionData['sessionId'], $sessionData['sequenceNumber'], $sessionData['securityToken'])) {
+            $this->sessionData['sessionId'] = $sessionData['sessionId'];
+            $this->sessionData['sequenceNumber'] = $sessionData['sequenceNumber'];
+            $this->sessionData['securityToken'] = $sessionData['securityToken'];
+            $this->isAuthenticated = true;
+        } else {
+            $this->isAuthenticated = false;
+        }
+
+        return $this->isAuthenticated;
+    }
 
 
     /**

@@ -98,6 +98,13 @@ class Client
     protected $responseHandler;
 
     /**
+     * Authentication parameters
+     *
+     * @var Params\AuthParams
+     */
+    protected $authParams;
+
+    /**
      * Set the session as stateful (true) or stateless (false)
      *
      * @param bool $newStateful
@@ -142,6 +149,11 @@ class Client
      */
     public function __construct($params)
     {
+        if ($params->authParams instanceof Params\AuthParams) {
+            $this->authParams = $params->authParams;
+            $params->sessionHandlerParams->authParams = $this->authParams;
+        }
+
         $this->sessionHandler = $this->loadSessionHandler(
             $params->sessionHandler,
             $params->sessionHandlerParams
@@ -157,6 +169,31 @@ class Client
 
         $this->responseHandler = $this->loadResponseHandler(
             $params->responseHandler
+        );
+    }
+
+    /**
+     * Authenticate.
+     *
+     * Parameters were provided at construction time (sessionhandlerparams)
+     *
+     * @return \stdClass
+     * @throws Exception
+     */
+    public function securityAuthenticate()
+    {
+        $msgName = 'Security_Authenticate';
+        $messageOptions = $this->makeMessageOptions([], false, false);
+
+        return $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                new RequestOptions\SecurityAuthenticateOptions(
+                    $this->authParams
+                )
+            ),
+            $messageOptions
         );
     }
 

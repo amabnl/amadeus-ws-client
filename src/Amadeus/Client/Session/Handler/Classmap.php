@@ -49,7 +49,7 @@ class Classmap
      * @var array
      */
     public static $soapheader2map = [
-
+        'Session' => 'Amadeus\Client\Struct\HeaderV2\Session',
     ];
 
     /**

@@ -50,6 +50,7 @@ use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
 use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
 use Amadeus\Client\RequestOptions\QueueRemoveItemOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
+use Amadeus\Client\RequestOptions\SecurityAuthenticateOptions;
 use Amadeus\Client\RequestOptions\TicketCreateTstFromPricingOptions;
 use Amadeus\Client\Struct;
 
@@ -108,6 +109,17 @@ class Base implements RequestCreatorInterface
     protected function createSecuritySignOut()
     {
         return new Struct\Security\SignOut();
+    }
+
+    /**
+     * Create request object for Security_Authenticate message
+     *
+     * @param SecurityAuthenticateOptions $params
+     * @return Struct\Security\Authenticate
+     */
+    protected function createSecurityAuthenticate(SecurityAuthenticateOptions $params)
+    {
+        return new Struct\Security\Authenticate($params);
     }
 
     /**
