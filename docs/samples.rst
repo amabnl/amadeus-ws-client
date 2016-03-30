@@ -4,9 +4,9 @@ EXAMPLES
 
 Here are some examples of how you can handle some problems you might encounter and how to send specific messages.
 
-***********************************************
-Switching between stateful & stateless messages
-***********************************************
+***************************************************************
+Switching between stateful & stateless messages (Soap Header 4)
+***************************************************************
 
 If you do not require an active context in your session, you're better off using stateless messages.
 
@@ -38,9 +38,9 @@ It's also possible to specify the default stateful setting at construction time 
     $client = new Client($params);
 
 
-*************************
-Ending a stateful session
-*************************
+*****************************************
+Ending a stateful session (Soap Header 4)
+*****************************************
 
 After doing multiple calls with a stateful session, there are two ways to end the session:
 
