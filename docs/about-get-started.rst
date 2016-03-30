@@ -11,7 +11,7 @@ See `the Amadeus Web Services website <https://webservices.amadeus.com/>`_ for m
 The basic pieces of information you will need to use this library are:
 
 - **The WSDL file with all its includes**: You can just extract the ZIP file you received from Amadeus to a location on your filesystem where the client can access it.
-- **The authentication information required to start a session**: Office ID's, User Id (=Originator), Password, Duty Code. *For legacy WSAP's using Soap Header 1 or 2, you'll need: Office ID, Originator, Organization ID, Password Length, Password Data. Soap Header 1 & 2 is not yet implemented in this library*
+- **The authentication information required to start a session**: Office ID's, User Id (=Originator), Password, Duty Code. *For legacy WSAP's using Soap Header 1 or 2, you'll need: Office ID, Originator, Organization ID, Password Length, Password Data. Soap Header 1 is not yet implemented in this library*
 
 You usually receive this information after the project kick-off has been done and a support person has been assigned to your project.
 
@@ -20,7 +20,8 @@ Support for Amadeus Soap Header versions
 ****************************************
 Upon receiving access, Amadeus will give you a Web Service Access Point with a specific Soap Header version to use. This will define how you can handle session management *(e.g. support for stateless calls, requiring session pooling or not)*.
 
-This library is initially built to support the current **Soap Header 4** and the legacy **Soap Header 2**.
+This library is built to support the current **Soap Header 4** and the legacy **Soap Header 2**.
+
 - Soap Header 4 is the Soap Header Version you would get for a new WSAP requested today (2016).
 - Soap Header 2 is still in use in legacy applications.
 
