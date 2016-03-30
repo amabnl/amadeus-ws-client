@@ -151,7 +151,9 @@ class Client
     {
         if ($params->authParams instanceof Params\AuthParams) {
             $this->authParams = $params->authParams;
-            $params->sessionHandlerParams->authParams = $this->authParams;
+            if (isset($params->sessionHandlerParams) && $params->sessionHandlerParams instanceof Params\SessionHandlerParams) {
+                $params->sessionHandlerParams->authParams = $this->authParams;
+            }
         }
 
         $this->sessionHandler = $this->loadSessionHandler(

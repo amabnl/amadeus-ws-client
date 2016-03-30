@@ -22,12 +22,12 @@
 
 namespace Amadeus\Client\Struct\Security;
 
+use Amadeus\Client\RequestOptions\SecurityAuthenticateOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
  * Authenticate
  *
- * @todo Implement this message when we support SoapHeader v. 1 or 2
  * @package Amadeus\Client\Struct\Security
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
@@ -61,4 +61,27 @@ class Authenticate extends BaseWsMessage
      * @var ApplicationId
      */
     public $applicationId;
+
+    /**
+     * Authenticate constructor.
+     *
+     * @param SecurityAuthenticateOptions $params
+     */
+    public function __construct(SecurityAuthenticateOptions $params)
+    {
+        $this->userIdentifier = new UserIdentifier(
+            $params->officeId,
+            $params->originatorTypeCode,
+            $params->userId
+        );
+
+        $this->dutyCode = new DutyCode($params->dutyCode);
+
+        $this->systemDetails = new SystemDetails($params->organizationId);
+
+        $this->passwordInfo = new PasswordInfo(
+            $params->passwordData,
+            $params->passwordLength
+        );
+    }
 }

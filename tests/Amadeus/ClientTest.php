@@ -1365,7 +1365,7 @@ class ClientTest extends BaseTestCase
             'passwordData' => base64_encode('TEST'),
             'passwordLength' => 4,
             'dutyCode' => 'SU',
-            'organizationId' => 'NMC-BENELU',
+            'organizationId' => 'DUMMY-ORG',
         ]);
 
         $messageResult = new \stdClass();
@@ -1392,6 +1392,7 @@ class ClientTest extends BaseTestCase
             ->will($this->returnValue(['Security_Authenticate' => "6.1"]));
 
         $par = new Params();
+        $par->authParams = $authParams;
         $par->sessionHandler = $mockSessionHandler;
         $par->requestCreatorParams = new Params\RequestCreatorParams([
             'receivedFrom' => 'some RF string',
