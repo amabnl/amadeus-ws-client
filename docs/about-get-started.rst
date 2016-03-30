@@ -111,7 +111,7 @@ Soap Header 2 example:
                 'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
                 'userId' => 'WSBENXXX', //Also known as 'Originator' for Soap Header 1 & 2 WSDL's
                 'passwordData' => 'dGhlIHBhc3N3b3Jk' // **base 64 encoded** password
-                'passwordLength => 12,
+                'passwordLength' => 12,
                 'dutyCode' => 'SU',
                 'organizationId' => 'DUMMY-ORG',
             ]
