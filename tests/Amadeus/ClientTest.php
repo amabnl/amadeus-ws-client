@@ -74,6 +74,29 @@ class ClientTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client', $client);
     }
 
+    public function testCanCreateClientWithAuthOptionsAndSessionParams()
+    {
+        $par = new Params([
+            'authParams' => [
+                'officeId' => 'BRUXXXXXX',
+                'originatorTypeCode' => 'U',
+                'userId' => 'WSXXXXXX',
+                'passwordData' => base64_encode('TEST')
+            ],
+            'sessionHandlerParams' => [
+                'wsdl' => $this->makePathToDummyWSDL(),
+                'stateful' => true,
+                'logger' => new NullLogger()
+            ],
+            'requestCreatorParams' => [
+                'receivedFrom' => 'some RF string'
+            ]
+        ]);
+
+        $client = new Client($par);
+
+        $this->assertTrue($client->isStateful());
+    }
 
     /**
      * @dataProvider dataProviderMakeMessageOptions
