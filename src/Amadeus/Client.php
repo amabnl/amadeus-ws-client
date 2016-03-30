@@ -36,8 +36,7 @@ use Amadeus\Client\ResponseHandler\Base as ResponseHandlerBase;
  * Amadeus Web Service Client.
  *
  * TODO:
- * - have a solution for session pooling for stateful sessions (soapheader 1 & 2)
- * - support older versions of SoapHeader (1, 2)
+ * - support older versions of SoapHeader (1)
  * - implement calls for full online booking flow:
  *      SalesReports_DisplayQueryReport
  *      Air_MultiAvailability
@@ -140,6 +139,19 @@ class Client
     public function getLastResponse()
     {
         return $this->sessionHandler->getLastResponse();
+    }
+
+    /**
+     * Restore a previously used session
+     *
+     * To be used when implementing your own session pooling system on legacy Soap Header 2 applications.
+     *
+     * @param array $sessionData
+     * @return bool
+     */
+    public function setSessionData(array $sessionData)
+    {
+        return $this->sessionHandler->setSessionData($sessionData);
     }
 
     /**

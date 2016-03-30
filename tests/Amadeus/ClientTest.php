@@ -1406,6 +1406,36 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSetSessionData()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $dummySessionData = [
+            'sessionId' => 'XFHZEKLRZHREJ',
+            'sequenceNumber' => 12,
+            'securityToken' => 'RKLERJEZLKRHZEJKLRHEZJKLREZRHEZK'
+        ];
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('setSessionData')
+            ->with($dummySessionData)
+            ->will($this->returnValue(true));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $result = $client->setSessionData($dummySessionData);
+
+        $this->assertTrue($result);
+    }
+
 
 
     public function dataProviderMakeMessageOptions()

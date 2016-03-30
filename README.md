@@ -14,7 +14,7 @@ The Amadeus documentation portal can be found at https://webservices.amadeus.com
 
 * PHP 5.4+
 * SOAP and XSL extensions activated
-* A WSDL & authentication details from Amadeus
+* A WSDL & authentication details from Amadeus _(SoapHeader 4 or SoapHeader 2)_
 
 # Installation
 
