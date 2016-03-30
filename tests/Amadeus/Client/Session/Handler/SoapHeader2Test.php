@@ -103,6 +103,85 @@ class SoapHeader2Test extends BaseTestCase
         $this->assertEquals($dummyPnrReplyExtractedMessage, $messageResponse);
     }
 
+    public function testCanSendAuthCallAndStartSession()
+    {
+        $overrideSoapClient = $this->getMock(
+            'Amadeus\Client\SoapClient',
+            ['__getLastRequest', '__getLastResponse', 'Security_Authenticate'],
+            [],
+            '',
+            false
+        );
+
+        $dummyRequest = $this->getTestFile('soapheader2' . DIRECTORY_SEPARATOR . 'dummySecurityAuth.txt');
+        $dummyReply = $this->getTestFile('soapheader2' . DIRECTORY_SEPARATOR . 'dummySecurityAuthReply.txt');
+
+        $messageResult = new \stdClass();
+        $messageResult->processStatus = new \stdClass();
+        $messageResult->processStatus->statusCode = 'P';
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastRequest')
+            ->will($this->returnValue($dummyRequest));
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastResponse')
+            ->will($this->returnValue($dummyReply));
+
+        $overrideSoapClient
+            ->expects($this->any())
+            ->method('Security_Authenticate')
+            ->will($this->returnValue($messageResult));
+
+        $handlerParams = $this->makeSessionHandlerParams(
+            $overrideSoapClient
+        );
+
+        $handler = new SoapHeader2($handlerParams);
+
+        //SEND MESSAGE AND CHECK RESULT
+        $actualSendResult = $handler->sendMessage(
+            'Security_Authenticate',
+            new Client\Struct\Security\Authenticate(
+                new Client\RequestOptions\SecurityAuthenticateOptions(
+                    $handlerParams->authParams
+                )
+            ),
+            [
+                'asString' => false,
+                'endSession' => false
+            ]
+        );
+
+        $this->assertEquals($messageResult, $actualSendResult);
+
+        //ASSERT THAT THE SESSION HAS BEEN STARTED CORRECTLY
+        $expectedSessionData = [
+            'sessionId' => 'IROZERIIOP',
+            'sequenceNumber' => 1,
+            'securityToken' => 'FDKLSDMJFSMLRJEZRHZJ'
+        ];
+
+        $this->assertEquals(
+            $expectedSessionData,
+            $handler->getSessionData()
+        );
+    }
+
+    public function testGetLastRequestEmptyWithNoMessages()
+    {
+
+        $handlerParams = $this->makeSessionHandlerParams();
+
+        $handler = new SoapHeader2($handlerParams);
+
+        $result = $handler->getLastRequest();
+
+        $this->assertNull($result);
+    }
+
     /**
      * @param \SoapClient|null $overrideSoapClient
      * @return SessionHandlerParams
