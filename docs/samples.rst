@@ -64,6 +64,7 @@ Handling sessions with Soap Header 2
 ************************************
 
 Soap Header 2 based applications are a bit more cumbersome to handle in order to get a successful certification:
+
 - you need to implement session pooling in order to limit the number of session creation/destruction events
 - you need to enforce your maximum number of concurrent sessions
 - you need to send a separate authentication message before you can do anything
