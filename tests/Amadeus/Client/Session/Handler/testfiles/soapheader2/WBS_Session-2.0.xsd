@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--"Amadeus Proprietary and Confidential Information: unauthorized use and disclosure strictly forbidden. 2010 - Amadeus s.a.s - All Rights Reserved."-->
+<!-- New version to be W3C compliant-->
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://xml.amadeus.com/ws/2009/01/WBS_Session-2.0.xsd" xmlns:awssec="http://xml.amadeus.com/ws/2009/01/WBS_Session-2.0.xsd" targetNamespace="http://xml.amadeus.com/ws/2009/01/WBS_Session-2.0.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified" version="2.0">
+    <xs:element name="Session">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="SessionId" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>This element defines the identifier part of the SessionId.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="SequenceNumber" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>This element defines the sequence number of the SessionId.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="SecurityToken" type="xs:string">
+                    <xs:annotation>
+                        <xs:documentation>This element defines the SecurityToken of the SessionId.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

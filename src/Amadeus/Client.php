@@ -36,8 +36,7 @@ use Amadeus\Client\ResponseHandler\Base as ResponseHandlerBase;
  * Amadeus Web Service Client.
  *
  * TODO:
- * - have a solution for session pooling for stateful sessions (soapheader 1 & 2)
- * - support older versions of SoapHeader (1, 2)
+ * - support older versions of SoapHeader (1)
  * - implement calls for full online booking flow:
  *      SalesReports_DisplayQueryReport
  *      Air_MultiAvailability
@@ -98,6 +97,13 @@ class Client
     protected $responseHandler;
 
     /**
+     * Authentication parameters
+     *
+     * @var Params\AuthParams
+     */
+    protected $authParams;
+
+    /**
      * Set the session as stateful (true) or stateless (false)
      *
      * @param bool $newStateful
@@ -150,12 +156,32 @@ class Client
     }
 
     /**
+     * Restore a previously used session
+     *
+     * To be used when implementing your own session pooling system on legacy Soap Header 2 applications.
+     *
+     * @param array $sessionData
+     * @return bool
+     */
+    public function setSessionData(array $sessionData)
+    {
+        return $this->sessionHandler->setSessionData($sessionData);
+    }
+
+    /**
      * Construct Amadeus Web Services client
      *
      * @param Params $params
      */
     public function __construct($params)
     {
+        if ($params->authParams instanceof Params\AuthParams) {
+            $this->authParams = $params->authParams;
+            if (isset($params->sessionHandlerParams) && $params->sessionHandlerParams instanceof Params\SessionHandlerParams) {
+                $params->sessionHandlerParams->authParams = $this->authParams;
+            }
+        }
+
         $this->sessionHandler = $this->loadSessionHandler(
             $params->sessionHandler,
             $params->sessionHandlerParams
@@ -171,6 +197,31 @@ class Client
 
         $this->responseHandler = $this->loadResponseHandler(
             $params->responseHandler
+        );
+    }
+
+    /**
+     * Authenticate.
+     *
+     * Parameters were provided at construction time (sessionhandlerparams)
+     *
+     * @return \stdClass
+     * @throws Exception
+     */
+    public function securityAuthenticate()
+    {
+        $msgName = 'Security_Authenticate';
+        $messageOptions = $this->makeMessageOptions([], false, false);
+
+        return $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                new RequestOptions\SecurityAuthenticateOptions(
+                    $this->authParams
+                )
+            ),
+            $messageOptions
         );
     }
 

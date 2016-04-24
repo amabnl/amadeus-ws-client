@@ -4,9 +4,9 @@ EXAMPLES
 
 Here are some examples of how you can handle some problems you might encounter and how to send specific messages.
 
-***********************************************
-Switching between stateful & stateless messages
-***********************************************
+***************************************************************
+Switching between stateful & stateless messages (Soap Header 4)
+***************************************************************
 
 If you do not require an active context in your session, you're better off using stateless messages.
 
@@ -38,9 +38,9 @@ It's also possible to specify the default stateful setting at construction time 
     $client = new Client($params);
 
 
-*************************
-Ending a stateful session
-*************************
+*****************************************
+Ending a stateful session (Soap Header 4)
+*****************************************
 
 After doing multiple calls with a stateful session, there are two ways to end the session:
 
@@ -58,6 +58,30 @@ After doing multiple calls with a stateful session, there are two ways to end th
         new PnrRetrieveOptions(['recordLocator' => 'ABC123']),
         ['endSession' => true]
     );
+
+************************************
+Handling sessions with Soap Header 2
+************************************
+
+Soap Header 2 based applications are a bit more cumbersome to handle in order to get a successful certification:
+
+- you need to implement session pooling in order to limit the number of session creation/destruction events
+- you need to enforce your maximum number of concurrent sessions
+- you need to send a separate authentication message before you can do anything
+
+This library does not provide any session pooling mechanism, you'll have to implement this yourself.
+
+You can get a current session's info (for later re-use) by calling
+
+.. code-block:: php
+
+    $client->getSessionData();
+
+You can restore a previous current session after you retrieved it from your session pool for later re-use:
+
+.. code-block:: php
+
+    $client->setSessionData($previousSessionData);
 
 
 *********************

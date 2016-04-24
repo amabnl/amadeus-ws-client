@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client;
 
+use Amadeus\Client\Params\AuthParams;
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\Params\SessionHandlerParams;
 use Amadeus\Client\RequestCreator\RequestCreatorInterface;
@@ -58,6 +59,13 @@ class Params
     public $responseHandler;
 
     /**
+     * Parameters for authenticating to the Amadeus Web Services
+     *
+     * @var Params\AuthParams
+     */
+    public $authParams;
+
+    /**
      * Parameters required to create the Session Handler
      *
      * @var Params\SessionHandlerParams
@@ -70,7 +78,6 @@ class Params
      * @var Params\RequestCreatorParams
      */
     public $requestCreatorParams;
-
 
 
     /**
@@ -96,6 +103,14 @@ class Params
         }
         if (isset($params['responseHandler']) && $params['responseHandler'] instanceof ResponseHandlerInterface) {
             $this->responseHandler = $params['responseHandler'];
+        }
+
+        if (isset($params['authParams'])) {
+            if ($params['authParams'] instanceof AuthParams) {
+                $this->authParams = $params['authParams'];
+            } elseif (is_array($params['authParams'])) {
+                $this->authParams = new AuthParams($params['authParams']);
+            }
         }
 
         if (isset($params['sessionHandlerParams'])) {

@@ -44,6 +44,15 @@ class Classmap
     ];
 
     /**
+     * The PHP -> WSDL translation classmap for Soap Header 2 specific message parts
+     *
+     * @var array
+     */
+    public static $soapheader2map = [
+        'Session' => 'Amadeus\Client\Struct\HeaderV2\Session',
+    ];
+
+    /**
      * The PHP -> WSDL translation classmap for the Amadeus WS Client
      *
      * Contains all non-soapheader-specific mapping

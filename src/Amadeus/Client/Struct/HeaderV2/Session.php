@@ -20,16 +20,38 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct;
+namespace Amadeus\Client\Struct\HeaderV2;
 
 /**
- * Class SessionHeaderV2
+ * Soap Header V2 Session header structure
  *
- * @todo NOT YET IMPLEMENTED
- * @package Amadeus\Client\Struct
+ * @package Amadeus\Client\Struct\HeaderV2
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class SessionHeaderV2
+class Session
 {
-    //TODO
+    /**
+     * @var string
+     */
+    public $sessionId;
+    /**
+     * @var int
+     */
+    public $sequenceNumber;
+    /**
+     * @var string
+     */
+    public $securityToken;
+
+    /**
+     * @param string	$sessId
+     * @param int		$seqNr
+     * @param string	$secTok
+     */
+    public function __construct($sessId, $seqNr, $secTok)
+    {
+        $this->sessionId = $sessId;
+        $this->sequenceNumber = $seqNr;
+        $this->securityToken = $secTok;
+    }
 }

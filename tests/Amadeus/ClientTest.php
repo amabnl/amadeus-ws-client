@@ -74,6 +74,29 @@ class ClientTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client', $client);
     }
 
+    public function testCanCreateClientWithAuthOptionsAndSessionParams()
+    {
+        $par = new Params([
+            'authParams' => [
+                'officeId' => 'BRUXXXXXX',
+                'originatorTypeCode' => 'U',
+                'userId' => 'WSXXXXXX',
+                'passwordData' => base64_encode('TEST')
+            ],
+            'sessionHandlerParams' => [
+                'wsdl' => $this->makePathToDummyWSDL(),
+                'stateful' => true,
+                'logger' => new NullLogger()
+            ],
+            'requestCreatorParams' => [
+                'receivedFrom' => 'some RF string'
+            ]
+        ]);
+
+        $client = new Client($par);
+
+        $this->assertTrue($client->isStateful());
+    }
 
     /**
      * @dataProvider dataProviderMakeMessageOptions
@@ -1354,6 +1377,88 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoAuthenticateCall()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $authParams = new Params\AuthParams([
+            'officeId' => 'BRUXXXXXX',
+            'originatorTypeCode' => 'U',
+            'userId' => 'WSXXXXXX',
+            'passwordData' => base64_encode('TEST'),
+            'passwordLength' => 4,
+            'dutyCode' => 'SU',
+            'organizationId' => 'DUMMY-ORG',
+        ]);
+
+        $messageResult = new \stdClass();
+        $messageResult->processStatus = new \stdClass();
+        $messageResult->processStatus->statusCode = 'P';
+
+        $expectedMessageResult = new Client\Struct\Security\Authenticate(
+            new Client\RequestOptions\SecurityAuthenticateOptions(
+                $authParams
+            )
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Security_Authenticate', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->will($this->returnValue($messageResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Security_Authenticate' => "6.1"]));
+
+        $par = new Params();
+        $par->authParams = $authParams;
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->securityAuthenticate();
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSetSessionData()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $dummySessionData = [
+            'sessionId' => 'XFHZEKLRZHREJ',
+            'sequenceNumber' => 12,
+            'securityToken' => 'RKLERJEZLKRHZEJKLRHEZJKLREZRHEZK'
+        ];
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('setSessionData')
+            ->with($dummySessionData)
+            ->will($this->returnValue(true));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $result = $client->setSessionData($dummySessionData);
+
+        $this->assertTrue($result);
+    }
+
     public function testCanGetSessionInfo()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -1382,6 +1487,7 @@ class ClientTest extends BaseTestCase
 
         $this->assertEquals($mockedSession, $actual);
     }
+
 
 
 

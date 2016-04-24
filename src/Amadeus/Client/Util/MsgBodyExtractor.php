@@ -38,6 +38,13 @@ class MsgBodyExtractor
     const REGEXP_SOAP_ENVELOPE_CONTENTS = "|\\<SOAP-ENV:Body\\>(.*?)\\<\\/SOAP-ENV:Body\\>|";
 
     /**
+     * Regular expression for extracting the Soap Envelope Body's content - legacy format for Soap Header v2 and older
+     *
+     * @var string
+     */
+    const REGEXP_SOAP_ENVELOPE_CONTENTS_LEGACY = "|\\<soap:Body\\>(.*?)\\<\\/soap:Body\\>|";
+
+    /**
      * Extracts the message content from the soap envelope (i.e. everything under the soap body)
      *
      * @param string $soapResponse
@@ -50,6 +57,12 @@ class MsgBodyExtractor
 
         if (preg_match(self::REGEXP_SOAP_ENVELOPE_CONTENTS, $soapResponse, $matches) === 1) {
             $messageBody = $matches[1];
+        }
+
+        if (empty($messageBody)) {
+            if (preg_match(self::REGEXP_SOAP_ENVELOPE_CONTENTS_LEGACY, $soapResponse, $matches) === 1) {
+                $messageBody = $matches[1];
+            }
         }
 
         return $messageBody;

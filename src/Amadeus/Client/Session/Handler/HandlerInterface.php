@@ -81,6 +81,14 @@ interface HandlerInterface
     public function getSessionData();
 
     /**
+     * Set the session data to continue a previously started session.
+     *
+     * @param array $sessionData
+     * @return bool success or failure
+     */
+    public function setSessionData(array $sessionData);
+
+    /**
      * Get the current stateful mode (true is stateful, false is stateless)
      *
      * @return bool

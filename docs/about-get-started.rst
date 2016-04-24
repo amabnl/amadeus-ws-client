@@ -11,7 +11,7 @@ See `the Amadeus Web Services website <https://webservices.amadeus.com/>`_ for m
 The basic pieces of information you will need to use this library are:
 
 - **The WSDL file with all its includes**: You can just extract the ZIP file you received from Amadeus to a location on your filesystem where the client can access it.
-- **The authentication information required to start a session**: Office ID's, User Id (=Originator), Password, Duty Code. *For legacy WSAP's using Soap Header 1 or 2, you'll need: Office ID, Originator, Organization ID, Password Length, Password Data. Soap Header 1 & 2 is not yet implemented in this library*
+- **The authentication information required to start a session**: Office ID's, User Id (=Originator), Password, Duty Code. *For legacy WSAP's using Soap Header 1 or 2, you'll need: Office ID, Originator, Organization ID, Password Length, Password Data. Soap Header 1 is not yet implemented in this library*
 
 You usually receive this information after the project kick-off has been done and a support person has been assigned to your project.
 
@@ -20,9 +20,12 @@ Support for Amadeus Soap Header versions
 ****************************************
 Upon receiving access, Amadeus will give you a Web Service Access Point with a specific Soap Header version to use. This will define how you can handle session management *(e.g. support for stateless calls, requiring session pooling or not)*.
 
-This library is initially built to support the current Soap Header v4, which is the Soap Header Version you would get for a new WSAP requested today (2016).
+This library is built to support the current **Soap Header 4** and the legacy **Soap Header 2**.
 
-Legacy applications using already certified WSAP's can still be running on legacy Soap Header versions - most notably Soap Header 1 & 2. This library currently doesn't support those yet, but we plan to add that in the future.
+- Soap Header 4 is the Soap Header Version you would get for a new WSAP requested today (2016).
+- Soap Header 2 is still in use in legacy applications.
+
+Legacy applications using already certified WSAP's can still be running on legacy Soap Header versions (Soap Header 1 & 2). This library doesn't support Soap Header 1 at the moment.
 
 ******************************************
 Support for different versions of messages
@@ -51,6 +54,8 @@ Install the client library in your PHP project by requiring the package with Com
 ********************
 Set up a test client
 ********************
+
+Soap Header 4 example:
 
 .. code-block:: php
 
@@ -85,6 +90,48 @@ Set up a test client
         new PnrRetrieveOptions(['recordLocator' => 'ABC123'])
     );
 
+Soap Header 2 example:
+
+.. code-block:: php
+
+    <?php
+
+    use Amadeus\Client;
+    use Amadeus\Client\Params;
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    //Set up the client with necessary parameters:
+
+    $params = new Params([
+        'sessionHandlerParams' => [
+            'soapHeaderVersion' => Client::HEADER_V2,
+            'wsdl' => '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20110101_080000.wsdl', //Points to the location of the WSDL file for your WSAP. Make sure the associated XSD's are also available.
+            'logger' => new Psr\Log\NullLogger(),
+            'authParams' => [
+                'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
+                'userId' => 'WSBENXXX', //Also known as 'Originator' for Soap Header 1 & 2 WSDL's
+                'passwordData' => 'dGhlIHBhc3N3b3Jk' // **base 64 encoded** password
+                'passwordLength' => 12,
+                'dutyCode' => 'SU',
+                'organizationId' => 'DUMMY-ORG',
+            ]
+        ],
+        'requestCreatorParams' => [
+            'receivedFrom' => 'my test project' // The "Received From" string that will be visible in PNR History
+        ]
+    ]);
+
+    $client = new Client($params);
+
+    $authResult = $client->securityAuthenticate();
+
+    if (isset($authResult->processStatus->statusCode) && $authResult->processStatus->statusCode === 'P') {
+        //We are authenticated!
+        $pnrContent = $client->pnrRetrieve(
+            new PnrRetrieveOptions(['recordLocator' => 'ABC123'])
+        );
+    }
+
 
 ******************
 Messages supported
@@ -92,6 +139,7 @@ Messages supported
 
 This is the list of messages that are at least partially supported at this time:
 
+- Security_Authenticate
 - Security_SignOut
 - PNR_Retrieve
 - PNR_RetrieveAndDisplay
@@ -135,5 +183,3 @@ On the to-do list / work in progress:
 - Ticket_DisplayTST
 - Ticket_DeleteTST
 - SalesReports_DisplayQueryReport
-
-- Support for SoapHeader V2
