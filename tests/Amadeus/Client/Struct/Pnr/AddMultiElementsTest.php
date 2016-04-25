@@ -165,7 +165,7 @@ class AddMultiElementsTest extends BaseTestCase
             ],
             'references' => [
                 new Reference([
-                    'type' => Reference::TYPE_PASSENGER_TATOO,
+                    'type' => Reference::TYPE_PASSENGER_TATTOO,
                     'id' => 1
                 ])
             ]
@@ -654,11 +654,11 @@ class AddMultiElementsTest extends BaseTestCase
             'company' => '1A',
             'references' => [
                 new Reference([
-                    'type' => Reference::TYPE_PASSENGER_TATOO,
+                    'type' => Reference::TYPE_PASSENGER_TATTOO,
                     'id' => 1
                 ]),
                 new Reference([
-                    'type' => Reference::TYPE_PASSENGER_TATOO,
+                    'type' => Reference::TYPE_PASSENGER_TATTOO,
                     'id' => 2
                 ])
             ]

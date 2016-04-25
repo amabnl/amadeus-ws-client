@@ -33,7 +33,7 @@ class OfferConfirmAirOptions extends Base
     /**
      * @var int
      */
-    public $tatooNumber;
+    public $tattooNumber;
 
     /**
      * @var Offer\PassengerReAssocOptions[]

@@ -36,7 +36,6 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\Accounting;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\AirAuxItinerary;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsIndiv;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\DateAndTimeDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DateOfBirth;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementItinerary;
@@ -52,7 +51,6 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\MiscellaneousRemark;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\NewFopsDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\Passenger;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\PassengerData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\Reference;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForDataElement;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForSegment;
@@ -126,18 +124,18 @@ class AddMultiElements extends BaseWsMessage
             $this->reservationInfo = new AddMultiElements\ReservationInfo($params->recordLocator);
         }
 
-        $tatooCounter = 0;
+        $tattooCounter = 0;
 
         $this->addTravellers($params->travellers);
 
         if (!empty($params->tripSegments)) {
-            $this->addSegments($params->tripSegments, $tatooCounter);
+            $this->addSegments($params->tripSegments, $tattooCounter);
         }
 
         if (!empty($params->elements)) {
             $this->addElements(
                 $params->elements,
-                $tatooCounter,
+                $tattooCounter,
                 $params->receivedFrom
             );
         } elseif (!is_null($params->receivedFrom)) {
@@ -145,10 +143,10 @@ class AddMultiElements extends BaseWsMessage
                 $this->dataElementsMaster = new DataElementsMaster();
             }
 
-            $tatooCounter++;
+            $tattooCounter++;
 
             $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(
-                new ReceivedFrom(['receivedFrom' => $params->receivedFrom]), $tatooCounter
+                new ReceivedFrom(['receivedFrom' => $params->receivedFrom]), $tattooCounter
             );
         }
     }
@@ -165,7 +163,7 @@ class AddMultiElements extends BaseWsMessage
             $params->actionCode
         );
 
-        $tatooCounter = 0;
+        $tattooCounter = 0;
 
         if ($params->travellerGroup !== null) {
             $this->addTravellerGroup($params->travellerGroup);
@@ -173,25 +171,25 @@ class AddMultiElements extends BaseWsMessage
             $this->addTravellers($params->travellers);
         }
 
-        $this->addSegments($params->tripSegments, $tatooCounter);
+        $this->addSegments($params->tripSegments, $tattooCounter);
 
         $this->addElements(
             $params->elements,
-            $tatooCounter,
+            $tattooCounter,
             $params->receivedFrom
         );
     }
 
     /**
      * @param Segment[] $segments
-     * @param int $tatooCounter
+     * @param int $tattooCounter
      */
-    protected function addSegments($segments, &$tatooCounter)
+    protected function addSegments($segments, &$tattooCounter)
     {
         $tmpOrigDest = new OriginDestinationDetails();
 
         foreach ($segments as $segment) {
-            $tmpOrigDest->itineraryInfo[] = $this->createSegment($segment, $tatooCounter);
+            $tmpOrigDest->itineraryInfo[] = $this->createSegment($segment, $tattooCounter);
         }
 
         $this->originDestinationDetails[] = $tmpOrigDest;
@@ -199,14 +197,14 @@ class AddMultiElements extends BaseWsMessage
 
     /**
      * @param Segment $segment
-     * @param $tatooCounter
+     * @param $tattooCounter
      * @return ItineraryInfo
      */
-    protected function createSegment($segment, &$tatooCounter)
+    protected function createSegment($segment, &$tattooCounter)
     {
         $createdSegment = null;
 
-        $tatooCounter++;
+        $tattooCounter++;
 
         $reflect = new \ReflectionClass($segment);
         $segmentType = $reflect->getShortName();
@@ -214,7 +212,7 @@ class AddMultiElements extends BaseWsMessage
         switch ($segmentType) {
             case 'Miscellaneous':
                 /** @var Segment\Miscellaneous $segment */
-                $createdSegment = new ItineraryInfo($tatooCounter, ElementManagementItinerary::SEGMENT_MISCELLANEOUS);
+                $createdSegment = new ItineraryInfo($tattooCounter, ElementManagementItinerary::SEGMENT_MISCELLANEOUS);
                 $createdSegment->airAuxItinerary = new AirAuxItinerary($segmentType, $segment);
                 break;
             case 'Air':
@@ -304,10 +302,10 @@ class AddMultiElements extends BaseWsMessage
 
     /**
      * @param Element[] $elements
-     * @param int $tatooCounter (BYREF)
+     * @param int $tattooCounter (BYREF)
      * @param string|null $receivedFromString
      */
-    protected function addElements($elements, &$tatooCounter, $receivedFromString = null)
+    protected function addElements($elements, &$tattooCounter, $receivedFromString = null)
     {
         if ($this->dataElementsMaster === null) {
             $this->dataElementsMaster = new DataElementsMaster();
@@ -318,7 +316,7 @@ class AddMultiElements extends BaseWsMessage
 
         foreach ($elements as $element) {
             if ($element instanceof Element) {
-                $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement($element, $tatooCounter);
+                $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement($element, $tattooCounter);
             }
 
             if ($element instanceof ReceivedFrom) {
@@ -328,22 +326,22 @@ class AddMultiElements extends BaseWsMessage
 
         if ($receivedFromString !== null && !$explicitRf) {
             $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(
-                new ReceivedFrom(['receivedFrom' => $receivedFromString]), $tatooCounter
+                new ReceivedFrom(['receivedFrom' => $receivedFromString]), $tattooCounter
             );
         }
     }
 
     /**
      * @param Element $element
-     * @param int $tatooCounter (BYREF)
+     * @param int $tattooCounter (BYREF)
      * @throws InvalidArgumentException
      * @return DataElementsIndiv
      */
-    protected function createElement($element, &$tatooCounter)
+    protected function createElement($element, &$tattooCounter)
     {
         $createdElement = null;
 
-        $tatooCounter++;
+        $tattooCounter++;
 
         $reflect = new \ReflectionClass($element);
         $elementType = $reflect->getShortName();
@@ -351,7 +349,7 @@ class AddMultiElements extends BaseWsMessage
         switch ($elementType) {
             case 'Contact':
                 /** @var Element\Contact $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_CONTACT_ELEMENT, $tatooCounter);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_CONTACT_ELEMENT, $tattooCounter);
                 $createdElement->freetextData = new FreetextData(
                     $element->value,
                     $element->type
@@ -359,7 +357,7 @@ class AddMultiElements extends BaseWsMessage
                 break;
             case 'FormOfPayment':
                 /** @var Element\FormOfPayment $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_FORM_OF_PAYMENT, $tatooCounter);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_FORM_OF_PAYMENT, $tattooCounter);
                 $createdElement->formOfPayment = new FormOfPayment($element->type);
                 if ($element->type === Fop::IDENT_CREDITCARD) {
                     $createdElement->formOfPayment->fop->creditCardCode = $element->creditCardType;
@@ -381,7 +379,7 @@ class AddMultiElements extends BaseWsMessage
                 break;
             case 'MiscellaneousRemark':
                 /** @var Element\MiscellaneousRemark $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_GENERAL_REMARK, $tatooCounter);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_GENERAL_REMARK, $tattooCounter);
                 $createdElement->miscellaneousRemark = new MiscellaneousRemark(
                     $element->text,
                     $element->type,
@@ -390,7 +388,7 @@ class AddMultiElements extends BaseWsMessage
                 break;
             case 'ReceivedFrom':
                 /** @var Element\ReceivedFrom $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_RECEIVE_FROM, $tatooCounter);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_RECEIVE_FROM, $tattooCounter);
                 $createdElement->freetextData = new FreetextData(
                     $element->receivedFrom,
                     FreetextDetail::TYPE_RECEIVE_FROM
@@ -398,22 +396,22 @@ class AddMultiElements extends BaseWsMessage
                 break;
             case 'ServiceRequest':
                 /** @var Element\ServiceRequest $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST, $tatooCounter);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST, $tattooCounter);
                 $createdElement->serviceRequest = new ServiceRequest($element);
                 break;
             case 'Ticketing':
                 /** @var Element\Ticketing $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_TICKETING_ELEMENT, $tatooCounter);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_TICKETING_ELEMENT, $tattooCounter);
                 $createdElement->ticketElement = new TicketElement($element);
                 break;
             case 'AccountingInfo':
                 /** @var Element\AccountingInfo $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_ACCOUNTING_INFORMATION, $tatooCounter);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_ACCOUNTING_INFORMATION, $tattooCounter);
                 $createdElement->accounting = new Accounting($element);
                 break;
             case 'Address':
                 /** @var Element\Address $element */
-                $createdElement = new DataElementsIndiv($element->type, $tatooCounter);
+                $createdElement = new DataElementsIndiv($element->type, $tattooCounter);
                 if ($element->type === ElementManagementData::SEGNAME_ADDRESS_BILLING_UNSTRUCTURED || $element->type === ElementManagementData::SEGNAME_ADDRESS_MAILING_UNSTRUCTURED) {
                     $createdElement->freetextData = new FreetextData($element->freeText, FreetextDetail::TYPE_MAILING_ADDRESS);
                 } else {
@@ -422,7 +420,7 @@ class AddMultiElements extends BaseWsMessage
                 break;
             case 'FrequentFlyer':
                 /** @var Element\FrequentFlyer $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST, $tatooCounter);
+                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST, $tattooCounter);
                 $createdElement->serviceRequest = new ServiceRequest();
                 $createdElement->serviceRequest->ssr->type = 'FQTV';
                 $createdElement->serviceRequest->ssr->companyId = $element->airline;

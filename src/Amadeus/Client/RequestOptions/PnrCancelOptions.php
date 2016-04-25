@@ -67,11 +67,11 @@ class PnrCancelOptions extends PnrBase
     public $passengers = [];
 
     /**
-     * All elements by Tatoo number to be removed
+     * All elements by Tattoo number to be removed
      *
      * @var int[]
      */
-    public $elementsByTatoo = [];
+    public $elementsByTattoo = [];
 
     /**
      * Set to true if you want to cancel the entire itinerary of the PNR.

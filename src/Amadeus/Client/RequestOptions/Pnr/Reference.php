@@ -32,11 +32,11 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class Reference extends LoadParamsFromArray
 {
-    const TYPE_PASSENGER_TATOO = "PT";
+    const TYPE_PASSENGER_TATTOO = "PT";
 
     const TYPE_PASSENGER_REQUEST = "PR";
 
-    const TYPE_SEGMENT_TATOO = "ST";
+    const TYPE_SEGMENT_TATTOO = "ST";
 
     const TYPE_SEGMENT_REQUEST = "SR";
 
@@ -48,12 +48,12 @@ class Reference extends LoadParamsFromArray
      * 002	Corporate identification number
      * D	Dominant segment in a marriage
      * N	Non dominant segment in a marriage
-     * OT	Other element tatoo reference number
+     * OT	Other element tattoo reference number
      * PR	Passenger Client-request-message-defined ref. nbr
-     * PT	Passenger tatoo reference number
+     * PT	Passenger tattoo reference number
      * SR	Segment Client-request-message-defined ref. nbr
-     * SS	Segment Tatoo+SubTatoo reference number
-     * ST	Segment Tatoo reference number
+     * SS	Segment Tattoo+SubTattoo reference number
+     * ST	Segment Tattoo reference number
      *
      * @var
      */

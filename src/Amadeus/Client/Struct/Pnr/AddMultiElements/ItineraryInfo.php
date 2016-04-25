@@ -48,11 +48,11 @@ class ItineraryInfo
     /**
      * ItineraryInfo constructor.
      *
-     * @param int $tatooNr
+     * @param int $tattooNr
      * @param string $segmentName
      */
-    public function __construct($tatooNr, $segmentName)
+    public function __construct($tattooNr, $segmentName)
     {
-        $this->elementManagementItinerary = new ElementManagementItinerary($tatooNr, $segmentName);
+        $this->elementManagementItinerary = new ElementManagementItinerary($tattooNr, $segmentName);
     }
 }

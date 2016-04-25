@@ -660,7 +660,7 @@ class ClientTest extends BaseTestCase
 
         $expectedMessageResult = new Client\Struct\Offer\Verify(
             1,
-            Client\Struct\Offer\OfferTatoo::SEGMENT_AIR
+            Client\Struct\Offer\OfferTattoo::SEGMENT_AIR
         );
 
         $mockSessionHandler
@@ -877,7 +877,7 @@ class ClientTest extends BaseTestCase
 
         $expectedMessageResult = new Client\Struct\Offer\ConfirmAir(
             new Client\RequestOptions\OfferConfirmAirOptions([
-                'tatooNumber' => 1
+                'tattooNumber' => 1
             ])
         );
 
@@ -905,7 +905,7 @@ class ClientTest extends BaseTestCase
 
         $response = $client->offerConfirmAir(
             new Client\RequestOptions\OfferConfirmAirOptions([
-                'tatooNumber' => 1
+                'tattooNumber' => 1
             ])
         );
 
@@ -1311,7 +1311,7 @@ class ClientTest extends BaseTestCase
 
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $messageResult = 'dummyfarepricepnrwithbookingclassmessage';
+        //$messageResult = 'dummyfarepricepnrwithbookingclassmessage';
 
         $mockSessionHandler
             ->expects($this->never())
@@ -1489,8 +1489,9 @@ class ClientTest extends BaseTestCase
     }
 
 
-
-
+    /**
+     * @return array
+     */
     public function dataProviderMakeMessageOptions()
     {
         return [
@@ -1572,6 +1573,9 @@ class ClientTest extends BaseTestCase
         return new Client($par);
     }
 
+    /**
+     * @return string
+     */
     protected function makePathToDummyWSDL()
     {
         return realpath(

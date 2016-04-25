@@ -49,5 +49,5 @@ class PassengerDef extends LoadParamsFromArray
     /**
      * @var int
      */
-    public $passengerTatoo;
+    public $passengerTattoo;
 }

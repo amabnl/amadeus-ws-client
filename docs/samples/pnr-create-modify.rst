@@ -157,7 +157,7 @@ Provide mandatory SR DOCS with APIS information for flights to the US *(must be 
                 ],
                 'references' => [
                     new Reference([
-                        'type' => Reference::TYPE_PASSENGER_TATOO,
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
                         'id' => 1
                     ])
                 ]
@@ -262,7 +262,7 @@ Add a structured billing address element (e.g. ``AB //CY-COMPANY/NA-NAME/A1-LINE
                 'zipCode' => 'ZIP CODE',
                 'references' => [
                     new Reference([
-                        'type' => Reference::TYPE_PASSENGER_TATOO,
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
                         'id' => 1
                     ])
                 ]
@@ -289,7 +289,7 @@ Add a manual Frequent Flyer number (e.g. ``SR FQTV SN-SN 111111111/P2``)
                 'number' => '111111111',
                 'references' => [
                     new Reference([
-                        'type' => Reference::TYPE_PASSENGER_TATOO,
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
                         'id' => 2
                     ])
                 ]

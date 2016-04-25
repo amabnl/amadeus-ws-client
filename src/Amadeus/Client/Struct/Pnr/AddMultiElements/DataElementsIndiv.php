@@ -22,8 +22,6 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
-use Amadeus\Client\RequestOptions\PnrCancelOptions;
-
 /**
  * DataElementsIndiv
  *
@@ -125,10 +123,10 @@ class DataElementsIndiv
 
     /**
      * @param string $segmentName One of the constants ElementManagementData::SEGNAME_*
-     * @param int $tatoo Unique tatoo number for this element
+     * @param int $tattoo Unique tattoo number for this element
      */
-    public function __construct($segmentName = null, $tatoo = null)
+    public function __construct($segmentName = null, $tattoo = null)
     {
-        $this->elementManagementData = new ElementManagementData($segmentName, $tatoo);
+        $this->elementManagementData = new ElementManagementData($segmentName, $tattoo);
     }
 }

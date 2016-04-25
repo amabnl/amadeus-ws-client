@@ -235,7 +235,7 @@ Cancel the entire itinerary of the PNR in context and do an end transact to save
     );
 
 
-Cancel a PNR element with tatoo number 15 and do an End and Retrieve (ER) to receive the resulting PNR_Reply:
+Cancel a PNR element with tattoo number 15 and do an End and Retrieve (ER) to receive the resulting PNR_Reply:
 
 .. code-block:: php
 
@@ -243,7 +243,7 @@ Cancel a PNR element with tatoo number 15 and do an End and Retrieve (ER) to rec
 
     $cancelReply = $client->pnrCancel(
         new PnrCancelOptions([
-            'elementsByTatoo' => [15],
+            'elementsByTattoo' => [15],
             'actionCode' => PnrCancelOptions::ACTION_END_TRANSACT_RETRIEVE
         ])
     );
@@ -257,7 +257,7 @@ Same as before, but this time without having a PNR in context (you must provide 
     $cancelReply = $client->pnrCancel(
         new PnrCancelOptions([
             'recordLocator' => 'ABC123,
-            'elementsByTatoo' => [15],
+            'elementsByTattoo' => [15],
             'actionCode' => PnrCancelOptions::ACTION_END_TRANSACT_RETRIEVE
         ])
     );
@@ -600,7 +600,7 @@ Verify if an offer is still valid:
 ---------------------
 Offer_ConfirmAirOffer
 ---------------------
-Confirm a given AIR offer by providing office reference / tatoo:
+Confirm a given AIR offer by providing office reference / tattoo:
 
 .. code-block:: php
 
@@ -608,7 +608,7 @@ Confirm a given AIR offer by providing office reference / tatoo:
 
     $response = $client->offerConfirmAir(
         new OfferConfirmAirOptions([
-            'tatooNumber' => 1
+            'tattooNumber' => 1
         ])
     );
 

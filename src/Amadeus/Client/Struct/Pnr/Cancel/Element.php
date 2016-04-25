@@ -30,13 +30,13 @@ namespace Amadeus\Client\Struct\Pnr\Cancel;
  */
 class Element
 {
-    const IDENT_SEGMENT_TATOO = "ST";
+    const IDENT_SEGMENT_TATTOO = "ST";
 
-    const IDENT_PASSENGER_TATOO = "PT";
+    const IDENT_PASSENGER_TATTOO = "PT";
 
-    const IDENT_OFFER_TATOO = "OOT";
+    const IDENT_OFFER_TATTOO = "OOT";
 
-    const IDENT_OTHER_TATOO = "OT";
+    const IDENT_OTHER_TATTOO = "OT";
 
 
     /**
@@ -51,13 +51,13 @@ class Element
      * ESI	ES element with receiver type I
      * ESP	ES element with receiver type P
      * N	Non dominant segment in a marriage
-     * OOT	Offers - Other element tatoo reference number
-     * OT	Other element tatoo reference number
+     * OOT	Offers - Other element tattoo reference number
+     * OT	Other element tattoo reference number
      * PR	Passenger Client-request-message-defined ref. nbr
-     * PT	Passenger tatoo reference number
+     * PT	Passenger tattoo reference number
      * SR	Segment Client-request-message-defined ref. nbr
-     * SS	Segment Tatoo+SubTatoo reference number
-     * ST	Segment Tatoo reference number
+     * SS	Segment Tattoo+SubTattoo reference number
+     * ST	Segment Tattoo reference number
      *
      * @var string
      */

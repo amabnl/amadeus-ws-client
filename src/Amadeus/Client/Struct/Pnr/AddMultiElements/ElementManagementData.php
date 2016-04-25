@@ -127,15 +127,15 @@ class ElementManagementData
      * Create new ElementManagementData
      *
      * @param string|null $segmentName one of the constants SEGNAME_* defined in this class
-     * @param int|null $tatoo Optional tatoo nr to reference this element
+     * @param int|null $tattoo Optional tattoo nr to reference this element
      */
-    public function __construct($segmentName = null, $tatoo = null)
+    public function __construct($segmentName = null, $tattoo = null)
     {
         if (!is_null($segmentName)) {
             $this->segmentName = $segmentName;
         }
-        if (!is_null($tatoo) && is_int($tatoo)) {
-            $this->reference = new Reference(Reference::QUAL_OTHER, $tatoo);
+        if (!is_null($tattoo) && is_int($tattoo)) {
+            $this->reference = new Reference(Reference::QUAL_OTHER, $tattoo);
         }
     }
 }

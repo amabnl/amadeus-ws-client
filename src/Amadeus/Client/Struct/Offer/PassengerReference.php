@@ -84,12 +84,12 @@ class PassengerReference
     public $value;
 
     /**
-     * @param int $tatoo
+     * @param int $tattoo
      * @param string $type
      */
-    public function __construct($tatoo, $type)
+    public function __construct($tattoo, $type)
     {
-        $this->value = $tatoo;
+        $this->value = $tattoo;
         $this->type = $type;
     }
 }

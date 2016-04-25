@@ -37,14 +37,14 @@ class ConfirmAirOfferTest extends BaseTestCase
     public function testCanMakeMessageWithPassengerReassociation()
     {
         $opt = new OfferConfirmAirOptions([
-            'tatooNumber' => 2,
+            'tattooNumber' => 2,
             'passengerReassociation' => [
                 new PassengerReAssocOptions([
                     'pricingReference' => 5,
                     'paxReferences' => [
                         new PassengerDef([
                             'passengerType' => "PA", //ADULT
-                            'passengerTatoo' => 1
+                            'passengerTattoo' => 1
                         ])
                     ]
                 ])
@@ -53,9 +53,9 @@ class ConfirmAirOfferTest extends BaseTestCase
 
         $message = new ConfirmAir($opt);
 
-        $this->assertEquals(2, $message->offerTatoo->reference->value);
-        $this->assertEquals(Reference::TYPE_OFFER_TATOO, $message->offerTatoo->reference->type);
-        $this->assertEquals(OfferTatoo::SEGMENT_AIR, $message->offerTatoo->segmentName);
+        $this->assertEquals(2, $message->offerTattoo->reference->value);
+        $this->assertEquals(Reference::TYPE_OFFER_TATTOO, $message->offerTattoo->reference->type);
+        $this->assertEquals(OfferTattoo::SEGMENT_AIR, $message->offerTattoo->segmentName);
         $this->assertEquals('PA', $message->passengerReassociation[0]->paxReference->passengerReference[0]->type);
         $this->assertEquals(1, $message->passengerReassociation[0]->paxReference->passengerReference[0]->value);
         $this->assertEquals(PricingRecordId::REFTYPE_PRODQUOTREC, $message->passengerReassociation[0]->pricingRecordId->referenceType);

@@ -33,12 +33,12 @@ class Reference
     /**
      * Offer Other element Tattoo reference number
      */
-    const TYPE_OFFER_TATOO = "OOT";
+    const TYPE_OFFER_TATTOO = "OOT";
 
     /**
      * @var string
      */
-    public $type = self::TYPE_OFFER_TATOO;
+    public $type = self::TYPE_OFFER_TATTOO;
 
     /**
      * Identification number.

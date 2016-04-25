@@ -44,7 +44,7 @@ class PricePnrBcFareBasis extends LoadParamsFromArray
     public $fareBasisCode;
 
     /**
-     * The key is the segment tatoo number, the value is the segment type (self::SEGREFTYPE_*)
+     * The key is the segment tattoo number, the value is the segment type (self::SEGREFTYPE_*)
      *
      * @var array
      */

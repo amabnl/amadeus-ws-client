@@ -68,11 +68,11 @@ class Cancel extends BaseWsMessage
             $this->cancelElements[] = new Cancel\Elements(Elements::ENTRY_ITINERARY);
         }
 
-        if (!empty($params->elementsByTatoo)) {
+        if (!empty($params->elementsByTattoo)) {
             $tmp = new Cancel\Elements(Elements::ENTRY_ELEMENT);
 
-            foreach ($params->elementsByTatoo as $tatoo) {
-                $tmp->element[] = new Element($tatoo, Element::IDENT_OTHER_TATOO);
+            foreach ($params->elementsByTattoo as $tattoo) {
+                $tmp->element[] = new Element($tattoo, Element::IDENT_OTHER_TATTOO);
             }
 
             $this->cancelElements[] = $tmp;
@@ -82,7 +82,7 @@ class Cancel extends BaseWsMessage
             $tmp = new Cancel\Elements(Elements::ENTRY_NAME_INTEGRATION);
 
             foreach ($params->groupPassengers as $offerRef) {
-                $tmp->element[] = new Element($offerRef, Element::IDENT_PASSENGER_TATOO);
+                $tmp->element[] = new Element($offerRef, Element::IDENT_PASSENGER_TATTOO);
             }
 
             $this->cancelElements[] = $tmp;
@@ -92,7 +92,7 @@ class Cancel extends BaseWsMessage
             $tmp = new Cancel\Elements(Elements::ENTRY_ELEMENT);
 
             foreach ($params->passengers as $offerRef) {
-                $tmp->element[] = new Element($offerRef, Element::IDENT_PASSENGER_TATOO);
+                $tmp->element[] = new Element($offerRef, Element::IDENT_PASSENGER_TATTOO);
             }
 
             $this->cancelElements[] = $tmp;
@@ -102,7 +102,7 @@ class Cancel extends BaseWsMessage
             $tmp = new Cancel\Elements(Elements::ENTRY_ELEMENT);
 
             foreach ($params->offers as $offerRef) {
-                $tmp->element[] = new Element($offerRef, Element::IDENT_OFFER_TATOO);
+                $tmp->element[] = new Element($offerRef, Element::IDENT_OFFER_TATTOO);
             }
 
             $this->cancelElements[] = $tmp;

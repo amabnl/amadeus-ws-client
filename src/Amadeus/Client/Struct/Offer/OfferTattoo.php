@@ -23,12 +23,12 @@
 namespace Amadeus\Client\Struct\Offer;
 
 /**
- * OfferTatoo
+ * OfferTattoo
  *
  * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class OfferTatoo
+class OfferTattoo
 {
     /**
      * AIR	Air segment
