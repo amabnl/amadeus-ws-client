@@ -105,7 +105,10 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
 
 
     /**
-     * SoapClient options used during initialisation
+     * Default SoapClient options used during initialisation
+     *
+     * Can be overridden by providing custom options in
+     * Amadeus\Client\Params\SessionHandlerParams::$soapClientOptions
      *
      * @var array
      */

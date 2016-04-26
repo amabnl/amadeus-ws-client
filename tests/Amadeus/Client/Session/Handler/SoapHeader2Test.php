@@ -182,6 +182,27 @@ class SoapHeader2Test extends BaseTestCase
         $this->assertNull($result);
     }
 
+    public function testCanMakeSoapClientOptionsWithOverrides()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandlerParams->soapClientOptions['compression'] = SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP;
+
+        $sessionHandler = new SoapHeader2($sessionHandlerParams);
+
+        $expected = [
+            'trace' 		=> 1,
+            'exceptions' 	=> 1,
+            'soap_version' 	=> SOAP_1_1,
+            'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP,
+            'classmap' => Client\Session\Handler\Classmap::$soapheader2map
+        ];
+
+        $meth = self::getMethod($sessionHandler, 'makeSoapClientOptions');
+        $result = $meth->invoke($sessionHandler);
+
+        $this->assertEquals($expected, $result);
+    }
+
     /**
      * @param \SoapClient|null $overrideSoapClient
      * @return SessionHandlerParams

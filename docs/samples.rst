@@ -83,7 +83,6 @@ You can restore a previous current session after you retrieved it from your sess
 
     $client->setSessionData($previousSessionData);
 
-
 *********************
 Handling the response
 *********************
@@ -123,6 +122,38 @@ The Amadeus web services can be tricky with regards to error detection. In most 
 We try to ease your pain a little by analyzing the messages we support and look for error nodes. If any are found, we throw them as exceptions.
 
 To override this behaviour, look at the ``Amadeus\Client\ResponseHandler\ResponseHandlerInterface``.
+
+**************************
+Custom \SoapClient options
+**************************
+
+You can override the default ``\SoapClient`` options by passing them in the Session Handler Params:
+
+.. code-block:: php
+
+    $params = new Params([
+        'sessionHandlerParams' => [
+            'soapHeaderVersion' => Client::HEADER_V4, //This is the default value, can be omitted.
+            'wsdl' => '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20160101_080000.wsdl', //Points to the location of the WSDL file for your WSAP. Make sure the associated XSD's are also available.
+            'stateful' => false, //Enable stateful messages by default - can be changed at will to switch between stateless & stateful.
+            'logger' => new Psr\Log\NullLogger(),
+            'soapClientOptions' => [
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP
+            ]
+            'authParams' => [
+                'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
+                'userId' => 'WSBENXXX', //Also known as 'Originator' for Soap Header 1 & 2 WSDL's
+                'passwordData' => 'dGhlIHBhc3N3b3Jk' // **base 64 encoded** password
+            ]
+        ],
+        'requestCreatorParams' => [
+            'receivedFrom' => 'my test project' // The "Received From" string that will be visible in PNR History
+        ]
+    ]);
+
+\SoapClient options provided as such will override the default settings defined in
+``Amadeus\Client\Session\Handler\Base::$soapClientOptions`` and must be provided in the correct
+format as specified in the PHP manual: http://php.net/manual/en/soapclient.soapclient.php
 
 ***
 PNR

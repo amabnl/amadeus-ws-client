@@ -610,7 +610,27 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $actual = $sessionHandler->getMessagesAndVersions();
 
         $this->assertEquals($expected, $actual);
+    }
 
+    public function testCanMakeSoapClientOptionsWithOverrides()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandlerParams->soapClientOptions['compression'] = SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP;
+
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $expected = [
+            'trace' 		=> 1,
+            'exceptions' 	=> 1,
+            'soap_version' 	=> SOAP_1_1,
+            'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP,
+            'classmap' => Client\Session\Handler\Classmap::$soapheader4map
+        ];
+
+        $meth = self::getMethod($sessionHandler, 'makeSoapClientOptions');
+        $result = $meth->invoke($sessionHandler);
+
+        $this->assertEquals($expected, $result);
     }
 
     /**

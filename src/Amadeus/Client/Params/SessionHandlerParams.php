@@ -68,6 +68,17 @@ class SessionHandlerParams
     public $logger;
 
     /**
+     * Override the default \SoapClient options
+     *
+     * used when constructing \SoapClient
+     *
+     * See Amadeus\Client\Session\Handler\Base::$soapClientOptions for defaults
+     *
+     * @var array
+     */
+    public $soapClientOptions = [];
+
+    /**
      * Overridden soap client
      *
      * @var \SoapClient
@@ -107,6 +118,9 @@ class SessionHandlerParams
 
             if (isset($params['overrideSoapClient']) && $params['overrideSoapClient'] instanceof \SoapClient) {
                 $this->overrideSoapClient = $params['overrideSoapClient'];
+            }
+            if (isset($params['soapClientOptions']) && is_array($params['soapClientOptions'])) {
+                $this->soapClientOptions = $params['soapClientOptions'];
             }
         }
     }

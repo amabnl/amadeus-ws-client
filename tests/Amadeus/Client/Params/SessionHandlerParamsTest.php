@@ -96,4 +96,27 @@ class SessionHandlerParamsTest extends BaseTestCase
         $this->assertEquals(Client::HEADER_V4,$par->soapHeaderVersion);
         $this->assertNull($par->overrideSoapClient);
     }
+
+    public function testCanMakeSessionHandlerParamsWithSoapClientOptions()
+    {
+        $par = new Params\SessionHandlerParams([
+            'wsdl' => realpath(dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . "testfiles" . DIRECTORY_SEPARATOR . "dummywsdl.wsdl"),
+            'stateful' => true,
+            'authParams' => new Params\AuthParams([
+                'officeId' => 'BRUXXXXXX',
+                'userId' => 'WSXXXXXX',
+                'passwordData' => base64_encode('TEST')
+            ]),
+            'soapClientOptions' => [
+                'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP
+            ]
+        ]);
+
+        $this->assertInternalType('array', $par->soapClientOptions);
+        $this->assertNotEmpty($par->soapClientOptions);
+        $this->assertEquals(
+            SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP,
+            $par->soapClientOptions['compression']
+        );
+    }
 }

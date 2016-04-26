@@ -182,6 +182,10 @@ class SoapHeader2 extends Base
         $options = $this->soapClientOptions;
         $options['classmap'] = array_merge(Classmap::$soapheader2map, Classmap::$map);
 
+        if (!empty($this->params->soapClientOptions)) {
+            $options = array_merge($options, $this->params->soapClientOptions);
+        }
+
         return $options;
     }
 }

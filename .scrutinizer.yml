@@ -4,11 +4,11 @@ filter:
 checks:
     php: true
 coding_style:
-  php:
-      indentation:
-          general:
-              size: 1
+    php:
+        indentation:
+            general:
+                size: 1
 build: true
-  environment:
-      php:
-          version: 5.6
+    environment:
+        php:
+            version: 5.6
