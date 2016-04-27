@@ -132,6 +132,16 @@ class Client
     }
 
     /**
+     * Get the last raw XML message that was received
+     *
+     * @return string|null
+     */
+    public function getLastResponse()
+    {
+        return $this->sessionHandler->getLastResponse();
+    }
+
+    /**
      * Get session information for authenticated session
      *
      * - sessionId
@@ -140,19 +150,9 @@ class Client
      *
      * @return array|null
      */
-    public function getSessionInfo()
+    public function getSessionData()
     {
         return $this->sessionHandler->getSessionData();
-    }
-
-    /**
-     * Get the last raw XML message that was received
-     *
-     * @return string|null
-     */
-    public function getLastResponse()
-    {
-        return $this->sessionHandler->getLastResponse();
     }
 
     /**

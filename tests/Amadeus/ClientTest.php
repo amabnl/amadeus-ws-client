@@ -1483,7 +1483,7 @@ class ClientTest extends BaseTestCase
 
         $client = new Client($par);
 
-        $actual = $client->getSessionInfo();
+        $actual = $client->getSessionData();
 
         $this->assertEquals($mockedSession, $actual);
     }
