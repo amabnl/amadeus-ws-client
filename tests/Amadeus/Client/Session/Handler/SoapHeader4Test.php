@@ -430,7 +430,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $overrideSoapClient
             ->expects($this->any())
             ->method('PNR_Retrieve')
-            ->will($this->returnValue(''));
+            ->will($this->returnValue(new \stdClass()));
 
         $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
@@ -446,8 +446,12 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
             ['asString'=>true,'endSession'=>false]
         );
 
-        $this->assertInternalType('string', $messageResponse);
-        $this->assertEquals($dummyPnrReplyExtractedMessage, $messageResponse);
+        $expectedResult = new Client\Session\Handler\SendResult();
+        $expectedResult->responseXml = $dummyPnrReplyExtractedMessage;
+        $expectedResult->responseObject = new \stdClass();
+
+
+        $this->assertEquals($expectedResult, $messageResponse);
     }
 
     public function testCanHandleMessageThrowingSoapFault()
@@ -580,10 +584,14 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $messageResponse = $sessionHandler->sendMessage(
             'PNR_Retrieve',
             $pnrRetrieveMessage,
-            ['asString'=>true,'endSession'=>false]
+            ['asString' => true, 'endSession' => false]
         );
 
-        $this->assertEquals($this->getTestFile('acspnrreply.xml'), $messageResponse);
+        $expectedResult = new Client\Session\Handler\SendResult();
+        $expectedResult->responseXml = $this->getTestFile('acspnrreply.xml');
+        $expectedResult->responseObject = $this->getTestFile('acspnr.xml');
+
+        $this->assertEquals($expectedResult, $messageResponse);
 
         $sessionData = $sessionHandler->getSessionData();
 
@@ -631,6 +639,74 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $result = $meth->invoke($sessionHandler);
 
         $this->assertEquals($expected, $result);
+    }
+
+    public function testCanMakeSessionHandlerWithoutLogger()
+    {
+        $overrideSoapClient = $this->getMock(
+            'Amadeus\Client\SoapClient',
+            ['__getLastRequest', '__getLastResponse', 'PNR_Retrieve'],
+            [],
+            '',
+            false
+        );
+
+        $dummyPnrRequest = $this->getTestFile('dummyPnrRequest.txt');
+        $dummyPnrReply = $this->getTestFile('sessionheadertestresponse.txt');
+        $dummyPnrReplyExtractedMessage = $this->getTestFile('dummyPnrReplyExtractedMessage.txt');
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastRequest')
+            ->will($this->returnValue($dummyPnrRequest));
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastResponse')
+            ->will($this->returnValue($dummyPnrReply));
+
+        $overrideSoapClient
+            ->expects($this->any())
+            ->method('PNR_Retrieve')
+            ->will($this->returnValue(new \stdClass()));
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
+        $sessionHandlerParams->logger = null;
+
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
+            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
+            'ABC123'
+        );
+
+        $messageResponse = $sessionHandler->sendMessage(
+            'PNR_Retrieve',
+            $pnrRetrieveMessage,
+            ['asString'=>true,'endSession'=>false]
+        );
+
+        $expectedResult = new Client\Session\Handler\SendResult();
+        $expectedResult->responseXml = $dummyPnrReplyExtractedMessage;
+        $expectedResult->responseObject = new \stdClass();
+
+        $this->assertEquals($expectedResult, $messageResponse);
+    }
+
+    public function testCanTryAuthenticateWithInvalidSessionData()
+    {
+        $invalidSessionData = [
+            'noSessionID' => 'ABCA2312KJL',
+            'wrongSequence' => 3
+        ];
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $isAuthenticated = $sessionHandler->setSessionData($invalidSessionData);
+
+        $this->assertFalse($isAuthenticated);
     }
 
     /**

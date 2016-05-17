@@ -107,6 +107,7 @@ class SoapHeader4 extends Base
      * @param string $lastResponse
      * @param array $messageOptions
      * @param mixed $result
+     * @return void
      */
     protected function handlePostMessage($messageName, $lastResponse, $messageOptions, $result)
     {

@@ -20,29 +20,22 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler;
-
-use Amadeus\Client\Exception;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+namespace Amadeus\Client\Session\Handler;
 
 /**
- * ResponseHandlerInterface
+ * SendResult
  *
- * @package Amadeus\Client\ResponseHandler
+ * @package Amadeus\Client\Session\Handler
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface ResponseHandlerInterface
+class SendResult
 {
     /**
-     * Analyze the response from the server and throw an exception when an error has been detected.
-     *
-     * @param SendResult $sendResult The Send Result from the Session Handler
-     * @param string $messageName The message that was called
-     *
-     * @throws Exception When an error is detected
-     * @throws \RuntimeException When there is a problem calling the response handler
-     * @return Result
+     * @var string
      */
-    public function analyzeResponse($sendResult, $messageName);
+    public $responseXml;
+    /**
+     * @var \stdClass|array
+     */
+    public $responseObject;
 }

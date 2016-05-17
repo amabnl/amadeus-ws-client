@@ -22,6 +22,8 @@
 
 namespace Test\Amadeus\Client\ResponseHandler;
 
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 use Test\Amadeus\BaseTestCase;
 use Amadeus\Client\ResponseHandler;
 
@@ -33,35 +35,93 @@ use Amadeus\Client\ResponseHandler;
  */
 class BaseTest extends BaseTestCase
 {
-    public function testCanThrowCorrectErrorForEmptyQueue()
+    public function testCanFindTopLevelErrorMessageInPnrReply()
     {
-        $this->setExpectedException('\Amadeus\Client\Exception', "Queue category empty", 926);
+        $respHandler = new ResponseHandler\Base();
 
-        $xml = $this->getTestFile('emptyqueueresponse.txt');
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('faultyPnrCreateTopError.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_AddMultiElements');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->errors));
+        $this->assertEquals('102', $result->errors[0]->code);
+        $this->assertEquals("CHECK DATE", $result->errors[0]->text);
+        $this->assertEquals('general', $result->errors[0]->level);
+    }
+
+    public function testCanFindSegmentLevelErrorMessageInPnrReply()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('faultyPnrCreateSegmentError.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_AddMultiElements');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->errors));
+        $this->assertEquals('102', $result->errors[0]->code);
+        $this->assertEquals("CHECK DATE", $result->errors[0]->text);
+        $this->assertEquals('segment', $result->errors[0]->level);
+    }
+
+    public function testCanFindElementLevelErrorMessageInPnrReply()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('faultyPnrCreateElementError.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_AddMultiElements');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->errors));
+        $this->assertEquals('4498', $result->errors[0]->code);
+        $this->assertEquals("COMBINATION OF ELEMENTS NOT ALLOWED", $result->errors[0]->text);
+        $this->assertEquals('element', $result->errors[0]->level);
+    }
+
+    public function testCanSetWarningStatusForEmptyQueue()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('emptyqueueresponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Queue_List');
+
+        $this->assertEquals(Result::STATUS_WARN, $result->status);
+        $this->assertEquals(1, count($result->warnings));
+        $this->assertEquals(926, $result->warnings[0]->code);
+        $this->assertEquals("Queue category empty", $result->warnings[0]->text);
+    }
+
+    public function testWillSetGenericWarningForUnknownError()
+    {
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('emptyqueueresponsedummy666error.txt');
 
         $respHandler = new ResponseHandler\Base();
 
-        $respHandler->analyzeResponse($xml, 'Queue_List');
+        $result = $respHandler->analyzeResponse($sendResult, 'Queue_List');
+
+        $this->assertEquals(Result::STATUS_WARN, $result->status);
+        $this->assertEquals(1, count($result->warnings));
+        $this->assertEquals(666, $result->warnings[0]->code);
+        $this->assertEquals("QUEUE ERROR '666' (Error message unavailable)", $result->warnings[0]->text);
     }
 
-    public function testWillThrowGenericErrorForUnknownError()
+    public function testWillReturnUnknownStatusWhenHandlingResponseFromUnknownMessage()
     {
-        $this->setExpectedException('\Amadeus\Client\Exception', " QUEUE ERROR '666' (Error message unavailable)", 666);
-
-        $xml = $this->getTestFile('emptyqueueresponsedummy666error.txt');
-
         $respHandler = new ResponseHandler\Base();
 
-        $respHandler->analyzeResponse($xml, 'Queue_List');
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareDisplayFaresForCityPairReply.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_DisplayFaresForCityPair');
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
     }
-
-    public function testWillThrowRuntimeExceptionWhenHandlingResponseFromUnknownMessage()
-    {
-        $this->setExpectedException('\RuntimeException', 'is not implemented');
-
-        $respHandler = new ResponseHandler\Base();
-
-        $respHandler->analyzeResponse('', 'Fare_DisplayFaresForCityPair');
-    }
-
 }

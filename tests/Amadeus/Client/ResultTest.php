@@ -20,29 +20,33 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler;
+namespace Test\Amadeus\Client;
 
-use Amadeus\Client\Exception;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * ResponseHandlerInterface
+ * ResultTest
  *
- * @package Amadeus\Client\ResponseHandler
+ * @package Test\Amadeus\Client
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface ResponseHandlerInterface
+class ResultTest extends BaseTestCase
 {
-    /**
-     * Analyze the response from the server and throw an exception when an error has been detected.
-     *
-     * @param SendResult $sendResult The Send Result from the Session Handler
-     * @param string $messageName The message that was called
-     *
-     * @throws Exception When an error is detected
-     * @throws \RuntimeException When there is a problem calling the response handler
-     * @return Result
-     */
-    public function analyzeResponse($sendResult, $messageName);
+    public function testCanConstruct()
+    {
+        $responseObject = new \stdClass();
+        $responseObject->dummyProp = new \stdClass();
+
+        $dummySendResult = new SendResult();
+        $dummySendResult->responseObject = $responseObject;
+        $dummySendResult->responseXml = 'dummy XML message';
+
+        $result = new Result($dummySendResult);
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals('dummy XML message', $result->responseXml);
+        $this->assertEquals($responseObject, $result->response);
+    }
 }

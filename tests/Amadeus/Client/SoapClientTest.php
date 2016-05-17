@@ -134,7 +134,7 @@ class SoapClientTest extends BaseTestCase
    </oas:UsernameToken>
   </oas:Security>
   <ns3:MessageID>FF93A63C-9002-942A-13D5-90BCA97D3C15</ns3:MessageID>
-  <ns3:To>https://nodeD1.test.webservices.amadeus.com/1ASIWACSBEN</ns3:To>
+  <ns3:To>https://nodeD1.test.webservices.amadeus.com/1ASIWXXXXXX</ns3:To>
   <ns3:Action>http://webservices.amadeus.com/PNRRET_11_3_1A</ns3:Action>
   <ns4:AMA_SecurityHostedUser>
    <ns4:UserID POS_Type="1" PseudoCityCode="BRUBG21HE" RequestorType="U"/>

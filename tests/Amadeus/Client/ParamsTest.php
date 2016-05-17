@@ -144,5 +144,35 @@ class ParamsTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Params\SessionHandlerParams', $params->sessionHandlerParams);
         $this->assertInstanceOf('Amadeus\Client\Params\RequestCreatorParams', $params->requestCreatorParams);
     }
+
+    public function testCanCreateParamsWithAuthParamsObject()
+    {
+        $authParams = new Params\AuthParams([
+            'officeId' => 'BRUXXXXXX',
+            'originatorTypeCode' => 'U',
+            'userId' => 'WSXXXXXX',
+            'organizationId' => 'NMC-XXXXXX',
+            'passwordLength' => '4',
+            'passwordData' => base64_encode('TEST')
+        ]);
+
+        $theParamArray = [
+            'authParams' => $authParams,
+            'sessionHandlerParams' => [
+                'wsdl' => '/var/fake/file/path',
+                'stateful' => true,
+                'logger' => new NullLogger()
+            ],
+            'requestCreatorParams' => [
+                'originatorOfficeId' => 'BRUXXXXXX',
+                'receivedFrom' => 'some RF string'
+            ]
+        ];
+
+        $params = new Params($theParamArray);
+
+        $this->assertEquals($authParams, $params->authParams);
+        $this->assertNull($params->sessionHandlerParams->authParams);
+    }
 }
 

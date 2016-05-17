@@ -20,29 +20,42 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler;
-
-use Amadeus\Client\Exception;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+namespace Amadeus\Client\Result;
 
 /**
- * ResponseHandlerInterface
+ * NotOk
  *
- * @package Amadeus\Client\ResponseHandler
+ * @package Amadeus\Client\Result
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface ResponseHandlerInterface
+class NotOk
 {
     /**
-     * Analyze the response from the server and throw an exception when an error has been detected.
-     *
-     * @param SendResult $sendResult The Send Result from the Session Handler
-     * @param string $messageName The message that was called
-     *
-     * @throws Exception When an error is detected
-     * @throws \RuntimeException When there is a problem calling the response handler
-     * @return Result
+     * @var mixed
      */
-    public function analyzeResponse($sendResult, $messageName);
+    public $code;
+
+    /**
+     * @var string
+     */
+    public $text;
+
+    /**
+     * @var string
+     */
+    public $level;
+
+    /**
+     * NotOk constructor.
+     *
+     * @param string|int|null $code
+     * @param string|null $text
+     * @param string|null $level
+     */
+    public function __construct($code = null, $text = null, $level = null)
+    {
+        $this->code = $code;
+        $this->text = $text;
+        $this->level = $level;
+    }
 }

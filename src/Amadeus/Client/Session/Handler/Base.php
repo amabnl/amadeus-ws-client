@@ -190,19 +190,19 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      * @param string $messageName Method Operation name as defined in the WSDL.
      * @param BaseWsMessage $messageBody
      * @param array $messageOptions options: bool 'asString', bool 'endSession'
-     * @return mixed
+     * @return SendResult
      * @throws \InvalidArgumentException
      * @throws Client\Exception
      * @throws \SoapFault
      */
     public function sendMessage($messageName, Client\Struct\BaseWsMessage $messageBody, $messageOptions = [])
     {
-        $result = null;
+        $result = new SendResult();
 
         $this->prepareForNextMessage($messageName, $messageOptions);
 
         try {
-            $result = $this->getSoapClient()->$messageName($messageBody);
+            $result->responseObject = $this->getSoapClient()->$messageName($messageBody);
 
             $this->logRequestAndResponse($messageName);
 
@@ -230,9 +230,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
             throw new Client\Exception($ex->getMessage(), $ex->getCode(), $ex);
         }
 
-        if ($messageOptions['asString'] === true) {
-            $result = Client\Util\MsgBodyExtractor::extract($this->getLastResponse());
-        }
+        $result->responseXml = Client\Util\MsgBodyExtractor::extract($this->getLastResponse());
 
         return $result;
     }

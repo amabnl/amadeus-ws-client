@@ -76,10 +76,12 @@ class SoapHeader2Test extends BaseTestCase
             ->method('__getLastResponse')
             ->will($this->returnValue($dummyPnrReply));
 
+        $dummyPnrResponseObject = new \stdClass();
+
         $overrideSoapClient
             ->expects($this->any())
             ->method('PNR_Retrieve')
-            ->will($this->returnValue(''));
+            ->will($this->returnValue($dummyPnrResponseObject));
 
         $handler = new SoapHeader2($this->makeSessionHandlerParams(
             $overrideSoapClient
@@ -99,8 +101,11 @@ class SoapHeader2Test extends BaseTestCase
             ]
         );
 
-        $this->assertInternalType('string', $messageResponse);
-        $this->assertEquals($dummyPnrReplyExtractedMessage, $messageResponse);
+        $expectedResult = new SendResult();
+        $expectedResult->responseXml = $dummyPnrReplyExtractedMessage;
+        $expectedResult->responseObject = new \stdClass();
+
+        $this->assertEquals($expectedResult, $messageResponse);
     }
 
     public function testCanSendAuthCallAndStartSession()
@@ -116,9 +121,14 @@ class SoapHeader2Test extends BaseTestCase
         $dummyRequest = $this->getTestFile('soapheader2' . DIRECTORY_SEPARATOR . 'dummySecurityAuth.txt');
         $dummyReply = $this->getTestFile('soapheader2' . DIRECTORY_SEPARATOR . 'dummySecurityAuthReply.txt');
 
-        $messageResult = new \stdClass();
-        $messageResult->processStatus = new \stdClass();
-        $messageResult->processStatus->statusCode = 'P';
+        $wsResponse = new \stdClass();
+        $wsResponse->processStatus = new \stdClass();
+        $wsResponse->processStatus->statusCode = 'P';
+
+        $messageResult = new SendResult();
+        $messageResult->responseObject = $wsResponse;
+        $messageResult->responseXml = Client\Util\MsgBodyExtractor::extract($dummyReply);
+
 
         $overrideSoapClient
             ->expects($this->atLeastOnce())
@@ -133,7 +143,7 @@ class SoapHeader2Test extends BaseTestCase
         $overrideSoapClient
             ->expects($this->any())
             ->method('Security_Authenticate')
-            ->will($this->returnValue($messageResult));
+            ->will($this->returnValue($wsResponse));
 
         $handlerParams = $this->makeSessionHandlerParams(
             $overrideSoapClient
@@ -201,6 +211,24 @@ class SoapHeader2Test extends BaseTestCase
         $result = $meth->invoke($sessionHandler);
 
         $this->assertEquals($expected, $result);
+    }
+
+    public function testSetStatelessNotSupported()
+    {
+        $this->setExpectedException('\Amadeus\Client\Session\Handler\UnsupportedOperationException');
+
+        $sessionHandler = new SoapHeader2($this->makeSessionHandlerParams());
+
+        $sessionHandler->setStateful(false);
+    }
+
+    public function testGetStatefullWillReturnTrue()
+    {
+        $sessionHandler = new SoapHeader2($this->makeSessionHandlerParams());
+
+        $isStateful = $sessionHandler->isStateful();
+
+        $this->assertTrue($isStateful);
     }
 
     /**

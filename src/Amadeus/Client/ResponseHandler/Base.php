@@ -23,7 +23,8 @@
 namespace Amadeus\Client\ResponseHandler;
 
 use Amadeus\Client\Exception;
-use Amadeus\Client\Util\MsgBodyExtractor;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 
 /**
  * Base Response Handler
@@ -43,55 +44,110 @@ class Base implements ResponseHandlerInterface
     /**
      * Analyze the response from the server and throw an exception when an error has been detected.
      *
-     * @param string $response The last response received by the client
+     * @param SendResult $sendResult The Send Result from the Session Handler
      * @param string $messageName The message that was called
      *
      * @throws Exception
      * @throws \RuntimeException
-     * @return bool
+     * @return Result
      */
-    public function analyzeResponse($response, $messageName)
+    public function analyzeResponse($sendResult, $messageName)
     {
         $methodName = 'analyze' . str_replace('_', '', ucfirst($messageName)).'Response';
 
         if (method_exists($this, $methodName)) {
             return $this->$methodName(
-                MsgBodyExtractor::extract($response)
+                $sendResult
             );
         } else {
-            throw new \RuntimeException('Response checker for ' . $messageName . ' is not implemented');
+            return new Result($sendResult, Result::STATUS_UNKNOWN);
         }
     }
 
     /**
-     * @param string $response PNR_AddMultiElements XML string
-     * @return bool
-     * @throws Exception
+     * @param SendResult $response PNR_AddMultiElements result
+     * @return Result
      */
     protected function analyzePnrAddMultiElementsResponse($response)
     {
+        $analyzeResponse = new Result($response);
 
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        //General Errors:
+        $queryAllErrorCodes = "//m:generalErrorInfo//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCode";
+        $queryAllErrorMsg = "//m:generalErrorInfo/m:errorWarningDescription/m:freeText";
+
+        $errorCodeNodeList = $domXpath->query($queryAllErrorCodes);
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $code = $errorCodeNodeList->item(0)->nodeValue;
+            $errorTextNodeList = $domXpath->query($queryAllErrorMsg);
+            $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
+
+            $analyzeResponse->errors[] = new Result\NotOk($code, $message, 'general');
+        }
+
+        //Segment errors:
+        $querySegmentErrorCodes = "//m:originDestinationDetails//m:errorInfo/m:errorOrWarningCodeDetails/m:errorDetails/m:errorCode";
+        $querySegmentErrorMsg = "//m:originDestinationDetails//m:errorInfo/m:errorWarningDescription/m:freeText";
+
+        $errorCodeNodeList = $domXpath->query($querySegmentErrorCodes);
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $code = $errorCodeNodeList->item(0)->nodeValue;
+            $errorTextNodeList = $domXpath->query($querySegmentErrorMsg);
+            $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
+
+            $analyzeResponse->errors[] = new Result\NotOk($code, $message, 'segment');
+        }
+
+        //Element errors:
+        $queryElementErrorCodes = "//m:dataElementsIndiv/m:elementErrorInformation/m:errorOrWarningCodeDetails/m:errorDetails/m:errorCode";
+        $queryElementErrorMsg = "//m:dataElementsIndiv//m:elementErrorInformation/m:errorWarningDescription/m:freeText";
+
+        $errorCodeNodeList = $domXpath->query($queryElementErrorCodes);
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $code = $errorCodeNodeList->item(0)->nodeValue;
+
+            $errorTextNodeList = $domXpath->query($queryElementErrorMsg);
+            $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
+
+            $analyzeResponse->errors[] = new Result\NotOk($code, $message, 'element');
+        }
+
+
+        return $analyzeResponse;
     }
 
     /**
-     * @param string $response Queue_List XML string
-     * @return bool
+     * @param SendResult $response Queue_List result
+     * @return Result
      * @throws Exception
      */
     protected function analyzeQueueListResponse($response)
     {
-        $analysisResponse = true;
+        $analysisResponse = new Result($response);
 
         $domDoc = new \DOMDocument('1.0', 'UTF-8');
-        $domDoc->loadXML($response);
+        $domDoc->loadXML($response->responseXml);
 
         $errorCodeNode = $domDoc->getElementsByTagName("errorCode")->item(0);
 
         if (!is_null($errorCodeNode)) {
+            $analysisResponse->status = Result::STATUS_WARN;
+
             $errorCode = $errorCodeNode->nodeValue;
             $errorMessage = $this->getErrorTextFromQueueErrorCode($errorCode);
 
-            throw new Exception($errorMessage, $errorCode);
+            $analysisResponse->warnings[] = new Result\NotOk($errorCode, $errorMessage);
         }
 
         return $analysisResponse;
@@ -128,7 +184,7 @@ class Base implements ResponseHandlerInterface
         $errorMessage = (array_key_exists($errorCode, $recognizedErrors)) ? $recognizedErrors[$errorCode] : '';
 
         if ($errorMessage === '') {
-            $errorMessage = " QUEUE ERROR '" . $errorCode . "' (Error message unavailable)";
+            $errorMessage = "QUEUE ERROR '" . $errorCode . "' (Error message unavailable)";
         }
 
         return $errorMessage;
@@ -136,18 +192,46 @@ class Base implements ResponseHandlerInterface
 
 
     /**
+     * Make a Xpath-queryable object for an XML string
+     *
      * @param string $response
      * @return \DOMXPath
+     * @throws Exception when there's a problem loading the message
      */
     protected function makeDomXpath($response)
     {
         $domDoc = new \DOMDocument('1.0', 'UTF-8');
-        $domDoc->loadXML($response);
-        $uri = $domDoc->documentElement->lookupNamespaceUri(null);
+        $domXpath = null;
+        $loadResult = $domDoc->loadXML($response);
 
-        $domXpath = new \DOMXPath($domDoc);
-        $domXpath->registerNamespace(self::XMLNS_PREFIX, $uri);
+        if ($loadResult === true) {
+            $uri = $domDoc->documentElement->lookupNamespaceUri(null);
+
+            $domXpath = new \DOMXPath($domDoc);
+            $domXpath->registerNamespace(self::XMLNS_PREFIX, $uri);
+        } else {
+            throw new Exception('Could not load response message into DOMDocument');
+        }
 
         return $domXpath;
+    }
+
+    /**
+     * Convert a DomNodeList of nodes containing a (potentially partial) error message into a string.
+     *
+     * @param \DOMNodeList $errorTextNodeList
+     * @return string|null
+     */
+    protected function makeMessageFromMessagesNodeList($errorTextNodeList)
+    {
+        return implode(
+            ' - ',
+            array_map(
+                function($item) {
+                    return $item->nodeValue;
+                },
+                iterator_to_array($errorTextNodeList)
+            )
+        );
     }
 }

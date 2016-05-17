@@ -46,7 +46,7 @@ interface HandlerInterface
      * @param string $messageName The Method name to be called (from the WSDL)
      * @param BaseWsMessage $messageBody The message's body to be sent to the server
      * @param array $messageOptions Optional options on how to handle this particular message.
-     * @return string|\stdClass
+     * @return SendResult
      */
     public function sendMessage($messageName, BaseWsMessage $messageBody, $messageOptions);
 
