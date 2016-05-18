@@ -38,4 +38,11 @@ class SendResult
      * @var \stdClass|array
      */
     public $responseObject;
+
+    /**
+     * Which version of the message was called
+     *
+     * @var string
+     */
+    public $messageVersion;
 }

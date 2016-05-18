@@ -65,10 +65,23 @@ class Base implements ResponseHandlerInterface
     }
 
     /**
-     * @param SendResult $response PNR_AddMultiElements result
+     * Analysing a Security_Authenticate
+     *
+     * @param SendResult $response Security_Authenticate result
      * @return Result
      */
-    protected function analyzePnrAddMultiElementsResponse($response)
+    protected function analyzeSecurityAuthenticateResponse($response)
+    {
+        return new Result($response); //TODO
+    }
+
+    /**
+     * Analysing a PNR_Reply
+     *
+     * @param SendResult $response PNR_Retrieve result
+     * @return Result
+     */
+    protected function analyzePnrRetrieveResponse($response)
     {
         $analyzeResponse = new Result($response);
 
@@ -125,6 +138,15 @@ class Base implements ResponseHandlerInterface
 
 
         return $analyzeResponse;
+    }
+
+    /**
+     * @param SendResult $response PNR_AddMultiElements result
+     * @return Result
+     */
+    protected function analyzePnrAddMultiElementsResponse($response)
+    {
+        return $this->analyzePnrRetrieveResponse($response);
     }
 
     /**
