@@ -36,7 +36,6 @@ class PnrCancelOptions extends PnrBase
      */
     public $recordLocator;
 
-
     /**
      * How to handle the PNR after doing the Cancel operation
      *
@@ -95,4 +94,11 @@ class PnrCancelOptions extends PnrBase
      * @var int[]
      */
     public $groupPassengers = [];
+
+    /**
+     * All tattoos of PNR Segments to be removed
+     *
+     * @var int[]
+     */
+    public $segments = [];
 }

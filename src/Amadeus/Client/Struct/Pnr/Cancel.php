@@ -78,6 +78,16 @@ class Cancel extends BaseWsMessage
             $this->cancelElements[] = $tmp;
         }
 
+        if (!empty($params->segments)) {
+            $tmp = new Cancel\Elements(Elements::ENTRY_ELEMENT);
+
+            foreach ($params->segments as $tatoo) {
+                $tmp->element[] = new Element($tatoo, Element::IDENT_SEGMENT_TATOO);
+            }
+
+            $this->cancelElements[] = $tmp;
+        }
+
         if (!empty($params->groupPassengers)) {
             $tmp = new Cancel\Elements(Elements::ENTRY_NAME_INTEGRATION);
 
