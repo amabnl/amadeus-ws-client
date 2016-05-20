@@ -141,9 +141,9 @@ class CancelTest extends BaseTestCase
         $this->assertEquals(1, count($message->cancelElements));
         $this->assertEquals(Cancel\Elements::ENTRY_ELEMENT, $message->cancelElements[0]->entryType);
         $this->assertEquals(2, count($message->cancelElements[0]->element));
-        $this->assertEquals(Cancel\Element::IDENT_SEGMENT_TATOO, $message->cancelElements[0]->element[0]->identifier);
+        $this->assertEquals(Cancel\Element::IDENT_SEGMENT_TATTOO, $message->cancelElements[0]->element[0]->identifier);
         $this->assertEquals(3, $message->cancelElements[0]->element[0]->number);
-        $this->assertEquals(Cancel\Element::IDENT_SEGMENT_TATOO, $message->cancelElements[0]->element[1]->identifier);
+        $this->assertEquals(Cancel\Element::IDENT_SEGMENT_TATTOO, $message->cancelElements[0]->element[1]->identifier);
         $this->assertEquals(4, $message->cancelElements[0]->element[1]->number);
     }
 }
