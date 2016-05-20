@@ -57,7 +57,6 @@ class PnrCancelOptions extends PnrBase
      */
     public $actionCode = 0;
 
-
     /**
      * All Passengers by name element number to be removed
      *

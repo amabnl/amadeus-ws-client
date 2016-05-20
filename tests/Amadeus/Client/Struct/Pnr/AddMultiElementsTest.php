@@ -673,6 +673,38 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(2, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->referenceForSegment->reference[1]->number);
     }
 
+    public function testCanCreateAddSegmentsMessageForExistingPnr()
+    {
+        $options = new PnrAddMultiElementsOptions([
+            'recordLocator' => 'ABC123',
+            'actionCode' => PnrAddMultiElementsOptions::ACTION_END_TRANSACT,
+            'tripSegments' => [
+                new Miscellaneous([
+                    'date' => \DateTime::createFromFormat('Y-m-d', "2017-01-02", new \DateTimeZone('UTC')),
+                    'cityCode' => 'BRU',
+                    'freeText' => 'GENERIC TRAVEL REQUEST',
+                    'company' => '1A'
+                ])
+            ]
+        ]);
+
+
+        $requestStruct = new AddMultiElements($options);
+
+        $this->assertInternalType('array', $requestStruct->originDestinationDetails);
+        $this->assertEquals(1, count($requestStruct->originDestinationDetails));
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails', $requestStruct->originDestinationDetails[0]);
+        $this->assertNull($requestStruct->originDestinationDetails[0]->originDestination);
+        $this->assertInternalType('array', $requestStruct->originDestinationDetails[0]->itineraryInfo);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\ItineraryInfo', $requestStruct->originDestinationDetails[0]->itineraryInfo[0]);
+        $this->assertEquals(AddMultiElements\ElementManagementItinerary::SEGMENT_MISCELLANEOUS, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->segmentName);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_OTHER, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->reference->qualifier);
+        $this->assertEquals('GENERIC TRAVEL REQUEST', $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->freetextItinerary->longFreetext);
+        $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_CONFIRMED, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
+
+
+    }
+
     public function testCanCreateMessageForManipulateExistingPnr()
     {
 
