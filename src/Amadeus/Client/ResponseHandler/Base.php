@@ -100,7 +100,7 @@ class Base implements ResponseHandlerInterface
             $errorTextNodeList = $domXpath->query($queryAllErrorMsg);
             $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
 
-            $analyzeResponse->errors[] = new Result\NotOk($code, $message, 'general');
+            $analyzeResponse->errors[] = new Result\NotOk($code, trim($message), 'general');
         }
 
         //Segment errors:
@@ -116,7 +116,7 @@ class Base implements ResponseHandlerInterface
             $errorTextNodeList = $domXpath->query($querySegmentErrorMsg);
             $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
 
-            $analyzeResponse->errors[] = new Result\NotOk($code, $message, 'segment');
+            $analyzeResponse->errors[] = new Result\NotOk($code, trim($message), 'segment');
         }
 
         //Element errors:
@@ -133,7 +133,7 @@ class Base implements ResponseHandlerInterface
             $errorTextNodeList = $domXpath->query($queryElementErrorMsg);
             $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
 
-            $analyzeResponse->errors[] = new Result\NotOk($code, $message, 'element');
+            $analyzeResponse->errors[] = new Result\NotOk($code, trim($message), 'element');
         }
 
 

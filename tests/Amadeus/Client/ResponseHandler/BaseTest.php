@@ -35,6 +35,22 @@ use Amadeus\Client\ResponseHandler;
  */
 class BaseTest extends BaseTestCase
 {
+    public function testCanFindSimultaneousChangesErrorMessageInPnrReply()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('pnrAddMultiElementsSimultaneousChanges.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_AddMultiElements');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->errors));
+        $this->assertEquals('8111', $result->errors[0]->code);
+        $this->assertEquals("SIMULTANEOUS CHANGES TO PNR - USE WRA/RT TO PRINT OR IGNORE", $result->errors[0]->text);
+        $this->assertEquals('general', $result->errors[0]->level);
+    }
+
     public function testCanFindTopLevelErrorMessageInPnrReply()
     {
         $respHandler = new ResponseHandler\Base();
