@@ -1830,6 +1830,19 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($mockedSession, $actual);
     }
 
+    public function testWillGetErrorOnInvalidSessionHandlerParams()
+    {
+        $this->setExpectedException('InvalidArgumentException', 'Invalid parameters');
+        $par = new Params();
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $client->airFlightInfo();
+    }
 
     /**
      * @return array

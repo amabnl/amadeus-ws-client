@@ -45,10 +45,10 @@ class BaseTest extends BaseTestCase
         $result = $respHandler->analyzeResponse($sendResult, 'PNR_AddMultiElements');
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
-        $this->assertEquals(1, count($result->errors));
-        $this->assertEquals('8111', $result->errors[0]->code);
-        $this->assertEquals("SIMULTANEOUS CHANGES TO PNR - USE WRA/RT TO PRINT OR IGNORE", $result->errors[0]->text);
-        $this->assertEquals('general', $result->errors[0]->level);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('8111', $result->messages[0]->code);
+        $this->assertEquals("SIMULTANEOUS CHANGES TO PNR - USE WRA/RT TO PRINT OR IGNORE", $result->messages[0]->text);
+        $this->assertEquals('general', $result->messages[0]->level);
     }
 
     public function testCanFindTopLevelErrorMessageInPnrReply()
@@ -61,10 +61,10 @@ class BaseTest extends BaseTestCase
         $result = $respHandler->analyzeResponse($sendResult, 'PNR_AddMultiElements');
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
-        $this->assertEquals(1, count($result->errors));
-        $this->assertEquals('102', $result->errors[0]->code);
-        $this->assertEquals("CHECK DATE", $result->errors[0]->text);
-        $this->assertEquals('general', $result->errors[0]->level);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('102', $result->messages[0]->code);
+        $this->assertEquals("CHECK DATE", $result->messages[0]->text);
+        $this->assertEquals('general', $result->messages[0]->level);
     }
 
     public function testCanFindSegmentLevelErrorMessageInPnrReply()
@@ -77,10 +77,10 @@ class BaseTest extends BaseTestCase
         $result = $respHandler->analyzeResponse($sendResult, 'PNR_AddMultiElements');
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
-        $this->assertEquals(1, count($result->errors));
-        $this->assertEquals('102', $result->errors[0]->code);
-        $this->assertEquals("CHECK DATE", $result->errors[0]->text);
-        $this->assertEquals('segment', $result->errors[0]->level);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('102', $result->messages[0]->code);
+        $this->assertEquals("CHECK DATE", $result->messages[0]->text);
+        $this->assertEquals('segment', $result->messages[0]->level);
     }
 
     public function testCanFindElementLevelErrorMessageInPnrReply()
@@ -93,10 +93,23 @@ class BaseTest extends BaseTestCase
         $result = $respHandler->analyzeResponse($sendResult, 'PNR_AddMultiElements');
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
-        $this->assertEquals(1, count($result->errors));
-        $this->assertEquals('4498', $result->errors[0]->code);
-        $this->assertEquals("COMBINATION OF ELEMENTS NOT ALLOWED", $result->errors[0]->text);
-        $this->assertEquals('element', $result->errors[0]->level);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('4498', $result->messages[0]->code);
+        $this->assertEquals("COMBINATION OF ELEMENTS NOT ALLOWED", $result->messages[0]->text);
+        $this->assertEquals('element', $result->messages[0]->level);
+    }
+
+    public function testCanFindErrorInPnrCancel()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('pnrCancelDemoError.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_Cancel');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
     }
 
     public function testCanSetWarningStatusForEmptyQueue()
@@ -109,9 +122,9 @@ class BaseTest extends BaseTestCase
         $result = $respHandler->analyzeResponse($sendResult, 'Queue_List');
 
         $this->assertEquals(Result::STATUS_WARN, $result->status);
-        $this->assertEquals(1, count($result->warnings));
-        $this->assertEquals(926, $result->warnings[0]->code);
-        $this->assertEquals("Queue category empty", $result->warnings[0]->text);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals(926, $result->messages[0]->code);
+        $this->assertEquals("Queue category empty", $result->messages[0]->text);
     }
 
     public function testWillSetGenericWarningForUnknownError()
@@ -124,9 +137,9 @@ class BaseTest extends BaseTestCase
         $result = $respHandler->analyzeResponse($sendResult, 'Queue_List');
 
         $this->assertEquals(Result::STATUS_WARN, $result->status);
-        $this->assertEquals(1, count($result->warnings));
-        $this->assertEquals(666, $result->warnings[0]->code);
-        $this->assertEquals("QUEUE ERROR '666' (Error message unavailable)", $result->warnings[0]->text);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals(666, $result->messages[0]->code);
+        $this->assertEquals("QUEUE ERROR '666' (Error message unavailable)", $result->messages[0]->text);
     }
 
     public function testWillReturnUnknownStatusWhenHandlingResponseFromUnknownMessage()
@@ -139,5 +152,20 @@ class BaseTest extends BaseTestCase
         $result = $respHandler->analyzeResponse($sendResult, 'Fare_DisplayFaresForCityPair');
 
         $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
+    }
+
+    public function testCanFindAirFlightInfoError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyAirFlightInoResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Air_FlightInfo');
+
+        $this->assertEquals(Result::STATUS_INFO, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('AUE', $result->messages[0]->code);
+        $this->assertEquals("FLIGHT CANCELLED", $result->messages[0]->text);
     }
 }

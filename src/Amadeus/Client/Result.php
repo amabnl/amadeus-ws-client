@@ -38,6 +38,10 @@ class Result
      */
     const STATUS_OK = 'OK';
     /**
+     * Status indicator for an informational message situation.
+     */
+    const STATUS_INFO = 'INFO';
+    /**
      * Status indicator for a warning situation.
      */
     const STATUS_WARN = 'WARN';
@@ -60,18 +64,11 @@ class Result
     public $status;
 
     /**
-     * Array of warnings found
+     * Array of errors or warnings found
      *
      * @var NotOk[]
      */
-    public $warnings = [];
-
-    /**
-     * Array of errors found
-     *
-     * @var NotOk[]
-     */
-    public $errors = [];
+    public $messages = [];
 
     /**
      * The actual result received after performing the web service call.

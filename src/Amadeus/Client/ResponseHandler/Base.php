@@ -72,7 +72,80 @@ class Base implements ResponseHandlerInterface
      */
     protected function analyzeSecurityAuthenticateResponse($response)
     {
-        return new Result($response); //TODO
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
+
+    /**
+     * Analysing a Security_Authenticate
+     *
+     * @param SendResult $response Security_Authenticate result
+     * @return Result
+     */
+    protected function analyzeSecuritySignOutResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeAirFlightInfoResponse($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $code = null;
+        $message = null;
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $categoryNodes = $domXpath->query('//m:responseError/m:errorInfo/m:errorDetails/m:errorCategory');
+        if ($categoryNodes->length > 0) {
+            $analyzeResponse->status = $this->makeStatusFromErrorQualifier($categoryNodes->item(0)->nodeValue);
+        }
+
+        $codeNodes = $domXpath->query('//m:responseError/m:errorInfo/m:errorDetails/m:errorCode');
+        if ($codeNodes->length > 0) {
+            $code = $codeNodes->item(0)->nodeValue;
+        }
+
+        $messageNodes = $domXpath->query('//m:responseError/m:interactiveFreeText/m:freeText');
+        if ($messageNodes->length > 0) {
+            $message = $this->makeMessageFromMessagesNodeList($messageNodes);
+        }
+
+        $analyzeResponse->messages[] = new Result\NotOk($code, $message);
+
+        return $analyzeResponse;
+    }
+
+    /**
+     * Analysing a PNR_Retrieve response
+     *
+     * @param SendResult $response PNR_Retrieve result
+     * @return Result
+     */
+    protected function analyzePnrRetrieveResponse($response)
+    {
+        return $this->analyzePnrReply($response);
+    }
+
+    /**
+     * @param SendResult $response PNR_AddMultiElements result
+     * @return Result
+     */
+    protected function analyzePnrAddMultiElementsResponse($response)
+    {
+        return $this->analyzePnrReply($response);
+    }
+
+    /**
+     * @param SendResult $response PNR_Cancel result
+     * @return Result
+     */
+    protected function analyzePnrCancelResponse($response)
+    {
+        return $this->analyzePnrReply($response);
     }
 
     /**
@@ -81,7 +154,7 @@ class Base implements ResponseHandlerInterface
      * @param SendResult $response PNR_Retrieve result
      * @return Result
      */
-    protected function analyzePnrRetrieveResponse($response)
+    protected function analyzePnrReply($response)
     {
         $analyzeResponse = new Result($response);
 
@@ -100,7 +173,7 @@ class Base implements ResponseHandlerInterface
             $errorTextNodeList = $domXpath->query($queryAllErrorMsg);
             $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
 
-            $analyzeResponse->errors[] = new Result\NotOk($code, trim($message), 'general');
+            $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'general');
         }
 
         //Segment errors:
@@ -116,7 +189,7 @@ class Base implements ResponseHandlerInterface
             $errorTextNodeList = $domXpath->query($querySegmentErrorMsg);
             $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
 
-            $analyzeResponse->errors[] = new Result\NotOk($code, trim($message), 'segment');
+            $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'segment');
         }
 
         //Element errors:
@@ -133,20 +206,11 @@ class Base implements ResponseHandlerInterface
             $errorTextNodeList = $domXpath->query($queryElementErrorMsg);
             $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
 
-            $analyzeResponse->errors[] = new Result\NotOk($code, trim($message), 'element');
+            $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'element');
         }
 
 
         return $analyzeResponse;
-    }
-
-    /**
-     * @param SendResult $response PNR_AddMultiElements result
-     * @return Result
-     */
-    protected function analyzePnrAddMultiElementsResponse($response)
-    {
-        return $this->analyzePnrRetrieveResponse($response);
     }
 
     /**
@@ -158,8 +222,7 @@ class Base implements ResponseHandlerInterface
     {
         $analysisResponse = new Result($response);
 
-        $domDoc = new \DOMDocument('1.0', 'UTF-8');
-        $domDoc->loadXML($response->responseXml);
+        $domDoc = $this->loadDomDocument($response->responseXml);
 
         $errorCodeNode = $domDoc->getElementsByTagName("errorCode")->item(0);
 
@@ -169,10 +232,37 @@ class Base implements ResponseHandlerInterface
             $errorCode = $errorCodeNode->nodeValue;
             $errorMessage = $this->getErrorTextFromQueueErrorCode($errorCode);
 
-            $analysisResponse->warnings[] = new Result\NotOk($errorCode, $errorMessage);
+            $analysisResponse->messages[] = new Result\NotOk($errorCode, $errorMessage);
         }
 
         return $analysisResponse;
+    }
+
+    /**
+     * @param SendResult $response WebService message Send Result
+     * @return Result
+     * @throws Exception
+     */
+    protected function analyzeSimpleResponseErrorCodeAndMessage($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domDoc = $this->loadDomDocument($response->responseXml);
+
+        $errorCodeNode = $domDoc->getElementsByTagName("errorCode")->item(0);
+
+        if (!is_null($errorCodeNode)) {
+            $analyzeResponse->status = Result::STATUS_WARN;
+            $errorCode = $errorCodeNode->nodeValue;
+            $errorTextNodeList = $domDoc->getElementsByTagName("freeText");
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $errorCode,
+                $this->makeMessageFromMessagesNodeList($errorTextNodeList)
+            );
+        }
+
+        return $analyzeResponse;
     }
 
     /**
@@ -212,9 +302,56 @@ class Base implements ResponseHandlerInterface
         return $errorMessage;
     }
 
+    /**
+     * @param string $response
+     * @return \DOMDocument
+     * @throws Exception when there's a problem loading the message
+     */
+    protected function loadDomDocument($response)
+    {
+        $domDoc = new \DOMDocument('1.0', 'UTF-8');
+
+        $loadResult = $domDoc->loadXML($response);
+        if ($loadResult === false) {
+            throw new Exception('Could not load response message into DOMDocument');
+        }
+
+        return $domDoc;
+    }
+
+    /**
+     * @param $qualifier
+     * @return string Result::STATUS_*
+     */
+    protected function makeStatusFromErrorQualifier($qualifier)
+    {
+        $status = null;
+
+        switch ($qualifier) {
+            case 'INF':
+                $status = Result::STATUS_INFO;
+                break;
+            case 'WEC':
+            case 'WZZ': //Mutually defined warning
+                $status = Result::STATUS_WARN;
+                break;
+            case 'EC':
+                $status = Result::STATUS_ERROR;
+                break;
+            case 'ZZZ': //Mutually defined
+            default:
+                $status = Result::STATUS_UNKNOWN;
+                break;
+        }
+
+        return $status;
+    }
+
 
     /**
      * Make a Xpath-queryable object for an XML string
+     *
+     * registers TNS namespace with prefix self::XMLNS_PREFIX
      *
      * @param string $response
      * @return \DOMXPath
@@ -222,18 +359,13 @@ class Base implements ResponseHandlerInterface
      */
     protected function makeDomXpath($response)
     {
-        $domDoc = new \DOMDocument('1.0', 'UTF-8');
-        $domXpath = null;
-        $loadResult = $domDoc->loadXML($response);
+        $domDoc = $this->loadDomDocument($response);
+        $domXpath = new \DOMXPath($domDoc);
 
-        if ($loadResult === true) {
-            $uri = $domDoc->documentElement->lookupNamespaceUri(null);
-
-            $domXpath = new \DOMXPath($domDoc);
-            $domXpath->registerNamespace(self::XMLNS_PREFIX, $uri);
-        } else {
-            throw new Exception('Could not load response message into DOMDocument');
-        }
+        $domXpath->registerNamespace(
+            self::XMLNS_PREFIX,
+            $domDoc->documentElement->lookupNamespaceUri(null)
+        );
 
         return $domXpath;
     }

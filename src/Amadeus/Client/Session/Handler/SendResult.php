@@ -31,10 +31,15 @@ namespace Amadeus\Client\Session\Handler;
 class SendResult
 {
     /**
+     * The response as an XML string
+     *
      * @var string
      */
     public $responseXml;
+
     /**
+     * The response as returned by PHP's \SoapClient
+     *
      * @var \stdClass|array
      */
     public $responseObject;
