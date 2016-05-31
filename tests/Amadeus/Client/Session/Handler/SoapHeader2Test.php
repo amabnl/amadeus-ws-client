@@ -128,6 +128,7 @@ class SoapHeader2Test extends BaseTestCase
         $messageResult = new SendResult();
         $messageResult->responseObject = $wsResponse;
         $messageResult->responseXml = Client\Util\MsgBodyExtractor::extract($dummyReply);
+        $messageResult->messageVersion = '6.1';
 
 
         $overrideSoapClient

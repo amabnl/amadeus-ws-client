@@ -449,15 +449,14 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $expectedResult = new Client\Session\Handler\SendResult();
         $expectedResult->responseXml = $dummyPnrReplyExtractedMessage;
         $expectedResult->responseObject = new \stdClass();
+        $expectedResult->messageVersion = '11.3';
 
 
         $this->assertEquals($expectedResult, $messageResponse);
     }
 
-    public function testCanHandleMessageThrowingSoapFault()
+    public function testCanHandleMessageWithSoapFault()
     {
-        $this->setExpectedException('\SoapFault');
-
         $overrideSoapClient = $this->getMock(
             'Amadeus\Client\SoapClient',
             ['__getLastRequest', '__getLastResponse', 'PNR_Retrieve'],
@@ -483,7 +482,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $overrideSoapClient
             ->expects($this->any())
             ->method('PNR_Retrieve')
-            ->will($this->throwException(new \SoapFault("Sender", "SECURED PNR")));
+            ->will($this->throwException(new \SoapFault("Sender", "284|Application|SECURED PNR")));
 
         $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
@@ -493,11 +492,17 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
             'ABC123'
         );
 
-        $sessionHandler->sendMessage(
+        $sendResult = $sessionHandler->sendMessage(
             'PNR_Retrieve',
             $pnrRetrieveMessage,
             ['asString'=>true,'endSession'=>false]
         );
+
+        $this->assertInstanceOf('Amadeus\Client\Session\Handler\SendResult', $sendResult);
+        $this->assertInstanceOf('\SoapFault', $sendResult->exception);
+        $this->assertEquals('284|Application|SECURED PNR', $sendResult->exception->getMessage());
+        $this->assertEquals('11.3', $sendResult->messageVersion);
+        $this->assertEquals(Client\Util\MsgBodyExtractor::extract($dummyPnrReply), $sendResult->responseXml);
     }
 
     public function testCanHandleMessageThrowingNonSoapFaultException()
@@ -590,6 +595,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $expectedResult = new Client\Session\Handler\SendResult();
         $expectedResult->responseXml = $this->getTestFile('acspnrreply.xml');
         $expectedResult->responseObject = $this->getTestFile('acspnr.xml');
+        $expectedResult->messageVersion = '11.3';
 
         $this->assertEquals($expectedResult, $messageResponse);
 
@@ -689,6 +695,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $expectedResult = new Client\Session\Handler\SendResult();
         $expectedResult->responseXml = $dummyPnrReplyExtractedMessage;
         $expectedResult->responseObject = new \stdClass();
+        $expectedResult->messageVersion = '11.3';
 
         $this->assertEquals($expectedResult, $messageResponse);
     }

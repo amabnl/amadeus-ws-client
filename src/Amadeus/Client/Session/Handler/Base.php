@@ -139,6 +139,11 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     protected $wsdlDomXpath;
 
     /**
+     * @var array
+     */
+    protected $messagesAndVersions;
+
+    /**
      * Get the session parameters of the active session
      *
      * @return array|null
@@ -197,7 +202,9 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      */
     public function sendMessage($messageName, Client\Struct\BaseWsMessage $messageBody, $messageOptions = [])
     {
-        $result = new SendResult();
+        $result = new SendResult(
+            $this->getActiveVersionFor($messageName)
+        );
 
         $this->prepareForNextMessage($messageName, $messageOptions);
 
@@ -216,9 +223,10 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
                 " line " . $ex->getLine() . ": \n" . $ex->getTraceAsString()
             );
             $this->logRequestAndResponse($messageName);
-            //TODO We must be able to handle certain soapfaults inside the client, so maybe pass through after logging?
-            throw $ex;
+            $result->exception = $ex;
         } catch (\Exception $ex) {
+            // We should only come here when the XSL extension is not enabled or the XSLT transformation file
+            // is unreadable
             $this->log(
                 LogLevel::ERROR,
                 "EXCEPTION while sending message " . $messageName . ": " .
@@ -295,6 +303,20 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      */
     public function getMessagesAndVersions()
     {
+        if (empty($this->messagesAndVersions)) {
+            $this->messagesAndVersions = $this->loadMessagesAndVersions();
+        }
+
+        return $this->messagesAndVersions;
+    }
+
+    /**
+     * Loads messages & versions from WSDL.
+     *
+     * @return array
+     */
+    protected function loadMessagesAndVersions()
+    {
         $this->loadWsdlXpath($this->params->wsdl);
 
         $msgAndVer = [];
@@ -353,6 +375,23 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
                 'http://schemas.xmlsoap.org/wsdl/soap/'
             );
         }
+    }
+
+    /**
+     * Get the version number active in the WSDL for the given message
+     *
+     * @param $messageName
+     * @return float|string|null
+     */
+    protected function getActiveVersionFor($messageName)
+    {
+        $msgAndVer = $this->getMessagesAndVersions();
+
+        if (isset($msgAndVer[$messageName])) {
+            return $msgAndVer[$messageName];
+        }
+
+        return null;
     }
 
 

@@ -168,4 +168,71 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('AUE', $result->messages[0]->code);
         $this->assertEquals("FLIGHT CANCELLED", $result->messages[0]->text);
     }
+
+    public function testCanParseSecurityAuthenticateReplyOk()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummySecurityAuthenticateReply.txt');
+        $sendResult->messageVersion = '6.1';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Security_Authenticate');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanParseSecurityAuthenticateReplyErr()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummySecurityAuthenticateReplyError.txt');
+        $sendResult->messageVersion = '6.1';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Security_Authenticate');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('You are not authorized to login in this area.', $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+        $this->assertEquals('16199', $result->messages[0]->code);
+    }
+
+    public function testCanHandleSoapFault()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummySoapFault.txt');
+        $sendResult->messageVersion = '14.2';
+        $sendResult->exception = new \SoapFault("Sender", "1929|Application|INVALID RECORD LOCATOR");
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_Retrieve');
+
+        $this->assertEquals(Result::STATUS_FATAL, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('1929', $result->messages[0]->code);
+        $this->assertEquals("INVALID RECORD LOCATOR", $result->messages[0]->text);
+        $this->assertEquals("Application", $result->messages[0]->level);
+    }
+
+    public function testCanHandleSoapFaultSession()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummySoapFaultSession.txt');
+        $sendResult->messageVersion = '14.2';
+        $sendResult->exception = new \SoapFault("Sender", "11|Session|");
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_Retrieve');
+
+        $this->assertEquals(Result::STATUS_FATAL, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('11', $result->messages[0]->code);
+        $this->assertEquals("Session", $result->messages[0]->level);
+        $this->assertEquals('', $result->messages[0]->text);
+    }
 }

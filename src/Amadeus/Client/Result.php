@@ -50,6 +50,10 @@ class Result
      */
     const STATUS_ERROR = 'ERR';
     /**
+     * Status indicator for a FATAL error response.
+     */
+    const STATUS_FATAL = 'FATAL';
+    /**
      * Status indicator for a response which could not be checked for warnings/errors.
      */
     const STATUS_UNKNOWN = 'UNKNOWN';

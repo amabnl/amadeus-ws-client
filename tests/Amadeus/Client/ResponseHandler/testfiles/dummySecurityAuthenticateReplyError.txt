@@ -1,0 +1,19 @@
+<Security_AuthenticateReply xmlns="http://xml.amadeus.com/VLSSLR_06_1_1A">
+    <errorSection>
+        <applicationError>
+            <errorDetails>
+                <errorCode>16199</errorCode>
+                <errorCategory>EC</errorCategory>
+                <errorCodeOwner>APPLICATION1</errorCodeOwner>
+            </errorDetails>
+        </applicationError>
+        <interactiveFreeText>
+            <freeTextQualification>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <informationType>TXT</informationType>
+                <language>EN</language>
+            </freeTextQualification>
+            <freeText>You are not authorized to login in this area.</freeText>
+        </interactiveFreeText>
+    </errorSection>
+</Security_AuthenticateReply>

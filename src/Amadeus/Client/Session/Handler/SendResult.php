@@ -25,6 +25,8 @@ namespace Amadeus\Client\Session\Handler;
 /**
  * SendResult
  *
+ * An object used to return the result of the Session Handler sendMessage()
+ *
  * @package Amadeus\Client\Session\Handler
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
@@ -50,4 +52,20 @@ class SendResult
      * @var string
      */
     public $messageVersion;
+
+    /**
+     * Exception that occurred while sending
+     * @var \Exception
+     */
+    public $exception;
+
+    /**
+     * SendResult constructor.
+     *
+     * @param string|float|null $messageVersion
+     */
+    public function __construct($messageVersion = null)
+    {
+        $this->messageVersion = $messageVersion;
+    }
 }

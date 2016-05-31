@@ -55,7 +55,9 @@ class Base implements ResponseHandlerInterface
     {
         $methodName = 'analyze' . str_replace('_', '', ucfirst($messageName)).'Response';
 
-        if (method_exists($this, $methodName)) {
+        if (!empty($sendResult->exception)) {
+            return $this->makeResultForException($sendResult);
+        } elseif (method_exists($this, $methodName)) {
             return $this->$methodName(
                 $sendResult
             );
@@ -252,7 +254,9 @@ class Base implements ResponseHandlerInterface
         $errorCodeNode = $domDoc->getElementsByTagName("errorCode")->item(0);
 
         if (!is_null($errorCodeNode)) {
-            $analyzeResponse->status = Result::STATUS_WARN;
+            $errorCatNode = $domDoc->getElementsByTagName("errorCategory")->item(0);
+            $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
+
             $errorCode = $errorCodeNode->nodeValue;
             $errorTextNodeList = $domDoc->getElementsByTagName("freeText");
 
@@ -387,5 +391,41 @@ class Base implements ResponseHandlerInterface
                 iterator_to_array($errorTextNodeList)
             )
         );
+    }
+
+    /**
+     * @param SendResult $sendResult
+     * @return Result
+     */
+    protected function makeResultForException($sendResult)
+    {
+        $result = new Result($sendResult, Result::STATUS_FATAL);
+
+        $result->messages[] = $this->makeMessageFromException($sendResult->exception);
+
+        return $result;
+    }
+
+    /**
+     * @param \Exception $exception
+     * @return Result\NotOk
+     * @throws Exception
+     */
+    protected function makeMessageFromException(\Exception $exception)
+    {
+        $message = new Result\NotOk();
+
+        if ($exception instanceof \SoapFault) {
+            $info = explode('|', $exception->getMessage());
+            $message->code = $info[0];
+            if (count($info) === 3) {
+                $message->level = $info[1];
+                $message->text = $info[2];
+            }
+        } else {
+            throw new Exception('Did not implement other exceptions than soapfaults');
+        }
+
+        return $message;
     }
 }
