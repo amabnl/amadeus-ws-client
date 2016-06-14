@@ -30,28 +30,73 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
  */
 class PricingOptionGroup
 {
+    /**
+     * @var PricingOptionKey
+     */
     public $pricingOptionKey;
 
+    /**
+     * @var OptionDetail
+     */
     public $optionDetail;
 
+    /**
+     * @var CarrierInformation
+     */
     public $carrierInformation;
 
+    /**
+     * @var Currency
+     */
     public $currency;
 
+    /**
+     * @var PenDisInformation
+     */
     public $penDisInformation;
 
+    /**
+     * @var MonetaryInformation
+     */
     public $monetaryInformation;
 
+    /**
+     * @var TaxInformation
+     */
     public $taxInformation;
 
+    /**
+     * @var DateInformation
+     */
     public $dateInformation;
 
+    /**
+     * @var FrequentFlyerInformation
+     */
     public $frequentFlyerInformation;
 
+    /**
+     * @var FormOfPaymentInformation
+     */
     public $formOfPaymentInformation;
 
+    /**
+     * @var LocationInformation
+     */
     public $locationInformation;
 
+    /**
+     * @var PaxSegTstReference
+     */
     public $paxSegTstReference;
 
+    /**
+     * PricingOptionGroup constructor.
+     *
+     * @param string $key
+     */
+    public function __construct($key)
+    {
+        $this->pricingOptionKey = new PricingOptionKey($key);
+    }
 }

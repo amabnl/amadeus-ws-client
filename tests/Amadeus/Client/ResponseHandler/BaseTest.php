@@ -112,6 +112,19 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(0, count($result->messages));
     }
 
+    public function testCanHandleOkPnrRetrieve()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPnrRetrieveReply.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_Retrieve');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
     public function testCanSetWarningStatusForEmptyQueue()
     {
         $respHandler = new ResponseHandler\Base();
@@ -200,6 +213,23 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('16199', $result->messages[0]->code);
     }
 
+    public function testCanParseSecuritySignOutReplyErr()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummySecuritySignoutReply.txt');
+        $sendResult->messageVersion = '6.1';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Security_SignOut');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('ERROR', $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+        $this->assertEquals('1', $result->messages[0]->code);
+    }
+
     public function testCanHandleSoapFault()
     {
         $respHandler = new ResponseHandler\Base();
@@ -234,5 +264,20 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('11', $result->messages[0]->code);
         $this->assertEquals("Session", $result->messages[0]->level);
         $this->assertEquals('', $result->messages[0]->text);
+    }
+
+    public function testCanFindFarePricePnrWithBookingClassError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFarePricePnrWithBookingClassReplyError.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePnrWithBookingClass');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('00477', $result->messages[0]->code);
+        $this->assertEquals("INVALID FORMAT", $result->messages[0]->text);
     }
 }

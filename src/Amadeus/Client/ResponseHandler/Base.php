@@ -240,6 +240,59 @@ class Base implements ResponseHandlerInterface
         return $analysisResponse;
     }
 
+
+    /**
+     *
+     * <Fare_PricePNRWithBookingClassReply xmlns="http://xml.amadeus.com/TPCBRR_13_2_1A">
+     * <applicationError>
+     * <errorOrWarningCodeDetails>
+     * <errorDetails>
+     * <errorCode>00477</errorCode>
+     * <errorCategory>EC</errorCategory>
+     * <errorCodeOwner>1A</errorCodeOwner>
+     * </errorDetails>
+     * </errorOrWarningCodeDetails>
+     * <errorWarningDescription>
+     * <freeText>INVALID FORMAT</freeText>
+     * </errorWarningDescription>
+     * </applicationError>
+     * </Fare_PricePNRWithBookingClassReply>
+     *
+     * @param SendResult $response Fare_PricePNRWithBookingClass result
+     * @return Result
+     * @throws Exception
+     */
+    protected function analyzeFarePricePNRWithBookingClassResponse($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $queryErrorCode = "//m:applicationError//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCode";
+        $queryErrorCategory = "//m:applicationError//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCategory";
+        $queryErrorMsg = "//m:applicationError/m:errorWarningDescription/m:freeText";
+
+        $errorCodeNodeList = $domXpath->query($queryErrorCode);
+
+        if ($errorCodeNodeList->length > 0) {
+            $errorCatNode = $domXpath->query($queryErrorCategory)->item(0);
+            if ($errorCatNode instanceof \DOMNode) {
+                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
+            } else {
+                $analyzeResponse->status = Result::STATUS_ERROR;
+            }
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $errorCodeNodeList->item(0)->nodeValue,
+                $this->makeMessageFromMessagesNodeList(
+                    $domXpath->query($queryErrorMsg)
+                )
+            );
+        }
+
+        return $analyzeResponse;
+    }
+
     /**
      * @param SendResult $response WebService message Send Result
      * @return Result
@@ -255,7 +308,11 @@ class Base implements ResponseHandlerInterface
 
         if (!is_null($errorCodeNode)) {
             $errorCatNode = $domDoc->getElementsByTagName("errorCategory")->item(0);
-            $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
+            if ($errorCatNode instanceof \DOMNode) {
+                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
+            } else {
+                $analyzeResponse->status = Result::STATUS_ERROR;
+            }
 
             $errorCode = $errorCodeNode->nodeValue;
             $errorTextNodeList = $domDoc->getElementsByTagName("freeText");

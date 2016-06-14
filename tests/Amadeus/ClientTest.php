@@ -1622,15 +1622,24 @@ class ClientTest extends BaseTestCase
 
     public function testCanFarePricePnrWithBookingClassVersion14()
     {
-        $this->setExpectedException('\Amadeus\Client\RequestCreator\MessageVersionUnsupportedException');
-
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        //$messageResult = 'dummyfarepricepnrwithbookingclassmessage';
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('farePricePnrWithBookingClassReply14.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Fare\PricePNRWithBookingClass13(
+            new Client\RequestOptions\FarePricePnrWithBookingClassOptions([
+                'validatingCarrier' => 'SN'
+            ])
+        );
 
         $mockSessionHandler
-            ->expects($this->never())
-            ->method('sendMessage');
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Fare_PricePNRWithBookingClass', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->will($this->returnValue($mockedSendResult));;
         $mockSessionHandler
             ->expects($this->never())
             ->method('getLastResponse');
@@ -1648,11 +1657,14 @@ class ClientTest extends BaseTestCase
 
         $client = new Client($par);
 
-        $client->farePricePnrWithBookingClass(
+
+        $response = $client->farePricePnrWithBookingClass(
             new Client\RequestOptions\FarePricePnrWithBookingClassOptions([
                 'validatingCarrier' => 'SN'
             ])
         );
+
+        $this->assertEquals($messageResult, $response);
     }
 
     public function testCanDoSignOutCall()
