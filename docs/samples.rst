@@ -623,7 +623,7 @@ Issue ticket for an entire PNR as e-Ticket (TTP/ET):
         ])
     );
 
-Issue ticket for one single TST PNR as e-Ticket and retrieve PNR (TTP/T1/ET/RT):
+Issue e-Ticket for one single TST and retrieve PNR (TTP/T1/ET/RT):
 
 .. code-block:: php
 
