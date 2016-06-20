@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><Command_CrypticReply xmlns="http://xml.amadeus.com/HSFRES_07_3_1A"><longTextString><textStringDetails>/ SIMULTANEOUS CHANGES TO PNR - USE WRA/RT TO PRINT OR IGNORE  </textStringDetails></longTextString></Command_CrypticReply>

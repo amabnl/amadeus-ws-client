@@ -27,6 +27,10 @@ use Amadeus\Client\Exception;
 /**
  * UnsupportedOperation
  *
+ * Thrown when an unsupported feature on a session handler was requested.
+ *
+ * For example: enable stateless messages on a legacy soap header WSAP
+ *
  * @package Amadeus\Client\Session\Handler
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */

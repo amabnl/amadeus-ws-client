@@ -27,7 +27,7 @@ use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * Base Response Handler
+ * Default Response Handler
  *
  * @package Amadeus\Client\ResponseHandler
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -53,7 +53,7 @@ class Base implements ResponseHandlerInterface
      */
     public function analyzeResponse($sendResult, $messageName)
     {
-        $methodName = 'analyze' . str_replace('_', '', ucfirst($messageName)).'Response';
+        $methodName = 'analyze' . str_replace('_', '', ucfirst($messageName)) . 'Response';
 
         if (!empty($sendResult->exception)) {
             return $this->makeResultForException($sendResult);
@@ -89,6 +89,51 @@ class Base implements ResponseHandlerInterface
     }
 
     /**
+     * Unknown response for Command_Cryptic because you need to analyse the cryptic response yourself
+     *
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeCommandCrypticResponse($response)
+    {
+        $ccResult =  new Result($response, Result::STATUS_UNKNOWN);
+        $ccResult->messages[] = new Result\NotOk(
+            0,
+            "Response handling not supported for cryptic entries"
+        );
+
+        return $ccResult;
+    }
+
+    protected function analyzeAirSellFromRecommendationResponse($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $errMsgMap = [
+            "288" => "UNABLE TO SATISFY, NEED CONFIRMED FLIGHT STATUS",
+            "390" => "UNABLE TO REFORMAT"
+        ];
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $codeNode = $domXpath->query("//m:errorSegment/m:errorDetails/m:errorCode")->item(0);
+        if ($codeNode instanceof \DOMNode) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $categoryNode = $domXpath->query("//m:errorSegment/m:errorDetails/m:errorCategory")->item(0);
+            if ($categoryNode instanceof \DOMNode) {
+                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($categoryNode->nodeValue);
+            }
+
+            $message = (array_key_exists($codeNode->nodeValue, $errMsgMap)) ? $errMsgMap[$codeNode->nodeValue] : 'UNKNOWN ERROR';
+
+            $analyzeResponse->messages [] = new Result\NotOk($codeNode->nodeValue, $message);
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
      * @param SendResult $response
      * @return Result
      */
@@ -116,7 +161,9 @@ class Base implements ResponseHandlerInterface
             $message = $this->makeMessageFromMessagesNodeList($messageNodes);
         }
 
-        $analyzeResponse->messages[] = new Result\NotOk($code, $message);
+        if (!is_null($message) && !is_null($code)) {
+            $analyzeResponse->messages[] = new Result\NotOk($code, $message);
+        }
 
         return $analyzeResponse;
     }
@@ -216,11 +263,53 @@ class Base implements ResponseHandlerInterface
     }
 
     /**
+     * @param SendResult $response Queue_RemoveItem response
+     * @return Result
+     * @throws Exception
+     */
+    protected function analyzeQueueRemoveItemResponse($response)
+    {
+        return $this->analyzeGenericQueueResponse($response);
+    }
+
+    /**
+     * @param SendResult $response Queue_MoveItem response
+     * @return Result
+     * @throws Exception
+     */
+    protected function analyzeQueueMoveItemResponse($response)
+    {
+        return $this->analyzeGenericQueueResponse($response);
+    }
+
+    /**
+     * @param SendResult $response Queue_PlacePNR response
+     * @return Result
+     * @throws Exception
+     */
+    protected function analyzeQueuePlacePNRResponse($response)
+    {
+        return $this->analyzeGenericQueueResponse($response);
+    }
+
+    /**
      * @param SendResult $response Queue_List result
      * @return Result
      * @throws Exception
      */
     protected function analyzeQueueListResponse($response)
+    {
+        return $this->analyzeGenericQueueResponse($response);
+    }
+
+    /**
+     * Analyze a generic Queue response
+     *
+     * @param SendResult $response Queue_*Reply result
+     * @return Result
+     * @throws Exception
+     */
+    protected function analyzeGenericQueueResponse($response)
     {
         $analysisResponse = new Result($response);
 
@@ -275,11 +364,11 @@ class Base implements ResponseHandlerInterface
         $errorCodeNodeList = $domXpath->query($queryErrorCode);
 
         if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
             $errorCatNode = $domXpath->query($queryErrorCategory)->item(0);
             if ($errorCatNode instanceof \DOMNode) {
                 $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
-            } else {
-                $analyzeResponse->status = Result::STATUS_ERROR;
             }
 
             $analyzeResponse->messages[] = new Result\NotOk(
@@ -291,6 +380,231 @@ class Base implements ResponseHandlerInterface
         }
 
         return $analyzeResponse;
+    }
+
+    protected function analyzeFareMasterPricerTravelBoardSearchResponse($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $queryErrCode = "//m:applicationError//m:applicationErrorDetail/m:error";
+        $queryErrMsg = "//m:errorMessageText/m:description";
+
+        $codeNode = $domXpath->query($queryErrCode)->item(0);
+
+        if ($codeNode instanceof \DOMNode) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $errMsg = '';
+            $errMsgNode = $domXpath->query($queryErrMsg)->item(0);
+            if ($errMsgNode instanceof \DOMNode) {
+                $errMsg = $errMsgNode->nodeValue;
+            }
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $codeNode->nodeValue,
+                $errMsg
+            );
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeFareConvertCurrencyResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeFareCheckRulesResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeDocIssuanceIssueTicketResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
+    }
+
+    protected function analyzeTicketCreateTSTFromPricingResponse($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domDoc = $this->loadDomDocument($response->responseXml);
+
+        $errorCodeNode = $domDoc->getElementsByTagName("applicationErrorCode")->item(0);
+
+        if (!is_null($errorCodeNode)) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $errorCatNode = $domDoc->getElementsByTagName("codeListQualifier")->item(0);
+            if ($errorCatNode instanceof \DOMNode) {
+                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
+            }
+
+            $errorCode = $errorCodeNode->nodeValue;
+            $errorTextNodeList = $domDoc->getElementsByTagName("errorFreeText");
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $errorCode,
+                $this->makeMessageFromMessagesNodeList($errorTextNodeList)
+            );
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeOfferConfirmCarOfferResponse($response)
+    {
+        return $this->analyzeGenericOfferResponse($response);
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeOfferConfirmHotelOfferResponse($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $codeNode = $domXpath->query("//m:errorDetails/m:errorCode")->item(0);
+        if ($codeNode instanceof \DOMNode) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $categoryNode = $domXpath->query("//m:errorDetails/m:errorCategory")->item(0);
+            if ($categoryNode instanceof \DOMNode) {
+                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($categoryNode->nodeValue);
+            }
+
+            $msgNode = $domXpath->query('//m:errorDescription/m:freeText')->item(0);
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $codeNode->nodeValue,
+                trim($msgNode->nodeValue)
+            );
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeOfferConfirmAirOfferResponse($response)
+    {
+        return $this->analyzeGenericOfferResponse($response);
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeOfferVerifyOfferResponse($response)
+    {
+        return $this->analyzeGenericOfferResponse($response);
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeGenericOfferResponse($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $msgNode = $domXpath->query('//m:errorsDescription/m:errorWarningDescription/m:freeText')->item(0);
+
+        if ($msgNode instanceof \DOMNode) {
+            if (trim($msgNode->nodeValue) === "OFFER CONFIRMED SUCCESSFULLY" || trim($msgNode->nodeValue) === "OFFER VERIFIED SUCCESSFULLY" ) {
+                $analyzeResponse->messages[] = new Result\NotOk(
+                    0,
+                    trim($msgNode->nodeValue)
+                );
+                return $analyzeResponse;
+            }
+
+            $categoryNode = $domXpath->query('//m:errorDetails/m:errorCategory')->item(0);
+            if ($categoryNode instanceof \DOMNode) {
+                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($categoryNode->nodeValue);
+            }
+
+            $codeNode = $domXpath->query('//m:errorDetails/m:errorCode')->item(0);
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $codeNode->nodeValue,
+                trim($msgNode->nodeValue)
+            );
+        }
+
+        return $analyzeResponse;
+    }
+
+    protected function analyzeMiniRuleGetFromPricingRecResponse($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $statusNode = $domXpath->query('//m:responseDetails/m:statusCode')->item(0);
+        if ($statusNode instanceof \DOMNode) {
+            $code = $statusNode->nodeValue;
+
+            if ($code !== 'O') {
+                $categoryNode = $domXpath->query('//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCategory')->item(0);
+                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($categoryNode->nodeValue);
+
+                $codeNode = $domXpath->query('//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCode')->item(0);
+                $msgNode = $domXpath->query('//m:errorWarningDescription/m:freeText')->item(0);
+
+                if ($codeNode instanceof \DOMNode && $msgNode instanceof \DOMNode) {
+                    $analyzeResponse->messages[] = new Result\NotOk(
+                        $codeNode->nodeValue,
+                        $msgNode->nodeValue
+                    );
+                }
+            }
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeInfoEncodeDecodeCityResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzePriceXplorerExtremeSearchResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
     }
 
     /**
@@ -312,6 +626,39 @@ class Base implements ResponseHandlerInterface
                 $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
             } else {
                 $analyzeResponse->status = Result::STATUS_ERROR;
+            }
+
+            $errorCode = $errorCodeNode->nodeValue;
+            $errorTextNodeList = $domDoc->getElementsByTagName("freeText");
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $errorCode,
+                $this->makeMessageFromMessagesNodeList($errorTextNodeList)
+            );
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
+     * @param SendResult $response WebService message Send Result
+     * @return Result
+     * @throws Exception
+     */
+    protected function analyzeSimpleResponseErrorCodeAndMessageStatusCode($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domDoc = $this->loadDomDocument($response->responseXml);
+
+        $errorCodeNode = $domDoc->getElementsByTagName("errorCode")->item(0);
+
+        if (!is_null($errorCodeNode)) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $errorCatNode = $domDoc->getElementsByTagName("statusCode")->item(0);
+            if ($errorCatNode instanceof \DOMNode) {
+                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
             }
 
             $errorCode = $errorCodeNode->nodeValue;
@@ -394,10 +741,15 @@ class Base implements ResponseHandlerInterface
                 break;
             case 'WEC':
             case 'WZZ': //Mutually defined warning
+            case 'W':
                 $status = Result::STATUS_WARN;
                 break;
             case 'EC':
+            case 'X':
                 $status = Result::STATUS_ERROR;
+                break;
+            case 'O':
+                $status = Result::STATUS_OK;
                 break;
             case 'ZZZ': //Mutually defined
             default:
@@ -443,7 +795,7 @@ class Base implements ResponseHandlerInterface
             ' - ',
             array_map(
                 function($item) {
-                    return $item->nodeValue;
+                    return trim($item->nodeValue);
                 },
                 iterator_to_array($errorTextNodeList)
             )
@@ -479,8 +831,6 @@ class Base implements ResponseHandlerInterface
                 $message->level = $info[1];
                 $message->text = $info[2];
             }
-        } else {
-            throw new Exception('Did not implement other exceptions than soapfaults');
         }
 
         return $message;

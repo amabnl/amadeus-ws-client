@@ -26,7 +26,7 @@ namespace Amadeus\Client\RequestOptions;
  * FarePricePnrWithBookingClassOptions
  *
  * @package Amadeus\Client\RequestOptions
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class FarePricePnrWithBookingClassOptions extends Base
 {

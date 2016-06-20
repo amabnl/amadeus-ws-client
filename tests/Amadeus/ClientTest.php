@@ -153,7 +153,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('PNR_Retrieve', $expectedPnrResult, ['asString' => true, 'endSession' => false])
+            ->with('PNR_Retrieve', $expectedPnrResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->once())
@@ -200,7 +200,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('PNR_RetrieveAndDisplay', $expectedPnrResult, ['asString' => true, 'endSession' => false])
+            ->with('PNR_RetrieveAndDisplay', $expectedPnrResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->once())
@@ -277,7 +277,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('PNR_AddMultiElements', $expectedPnrResult, ['asString' => true, 'endSession' => false])
+            ->with('PNR_AddMultiElements', $expectedPnrResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->once())
@@ -325,7 +325,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('PNR_AddMultiElements', $expectedPnrResult, ['asString' => true, 'endSession' => false])
+            ->with('PNR_AddMultiElements', $expectedPnrResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
 
         $mockSessionHandler
@@ -386,7 +386,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('PNR_AddMultiElements', $expectedPnrResult, ['asString' => true, 'endSession' => false])
+            ->with('PNR_AddMultiElements', $expectedPnrResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
 
         $mockSessionHandler
@@ -438,7 +438,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('PNR_Cancel', $expectedPnrResult, ['asString' => true, 'endSession' => false])
+            ->with('PNR_Cancel', $expectedPnrResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->once())
@@ -491,7 +491,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Queue_List', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Queue_List', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($sendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -544,7 +544,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Queue_PlacePNR', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Queue_PlacePNR', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -597,7 +597,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Queue_RemoveItem', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Queue_RemoveItem', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -650,7 +650,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Queue_MoveItem', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Queue_MoveItem', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -706,7 +706,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Command_Cryptic', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Command_Cryptic', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -769,7 +769,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('MiniRule_GetFromPricingRec', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('MiniRule_GetFromPricingRec', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -829,7 +829,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Offer_VerifyOffer', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Offer_VerifyOffer', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -884,7 +884,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Offer_ConfirmHotelOffer', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Offer_ConfirmHotelOffer', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -931,13 +931,15 @@ class ClientTest extends BaseTestCase
 
         $expectedMessageResult = new Client\Struct\Offer\ConfirmCar(
             new Client\RequestOptions\OfferConfirmCarOptions([
+                'passengerTattoo' => 1,
+                'offerTattoo' => 2
             ])
         );
 
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Offer_ConfirmCarOffer', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Offer_ConfirmCarOffer', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -967,6 +969,8 @@ class ClientTest extends BaseTestCase
 
         $response = $client->offerConfirmCar(
             new Client\RequestOptions\OfferConfirmCarOptions([
+                'passengerTattoo' => 1,
+                'offerTattoo' => 2
             ])
         );
 
@@ -982,6 +986,7 @@ class ClientTest extends BaseTestCase
 
         $expectedMessageResult = new Client\Struct\Info\EncodeDecodeCity(
             new Client\RequestOptions\InfoEncodeDecodeCityOptions([
+                'locationCode' => 'OPO'
             ])
         );
 
@@ -990,7 +995,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Info_EncodeDecodeCity', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Info_EncodeDecodeCity', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -1020,6 +1025,7 @@ class ClientTest extends BaseTestCase
 
         $response = $client->infoEncodeDecodeCity(
             new Client\RequestOptions\InfoEncodeDecodeCityOptions([
+                'locationCode' => 'OPO'
             ])
         );
 
@@ -1048,7 +1054,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Ticket_CreateTSTFromPricing', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Ticket_CreateTSTFromPricing', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -1106,7 +1112,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Offer_ConfirmAirOffer', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Offer_ConfirmAirOffer', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -1178,7 +1184,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Air_SellFromRecommendation', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Air_SellFromRecommendation', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -1254,7 +1260,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Air_FlightInfo', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Air_FlightInfo', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -1330,7 +1336,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Fare_MasterPricerTravelBoardSearch', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Fare_MasterPricerTravelBoardSearch', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -1407,7 +1413,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('PriceXplorer_ExtremeSearch', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('PriceXplorer_ExtremeSearch', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -1467,7 +1473,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Fare_CheckRules', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Fare_CheckRules', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -1525,7 +1531,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Fare_ConvertCurrency', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Fare_ConvertCurrency', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -1583,7 +1589,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Fare_PricePNRWithBookingClass', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Fare_PricePNRWithBookingClass', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -1638,7 +1644,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Fare_PricePNRWithBookingClass', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Fare_PricePNRWithBookingClass', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));;
         $mockSessionHandler
             ->expects($this->never())
@@ -1684,7 +1690,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Security_SignOut', $expectedMessageResult, ['asString' => false, 'endSession' => true])
+            ->with('Security_SignOut', $expectedMessageResult, ['endSession' => true])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -1749,7 +1755,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('Security_Authenticate', $expectedMessageResult, ['asString' => false, 'endSession' => false])
+            ->with('Security_Authenticate', $expectedMessageResult, ['endSession' => false])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -1856,6 +1862,61 @@ class ClientTest extends BaseTestCase
         $client->airFlightInfo();
     }
 
+    public function testCanSendDocIssuanceIssueTicket()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummydocissuanceissueticketresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\DocIssuance\IssueTicket(
+            new Client\RequestOptions\DocIssuanceIssueTicketOptions([
+                'options' => [Client\RequestOptions\DocIssuanceIssueTicketOptions::OPTION_ETICKET]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('DocIssuance_IssueTicket', $expectedMessageResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['DocIssuance_IssueTicket' => "9.1"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'DocIssuance_IssueTicket')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->docIssuanceIssueTicket(
+            new Client\RequestOptions\DocIssuanceIssueTicketOptions([
+                'options' => [Client\RequestOptions\DocIssuanceIssueTicketOptions::OPTION_ETICKET]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     /**
      * @return array
      */
@@ -1864,39 +1925,38 @@ class ClientTest extends BaseTestCase
         return [
             //No special message options: result is the default
             [
-                ['asString' => false, 'endSession' => false],
+                ['endSession' => false],
                 [
                     []
                 ]
             ],
             //Override asString by user:
             [
-                ['asString' => true, 'endSession' => false],
+                ['endSession' => false],
                 [
-                    ['asString' => true]
+                    []
                 ]
             ],
             //Override asString in message definition:
             [
-                ['asString' => true, 'endSession' => false],
+                ['endSession' => false],
                 [
                     [],
-                    true
+                    false
                 ]
             ],
             //Override endSession by user:
             [
-                ['asString' => false, 'endSession' => true],
+                ['endSession' => true],
                 [
                     ['endSession' => true]
                 ]
             ],
             //Override endSession in message definition:
             [
-                ['asString' => false, 'endSession' => true],
+                ['endSession' => true],
                 [
                     [],
-                    false,
                     true
                 ]
             ]

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Fare_CheckRulesReply xmlns="http://xml.amadeus.com/FARQNR_07_1_1A">
+	<transactionType>
+		<messageFunctionDetails>
+			<messageFunction>712</messageFunction>
+		</messageFunctionDetails>
+	</transactionType>
+	<errorInfo>
+		<rejectErrorCode>
+			<errorDetails>
+				<errorCode>0</errorCode>
+			</errorDetails>
+		</rejectErrorCode>
+		<errorFreeText>
+			<freeText>ENTRY REQUIRES PREVIOUS PRICING/FARE DISPLAY REQUEST</freeText>
+		</errorFreeText>
+	</errorInfo>
+</Fare_CheckRulesReply>

@@ -27,6 +27,7 @@ use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestOptions\AirFlightInfoOptions;
 use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
+use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
 use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
 use Amadeus\Client\RequestOptions\FareConvertCurrencyOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
@@ -385,8 +386,9 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * @param TicketCreateTstFromPricingOptions $params
+     * Ticket_CreateTstFromPricing
      *
+     * @param TicketCreateTstFromPricingOptions $params
      * @return Struct\Ticket\CreateTSTFromPricing
      */
     protected function createTicketCreateTSTFromPricing(TicketCreateTstFromPricingOptions $params)
@@ -395,8 +397,20 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * @param PriceXplorerExtremeSearchOptions $params
+     * DocIssuance_IssueTicket
      *
+     * @param DocIssuanceIssueTicketOptions $params
+     * @return Struct\DocIssuance\IssueTicket
+     */
+    protected function createDocIssuanceIssueTicket(DocIssuanceIssueTicketOptions $params)
+    {
+        return new Struct\DocIssuance\IssueTicket($params);
+    }
+
+    /**
+     * PriceXplorer_ExtremeSearch
+     *
+     * @param PriceXplorerExtremeSearchOptions $params
      * @return Struct\PriceXplorer\ExtremeSearch
      */
     protected function createPriceXplorerExtremeSearch(PriceXplorerExtremeSearchOptions $params)

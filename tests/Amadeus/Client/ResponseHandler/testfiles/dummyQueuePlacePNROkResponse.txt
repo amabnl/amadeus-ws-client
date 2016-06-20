@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><Queue_PlacePNRReply xmlns="http://xml.amadeus.com/QUQPCR_03_1_1A"><recordLocator><reservation><controlNumber>7TWOWX</controlNumber></reservation></recordLocator></Queue_PlacePNRReply>

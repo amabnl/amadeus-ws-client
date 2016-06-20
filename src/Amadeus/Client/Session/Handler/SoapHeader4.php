@@ -111,12 +111,6 @@ class SoapHeader4 extends Base
      */
     protected function handlePostMessage($messageName, $lastResponse, $messageOptions, $result)
     {
-
-        if ($messageName === "Security_Authenticate") {
-            //You really don't need the Security_Authenticate call anymore with SoapHeader 4!
-            throw new \RuntimeException('NOT YET IMPLEMENTED: Extract session data from Security_AuthenticateReply');
-        }
-
         //CHECK FOR SESSION DATA:
         if ($this->isStateful() === true) {
             //We need to extract session info
@@ -343,7 +337,7 @@ class SoapHeader4 extends Base
         } else {
             mt_srand((double)microtime()*10000);
             $charId = strtoupper(md5(uniqid(rand(), true)));
-            $hyphen = chr(45);// "-"
+            $hyphen = chr(45); // "-"
 
             $uuid = substr($charId, 0, 8) . $hyphen
                 .substr($charId, 8, 4) . $hyphen

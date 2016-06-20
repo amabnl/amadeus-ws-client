@@ -26,7 +26,7 @@ namespace Amadeus\Client\RequestOptions;
  * AirSellFromRecommendation
  *
  * @package Amadeus\Client\RequestOptions
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class AirSellFromRecommendationOptions extends Base
 {

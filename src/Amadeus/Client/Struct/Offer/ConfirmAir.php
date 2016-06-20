@@ -26,7 +26,7 @@ use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * ConfirmAir
+ * Offer_ConfirmAirOffer
  *
  * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>

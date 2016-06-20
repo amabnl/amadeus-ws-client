@@ -63,6 +63,7 @@ Soap Header 4 example:
 
     use Amadeus\Client;
     use Amadeus\Client\Params;
+    use Amadeus\Client\Result;
     use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
 
     //Set up the client with necessary parameters:
@@ -86,9 +87,13 @@ Soap Header 4 example:
 
     $client = new Client($params);
 
-    $pnrContent = $client->pnrRetrieve(
+    $pnrResult = $client->pnrRetrieve(
         new PnrRetrieveOptions(['recordLocator' => 'ABC123'])
     );
+
+    if ($pnrResult->status === Result::STATUS_OK) {
+        echo "Successfully retrieved PNR, no errors in PNR found!";
+    }
 
 Soap Header 2 example:
 
@@ -98,6 +103,7 @@ Soap Header 2 example:
 
     use Amadeus\Client;
     use Amadeus\Client\Params;
+    use Amadeus\Client\Result;
     use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
 
     //Set up the client with necessary parameters:
@@ -125,9 +131,9 @@ Soap Header 2 example:
 
     $authResult = $client->securityAuthenticate();
 
-    if (isset($authResult->processStatus->statusCode) && $authResult->processStatus->statusCode === 'P') {
+    if ($authResult->status === Result::STATUS_OK) {
         //We are authenticated!
-        $pnrContent = $client->pnrRetrieve(
+        $pnrResult = $client->pnrRetrieve(
             new PnrRetrieveOptions(['recordLocator' => 'ABC123'])
         );
     }
@@ -156,11 +162,14 @@ This is the list of messages that are at least partially supported at this time:
 - Fare_CheckRules
 - Air_SellFromRecommendation
 - Air_FlightInfo
+- DocIssuance_IssueTicket
+- Ticket_CreateTSTFromPricing
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
 - Offer_ConfirmHotelOffer
+- Offer_ConfirmCarOffer
 - MiniRule_GetFromPricingRec
-- Ticket_CreateTSTFromPricing
+- Info_EncodeDecodeCity
 - Command_Cryptic
 - PriceXplorer_ExtremeSearch
 
@@ -168,16 +177,16 @@ On the to-do list / work in progress:
 
 - Air_RetrieveSeatMap
 - Air_MultiAvailability
-- DocIssuance_IssueTicket
 - Fare_InformativePricingWithoutPNR
 - Fare_InformativeBestPricingWithoutPNR
 - Fare_PricePNRWithLowerFares
+- Fare_PricePNRWithLowestFare
 - Fare_MasterPricerCalendar
 - Fare_DisplayFaresForCityPair
 - Fare_DisplayBookingCodeInformation
 - Fare_CalculateMileage
-- Info_EncodeDecodeCity
-- Offer_ConfirmCarOffer
+- PNR_TransferOwnership
+- PNR_NameChange
 - PointOfRef_Search
 - PointOfRef_CategoryList
 - Ticket_DisplayTST

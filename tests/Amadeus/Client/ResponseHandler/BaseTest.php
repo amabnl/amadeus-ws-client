@@ -125,6 +125,60 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(0, count($result->messages));
     }
 
+    public function testCanHandleQueueRemoveItemOk()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyQueueRemoveItemOkResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Queue_RemoveItem');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleQueuePlacePNROk()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyQueuePlacePNROkResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Queue_PlacePNR');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleQueueMoveItemOk()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyQueueMoveItemOkResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Queue_MoveItem');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleQueueMoveItemErr()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyQueueMoveItemErrResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Queue_MoveItem');
+
+        $this->assertEquals(Result::STATUS_WARN, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals("79D", $result->messages[0]->code);
+        $this->assertEquals("Queue identifier has not been assigned for specified office identification", $result->messages[0]->text);
+    }
+
     public function testCanSetWarningStatusForEmptyQueue()
     {
         $respHandler = new ResponseHandler\Base();
@@ -167,12 +221,42 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
     }
 
+    public function testCanFindAirSellFromRecommendationError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyAirSellFromRecommendationErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Air_SellFromRecommendation');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('390', $result->messages[0]->code);
+        $this->assertEquals("UNABLE TO REFORMAT", $result->messages[0]->text);
+    }
+
+    public function testCanFindAirSellFromRecommendationErrorPartialSuccesCancelled()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyAirSellFromRecommendationPartialSuccessCancelled.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Air_SellFromRecommendation');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('288', $result->messages[0]->code);
+        $this->assertEquals("UNABLE TO SATISFY, NEED CONFIRMED FLIGHT STATUS", $result->messages[0]->text);
+    }
+
     public function testCanFindAirFlightInfoError()
     {
         $respHandler = new ResponseHandler\Base();
 
         $sendResult = new SendResult();
-        $sendResult->responseXml = $this->getTestFile('dummyAirFlightInoResponse.txt');
+        $sendResult->responseXml = $this->getTestFile('dummyAirFlightInfoResponse.txt');
 
         $result = $respHandler->analyzeResponse($sendResult, 'Air_FlightInfo');
 
@@ -219,7 +303,7 @@ class BaseTest extends BaseTestCase
 
         $sendResult = new SendResult();
         $sendResult->responseXml = $this->getTestFile('dummySecuritySignoutReply.txt');
-        $sendResult->messageVersion = '6.1';
+        $sendResult->messageVersion = '4.1';
 
         $result = $respHandler->analyzeResponse($sendResult, 'Security_SignOut');
 
@@ -228,6 +312,153 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('ERROR', $result->messages[0]->text);
         $this->assertEquals('', $result->messages[0]->level);
         $this->assertEquals('1', $result->messages[0]->code);
+    }
+
+    public function testCanParseSecuritySignOutReplyOk()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummySecuritySignoutReplyOk.txt');
+        $sendResult->messageVersion = '4.1';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Security_SignOut');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleOfferConfirmCarOfferOk()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyOfferConfirmCarOfferOkResponse.txt');
+        $sendResult->messageVersion = '13.1';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Offer_ConfirmCarOffer');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('OFFER CONFIRMED SUCCESSFULLY', $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+        $this->assertEquals(0, $result->messages[0]->code);
+    }
+
+    public function testCanHandleOfferConfirmCarOfferErr()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyOfferConfirmCarOfferErrResponse.txt');
+        $sendResult->messageVersion = '13.1';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Offer_ConfirmCarOffer');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('OFFER NO LONGER AVAILABLE', $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+        $this->assertEquals(27635, $result->messages[0]->code);
+    }
+
+    public function testCanHandleOfferConfirmHotelOfferOk()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyOfferConfirmHotelOfferOkResponse.txt');
+        $sendResult->messageVersion = '10.2';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Offer_ConfirmHotelOffer');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleOfferConfirmHotelOfferErr()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyOfferConfirmHotelOfferErrResponse.txt');
+        $sendResult->messageVersion = '10.2';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Offer_ConfirmHotelOffer');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('CREDIT CARD DEPOSIT REQUIRED', $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+        $this->assertEquals('03659', $result->messages[0]->code);
+    }
+
+    public function testCanHandleOfferConfirmAirOfferOk()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyOfferConfirmAirOfferOkResponse.txt');
+        $sendResult->messageVersion = '10.1';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Offer_ConfirmAirOffer');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('OFFER CONFIRMED SUCCESSFULLY', $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+        $this->assertEquals(0, $result->messages[0]->code);
+    }
+
+    public function testCanHandleOfferConfirmAirOfferErr()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyOfferConfirmAirOfferErrResponse.txt');
+        $sendResult->messageVersion = '10.1';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Offer_ConfirmAirOffer');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('INACTIVE OFFER CAN NOT BE VERIFIED NOR CONFIRMED', $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+        $this->assertEquals('27631', $result->messages[0]->code);
+    }
+
+    public function testCanHandleOfferVerifyOfferOk()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyOfferVerifyOfferOkResponse.txt');
+        $sendResult->messageVersion = '10.1';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Offer_VerifyOffer');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('OFFER VERIFIED SUCCESSFULLY', $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+        $this->assertEquals(0, $result->messages[0]->code);
+    }
+
+    public function testCanHandleOfferVerifyOfferErr()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyOfferVerifyOfferErrResponse.txt');
+        $sendResult->messageVersion = '10.1';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Offer_VerifyOffer');
+
+        $this->assertEquals(Result::STATUS_WARN, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('PRICING CONDITIONS HAVE CHANGED', $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+        $this->assertEquals('27706', $result->messages[0]->code);
     }
 
     public function testCanHandleSoapFault()
@@ -266,6 +497,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('', $result->messages[0]->text);
     }
 
+    public function testCanHandleFareMasterPricerTravelBoarSearchError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareMasterPricerTravelBoardSearchErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_MasterPricerTravelBoardSearch');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('920', $result->messages[0]->code);
+        $this->assertEquals("Past date/time not allowed", $result->messages[0]->text);
+    }
+
     public function testCanFindFarePricePnrWithBookingClassError()
     {
         $respHandler = new ResponseHandler\Base();
@@ -279,5 +525,158 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
         $this->assertEquals('00477', $result->messages[0]->code);
         $this->assertEquals("INVALID FORMAT", $result->messages[0]->text);
+    }
+
+    public function testCanHandleFareConvertCurrencyError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareConvertCurrencyErrResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_ConvertCurrency');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('0123', $result->messages[0]->code);
+        $this->assertEquals("VERIFY CURRENCY", $result->messages[0]->text);
+    }
+
+    public function testCanHandleFareCheckRulesError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareCheckRulesReplyErr.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_CheckRules');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('0', $result->messages[0]->code);
+        $this->assertEquals("ENTRY REQUIRES PREVIOUS PRICING/FARE DISPLAY REQUEST", $result->messages[0]->text);
+    }
+
+    public function testCanHandleDocIssuanceIssueTicketOkResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyDocIssuanceIssueTicketReplyOk.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'DocIssuance_IssueTicket');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('OK', $result->messages[0]->code);
+        $this->assertEquals("OK ETICKET", $result->messages[0]->text);
+    }
+
+    public function testCanHandleDocIssuanceIssueTicketErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyDocIssuanceIssueTicketReplyError.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'DocIssuance_IssueTicket');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('120', $result->messages[0]->code);
+        $this->assertEquals("UNABLE TO PROCESS", $result->messages[0]->text);
+    }
+
+    public function testCanHandleTicketCreateTSTFromPricingErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketCreateTSTFromPricingReplyError.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_CreateTSTFromPricing');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('CM01959', $result->messages[0]->code);
+        $this->assertEquals("NEED PNR", $result->messages[0]->text);
+    }
+
+    public function testCanHandleMiniRuleGetFromPricingRecErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyMiniRuleGetFromPricingRecErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'MiniRule_GetFromPricingRec');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('20', $result->messages[0]->code);
+        $this->assertEquals("RESTRICTED", $result->messages[0]->text);
+    }
+
+    public function testCanHandleInfoEncodeDecodeCityErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyInfoEncodeDecodeCityErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Info_EncodeDecodeCity');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('11177', $result->messages[0]->code);
+        $this->assertEquals("Invalid value (TTT) for IATA code (TTT) field", $result->messages[0]->text);
+    }
+
+    public function testCanHandlePriceXplorerExtremeSearchErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPriceXplorerExtremeSearchErrResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PriceXplorer_ExtremeSearch');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('1004', $result->messages[0]->code);
+        $this->assertEquals("Invalid departure dates range", $result->messages[0]->text);
+    }
+
+    public function testCanHandleInvalidXmlDocument()
+    {
+        $this->setExpectedException('Amadeus\Client\Exception');
+
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyInvalidXmlDocument.txt');
+
+        $warningEnabledOrig = \PHPUnit_Framework_Error_Warning::$enabled;
+        \PHPUnit_Framework_Error_Warning::$enabled = false;
+
+        $respHandler->analyzeResponse($sendResult, 'Fare_PricePnrWithBookingClass');
+
+        \PHPUnit_Framework_Error_Warning::$enabled = $warningEnabledOrig;
+    }
+
+    public function testCanHandleCommandCryptic()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->messageVersion = "7.3";
+        $sendResult->responseXml = $this->getTestFile('dummyCommandCrypticResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Command_Cryptic');
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('0', $result->messages[0]->code);
+        $this->assertEquals("Response handling not supported for cryptic entries", $result->messages[0]->text);
     }
 }

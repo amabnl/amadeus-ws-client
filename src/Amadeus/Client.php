@@ -212,7 +212,7 @@ class Client
     public function securityAuthenticate()
     {
         $msgName = 'Security_Authenticate';
-        $messageOptions = $this->makeMessageOptions([], false, false);
+        $messageOptions = $this->makeMessageOptions([], false);
 
         $sendResult = $this->sessionHandler->sendMessage(
             $msgName,
@@ -240,7 +240,7 @@ class Client
     public function securitySignOut()
     {
         $msgName = 'Security_SignOut';
-        $messageOptions = $this->makeMessageOptions([], false, true);
+        $messageOptions = $this->makeMessageOptions([], true);
 
         $sendResult = $this->sessionHandler->sendMessage(
             $msgName,
@@ -263,8 +263,6 @@ class Client
      * By default, the result will be the PNR_Reply XML as string.
      * That way you can easily parse the PNR's contents with XPath.
      *
-     * Set $responseAsString FALSE to get the response as a PHP object.
-     *
      * https://webservices.amadeus.com/extranet/viewService.do?id=27&flavourId=1&menuId=functional
      *
      * @param RequestOptions\PnrRetrieveOptions $options
@@ -275,7 +273,7 @@ class Client
     public function pnrRetrieve(RequestOptions\PnrRetrieveOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_Retrieve';
-        $messageOptions = $this->makeMessageOptions($messageOptions, true);
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         $sendResult = $this->sessionHandler->sendMessage(
             $msgName,
@@ -302,7 +300,7 @@ class Client
     public function pnrCreatePnr(RequestOptions\PnrCreatePnrOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_AddMultiElements';
-        $messageOptions = $this->makeMessageOptions($messageOptions, true);
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         $sendResult = $this->sessionHandler->sendMessage(
             $msgName,
@@ -332,7 +330,7 @@ class Client
     public function pnrAddMultiElements(RequestOptions\PnrAddMultiElementsOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_AddMultiElements';
-        $messageOptions = $this->makeMessageOptions($messageOptions, true);
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         $sendResult = $this->sessionHandler->sendMessage(
             $msgName,
@@ -369,7 +367,7 @@ class Client
     public function pnrRetrieveAndDisplay(RequestOptions\PnrRetrieveAndDisplayOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_RetrieveAndDisplay';
-        $messageOptions = $this->makeMessageOptions($messageOptions, true);
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         $sendResult = $this->sessionHandler->sendMessage(
             $msgName,
@@ -396,7 +394,7 @@ class Client
     public function pnrCancel(RequestOptions\PnrCancelOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_Cancel';
-        $messageOptions = $this->makeMessageOptions($messageOptions, true);
+        $messageOptions = $this->makeMessageOptions($messageOptions);
 
         $sendResult = $this->sessionHandler->sendMessage(
             $msgName,
@@ -905,6 +903,33 @@ class Client
     }
 
     /**
+     * DocIssuance_IssueTicket
+     *
+     * @param RequestOptions\DocIssuanceIssueTicketOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function docIssuanceIssueTicket(RequestOptions\DocIssuanceIssueTicketOptions $options, $messageOptions = [])
+    {
+        $msgName = 'DocIssuance_IssueTicket';
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        $sendResult = $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+
+        return $this->responseHandler->analyzeResponse(
+            $sendResult,
+            $msgName
+        );
+    }
+
+    /**
      * PriceXplorer_ExtremeSearch
      *
      * @param RequestOptions\PriceXplorerExtremeSearchOptions $options
@@ -944,16 +969,11 @@ class Client
      * @param bool $endSession Switch if you want to terminate the current session after making the call.
      * @return array
      */
-    protected function makeMessageOptions(array $incoming, $asString = false, $endSession = false)
+    protected function makeMessageOptions(array $incoming, $endSession = false)
     {
         $options = [
-            'asString' => $asString,
             'endSession' => $endSession
         ];
-
-        if (array_key_exists('asString', $incoming)) {
-            $options['asString'] = $incoming['asString'];
-        }
 
         if (array_key_exists('endSession', $incoming)) {
             $options['endSession'] = $incoming['endSession'];

@@ -1,0 +1,5 @@
+<Security_SignOutReply xmlns="http://xml.amadeus.com/VLSSOR_04_1_1A">
+    <processStatus>
+        <statusCode>P</statusCode>
+    </processStatus>
+</Security_SignOutReply>

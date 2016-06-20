@@ -41,7 +41,7 @@ use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomStayData;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\TattooReference;
 
 /**
- * ConfirmHotel
+ * Offer_ConfirmHotelOffer
  *
  * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>

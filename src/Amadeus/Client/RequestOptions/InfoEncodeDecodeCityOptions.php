@@ -26,8 +26,80 @@ namespace Amadeus\Client\RequestOptions;
  * InfoEncodeDecodeCityOptions
  *
  * @package Amadeus\Client\RequestOptions
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class InfoEncodeDecodeCityOptions extends Base
 {
+    const SEARCHMODE_EXACT = "EXT";
 
+    const SEARCHMODE_PHONETIC = "PHO";
+
+
+    const SELECT_ALL_LOCATIONS = "ALL";
+
+    const SELECT_AIRPORTS = "A";
+
+    const SELECT_HELIPORTS = "H";
+
+    const SELECT_BUS_STATIONS = "B";
+
+    const SELECT_TRAIN_STATIONS = "R";
+
+    const SELECT_ASSOCIATED_LOCATION = "S";
+
+    const SELECT_GROUND_TRANSPORT = "G";
+
+    const SELECT_OFFLINE_POINT = "O";
+
+
+
+    /**
+     * Search for an exact result or phonetic result
+     *
+     * self::SEARCHMODE_*
+     *
+     * @var string
+     */
+    public $searchMode = self::SEARCHMODE_EXACT;
+
+    /**
+     * The name of the location to search.
+     *
+     * @var string
+     */
+    public $locationName;
+
+    /**
+     * The location IATA code to search
+     *
+     * 3-character IATA location code
+     *
+     * @var string
+     */
+    public $locationCode;
+
+    /**
+     * Search for the location in a given country
+     *
+     * 2-character ISO 3166-1 code
+     *
+     * @var string
+     */
+    public $restrictCountry;
+
+    /**
+     * Search for the location in a given state
+     *
+     * @var string
+     */
+    public $restrictState;
+
+    /**
+     * What kind of result to select (only airports, heliports, ...)
+     *
+     * self::SELECT_*
+     *
+     * @var string
+     */
+    public $selectResult;
 }
