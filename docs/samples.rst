@@ -113,6 +113,8 @@ The Amadeus web services can be tricky with regards to error detection. In most 
 
 We try to ease your pain a little by analyzing the messages we support and look for error nodes. If any are found, we will put any error messages in the ``Amadeus\Client\Result::messages`` property of the result and set the result status accordingly.
 
+If the Amadeus server responds with a ``\SoapFault``, the library will convert this to a ``Result`` object with status 'FATAL'.
+
 To override this behaviour, look at the ``Amadeus\Client\ResponseHandler\ResponseHandlerInterface``.
 
 **************************
