@@ -96,7 +96,7 @@ class Base implements ResponseHandlerInterface
      */
     protected function analyzeCommandCrypticResponse($response)
     {
-        $ccResult =  new Result($response, Result::STATUS_UNKNOWN);
+        $ccResult = new Result($response, Result::STATUS_UNKNOWN);
         $ccResult->messages[] = new Result\NotOk(
             0,
             "Response handling not supported for cryptic entries"
@@ -258,8 +258,17 @@ class Base implements ResponseHandlerInterface
             $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'element');
         }
 
-
         return $analyzeResponse;
+    }
+
+    /**
+     * @param SendResult $response Pnr_RetrieveAndDisplay response
+     * @return Result
+     * @throws Exception
+     */
+    public function analyzePnrRetrieveAndDisplayResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
     }
 
     /**

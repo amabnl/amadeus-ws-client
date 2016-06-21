@@ -93,6 +93,7 @@ Soap Header 4 example:
 
     if ($pnrResult->status === Result::STATUS_OK) {
         echo "Successfully retrieved PNR, no errors in PNR found!";
+        echo "PNR XML string received: <pre>" . $pnrResult->responseXml . "</pre>";
     }
 
 Soap Header 2 example:

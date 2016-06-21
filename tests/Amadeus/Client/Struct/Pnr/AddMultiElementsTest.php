@@ -32,6 +32,9 @@ use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest;
 use Amadeus\Client\RequestOptions\Pnr\Element\Ticketing;
 use Amadeus\Client\RequestOptions\Pnr\Reference;
+use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
+use Amadeus\Client\RequestOptions\Pnr\Segment\Ghost;
+use Amadeus\Client\RequestOptions\Pnr\Segment\Hotel;
 use Amadeus\Client\RequestOptions\Pnr\Segment\Miscellaneous;
 use Amadeus\Client\RequestOptions\Pnr\Traveller;
 use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
@@ -728,5 +731,97 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals('Name,Street 20, Zipcode City', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->longFreetext);
         $this->assertEquals(AddMultiElements\FreetextDetail::TYPE_MAILING_ADDRESS, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->type);
         $this->assertEquals(AddMultiElements\FreetextDetail::QUALIFIER_LITERALTEXT, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->subjectQualifier);
+    }
+
+    public function testInfantPassengerWillThrowRuntimeException()
+    {
+        $this->setExpectedException('\RuntimeException', 'not yet supported');
+
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David',
+            'infant' => new Traveller(['lastName' => 'Bowie', 'firstName' => 'Junior'])
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'quantity' => 2,
+            'company' => '1A',
+            'references' => [
+                new Reference([
+                    'type' => Reference::TYPE_PASSENGER_TATTOO,
+                    'id' => 1
+                ]),
+                new Reference([
+                    'type' => Reference::TYPE_PASSENGER_TATTOO,
+                    'id' => 2
+                ])
+            ]
+        ]);
+
+        new AddMultiElements($createPnrOptions);
+    }
+
+    public function testCreateAirSegmentWillThrowException()
+    {
+        $this->setExpectedException('\RuntimeException', 'NOT YET IMPLEMENTED');
+
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Air([
+
+        ]);
+
+        new AddMultiElements($createPnrOptions);
+    }
+
+    public function testCreateGhostSegmentWillThrowException()
+    {
+        $this->setExpectedException('\RuntimeException', 'NOT YET IMPLEMENTED');
+
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Ghost([
+        ]);
+
+        new AddMultiElements($createPnrOptions);
+    }
+
+    public function testCreateHotelSegmentWillThrowException()
+    {
+        $this->setExpectedException(
+            'Amadeus\Client\Struct\InvalidArgumentException',
+            'Segment type Hotel is not supported'
+        );
+
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Hotel([
+        ]);
+
+        new AddMultiElements($createPnrOptions);
     }
 }

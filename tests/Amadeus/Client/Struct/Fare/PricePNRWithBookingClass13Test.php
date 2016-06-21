@@ -92,6 +92,52 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
 
 
     /**
+     * Testcase where we have the Fare Basis override in the override options and also pricingsFareBasis provided
+     * we will test that we only have 1 pricingOptionGroup for the fare basis override.
+     */
+    public function testCanDoPricePnrCallWithFareOverrideDuplicate()
+    {
+        $opt = new FarePricePnrWithBookingClassOptions([
+            'overrideOptions' => [FarePricePnrWithBookingClassOptions::OVERRIDE_FARETYPE_NEG, FarePricePnrWithBookingClassOptions::OVERRIDE_FAREBASIS],
+            'validatingCarrier' => 'BA',
+            'currencyOverride' => 'EUR',
+            'pricingsFareBasis' => [
+                new PricePnrBcFareBasis([
+                    'fareBasisPrimaryCode' => 'QNC',
+                    'fareBasisCode' => '469W2',
+                    'segmentReference' => [2 => PricePnrBcFareBasis::SEGREFTYPE_SEGMENT]
+                ])
+            ]
+        ]);
+
+        $message = new PricePNRWithBookingClass13($opt);
+
+        $this->assertCount(4, $message->pricingOptionGroup);
+
+        $validatingCarrierPo = new PricingOptionGroup(PricingOptionKey::OPTION_VALIDATING_CARRIER);
+        $validatingCarrierPo->carrierInformation = new CarrierInformation('BA');
+
+        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $validatingCarrierPo));
+
+        $currencyOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE);
+        $currencyOverridePo->currency = new Currency('EUR');
+
+        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $currencyOverridePo));
+
+        $fareBasisOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
+        $fareBasisOverridePo->optionDetail = new OptionDetail();
+        $fareBasisOverridePo->optionDetail->criteriaDetails[] = new CriteriaDetails('QNC469W2');
+        $fareBasisOverridePo->paxSegTstReference = new PaxSegTstReference([2 => PricePnrBcFareBasis::SEGREFTYPE_SEGMENT]);
+
+        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $fareBasisOverridePo));
+
+        $negofarePo = new PricingOptionGroup(PricingOptionKey::OPTION_NEGOTIATED_FARES);
+
+        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $negofarePo));
+    }
+
+
+    /**
      * @param $theArray
      * @param $theObject
      * @return bool

@@ -1,0 +1,17 @@
+<PNR_RetrieveAndDisplayReply xmlns="http://xml.amadeus.com/PADSRR_12_2_1A">
+    <errorDetails>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>27563</errorCode>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>1</textSubjectQualifier>
+                <source>M</source>
+                <encoding>1</encoding>
+            </freeTextDetails>
+            <freeText>NO OFFER</freeText>
+        </errorWarningDescription>
+    </errorDetails>
+</PNR_RetrieveAndDisplayReply>

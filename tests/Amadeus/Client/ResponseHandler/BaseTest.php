@@ -125,6 +125,38 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(0, count($result->messages));
     }
 
+    public function testCanHandlePnrRetrieveAndDisplayErr()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPnrRetrieveAndDisplayErrResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_RetrieveAndDisplay');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('1', $result->messages[0]->code);
+        $this->assertEquals("NO MATCH FOR RECORD LOCATOR", $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+    }
+
+    public function testCanHandlePnrRetrieveAndDisplayErr2()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPnrRetrieveAndDisplayErr2Response.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_RetrieveAndDisplay');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('27563', $result->messages[0]->code);
+        $this->assertEquals("NO OFFER", $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+    }
+
     public function testCanHandleQueueRemoveItemOk()
     {
         $respHandler = new ResponseHandler\Base();
@@ -678,5 +710,18 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
         $this->assertEquals('0', $result->messages[0]->code);
         $this->assertEquals("Response handling not supported for cryptic entries", $result->messages[0]->text);
+    }
+
+    public function testCanGetUnknownStatusForUnknownErrorCode()
+    {
+        //Sweet sweet 100% coverage
+
+        $respHandler = new ResponseHandler\Base();
+
+        $meth = $this->getMethod('Amadeus\Client\ResponseHandler\Base', 'makeStatusFromErrorQualifier');
+
+        $result = $meth->invoke($respHandler, ['ZZZ']);
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result);
     }
 }
