@@ -43,4 +43,14 @@ class MsgBodyExtractorTest extends BaseTestCase
 
         $this->assertEquals($expectedResult, $actual);
     }
+
+    public function testCanExtractMessageFromSoapEnvelopeWithNewline()
+    {
+        $xml = $this->getTestFile("dummyPnrRetrieveWithNewLine.txt");
+        $expectedResult = $this->getTestFile("dummyPnrRetrieveWithNewLineOnlyPnrReply.txt");
+
+        $actual = MsgBodyExtractor::extract($xml);
+
+        $this->assertEquals($expectedResult, $actual);
+    }
 }

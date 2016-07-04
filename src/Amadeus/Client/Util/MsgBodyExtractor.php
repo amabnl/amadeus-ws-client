@@ -35,14 +35,14 @@ class MsgBodyExtractor
      *
      * @var string
      */
-    const REGEXP_SOAP_ENVELOPE_CONTENTS = "|\\<SOAP-ENV:Body\\>(.*?)\\<\\/SOAP-ENV:Body\\>|";
+    const REGEXP_SOAP_ENVELOPE_CONTENTS = "|\\<SOAP-ENV:Body\\>(.*?)\\<\\/SOAP-ENV:Body\\>|s";
 
     /**
      * Regular expression for extracting the Soap Envelope Body's content - legacy format for Soap Header v2 and older
      *
      * @var string
      */
-    const REGEXP_SOAP_ENVELOPE_CONTENTS_LEGACY = "|\\<soap:Body\\>(.*?)\\<\\/soap:Body\\>|";
+    const REGEXP_SOAP_ENVELOPE_CONTENTS_LEGACY = "|\\<soap:Body\\>(.*?)\\<\\/soap:Body\\>|s";
 
     /**
      * Extracts the message content from the soap envelope (i.e. everything under the soap body)
