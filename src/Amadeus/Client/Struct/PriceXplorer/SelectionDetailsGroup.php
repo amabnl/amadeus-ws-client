@@ -30,7 +30,6 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class SelectionDetailsGroup
 {
-	
 	/**
 	 * @var SelectionDetailsInfo
 	 */

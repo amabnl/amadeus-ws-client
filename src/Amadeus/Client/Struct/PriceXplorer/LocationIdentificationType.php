@@ -30,32 +30,32 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class LocationIdentificationType
 {
-	const QUAL_DESTINATION = "D";
+    const QUAL_DESTINATION = "D";
 	
-	const QUAL_ORIGIN = "O";
+    const QUAL_ORIGIN = "O";
 	
-	/**
-	 * Identification of the name of place/location, other than 3164 City name.
-	 * 
-	 * IATA Code or:
-	 * ARNK 	ARNK (for RTG use only)
-	 * ZZZ 	ZZZ (used to designate all cities)
-	 * 
-	 * @var string
-	 */
-	public $code;
+    /**
+     * Identification of the name of place/location, other than 3164 City name.
+     *
+     * IATA Code or:
+     * ARNK 	ARNK (for RTG use only)
+     * ZZZ 	ZZZ (used to designate all cities)
+     *
+     * @var string
+     */
+    public $code;
 
-	/**
-	 *  Identification of a code list.
-	 *  
-	 * @var string self::QUAL_*
-	 */
-	public $qualifier;
+    /**
+     *  Identification of a code list.
+     *
+     * @var string self::QUAL_*
+     */
+    public $qualifier;
 
-	/**
-	 * Name of place/location, other than 3164 city name.
-	 * 
-	 * @var string
-	 */
-	public $name;
+    /**
+     * Name of place/location, other than 3164 city name.
+     *
+     * @var string
+     */
+    public $name;
 }

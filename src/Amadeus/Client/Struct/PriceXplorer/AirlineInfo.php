@@ -30,13 +30,13 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class AirlineInfo
 {
-	/**
-	 * @var mixed
-	 */
-	public $attributeInfo;
+    /**
+     * @var mixed
+     */
+    public $attributeInfo;
 	
-	/**
-	 * @var mixed
-	 */
-	public $airlineDetails;
+    /**
+     * @var mixed
+     */
+    public $airlineDetails;
 }

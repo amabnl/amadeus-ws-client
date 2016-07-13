@@ -30,8 +30,8 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class SelectionDetailsInfo
 {
-	/**
-	 * @var SelectionDetails[]
-	 */
-	public $selectionDetails = [];
+    /**
+     * @var SelectionDetails[]
+     */
+    public $selectionDetails = [];
 }

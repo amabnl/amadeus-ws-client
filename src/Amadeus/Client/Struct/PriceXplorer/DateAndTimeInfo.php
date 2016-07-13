@@ -30,8 +30,8 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class DateAndTimeInfo
 {
-	/**
-	 * @var DateAndTimeDetails[]
-	 */
-	public $dateAndTimeDetails = [];
+    /**
+     * @var DateAndTimeDetails[]
+     */
+    public $dateAndTimeDetails = [];
 }

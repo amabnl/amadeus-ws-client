@@ -113,13 +113,7 @@ class ExtremeSearch extends BaseWsMessage
             $this->officeIdInfo[] = new OfficeIdInfo($params->searchOffice);
         }
 
-        if (($params->maxBudget !== null || $params->minBudget !== null) && $params->currency !== null) {
-            $this->budget = new Budget(
-                $params->maxBudget,
-                $params->minBudget,
-                $params->currency
-            );
-        }
+        $this->loadBudget($params->maxBudget, $params->minBudget, $params->currency);
 
         if (!empty($params->destinations)) {
             foreach ($params->destinations as $destination) {
@@ -128,17 +122,7 @@ class ExtremeSearch extends BaseWsMessage
         }
 
         if (!empty($params->destinationCountries)) {
-            foreach ($params->destinationCountries as $destCountry) {
-                $tmpGrp = new ItineraryGrp();
-
-                $tmpGrp->locationInfo = new LocationInfo(LocationInfo::LOC_COUNTRY);
-
-                $tmpGrp->locationInfo->locationDescription = new LocationIdentificationType();
-                $tmpGrp->locationInfo->locationDescription->qualifier = LocationIdentificationType::QUAL_DESTINATION;
-                $tmpGrp->locationInfo->locationDescription->code = $destCountry;
-
-                $this->itineraryGrp[] = $tmpGrp;
-            }
+            $this->loadDestinationCountries($params->destinationCountries);
         }
 
         if (!empty($params->departureDaysInbound)) {
@@ -151,15 +135,69 @@ class ExtremeSearch extends BaseWsMessage
             );
         }
 
-        if ($params->stayDurationDays !== null) {
-            $this->stayDuration = new StayDuration($params->stayDurationDays);
+        $this->loadStayDuration($params->stayDurationDays, $params->stayDurationFlexibilityDays);
 
-            if ($params->stayDurationFlexibilityDays !== null) {
-                $this->stayDuration->flexibilityInfo = new FlexibilityInfo($params->stayDurationFlexibilityDays);
+        $this->loadCheapestQualifiers($params->returnCheapestNonStop, $params->returnCheapestOverall);
+
+        $this->loadResultAggregation($params->resultAggregationOption);
+    }
+
+    /**
+     * @param int|null $maxBudget
+     * @param int|null $minBudget
+     * @param string|null $currency
+     */
+    protected function loadBudget($maxBudget, $minBudget, $currency)
+    {
+        if (($maxBudget !== null || $minBudget !== null) && $currency !== null) {
+            $this->budget = new Budget(
+                $maxBudget,
+                $minBudget,
+                $currency
+            );
+        }
+    }
+
+    /**
+     * @param array $destinationCountries
+     */
+    protected function loadDestinationCountries($destinationCountries)
+    {
+        foreach ($destinationCountries as $destinationCountry) {
+            $tmpGrp = new ItineraryGrp();
+
+            $tmpGrp->locationInfo = new LocationInfo(LocationInfo::LOC_COUNTRY);
+
+            $tmpGrp->locationInfo->locationDescription = new LocationIdentificationType();
+            $tmpGrp->locationInfo->locationDescription->qualifier = LocationIdentificationType::QUAL_DESTINATION;
+            $tmpGrp->locationInfo->locationDescription->code = $destinationCountry;
+
+            $this->itineraryGrp[] = $tmpGrp;
+        }
+    }
+
+    /**
+     * @param int|null $stayDuration
+     * @param int|null $flexibility
+     */
+    protected function loadStayDuration($stayDuration, $flexibility)
+    {
+        if ($stayDuration !== null) {
+            $this->stayDuration = new StayDuration($stayDuration);
+
+            if ($flexibility !== null) {
+                $this->stayDuration->flexibilityInfo = new FlexibilityInfo($flexibility);
             }
         }
+    }
 
-        if ($params->returnCheapestNonStop || $params->returnCheapestOverall) {
+    /**
+     * @param bool $cheapestNonStop
+     * @param bool $cheapestOverall
+     */
+    protected function loadCheapestQualifiers($cheapestNonStop, $cheapestOverall)
+    {
+        if ($cheapestNonStop || $cheapestOverall) {
 
             $tmpSelDet = new SelectionDetailsGroup();
 
@@ -170,16 +208,14 @@ class ExtremeSearch extends BaseWsMessage
 
             $tmpSelDet->nbOfUnitsInfo = new NbOfUnitsInfo();
 
-            if ($params->returnCheapestNonStop) {
-
+            if ($cheapestNonStop) {
                 $tmpSelDet->nbOfUnitsInfo->quantityDetails[] = new NumberOfUnitDetailsType(
                     null,
                     NumberOfUnitDetailsType::QUAL_CHEAPEST_NONSTOP
                 );
             }
 
-            if ($params->returnCheapestOverall) {
-
+            if ($cheapestOverall) {
                 $tmpSelDet->nbOfUnitsInfo->quantityDetails[] = new NumberOfUnitDetailsType(
                     null,
                     NumberOfUnitDetailsType::QUAL_CHEAPEST_OVERALL
@@ -188,9 +224,15 @@ class ExtremeSearch extends BaseWsMessage
 
             $this->selectionDetailsGroup[] = $tmpSelDet;
         }
+    }
 
-        if ($params->resultAggregationOption !== null) {
-            $groupTypes = $this->makeAggregationGroupTypes($params->resultAggregationOption);
+    /**
+     * @param string $resultAggregationOption
+     */
+    protected function loadResultAggregation($resultAggregationOption)
+    {
+        if ($resultAggregationOption !== null) {
+            $groupTypes = $this->makeAggregationGroupTypes($resultAggregationOption);
 
             $tmpAttrInfo = new AttributeInfo(
                 AttributeInfo::FUNC_GROUPING,

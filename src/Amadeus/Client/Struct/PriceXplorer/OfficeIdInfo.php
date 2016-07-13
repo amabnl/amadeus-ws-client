@@ -30,19 +30,19 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class OfficeIdInfo
 {
-	/**
-	 * Office identification details
-	 * 
-	 * @var OfficeId
-	 */
-	public $officeId;
+    /**
+     * Office identification details
+     *
+     * @var OfficeId
+     */
+    public $officeId;
 	
-	/**
-	 * 
-	 * @param string $officeId
-	 */
-	public function __construct($officeId)
-	{
-		$this->officeId = new OfficeId($officeId);
-	}
+    /**
+     *
+     * @param string $officeId
+     */
+    public function __construct($officeId)
+    {
+        $this->officeId = new OfficeId($officeId);
+    }
 }

@@ -30,25 +30,25 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class OfficeId
 {
-	/**
-	 * 
-	 * @var OriginIdentification
-	 */
-	public $originIdentification;
-	/**
-	 * @var mixed
-	 */
-	public $originatorTypeCode;
-	/**
-	 * @var mixed
-	 */
-	public $originator;
+    /**
+     *
+     * @var OriginIdentification
+     */
+    public $originIdentification;
+    /**
+     * @var mixed
+     */
+    public $originatorTypeCode;
+    /**
+     * @var mixed
+     */
+    public $originator;
 	
-	/**
-	 * @param string $officeId
-	 */
-	public function __construct($officeId)
-	{
-		$this->originIdentification = new OriginIdentification($officeId);
-	}
+    /**
+     * @param string $officeId
+     */
+    public function __construct($officeId)
+    {
+        $this->originIdentification = new OriginIdentification($officeId);
+    }
 }
