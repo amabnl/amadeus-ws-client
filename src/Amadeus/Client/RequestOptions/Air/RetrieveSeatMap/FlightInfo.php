@@ -20,60 +20,63 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Air;
+namespace Amadeus\Client\RequestOptions\Air\RetrieveSeatMap;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * FlightDate
+ * FlightInfo
  *
- * @package Amadeus\Client\Struct\Air
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions\Air\RetrieveSeatMap
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FlightDate
+class FlightInfo extends LoadParamsFromArray
 {
     /**
-     * DDMMYY
+     * Departure date & time of flight
      *
-     * @var string
+     * @var \DateTime
      */
     public $departureDate;
-    /**
-     * HHMM
-     *
-     * @var string
-     */
-    public $departureTime;
-    /**
-     * DDMMYY
-     *
-     * @var string
-     */
-    public $arrivalDate;
-    /**
-     * HHMM
-     *
-     * @var string
-     */
-    public $arrivalTime;
-    /**
-     * @var string
-     */
-    public $dateVariation;
 
     /**
-     * FlightDate constructor.
+     * Departure location
      *
-     * @param string|\DateTime $departureDate in format DDMMYY or \DateTime
+     * 3-character IATA code
+     *
+     * @var string
      */
-    public function __construct($departureDate)
-    {
-        if (!($departureDate instanceof \DateTime)) {
-            $this->departureDate = $departureDate;
-        } else {
-            $this->departureDate = $departureDate->format('dmy');
-            $time = $departureDate->format('Hi');
-            if ($time !== "0000") {
-                $this->departureTime = $time;
-            }
-        }
-    }
+    public $departure;
+
+    /**
+     * Arrival location
+     *
+     * 3-character IATA code
+     *
+     * @var string
+     */
+    public $arrival;
+
+    /**
+     * Airline code
+     *
+     * 2-character IATA airline code
+     *
+     * @var string
+     */
+    public $airline;
+
+    /**
+     * The flight number
+     *
+     * @var string
+     */
+    public $flightNumber;
+
+    /**
+     * (Optional) Booking class
+     *
+     * @var string
+     */
+    public $bookingClass;
 }

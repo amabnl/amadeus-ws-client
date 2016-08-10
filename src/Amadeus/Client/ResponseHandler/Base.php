@@ -23,6 +23,7 @@
 namespace Amadeus\Client\ResponseHandler;
 
 use Amadeus\Client\Exception;
+use Amadeus\Client\ResponseHandler\Air\RetrieveSeatMap;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
 
@@ -163,6 +164,76 @@ class Base implements ResponseHandlerInterface
 
         if (!is_null($message) && !is_null($code)) {
             $analyzeResponse->messages[] = new Result\NotOk($code, $message);
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeAirRetrieveSeatMapResponse($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $code = null;
+        $message = null;
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $errorCodeNode = $domXpath->query('//m:errorInformation/m:errorDetails/m:code');
+        if ($errorCodeNode->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $errCode = $errorCodeNode->item(0)->nodeValue;
+            $level = null;
+            $errDesc = null;
+
+            $errorLevelNode = $domXpath->query('//m:errorInformation/m:errorDetails/m:processingLevel');
+            if ($errorLevelNode->length > 0) {
+                $level = RetrieveSeatMap::decodeProcessingLevel($errorLevelNode->item(0)->nodeValue);
+            }
+
+            $errorDescNode = $domXpath->query('//m:errorInformation/m:errorDetails/m:description');
+            if ($errorDescNode->length > 0) {
+                $errDesc = $errorDescNode->item(0)->nodeValue;
+            } else {
+                $errDesc = RetrieveSeatMap::findMessage($errCode);
+            }
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $errCode,
+                $errDesc,
+                $level
+            );
+        }
+
+        $codeNode = $domXpath->query('//m:warningInformation/m:warningDetails/m:code');
+        if ($codeNode->length > 0) {
+            $analyzeResponse->status = Result::STATUS_WARN;
+
+            $warnCode = $codeNode->item(0)->nodeValue;
+            $level = null;
+            $warnDesc = null;
+
+            $levelNode = $domXpath->query('//m:warningInformation/m:warningDetails/m:processingLevel');
+            if ($levelNode->length > 0) {
+                $level = RetrieveSeatMap::decodeProcessingLevel($levelNode->item(0)->nodeValue);
+            }
+
+            $descNode = $domXpath->query('//m:warningInformation/m:warningDetails/m:description');
+            if ($descNode->length > 0) {
+                $warnDesc = $descNode->item(0)->nodeValue;
+            } else {
+                $warnDesc = RetrieveSeatMap::findMessage($warnCode);
+            }
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $warnCode,
+                $warnDesc,
+                $level
+            );
         }
 
         return $analyzeResponse;

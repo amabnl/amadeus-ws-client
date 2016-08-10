@@ -188,8 +188,15 @@ On the to-do list / work in progress:
 - Fare_CalculateMileage
 - PNR_TransferOwnership
 - PNR_NameChange
+- PNR_History
 - PointOfRef_Search
 - PointOfRef_CategoryList
+- MiniRule_GetFromPricing
+- FOP_CreateFormOfPayment
 - Ticket_DisplayTST
 - Ticket_DeleteTST
+- Ticket_CreateTSMFromPricing
 - SalesReports_DisplayQueryReport
+- Media_GetMedia
+- Service_IntegratedPricing
+- DocIssuance_IssueMiscellaneousDocuments

@@ -25,6 +25,7 @@ namespace Amadeus\Client\RequestCreator;
 use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestOptions\AirFlightInfoOptions;
+use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
 use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
@@ -262,7 +263,6 @@ class Base implements RequestCreatorInterface
     }
 
 
-
     /**
      * @param OfferConfirmHotelOptions $params
      * @return Struct\Offer\ConfirmHotel
@@ -334,6 +334,15 @@ class Base implements RequestCreatorInterface
     protected function createAirFlightInfo(AirFlightInfoOptions $params)
     {
         return new Struct\Air\FlightInfo($params);
+    }
+
+    /**
+     * @param AirRetrieveSeatMapOptions $params
+     * @return Struct\Air\RetrieveSeatMap
+     */
+    protected function createAirRetrieveSeatMap(AirRetrieveSeatMapOptions $params)
+    {
+        return new Struct\Air\RetrieveSeatMap($params);
     }
 
     /**

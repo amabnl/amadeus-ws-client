@@ -794,6 +794,33 @@ class Client
     }
 
     /**
+     * Air_RetrieveSeatMap
+     *
+     * @param RequestOptions\AirRetrieveSeatMapOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function airRetrieveSeatMap(RequestOptions\AirRetrieveSeatMapOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Air_RetrieveSeatMap';
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        $sendResult = $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+
+        return $this->responseHandler->analyzeResponse(
+            $sendResult,
+            $msgName
+        );
+    }
+
+    /**
      * Command_Cryptic
      *
      * @param RequestOptions\CommandCrypticOptions $options

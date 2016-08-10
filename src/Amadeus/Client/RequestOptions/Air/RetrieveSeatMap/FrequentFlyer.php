@@ -20,39 +20,46 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Air;
+namespace Amadeus\Client\RequestOptions\Air\RetrieveSeatMap;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * PointDetails
+ * FrequentFlyer
  *
- * @package Amadeus\Client\Struct\Air
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions\Air\RetrieveSeatMap
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PointDetails
+class FrequentFlyer extends LoadParamsFromArray
 {
-    const ID_ARRIVAL_UNKNOWN = "ARNK";
+    const TYPE_FREQUENT_FLYER = 1;
 
-    const ID_ALL_CITIES = "ZZZ";
+    const TYPE_CORPORATE_FREQUENT_FLYER = 2;
 
     /**
-     * self::ID_* or a location code
+     * 2-character airline code
      *
      * @var string
      */
-    public $trueLocationId;
+    public $company;
 
     /**
+     * A code to uniquely identify a frequent traveller.
+     *
      * @var string
      */
-    public $trueLocation;
+    public $cardNumber;
 
     /**
-     * PointDetails constructor.
+     * Description of a membership level.
      *
-     * @param string $locationId
+     * @var string
      */
-    public function __construct($locationId)
-    {
-        $this->trueLocationId = $locationId;
-    }
+    public $tierLevel;
+
+    /**
+     * self::TYPE_*
+     *
+     * @var int
+     */
+    public $type;
 }

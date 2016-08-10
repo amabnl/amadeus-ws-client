@@ -298,6 +298,22 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("FLIGHT CANCELLED", $result->messages[0]->text);
     }
 
+    public function testCanFindAirRetrieveSeatMapError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyAirRetrieveSeatMapErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Air_RetrieveSeatMap');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('2', $result->messages[0]->code);
+        $this->assertEquals('application', $result->messages[0]->level);
+        $this->assertEquals("Seat not available on the requested class/zone", $result->messages[0]->text);
+    }
+
     public function testCanParseSecurityAuthenticateReplyOk()
     {
         $respHandler = new ResponseHandler\Base();

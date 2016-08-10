@@ -1301,6 +1301,73 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendAirRetrieveSeatMap()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyairretrieveseatmapmessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Air\RetrieveSeatMap(
+            new Client\RequestOptions\AirRetrieveSeatMapOptions([
+                'flight' => new Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo([
+                    'airline' => 'SN',
+                    'flightNumber' => '652',
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18'),
+                    'departure' => 'BRU',
+                    'arrival' => 'LIS'
+                ])
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Air_RetrieveSeatMap', $expectedMessageResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Air_RetrieveSeatMap' => "14.2"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Air_RetrieveSeatMap')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->airRetrieveSeatMap(
+            new Client\RequestOptions\AirRetrieveSeatMapOptions([
+                'flight' => new Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo([
+                    'airline' => 'SN',
+                    'flightNumber' => '652',
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18'),
+                    'departure' => 'BRU',
+                    'arrival' => 'LIS'
+                ])
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanSendFareMasterPricerTravelBoardSearch()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

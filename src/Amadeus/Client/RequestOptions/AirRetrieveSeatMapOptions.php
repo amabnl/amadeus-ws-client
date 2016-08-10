@@ -20,39 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Air;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * PointDetails
+ * AirRetrieveSeatMapOptions
  *
- * @package Amadeus\Client\Struct\Air
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * Options available for the Air_RetrieveSeatMap message.
+ *
+ * Currently only supported option is flight information.
+ *
+ * @package Amadeus\Client\RequestOptions
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PointDetails
+class AirRetrieveSeatMapOptions extends Base
 {
-    const ID_ARRIVAL_UNKNOWN = "ARNK";
-
-    const ID_ALL_CITIES = "ZZZ";
-
     /**
-     * self::ID_* or a location code
+     * Flight information
      *
-     * @var string
+     * @var Air\RetrieveSeatMap\FlightInfo
      */
-    public $trueLocationId;
+    public $flight;
 
     /**
-     * @var string
-     */
-    public $trueLocation;
-
-    /**
-     * PointDetails constructor.
+     * Frequent flyer information
      *
-     * @param string $locationId
+     * @var Air\RetrieveSeatMap\FrequentFlyer
      */
-    public function __construct($locationId)
-    {
-        $this->trueLocationId = $locationId;
-    }
+    public $frequentFlyer;
 }
