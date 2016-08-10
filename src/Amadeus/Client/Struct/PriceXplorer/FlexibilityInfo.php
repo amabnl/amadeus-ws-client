@@ -30,18 +30,18 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class FlexibilityInfo
 {
-	/**
-	 * @var QuantityDetailsType[]
-	 */
-	public $quantityDetails = [];
+    /**
+     * @var QuantityDetailsType[]
+     */
+    public $quantityDetails = [];
 	
-	/**
-	 * @param int $flexibilityDays Number of flexible days
-	 */
-	public function __construct($flexibilityDays = null)
-	{
-		if ($flexibilityDays !== null && is_int($flexibilityDays)) {
-			$this->quantityDetails[] = new QuantityDetailsType($flexibilityDays);
-		}
-	}
+    /**
+     * @param int $flexibilityDays Number of flexible days
+     */
+    public function __construct($flexibilityDays = null)
+    {
+        if ($flexibilityDays !== null && is_int($flexibilityDays)) {
+            $this->quantityDetails[] = new QuantityDetailsType($flexibilityDays);
+        }
+    }
 }

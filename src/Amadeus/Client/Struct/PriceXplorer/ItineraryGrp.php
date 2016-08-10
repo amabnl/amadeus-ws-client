@@ -30,24 +30,24 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class ItineraryGrp
 {
-	/**
-	 * @var ItineraryInfo
-	 */
-	public $itineraryInfo;
+    /**
+     * @var ItineraryInfo
+     */
+    public $itineraryInfo;
 	
-	/**
-	 * @var LocationInfo
-	 */
-	public $locationInfo;
+    /**
+     * @var LocationInfo
+     */
+    public $locationInfo;
 	
-	/**
-	 * Construct ItineraryGrp
-	 * 
-	 * @param string|null $origin
-	 * @param string|null $destination
-	 */
-	public function __construct($origin = null, $destination = null)
-	{
-		$this->itineraryInfo = new ItineraryInfo($origin, $destination);
-	}
+    /**
+     * Construct ItineraryGrp
+     *
+     * @param string|null $origin
+     * @param string|null $destination
+     */
+    public function __construct($origin = null, $destination = null)
+    {
+        $this->itineraryInfo = new ItineraryInfo($origin, $destination);
+    }
 }

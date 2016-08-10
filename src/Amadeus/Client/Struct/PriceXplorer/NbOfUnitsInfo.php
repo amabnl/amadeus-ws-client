@@ -30,18 +30,18 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class NbOfUnitsInfo
 {
-	/**
-	 * @var NumberOfUnitDetailsType[]
-	 */
-	public $quantityDetails = [];
+    /**
+     * @var NumberOfUnitDetailsType[]
+     */
+    public $quantityDetails = [];
 	
-	/**
-	 * @param int $numberOfDays
-	 */
-	public function __construct($numberOfDays = null)
-	{
-		if ($numberOfDays !== null) {
-			$this->quantityDetails[] = new NumberOfUnitDetailsType($numberOfDays);
-		}
-	}
+    /**
+     * @param int $numberOfDays
+     */
+    public function __construct($numberOfDays = null)
+    {
+        if ($numberOfDays !== null) {
+            $this->quantityDetails[] = new NumberOfUnitDetailsType($numberOfDays);
+        }
+    }
 }

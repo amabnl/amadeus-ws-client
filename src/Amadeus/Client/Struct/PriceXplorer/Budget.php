@@ -30,34 +30,34 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class Budget
 {
-	/**
-	 * @var MonetaryDetails[]
-	 */
-	public $monetaryDetails = [];
+    /**
+     * @var MonetaryDetails[]
+     */
+    public $monetaryDetails = [];
 	
-	/**
-	 * When providing MAX or MIN you MUST specify currency
-	 * 
-	 * @param double|int|string|null $maxBudget
-	 * @param double|int|string|null $minBudget
-	 * @param string|null $currency
-	 */
-	public function __construct($maxBudget = null, $minBudget = null, $currency = null)
-	{
-		if ($maxBudget !== null && $currency !== null) {
-			$this->monetaryDetails[] = new MonetaryDetails(
-				$maxBudget, 
-				MonetaryDetails::QUAL_MAX_BUDGET,
-				$currency
-			);
-		}
+    /**
+     * When providing MAX or MIN you MUST specify currency
+     *
+     * @param double|int|string|null $maxBudget
+     * @param double|int|string|null $minBudget
+     * @param string|null $currency
+     */
+    public function __construct($maxBudget = null, $minBudget = null, $currency = null)
+    {
+        if ($maxBudget !== null && $currency !== null) {
+            $this->monetaryDetails[] = new MonetaryDetails(
+                $maxBudget,
+                MonetaryDetails::QUAL_MAX_BUDGET,
+                $currency
+            );
+        }
 		
-		if ($minBudget !== null && $currency !== null) {
-			$this->monetaryDetails[] = new MonetaryDetails(
-					$minBudget,
-					MonetaryDetails::QUAL_MIN_BUDGET,
-					$currency
-			);
-		}
-	}
+        if ($minBudget !== null && $currency !== null) {
+            $this->monetaryDetails[] = new MonetaryDetails(
+                $minBudget,
+                MonetaryDetails::QUAL_MIN_BUDGET,
+                $currency
+            );
+        }
+    }
 }

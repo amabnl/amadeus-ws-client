@@ -30,31 +30,31 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class DepartureDays
 {
-	/**
-	 * @var DaySelection
-	 */
-	public $daySelection;
-	/**
-	 * @var DaySelection
-	 */
-	public $additionalDaySelection;
-	/**
-	 * @var SelectionInfo
-	 */
-	public $selectionInfo;
+    /**
+     * @var DaySelection
+     */
+    public $daySelection;
+    /**
+     * @var DaySelection
+     */
+    public $additionalDaySelection;
+    /**
+     * @var SelectionInfo
+     */
+    public $selectionInfo;
 	
-	/**
-	 * @param array $weekDays Week days in array format: e.g. array(1, 2) for Monday and Tuesday. MUST BE CONSECUTIVE DAYS
-	 * @param string $departureDayOption 
-	 */
-	public function __construct($weekDays = [], $departureDayOption = null)
-	{
-		$this->daySelection = new DaySelection($weekDays);
+    /**
+     * @param array $weekDays Week days in array format: e.g. array(1, 2) for Monday and Tuesday. MUST BE CONSECUTIVE DAYS
+     * @param string $departureDayOption
+     */
+    public function __construct($weekDays = [], $departureDayOption = null)
+    {
+        $this->daySelection = new DaySelection($weekDays);
 		
-		if ($departureDayOption === null) {
-			$this->selectionInfo = new SelectionInfo();
-		} else {
-			$this->selectionInfo = new SelectionInfo($departureDayOption);
-		}
-	}
+        if ($departureDayOption === null) {
+            $this->selectionInfo = new SelectionInfo();
+        } else {
+            $this->selectionInfo = new SelectionInfo($departureDayOption);
+        }
+    }
 }

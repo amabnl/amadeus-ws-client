@@ -31,7 +31,7 @@ namespace Amadeus\Client\Struct\PriceXplorer;
 class NumberOfUnitDetailsType
 {
 	
-	/*
+    /*
 	 * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2338&serviceVersionId=2304&isQuery=true#
 	 * 	CNS 	Cheapest non-stop
 	 * 	COP 	Cheapest over all price
@@ -39,36 +39,36 @@ class NumberOfUnitDetailsType
 	 * 	MTH 	Month
 	 * 	PR 	Number of price results
 	 */
-	const QUAL_CHEAPEST_NONSTOP = "CNS";
+    const QUAL_CHEAPEST_NONSTOP = "CNS";
 	
-	const QUAL_CHEAPEST_OVERALL = "COP";
+    const QUAL_CHEAPEST_OVERALL = "COP";
 	
-	const QUAL_DAY = "DAY";
+    const QUAL_DAY = "DAY";
 	
-	const QUAL_MONTH = "MTH";
+    const QUAL_MONTH = "MTH";
 	
-	const QUAL_NR_OF_PRICE_RESULTS = "PR";
+    const QUAL_NR_OF_PRICE_RESULTS = "PR";
 	
 	
-	/**
-	 * @var int
-	 */
-	public $numberOfUnit;
+    /**
+     * @var int
+     */
+    public $numberOfUnit;
 	
-	/**
-	 * @var string self::QUAL_*
-	 */
-	public $unitQualifier;
+    /**
+     * @var string self::QUAL_*
+     */
+    public $unitQualifier;
 	
-	/**
-	 * Create NumberOfUnitDetailsType
-	 * 
-	 * @param int $numberOfUnit
-	 * @param string $qualifier One of the constants self::QUAL_*
-	 */
-	public function __construct($numberOfUnit = null, $qualifier = self::QUAL_DAY)
-	{
-		$this->numberOfUnit = $numberOfUnit;
-		$this->unitQualifier = $qualifier;
-	}
+    /**
+     * Create NumberOfUnitDetailsType
+     *
+     * @param int $numberOfUnit
+     * @param string $qualifier One of the constants self::QUAL_*
+     */
+    public function __construct($numberOfUnit = null, $qualifier = self::QUAL_DAY)
+    {
+        $this->numberOfUnit = $numberOfUnit;
+        $this->unitQualifier = $qualifier;
+    }
 }

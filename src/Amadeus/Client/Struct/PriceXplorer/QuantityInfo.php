@@ -30,8 +30,8 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class QuantityInfo
 {
-	/**
-	 * @var QuantityDetailsType[]
-	 */
-	public $quantityDetails = [];
+    /**
+     * @var QuantityDetailsType[]
+     */
+    public $quantityDetails = [];
 }
