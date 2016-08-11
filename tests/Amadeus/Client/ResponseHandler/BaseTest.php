@@ -157,6 +157,35 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('', $result->messages[0]->level);
     }
 
+    public function testCanHandlePnrDisplayHistoryError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPnrDisplayHistoryErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_DisplayHistory');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('20', $result->messages[0]->code);
+        $this->assertEquals("RESTRICTED", $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+    }
+
+    public function testCanHandlePnrDisplayHistoryOk()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPnrDisplayHistoryOkResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_DisplayHistory');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
     public function testCanHandleQueueRemoveItemOk()
     {
         $respHandler = new ResponseHandler\Base();

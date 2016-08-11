@@ -337,9 +337,40 @@ class Base implements ResponseHandlerInterface
      * @return Result
      * @throws Exception
      */
-    public function analyzePnrRetrieveAndDisplayResponse($response)
+    protected function analyzePnrRetrieveAndDisplayResponse($response)
     {
         return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
+
+    /**
+     * Analysing a PNR_DisplayHistoryReply
+     *
+     * @param SendResult $response PNR_DisplayHistoryReply result
+     * @return Result
+     * @throws Exception
+     */
+    protected function analyzePnrDisplayHistoryResponse($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $queryAllErrorCodes = "//m:generalErrorGroup//m:errorNumber/m:errorDetails/m:errorCode";
+        $queryAllErrorMsg = "//m:generalErrorGroup/m:genrealErrorText/m:freeText";
+
+        $errorCodeNodeList = $domXpath->query($queryAllErrorCodes);
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $code = $errorCodeNodeList->item(0)->nodeValue;
+            $errorTextNodeList = $domXpath->query($queryAllErrorMsg);
+            $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
+
+            $analyzeResponse->messages[] = new Result\NotOk($code, trim($message));
+        }
+
+        return $analyzeResponse;
     }
 
     /**

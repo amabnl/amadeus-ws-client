@@ -992,7 +992,6 @@ class Client
      * - ... ?
      *
      * @param array $incoming The Message options chosen by the caller - if any.
-     * @param bool $asString Switch if the response should be returned as a string (true) or a PHP object (false).
      * @param bool $endSession Switch if you want to terminate the current session after making the call.
      * @return array
      */
