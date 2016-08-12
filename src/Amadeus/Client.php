@@ -412,6 +412,33 @@ class Client
     }
 
     /**
+     * PNR_DisplayHistory
+     *
+     * @param RequestOptions\PnrDisplayHistoryOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function pnrDisplayHistory(RequestOptions\PnrDisplayHistoryOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PNR_DisplayHistory';
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        $sendResult = $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+
+        return $this->responseHandler->analyzeResponse(
+            $sendResult,
+            $msgName
+        );
+    }
+
+    /**
      * Queue_List - get a list of all PNR's on a given queue
      *
      * https://webservices.amadeus.com/extranet/viewService.do?id=52&flavourId=1&menuId=functional
@@ -668,6 +695,33 @@ class Client
     public function farePricePnrWithBookingClass(RequestOptions\FarePricePnrWithBookingClassOptions $options, $messageOptions = [])
     {
         $msgName = 'Fare_PricePNRWithBookingClass';
+        $messageOptions = $this->makeMessageOptions($messageOptions);
+
+        $sendResult = $this->sessionHandler->sendMessage(
+            $msgName,
+            $this->requestCreator->createRequest(
+                $msgName,
+                $options
+            ),
+            $messageOptions
+        );
+
+        return $this->responseHandler->analyzeResponse(
+            $sendResult,
+            $msgName
+        );
+    }
+
+    /**
+     * Fare_InformativePricingWithoutPNR
+     *
+     * @param RequestOptions\FareInformativePricingWithoutPnrOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function fareInformativePricingWithoutPnr(RequestOptions\FareInformativePricingWithoutPnrOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Fare_InformativePricingWithoutPNR';
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
         $sendResult = $this->sessionHandler->sendMessage(
