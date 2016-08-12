@@ -22,43 +22,33 @@
 
 namespace Amadeus\Client\Struct\Pnr\DisplayHistory;
 
-use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\Predicate as PredicateOptions;
-
 /**
- * Predicate
+ * RangeDetails
  *
  * @package Amadeus\Client\Struct\Pnr\DisplayHistory
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Predicate
+class RangeDetails
 {
     /**
-     * @var PredicateDetails
+     * @var int
      */
-    public $predicateDetails;
+    public $min;
 
     /**
-     * @var PredicateEnvRange
+     * @var int
      */
-    public $predicateEnvRange;
+    public $max;
 
     /**
-     * @var PredicateElementType[]
-     */
-    public $predicateElementType = [];
-
-    /**
-     * @var PredicateFreeText
-     */
-    public $predicateFreeText;
-
-    /**
-     * Predicate constructor.
+     * RangeDetails constructor.
      *
-     * @param PredicateOptions $options
+     * @param int $min
+     * @param int $max
      */
-    public function __construct(PredicateOptions $options)
+    public function __construct($min, $max)
     {
-
+        $this->min = $min;
+        $this->max = $max;
     }
 }

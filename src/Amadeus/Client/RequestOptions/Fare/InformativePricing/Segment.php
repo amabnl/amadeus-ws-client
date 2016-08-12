@@ -20,45 +20,15 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\DisplayHistory;
-
-use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\Predicate as PredicateOptions;
+namespace Amadeus\Client\RequestOptions\Fare\InformativePricing;
 
 /**
- * Predicate
+ * Segment
  *
- * @package Amadeus\Client\Struct\Pnr\DisplayHistory
+ * @package Amadeus\Client\RequestOptions\Fare\InformativePricing
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Predicate
+class Segment
 {
-    /**
-     * @var PredicateDetails
-     */
-    public $predicateDetails;
 
-    /**
-     * @var PredicateEnvRange
-     */
-    public $predicateEnvRange;
-
-    /**
-     * @var PredicateElementType[]
-     */
-    public $predicateElementType = [];
-
-    /**
-     * @var PredicateFreeText
-     */
-    public $predicateFreeText;
-
-    /**
-     * Predicate constructor.
-     *
-     * @param PredicateOptions $options
-     */
-    public function __construct(PredicateOptions $options)
-    {
-
-    }
 }

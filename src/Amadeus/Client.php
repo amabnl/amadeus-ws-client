@@ -69,6 +69,7 @@ class Client
      * @var string
      */
     const version = "0.0.1dev";
+
     /**
      * An identifier string for the library (to be used in Received From entries)
      *
@@ -697,7 +698,6 @@ class Client
      *
      * Message options are meta options when sending a message to the amadeus web services
      * - (if stateful) should we end the current session after sending this call?
-     * - do you want the response as a PHP object or as a string?
      * - ... ?
      *
      * @param array $incoming The Message options chosen by the caller - if any.

@@ -22,43 +22,35 @@
 
 namespace Amadeus\Client\Struct\Pnr\DisplayHistory;
 
-use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\Predicate as PredicateOptions;
-
 /**
- * Predicate
+ * PredicateDetails
  *
  * @package Amadeus\Client\Struct\Pnr\DisplayHistory
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Predicate
+class PredicateDetails
 {
     /**
-     * @var PredicateDetails
+     * @var PredicateSelectionDetails
      */
-    public $predicateDetails;
+    public $selectionDetails;
 
     /**
-     * @var PredicateEnvRange
+     * @var PredicateSelectionDetails[]
      */
-    public $predicateEnvRange;
+    public $otherSelectionDetails = [];
 
     /**
-     * @var PredicateElementType[]
-     */
-    public $predicateElementType = [];
-
-    /**
-     * @var PredicateFreeText
-     */
-    public $predicateFreeText;
-
-    /**
-     * Predicate constructor.
+     * PredicateDetails constructor.
      *
-     * @param PredicateOptions $options
+     * @param string $option PredicateSelectionDetails::OPT_*
+     * @param int $optionInformation PredicateSelectionDetails::OPTINF_*
      */
-    public function __construct(PredicateOptions $options)
+    public function __construct($option, $optionInformation = PredicateSelectionDetails::OPTINF_PREDICATE_TYPE)
     {
-
+        $this->selectionDetails = new PredicateSelectionDetails(
+            $option,
+            $optionInformation
+        );
     }
 }

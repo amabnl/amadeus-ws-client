@@ -22,43 +22,50 @@
 
 namespace Amadeus\Client\Struct\Pnr\DisplayHistory;
 
-use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\Predicate as PredicateOptions;
-
 /**
- * Predicate
+ * Reference
  *
  * @package Amadeus\Client\Struct\Pnr\DisplayHistory
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Predicate
+class Reference
 {
     /**
-     * @var PredicateDetails
+     * Other element tatoo reference number
      */
-    public $predicateDetails;
+    const QUAL_OTHER_ELEMENT_TATTOO = "OT";
+    /**
+     * Passenger tattoo indicator
+     */
+    const QUAL_SEGMENT_TATTOO = "ST";
+    /**
+     * Segment tattoo indicator
+     */
+    const QUAL_PASSENGER_TATTOO = "PT";
 
     /**
-     * @var PredicateEnvRange
-     */
-    public $predicateEnvRange;
-
-    /**
-     * @var PredicateElementType[]
-     */
-    public $predicateElementType = [];
-
-    /**
-     * @var PredicateFreeText
-     */
-    public $predicateFreeText;
-
-    /**
-     * Predicate constructor.
+     * self::QUAL_*
      *
-     * @param PredicateOptions $options
+     * @var string
      */
-    public function __construct(PredicateOptions $options)
-    {
+    public $qualifier;
 
+    /**
+     * The tattoo reference
+     *
+     * @var int
+     */
+    public $number;
+
+    /**
+     * Reference constructor.
+     *
+     * @param int $tattoo The tattoo reference
+     * @param string $type self::QUAL_*
+     */
+    public function __construct($tattoo, $type)
+    {
+        $this->number = $tattoo;
+        $this->qualifier = $type;
     }
 }
