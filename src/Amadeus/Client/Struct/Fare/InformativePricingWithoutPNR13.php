@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
+use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
@@ -32,5 +33,8 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class InformativePricingWithoutPNR13 extends BaseWsMessage
 {
-
+    public function __construct(FareInformativePricingWithoutPnrOptions $options)
+    {
+        //TODO
+    }
 }

@@ -183,7 +183,7 @@ class Base implements RequestCreatorInterface
 
     /**
      * @param PnrDisplayHistoryOptions $params
-     * @return Struct\Pnr\Cancel
+     * @return Struct\Pnr\DisplayHistory
      */
     protected function createPNRDisplayHistory(PnrDisplayHistoryOptions $params)
     {
@@ -469,7 +469,7 @@ class Base implements RequestCreatorInterface
     /**
      * Get the version number active in the WSDL for the given message
      *
-     * @param $messageName
+     * @param string $messageName
      * @return float|string
      */
     protected function getActiveVersionFor($messageName)

@@ -273,21 +273,8 @@ class Client
     public function pnrRetrieve(RequestOptions\PnrRetrieveOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_Retrieve';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -300,21 +287,8 @@ class Client
     public function pnrCreatePnr(RequestOptions\PnrCreatePnrOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_AddMultiElements';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -330,21 +304,8 @@ class Client
     public function pnrAddMultiElements(RequestOptions\PnrAddMultiElementsOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_AddMultiElements';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -367,21 +328,8 @@ class Client
     public function pnrRetrieveAndDisplay(RequestOptions\PnrRetrieveAndDisplayOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_RetrieveAndDisplay';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -394,21 +342,8 @@ class Client
     public function pnrCancel(RequestOptions\PnrCancelOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_Cancel';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -421,21 +356,8 @@ class Client
     public function pnrDisplayHistory(RequestOptions\PnrDisplayHistoryOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_DisplayHistory';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -450,21 +372,8 @@ class Client
     public function queueList(RequestOptions\QueueListOptions $options, $messageOptions = [])
     {
         $msgName = 'Queue_List';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -477,21 +386,8 @@ class Client
     public function queuePlacePnr(RequestOptions\QueuePlacePnrOptions $options, $messageOptions = [])
     {
         $msgName = 'Queue_PlacePNR';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -504,21 +400,8 @@ class Client
     public function queueRemoveItem(RequestOptions\QueueRemoveItemOptions $options, $messageOptions = [])
     {
         $msgName = 'Queue_RemoveItem';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -531,21 +414,8 @@ class Client
     public function queueMoveItem(RequestOptions\QueueMoveItemOptions $options, $messageOptions = [])
     {
         $msgName = 'Queue_MoveItem';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -560,21 +430,8 @@ class Client
     public function offerVerify(RequestOptions\OfferVerifyOptions $options, $messageOptions = [])
     {
         $msgName = 'Offer_VerifyOffer';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -587,21 +444,8 @@ class Client
     public function offerConfirmAir(RequestOptions\OfferConfirmAirOptions $options, $messageOptions = [])
     {
         $msgName = 'Offer_ConfirmAirOffer';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -614,21 +458,8 @@ class Client
     public function offerConfirmHotel(RequestOptions\OfferConfirmHotelOptions $options, $messageOptions = [])
     {
         $msgName = 'Offer_ConfirmHotelOffer';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -641,21 +472,8 @@ class Client
     public function offerConfirmCar(RequestOptions\OfferConfirmCarOptions $options, $messageOptions = [])
     {
         $msgName = 'Offer_ConfirmCarOffer';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -668,21 +486,8 @@ class Client
     public function fareMasterPricerTravelBoardSearch(RequestOptions\FareMasterPricerTbSearch $options, $messageOptions = [])
     {
         $msgName = 'Fare_MasterPricerTravelBoardSearch';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -695,21 +500,8 @@ class Client
     public function farePricePnrWithBookingClass(RequestOptions\FarePricePnrWithBookingClassOptions $options, $messageOptions = [])
     {
         $msgName = 'Fare_PricePNRWithBookingClass';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -722,21 +514,8 @@ class Client
     public function fareInformativePricingWithoutPnr(RequestOptions\FareInformativePricingWithoutPnrOptions $options, $messageOptions = [])
     {
         $msgName = 'Fare_InformativePricingWithoutPNR';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -749,21 +528,8 @@ class Client
     public function fareCheckRules(RequestOptions\FareCheckRulesOptions $options, $messageOptions = [])
     {
         $msgName = 'Fare_CheckRules';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -776,21 +542,8 @@ class Client
     public function fareConvertCurrency(RequestOptions\FareConvertCurrencyOptions $options, $messageOptions = [])
     {
         $msgName = 'Fare_ConvertCurrency';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -803,21 +556,8 @@ class Client
     public function airSellFromRecommendation(RequestOptions\AirSellFromRecommendationOptions $options, $messageOptions = [])
     {
         $msgName = 'Air_SellFromRecommendation';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -830,21 +570,8 @@ class Client
     public function airFlightInfo(RequestOptions\AirFlightInfoOptions $options, $messageOptions = [])
     {
         $msgName = 'Air_FlightInfo';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -857,21 +584,8 @@ class Client
     public function airRetrieveSeatMap(RequestOptions\AirRetrieveSeatMapOptions $options, $messageOptions = [])
     {
         $msgName = 'Air_RetrieveSeatMap';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -884,21 +598,8 @@ class Client
     public function commandCryptic(RequestOptions\CommandCrypticOptions $options, $messageOptions = [])
     {
         $msgName = 'Command_Cryptic';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -911,21 +612,8 @@ class Client
     public function miniRuleGetFromPricingRec(RequestOptions\MiniRuleGetFromPricingRecOptions $options, $messageOptions = [])
     {
         $msgName = 'MiniRule_GetFromPricingRec';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -938,21 +626,8 @@ class Client
     public function infoEncodeDecodeCity(RequestOptions\InfoEncodeDecodeCityOptions $options, $messageOptions = [])
     {
         $msgName = 'Info_EncodeDecodeCity';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
 
@@ -966,21 +641,8 @@ class Client
     public function ticketCreateTSTFromPricing(RequestOptions\TicketCreateTstFromPricingOptions $options, $messageOptions = [])
     {
         $msgName = 'Ticket_CreateTSTFromPricing';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -993,21 +655,8 @@ class Client
     public function docIssuanceIssueTicket(RequestOptions\DocIssuanceIssueTicketOptions $options, $messageOptions = [])
     {
         $msgName = 'DocIssuance_IssueTicket';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -1020,12 +669,33 @@ class Client
     public function priceXplorerExtremeSearch(RequestOptions\PriceXplorerExtremeSearchOptions $options, $messageOptions = [])
     {
         $msgName = 'PriceXplorer_ExtremeSearch';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Call a message with the given parameters
+     *
+     * @param string $messageName
+     * @param RequestOptions\RequestOptionsInterface $options
+     * @param array $messageOptions
+     * @return Result
+     * @throws Client\Exception
+     * @throws Client\Struct\InvalidArgumentException
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws \SoapFault
+     */
+    protected function callMessage($messageName, $options, $messageOptions)
+    {
         $messageOptions = $this->makeMessageOptions($messageOptions);
 
         $sendResult = $this->sessionHandler->sendMessage(
-            $msgName,
+            $messageName,
             $this->requestCreator->createRequest(
-                $msgName,
+                $messageName,
                 $options
             ),
             $messageOptions
@@ -1033,7 +703,7 @@ class Client
 
         return $this->responseHandler->analyzeResponse(
             $sendResult,
-            $msgName
+            $messageName
         );
     }
 

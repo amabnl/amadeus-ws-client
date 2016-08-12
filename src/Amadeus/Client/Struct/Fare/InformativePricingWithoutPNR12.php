@@ -23,6 +23,7 @@
 namespace Amadeus\Client\Struct\Fare;
 
 use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
+use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
@@ -33,7 +34,13 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class InformativePricingWithoutPNR12 extends BaseWsMessage
 {
-    public function __construct()
+    /**
+     * InformativePricingWithoutPNR12 constructor.
+     *
+     * @param FareInformativePricingWithoutPnrOptions $options
+     * @throws MessageVersionUnsupportedException
+     */
+    public function __construct(FareInformativePricingWithoutPnrOptions $options)
     {
         throw new MessageVersionUnsupportedException(
             'Fare_InformativePricingWithoutPNR versions < 13 are not yet implemented'

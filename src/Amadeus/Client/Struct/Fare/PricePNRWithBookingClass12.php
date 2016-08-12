@@ -22,7 +22,6 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
-use Amadeus\Client\RequestCreator\UnsupportedOptionException;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\PricePnr12\AttributeDetails;
@@ -86,7 +85,6 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
      * PricePNRWithBookingClass12 constructor.
      *
      * @param FarePricePnrWithBookingClassOptions $options
-     * @throws UnsupportedOptionException
      */
     public function __construct(FarePricePnrWithBookingClassOptions $options)
     {
