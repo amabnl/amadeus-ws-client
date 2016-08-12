@@ -212,22 +212,14 @@ class Client
     public function securityAuthenticate()
     {
         $msgName = 'Security_Authenticate';
-        $messageOptions = $this->makeMessageOptions([], false);
 
-        $sendResult = $this->sessionHandler->sendMessage(
+        return $this->callMessage(
             $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                new RequestOptions\SecurityAuthenticateOptions(
-                    $this->authParams
-                )
+            new RequestOptions\SecurityAuthenticateOptions(
+                $this->authParams
             ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
+            [],
+            false
         );
     }
 
@@ -240,20 +232,12 @@ class Client
     public function securitySignOut()
     {
         $msgName = 'Security_SignOut';
-        $messageOptions = $this->makeMessageOptions([], true);
 
-        $sendResult = $this->sessionHandler->sendMessage(
+        return $this->callMessage(
             $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                new RequestOptions\SecuritySignOutOptions()
-            ),
-            $messageOptions
-        );
-
-        return $this->responseHandler->analyzeResponse(
-            $sendResult,
-            $msgName
+            new RequestOptions\SecuritySignOutOptions(),
+            [],
+            true
         );
     }
 
@@ -679,6 +663,7 @@ class Client
      * @param string $messageName
      * @param RequestOptions\RequestOptionsInterface $options
      * @param array $messageOptions
+     * @param bool $endSession
      * @return Result
      * @throws Client\Exception
      * @throws Client\Struct\InvalidArgumentException
@@ -688,9 +673,9 @@ class Client
      * @throws \InvalidArgumentException
      * @throws \SoapFault
      */
-    protected function callMessage($messageName, $options, $messageOptions)
+    protected function callMessage($messageName, $options, $messageOptions, $endSession = false)
     {
-        $messageOptions = $this->makeMessageOptions($messageOptions);
+        $messageOptions = $this->makeMessageOptions($messageOptions, $endSession);
 
         $sendResult = $this->sessionHandler->sendMessage(
             $messageName,
