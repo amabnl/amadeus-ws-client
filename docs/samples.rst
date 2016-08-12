@@ -224,6 +224,8 @@ Retrieving a PNR:
         new PnrRetrieveOptions(['recordLocator' => 'ABC123'])
     );
 
+**Note:** Retrieving a PNR this way is identical to performing a ``RT<recordlocator>`` cryptic entry in Amadeus Selling Platform:
+This will implicitly place the PNR in the session's context *(if this action is performed in a stateful session)*.
 
 ----------------------
 PNR_RetrieveAndDisplay
