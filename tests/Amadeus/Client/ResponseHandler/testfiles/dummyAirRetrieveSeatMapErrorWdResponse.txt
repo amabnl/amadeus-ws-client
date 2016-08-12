@@ -1,0 +1,12 @@
+<Air_RetrieveSeatMapReply xmlns="http://xml.amadeus.com/SMPRES_14_2_1A">
+    <responseDetails>
+        <statusCode>X</statusCode>
+    </responseDetails>
+    <errorInformation>
+        <errorDetails>
+            <processingLevel>1</processingLevel>
+            <code>2</code>
+            <description>test description 100% is the goal</description>
+        </errorDetails>
+    </errorInformation>
+</Air_RetrieveSeatMapReply>

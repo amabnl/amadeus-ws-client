@@ -1,3 +1,12 @@
+# 2016-08
+
+* Implemented PNR_DisplayHistory
+* Implemented Fare_InformativePricingWithoutPNR (https://github.com/amabnl/amadeus-ws-client/issues/13)
+
+# 2016-07
+
+* Implemented Air_RetrieveSeatMap
+
 # 2016-06
 
 * Implemented Fare_PricePNRWithBookingClass version 13 and up (https://github.com/amabnl/amadeus-ws-client/issues/6)

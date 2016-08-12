@@ -153,16 +153,19 @@ This is the list of messages that are at least partially supported at this time:
 - PNR_AddMultiElements (pnrCreate to create a PNR from scratch)
 - PNR_AddMultiElements (possibility to do actionCode operations on a PNR in context without further actions)
 - PNR_Cancel
+- PNR_DisplayHistory *
 - Queue_List
 - Queue_PlacePNR
 - Queue_RemoveItem
 - Queue_MoveItem
 - Fare_MasterPricerTravelBoardSearch
 - Fare_PricePNRWithBookingClass
+- Fare_InformativePricingWithoutPNR *
 - Fare_ConvertCurrency
 - Fare_CheckRules
 - Air_SellFromRecommendation
 - Air_FlightInfo
+- Air_RetrieveSeatMap
 - DocIssuance_IssueTicket
 - Ticket_CreateTSTFromPricing
 - Offer_VerifyOffer
@@ -176,9 +179,7 @@ This is the list of messages that are at least partially supported at this time:
 
 On the to-do list / work in progress:
 
-- Air_RetrieveSeatMap
 - Air_MultiAvailability
-- Fare_InformativePricingWithoutPNR
 - Fare_InformativeBestPricingWithoutPNR
 - Fare_PricePNRWithLowerFares
 - Fare_PricePNRWithLowestFare
@@ -188,9 +189,9 @@ On the to-do list / work in progress:
 - Fare_CalculateMileage
 - PNR_TransferOwnership
 - PNR_NameChange
-- PNR_History
 - PointOfRef_Search
 - PointOfRef_CategoryList
+- Offer_CreateOffer
 - MiniRule_GetFromPricing
 - FOP_CreateFormOfPayment
 - Ticket_DisplayTST

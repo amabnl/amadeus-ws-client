@@ -473,6 +473,60 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoDummyPnrDisplayHistoryCall()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->dummyProp = 'A dummy message result'; // Not an actual Soap reply.
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedPnrResult = new Client\Struct\Pnr\DisplayHistory(
+            new Client\RequestOptions\PnrDisplayHistoryOptions([
+
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_DisplayHistory', $expectedPnrResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_DisplayHistory' => '14.2']));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'PNR_DisplayHistory')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->pnrDisplayHistory(
+            new Client\RequestOptions\PnrDisplayHistoryOptions([
+
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
 
     public function testCanDoDummyQueueListCall()
     {
@@ -1734,6 +1788,51 @@ class ClientTest extends BaseTestCase
         $response = $client->farePricePnrWithBookingClass(
             new Client\RequestOptions\FarePricePnrWithBookingClassOptions([
                 'validatingCarrier' => 'SN'
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanFareInformativePricingWithoutPnrVersion14()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('fareInformativePricingWithoutPnrReply14.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Fare\InformativePricingWithoutPNR13(
+            new Client\RequestOptions\FareInformativePricingWithoutPnrOptions([
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Fare_InformativePricingWithoutPNR', $expectedMessageResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));;
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Fare_InformativePricingWithoutPNR' => "15.1"]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+
+        $response = $client->fareInformativePricingWithoutPnr(
+            new Client\RequestOptions\FareInformativePricingWithoutPnrOptions([
             ])
         );
 

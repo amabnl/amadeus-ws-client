@@ -209,7 +209,7 @@ class Base implements ResponseHandlerInterface
             );
         }
 
-        $codeNode = $domXpath->query('//m:warningInformation/m:warningDetails/m:code');
+        $codeNode = $domXpath->query('//m:warningInformation/m:warningDetails/m:number');
         if ($codeNode->length > 0) {
             $analyzeResponse->status = Result::STATUS_WARN;
 
@@ -539,6 +539,16 @@ class Base implements ResponseHandlerInterface
     {
         return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
     }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeFareInformativePricingWithoutPNRResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
+
 
     /**
      * @param SendResult $response

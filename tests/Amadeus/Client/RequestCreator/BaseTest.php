@@ -24,6 +24,7 @@ namespace Test\Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestCreator\Base;
+use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
@@ -202,5 +203,26 @@ class BaseTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Struct\Queue\SortOption', $message->sortCriteria->sortOption[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Queue\SelectionDetails', $message->sortCriteria->sortOption[0]->selectionDetails);
         $this->assertEquals(SelectionDetails::LIST_OPTION_SORT_CREATION, $message->sortCriteria->sortOption[0]->selectionDetails->option);
+    }
+
+    public function testCanCreateFareInformativePricingMessageV12()
+    {
+        $this->setExpectedException('Amadeus\Client\RequestCreator\MessageVersionUnsupportedException');
+
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['Fare_InformativePricingWithoutPNR' => '12.3']
+        ]);
+
+        $rq = new Base($par);
+
+        $rq->createRequest(
+            'Fare_InformativePricingWithoutPNR',
+            new FareInformativePricingWithoutPnrOptions([
+
+            ])
+        );
+
     }
 }

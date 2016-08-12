@@ -570,6 +570,73 @@ Get flight info for a specific flight:
         ])
     );
 
+-------------------
+Air_RetrieveSeatMap
+-------------------
+
+Get seat map information for a specific flight:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
+
+    $seatmapInfo = $client->airRetrieveSeatMap(
+        new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'departureDate' => \DateTime::createFromFormat('Ymd', '20170419'),
+                'departure' => 'BRU',
+                'arrival' => 'FCO',
+                'airline' => 'SN',
+                'flightNumber' => '3175'
+            ])
+        ])
+    );
+
+Get seat map information for a specific flight, specifying a specific booking class:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
+
+    $seatmapInfo = $client->airRetrieveSeatMap(
+        new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'departureDate' => \DateTime::createFromFormat('Ymd', '20170419'),
+                'departure' => 'BRU',
+                'arrival' => 'FCO',
+                'airline' => 'SN',
+                'flightNumber' => '3175',
+                'bookingClass' => 'C'
+            ])
+        ])
+    );
+
+Get seat map information for a specific flight and specify Frequent Flyer:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FrequentFlyer;
+
+    $seatmapInfo = $client->airRetrieveSeatMap(
+        new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'departureDate' => \DateTime::createFromFormat('Ymd', '20170419'),
+                'departure' => 'BRU',
+                'arrival' => 'FCO',
+                'airline' => 'SN',
+                'flightNumber' => '3175'
+            ]),
+            'frequentFlyer' => new FrequentFlyer([
+                'company' => 'SN',
+                'cardNumber' => '4099913025539611',
+                'tierLevel' => 1
+            ])
+        ])
+    );
 
 ******
 Ticket

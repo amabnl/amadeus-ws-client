@@ -1,0 +1,24 @@
+<Fare_InformativePricingWithoutPNRReply xmlns="http://xml.amadeus.com/TIPNRR_15_1_1A">
+    <messageDetails>
+        <messageFunctionDetails>
+            <businessFunction>1</businessFunction>
+        </messageFunctionDetails>
+    </messageDetails>
+    <errorGroup>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>00477</errorCode>
+                <errorCategory>EC</errorCategory>
+                <errorCodeOwner>1A</errorCodeOwner>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>TXT</textSubjectQualifier>
+                <source>F</source>
+                <encoding>2</encoding>
+            </freeTextDetails>
+            <freeText>INVALID FORMAT</freeText>
+        </errorWarningDescription>
+    </errorGroup>
+</Fare_InformativePricingWithoutPNRReply>

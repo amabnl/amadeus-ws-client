@@ -31,6 +31,7 @@ use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
 use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
 use Amadeus\Client\RequestOptions\FareConvertCurrencyOptions;
+use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
@@ -44,6 +45,7 @@ use Amadeus\Client\RequestOptions\PnrAddMultiElementsBase;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
 use Amadeus\Client\RequestOptions\PnrCancelOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
 use Amadeus\Client\RequestOptions\PriceXplorerExtremeSearchOptions;
@@ -130,7 +132,7 @@ class Base implements RequestCreatorInterface
      * @param PnrRetrieveOptions $params
      * @return Struct\Pnr\Retrieve
      */
-    protected function createPnrRetrieve(PnrRetrieveOptions $params)
+    protected function createPNRRetrieve(PnrRetrieveOptions $params)
     {
         $retrieveRequest = new Struct\Pnr\Retrieve(
             Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
@@ -144,7 +146,7 @@ class Base implements RequestCreatorInterface
      * @param PnrRetrieveAndDisplayOptions $params
      * @return Struct\Pnr\RetrieveAndDisplay
      */
-    protected function createPnrRetrieveAndDisplay(PnrRetrieveAndDisplayOptions $params)
+    protected function createPNRRetrieveAndDisplay(PnrRetrieveAndDisplayOptions $params)
     {
         $req = new Struct\Pnr\RetrieveAndDisplay(
             $params->recordLocator,
@@ -158,7 +160,7 @@ class Base implements RequestCreatorInterface
      * @param PnrAddMultiElementsBase $params
      * @return Struct\Pnr\AddMultiElements
      */
-    protected function createPnrAddMultiElements(PnrAddMultiElementsBase $params)
+    protected function createPNRAddMultiElements(PnrAddMultiElementsBase $params)
     {
         if ($params instanceof PnrCreatePnrOptions && empty($params->receivedFrom)) {
             //Automagically add RF if not present:
@@ -177,6 +179,15 @@ class Base implements RequestCreatorInterface
     protected function createPNRCancel(PnrCancelOptions $params)
     {
         return new Struct\Pnr\Cancel($params);
+    }
+
+    /**
+     * @param PnrDisplayHistoryOptions $params
+     * @return Struct\Pnr\Cancel
+     */
+    protected function createPNRDisplayHistory(PnrDisplayHistoryOptions $params)
+    {
+        return new Struct\Pnr\DisplayHistory($params);
     }
 
     /**
@@ -315,6 +326,37 @@ class Base implements RequestCreatorInterface
         return new Struct\Fare\ConvertCurrency($params);
     }
 
+    /**
+     * makeFarePricePnrWithBookingClass
+     *
+     * @param FarePricePnrWithBookingClassOptions $params
+     * @return Struct\Fare\PricePNRWithBookingClass12|Struct\Fare\PricePNRWithBookingClass13
+     */
+    protected function createFarePricePnrWithBookingClass(FarePricePnrWithBookingClassOptions $params)
+    {
+        $version = $this->getActiveVersionFor('Fare_PricePNRWithBookingClass');
+        if ($version < 13) {
+            return new Struct\Fare\PricePNRWithBookingClass12($params);
+        } else {
+            return new Struct\Fare\PricePNRWithBookingClass13($params);
+        }
+    }
+
+    /**
+     * createFareInformativePricingWithoutPNR
+     *
+     * @param FareInformativePricingWithoutPnrOptions $params
+     * @return Struct\Fare\InformativePricingWithoutPNR12|Struct\Fare\InformativePricingWithoutPNR13
+     */
+    protected function createFareInformativePricingWithoutPNR(FareInformativePricingWithoutPnrOptions $params)
+    {
+        $version = $this->getActiveVersionFor('Fare_InformativePricingWithoutPNR');
+        if ($version < 13) {
+            return new Struct\Fare\InformativePricingWithoutPNR12($params);
+        } else {
+            return new Struct\Fare\InformativePricingWithoutPNR13($params);
+        }
+    }
 
     /**
      *
@@ -376,22 +418,6 @@ class Base implements RequestCreatorInterface
     protected function createMiniRuleGetFromPricingRec(MiniRuleGetFromPricingRecOptions $params)
     {
         return new Struct\MiniRule\GetFromPricingRec($params);
-    }
-
-    /**
-     * makeFarePricePnrWithBookingClass
-     *
-     * @param FarePricePnrWithBookingClassOptions $params
-     * @return Struct\Fare\PricePNRWithBookingClass12|Struct\Fare\PricePNRWithBookingClass13
-     */
-    protected function createFarePricePnrWithBookingClass(FarePricePnrWithBookingClassOptions $params)
-    {
-        $version = $this->getActiveVersionFor('Fare_PricePNRWithBookingClass');
-        if ($version < 13) {
-            return new Struct\Fare\PricePNRWithBookingClass12($params);
-        } else {
-            return new Struct\Fare\PricePNRWithBookingClass13($params);
-        }
     }
 
     /**

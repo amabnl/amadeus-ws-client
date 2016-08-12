@@ -23,7 +23,7 @@
 namespace Amadeus\Client\ResponseHandler\Air;
 
 /**
- * RetrieveSeatMap
+ * Utility class to get proper error messages from an Air_RetrieveSeatMapReply message
  *
  * @package Amadeus\Client\ResponseHandler\Air
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>

@@ -327,6 +327,22 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("FLIGHT CANCELLED", $result->messages[0]->text);
     }
 
+    public function testCanFindAirRetrieveSeatMapErrorWithCode()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyAirRetrieveSeatMapError2Response.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Air_RetrieveSeatMap');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('94', $result->messages[0]->code);
+        $this->assertEquals('application', $result->messages[0]->level);
+        $this->assertEquals("Flight does not operate between requested cities", $result->messages[0]->text);
+    }
+
     public function testCanFindAirRetrieveSeatMapError()
     {
         $respHandler = new ResponseHandler\Base();
@@ -341,6 +357,67 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('2', $result->messages[0]->code);
         $this->assertEquals('application', $result->messages[0]->level);
         $this->assertEquals("Seat not available on the requested class/zone", $result->messages[0]->text);
+    }
+
+    public function testCanFindAirRetrieveSeatMapErrorWithDescription()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyAirRetrieveSeatMapErrorWdResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Air_RetrieveSeatMap');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('2', $result->messages[0]->code);
+        $this->assertEquals('application', $result->messages[0]->level);
+        $this->assertEquals("test description 100% is the goal", $result->messages[0]->text);
+    }
+
+    public function testCanParseAirRetrieveSeatMapOk()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyAirRetrieveSeatMapOkResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Air_RetrieveSeatMap');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanFindAirRetrieveSeatMapWarning()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyAirRetrieveSeatMapWarningResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Air_RetrieveSeatMap');
+
+        $this->assertEquals(Result::STATUS_WARN, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('62', $result->messages[0]->code);
+        $this->assertEquals('application', $result->messages[0]->level);
+        $this->assertEquals("Smoking zone unavailable", $result->messages[0]->text);
+    }
+
+    public function testCanFindAirRetrieveSeatMapWarningWithDescription()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyAirRetrieveSeatMapWarningWdResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Air_RetrieveSeatMap');
+
+        $this->assertEquals(Result::STATUS_WARN, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('62', $result->messages[0]->code);
+        $this->assertEquals('application', $result->messages[0]->level);
+        $this->assertEquals("test description 100% is the goal", $result->messages[0]->text);
     }
 
     public function testCanParseSecurityAuthenticateReplyOk()
@@ -632,6 +709,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
         $this->assertEquals('0', $result->messages[0]->code);
         $this->assertEquals("ENTRY REQUIRES PREVIOUS PRICING/FARE DISPLAY REQUEST", $result->messages[0]->text);
+    }
+
+    public function testCanHandleFareInformativePricingWithoutPNRError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareInformativePricingWithoutPNRErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_InformativePricingWithoutPNR');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('00477', $result->messages[0]->code);
+        $this->assertEquals("INVALID FORMAT", $result->messages[0]->text);
     }
 
     public function testCanHandleDocIssuanceIssueTicketOkResponse()
