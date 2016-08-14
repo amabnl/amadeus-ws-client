@@ -66,6 +66,6 @@ class RoomList
      */
     public function __construct()
     {
-        //$this->roomRateDetails = new RoomRateDetails();
+
     }
 }

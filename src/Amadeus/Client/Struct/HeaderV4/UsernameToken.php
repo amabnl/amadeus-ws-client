@@ -65,16 +65,6 @@ class UsernameToken
 
         $this->Password = new \SoapVar($passwordNode, XSD_ANYXML, null, null, 'Password');
 
-        //$this->Password = new \SoapVar(new Password($password), SOAP_ENC_OBJECT, null, null, 'Password', $ns);
-
-        /*$this->UsernameToken->Password = new \SoapVar(
-            [
-                '_' => $password,
-                'Type' => 'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest'
-            ],
-            SOAP_ENC_OBJECT
-        );*/
-
         $this->Nonce = new \SoapVar($nonce, XSD_STRING, null, null, 'Nonce', $ns);
 
         $this->Created = new \SoapVar($created, XSD_STRING, null, null, 'Created', $ns);

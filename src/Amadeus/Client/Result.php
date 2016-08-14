@@ -77,7 +77,7 @@ class Result
     /**
      * The actual result received after performing the web service call.
      *
-     * @var \stdClass
+     * @var \stdClass|array
      */
     public $response;
 

@@ -41,7 +41,6 @@ class TicketCreateTstFromPricingOptions extends Base
      * This PNR record locator is used for tracing purpose, no internal retrieve
      *
      * @var string
-     * @deprecated
      */
     public $informationalRecordLocator;
 }

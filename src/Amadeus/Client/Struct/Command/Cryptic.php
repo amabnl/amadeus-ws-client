@@ -54,7 +54,7 @@ class Cryptic extends BaseWsMessage
     public $longTextString;
 
     /**
-     * @param string $command
+     * @param string|null $command
      */
     public function __construct($command = null)
     {

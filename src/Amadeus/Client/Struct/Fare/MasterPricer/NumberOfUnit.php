@@ -36,8 +36,8 @@ class NumberOfUnit
     public $unitNumberDetail = [];
 
     /**
-     * @param int $mainUnitNumber
-     * @param string $mainUnitType
+     * @param int|null $mainUnitNumber
+     * @param string|null $mainUnitType
      */
     public function __construct($mainUnitNumber = null, $mainUnitType = null)
     {

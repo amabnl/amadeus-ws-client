@@ -313,6 +313,106 @@ Remove passenger with passenger reference 2 from the PNR:
         ])
     );
 
+------------------
+PNR_DisplayHistory
+------------------
+
+Retrieve the full history of a PNR:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
+
+    $historyResult = $client->pnrDisplayHistory(
+        new PnrDisplayHistoryOptions([
+            'recordLocator' => 'ABC123'
+        ])
+    );
+
+Retrieve the PNR history envelopes containing RF lines only:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
+    use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\Predicate;
+    use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\PredicateDetail;
+
+    $historyResult = $client->pnrDisplayHistory(
+        new PnrDisplayHistoryOptions([
+            'recordLocator' => 'ABC123',
+            'predicates' => [
+                new Predicate([
+                    'details' => [
+                        new PredicateDetail([
+                            'option' => PredicateDetail::OPT_KEEP_HISTORY_MATCHING_CRITERION,
+                            'associatedOption' => PredicateDetail::ASSOC_OPT_PREDICATE_TYPE
+                        ]),
+                        new PredicateDetail([
+                            'option' => PredicateDetail::OPT_DISPLAY_ENVELOPES_CONTAINING_RF_LINE_ONLY,
+                            'associatedOption' => PredicateDetail::ASSOC_OPT_MATCH_QUEUE_UPDATE
+                        ]),
+                    ]
+                ])
+            ]
+        ])
+    );
+
+Retrieve the PNR history - return maximum 20 results:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
+
+    $historyResult = $client->pnrDisplayHistory(
+        new PnrDisplayHistoryOptions([
+            'recordLocator' => 'ABC123',
+            'scrollingMax' => 20
+        ])
+    );
+
+Retrieve the PNR history for AIR segments and exclude Queue updates:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
+    use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\Predicate;
+    use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\PredicateDetail;
+    use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\PredicateType;
+
+   $historyResult = $client->pnrDisplayHistory(
+        new PnrDisplayHistoryOptions([
+            'recordLocator' => 'ABC123',
+            'predicates' => [
+                new Predicate([
+                    'details' => [
+                        new PredicateDetail([
+                            'option' => PredicateDetail::OPT_KEEP_HISTORY_MATCHING_CRITERION,
+                            'associatedOption' => PredicateDetail::ASSOC_OPT_PREDICATE_TYPE
+                        ]),
+                    ],
+                    'types' => [
+                        new PredicateType([
+                            'elementName' => 'AIR'
+                        ])
+                    ]
+                ]),
+                new Predicate([
+                    'details' => [
+                        new PredicateDetail([
+                            'option' => PredicateDetail::OPT_DISCARD_HISTORY_MATCHING_CRITERION,
+                            'associatedOption' => PredicateDetail::ASSOC_OPT_MATCH_QUEUE_UPDATE
+                        ]),
+                        new PredicateDetail([
+                            'option' => PredicateDetail::OPT_DISPLAY_HISTORY_WITH_QUEUEING_UPDATES,
+                            'associatedOption' => PredicateDetail::ASSOC_OPT_PREDICATE_TYPE
+                        ]),
+                    ],
+                ])
+            ]
+        ])
+   );
+
+
 *****
 Queue
 *****

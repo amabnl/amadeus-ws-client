@@ -153,7 +153,7 @@ This is the list of messages that are at least partially supported at this time:
 - PNR_AddMultiElements (pnrCreate to create a PNR from scratch)
 - PNR_AddMultiElements (possibility to do actionCode operations on a PNR in context without further actions)
 - PNR_Cancel
-- PNR_DisplayHistory *
+- PNR_DisplayHistory
 - Queue_List
 - Queue_PlacePNR
 - Queue_RemoveItem

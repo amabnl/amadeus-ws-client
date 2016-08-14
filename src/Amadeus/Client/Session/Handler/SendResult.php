@@ -49,7 +49,7 @@ class SendResult
     /**
      * Which version of the message was called
      *
-     * @var string
+     * @var string|float
      */
     public $messageVersion;
 

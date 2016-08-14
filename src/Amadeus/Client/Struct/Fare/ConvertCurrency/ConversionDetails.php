@@ -50,9 +50,9 @@ class ConversionDetails
     /**
      * Create new ConversionDetails
      *
-     * @param string $convertOption (OPTIONAL) SelectionDetails::OPTION_CONVERT_*
-     * @param string $currency
-     * @param int $amount
+     * @param string|null $convertOption (OPTIONAL) SelectionDetails::OPTION_CONVERT_*
+     * @param string|null $currency
+     * @param int|null $amount
      */
     public function __construct($convertOption = null, $currency = null, $amount = null)
     {
