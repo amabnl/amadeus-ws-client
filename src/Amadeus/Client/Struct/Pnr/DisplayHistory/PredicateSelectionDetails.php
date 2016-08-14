@@ -90,7 +90,7 @@ class PredicateSelectionDetails
     /**
      * self::OPTINF_*
      *
-     * @var string
+     * @var int
      */
     public $optionInformation;
 
