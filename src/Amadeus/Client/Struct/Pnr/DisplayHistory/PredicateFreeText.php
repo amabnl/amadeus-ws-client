@@ -30,5 +30,24 @@ namespace Amadeus\Client\Struct\Pnr\DisplayHistory;
  */
 class PredicateFreeText
 {
+    /**
+     * @var FreeTextDetails
+     */
+    public $freeTextDetails;
 
+    /**
+     * @var string
+     */
+    public $freeText;
+
+    /**
+     * PredicateFreeText constructor.
+     *
+     * @param string $freeText
+     */
+    public function __construct($freeText)
+    {
+        $this->freeTextDetails = new FreeTextDetails();
+        $this->freeText = $freeText;
+    }
 }

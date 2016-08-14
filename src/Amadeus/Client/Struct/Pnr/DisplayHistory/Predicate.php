@@ -23,6 +23,7 @@
 namespace Amadeus\Client\Struct\Pnr\DisplayHistory;
 
 use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\Predicate as PredicateOptions;
+use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\PredicateDetail;
 
 /**
  * Predicate
@@ -59,6 +60,44 @@ class Predicate
      */
     public function __construct(PredicateOptions $options)
     {
+        foreach($options->details as $key=>$detail) {
+            if ($key === 0) {
+                $this->predicateDetails = new PredicateDetails(
+                    $options->details[0]->option,
+                    $options->details[0]->associatedOption
+                );
+            } else {
+                $this->predicateDetails->otherSelectionDetails[] = new PredicateSelectionDetails(
+                    $detail->option,
+                    $detail->associatedOption
+                );
+            }
+        }
 
+        foreach ($options->types as $type) {
+            $tmp = new PredicateElementType(
+                $type->elementName
+            );
+
+            if (!is_null($type->reference) && !is_null($type->referenceQualifier)) {
+                $tmp->reference = new Reference(
+                    $type->reference,
+                    $type->referenceQualifier
+                );
+            }
+
+            $this->predicateElementType[] = $tmp;
+        }
+
+        if (is_int($options->rangeMin) || is_int($options->rangeMax)) {
+            $this->predicateEnvRange = new PredicateEnvRange(
+                $options->rangeMin,
+                $options->rangeMax
+            );
+        }
+
+        if (!empty($options->freeText)) {
+            $this->predicateFreeText = new PredicateFreeText($options->freeText);
+        }
     }
 }

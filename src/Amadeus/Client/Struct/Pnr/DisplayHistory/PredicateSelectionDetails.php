@@ -49,7 +49,7 @@ class PredicateSelectionDetails
     /**
      * Filter predicate
      */
-    const OPT_FILTER_PREDICATE = "Fil";
+    const OPT_FILTER_PREDICATE = "FIL";
     /**
      * Display envelopes containing RF line only
      */
@@ -61,11 +61,11 @@ class PredicateSelectionDetails
     /**
      * Match queue update
      */
-    const OPT_MATCH_QUEUE_UPDATE = "Que";
+    const OPT_MATCH_QUEUE_UPDATE = "QUE";
     /**
      * Selection predicate
      */
-    const OPT_SELECTION_PREDICATE = "Sel";
+    const OPT_SELECTION_PREDICATE = "SEL";
     /**
      * Display all TTR elements
      */

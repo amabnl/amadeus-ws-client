@@ -97,4 +97,14 @@ class PredicateElementType
      * @var string
      */
     public $segmentName;
+
+    /**
+     * PredicateElementType constructor.
+     *
+     * @param string $segmentName self::SEGNAME_*
+     */
+    public function __construct($segmentName)
+    {
+        $this->segmentName = $segmentName;
+    }
 }

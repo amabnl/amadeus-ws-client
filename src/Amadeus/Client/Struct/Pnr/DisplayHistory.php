@@ -24,6 +24,10 @@ namespace Amadeus\Client\Struct\Pnr;
 
 use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\Pnr\DisplayHistory\PnrInfo;
+use Amadeus\Client\Struct\Pnr\DisplayHistory\Predicate;
+use Amadeus\Client\Struct\Pnr\DisplayHistory\RedundantElements;
+use Amadeus\Client\Struct\Pnr\DisplayHistory\ScrollingDetails;
 
 /**
  * DisplayHistory
@@ -60,6 +64,21 @@ class DisplayHistory extends BaseWsMessage
      */
     public function __construct(PnrDisplayHistoryOptions $options)
     {
-        //TODO
+        if (is_string($options->recordLocator)) {
+            $this->pnrInfo = new PnrInfo(
+                $options->recordLocator,
+                $options->pnrCreateTime
+            );
+        }
+
+        $this->redundantElements = new RedundantElements($options->option);
+
+        if (is_int($options->scrollingMax)) {
+            $this->scrollingDetails = new ScrollingDetails($options->scrollingMax);
+        }
+
+        foreach ($options->predicates as $predicateOptions) {
+            $this->predicate[] = new Predicate($predicateOptions);
+        }
     }
 }

@@ -35,7 +35,10 @@ class Predicate extends LoadParamsFromArray
     /**
      * Indicates the type of the predicate.
      *
-     * Up to 10 occurrence of Predicate Details can be defined.
+     * Up to 11 Predicate Details can be provided.
+     *
+     * The first one will be placed in <predicateDetails><selectionDetails>,
+     * any others will be placed in <predicateDetails><otherSelectionDetails>
      *
      * @var PredicateDetail[]
      */

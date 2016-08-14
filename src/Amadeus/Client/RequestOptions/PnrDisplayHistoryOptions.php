@@ -57,6 +57,15 @@ class PnrDisplayHistoryOptions extends Base
     public $recordLocator;
 
     /**
+     * Optional creation date (& optionally time) of the PNR you're trying to retrieve
+     *
+     * If the time component is 00:00:00, it will not be included in the request.
+     *
+     * @var \DateTime
+     */
+    public $pnrCreateTime;
+
+    /**
      * Specify up to 20 filter options in order to filter the PNR history lines that will be returned.
      *
      * There are different types of filter options: they can be used to select (or exclude)

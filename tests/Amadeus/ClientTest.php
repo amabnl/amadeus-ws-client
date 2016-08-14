@@ -486,7 +486,7 @@ class ClientTest extends BaseTestCase
 
         $expectedPnrResult = new Client\Struct\Pnr\DisplayHistory(
             new Client\RequestOptions\PnrDisplayHistoryOptions([
-
+                'recordLocator' => 'ABC123'
             ])
         );
 
@@ -520,7 +520,7 @@ class ClientTest extends BaseTestCase
 
         $response = $client->pnrDisplayHistory(
             new Client\RequestOptions\PnrDisplayHistoryOptions([
-
+                'recordLocator' => 'ABC123'
             ])
         );
 
