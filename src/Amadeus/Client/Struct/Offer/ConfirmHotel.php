@@ -105,7 +105,7 @@ class ConfirmHotel extends BaseWsMessage
 
         if (!empty($params->originatorId)) {
             $this->makeRoomStayData();
-            if(!($this->roomStayData[0]->globalBookingInfo instanceof GlobalBookingInfo)) {
+            if (!($this->roomStayData[0]->globalBookingInfo instanceof GlobalBookingInfo)) {
                 $this->roomStayData[0]->globalBookingInfo = new GlobalBookingInfo();
             }
 

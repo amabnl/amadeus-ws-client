@@ -96,7 +96,7 @@ class IssueTicket extends BaseWsMessage
                 OverrideDate::OPT_ALTERNATE_DATE_VALIDATION,
                 $options->alternateDateValidation
             );
-        } elseif($options->overridePastDateTst === true) {
+        } elseif ($options->overridePastDateTst === true) {
             $this->overrideDate = new OverrideDate(OverrideDate::OPT_OVERRIDE_PAST_DATE_TST);
         }
 

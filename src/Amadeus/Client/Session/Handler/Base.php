@@ -180,7 +180,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     public function __construct(SessionHandlerParams $params)
     {
         $this->params = $params;
-        if($params->logger instanceof LoggerInterface) {
+        if ($params->logger instanceof LoggerInterface) {
             $this->setLogger($params->logger);
             $this->log(LogLevel::INFO, __METHOD__. "(): Logger started.");
         }
