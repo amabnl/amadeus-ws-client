@@ -105,9 +105,7 @@ class ExtremeSearch extends BaseWsMessage
     {
         $this->itineraryGrp[] = new ItineraryGrp($params->origin);
 
-        if ($params->earliestDepartureDate instanceof \DateTime || $params->latestDepartureDate instanceof \DateTime) {
-            $this->travelDates = new TravelDates($params->earliestDepartureDate, $params->latestDepartureDate);
-        }
+        $this->loadDepartureDateLimits($params);
 
         if ($params->searchOffice !== null) {
             $this->officeIdInfo[] = new OfficeIdInfo($params->searchOffice);
@@ -115,25 +113,13 @@ class ExtremeSearch extends BaseWsMessage
 
         $this->loadBudget($params->maxBudget, $params->minBudget, $params->currency);
 
-        if (!empty($params->destinations)) {
-            foreach ($params->destinations as $destination) {
-                $this->itineraryGrp[] = new ItineraryGrp(null, $destination);
-            }
-        }
+        $this->loadDestinations($params);
 
         if (!empty($params->destinationCountries)) {
             $this->loadDestinationCountries($params->destinationCountries);
         }
 
-        if (!empty($params->departureDaysInbound)) {
-            $this->departureDays[] = new DepartureDays($params->departureDaysInbound, SelectionDetails::OPT_INBOUND_DEP_DAYS);
-        }
-        if (!empty($params->departureDaysOutbound)) {
-            $this->departureDays[] = new DepartureDays(
-                $params->departureDaysOutbound,
-                SelectionDetails::OPT_OUTBOUND_DEP_DAYS
-            );
-        }
+        $this->loadDepartureDaysOutIn($params);
 
         $this->loadStayDuration($params->stayDurationDays, $params->stayDurationFlexibilityDays);
 
@@ -276,5 +262,46 @@ class ExtremeSearch extends BaseWsMessage
         }
 
         return $result;
+    }
+
+    /**
+     * @param PriceXplorerExtremeSearchOptions $params
+     *
+     */
+    protected function loadDepartureDateLimits(PriceXplorerExtremeSearchOptions $params)
+    {
+        if ($params->earliestDepartureDate instanceof \DateTime || $params->latestDepartureDate instanceof \DateTime) {
+            $this->travelDates = new TravelDates($params->earliestDepartureDate, $params->latestDepartureDate);
+        }
+    }
+
+    /**
+     * @param PriceXplorerExtremeSearchOptions $params
+     *
+     */
+    protected function loadDestinations(PriceXplorerExtremeSearchOptions $params)
+    {
+        if (!empty($params->destinations)) {
+            foreach ($params->destinations as $destination) {
+                $this->itineraryGrp[] = new ItineraryGrp(null, $destination);
+            }
+        }
+    }
+
+    /**
+     * @param PriceXplorerExtremeSearchOptions $params
+     *
+     */
+    protected function loadDepartureDaysOutIn(PriceXplorerExtremeSearchOptions $params)
+    {
+        if (!empty($params->departureDaysInbound)) {
+            $this->departureDays[] = new DepartureDays($params->departureDaysInbound, SelectionDetails::OPT_INBOUND_DEP_DAYS);
+        }
+        if (!empty($params->departureDaysOutbound)) {
+            $this->departureDays[] = new DepartureDays(
+                $params->departureDaysOutbound,
+                SelectionDetails::OPT_OUTBOUND_DEP_DAYS
+            );
+        }
     }
 }

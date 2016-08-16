@@ -65,10 +65,32 @@ class GeneralFlightInfo
      */
     public function __construct(AirFlightInfoOptions $params)
     {
+        $this->loadAirlineCode($params);
+
+        $this->loadFlightNumber($params);
+
+        $this->loadDepartureDate($params);
+        $this->loadDepartureLocation($params);
+        $this->loadArrivalLocation($params);
+    }
+
+    /**
+     * @param AirFlightInfoOptions $params
+     * @return void
+     */
+    protected function loadAirlineCode(AirFlightInfoOptions $params)
+    {
         if ($params->airlineCode !== null) {
             $this->companyDetails = new CompanyDetails($params->airlineCode);
         }
+    }
 
+    /**
+     * @param AirFlightInfoOptions $params
+     * @return void
+     */
+    protected function loadFlightNumber(AirFlightInfoOptions $params)
+    {
         if ($params->flightNumber !== null) {
             $this->flightIdentification = new FlightIdentification(
                 $params->flightNumber,
@@ -76,13 +98,36 @@ class GeneralFlightInfo
                 $params->flightNumberSuffix
             );
         }
+    }
 
+    /**
+     * @param AirFlightInfoOptions $params
+     * @return void
+     */
+    protected function loadDepartureDate(AirFlightInfoOptions $params)
+    {
         if ($params->departureDate instanceof \DateTime) {
             $this->flightDate = new FlightDate($params->departureDate->format('dmy'));
         }
+    }
+
+    /**
+     * @param AirFlightInfoOptions $params
+     * @return void
+     */
+    protected function loadDepartureLocation(AirFlightInfoOptions $params)
+    {
         if ($params->departureLocation !== null && strlen($params->departureLocation) === 3) {
             $this->boardPointDetails = new PointDetails($params->departureLocation);
         }
+    }
+
+    /**
+     * @param AirFlightInfoOptions $params
+     * @return void
+     */
+    protected function loadArrivalLocation(AirFlightInfoOptions $params)
+    {
         if ($params->arrivalLocation !== null && strlen($params->arrivalLocation) === 3) {
             $this->offPointDetails = new PointDetails($params->arrivalLocation);
         }

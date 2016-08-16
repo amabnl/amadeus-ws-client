@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Pnr\DisplayHistory;
 
 use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\Predicate as PredicateOptions;
 use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\PredicateDetail;
+use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\PredicateType;
 
 /**
  * Predicate
@@ -60,11 +61,23 @@ class Predicate
      */
     public function __construct(PredicateOptions $options)
     {
-        foreach($options->details as $key=>$detail) {
+        $this->loadDetails($options->details);
+        $this->loadTypes($options->types);
+        $this->loadRange($options->rangeMin, $options->rangeMax);
+        $this->loadFreeText($options->freeText);
+    }
+
+    /**
+     * @param PredicateDetail[] $details
+     * @return void
+     */
+    protected function loadDetails($details)
+    {
+        foreach ($details as $key=>$detail) {
             if ($key === 0) {
                 $this->predicateDetails = new PredicateDetails(
-                    $options->details[0]->option,
-                    $options->details[0]->associatedOption
+                    $detail->option,
+                    $detail->associatedOption
                 );
             } else {
                 $this->predicateDetails->otherSelectionDetails[] = new PredicateSelectionDetails(
@@ -73,8 +86,15 @@ class Predicate
                 );
             }
         }
+    }
 
-        foreach ($options->types as $type) {
+    /**
+     * @param PredicateType[] $types
+     * @return void
+     */
+    protected function loadTypes($types)
+    {
+        foreach ($types as $type) {
             $tmp = new PredicateElementType(
                 $type->elementName
             );
@@ -88,16 +108,31 @@ class Predicate
 
             $this->predicateElementType[] = $tmp;
         }
+    }
 
-        if (is_int($options->rangeMin) || is_int($options->rangeMax)) {
+    /**
+     * @param int|null $rangeMin
+     * @param int|null $rangeMax
+     * @return void
+     */
+    protected function loadRange($rangeMin, $rangeMax)
+    {
+        if (is_int($rangeMin) || is_int($rangeMax)) {
             $this->predicateEnvRange = new PredicateEnvRange(
-                $options->rangeMin,
-                $options->rangeMax
+                $rangeMin,
+                $rangeMax
             );
         }
+    }
 
-        if (!empty($options->freeText)) {
-            $this->predicateFreeText = new PredicateFreeText($options->freeText);
+    /**
+     * @param string|null $freeText
+     * @return void
+     */
+    protected function loadFreeText($freeText)
+    {
+        if (!empty($freeText)) {
+            $this->predicateFreeText = new PredicateFreeText($freeText);
         }
     }
 }

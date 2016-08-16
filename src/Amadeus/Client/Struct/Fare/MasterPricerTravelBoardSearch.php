@@ -126,21 +126,7 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
      */
     protected function loadOptions(FareMasterPricerTbSearch $options)
     {
-        if (is_int($options->nrOfRequestedPassengers) || is_int($options->nrOfRequestedResults)) {
-            $this->numberOfUnit = new MasterPricer\NumberOfUnit();
-            if (is_int($options->nrOfRequestedPassengers)) {
-                $this->numberOfUnit->unitNumberDetail[] = new MasterPricer\UnitNumberDetail(
-                    $options->nrOfRequestedPassengers,
-                    MasterPricer\UnitNumberDetail::TYPE_PASS
-                );
-            }
-            if (is_int($options->nrOfRequestedResults)) {
-                $this->numberOfUnit->unitNumberDetail[] = new MasterPricer\UnitNumberDetail(
-                    $options->nrOfRequestedResults,
-                    MasterPricer\UnitNumberDetail::TYPE_RESULTS
-                );
-            }
-        }
+        $this->loadNrOfPaxAndResults($options);
 
         if ($options->doTicketabilityPreCheck === true) {
             $this->fareOptions = new MasterPricer\FareOptions();
@@ -218,5 +204,28 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
         $this->itinerary[] = $tmpItin;
 
         $counter++;
+    }
+
+    /**
+     * @param FareMasterPricerTbSearch $options
+     * @return void
+     */
+    protected function loadNrOfPaxAndResults(FareMasterPricerTbSearch $options)
+    {
+        if (is_int($options->nrOfRequestedPassengers) || is_int($options->nrOfRequestedResults)) {
+            $this->numberOfUnit = new MasterPricer\NumberOfUnit();
+            if (is_int($options->nrOfRequestedPassengers)) {
+                $this->numberOfUnit->unitNumberDetail[] = new MasterPricer\UnitNumberDetail(
+                    $options->nrOfRequestedPassengers,
+                    MasterPricer\UnitNumberDetail::TYPE_PASS
+                );
+            }
+            if (is_int($options->nrOfRequestedResults)) {
+                $this->numberOfUnit->unitNumberDetail[] = new MasterPricer\UnitNumberDetail(
+                    $options->nrOfRequestedResults,
+                    MasterPricer\UnitNumberDetail::TYPE_RESULTS
+                );
+            }
+        }
     }
 }

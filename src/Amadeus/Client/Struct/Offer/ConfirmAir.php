@@ -55,7 +55,7 @@ class ConfirmAir extends BaseWsMessage
         if (!is_null($options)) {
             $this->offerTattoo = new OfferTattoo($options->tattooNumber);
 
-            foreach($options->passengerReassociation as $reAssoc) {
+            foreach ($options->passengerReassociation as $reAssoc) {
                 $this->passengerReassociation[] = new PassengerReassociation(
                     $reAssoc->pricingReference,
                     $reAssoc->paxReferences
