@@ -1,9 +1,11 @@
 ===================
 About / Get Started
 ===================
+
 ***********************
 Get access from Amadeus
 ***********************
+
 First, get a WSDL by requesting a WSAP (Web Service Access Point) for your project from Amadeus. You will probably have to go through your Amadeus sales channel and start a web services project with Amadeus.
 
 See `the Amadeus Web Services website <https://webservices.amadeus.com/>`_ for more information.
@@ -18,6 +20,7 @@ You usually receive this information after the project kick-off has been done an
 ****************************************
 Support for Amadeus Soap Header versions
 ****************************************
+
 Upon receiving access, Amadeus will give you a Web Service Access Point with a specific Soap Header version to use. This will define how you can handle session management *(e.g. support for stateless calls, requiring session pooling or not)*.
 
 This library is built to support the current **Soap Header 4** and the legacy **Soap Header 2**.
@@ -30,6 +33,7 @@ Legacy applications using already certified WSAP's can still be running on legac
 ******************************************
 Support for different versions of messages
 ******************************************
+
 Amadeus periodically releases new versions of the messages (also called "verbs") available on their web services.
 
 On requesting access to the Amadeus web services, you'll receive a WSDL which contains messages in the lastest stable version Amadeus has released (unless you request for specific older versions of messages).
@@ -47,6 +51,7 @@ it yourself in a fork and provide a pull request. If you do that, please do it i
 ******************************
 Install library in PHP project
 ******************************
+
 Install the client library in your PHP project by requiring the package with Composer:
 
 ``composer require amabnl/amadeus-ws-client``
@@ -144,60 +149,4 @@ Soap Header 2 example:
 Messages supported
 ******************
 
-This is the list of messages that are at least partially supported at this time:
-
-- Security_Authenticate
-- Security_SignOut
-- PNR_Retrieve
-- PNR_RetrieveAndDisplay
-- PNR_AddMultiElements (pnrCreate to create a PNR from scratch)
-- PNR_AddMultiElements (possibility to do actionCode operations on a PNR in context without further actions)
-- PNR_Cancel
-- PNR_DisplayHistory
-- Queue_List
-- Queue_PlacePNR
-- Queue_RemoveItem
-- Queue_MoveItem
-- Fare_MasterPricerTravelBoardSearch
-- Fare_PricePNRWithBookingClass
-- Fare_InformativePricingWithoutPNR *
-- Fare_ConvertCurrency
-- Fare_CheckRules
-- Air_SellFromRecommendation
-- Air_FlightInfo
-- Air_RetrieveSeatMap
-- DocIssuance_IssueTicket
-- Ticket_CreateTSTFromPricing
-- Offer_VerifyOffer
-- Offer_ConfirmAirOffer
-- Offer_ConfirmHotelOffer
-- Offer_ConfirmCarOffer
-- MiniRule_GetFromPricingRec
-- Info_EncodeDecodeCity
-- Command_Cryptic
-- PriceXplorer_ExtremeSearch
-
-On the to-do list / work in progress:
-
-- Air_MultiAvailability
-- Fare_InformativeBestPricingWithoutPNR
-- Fare_PricePNRWithLowerFares
-- Fare_PricePNRWithLowestFare
-- Fare_MasterPricerCalendar
-- Fare_DisplayFaresForCityPair
-- Fare_DisplayBookingCodeInformation
-- Fare_CalculateMileage
-- PNR_TransferOwnership
-- PNR_NameChange
-- PointOfRef_Search
-- PointOfRef_CategoryList
-- Offer_CreateOffer
-- MiniRule_GetFromPricing
-- FOP_CreateFormOfPayment
-- Ticket_DisplayTST
-- Ticket_DeleteTST
-- Ticket_CreateTSMFromPricing
-- SalesReports_DisplayQueryReport
-- Media_GetMedia
-- Service_IntegratedPricing
-- DocIssuance_IssueMiscellaneousDocuments
+See the `list of supported messages <list-of-supported-messages.rst>`_.
