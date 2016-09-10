@@ -40,6 +40,11 @@ class SoapHeader2 extends Base
     const CORE_WS_V2_SESSION_NS = 'http://xml.amadeus.com/ws/2009/01/WBS_Session-2.0.xsd';
 
     /**
+     * Node for Session
+     */
+    const NODENAME_SESSION = "Session";
+
+    /**
      * Node for Session ID
      */
     const NODENAME_SESSIONID = "SessionId";
@@ -77,7 +82,7 @@ class SoapHeader2 extends Base
             );
 
             $this->getSoapClient()->__setSoapHeaders(
-                new \SoapHeader(self::CORE_WS_V2_SESSION_NS, self::NODENAME_SESSIONID, $session)
+                new \SoapHeader(self::CORE_WS_V2_SESSION_NS, self::NODENAME_SESSION, $session)
             );
         }
     }
