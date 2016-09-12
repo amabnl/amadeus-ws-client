@@ -182,7 +182,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
         $this->params = $params;
         if ($params->logger instanceof LoggerInterface) {
             $this->setLogger($params->logger);
-            $this->log(LogLevel::INFO, __METHOD__. "(): Logger started.");
+            $this->log(LogLevel::INFO, __METHOD__."(): Logger started.");
         }
         if ($params->overrideSoapClient instanceof \SoapClient) {
             $this->soapClient = $params->overrideSoapClient;
@@ -215,26 +215,24 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
 
             $this->handlePostMessage($messageName, $this->getLastResponse(), $messageOptions, $result);
 
-        } catch(\SoapFault $ex) {
+        } catch (\SoapFault $ex) {
             $this->log(
                 LogLevel::ERROR,
-                "SOAPFAULT while sending message " . $messageName . ": " .
-                $ex->getMessage() . " code: " .$ex->getCode() . " at " . $ex->getFile() .
-                " line " . $ex->getLine() . ": \n" . $ex->getTraceAsString()
+                "SOAPFAULT while sending message ".$messageName.": ".$ex->getMessage().
+                " code: ".$ex->getCode()." at ".$ex->getFile()." line ".$ex->getLine().
+                ": \n".$ex->getTraceAsString()
             );
             $this->logRequestAndResponse($messageName);
             $result->exception = $ex;
         } catch (\Exception $ex) {
-            // We should only come here when the XSL extension is not enabled or the XSLT transformation file
-            // is unreadable
+            // We should only come here when the XSL extension is not enabled
+            // or the XSLT transformation file is unreadable
             $this->log(
                 LogLevel::ERROR,
-                "EXCEPTION while sending message " . $messageName . ": " .
-                $ex->getMessage() . " at " . $ex->getFile() . " line " . $ex->getLine() . ": \n" .
-                $ex->getTraceAsString()
+                "EXCEPTION while sending message ".$messageName.": ".$ex->getMessage().
+                " at ".$ex->getFile()." line ".$ex->getLine().": \n".$ex->getTraceAsString()
             );
             $this->logRequestAndResponse($messageName);
-            //TODO We must be able to handle certain exceptions inside the client, so maybe pass through after logging?
             throw new Client\Exception($ex->getMessage(), $ex->getCode(), $ex);
         }
 

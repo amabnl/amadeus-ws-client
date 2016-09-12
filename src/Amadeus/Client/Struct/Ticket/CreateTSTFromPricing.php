@@ -61,7 +61,7 @@ class CreateTSTFromPricing extends BaseWsMessage
     public function __construct(TicketCreateTstFromPricingOptions $params)
     {
         foreach ($params->pricings as $pricing) {
-            $tmp =  new PsaList(
+            $tmp = new PsaList(
                 $pricing->tstNumber,
                 ItemReference::REFTYPE_TST
             );

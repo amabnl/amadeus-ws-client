@@ -74,7 +74,7 @@ class QueueList extends BaseWsMessage
     {
         $this->queueNumber = new QueueNumber($queueNumber);
 
-        $this->categoryDetails  = new CategoryDetails($categoryNumber);
+        $this->categoryDetails = new CategoryDetails($categoryNumber);
 
         $this->sortCriteria = new SortCriteria(SelectionDetails::LIST_OPTION_SORT_CREATION);
     }

@@ -39,7 +39,7 @@ class ElementManagementData
      *
      * @var string
      */
-    const SEGNAME_RECEIVE_FROM		= "RF";
+    const SEGNAME_RECEIVE_FROM = "RF";
     /**
      * Segment name "General Remark"
      *
@@ -49,13 +49,13 @@ class ElementManagementData
      *
      * @var string
      */
-    const SEGNAME_GENERAL_REMARK	= "RM";
+    const SEGNAME_GENERAL_REMARK = "RM";
     /**
      * Segment name "Form Of Payment"
      *
      * @var string
      */
-    const SEGNAME_FORM_OF_PAYMENT	= "FP";
+    const SEGNAME_FORM_OF_PAYMENT = "FP";
     /**
      * Segment name "Ticketing Element"
      *

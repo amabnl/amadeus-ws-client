@@ -30,10 +30,10 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class Fop
 {
-    const IDENT_CASH		= "CA";
-    const IDENT_CHECK		= "CK";
-    const IDENT_CREDITCARD	= "CC";
-    const IDENT_MISC		= "MS";
+    const IDENT_CASH = "CA";
+    const IDENT_CHECK = "CK";
+    const IDENT_CREDITCARD = "CC";
+    const IDENT_MISC = "MS";
 
     /**
      * @var string

@@ -30,13 +30,13 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class Reference
 {
-    const QUAL_PASSENGER	= "PR";
+    const QUAL_PASSENGER = "PR";
 
-    const QUAL_PASSTAT		= "PT";
+    const QUAL_PASSTAT = "PT";
 
-    const QUAL_SEGTAT		= "ST";
+    const QUAL_SEGTAT = "ST";
 
-    const QUAL_OTHER        = "OT";
+    const QUAL_OTHER = "OT";
 
 
     /**
