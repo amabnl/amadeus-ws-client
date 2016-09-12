@@ -34,15 +34,9 @@ class Passenger extends LoadParamsFromArray
 {
     const TYPE_ADULT = "ADT";
 
-    const TYPE_CHILD = "CHD";
+    const TYPE_CHILD = "CH";
 
     const TYPE_INFANT = "INF";
-
-    /**
-     * How many passengers of this type
-     * @var integer
-     */
-    public $amount;
 
     /**
      * What type of passengers?
@@ -51,4 +45,15 @@ class Passenger extends LoadParamsFromArray
      * @var string
      */
     public $type;
+
+    /**
+     * List of _unique_ identifiers for these passengers.
+     *
+     * If you have 3 passengers of this type, you need to provide 3 unique tattoos.
+     *
+     * For infants in a seat with an adult, you must provide the ID of the adult as their tattoo.
+     *
+     * @var int[]
+     */
+    public $tattoos = [];
 }

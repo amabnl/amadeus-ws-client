@@ -22,8 +22,15 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
-use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
+use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
+use Amadeus\Client\Struct\Fare\InformativePricing13\OriginatorGroup;
+use Amadeus\Client\Struct\Fare\InformativePricing13\PassengersGroup;
+use Amadeus\Client\Struct\Fare\InformativePricing13\SegmentGroup;
+use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionGroup;
 
 /**
  * InformativePricingWithoutPNR
@@ -33,8 +40,72 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class InformativePricingWithoutPNR13 extends BaseWsMessage
 {
+    /**
+     * @var OriginatorGroup
+     */
+    public $originatorGroup;
+
+    /**
+     * @var PassengersGroup[]
+     */
+    public $passengersGroup = [];
+
+    /**
+     * @var SegmentGroup[]
+     */
+    public $segmentGroup = [];
+
+    /**
+     * @var PricingOptionGroup[]
+     */
+    public $pricingOptionGroup = [];
+
+    /**
+     * InformativePricingWithoutPNR13 constructor.
+     *
+     * @param FareInformativePricingWithoutPnrOptions $options
+     */
     public function __construct(FareInformativePricingWithoutPnrOptions $options)
     {
-        //TODO
+        $this->loadPassengers($options->passengers);
+
+        $this->loadSegments($options->segments);
+
+        $this->loadPricingOptions($options->pricingOptions);
+
+    }
+
+    /**
+     * @param Passenger[] $passengers
+     */
+    protected function loadPassengers($passengers)
+    {
+        $counter = 1;
+
+        foreach ($passengers as $passenger) {
+            $this->passengersGroup[] = new PassengersGroup($passenger, $counter);
+            $counter++;
+        }
+    }
+
+    /**
+     * @param Segment[] $segments
+     */
+    protected function loadSegments($segments)
+    {
+        foreach ($segments as $segment) {
+            $this->segmentGroup[] = new SegmentGroup($segment);
+        }
+    }
+
+    /**
+     * @param PricingOptions|null $pricingOptions
+     */
+    protected function loadPricingOptions($pricingOptions)
+    {
+        if (!($pricingOptions instanceof PricingOptions)) {
+            $pricingOptions = new PricingOptions();
+        }
+        $this->pricingOptionGroup = PricePNRWithBookingClass13::loadPricingOptionsFromRequestOptions($pricingOptions);
     }
 }

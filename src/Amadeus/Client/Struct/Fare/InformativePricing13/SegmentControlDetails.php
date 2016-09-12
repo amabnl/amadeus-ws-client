@@ -20,30 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Fare\InformativePricing13;
 
 /**
- * FareInformativePricingWithoutPnrOptions
+ * SegmentControlDetails
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Fare\InformativePricing13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FareInformativePricingWithoutPnrOptions extends Base
+class SegmentControlDetails
 {
     /**
-     * Passenger types & amounts to be priced
+     * @var int
+     */
+    public $quantity;
+
+    /**
+     * @var int
+     */
+    public $numberOfUnits;
+
+    /**
+     * SegmentControlDetails constructor.
      *
-     * @var Fare\InformativePricing\Passenger[]
+     * @param int $groupNumber
+     * @param int $nrOfPassengers
      */
-    public $passengers = [];
-
-    /**
-     * @var Fare\InformativePricing\Segment[]
-     */
-    public $segments = [];
-
-    /**
-     * @var Fare\InformativePricing\PricingOptions
-     */
-    public $pricingOptions;
+    public function __construct($groupNumber, $nrOfPassengers)
+    {
+        $this->quantity = $groupNumber;
+        $this->numberOfUnits = $nrOfPassengers;
+    }
 }

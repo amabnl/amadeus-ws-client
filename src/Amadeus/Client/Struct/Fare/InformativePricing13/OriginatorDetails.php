@@ -20,30 +20,43 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Fare\InformativePricing13;
 
 /**
- * FareInformativePricingWithoutPnrOptions
+ * OriginatorDetails
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Fare\InformativePricing13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FareInformativePricingWithoutPnrOptions extends Base
+class OriginatorDetails
 {
     /**
-     * Passenger types & amounts to be priced
+     * @var string
+     */
+    public $originatorId;
+
+    /**
+     * Office ID
      *
-     * @var Fare\InformativePricing\Passenger[]
+     * @var string
      */
-    public $passengers = [];
+    public $inHouseIdentification1;
 
     /**
-     * @var Fare\InformativePricing\Segment[]
+     * @var string
      */
-    public $segments = [];
+    public $inHouseIdentification2;
 
     /**
-     * @var Fare\InformativePricing\PricingOptions
+     * @var string
      */
-    public $pricingOptions;
+    public $inHouseIdentification3;
+
+    /**
+     * @param string|null $officeId
+     */
+    public function __construct($officeId = null)
+    {
+        $this->inHouseIdentification1 = $officeId;
+    }
 }

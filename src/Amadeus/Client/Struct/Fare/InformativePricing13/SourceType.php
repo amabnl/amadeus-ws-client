@@ -20,30 +20,34 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Fare\InformativePricing13;
 
 /**
- * FareInformativePricingWithoutPnrOptions
+ * SourceType
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Fare\InformativePricing13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FareInformativePricingWithoutPnrOptions extends Base
+class SourceType
 {
-    /**
-     * Passenger types & amounts to be priced
-     *
-     * @var Fare\InformativePricing\Passenger[]
-     */
-    public $passengers = [];
+    const SOURCETYPE_SAME_AS_ORIGINATOR = 3;
+    const SOURCETYPE_OFFICE_SPECIFIED = 4;
 
     /**
-     * @var Fare\InformativePricing\Segment[]
+     * @var int
      */
-    public $segments = [];
+    public $sourceQualifier1;
 
     /**
-     * @var Fare\InformativePricing\PricingOptions
+     * @var int
      */
-    public $pricingOptions;
+    public $sourceQualifier2;
+
+    /**
+     * @param int $sourceType
+     */
+    public function __construct($sourceType)
+    {
+        $this->sourceQualifier1 = $sourceType;
+    }
 }

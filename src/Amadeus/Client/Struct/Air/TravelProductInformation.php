@@ -134,7 +134,8 @@ class TravelProductInformation
      */
     public function __construct($departureDate, $from, $to, $company, $flightNumber, $bookingClass)
     {
-        $this->flightDate = new FlightDate($departureDate->format('dmy'));
+        //$this->flightDate = new FlightDate($departureDate->format('dmy'));
+        $this->flightDate = new FlightDate($departureDate);
         $this->boardPointDetails = new PointDetails($from);
         $this->offpointDetails = new PointDetails($to);
         $this->companyDetails = new CompanyDetails($company);

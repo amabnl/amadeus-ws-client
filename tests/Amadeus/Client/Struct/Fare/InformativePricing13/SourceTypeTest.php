@@ -20,30 +20,23 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Test\Amadeus\Client\Struct\Fare\InformativePricing13;
+
+use Amadeus\Client\Struct\Fare\InformativePricing13\SourceType;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * FareInformativePricingWithoutPnrOptions
+ * SourceTypeTest
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Test\Amadeus\Client\Struct\Fare\InformativePricing13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FareInformativePricingWithoutPnrOptions extends Base
+class SourceTypeTest extends BaseTestCase
 {
-    /**
-     * Passenger types & amounts to be priced
-     *
-     * @var Fare\InformativePricing\Passenger[]
-     */
-    public $passengers = [];
+    public function testCanMake()
+    {
+        $it = new SourceType(SourceType::SOURCETYPE_OFFICE_SPECIFIED);
 
-    /**
-     * @var Fare\InformativePricing\Segment[]
-     */
-    public $segments = [];
-
-    /**
-     * @var Fare\InformativePricing\PricingOptions
-     */
-    public $pricingOptions;
+        $this->assertEquals(SourceType::SOURCETYPE_OFFICE_SPECIFIED, $it->sourceQualifier1);
+    }
 }

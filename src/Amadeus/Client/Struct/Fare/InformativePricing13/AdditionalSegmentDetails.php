@@ -20,30 +20,29 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Fare\InformativePricing13;
 
 /**
- * FareInformativePricingWithoutPnrOptions
+ * AdditionnalSegmentDetails
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Fare\InformativePricing13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FareInformativePricingWithoutPnrOptions extends Base
+class AdditionalSegmentDetails
 {
     /**
-     * Passenger types & amounts to be priced
+     * @var LegDetails
+     */
+    public $legDetails;
+
+    /**
+     * AdditionalSegmentDetails constructor.
      *
-     * @var Fare\InformativePricing\Passenger[]
+     * @param string|null $equipmentCode
+     * @param int|null $nrOfStops
      */
-    public $passengers = [];
-
-    /**
-     * @var Fare\InformativePricing\Segment[]
-     */
-    public $segments = [];
-
-    /**
-     * @var Fare\InformativePricing\PricingOptions
-     */
-    public $pricingOptions;
+    public function __construct($equipmentCode = null, $nrOfStops = null)
+    {
+        $this->legDetails = new LegDetails($equipmentCode, $nrOfStops);
+    }
 }

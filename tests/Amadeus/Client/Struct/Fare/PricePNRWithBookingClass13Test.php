@@ -31,7 +31,6 @@ use Amadeus\Client\Struct\Fare\PricePnr13\OptionDetail;
 use Amadeus\Client\Struct\Fare\PricePnr13\PaxSegTstReference;
 use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionGroup;
 use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionKey;
-use Amadeus\Client\Struct\Fare\PricePNRWithBookingClass12;
 use Amadeus\Client\Struct\Fare\PricePNRWithBookingClass13;
 use Test\Amadeus\BaseTestCase;
 
@@ -134,21 +133,5 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $negofarePo = new PricingOptionGroup(PricingOptionKey::OPTION_NEGOTIATED_FARES);
 
         $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $negofarePo));
-    }
-
-
-    /**
-     * @param $theArray
-     * @param $theObject
-     * @return bool
-     */
-    private function assertArrayContainsSameObject($theArray, $theObject)
-    {
-        foreach($theArray as $arrayItem) {
-            if($arrayItem == $theObject) {
-                return true;
-            }
-        }
-        return false;
     }
 }

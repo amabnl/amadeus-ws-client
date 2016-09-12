@@ -20,15 +20,30 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Fare\InformativePricing;
+namespace Amadeus\Client\Struct\Fare\InformativePricing13;
 
 /**
- * PricingOption
+ * LocationDetails
  *
- * @package Amadeus\Client\RequestOptions\Fare\InformativePricing
+ * @package Amadeus\Client\Struct\Fare\InformativePricing13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PricingOption
+class LocationDetails
 {
+    /**
+     * Identification of the name of place/location, other than 3164 City name.
+     *
+     * ARNK	(for RTG use only)
+     * ZZZ	(used to designate all cities)
+     *
+     * @var string
+     */
+    public $trueLocationId;
 
+    /**
+     * Name of place/location, other than 3164 city name.
+     *
+     * @var string
+     */
+    public $trueLocation;
 }

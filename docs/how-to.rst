@@ -154,3 +154,9 @@ You can override the default ``\SoapClient`` options by passing them in the Sess
 \SoapClient options provided as such will override the default settings defined in
 ``Amadeus\Client\Session\Handler\Base::$soapClientOptions`` and must be provided in the correct
 format as specified in the PHP manual: http://php.net/manual/en/soapclient.soapclient.php
+
+================
+EXAMPLE MESSAGES
+================
+
+See `examples <samples.rst>`_.

@@ -20,30 +20,32 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Fare\InformativePricing13;
 
 /**
- * FareInformativePricingWithoutPnrOptions
+ * FareDetails
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Fare\InformativePricing13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FareInformativePricingWithoutPnrOptions extends Base
+class FareDetails
 {
+    const QUAL_INFANT_WITHOUT_SEAT = 766;
+
     /**
-     * Passenger types & amounts to be priced
+     * self::QUAL_*
      *
-     * @var Fare\InformativePricing\Passenger[]
+     * @var string|int
      */
-    public $passengers = [];
+    public $qualifier;
 
     /**
-     * @var Fare\InformativePricing\Segment[]
+     * FareDetails constructor.
+     *
+     * @param string|int $qualifier
      */
-    public $segments = [];
-
-    /**
-     * @var Fare\InformativePricing\PricingOptions
-     */
-    public $pricingOptions;
+    public function __construct($qualifier)
+    {
+        $this->qualifier = $qualifier;
+    }
 }

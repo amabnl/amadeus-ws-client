@@ -56,40 +56,56 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
      */
     public function __construct(FarePricePnrWithBookingClassOptions $options)
     {
+        $this->pricingOptionGroup = $this->loadPricingOptionsFromRequestOptions($options);
+    }
+
+    /**
+     * Load an array of PricingOptionGroup objects from the Pricing request options.
+     *
+     * Extracted because this method is also used in the InformativePricingWithoutPnr messages.
+     *
+     * @param FarePricePnrWithBookingClassOptions $options
+     * @return PricingOptionGroup[]
+     */
+    public static function loadPricingOptionsFromRequestOptions(FarePricePnrWithBookingClassOptions $options)
+    {
+        $priceOptions = [];
 
         if ($options->validatingCarrier !== null) {
-            $this->pricingOptionGroup[] = $this->makePricingOptionForValidatingCarrier($options->validatingCarrier);
+            $priceOptions[] = self::makePricingOptionForValidatingCarrier($options->validatingCarrier);
         }
 
         if ($options->currencyOverride !== null) {
-            $this->pricingOptionGroup[] = $this->makePricingOptionForCurrencyOverride($options->currencyOverride);
+            $priceOptions[] = self::makePricingOptionForCurrencyOverride($options->currencyOverride);
         }
 
         if ($options->pricingsFareBasis !== null) {
             foreach ($options->pricingsFareBasis as $pricingFareBasis) {
-                $this->pricingOptionGroup[] = $this->makePricingOptionFareBasisOverride($pricingFareBasis);
+                $priceOptions[] = self::makePricingOptionFareBasisOverride($pricingFareBasis);
             }
         }
 
         if (!empty($options->overrideOptions)) {
             foreach ($options->overrideOptions as $overrideOption) {
-                if (!$this->hasPricingGroup($overrideOption)) {
-                    $this->pricingOptionGroup[] = new PricingOptionGroup($overrideOption);
+                if (!self::hasPricingGroup($overrideOption, $priceOptions)) {
+                    $priceOptions[] = new PricingOptionGroup($overrideOption);
                 }
             }
         }
 
         // All options processed, no options found:
-        if (empty($this->pricingOptionGroup)) {
-            $this->pricingOptionGroup[] = new PricingOptionGroup(PricingOptionKey::OPTION_NO_OPTION);
+        if (empty($priceOptions)) {
+            $priceOptions[] = new PricingOptionGroup(PricingOptionKey::OPTION_NO_OPTION);
         }
+
+        return $priceOptions;
     }
 
     /**
      * @param string $validatingCarrier
      * @return PricePnr13\PricingOptionGroup
      */
-    protected function makePricingOptionForValidatingCarrier($validatingCarrier)
+    protected static function makePricingOptionForValidatingCarrier($validatingCarrier)
     {
         $po = new PricingOptionGroup(PricingOptionKey::OPTION_VALIDATING_CARRIER);
 
@@ -102,7 +118,7 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
      * @param string $currency
      * @return PricePnr13\PricingOptionGroup
      */
-    protected function makePricingOptionForCurrencyOverride($currency)
+    protected static function makePricingOptionForCurrencyOverride($currency)
     {
         $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE);
 
@@ -115,7 +131,7 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
      * @param PricePnrBcFareBasis $pricingFareBasis
      * @return PricePnr13\PricingOptionGroup
      */
-    protected function makePricingOptionFareBasisOverride($pricingFareBasis)
+    protected static function makePricingOptionFareBasisOverride($pricingFareBasis)
     {
         $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
 
@@ -136,13 +152,14 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
      * Backwards compatibility with PricePnrWithBookingClass12
      *
      * @param string $optionKey
+     * @param PricingOptionGroup[] $priceOptions
      * @return bool
      */
-    protected function hasPricingGroup($optionKey)
+    protected static function hasPricingGroup($optionKey, $priceOptions)
     {
         $found = false;
 
-        foreach ($this->pricingOptionGroup as $pog) {
+        foreach ($priceOptions as $pog) {
             if ($pog->pricingOptionKey->pricingOptionKey === $optionKey) {
                 $found = true;
             }

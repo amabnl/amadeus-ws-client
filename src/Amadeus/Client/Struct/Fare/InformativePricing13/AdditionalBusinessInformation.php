@@ -20,30 +20,38 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Fare\InformativePricing13;
 
 /**
- * FareInformativePricingWithoutPnrOptions
+ * AdditionalBusinessInformation
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Fare\InformativePricing13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FareInformativePricingWithoutPnrOptions extends Base
+class AdditionalBusinessInformation
 {
     /**
-     * Passenger types & amounts to be priced
-     *
-     * @var Fare\InformativePricing\Passenger[]
+     * @var SourceType
      */
-    public $passengers = [];
+    public $sourceType;
 
     /**
-     * @var Fare\InformativePricing\Segment[]
+     * @var OriginatorDetails
      */
-    public $segments = [];
+    public $originatorDetails;
 
     /**
-     * @var Fare\InformativePricing\PricingOptions
+     * @var LocationDetails
      */
-    public $pricingOptions;
+    public $locationDetails;
+
+    /**
+     * @var string
+     */
+    public $countryCode;
+
+    /**
+     * @var string
+     */
+    public $systemCode;
 }

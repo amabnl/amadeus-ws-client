@@ -2,7 +2,7 @@
 EXAMPLES
 ========
 
-Here are some examples how to send specific messages.
+Here are some examples of how to send specific messages.
 
 ***
 PNR
@@ -415,6 +415,52 @@ Do a pricing on the PNR in context:
         ])
     );
 
+
+---------------------------------
+Fare_InformativePricingWithoutPNR
+---------------------------------
+
+Do an informative pricing on BRU-LIS flight with 2 adults and no special pricing options:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
+
+    $informativePricingResponse = $client->fareInformativePricingWithoutPnr(
+        new FareInformativePricingWithoutPnrOptions([
+            'passengers' => [
+                new Passenger([
+                    'tattoos' => [1, 2],
+                    'type' => Passenger::TYPE_ADULT
+                ])
+            ],
+            'segments' => [
+                new Segment([
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-11-21 09:15:00'),
+                    'from' => 'BRU',
+                    'to' => 'LIS',
+                    'marketingCompany' => 'TP',
+                    'flightNumber' => '4652',
+                    'bookingClass' => 'Y',
+                    'segmentTattoo' => 1,
+                    'groupNumber' => 1
+                ]),
+                new Segment([
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-11-28 14:20:00'),
+                    'from' => 'LIS',
+                    'to' => 'BRU',
+                    'marketingCompany' => 'TP',
+                    'flightNumber' => '3581',
+                    'bookingClass' => 'C',
+                    'segmentTattoo' => 2,
+                    'groupNumber' => 2
+                ])
+            ]
+        ])
+    );
+
 ---------------
 Fare_CheckRules
 ---------------
@@ -466,7 +512,6 @@ Convert 200 Euro to US Dollars in the exchange rate of 25th December 2015 *(this
             'rateOfConversion' => FareConvertCurrencyOptions::RATE_TYPE_BANKERS_SELLER_RATE
         ])
     );
-
 
 ***
 Air

@@ -20,30 +20,24 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Test\Amadeus\Client\Struct\Fare\InformativePricing13;
+
+use Amadeus\Client\Struct\Fare\InformativePricing13\OriginatorDetails;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * FareInformativePricingWithoutPnrOptions
+ * OriginatorDetailsTest
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Test\Amadeus\Client\Struct\Fare\InformativePricing13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FareInformativePricingWithoutPnrOptions extends Base
+class OriginatorDetailsTest extends BaseTestCase
 {
-    /**
-     * Passenger types & amounts to be priced
-     *
-     * @var Fare\InformativePricing\Passenger[]
-     */
-    public $passengers = [];
+    public function testCanMake()
+    {
+        $it = new OriginatorDetails('BRUXX0900');
 
-    /**
-     * @var Fare\InformativePricing\Segment[]
-     */
-    public $segments = [];
+        $this->assertEquals('BRUXX0900', $it->inHouseIdentification1);
+    }
 
-    /**
-     * @var Fare\InformativePricing\PricingOptions
-     */
-    public $pricingOptions;
 }

@@ -76,4 +76,18 @@ class FlightDate
             }
         }
     }
+
+    /**
+     * Load Arrival date info from \DateTime
+     *
+     * @param \DateTime $arrivalDate
+     */
+    public function setArrivalDate(\DateTime $arrivalDate)
+    {
+        $this->arrivalDate = $arrivalDate->format('dmy');
+        $time = $arrivalDate->format('Hi');
+        if ($time !== "0000") {
+            $this->arrivalTime = $time;
+        }
+    }
 }

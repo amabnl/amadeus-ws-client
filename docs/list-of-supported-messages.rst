@@ -18,7 +18,7 @@ This is the list of messages that are at least partially supported at this time:
 - Queue_MoveItem
 - Fare_MasterPricerTravelBoardSearch
 - Fare_PricePNRWithBookingClass
-- Fare_InformativePricingWithoutPNR *
+- Fare_InformativePricingWithoutPNR
 - Fare_ConvertCurrency
 - Fare_CheckRules
 - Air_SellFromRecommendation

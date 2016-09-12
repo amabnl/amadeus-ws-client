@@ -20,30 +20,19 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\RequestOptions\Fare\InformativePricing;
+
+use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 
 /**
- * FareInformativePricingWithoutPnrOptions
+ * Pricing Options for the Fare_InformativePricingWithoutPNR message
  *
- * @package Amadeus\Client\RequestOptions
+ * The pricing options are the same as a Fare_PricePnrWithBookingClassOptions
+ *
+ * @package Amadeus\Client\RequestOptions\Fare\InformativePricing
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FareInformativePricingWithoutPnrOptions extends Base
+class PricingOptions extends FarePricePnrWithBookingClassOptions
 {
-    /**
-     * Passenger types & amounts to be priced
-     *
-     * @var Fare\InformativePricing\Passenger[]
-     */
-    public $passengers = [];
 
-    /**
-     * @var Fare\InformativePricing\Segment[]
-     */
-    public $segments = [];
-
-    /**
-     * @var Fare\InformativePricing\PricingOptions
-     */
-    public $pricingOptions;
 }
