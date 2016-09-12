@@ -33,15 +33,15 @@ class Session
     /**
      * @var string
      */
-    public $sessionId;
+    public $SessionId;
     /**
      * @var int
      */
-    public $sequenceNumber;
+    public $SequenceNumber;
     /**
      * @var string
      */
-    public $securityToken;
+    public $SecurityToken;
 
     /**
      * @param string	$sessId
@@ -50,8 +50,8 @@ class Session
      */
     public function __construct($sessId, $seqNr, $secTok)
     {
-        $this->sessionId = $sessId;
-        $this->sequenceNumber = $seqNr;
-        $this->securityToken = $secTok;
+        $this->SessionId = $sessId;
+        $this->SequenceNumber = $seqNr;
+        $this->SecurityToken = $secTok;
     }
 }
