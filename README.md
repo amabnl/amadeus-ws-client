@@ -46,7 +46,7 @@ For now, if you want the bleeding edge, point your composer.json towards `dev-de
 
 # Usage
 
-- [About & Get Started](docs/about-get-started.rst)
-- [List of supported messages](docs/list-of-supported-messages.rst)
+- [About &amp; Get Started](/docs/about-get-started.rst)
+- [List of supported messages](/docs/list-of-supported-messages.rst)
 - [How to](docs/how-to.rst)
 - [Examples](docs/samples.rst)
