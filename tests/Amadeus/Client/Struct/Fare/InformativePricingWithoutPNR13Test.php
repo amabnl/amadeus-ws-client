@@ -57,7 +57,7 @@ class InformativePricingWithoutPNR13Test extends BaseTestCase
             ],
             'segments' => [
                 new Segment([
-                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-11-21 09:15:00'),
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-11-21 09:15:00', new \DateTimeZone('UTC')),
                     'from' => 'BRU',
                     'to' => 'LIS',
                     'marketingCompany' => 'TP',
@@ -67,7 +67,7 @@ class InformativePricingWithoutPNR13Test extends BaseTestCase
                     'groupNumber' => 1
                 ]),
                 new Segment([
-                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-11-28 14:20:00'),
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-11-28 14:20:00', new \DateTimeZone('UTC')),
                     'from' => 'LIS',
                     'to' => 'BRU',
                     'marketingCompany' => 'TP',
@@ -142,8 +142,8 @@ class InformativePricingWithoutPNR13Test extends BaseTestCase
             ],
             'segments' => [
                 new Segment([
-                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-18 09:15:00'),
-                    'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-18 12:30:00'),
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-18 09:15:00', new \DateTimeZone('UTC')),
+                    'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-18 12:30:00', new \DateTimeZone('UTC')),
                     'from' => 'SYD',
                     'to' => 'BKK',
                     'marketingCompany' => '6X',
@@ -165,8 +165,8 @@ class InformativePricingWithoutPNR13Test extends BaseTestCase
                     ]
                 ]),
                 new Segment([
-                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-18 15:05:00'),
-                    'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-18 21:50:00'),
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-18 15:05:00', new \DateTimeZone('UTC')),
+                    'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-18 21:50:00', new \DateTimeZone('UTC')),
                     'from' => 'BKK',
                     'to' => 'LHR',
                     'marketingCompany' => '6X',
@@ -188,8 +188,8 @@ class InformativePricingWithoutPNR13Test extends BaseTestCase
                     ]
                 ]),
                 new Segment([
-                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-28 09:25:00'),
-                    'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-28 18:10:00'),
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-28 09:25:00', new \DateTimeZone('UTC')),
+                    'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-28 18:10:00', new \DateTimeZone('UTC')),
                     'from' => 'LHR',
                     'to' => 'BKK',
                     'marketingCompany' => '6X',
@@ -212,8 +212,8 @@ class InformativePricingWithoutPNR13Test extends BaseTestCase
                     ]
                 ]),
                 new Segment([
-                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-28 19:50:00'),
-                    'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-29 08:45:00'),
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-28 19:50:00', new \DateTimeZone('UTC')),
+                    'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2009-03-29 08:45:00', new \DateTimeZone('UTC')),
                     'from' => 'BKK',
                     'to' => 'SYD',
                     'marketingCompany' => '6X',
@@ -356,7 +356,7 @@ class InformativePricingWithoutPNR13Test extends BaseTestCase
             ],
             'segments' => [
                 new Segment([
-                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-12-06 05:04:00'),
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-12-06 05:04:00', new \DateTimeZone('UTC')),
                     'from' => 'BRU',
                     'to' => 'LON',
                     'marketingCompany' => 'BA',

@@ -20,48 +20,29 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Test\Amadeus\Client\Struct\Pnr\AddMultiElements;
+
+use Amadeus\Client\Struct\Pnr\AddMultiElements\Remarks;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * Traveller
+ * RemarksTest
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Test\Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Traveller
+class RemarksTest extends BaseTestCase
 {
-    const QUAL_GROUP = "G";
-
-    /**
-     * @var string
-     */
-    public $surname;
-    /**
-     * Traveller Qualifiers:
-     * - 766 	Infant without seat
-     * - 767 	Infant with seat
-     * - C 	CBBG - Cabin Baggage
-     * - COR 	CORPORATE NAME
-     * - E 	EXST - Extra Seat
-     * - G 	Group
-     * - INF 	Infant not occupying a seat
-     * - MTH 	Month
-     * - PAX 	Passenger
-     * - YRS 	Year
-     *
-     * @var string
-     */
-    public $qualifier;
-    /**
-     * @var int
-     */
-    public $quantity;
-
-    /**
-     * @param string $surName
-     */
-    public function __construct($surName)
+    public function testCanMakeRemarkWithCategory()
     {
-        $this->surname = $surName;
+        $element = new Remarks(
+            'a remark text',
+            Remarks::TYPE_MISCELLANEOUS,
+            'C'
+        );
+
+        $this->assertEquals('a remark text', $element->freetext);
+        $this->assertEquals('C', $element->category);
+        $this->assertEquals(Remarks::TYPE_MISCELLANEOUS, $element->type);
     }
 }

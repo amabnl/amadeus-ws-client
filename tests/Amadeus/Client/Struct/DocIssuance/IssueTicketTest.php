@@ -92,7 +92,7 @@ class IssueTicketTest extends BaseTestCase
     public function testCanMakeIssueTicketRequestWithAlternateDateVal()
     {
         $opt = new DocIssuanceIssueTicketOptions([
-            'alternateDateValidation' => \DateTime::createFromFormat('dmY', '16102016')
+            'alternateDateValidation' => \DateTime::createFromFormat('dmY', '16102016', new \DateTimeZone('UTC'))
         ]);
 
         $message = new IssueTicket($opt);

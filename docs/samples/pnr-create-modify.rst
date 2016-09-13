@@ -10,6 +10,68 @@ Below are some examples of how to do specific things with regards to creating & 
 Creating specific PNR elements
 ******************************
 
+--------------------
+Passengers - Infants
+--------------------
+
+Add an infant to a traveller without providing extra information:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+
+    $opt = new PnrCreatePnrOptions([
+        'travellers' => [
+            new Traveller([
+                'number' => 1,
+                'lastName' => 'Bowie',
+                'firstName' => 'David',
+                'withInfant' => true
+            ])
+        ]
+    ]);
+
+Add an infant to a traveller and provide only the infant's first name:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+
+    $opt = new PnrCreatePnrOptions([
+        'travellers' => [
+            new Traveller([
+                'number' => 1,
+                'lastName' => 'Bowie',
+                'firstName' => 'David',
+                'infant' => new Traveller(['firstName' => 'Junior'])
+            ])
+        ]
+    ]);
+
+Add an infant to a traveller and provide the infant's first & last name and date of birth:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+
+    $opt = new PnrCreatePnrOptions([
+        'travellers' => [
+            new Traveller([
+                'number' => 1,
+                'lastName' => 'Bowie',
+                'firstName' => 'David',
+                'infant' => new Traveller([
+                    'firstName' => 'Junior',
+                    'lastName' => 'Dylan',
+                    'dateOfBirth' => \DateTime::createFromFormat('Y-m-d', '2016-01-08')
+                ])
+            ])
+        ]
+    ]);
+
 ---------------------
 Remark - Confidential
 ---------------------

@@ -42,7 +42,7 @@ class RetrieveSeatMapTest extends BaseTestCase
             'flight' => new FlightInfo([
                 'airline' => 'SN',
                 'flightNumber' => '652',
-                'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-05-18 00:00:00'),
+                'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-05-18 00:00:00', new \DateTimeZone('UTC')),
                 'departure' => 'BRU',
                 'arrival' => 'LIS'
             ])
@@ -69,7 +69,7 @@ class RetrieveSeatMapTest extends BaseTestCase
             'flight' => new FlightInfo([
                 'airline' => 'SN',
                 'flightNumber' => '652',
-                'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-05-18 14:35:00'),
+                'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-05-18 14:35:00', new \DateTimeZone('UTC')),
                 'departure' => 'BRU',
                 'arrival' => 'LIS'
             ])
@@ -97,7 +97,7 @@ class RetrieveSeatMapTest extends BaseTestCase
                 'airline' => 'SN',
                 'flightNumber' => '652',
                 'bookingClass' => 'Y',
-                'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-05-18 00:00:00'),
+                'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-05-18 00:00:00', new \DateTimeZone('UTC')),
                 'departure' => 'BRU',
                 'arrival' => 'LIS'
             ])
@@ -124,7 +124,7 @@ class RetrieveSeatMapTest extends BaseTestCase
             'flight' => new FlightInfo([
                 'airline' => 'SN',
                 'flightNumber' => '652',
-                'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-05-18 00:00:00'),
+                'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-05-18 00:00:00', new \DateTimeZone('UTC')),
                 'departure' => 'BRU',
                 'arrival' => 'LIS'
             ]),

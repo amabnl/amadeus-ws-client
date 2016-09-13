@@ -1305,7 +1305,7 @@ class ClientTest extends BaseTestCase
             new Client\RequestOptions\AirFlightInfoOptions([
                 'airlineCode' => 'SN',
                 'flightNumber' => '652',
-                'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18'),
+                'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
                 'departureLocation' => 'BRU',
                 'arrivalLocation' => 'LIS'
             ])
@@ -1346,7 +1346,7 @@ class ClientTest extends BaseTestCase
             new Client\RequestOptions\AirFlightInfoOptions([
                 'airlineCode' => 'SN',
                 'flightNumber' => '652',
-                'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18'),
+                'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
                 'departureLocation' => 'BRU',
                 'arrivalLocation' => 'LIS'
             ])
@@ -1369,7 +1369,7 @@ class ClientTest extends BaseTestCase
                 'flight' => new Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo([
                     'airline' => 'SN',
                     'flightNumber' => '652',
-                    'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18'),
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
                     'departure' => 'BRU',
                     'arrival' => 'LIS'
                 ])
@@ -1412,7 +1412,7 @@ class ClientTest extends BaseTestCase
                 'flight' => new Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo([
                     'airline' => 'SN',
                     'flightNumber' => '652',
-                    'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18'),
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
                     'departure' => 'BRU',
                     'arrival' => 'LIS'
                 ])

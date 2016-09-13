@@ -44,7 +44,7 @@ class DisplayHistoryTest extends BaseTestCase
     {
         $opt = new PnrDisplayHistoryOptions([
             'recordLocator' => 'ABC123',
-            'pnrCreateTime' => \DateTime::createFromFormat('dmY H:i:s', '19082017 00:00:00')
+            'pnrCreateTime' => \DateTime::createFromFormat('dmY H:i:s', '19082017 00:00:00', new \DateTimeZone('UTC'))
         ]);
 
         $message = new DisplayHistory($opt);
@@ -63,7 +63,7 @@ class DisplayHistoryTest extends BaseTestCase
     {
         $opt = new PnrDisplayHistoryOptions([
             'recordLocator' => 'ABC123',
-            'pnrCreateTime' => \DateTime::createFromFormat('dmY H:i', '19082017 14:31')
+            'pnrCreateTime' => \DateTime::createFromFormat('dmY H:i', '19082017 14:31', new \DateTimeZone('UTC'))
         ]);
 
         $message = new DisplayHistory($opt);

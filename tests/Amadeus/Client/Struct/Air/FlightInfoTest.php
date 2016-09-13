@@ -38,7 +38,7 @@ class FlightInfoTest extends BaseTest
         $options = new AirFlightInfoOptions([
             'airlineCode' => 'SN',
             'flightNumber' => '652',
-            'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18'),
+            'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
             'departureLocation' => 'BRU',
             'arrivalLocation' => 'LIS'
         ]);
@@ -67,7 +67,7 @@ class FlightInfoTest extends BaseTest
             'airlineCode' => 'SN',
             'flightNumber' => '652',
             'flightNumberSuffix' => 'A',
-            'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18'),
+            'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
             'departureLocation' => 'BRU',
             'arrivalLocation' => 'LIS'
         ]);
