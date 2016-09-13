@@ -106,6 +106,11 @@ class Client
     protected $authParams;
 
     /**
+     * @var string
+     */
+    protected $lastMessage;
+
+    /**
      * Set the session as stateful (true) or stateless (false)
      *
      * @param bool $newStateful
@@ -130,7 +135,7 @@ class Client
      */
     public function getLastRequest()
     {
-        return $this->sessionHandler->getLastRequest();
+        return $this->sessionHandler->getLastRequest($this->lastMessage);
     }
 
     /**
@@ -140,7 +145,7 @@ class Client
      */
     public function getLastResponse()
     {
-        return $this->sessionHandler->getLastResponse();
+        return $this->sessionHandler->getLastResponse($this->lastMessage);
     }
 
     /**
@@ -677,6 +682,8 @@ class Client
     protected function callMessage($messageName, $options, $messageOptions, $endSession = false)
     {
         $messageOptions = $this->makeMessageOptions($messageOptions, $endSession);
+
+        $this->lastMessage = $messageName;
 
         $sendResult = $this->sessionHandler->sendMessage(
             $messageName,

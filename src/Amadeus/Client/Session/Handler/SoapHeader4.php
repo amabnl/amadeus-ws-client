@@ -23,7 +23,6 @@
 namespace Amadeus\Client\Session\Handler;
 
 use Amadeus\Client;
-use Psr\Log\LogLevel;
 
 /**
  * SoapHeader4: Session Handler for web service applications using Amadeus WS Soap Header v4.
@@ -91,8 +90,8 @@ class SoapHeader4 extends Base
 
         $headers = $this->createSoapHeaders($this->sessionData, $this->params, $messageName, $messageOptions);
 
-        $this->getSoapClient()->__setSoapHeaders(null);
-        $this->getSoapClient()->__setSoapHeaders($headers);
+        $this->getSoapClient($messageName)->__setSoapHeaders(null);
+        $this->getSoapClient($messageName)->__setSoapHeaders($headers);
     }
 
 
@@ -181,6 +180,9 @@ class SoapHeader4 extends Base
     {
         $headersToSet = [];
 
+        $wsdlId = $this->getWsdlIdFor($messageName);
+        $wsdl = $this->wsdlIds[$wsdlId];
+
         //CHECK STATEFUL
         $stateful = $this->isStateful();
 
@@ -200,7 +202,7 @@ class SoapHeader4 extends Base
             new \SoapHeader(
                 'http://www.w3.org/2005/08/addressing',
                 'Action',
-                $this->getActionFromWsdl($params->wsdl, $messageName)
+                $this->getActionFromWsdl($wsdl, $messageName)
             )
         );
 
@@ -210,7 +212,7 @@ class SoapHeader4 extends Base
             new \SoapHeader(
                 'http://www.w3.org/2005/08/addressing',
                 'To',
-                $this->getEndpointFromWsdl($params->wsdl)
+                $this->getEndpointFromWsdl($wsdl, $messageName)
             )
         );
 
@@ -300,13 +302,19 @@ class SoapHeader4 extends Base
      * Get the Web Services server Endpoint from the WSDL.
      *
      * @param string $wsdlFilePath
+     * @param string $messageName
      * @return string
      */
-    protected function getEndpointFromWsdl($wsdlFilePath)
+    protected function getEndpointFromWsdl($wsdlFilePath, $messageName)
     {
-        $this->loadWsdlXpath($wsdlFilePath);
+        $wsdlId = $this->getWsdlIdFor($messageName);
 
-        return $this->wsdlDomXpath->evaluate(self::XPATH_ENDPOINT);
+        $this->loadWsdlXpath(
+            $wsdlFilePath,
+            $wsdlId
+        );
+
+        return $this->wsdlDomXpath[$wsdlId]->evaluate(self::XPATH_ENDPOINT);
     }
 
     /**
@@ -318,9 +326,14 @@ class SoapHeader4 extends Base
      */
     protected function getActionFromWsdl($wsdlFilePath, $messageName)
     {
-        $this->loadWsdlXpath($wsdlFilePath);
+        $wsdlId = $this->getWsdlIdFor($messageName);
 
-        $action = $this->wsdlDomXpath->evaluate(sprintf(self::XPATH_OPERATION_ACTION, $messageName));
+        $this->loadWsdlXpath(
+            $wsdlFilePath,
+            $wsdlId
+        );
+
+        $action = $this->wsdlDomXpath[$wsdlId]->evaluate(sprintf(self::XPATH_OPERATION_ACTION, $messageName));
 
         return $action;
     }
@@ -421,12 +434,15 @@ class SoapHeader4 extends Base
     }
 
     /**
+     * @param string $wsdlId
      * @return \SoapClient
      */
-    protected function initSoapClient()
+    protected function initSoapClient($wsdlId)
     {
+        $wsdlPath = $this->wsdlIds[$wsdlId];
+
         $client = new Client\SoapClient(
-            $this->params->wsdl,
+            $wsdlPath,
             $this->makeSoapClientOptions(),
             $this->params->logger
         );

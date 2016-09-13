@@ -72,6 +72,31 @@ class HandlerFactoryTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Session\Handler\SoapHeader4', $createdHandler);
     }
 
+    public function testCreateSoapHeader4WithWsdlListWillCreateSoapHeader4Handler()
+    {
+        $params = $par = new SessionHandlerParams([
+            'wsdl' => [
+                '/dummy/path',
+                '/dummy/path/wsdl2'
+            ],
+            'soapHeaderVersion' => Client::HEADER_V4,
+            'receivedFrom' => 'unittests',
+            'logger' => new NullLogger(),
+            'authParams' => [
+                'officeId' => 'BRUXX0000',
+                'originatorTypeCode' => 'U',
+                'userId' => 'DUMMYORIG',
+                'organizationId' => 'DUMMYORG',
+                'passwordLength' => 12,
+                'passwordData' => 'dGhlIHBhc3N3b3Jk'
+            ]
+        ]);
+
+        $createdHandler = HandlerFactory::createHandler($params);
+
+        $this->assertInstanceOf('Amadeus\Client\Session\Handler\SoapHeader4', $createdHandler);
+    }
+
     public function testCreateSoapHeader2WillCreateSoapHeader2Handler()
     {
         $params = $par = new SessionHandlerParams([

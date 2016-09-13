@@ -37,12 +37,13 @@ class SessionHandlerParams
     /**
      * Full file & path to the WSDL file to be used
      *
-     * @var string
+     * @var string[]
      */
-    public $wsdl;
+    public $wsdl = [];
 
     /**
      * Which Soap Header version to be used
+     *
      * @var string
      */
     public $soapHeaderVersion = Client::HEADER_V4;
@@ -86,6 +87,13 @@ class SessionHandlerParams
     public $overrideSoapClient;
 
     /**
+     * Override SoapClient WSDL name
+     *
+     * @var string
+     */
+    public $overrideSoapClientWsdlName;
+
+    /**
      * @param array $params
      */
     public function __construct($params = [])
@@ -119,12 +127,22 @@ class SessionHandlerParams
     /**
      * Load WSDL from config
      *
+     * Either a single WSDL location as string or a list of WSDL locations as array.
+     *
      * @param array $params
      * @return void
      */
     protected function loadWsdl($params)
     {
-        $this->wsdl = (isset($params['wsdl'])) ? $params['wsdl'] : null;
+        if (isset($params['wsdl'])) {
+            if (is_string($params['wsdl'])) {
+                $this->wsdl = [
+                    $params['wsdl']
+                ];
+            } elseif (is_array($params['wsdl'])) {
+                $this->wsdl = $params['wsdl'];
+            }
+        }
     }
 
     /**
@@ -179,6 +197,9 @@ class SessionHandlerParams
     {
         if (isset($params['overrideSoapClient']) && $params['overrideSoapClient'] instanceof \SoapClient) {
             $this->overrideSoapClient = $params['overrideSoapClient'];
+        }
+        if (isset($params['overrideSoapClientWsdlName'])) {
+            $this->overrideSoapClientWsdlName = $params['overrideSoapClientWsdlName'];
         }
     }
 

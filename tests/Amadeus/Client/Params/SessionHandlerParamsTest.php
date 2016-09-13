@@ -41,8 +41,9 @@ class SessionHandlerParamsTest extends BaseTestCase
         $this->assertNull($par->authParams);
         $this->assertNull($par->logger);
         $this->assertNull($par->overrideSoapClient);
+        $this->assertNull($par->overrideSoapClientWsdlName);
         $this->assertTrue($par->stateful);
-        $this->assertNull($par->wsdl);
+        $this->assertEmpty($par->wsdl);
         $this->assertEquals(Client::HEADER_V4,$par->soapHeaderVersion);
     }
 

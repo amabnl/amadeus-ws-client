@@ -43,7 +43,6 @@ use Psr\Log\NullLogger;
  */
 abstract class Base implements HandlerInterface, LoggerAwareInterface
 {
-
     use LoggerAwareTrait;
 
     /**
@@ -76,7 +75,6 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      */
     protected $context;
 
-
     /**
      * Session information:
      * - session ID
@@ -99,10 +97,9 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     protected $isAuthenticated = false;
 
     /**
-     * @var \SoapClient
+     * @var array[string]\SoapClient
      */
-    protected $soapClient;
-
+    protected $soapClients = [];
 
     /**
      * Default SoapClient options used during initialisation
@@ -118,30 +115,67 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
         'soap_version' 	=> SOAP_1_1
     ];
 
-
     /**
      * @var SessionHandlerParams
      */
     protected $params;
 
-
     /**
-     * Dom Document where the WSDL's contents will be loaded
+     * Dom Document array where the WSDL's contents will be loaded
      *
-     * @var \DOMDocument
+     * format:
+     * [
+     *     '7d36c7b8' => \DOMDocument,
+     *     '7e84f2537' => \DOMDocument
+     * ]
+     *
+     * @var array
      */
     protected $wsdlDomDoc;
     /**
      * To query the WSDL contents
      *
-     * @var \DOMXpath
+     * format:
+     * [
+     *     '7d36c7b8' => \DOMXpath,
+     *     '7e84f2537' => \DOMXpath
+     * ]
+     *
+     * @var array
      */
     protected $wsdlDomXpath;
 
     /**
+     * A map of which messages are available in the provided WSDL's
+     *
+     * format:
+     * [
+     *      'PNR_Retrieve' => [
+     *          'version' => '14.1',
+     *          'wsdl' => '7d36c7b8'
+     *      ],
+     *      'Media_GetMedia' => [
+     *          'version' => '14.1',
+     *          'wsdl' => '7e84f2537'
+     *      ]
+     * ]
+     *
      * @var array
      */
-    protected $messagesAndVersions;
+    protected $messagesAndVersions = [];
+
+    /**
+     * List of WSDL ID's and their path
+     *
+     * format:
+     * [
+     *      '7d36c7b8' => '/path/to/wsdl.wsdl'
+     * ]
+     *
+     * @var array
+     */
+    protected $wsdlIds = [];
+
 
     /**
      * Get the session parameters of the active session
@@ -185,7 +219,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
             $this->log(LogLevel::INFO, __METHOD__."(): Logger started.");
         }
         if ($params->overrideSoapClient instanceof \SoapClient) {
-            $this->soapClient = $params->overrideSoapClient;
+            $this->soapClients[$params->overrideSoapClientWsdlName] = $params->overrideSoapClient;
         }
         $this->setStateful($params->stateful);
     }
@@ -209,11 +243,11 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
         $this->prepareForNextMessage($messageName, $messageOptions);
 
         try {
-            $result->responseObject = $this->getSoapClient()->$messageName($messageBody);
+            $result->responseObject = $this->getSoapClient($messageName)->$messageName($messageBody);
 
             $this->logRequestAndResponse($messageName);
 
-            $this->handlePostMessage($messageName, $this->getLastResponse(), $messageOptions, $result);
+            $this->handlePostMessage($messageName, $this->getLastResponse($messageName), $messageOptions, $result);
 
         } catch (\SoapFault $ex) {
             $this->log(
@@ -236,7 +270,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
             throw new Client\Exception($ex->getMessage(), $ex->getCode(), $ex);
         }
 
-        $result->responseXml = Client\Util\MsgBodyExtractor::extract($this->getLastResponse());
+        $result->responseXml = Client\Util\MsgBodyExtractor::extract($this->getLastResponse($messageName));
 
         return $result;
     }
@@ -264,21 +298,37 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     /**
      * Get the last raw XML message that was sent out
      *
+     * @param string $msgName
      * @return string|null
      */
-    public function getLastRequest()
+    public function getLastRequest($msgName)
     {
-        return $this->getSoapClient()->__getLastRequest();
+        $lastRequest = null;
+        $soapClient = $this->getSoapClient($msgName);
+
+        if ($soapClient instanceof \SoapClient) {
+            $lastRequest = $soapClient->__getLastRequest();
+        }
+
+        return $lastRequest;
     }
 
     /**
      * Get the last raw XML message that was received
      *
+     * @param string $msgName
      * @return string|null
      */
-    public function getLastResponse()
+    public function getLastResponse($msgName)
     {
-        return $this->getSoapClient()->__getLastResponse();
+        $lastResponse = null;
+        $soapClient = $this->getSoapClient($msgName);
+
+        if ($soapClient instanceof \SoapClient) {
+            $lastResponse = $soapClient->__getLastResponse();
+        }
+
+        return $lastResponse;
     }
 
     /**
@@ -315,22 +365,46 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      */
     protected function loadMessagesAndVersions()
     {
-        $this->loadWsdlXpath($this->params->wsdl);
-
         $msgAndVer = [];
-        $operations = $this->wsdlDomXpath->query(self::XPATH_ALL_OPERATIONS);
 
-        foreach ($operations as $operation) {
-            if (!empty($operation->value)) {
-                $fullVersion = $this->wsdlDomXpath->evaluate(sprintf(self::XPATH_VERSION_FOR_OPERATION, $operation->value));
-                if (!empty($fullVersion)) {
-                    $extractedVersion = $this->extractMessageVersion($fullVersion);
-                    $msgAndVer[$operation->value] = $extractedVersion;
+        $wsdls = $this->params->wsdl;
+
+        foreach ($wsdls as $wsdl) {
+            $wsdlIdentifier = $this->makeWsdlIdentifier($wsdl);
+
+            $this->wsdlIds[$wsdlIdentifier] = $wsdl;
+
+            $this->loadWsdlXpath($wsdl, $wsdlIdentifier);
+
+            $operations = $this->wsdlDomXpath[$wsdlIdentifier]->query(self::XPATH_ALL_OPERATIONS);
+
+            foreach ($operations as $operation) {
+                if (!empty($operation->value)) {
+                    $fullVersion = $this->wsdlDomXpath[$wsdlIdentifier]->evaluate(sprintf(self::XPATH_VERSION_FOR_OPERATION, $operation->value));
+                    if (!empty($fullVersion)) {
+                        $extractedVersion = $this->extractMessageVersion($fullVersion);
+                        $msgAndVer[$operation->value] = [
+                            'version' => $extractedVersion,
+                            'wsdl' => $wsdlIdentifier
+                        ];
+                    }
                 }
             }
         }
 
         return $msgAndVer;
+    }
+
+    /**
+     * Generates a unique identifier for a wsdl based on its path.
+     *
+     * @param string $wsdlPath
+     *
+     * @return string
+     */
+    protected function makeWsdlIdentifier($wsdlPath)
+    {
+        return sprintf('%x', crc32($wsdlPath));
     }
 
     /**
@@ -353,22 +427,23 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      * Load the WSDL contents to a queryable DOMXpath.
      *
      * @param string $wsdlFilePath
+     * @param string $wsdlId
      * @uses $this->wsdlDomDoc
      * @uses $this->wsdlDomXpath
      */
-    protected function loadWsdlXpath($wsdlFilePath)
+    protected function loadWsdlXpath($wsdlFilePath, $wsdlId)
     {
-        if (is_null($this->wsdlDomXpath)) {
+        if (is_null($this->wsdlDomXpath[$wsdlId])) {
             $wsdlContent = file_get_contents($wsdlFilePath);
 
-            $this->wsdlDomDoc = new \DOMDocument('1.0', 'UTF-8');
-            $this->wsdlDomDoc->loadXML($wsdlContent);
-            $this->wsdlDomXpath = new \DOMXPath($this->wsdlDomDoc);
-            $this->wsdlDomXpath->registerNamespace(
+            $this->wsdlDomDoc[$wsdlId] = new \DOMDocument('1.0', 'UTF-8');
+            $this->wsdlDomDoc[$wsdlId]->loadXML($wsdlContent);
+            $this->wsdlDomXpath[$wsdlId] = new \DOMXPath($this->wsdlDomDoc[$wsdlId]);
+            $this->wsdlDomXpath[$wsdlId]->registerNamespace(
                 'wsdl',
                 'http://schemas.xmlsoap.org/wsdl/'
             );
-            $this->wsdlDomXpath->registerNamespace(
+            $this->wsdlDomXpath[$wsdlId]->registerNamespace(
                 'soap',
                 'http://schemas.xmlsoap.org/wsdl/soap/'
             );
@@ -385,8 +460,27 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     {
         $msgAndVer = $this->getMessagesAndVersions();
 
-        if (isset($msgAndVer[$messageName])) {
-            return $msgAndVer[$messageName];
+        $found = null;
+
+        if (isset($msgAndVer[$messageName]) && isset($msgAndVer[$messageName]['version'])) {
+            $found = $msgAndVer[$messageName]['version'];
+        }
+
+        return $found;
+    }
+
+    /**
+     * Get the WSDL ID for the given message
+     *
+     * @param $messageName
+     * @return string|null
+     */
+    protected function getWsdlIdFor($messageName)
+    {
+        $msgAndVer = $this->getMessagesAndVersions();
+
+        if (isset($msgAndVer[$messageName]) && isset($msgAndVer[$messageName]['wsdl'])) {
+            return $msgAndVer[$messageName]['wsdl'];
         }
 
         return null;
@@ -394,21 +488,29 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
 
 
     /**
+     * @param string $msgName
      * @return \SoapClient
      */
-    protected function getSoapClient()
+    protected function getSoapClient($msgName)
     {
-        if (!$this->soapClient instanceof \SoapClient) {
-            $this->soapClient = $this->initSoapClient();
-        }
+        $wsdlId = $this->getWsdlIdFor($msgName);
 
-        return $this->soapClient;
+        if (!empty($msgName)) {
+            if (!isset($this->soapClients[$wsdlId]) || !($this->soapClients[$wsdlId] instanceof \SoapClient)) {
+                $this->soapClients[$wsdlId] = $this->initSoapClient($wsdlId);
+            }
+
+            return $this->soapClients[$wsdlId];
+        } else {
+            return null;
+        }
     }
 
     /**
+     * @param string $wsdlId
      * @return \SoapClient
      */
-    protected abstract function initSoapClient();
+    protected abstract function initSoapClient($wsdlId);
 
 
     /**
@@ -419,11 +521,11 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     {
         $this->log(
             LogLevel::INFO,
-            'Called ' . $messageName . ' with request: ' . $this->getSoapClient()->__getLastRequest()
+            'Called ' . $messageName . ' with request: ' . $this->getSoapClient($messageName)->__getLastRequest()
         );
         $this->log(
             LogLevel::INFO,
-            'Response:  ' . $this->getSoapClient()->__getLastResponse()
+            'Response:  ' . $this->getSoapClient($messageName)->__getLastResponse()
         );
     }
 

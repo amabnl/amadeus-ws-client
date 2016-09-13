@@ -98,14 +98,16 @@ interface HandlerInterface
     /**
      * Get the last raw XML message that was sent out
      *
+     * @param string $msgName
      * @return string|null
      */
-    public function getLastRequest();
+    public function getLastRequest($msgName);
 
     /**
      * Get the last raw XML message that was received
      *
+     * @param string $msgName
      * @return string|null
      */
-    public function getLastResponse();
+    public function getLastResponse($msgName);
 }

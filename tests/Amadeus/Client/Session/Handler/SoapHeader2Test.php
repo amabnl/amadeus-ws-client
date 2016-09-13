@@ -104,6 +104,7 @@ class SoapHeader2Test extends BaseTestCase
         $expectedResult = new SendResult();
         $expectedResult->responseXml = $dummyPnrReplyExtractedMessage;
         $expectedResult->responseObject = new \stdClass();
+        $expectedResult->messageVersion = '11.3';
 
         $this->assertEquals($expectedResult, $messageResponse);
     }
@@ -188,7 +189,7 @@ class SoapHeader2Test extends BaseTestCase
 
         $handler = new SoapHeader2($handlerParams);
 
-        $result = $handler->getLastRequest();
+        $result = $handler->getLastRequest('PNR_Retrieve');
 
         $this->assertNull($result);
     }
@@ -246,6 +247,7 @@ class SoapHeader2Test extends BaseTestCase
             'receivedFrom' => 'unittests',
             'logger' => new NullLogger(),
             'overrideSoapClient' => $overrideSoapClient,
+            'overrideSoapClientWsdlName' => sprintf('%x', crc32($wsdlpath)),
             'authParams' => [
                 'officeId' => 'BRUXX0000',
                 'originatorTypeCode' => 'U',
