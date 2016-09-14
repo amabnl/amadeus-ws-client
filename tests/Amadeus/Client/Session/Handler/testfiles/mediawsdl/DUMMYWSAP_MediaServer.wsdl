@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://wsdl.amadeus.com/MediaServer_v1_v4" xmlns:int="http://wsdl.amadeus.com/MediaServer_v1" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" name="_1AWDD_MediaServer_1.0_4.0" targetNamespace="http://wsdl.amadeus.com/MediaServer_v1_v4">
+	<wsdl:import namespace="http://wsdl.amadeus.com/MediaServer_v1" location="MediaServer_1.0.wsdl"/>
+	<wsdl:documentation>Versions: [interface: 1.0 ; technical: 4.0]</wsdl:documentation>
+	<wsdl:binding name="MediaServer_Binding" type="int:MediaServer_PT">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="Media_GetMedia">
+			<soap:operation soapAction="http://dummy.media.soapaction.com"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="MediaServer_Service">
+		<wsdl:port name="MediaServer_Port" binding="tns:MediaServer_Binding">
+			<soap:address location="https://dummy.media.endpoint.com/DUMMYWSAP"/>
+			<wsp:PolicyReference URI="#AmadeusPolicy"/>
+		</wsdl:port>
+	</wsdl:service>
+	<wsp:Policy wsu:Id="MessagingPolicy">
+		<wsam:Addressing wsp:Optional="true">
+			<wsp:Policy>
+				<wsam:AnonymousResponses/>
+			</wsp:Policy>
+		</wsam:Addressing>
+	</wsp:Policy>
+	<wsp:Policy wsu:Id="AmadeusPolicy">
+		<wsp:PolicyReference URI="#MessagingPolicy"/>
+	</wsp:Policy>
+</wsdl:definitions>

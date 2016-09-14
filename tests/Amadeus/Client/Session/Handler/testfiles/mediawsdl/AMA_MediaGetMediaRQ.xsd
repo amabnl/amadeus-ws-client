@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://xml.amadeus.com/2010/06/MediaServer_v1" targetNamespace="http://xml.amadeus.com/2010/06/MediaServer_v1" elementFormDefault="qualified" attributeFormDefault="unqualified" version="1.000" id="AMA2015A">
+  <xs:element name="AMA_MediaGetMediaRQ">
+  </xs:element>
+</xs:schema>
+

@@ -684,17 +684,6 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $sessionHandlerParams = $this->makeSessionHandlerParams();
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
-        $expected = [
-            'PNR_Retrieve' => [
-                'version' => '11.3',
-                'wsdl' => '5ab5a95a'
-            ],
-            'Security_SignOut' => [
-                'version' => '4.1',
-                'wsdl' => '5ab5a95a'
-            ],
-        ];
-
         $actual = $sessionHandler->getMessagesAndVersions();
 
         $this->assertCount(2, $actual);
@@ -703,6 +692,51 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertInternalType('string', $actual['PNR_Retrieve']['wsdl']);
         $this->assertEquals('4.1', $actual['Security_SignOut']['version']);
         $this->assertInternalType('string', $actual['Security_SignOut']['wsdl']);
+    }
+
+    public function testCanHandleInvalidWsdlWhenLoadingMessagesAndVersions()
+    {
+        \PHPUnit_Framework_Error_Warning::$enabled = FALSE;
+
+        $this->setExpectedException('\Amadeus\Client\Exception', 'could not be loaded');
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandlerParams->wsdl[] = __DIR__. DIRECTORY_SEPARATOR . 'invalidwsdl.wsdl';
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $sessionHandler->getMessagesAndVersions();
+    }
+
+    public function testCanHandleInvalidImportWsdlWhenLoadingMessagesAndVersions()
+    {
+        \PHPUnit_Framework_Error_Warning::$enabled = FALSE;
+
+        $this->setExpectedException('\Amadeus\Client\Exception', 'import could not be loaded');
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandlerParams->wsdl[] = __DIR__. DIRECTORY_SEPARATOR . 'testfiles' . DIRECTORY_SEPARATOR . 'mediawsdl'.DIRECTORY_SEPARATOR.'DUMMYWSAP_MediaServer_invalid.wsdl';
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $sessionHandler->getMessagesAndVersions();
+    }
+
+    public function testCanExtractMessagesAndVersionsFromMediaWsdl()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams(null, true);
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $actual = $sessionHandler->getMessagesAndVersions();
+
+        $this->assertInternalType('array', $actual);
+        $this->assertCount(3, $actual);
+        $this->assertEquals(['PNR_Retrieve', 'Security_SignOut', 'Media_GetMedia'], array_keys($actual));
+        $this->assertEquals('11.3', $actual['PNR_Retrieve']['version']);
+        $this->assertInternalType('string', $actual['PNR_Retrieve']['wsdl']);
+        $this->assertEquals('4.1', $actual['Security_SignOut']['version']);
+        $this->assertInternalType('string', $actual['Security_SignOut']['wsdl']);
+        $this->assertEquals('1.000', $actual['Media_GetMedia']['version']);
+        $this->assertInternalType('string', $actual['Media_GetMedia']['wsdl']);
+        $this->assertNotEquals($actual['PNR_Retrieve']['wsdl'], $actual['Media_GetMedia']['wsdl']);
     }
 
     public function testCanMakeSoapClientOptionsWithOverrides()
@@ -811,7 +845,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
     /**
      * @return SessionHandlerParams
      */
-    protected function makeSessionHandlerParams($overrideSoapClient = null)
+    protected function makeSessionHandlerParams($overrideSoapClient = null, $withMediaWsdl = false)
     {
         $wsdlpath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'testfiles' . DIRECTORY_SEPARATOR . 'testwsdl.wsdl';
 
@@ -821,8 +855,6 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
             'soapHeaderVersion' => Client::HEADER_V4,
             'receivedFrom' => 'unittests',
             'logger' => new NullLogger(),
-            'overrideSoapClient' => $overrideSoapClient,
-            'overrideSoapClientWsdlName' => sprintf('%x', crc32($wsdlpath)),
             'authParams' => [
                 'officeId' => 'BRUXX0000',
                 'originatorTypeCode' => 'U',
@@ -832,6 +864,16 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
                 'passwordData' => 'dGhlIHBhc3N3b3Jk'
             ]
         ]);
+
+        if (!is_null($overrideSoapClient)) {
+            $par->overrideSoapClient = $overrideSoapClient;
+            $par->overrideSoapClientWsdlName  = sprintf('%x', crc32($wsdlpath));
+        }
+
+        if ($withMediaWsdl) {
+            $par->wsdl[] = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'testfiles' .
+                DIRECTORY_SEPARATOR . 'mediawsdl' . DIRECTORY_SEPARATOR . 'DUMMYWSAP_MediaServer.wsdl';
+        }
 
         return $par;
     }

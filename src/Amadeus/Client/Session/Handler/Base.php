@@ -46,17 +46,25 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     use LoggerAwareTrait;
 
     /**
-     * XPATH query to retrieve all operations from the WSDL
+     * XPATH query to retrieve all operations from a WSDL
      *
      * @var string
      */
     const XPATH_ALL_OPERATIONS = '/wsdl:definitions/wsdl:portType/wsdl:operation/@name';
+
     /**
-     * XPATH query to retrieve the full operation name + version from the WSDL for a given operation.
+     * XPATH query to retrieve WSDL imports from a WSDL.
+     */
+    const XPATH_IMPORTS = '/wsdl:definitions/wsdl:import/@location';
+
+    /**
+     * XPATH query to retrieve the full operation name + version from a WSDL for a given operation.
      *
      * @var string
      */
     const XPATH_VERSION_FOR_OPERATION = "string(/wsdl:definitions/wsdl:message[contains(./@name, '%s_')]/@name)";
+
+    const XPATH_ALT_VERSION_FOR_OPERATION = "string(//wsdl:operation[contains(./@name, '%s')]/wsdl:input/@message)";
 
 
     /**
@@ -377,10 +385,31 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
             $this->loadWsdlXpath($wsdl, $wsdlIdentifier);
 
             $operations = $this->wsdlDomXpath[$wsdlIdentifier]->query(self::XPATH_ALL_OPERATIONS);
+            if ($operations->length === 0) {
+                //No operations found - are there any external WSDLs being imported?
+                $imports = $this->wsdlDomXpath[$wsdlIdentifier]->query(self::XPATH_IMPORTS);
+                $operations = [];
+
+                foreach ($imports as $import) {
+                    if (!empty($import->value)) {
+                        $tmpMsg = $this->getMessagesAndVersionsFromImportedWsdl(
+                            $import->value,
+                            $wsdl,
+                            $wsdlIdentifier
+                        );
+                        foreach ($tmpMsg as $msgName=>$msgInfo) {
+                            $msgAndVer[$msgName] = $msgInfo;
+                        }
+                    }
+                }
+            }
 
             foreach ($operations as $operation) {
                 if (!empty($operation->value)) {
-                    $fullVersion = $this->wsdlDomXpath[$wsdlIdentifier]->evaluate(sprintf(self::XPATH_VERSION_FOR_OPERATION, $operation->value));
+                    $fullVersion = $this->wsdlDomXpath[$wsdlIdentifier]->evaluate(
+                        sprintf(self::XPATH_VERSION_FOR_OPERATION, $operation->value)
+                    );
+
                     if (!empty($fullVersion)) {
                         $extractedVersion = $this->extractMessageVersion($fullVersion);
                         $msgAndVer[$operation->value] = [
@@ -411,14 +440,16 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      * extractMessageVersion
      *
      * extracts "4.1" from a string like "Security_SignOut_4_1"
+     * or "1.00" from a string like "tns:AMA_MediaGetMediaRQ_1.000"
      *
      * @param string $fullVersionString
      * @return string
      */
     protected function extractMessageVersion($fullVersionString)
     {
-        $secondUnderscore = strpos($fullVersionString, '_', strpos($fullVersionString, '_')+1);
-        $num = substr($fullVersionString, $secondUnderscore+1);
+        $marker = strpos($fullVersionString, '_', strpos($fullVersionString, '_')+1);
+
+        $num = substr($fullVersionString, $marker+1);
 
         return str_replace('_', '.', $num);
     }
@@ -433,22 +464,28 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      */
     protected function loadWsdlXpath($wsdlFilePath, $wsdlId)
     {
-        if (is_null($this->wsdlDomXpath[$wsdlId])) {
+        if (!isset($this->wsdlDomXpath[$wsdlId]) || is_null($this->wsdlDomXpath[$wsdlId])) {
             $wsdlContent = file_get_contents($wsdlFilePath);
 
-            $this->wsdlDomDoc[$wsdlId] = new \DOMDocument('1.0', 'UTF-8');
-            $this->wsdlDomDoc[$wsdlId]->loadXML($wsdlContent);
-            $this->wsdlDomXpath[$wsdlId] = new \DOMXPath($this->wsdlDomDoc[$wsdlId]);
-            $this->wsdlDomXpath[$wsdlId]->registerNamespace(
-                'wsdl',
-                'http://schemas.xmlsoap.org/wsdl/'
-            );
-            $this->wsdlDomXpath[$wsdlId]->registerNamespace(
-                'soap',
-                'http://schemas.xmlsoap.org/wsdl/soap/'
-            );
+            if ($wsdlContent !== false) {
+                $this->wsdlDomDoc[$wsdlId] = new \DOMDocument('1.0', 'UTF-8');
+                $this->wsdlDomDoc[$wsdlId]->loadXML($wsdlContent);
+                $this->wsdlDomXpath[$wsdlId] = new \DOMXPath($this->wsdlDomDoc[$wsdlId]);
+                $this->wsdlDomXpath[$wsdlId]->registerNamespace(
+                    'wsdl',
+                    'http://schemas.xmlsoap.org/wsdl/'
+                );
+                $this->wsdlDomXpath[$wsdlId]->registerNamespace(
+                    'soap',
+                    'http://schemas.xmlsoap.org/wsdl/soap/'
+                );
+            } else {
+                throw new Client\Exception('WSDL ' . $wsdlFilePath . ' could not be loaded');
+            }
         }
     }
+
+
 
     /**
      * Get the version number active in the WSDL for the given message
@@ -512,6 +549,68 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      */
     protected abstract function initSoapClient($wsdlId);
 
+    /**
+     * Get Messages & Versions from an imported WSDL file
+     *
+     * Imported wsdl's are a little different, they require a different query
+     * to extract the version nrs.
+     *
+     * @param string $import
+     * @param string $wsdlPath
+     * @param string $wsdlIdentifier
+     * @return array
+     * @throws Client\Exception when the WSDL import could not be loaded.
+     */
+    protected function getMessagesAndVersionsFromImportedWsdl($import, $wsdlPath, $wsdlIdentifier)
+    {
+        $msgAndVer = [];
+        $domDoc = null;
+        $domXpath = null;
+
+        $importPath = realpath(dirname($wsdlPath)) . DIRECTORY_SEPARATOR . $import;
+        $wsdlContent = file_get_contents($importPath);
+
+        if ($wsdlContent !== false) {
+            $domDoc = new \DOMDocument('1.0', 'UTF-8');
+            $ok = $domDoc->loadXML($wsdlContent);
+
+            if ($ok === true) {
+                $domXpath = new \DOMXPath($domDoc);
+                $domXpath->registerNamespace(
+                    'wsdl',
+                    'http://schemas.xmlsoap.org/wsdl/'
+                );
+                $domXpath->registerNamespace(
+                    'soap',
+                    'http://schemas.xmlsoap.org/wsdl/soap/'
+                );
+            }
+        } else {
+            throw new Client\Exception('WSDL ' . $importPath . ' import could not be loaded');
+        }
+
+        if ($domXpath instanceof \DOMXPath) {
+            $nodeList = $domXpath->query(self::XPATH_ALL_OPERATIONS);
+
+            foreach ($nodeList as $operation) {
+                if (!empty($operation->value)) {
+                    $fullVersion = $domXpath->evaluate(
+                        sprintf(self::XPATH_ALT_VERSION_FOR_OPERATION, $operation->value)
+                    );
+
+                    if (!empty($fullVersion)) {
+                        $extractedVersion = $this->extractMessageVersion($fullVersion);
+                        $msgAndVer[$operation->value] = [
+                            'version' => $extractedVersion,
+                            'wsdl' => $wsdlIdentifier
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $msgAndVer;
+    }
 
     /**
      * @param string $messageName
@@ -528,7 +627,6 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
             'Response:  ' . $this->getSoapClient($messageName)->__getLastResponse()
         );
     }
-
 
     /**
      * @param mixed $level
