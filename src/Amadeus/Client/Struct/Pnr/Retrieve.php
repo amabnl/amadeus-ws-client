@@ -34,7 +34,7 @@ class Retrieve extends BaseWsMessage
 {
     /**
      * Definition for retrieval type: by record locator
-     * 
+     *
      * see Amadeus Core Webservices documentation 
      * [Retrieval type, coded codesets (Ref: 109P 1A 00.1.1)]
      * @var int
@@ -52,14 +52,14 @@ class Retrieve extends BaseWsMessage
     
     /**
      * Construct PNR_Retrieve message
-     * 
+     *
      * @param int $retrievalType
      * @param string|null $recordLocator (OPTIONAL)
      */
     public function __construct($retrievalType = self::RETR_TYPE_BY_RECLOC, $recordLocator = null)
     {
         $this->retrievalFacts = new Retrieve\RetrievalFacts(
-            $retrievalType, 
+            $retrievalType,
             $recordLocator
         );
     }

@@ -117,7 +117,6 @@ class SoapHeader4 extends Base
             $this->isAuthenticated = (!empty($this->sessionData['sessionId']) &&
                 !empty($this->sessionData['sequenceNumber']) &&
                 !empty($this->sessionData['securityToken']));
-
         } else {
             $this->isAuthenticated = false;
         }

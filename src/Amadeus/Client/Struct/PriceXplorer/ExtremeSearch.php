@@ -184,7 +184,6 @@ class ExtremeSearch extends BaseWsMessage
     protected function loadCheapestQualifiers($cheapestNonStop, $cheapestOverall)
     {
         if ($cheapestNonStop || $cheapestOverall) {
-
             $tmpSelDet = new SelectionDetailsGroup();
 
             $tmpSelDet->selectionDetailsInfo = new SelectionDetailsInfo();

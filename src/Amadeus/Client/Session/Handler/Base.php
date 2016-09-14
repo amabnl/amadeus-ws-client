@@ -256,7 +256,6 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
             $this->logRequestAndResponse($messageName);
 
             $this->handlePostMessage($messageName, $this->getLastResponse($messageName), $messageOptions, $result);
-
         } catch (\SoapFault $ex) {
             $this->log(
                 LogLevel::ERROR,

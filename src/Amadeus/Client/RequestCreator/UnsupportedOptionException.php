@@ -36,5 +36,4 @@ use Amadeus\Client;
  */
 class UnsupportedOptionException extends Client\Exception
 {
-
 }

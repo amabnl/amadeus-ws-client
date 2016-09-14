@@ -59,7 +59,7 @@ class Passenger
     /*
      * self::PASST_*
      *
-     * Passenger Types: 
+     * Passenger Types:
      * 766     Infant without seat
      * 767     Infant with seat
      * A00     Companion

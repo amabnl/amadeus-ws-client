@@ -306,7 +306,6 @@ class AddMultiElements extends BaseWsMessage
             $travellerInfo = $this->makePassengerIfNeeded($travellerInfo);
             $travellerInfo->passengerData[0]->travellerInformation->passenger[0]->infantIndicator =
                 Passenger::INF_NOINFO;
-
         } elseif ($traveller->infant instanceof Traveller) {
             if (empty($traveller->infant->lastName)) {
                 $travellerInfo = $this->makePassengerIfNeeded($travellerInfo);

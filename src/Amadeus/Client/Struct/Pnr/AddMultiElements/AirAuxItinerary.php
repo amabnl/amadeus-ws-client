@@ -27,7 +27,7 @@ use Amadeus\Client\Struct\InvalidArgumentException;
 
 /**
  * AirAuxItinerary
- * 
+ *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */

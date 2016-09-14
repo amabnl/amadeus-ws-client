@@ -35,5 +35,4 @@ use Amadeus\Client;
  */
 class MessageVersionUnsupportedException extends Client\Exception
 {
-
 }
