@@ -1,6 +1,6 @@
 # amadeus-ws-client: PHP client for the Amadeus GDS SOAP Web Service interface
 
-[![Build Status](https://travis-ci.org/amabnl/amadeus-ws-client.svg?branch=develop)](https://travis-ci.org/amabnl/amadeus-ws-client) [![Coverage Status](https://coveralls.io/repos/github/amabnl/amadeus-ws-client/badge.svg?branch=develop)](https://coveralls.io/github/amabnl/amadeus-ws-client?branch=develop) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/amabnl/amadeus-ws-client/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/amabnl/amadeus-ws-client/?branch=develop)
+[![Build Status](https://travis-ci.org/amabnl/amadeus-ws-client.svg?branch=develop)](https://travis-ci.org/amabnl/amadeus-ws-client) [![Coverage Status](https://coveralls.io/repos/github/amabnl/amadeus-ws-client/badge.svg?branch=develop)](https://coveralls.io/github/amabnl/amadeus-ws-client?branch=develop) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/amabnl/amadeus-ws-client/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/amabnl/amadeus-ws-client/?branch=develop) [![Style Status - PSR-2](https://styleci.io/repos/49078536/shield?branch=develop)](https://styleci.io/repos/49078536)
 
 This client library provides access to the Amadeus GDS SOAP Web Service interface. 
 
