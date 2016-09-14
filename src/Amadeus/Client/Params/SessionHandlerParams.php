@@ -107,7 +107,8 @@ class SessionHandlerParams
      * @param array $params
      * @return void
      */
-    protected function loadFromArray(array $params) {
+    protected function loadFromArray(array $params)
+    {
         if (count($params) > 0) {
             if (isset($params['soapHeaderVersion'])) {
                 $this->soapHeaderVersion = $params['soapHeaderVersion'];

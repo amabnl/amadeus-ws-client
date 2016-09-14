@@ -42,7 +42,7 @@ class DepartureDays
      * @var SelectionInfo
      */
     public $selectionInfo;
-	
+
     /**
      * @param array $weekDays Week days in array format: e.g. array(1, 2) for Monday and Tuesday. MUST BE CONSECUTIVE DAYS
      * @param string $departureDayOption
@@ -50,7 +50,7 @@ class DepartureDays
     public function __construct($weekDays = [], $departureDayOption = null)
     {
         $this->daySelection = new DaySelection($weekDays);
-		
+
         if ($departureDayOption === null) {
             $this->selectionInfo = new SelectionInfo();
         } else {

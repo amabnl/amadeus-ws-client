@@ -30,20 +30,20 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class PassengerData
 {
-	/**
-	 * @var TravellerInformation
-	 */
-	public $travellerInformation;
-	/**
-	 * @var DateOfBirth
-	 */
-	public $dateOfBirth;
-	
-	/**
-	 * @param string $mainPassengerSurname
-	 */
-	public function __construct($mainPassengerSurname)
-	{
-		$this->travellerInformation = new TravellerInformation($mainPassengerSurname);
-	}
+    /**
+     * @var TravellerInformation
+     */
+    public $travellerInformation;
+    /**
+     * @var DateOfBirth
+     */
+    public $dateOfBirth;
+    
+    /**
+     * @param string $mainPassengerSurname
+     */
+    public function __construct($mainPassengerSurname)
+    {
+        $this->travellerInformation = new TravellerInformation($mainPassengerSurname);
+    }
 }

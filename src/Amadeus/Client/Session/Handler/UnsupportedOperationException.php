@@ -36,5 +36,4 @@ use Amadeus\Client\Exception;
  */
 class UnsupportedOperationException extends Exception
 {
-
 }

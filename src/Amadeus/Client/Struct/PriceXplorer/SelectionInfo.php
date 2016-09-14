@@ -34,7 +34,7 @@ class SelectionInfo
      * @var SelectionDetails[]
      */
     public $selectionDetails = [];
-	
+
     /**
      * @param string $departureDayOption SelectionDetails::OPT_*
      */

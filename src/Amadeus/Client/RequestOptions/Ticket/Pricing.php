@@ -24,7 +24,6 @@ namespace Amadeus\Client\RequestOptions\Ticket;
 
 use Amadeus\Client\LoadParamsFromArray;
 
-
 /**
  * Pricing
  *

@@ -657,7 +657,7 @@ class Base implements ResponseHandlerInterface
         $msgNode = $domXpath->query('//m:errorsDescription/m:errorWarningDescription/m:freeText')->item(0);
 
         if ($msgNode instanceof \DOMNode) {
-            if (trim($msgNode->nodeValue) === "OFFER CONFIRMED SUCCESSFULLY" || trim($msgNode->nodeValue) === "OFFER VERIFIED SUCCESSFULLY" ) {
+            if (trim($msgNode->nodeValue) === "OFFER CONFIRMED SUCCESSFULLY" || trim($msgNode->nodeValue) === "OFFER VERIFIED SUCCESSFULLY") {
                 $analyzeResponse->messages[] = new Result\NotOk(
                     0,
                     trim($msgNode->nodeValue)
@@ -915,7 +915,7 @@ class Base implements ResponseHandlerInterface
         return implode(
             ' - ',
             array_map(
-                function($item) {
+                function ($item) {
                     return trim($item->nodeValue);
                 },
                 iterator_to_array($errorTextNodeList)

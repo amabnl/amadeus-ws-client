@@ -34,7 +34,7 @@ class TravelDates
      * @var DateAndTimeDetails[]
      */
     public $dateAndTimeDetails = [];
-	
+
     /**
      * @param \DateTime|null $earliestDepartureDate
      * @param \DateTime|null $latestDepartureDate
@@ -47,7 +47,7 @@ class TravelDates
                 $earliestDepartureDate
             );
         }
-		
+
         if ($latestDepartureDate instanceof \DateTime) {
             $this->dateAndTimeDetails[] = new DateAndTimeDetails(
                 DateAndTimeDetails::QUAL_ENDDATE,

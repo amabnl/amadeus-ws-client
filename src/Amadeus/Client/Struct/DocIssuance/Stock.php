@@ -30,5 +30,4 @@ namespace Amadeus\Client\Struct\DocIssuance;
  */
 class Stock
 {
-
 }

@@ -45,5 +45,4 @@ class FrequentFlyer extends Element
      * @var string
      */
     public $number;
-
 }

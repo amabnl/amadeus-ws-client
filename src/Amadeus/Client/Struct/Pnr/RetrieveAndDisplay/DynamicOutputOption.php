@@ -42,5 +42,4 @@ class DynamicOutputOption
     {
         $this->statusDetails = new StatusDetails($action);
     }
-
 }

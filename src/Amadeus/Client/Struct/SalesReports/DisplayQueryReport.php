@@ -150,7 +150,6 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadAgencySource($agencySourceType, $iataNumber, $officeId)
     {
-
     }
 
     /**
@@ -158,7 +157,6 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadAgent($agentCode)
     {
-
     }
 
     /**
@@ -168,7 +166,6 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadTransaction($type, $code, $issueIndicator)
     {
-
     }
 
     /**
@@ -176,7 +173,6 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadValidatingCarrier($validatingCarrier)
     {
-
     }
 
     /**
@@ -185,7 +181,6 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadDateRange($startDate, $endDate)
     {
-
     }
 
     /**
@@ -194,7 +189,6 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadDate($type, $date)
     {
-
     }
 
     /**
@@ -203,7 +197,6 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadCurrency($type, $currency)
     {
-
     }
 
     /**
@@ -212,7 +205,6 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadFormOfPayment($type, $vendor)
     {
-
     }
 
     /**
@@ -220,7 +212,6 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadSalesIndicator($indicator)
     {
-
     }
 
     /**
@@ -229,6 +220,5 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadScrolling($count, $fromItem)
     {
-
     }
 }

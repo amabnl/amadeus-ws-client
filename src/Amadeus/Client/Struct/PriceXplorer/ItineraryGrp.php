@@ -34,12 +34,12 @@ class ItineraryGrp
      * @var ItineraryInfo
      */
     public $itineraryInfo;
-	
+
     /**
      * @var LocationInfo
      */
     public $locationInfo;
-	
+
     /**
      * Construct ItineraryGrp
      *

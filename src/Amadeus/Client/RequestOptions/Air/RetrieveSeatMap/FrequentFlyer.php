@@ -21,6 +21,7 @@
  */
 
 namespace Amadeus\Client\RequestOptions\Air\RetrieveSeatMap;
+
 use Amadeus\Client\LoadParamsFromArray;
 
 /**

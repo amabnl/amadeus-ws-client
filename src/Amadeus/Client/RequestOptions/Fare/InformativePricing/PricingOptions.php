@@ -34,5 +34,4 @@ use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
  */
 class PricingOptions extends FarePricePnrWithBookingClassOptions
 {
-
 }

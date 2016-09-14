@@ -45,5 +45,4 @@ class Itinerary extends LoadParamsFromArray
      * @var Segment[]
      */
     public $segments;
-
 }

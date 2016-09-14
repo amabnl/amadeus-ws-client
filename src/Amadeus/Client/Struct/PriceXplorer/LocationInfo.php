@@ -32,19 +32,19 @@ class LocationInfo
 {
     /**
      * Location Types:
-     * 25 	City
-     * 26 	Country
-     * A 	Airport
-     * R 	Region
+     * 25     City
+     * 26     Country
+     * A     Airport
+     * R     Region
      */
     const LOC_CITY = 25;
-	
+
     const LOC_COUNTRY = 26;
-	
+
     const LOC_AIRPORT = "A";
-	
+
     const LOC_REGION = "R";
-	
+
     /**
      * @var string
      */
@@ -53,7 +53,7 @@ class LocationInfo
      * @var LocationIdentificationType
      */
     public $locationDescription;
-	
+
     /**
      * @param string|int $locationType One of the constants self::LOC_*
      */

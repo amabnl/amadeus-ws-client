@@ -34,23 +34,23 @@ class QuantityDetailsType
      * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2338&serviceVersionId=2304&isQuery=true#
      * PriceXplorer_ExtremeSearch/itineraryGrp/quantityInfo/quantityDetails/unit
      * UNITS:
-     * DAY 	Day
-     * MTH 	Month
-     * WK 	Week
+     * DAY     Day
+     * MTH     Month
+     * WK     Week
      */
     const UNIT_DAY = "DAY";
-	
+
     const UNIT_WEEK = "WK";
-	
+
     const UNIT_MONTH = "MTH";
-	
+
     /**
      * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2338&serviceVersionId=2304&isQuery=true#
      * PriceXplorer_ExtremeSearch/itineraryGrp/quantityInfo/quantityDetails/qualifier
      * @var string
      */
     const QUAL_PLUS = "P";
-	
+
     /**
      * @var string
      */
@@ -63,7 +63,7 @@ class QuantityDetailsType
      * @var string
      */
     public $unit;
-	
+
     /**
      * @param int $value
      * @param string $unit

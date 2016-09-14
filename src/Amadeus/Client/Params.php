@@ -94,7 +94,8 @@ class Params
      * @param array $params
      * @return void
      */
-    protected function loadFromArray(array $params) {
+    protected function loadFromArray(array $params)
+    {
         $this->loadRequestCreator($params);
         $this->loadSessionHandler($params);
         $this->loadResponseHandler($params);

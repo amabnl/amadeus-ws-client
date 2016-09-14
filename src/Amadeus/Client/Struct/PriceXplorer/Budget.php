@@ -34,7 +34,7 @@ class Budget
      * @var MonetaryDetails[]
      */
     public $monetaryDetails = [];
-	
+
     /**
      * When providing MAX or MIN you MUST specify currency
      *
@@ -51,7 +51,7 @@ class Budget
                 $currency
             );
         }
-		
+
         if ($minBudget !== null && $currency !== null) {
             $this->monetaryDetails[] = new MonetaryDetails(
                 $minBudget,

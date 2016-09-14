@@ -223,7 +223,7 @@ class SoapHeader4 extends Base
             $password = base64_decode($params->authParams->passwordData);
             $creation = new \DateTime('now', new \DateTimeZone('UTC'));
             $t = microtime(true);
-            $micro = sprintf("%03d",($t - floor($t)) * 1000);
+            $micro = sprintf("%03d", ($t - floor($t)) * 1000);
             $creationString = $this->createDateTimeStringForAuth($creation, $micro);
             $messageNonce = $this->generateUniqueNonce($params->authParams->nonceBase, $creationString);
             $encodedNonce = base64_encode($messageNonce);
@@ -275,7 +275,7 @@ class SoapHeader4 extends Base
                     )
                 )
             );
-        } else if ($stateful === true) {
+        } elseif ($stateful === true) {
             //We are authenticated and stateful: provide session header to continue or terminate session
             $statusCode =
                 (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) ?
@@ -354,9 +354,9 @@ class SoapHeader4 extends Base
 
             $uuid = substr($charId, 0, 8) . $hyphen
                 .substr($charId, 8, 4) . $hyphen
-                .substr($charId,12, 4) . $hyphen
-                .substr($charId,16, 4) . $hyphen
-                .substr($charId,20,12);
+                .substr($charId, 12, 4) . $hyphen
+                .substr($charId, 16, 4) . $hyphen
+                .substr($charId, 20, 12);
 
             return $uuid;
         }

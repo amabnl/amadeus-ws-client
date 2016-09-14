@@ -34,7 +34,7 @@ class NbOfUnitsInfo
      * @var NumberOfUnitDetailsType[]
      */
     public $quantityDetails = [];
-	
+
     /**
      * @param int $numberOfDays
      */

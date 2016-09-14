@@ -30,5 +30,4 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
  */
 class DateDetails
 {
-
 }

@@ -32,5 +32,4 @@ use Amadeus\Client\RequestOptions\Pnr\Segment;
  */
 class Hotel extends Segment
 {
-
 }

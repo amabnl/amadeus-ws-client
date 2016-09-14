@@ -72,7 +72,6 @@ class InformativePricingWithoutPNR13 extends BaseWsMessage
         $this->loadSegments($options->segments);
 
         $this->loadPricingOptions($options->pricingOptions);
-
     }
 
     /**

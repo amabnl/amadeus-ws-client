@@ -31,15 +31,15 @@ namespace Amadeus\Client\Struct\PriceXplorer;
 class LocationIdentificationType
 {
     const QUAL_DESTINATION = "D";
-	
+
     const QUAL_ORIGIN = "O";
-	
+
     /**
      * Identification of the name of place/location, other than 3164 City name.
      *
      * IATA Code or:
-     * ARNK 	ARNK (for RTG use only)
-     * ZZZ 	ZZZ (used to designate all cities)
+     * ARNK     ARNK (for RTG use only)
+     * ZZZ     ZZZ (used to designate all cities)
      *
      * @var string
      */

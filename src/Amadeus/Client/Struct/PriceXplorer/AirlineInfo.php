@@ -34,7 +34,7 @@ class AirlineInfo
      * @var mixed
      */
     public $attributeInfo;
-	
+
     /**
      * @var mixed
      */

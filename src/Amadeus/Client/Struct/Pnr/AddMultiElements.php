@@ -100,7 +100,7 @@ class AddMultiElements extends BaseWsMessage
         if (!is_null($params)) {
             if ($params instanceof PnrCreatePnrOptions) {
                 $this->loadCreatePnr($params);
-            } else if ($params instanceof PnrAddMultiElementsOptions) {
+            } elseif ($params instanceof PnrAddMultiElementsOptions) {
                 $this->loadBare($params);
             }
         }

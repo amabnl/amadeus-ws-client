@@ -60,6 +60,6 @@ class Address
      */
     public function __construct($addressLineOne)
     {
-       $this->optionTextA1 = $addressLineOne;
+        $this->optionTextA1 = $addressLineOne;
     }
 }

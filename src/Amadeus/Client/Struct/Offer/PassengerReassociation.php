@@ -42,7 +42,6 @@ class PassengerReassociation
      */
     public $paxReference;
 
-
     /**
      * @param string|null $pricingRef
      * @param PassengerDef[]|null $paxRefs

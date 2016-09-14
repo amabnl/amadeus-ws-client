@@ -34,5 +34,4 @@ use Amadeus\Client\Exception;
  */
 class InvalidSessionException extends Exception
 {
-
 }

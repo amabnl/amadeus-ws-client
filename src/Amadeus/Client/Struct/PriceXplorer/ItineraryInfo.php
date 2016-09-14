@@ -34,12 +34,12 @@ class ItineraryInfo
      * @var string
      */
     public $origin;
-	
+
     /**
      * @var string
      */
     public $destination;
-	
+
     /**
      * @param string $origin
      * @param string $destination

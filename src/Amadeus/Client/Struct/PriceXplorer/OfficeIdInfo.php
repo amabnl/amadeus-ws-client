@@ -36,7 +36,7 @@ class OfficeIdInfo
      * @var OfficeId
      */
     public $officeId;
-	
+
     /**
      *
      * @param string $officeId

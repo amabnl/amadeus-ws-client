@@ -106,7 +106,8 @@ class AuthParams
      * @param array $params
      * @return void
      */
-    protected function loadFromArray(array $params) {
+    protected function loadFromArray(array $params)
+    {
         if (count($params) > 0) {
             $this->officeId = $params['officeId'];
             $this->originatorTypeCode = (isset($params['originatorTypeCode'])) ? $params['originatorTypeCode'] : "U";

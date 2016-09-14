@@ -34,7 +34,7 @@ class FlexibilityInfo
      * @var QuantityDetailsType[]
      */
     public $quantityDetails = [];
-	
+
     /**
      * @param int $flexibilityDays Number of flexible days
      */

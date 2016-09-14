@@ -24,7 +24,7 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
  * OriginDestination
- * 
+ *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
@@ -33,6 +33,7 @@ class OriginDestination
     const LOCATION_ARNK = "ARNK";
 
     const LOCATION_ALL = "ZZZ";
+
     /**
      * @var string
      */

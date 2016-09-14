@@ -40,5 +40,4 @@ class FlightTypeDetails
      * @var string
      */
     public $flightIndicator;
-
 }

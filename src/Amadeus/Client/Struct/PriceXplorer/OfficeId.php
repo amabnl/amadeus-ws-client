@@ -43,7 +43,7 @@ class OfficeId
      * @var mixed
      */
     public $originator;
-	
+
     /**
      * @param string $officeId
      */

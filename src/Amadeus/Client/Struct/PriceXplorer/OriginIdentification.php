@@ -34,22 +34,22 @@ class OriginIdentification
      * @var string
      */
     public $originatorId;
-	
+
     /**
      * @var string
      */
     public $inHouseIdentification1;
-	
+
     /**
      * @var string
      */
     public $inHouseIdentification2;
-	
+
     /**
      * @var string
      */
     public $inHouseIdentification3;
-	
+
     /**
      * @param string $officeId
      */

@@ -30,5 +30,4 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
  */
 class FrequentFlyerInformation
 {
-
 }

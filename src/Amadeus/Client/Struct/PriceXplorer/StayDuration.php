@@ -38,7 +38,7 @@ class StayDuration
      * @var FlexibilityInfo
      */
     public $flexibilityInfo;
-	
+
     /**
      * @param int $numberOfDays
      */

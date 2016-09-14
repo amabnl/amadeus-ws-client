@@ -69,5 +69,4 @@ class UsernameToken
 
         $this->Created = new \SoapVar($created, XSD_STRING, null, null, 'Created', $ns);
     }
-
 }

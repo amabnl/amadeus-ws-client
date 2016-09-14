@@ -32,5 +32,4 @@ namespace Amadeus\Client\RequestOptions;
  */
 interface RequestOptionsInterface
 {
-
 }

@@ -39,7 +39,7 @@ class DaySelection
      * @var string
      */
     public $dayOfWeek;
-	
+
     /**
      * @param array $weekDays Week days in array format: e.g. array(1, 2) for Monday and Tuesday. MUST BE CONSECUTIVE DAYS
      */

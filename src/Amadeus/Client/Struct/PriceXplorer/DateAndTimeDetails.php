@@ -34,27 +34,27 @@ class DateAndTimeDetails
     const QUAL_ENDDATE = "E";
     const QUAL_RETURNDATE = "R";
     const QUAL_STARTDATE = "S";
-	
+    
     /**
      * @var string self::QUAL_*
      */
     public $qualifier;
-	
+    
     /**
      * @var string Format: ddmmyy
      */
     public $date;
-	
+    
     /**
      * @var string
      */
     public $time;
-	
+    
     /**
      * @var string
      */
     public $otherQualifier;
-	
+    
     /**
      * @var string
      */

@@ -46,5 +46,4 @@ class AirSellFromRecommendationOptions extends Base
      * @var Air\SellFromRecommendation\Itinerary[]
      */
     public $itinerary = [];
-
 }

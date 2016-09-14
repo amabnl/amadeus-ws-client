@@ -31,9 +31,9 @@ namespace Amadeus\Client\Struct\PriceXplorer;
 class MonetaryDetails
 {
     const QUAL_MAX_BUDGET = "MAX";
-	
+
     const QUAL_MIN_BUDGET = "MIN";
-	
+
     /**
      * @var string self::QUAL_*
      */
@@ -46,7 +46,7 @@ class MonetaryDetails
      * @var string
      */
     public $currency;
-	
+
     /**
      * @param double|string $amount
      * @param string $qualifier MonetaryDetails::QUAL_*

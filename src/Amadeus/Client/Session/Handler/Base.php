@@ -118,9 +118,9 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      * @var array
      */
     protected $soapClientOptions = [
-        'trace' 		=> 1,
-        'exceptions' 	=> 1,
-        'soap_version' 	=> SOAP_1_1
+        'trace' => 1,
+        'exceptions' => 1,
+        'soap_version' => SOAP_1_1
     ];
 
     /**
@@ -289,7 +289,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      * @param string $messageName
      * @param array $messageOptions
      */
-    protected abstract function prepareForNextMessage($messageName, $messageOptions);
+    abstract protected function prepareForNextMessage($messageName, $messageOptions);
 
     /**
      * Handles post message actions
@@ -301,7 +301,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      * @param array $messageOptions
      * @param mixed $result
      */
-    protected abstract function handlePostMessage($messageName, $lastResponse, $messageOptions, $result);
+    abstract protected function handlePostMessage($messageName, $lastResponse, $messageOptions, $result);
 
     /**
      * Get the last raw XML message that was sent out
@@ -547,7 +547,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      * @param string $wsdlId
      * @return \SoapClient
      */
-    protected abstract function initSoapClient($wsdlId);
+    abstract protected function initSoapClient($wsdlId);
 
     /**
      * Get Messages & Versions from an imported WSDL file

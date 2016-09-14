@@ -44,5 +44,4 @@ class ValidatingCarrier
     {
         $this->carrierInformation = new CarrierInformation($carrierCode);
     }
-
 }

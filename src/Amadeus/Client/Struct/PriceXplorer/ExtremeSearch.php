@@ -237,7 +237,7 @@ class ExtremeSearch extends BaseWsMessage
     {
         $result = [];
 
-        switch($groupTypeString) {
+        switch ($groupTypeString) {
             case PriceXplorerExtremeSearchOptions::AGGR_DEST:
                 $result[] = AttributeDetails::TYPE_DESTINATION;
                 break;

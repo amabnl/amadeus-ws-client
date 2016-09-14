@@ -21,6 +21,7 @@
  */
 
 namespace Amadeus\Client\Struct\Air\RetrieveSeatMap;
+
 use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FrequentFlyer;
 
 /**

@@ -30,5 +30,4 @@ namespace Amadeus\Client\RequestOptions;
  */
 class SecuritySignOutOptions extends Base
 {
-
 }

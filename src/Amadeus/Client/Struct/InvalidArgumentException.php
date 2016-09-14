@@ -37,5 +37,4 @@ namespace Amadeus\Client\Struct;
  */
 class InvalidArgumentException extends \InvalidArgumentException
 {
-
 }

@@ -42,6 +42,6 @@ class AmountInfo
      */
     public function __construct($amount)
     {
-       $this->monetaryDetails[] = new MonetaryDetails($amount);
+        $this->monetaryDetails[] = new MonetaryDetails($amount);
     }
 }

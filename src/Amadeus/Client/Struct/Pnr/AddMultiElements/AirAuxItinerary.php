@@ -62,7 +62,7 @@ class AirAuxItinerary
      */
     public function __construct($segmentType, $segmentContent)
     {
-        switch($segmentType) {
+        switch ($segmentType) {
             case 'Miscellaneous':
                 $this->loadMiscellaneous($segmentContent);
                 break;
