@@ -1220,7 +1220,7 @@ class ClientTest extends BaseTestCase
                         'to' => 'LON',
                         'segments' => [
                             new Client\RequestOptions\Air\SellFromRecommendation\Segment([
-                                'departureDate' => \DateTime::createFromFormat('Ymd','20170120', new \DateTimeZone('UTC')),
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20170120000000', new \DateTimeZone('UTC')),
                                 'from' => 'BRU',
                                 'to' => 'LGW',
                                 'companyCode' => 'SN',
@@ -1274,7 +1274,7 @@ class ClientTest extends BaseTestCase
                         'to' => 'LON',
                         'segments' => [
                             new Client\RequestOptions\Air\SellFromRecommendation\Segment([
-                                'departureDate' => \DateTime::createFromFormat('Ymd','20170120', new \DateTimeZone('UTC')),
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20170120000000', new \DateTimeZone('UTC')),
                                 'from' => 'BRU',
                                 'to' => 'LGW',
                                 'companyCode' => 'SN',
