@@ -24,7 +24,6 @@ namespace Test\Amadeus\Client;
 
 use Amadeus\Client\Params;
 use Psr\Log\NullLogger;
-use Psr\Log\Test\LoggerInterfaceTest;
 use Test\Amadeus\BaseTestCase;
 
 /**
@@ -64,8 +63,9 @@ class ParamsTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Params\SessionHandlerParams', $params->sessionHandlerParams);
         $this->assertTrue($params->sessionHandlerParams->stateful);
         $this->assertInstanceOf('Psr\Log\LoggerInterface', $params->sessionHandlerParams->logger);
-        $this->assertInternalType('string', $params->sessionHandlerParams->wsdl);
-        $this->assertEquals('/var/fake/file/path', $params->sessionHandlerParams->wsdl);
+        $this->assertInternalType('array', $params->sessionHandlerParams->wsdl);
+        $this->assertCount(1, $params->sessionHandlerParams->wsdl);
+        $this->assertEquals('/var/fake/file/path', $params->sessionHandlerParams->wsdl[0]);
 
         $this->assertInstanceOf('Amadeus\Client\Params\AuthParams', $params->sessionHandlerParams->authParams);
         $this->assertEquals('BRUXXXXXX', $params->sessionHandlerParams->authParams->officeId);

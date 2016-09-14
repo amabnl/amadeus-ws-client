@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://wsdl.amadeus.com/MediaServer_v1" xmlns:ama_2010_06_MediaServer_v1="http://xml.amadeus.com/2010/06/MediaServer_v1" targetNamespace="http://wsdl.amadeus.com/MediaServer_v1" name="MediaServer_1.0">
+  <wsdl:documentation>Version 1.0</wsdl:documentation>
+  <wsdl:types>
+    <xs:schema>
+      <xs:import namespace="http://xml.amadeus.com/2010/06/MediaServer_v1" schemaLocation="AMA_MediaGetMediaRQ.xsd" />
+      <xs:import namespace="http://xml.amadeus.com/2010/06/MediaServer_v1" schemaLocation="AMA_MediaGetMediaRS.xsd" />
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="AMA_MediaGetMediaRQ_1.000">
+    <wsdl:part name="body" element="ama_2010_06_MediaServer_v1:AMA_MediaGetMediaRQ" />
+  </wsdl:message>
+  <wsdl:message name="AMA_MediaGetMediaRS_1.000">
+    <wsdl:part name="body" element="ama_2010_06_MediaServer_v1:AMA_MediaGetMediaRS" />
+  </wsdl:message>
+  <wsdl:portType name="MediaServer_PT">
+    <wsdl:operation name="Media_GetMedia">
+      <wsdl:documentation>Version 1.0</wsdl:documentation>
+      <wsdl:input message="tns:AMA_MediaGetMediaRQ_1.000" />
+      <wsdl:output message="tns:AMA_MediaGetMediaRS_1.000" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>
+

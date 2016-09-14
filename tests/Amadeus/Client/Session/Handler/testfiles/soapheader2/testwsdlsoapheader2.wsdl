@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:aws="http://xml.amadeus.com" xmlns:security_signout_4_1="http://xml.amadeus.com/VLSSOQ_04_1_1A" xmlns:security_signoutreply_4_1="http://xml.amadeus.com/VLSSOR_04_1_1A" xmlns:security_authenticate_6_1="http://xml.amadeus.com/VLSSLQ_06_1_1A" xmlns:security_authenticatereply_6_1="http://xml.amadeus.com/VLSSLR_06_1_1A" xmlns:pricexplorer_extremesearch_10_3="http://xml.amadeus.com/FAESXQ_10_3_1A" xmlns:pricexplorer_extremesearchreply_10_3="http://xml.amadeus.com/FAESXR_10_3_1A" targetNamespace="http://xml.amadeus.com">
     <wsdl:types>
         <xsd:schema targetNamespace="http://xml.amadeus.com">
@@ -10,6 +9,8 @@
             <xsd:import namespace="http://xml.amadeus.com/VLSSLR_06_1_1A" schemaLocation="Security_AuthenticateReply_06_1_1A.xsd"/>
             <xsd:import namespace="http://xml.amadeus.com/FAESXQ_10_3_1A" schemaLocation="PriceXplorer_ExtremeSearch_10_3_1A.xsd"/>
             <xsd:import namespace="http://xml.amadeus.com/FAESXR_10_3_1A" schemaLocation="PriceXplorer_ExtremeSearchReply_10_3_1A.xsd"/>
+            <xsd:import schemaLocation="PNR_Reply_11_3_1A.xsd" namespace="http://xml.amadeus.com/PNRACC_11_3_1A"/>
+            <xsd:import schemaLocation="PNR_Retrieve_11_3_1A.xsd" namespace="http://xml.amadeus.com/PNRRET_11_3_1A"/>
         </xsd:schema>
     </wsdl:types>
     <wsdl:message name="Session" xmlns:ns0="http://xml.amadeus.com/ws/2009/01/WBS_Session-2.0.xsd">
@@ -33,6 +34,12 @@
     <wsdl:message name="PriceXplorer_ExtremeSearchReply_10_3">
         <wsdl:part name="PriceXplorer_ExtremeSearchReply_10_3" element="pricexplorer_extremesearchreply_10_3:PriceXplorer_ExtremeSearchReply"/>
     </wsdl:message>
+    <wsdl:message name="PNR_Reply_11_3">
+        <wsdl:part name="PNR_Reply_11_3" element="pnr_reply_11_3:PNR_Reply"/>
+    </wsdl:message>
+    <wsdl:message name="PNR_Retrieve_11_3">
+        <wsdl:part name="PNR_Retrieve_11_3" element="pnr_retrieve_11_3:PNR_Retrieve"/>
+    </wsdl:message>
     <wsdl:portType name="AmadeusWebServicesPT">
         <wsdl:operation name="Security_SignOut">
             <wsdl:input message="aws:Security_SignOut_4_1"/>
@@ -45,6 +52,10 @@
         <wsdl:operation name="PriceXplorer_ExtremeSearch">
             <wsdl:input message="aws:PriceXplorer_ExtremeSearch_10_3"/>
             <wsdl:output message="aws:PriceXplorer_ExtremeSearchReply_10_3"/>
+        </wsdl:operation>
+        <wsdl:operation name="PNR_Retrieve">
+            <wsdl:input message="aws:PNR_Retrieve_11_3"/>
+            <wsdl:output message="aws:PNR_Reply_11_3"/>
         </wsdl:operation>
     </wsdl:portType>
     <wsdl:binding name="AmadeusWebServicesBinding" type="aws:AmadeusWebServicesPT">

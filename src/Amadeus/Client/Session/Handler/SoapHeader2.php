@@ -23,8 +23,6 @@
 namespace Amadeus\Client\Session\Handler;
 
 use Amadeus\Client;
-use Amadeus\Client\Params\SessionHandlerParams;
-use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
  * SoapHeader2: Session Handler for web service applications using Amadeus WS Soap Header v2.
@@ -70,7 +68,7 @@ class SoapHeader2 extends Base
             throw new InvalidSessionException('No active session');
         }
 
-        $this->getSoapClient()->__setSoapHeaders(null);
+        $this->getSoapClient($messageName)->__setSoapHeaders(null);
 
         if ($this->isAuthenticated === true && is_int($this->sessionData['sequenceNumber'])) {
             $this->sessionData['sequenceNumber']++;
@@ -81,7 +79,7 @@ class SoapHeader2 extends Base
                 $this->sessionData['securityToken']
             );
 
-            $this->getSoapClient()->__setSoapHeaders(
+            $this->getSoapClient($messageName)->__setSoapHeaders(
                 new \SoapHeader(self::CORE_WS_V2_SESSION_NS, self::NODENAME_SESSION, $session)
             );
         }
@@ -166,12 +164,15 @@ class SoapHeader2 extends Base
     }
 
     /**
+     * @param string $wsdlId
      * @return \SoapClient
      */
-    protected function initSoapClient()
+    protected function initSoapClient($wsdlId)
     {
+        $wsdlPath = $this->wsdlIds[$wsdlId];
+
         $client = new Client\SoapClient(
-            $this->params->wsdl,
+            $wsdlPath,
             $this->makeSoapClientOptions(),
             $this->params->logger
         );
