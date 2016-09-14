@@ -24,7 +24,17 @@ namespace Amadeus\Client\Struct\SalesReports;
 
 use Amadeus\Client\RequestOptions\SalesReportsDisplayQueryReportOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\ActionDetails;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\AgencyDetails;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\AgentUserDetails;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\CurrencyInfo;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\DateDetails;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\FormOfPaymentDetails;
 use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\RequestOption;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\SalesIndicator;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\SalesPeriodDetails;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\TransactionData;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\ValidatingCarrierDetails;
 
 /**
  * DisplayQueryReport
@@ -150,6 +160,9 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadAgencySource($agencySourceType, $iataNumber, $officeId)
     {
+        if (!empty($agencySourceType) || !empty($iataNumber) || !empty($officeId)) {
+            $this->agencyDetails = new AgencyDetails($agencySourceType, $iataNumber, $officeId);
+        }
     }
 
     /**
@@ -157,15 +170,21 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadAgent($agentCode)
     {
+        if (!empty($agentCode)) {
+            $this->agentUserDetails = new AgentUserDetails($agentCode);
+        }
     }
 
     /**
-     * @param string|null $type
      * @param string|null $code
+     * @param string|null $type
      * @param string|null $issueIndicator
      */
-    protected function loadTransaction($type, $code, $issueIndicator)
+    protected function loadTransaction($code, $type, $issueIndicator)
     {
+        if (!empty($type) || !empty($code) || !empty($issueIndicator)) {
+            $this->transactionData[] = new TransactionData($type, $code, $issueIndicator);
+        }
     }
 
     /**
@@ -173,6 +192,9 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadValidatingCarrier($validatingCarrier)
     {
+        if (!empty($validatingCarrier)) {
+            $this->validatingCarrierDetails = new ValidatingCarrierDetails($validatingCarrier);
+        }
     }
 
     /**
@@ -181,6 +203,9 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadDateRange($startDate, $endDate)
     {
+        if (!empty($startDate) || !empty($endDate)) {
+            $this->salesPeriodDetails = new SalesPeriodDetails($startDate, $endDate);
+        }
     }
 
     /**
@@ -189,6 +214,9 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadDate($type, $date)
     {
+        if (!empty($type) || !empty($date)) {
+            $this->dateDetails = new DateDetails($type, $date);
+        }
     }
 
     /**
@@ -197,6 +225,9 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadCurrency($type, $currency)
     {
+        if (!empty($type) || !empty($currency)) {
+            $this->currencyInfo = new CurrencyInfo($type, $currency);
+        }
     }
 
     /**
@@ -205,6 +236,9 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadFormOfPayment($type, $vendor)
     {
+        if (!empty($type) || !empty($vendor)) {
+            $this->formOfPaymentDetails = new FormOfPaymentDetails($type, $vendor);
+        }
     }
 
     /**
@@ -212,6 +246,9 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadSalesIndicator($indicator)
     {
+        if (!empty($indicator)) {
+            $this->salesIndicator = new SalesIndicator($indicator);
+        }
     }
 
     /**
@@ -220,5 +257,8 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadScrolling($count, $fromItem)
     {
+        if (!empty($count) || !empty($fromItem)) {
+            $this->actionDetails = new ActionDetails($count, $fromItem);
+        }
     }
 }

@@ -912,3 +912,25 @@ Request a basic Extreme Search result:
 
     $extremeSearchResult = $client->priceXplorerExtremeSearch($opt);
 
+*******************************
+SalesReports_DisplayQueryReport
+*******************************
+
+Request a sales report from a certain date to another date, issued in all offices sharing the same IATA number;
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\SalesReportsDisplayQueryReportOptions;
+
+    $opt = new SalesReportsDisplayQueryReportOptions([
+        'requestOptions' => [
+            SalesReportsDisplayQueryReportOptions::SELECT_ALL_OFFICES_SHARING_IATA_NR
+        ],
+        'agencySourceType' => SalesReportsDisplayQueryReportOptions::AGENCY_SRC_REPORTING_OFFICE,
+        'agencyIataNumber' => '23491193',
+        'startDate' => \DateTime::createFromFormat('Ymd', '20150101', new \DateTimeZone('UTC')),
+        'endDate' => \DateTime::createFromFormat('Ymd', '20160331', new \DateTimeZone('UTC'))
+    ]);
+
+    $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
+

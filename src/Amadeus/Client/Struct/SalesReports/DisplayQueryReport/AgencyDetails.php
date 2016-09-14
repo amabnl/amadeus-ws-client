@@ -38,4 +38,21 @@ class AgencyDetails
      * @var OriginatorDetails
      */
     public $originatorDetails;
+
+    /**
+     * AgencyDetails constructor.
+     *
+     * @param string $sourceType
+     * @param string $iataNumber
+     * @param string $officeId
+     */
+    public function __construct($sourceType, $iataNumber, $officeId)
+    {
+        if (!empty($sourceType)) {
+            $this->sourceType = new SourceType($sourceType);
+        }
+        if (!empty($iataNumber) || !empty($officeId)) {
+            $this->originatorDetails = new OriginatorDetails($iataNumber, $officeId);
+        }
+    }
 }

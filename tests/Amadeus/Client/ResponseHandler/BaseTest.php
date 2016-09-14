@@ -816,6 +816,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("Invalid departure dates range", $result->messages[0]->text);
     }
 
+    public function testCanHandleSalesReportsDisplayQueryReport()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummySalesReportsDisplayQueryReportErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'SalesReports_DisplayQueryReport');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('6466', $result->messages[0]->code);
+        $this->assertEquals("NO DATA FOUND", $result->messages[0]->text);
+    }
+
     public function testCanHandleInvalidXmlDocument()
     {
         $this->setExpectedException('Amadeus\Client\Exception');

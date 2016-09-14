@@ -30,4 +30,18 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
  */
 class ValidatingCarrierDetails
 {
+    /**
+     * @var CompanyIdentification
+     */
+    public $companyIdentification;
+
+    /**
+     * ValidatingCarrierDetails constructor.
+     *
+     * @param string $validatingCarrier
+     */
+    public function __construct($validatingCarrier)
+    {
+        $this->companyIdentification = new CompanyIdentification($validatingCarrier);
+    }
 }

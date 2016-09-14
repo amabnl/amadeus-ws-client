@@ -30,4 +30,25 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
  */
 class AgentUserDetails
 {
+    /**
+     * @var OriginIdentification
+     */
+    public $originIdentification;
+
+    /**
+     * A code given to an agent by the originating reservation system.
+     *
+     * @var string
+     */
+    public $originator;
+
+    /**
+     * AgentUserDetails constructor.
+     *
+     * @param string $agentId
+     */
+    public function __construct($agentId)
+    {
+        $this->originIdentification = new OriginIdentification($agentId);
+    }
 }

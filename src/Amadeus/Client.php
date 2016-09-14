@@ -39,7 +39,6 @@ use Amadeus\Client\ResponseHandler\Base as ResponseHandlerBase;
  * TODO:
  * - support older versions of SoapHeader (1)
  * - implement calls for full online booking flow:
- *      SalesReports_DisplayQueryReport
  *      Air_MultiAvailability
  *
  * - implement more PNR_AddMultiElements:
@@ -659,6 +658,20 @@ class Client
     public function priceXplorerExtremeSearch(RequestOptions\PriceXplorerExtremeSearchOptions $options, $messageOptions = [])
     {
         $msgName = 'PriceXplorer_ExtremeSearch';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * SalesReports_DisplayQueryReport
+     *
+     * @param RequestOptions\SalesReportsDisplayQueryReportOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function salesReportsDisplayQueryReport(RequestOptions\SalesReportsDisplayQueryReportOptions $options, $messageOptions = [])
+    {
+        $msgName = 'SalesReports_DisplayQueryReport';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }

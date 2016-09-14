@@ -30,4 +30,21 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
  */
 class CurrencyInfo
 {
+    /**
+     * @var CurrencyDetails
+     */
+    public $currencyDetails;
+
+    /**
+     * CurrencyInfo constructor.
+     *
+     * @param int $type
+     * @param string $currency
+     */
+    public function __construct($type, $currency)
+    {
+        if (!empty($type) || !empty($currency)) {
+            $this->currencyDetails = new CurrencyDetails($type, $currency);
+        }
+    }
 }

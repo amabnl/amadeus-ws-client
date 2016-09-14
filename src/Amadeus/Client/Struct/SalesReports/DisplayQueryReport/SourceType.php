@@ -31,12 +31,38 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
 class SourceType
 {
     /**
-     * @var int
+     * Reporting Office
+     */
+    const AGENCY_SRC_REPORTING_OFFICE = "REP";
+    /**
+     * STP office
+     */
+    const AGENCY_SRC_STP_OFFICE = "STP";
+    /**
+     * TDO office
+     */
+    const AGENCY_SRC_TDO_OFFICE = "TDO";
+
+
+    /**
+     * self::AGENCY_SRC_*
+     *
+     * @var string
      */
     public $sourceQualifier1;
 
     /**
-     * @var int
+     * @var string
      */
     public $sourceQualifier2;
+
+    /**
+     * SourceType constructor.
+     *
+     * @param string $sourceType self::AGENCY_SRC_*
+     */
+    public function __construct($sourceType)
+    {
+        $this->sourceQualifier1 = $sourceType;
+    }
 }

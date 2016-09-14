@@ -40,9 +40,7 @@ use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
-use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsBase;
-use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
 use Amadeus\Client\RequestOptions\PnrCancelOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
@@ -54,6 +52,7 @@ use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
 use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
 use Amadeus\Client\RequestOptions\QueueRemoveItemOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
+use Amadeus\Client\RequestOptions\SalesReportsDisplayQueryReportOptions;
 use Amadeus\Client\RequestOptions\SecurityAuthenticateOptions;
 use Amadeus\Client\RequestOptions\TicketCreateTstFromPricingOptions;
 use Amadeus\Client\Struct;
@@ -451,6 +450,17 @@ class Base implements RequestCreatorInterface
     protected function createPriceXplorerExtremeSearch(PriceXplorerExtremeSearchOptions $params)
     {
         return new Struct\PriceXplorer\ExtremeSearch($params);
+    }
+
+    /**
+     * SalesReports_DisplayQueryReport
+     *
+     * @param SalesReportsDisplayQueryReportOptions $params
+     * @return Struct\SalesReports\DisplayQueryReport
+     */
+    protected function createSalesReportsDisplayQueryReport(SalesReportsDisplayQueryReportOptions $params)
+    {
+        return new Struct\SalesReports\DisplayQueryReport($params);
     }
 
     /**

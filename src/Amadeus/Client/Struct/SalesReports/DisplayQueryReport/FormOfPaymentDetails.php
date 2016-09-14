@@ -30,4 +30,19 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
  */
 class FormOfPaymentDetails
 {
+    /**
+     * @var FormOfPayment
+     */
+    public $formOfPayment;
+
+    /**
+     * FormOfPaymentDetails constructor.
+     *
+     * @param string $type FormOfPayment::FOP_*
+     * @param string $vendor
+     */
+    public function __construct($type, $vendor)
+    {
+        $this->formOfPayment = new FormOfPayment($type, $vendor);
+    }
 }

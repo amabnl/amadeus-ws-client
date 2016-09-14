@@ -30,4 +30,30 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
  */
 class SalesPeriodDetails
 {
+    /**
+     * @var DateTime
+     */
+    public $beginDateTime;
+
+    /**
+     * @var DateTime
+     */
+    public $endDateTime;
+
+    /**
+     * SalesPeriodDetails constructor.
+     *
+     * @param \DateTime|null $begin
+     * @param \DateTime|null $end
+     */
+    public function __construct($begin, $end)
+    {
+        if ($begin instanceof \DateTime) {
+            $this->beginDateTime = new DateTime($begin);
+        }
+
+        if ($end instanceof \DateTime) {
+            $this->endDateTime = new DateTime($end);
+        }
+    }
 }

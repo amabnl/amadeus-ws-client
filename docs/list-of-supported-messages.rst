@@ -34,6 +34,7 @@ This is the list of messages that are at least partially supported at this time:
 - Info_EncodeDecodeCity
 - Command_Cryptic
 - PriceXplorer_ExtremeSearch
+- SalesReports_DisplayQueryReport
 
 On the to-do list / work in progress:
 
@@ -55,7 +56,6 @@ On the to-do list / work in progress:
 - Ticket_DisplayTST
 - Ticket_DeleteTST
 - Ticket_CreateTSMFromPricing
-- SalesReports_DisplayQueryReport
 - Media_GetMedia
 - Service_IntegratedPricing
 - DocIssuance_IssueMiscellaneousDocuments

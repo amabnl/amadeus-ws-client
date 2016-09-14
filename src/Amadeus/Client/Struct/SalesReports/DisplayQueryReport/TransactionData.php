@@ -30,4 +30,20 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
  */
 class TransactionData
 {
+    /**
+     * @var TransactionDetails
+     */
+    public $transactionDetails;
+
+    /**
+     * TransactionData constructor.
+     *
+     * @param string|null $type
+     * @param string|null $code
+     * @param string|null $issueIndicator
+     */
+    public function __construct($type, $code, $issueIndicator)
+    {
+        $this->transactionDetails = new TransactionDetails($type, $code, $issueIndicator);
+    }
 }

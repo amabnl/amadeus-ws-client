@@ -30,4 +30,40 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
  */
 class DateDetails
 {
+    const DATE_TYPE_CURRENT = "C";
+
+    const DATE_TYPE_SALES_REPORT_CLOSURE = "D";
+
+    const DATE_TYPE_ISSUANCE = "I";
+
+    const DATE_TYPE_REFUNDING = "R";
+
+    const DATE_TYPE_SPECIFIC = "S";
+
+    /**
+     * self::DATE_TYPE_*
+     *
+     * @var string
+     */
+    public $businessSemantic;
+
+    /**
+     * @var DateTime
+     */
+    public $dateTime;
+
+    /**
+     * DateDetails constructor.
+     *
+     * @param string $dateType
+     * @param \DateTime $date
+     */
+    public function __construct($dateType, $date)
+    {
+        $this->businessSemantic = $dateType;
+
+        if (!empty($date)) {
+            $this->dateTime = new DateTime($date);
+        }
+    }
 }

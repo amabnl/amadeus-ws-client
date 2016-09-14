@@ -729,6 +729,15 @@ class Base implements ResponseHandlerInterface
     }
 
     /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeSalesReportsDisplayQueryReportResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
+
+    /**
      * @param SendResult $response WebService message Send Result
      * @return Result
      * @throws Exception

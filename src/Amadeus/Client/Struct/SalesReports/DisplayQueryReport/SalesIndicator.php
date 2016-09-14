@@ -30,4 +30,18 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
  */
 class SalesIndicator
 {
+    /**
+     * @var StatusInformation
+     */
+    public $statusInformation;
+
+    /**
+     * SalesIndicator constructor.
+     *
+     * @param string $indicator StatusInformation::SALESIND_*
+     */
+    public function __construct($indicator)
+    {
+        $this->statusInformation = new StatusInformation($indicator);
+    }
 }

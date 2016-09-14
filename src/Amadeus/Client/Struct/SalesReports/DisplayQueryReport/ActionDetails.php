@@ -30,4 +30,30 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
  */
 class ActionDetails
 {
+    /**
+     * @var NumberOfItemsDetails
+     */
+    public $numberOfItemsDetails;
+
+    /**
+     * @var LastItemsDetails
+     */
+    public $lastItemsDetails;
+
+    /**
+     * ActionDetails constructor.
+     *
+     * @param int|null $amount
+     * @param string|null $lastItem
+     */
+    public function __construct($amount, $lastItem)
+    {
+        if (!empty($amount)) {
+            $this->numberOfItemsDetails = new NumberOfItemsDetails($amount);
+        }
+
+        if (!empty($lastItem)) {
+            $this->lastItemsDetails = new LastItemsDetails($lastItem);
+        }
+    }
 }
