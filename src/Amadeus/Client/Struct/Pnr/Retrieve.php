@@ -35,8 +35,9 @@ class Retrieve extends BaseWsMessage
     /**
      * Definition for retrieval type: by record locator
      *
-     * see Amadeus Core Webservices documentation 
+     * See Amadeus Core Webservices documentation
      * [Retrieval type, coded codesets (Ref: 109P 1A 00.1.1)]
+     *
      * @var int
      */
     const RETR_TYPE_BY_RECLOC = 2;
