@@ -22,40 +22,14 @@
 
 namespace Amadeus\Client\Struct\DocIssuance;
 
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\DateTime;
+
 /**
  * DocIssuanceDateTime
  *
  * @package Amadeus\Client\Struct\DocIssuance
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocIssuanceDateTime
+class DocIssuanceDateTime extends DateTime
 {
-    /**
-     * @var string
-     */
-    public $year;
-
-    /**
-     * @var string
-     */
-    public $month;
-
-    /**
-     * @var string
-     */
-    public $day;
-
-    /**
-     * DocIssuanceDateTime constructor.
-     *
-     * @param \DateTime $date
-     */
-    public function __construct($date)
-    {
-        if ($date instanceof \DateTime) {
-            $this->year = $date->format('Y');
-            $this->month = $date->format('n');
-            $this->day = $date->format('j');
-        }
-    }
 }

@@ -22,6 +22,10 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
+use Amadeus\Client\RequestOptions\Pnr\Traveller;
+use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\Traveller as PnrAddMultiTraveller;
+
 /**
  * TravellerInfo
  *
@@ -47,13 +51,129 @@ class TravellerInfo
     public $enhancedPassengerData = [];
 
     /**
-     * @param string $pasSegName ElementManagementPassenger::SEG_*
-     * @param string $mainPasSurName Main passenger's Surname
+     * TravellerInfo constructor.
+     *
+     * @param Traveller|null $traveller
+     * @param TravellerGroup|null $travellerGroup
      */
-    public function __construct($pasSegName = null, $mainPasSurName = null)
+    public function __construct($traveller = null, $travellerGroup = null)
     {
-        $this->elementManagementPassenger = new ElementManagementPassenger($pasSegName);
+        if ($traveller instanceof Traveller) {
+            $this->loadTraveller($traveller);
+        } elseif ($travellerGroup instanceof TravellerGroup) {
+            $this->loadTravellerGroup($travellerGroup);
+        }
+    }
 
-        $this->passengerData[] = new PassengerData($mainPasSurName);
+    /**
+     * @param TravellerGroup $group
+     */
+    protected function loadTravellerGroup($group)
+    {
+        $this->elementManagementPassenger = new ElementManagementPassenger(
+            ElementManagementPassenger::SEG_GROUPNAME
+        );
+
+        $this->passengerData[] = new PassengerData($group->name);
+
+        $this->passengerData[0]->travellerInformation->traveller->quantity = $group->nrOfTravellers;
+        $this->passengerData[0]->travellerInformation->traveller->qualifier = PnrAddMultiTraveller::QUAL_GROUP;
+    }
+
+    /**
+     * @param Traveller $traveller
+     */
+    protected function loadTraveller(Traveller $traveller)
+    {
+        $this->elementManagementPassenger = new ElementManagementPassenger(
+            ElementManagementPassenger::SEG_NAME
+        );
+
+        $this->passengerData[] = new PassengerData($traveller->lastName);
+
+        if (!is_null($traveller->number)) {
+            $this->elementManagementPassenger->reference = new Reference(
+                Reference::QUAL_PASSENGER,
+                $traveller->number
+            );
+        }
+
+        if ($traveller->firstName !== null || $traveller->travellerType !== null) {
+            $this->passengerData[0]->travellerInformation->passenger[] = new Passenger(
+                $traveller->firstName,
+                $traveller->travellerType
+            );
+        }
+
+        if ($traveller->withInfant === true || $traveller->infant !== null) {
+            $this->addInfant($traveller);
+        }
+
+        if ($traveller->dateOfBirth instanceof \DateTime) {
+            $this->passengerData[0]->dateOfBirth = new DateOfBirth(
+                $traveller->dateOfBirth->format('dmY')
+            );
+        }
+    }
+
+    /**
+     * Add infant
+     *
+     * 3 scenario's:
+     * - infant without additional information
+     * - infant with only first name provided
+     * - infant with first name, last name & date of birth provided.
+     *
+     * @param Traveller $traveller
+     */
+    protected function addInfant($traveller)
+    {
+        $this->passengerData[0]->travellerInformation->traveller->quantity = 2;
+
+        if ($traveller->withInfant && is_null($traveller->infant)) {
+            $this->makePassengerIfNeeded();
+            $this->passengerData[0]->travellerInformation->passenger[0]->infantIndicator = Passenger::INF_NOINFO;
+        } elseif ($traveller->infant instanceof Traveller) {
+            if (empty($traveller->infant->lastName)) {
+                $this->makePassengerIfNeeded();
+                $this->passengerData[0]->travellerInformation->passenger[0]->infantIndicator = Passenger::INF_GIVEN;
+
+                $tmpInfantPassenger = new Passenger(
+                    $traveller->infant->firstName,
+                    Passenger::PASST_INFANT
+                );
+
+                $this->passengerData[0]->travellerInformation->passenger[] = $tmpInfantPassenger;
+            } else {
+                $this->makePassengerIfNeeded();
+                $this->passengerData[0]->travellerInformation->passenger[0]->infantIndicator = Passenger::INF_FULL;
+
+                $tmpInfant = new PassengerData($traveller->infant->lastName);
+                $tmpInfant->travellerInformation->passenger[] = new Passenger(
+                    $traveller->infant->firstName,
+                    Passenger::PASST_INFANT
+                );
+
+                if ($traveller->infant->dateOfBirth instanceof \DateTime) {
+                    $tmpInfant->dateOfBirth = new DateOfBirth(
+                        $traveller->infant->dateOfBirth->format('dmY')
+                    );
+                }
+
+                $this->passengerData[] = $tmpInfant;
+            }
+        }
+    }
+
+    /**
+     * If there is no passenger node at
+     * $travellerInfo->passengerData[0]->travellerInformation->passenger[0]
+     * create one
+     */
+    protected function makePassengerIfNeeded()
+    {
+        if (count($this->passengerData[0]->travellerInformation->passenger) < 1) {
+            $this->passengerData[0]->travellerInformation->passenger[0] = new Passenger(null, null);
+        }
     }
 }

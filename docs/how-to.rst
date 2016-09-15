@@ -65,6 +65,40 @@ After doing multiple calls with a stateful session, there are two ways to end th
         ['endSession' => true]
     );
 
+***************************
+WSAP's with multiple WSDL's
+***************************
+
+Amadeus sometimes provides you with multiple WSDL files in a single WSAP. New features in the Amadeus Web Services are sometimes implemented as "interfaces". This library supports those interfaces *(although at the time of writing, it does not yet support any message that can be found in an interface WSDL)*.
+
+You can provide all the WSDL's in your WSAP by passing an array of wsdl's in the Client Params:
+
+
+    use Amadeus\Client;
+    use Amadeus\Client\Params;
+
+    //Set up the client with necessary parameters:
+
+    $params = new Params([
+        'sessionHandlerParams' => [
+            'soapHeaderVersion' => Client::HEADER_V4,
+            'wsdl' => [
+                '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20160101_080000.wsdl',
+                '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_MediaServer_1.0_4.0.wsdl'
+            ],
+            'logger' => new Psr\Log\NullLogger(),
+            'authParams' => [
+                'officeId' => 'BRUXX1111',
+                'userId' => 'WSBENXXX',
+                'passwordData' => 'dGhlIHBhc3N3b3Jk'
+            ]
+        ]
+    ]);
+
+    $client = new Client($params);
+
+You can now call messages from any of the loaded WSDL while staying in the same session & context.
+
 ************************************
 Handling sessions with Soap Header 2
 ************************************
@@ -86,6 +120,12 @@ You can get a current session's info (for later re-use) by calling
 You can restore a previous current session after you retrieved it from your session pool for later re-use:
 
 .. code-block:: php
+
+    $previousSessionData = [
+        'sessionId' => 'XFHZEKLRZHREJ',
+        'sequenceNumber' => 5,
+        'securityToken' => 'RKLERJEZLKRHZEJKLRHEZJKLREZRHEZK'
+    ];
 
     $client->setSessionData($previousSessionData);
 

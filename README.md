@@ -50,3 +50,5 @@ For now, if you want the bleeding edge, point your composer.json towards `dev-de
 - [List of supported messages](docs/list-of-supported-messages.rst)
 - [How to](docs/how-to.rst)
 - [Examples](docs/samples.rst)
+
+[Changelog](CHANGELOG.md)

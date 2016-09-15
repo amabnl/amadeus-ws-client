@@ -56,7 +56,7 @@ class DateDetails
      * DateDetails constructor.
      *
      * @param string $dateType
-     * @param \DateTime $date
+     * @param \DateTime|null $date
      */
     public function __construct($dateType, $date)
     {

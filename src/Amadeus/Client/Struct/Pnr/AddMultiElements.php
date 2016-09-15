@@ -36,10 +36,8 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\Accounting;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\AirAuxItinerary;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsIndiv;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\DateOfBirth;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementItinerary;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementPassenger;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\Fop;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\FopExtension;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\FormOfPayment;
@@ -50,8 +48,6 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\ItineraryInfo;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\MiscellaneousRemark;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\NewFopsDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\Passenger;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\PassengerData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\Reference;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForDataElement;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForSegment;
@@ -59,7 +55,6 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\ServiceRequest;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\StructuredAddress;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TicketElement;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInfo;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\Traveller as PnrAddMultiTraveller;
 
 /**
  * Structure class for representing the PNR_AddMultiElements request message
@@ -111,7 +106,7 @@ class AddMultiElements extends BaseWsMessage
      *
      * For doing specific actions like ignoring or saving PNR.
      *
-     * @param $params
+     * @param PnrAddMultiElementsOptions $params
      */
     protected function loadBare(PnrAddMultiElementsOptions $params)
     {
@@ -254,109 +249,7 @@ class AddMultiElements extends BaseWsMessage
      */
     protected function createTraveller($traveller)
     {
-        $createdTraveller = new TravellerInfo(
-            ElementManagementPassenger::SEG_NAME,
-            $traveller->lastName
-        );
-
-        if (!is_null($traveller->number)) {
-            $createdTraveller->elementManagementPassenger->reference = new Reference(
-                Reference::QUAL_PASSENGER,
-                $traveller->number
-            );
-        }
-
-        if ($traveller->firstName !== null || $traveller->travellerType !== null) {
-            $createdTraveller->passengerData[0]->travellerInformation->passenger[] = new Passenger(
-                $traveller->firstName,
-                $traveller->travellerType
-            );
-        }
-
-        if ($traveller->withInfant === true || $traveller->infant !== null) {
-            $createdTraveller = $this->addInfant($createdTraveller, $traveller);
-        }
-
-        if ($traveller->dateOfBirth instanceof \DateTime) {
-            $createdTraveller->passengerData[0]->dateOfBirth = new DateOfBirth(
-                $traveller->dateOfBirth->format('dmY')
-            );
-        }
-
-        return $createdTraveller;
-    }
-
-    /**
-     * Add infant
-     *
-     * 3 scenario's:
-     * - infant without additional information
-     * - infant with only first name provided
-     * - infant with first name, last name & date of birth provided.
-     *
-     * @param TravellerInfo $travellerInfo
-     * @param Traveller $traveller
-     * @return TravellerInfo
-     */
-    protected function addInfant($travellerInfo, $traveller)
-    {
-        $travellerInfo->passengerData[0]->travellerInformation->traveller->quantity = 2;
-
-        if ($traveller->withInfant && is_null($traveller->infant)) {
-            $travellerInfo = $this->makePassengerIfNeeded($travellerInfo);
-            $travellerInfo->passengerData[0]->travellerInformation->passenger[0]->infantIndicator =
-                Passenger::INF_NOINFO;
-        } elseif ($traveller->infant instanceof Traveller) {
-            if (empty($traveller->infant->lastName)) {
-                $travellerInfo = $this->makePassengerIfNeeded($travellerInfo);
-                $travellerInfo->passengerData[0]->travellerInformation->passenger[0]->infantIndicator =
-                    Passenger::INF_GIVEN;
-
-                $tmpInfantPassenger = new Passenger(
-                    $traveller->infant->firstName,
-                    Passenger::PASST_INFANT
-                );
-
-                $travellerInfo->passengerData[0]->travellerInformation->passenger[] = $tmpInfantPassenger;
-            } else {
-                $travellerInfo = $this->makePassengerIfNeeded($travellerInfo);
-                $travellerInfo->passengerData[0]->travellerInformation->passenger[0]->infantIndicator =
-                    Passenger::INF_FULL;
-
-                $tmpInfant = new PassengerData($traveller->infant->lastName);
-                $tmpInfant->travellerInformation->passenger[] = new Passenger(
-                    $traveller->infant->firstName,
-                    Passenger::PASST_INFANT
-                );
-
-                if ($traveller->infant->dateOfBirth instanceof \DateTime) {
-                    $tmpInfant->dateOfBirth = new DateOfBirth(
-                        $traveller->infant->dateOfBirth->format('dmY')
-                    );
-                }
-
-                $travellerInfo->passengerData[] = $tmpInfant;
-            }
-        }
-
-        return $travellerInfo;
-    }
-
-    /**
-     * If there is no passenger node at
-     * $travellerInfo->passengerData[0]->travellerInformation->passenger[0]
-     * create one
-     *
-     * @param TravellerInfo $travellerInfo
-     * @return TravellerInfo
-     */
-    protected function makePassengerIfNeeded($travellerInfo)
-    {
-        if (count($travellerInfo->passengerData[0]->travellerInformation->passenger) < 1) {
-            $travellerInfo->passengerData[0]->travellerInformation->passenger[0] = new Passenger(null, null);
-        }
-
-        return $travellerInfo;
+        return new TravellerInfo($traveller);
     }
 
     /**
@@ -364,12 +257,7 @@ class AddMultiElements extends BaseWsMessage
      */
     protected function addTravellerGroup($group)
     {
-        $groupInfo = new TravellerInfo(ElementManagementPassenger::SEG_GROUPNAME, $group->name);
-
-        $groupInfo->passengerData[0]->travellerInformation->traveller->quantity = $group->nrOfTravellers;
-        $groupInfo->passengerData[0]->travellerInformation->traveller->qualifier = PnrAddMultiTraveller::QUAL_GROUP;
-
-        $this->travellerInfo[] = $groupInfo;
+        $this->travellerInfo[] = new TravellerInfo(null, $group);
 
         $this->addTravellers($group->travellers);
     }
