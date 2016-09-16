@@ -51,4 +51,8 @@ For now, if you want the bleeding edge, point your composer.json towards `dev-de
 - [How to](docs/how-to.rst)
 - [Examples](docs/samples.rst)
 
+---------------------------------------
+
 [Changelog](CHANGELOG.md)
+
+[Example applications](docs/sample-applications.rst)

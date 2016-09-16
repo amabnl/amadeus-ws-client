@@ -460,6 +460,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      * @param string $wsdlId
      * @uses $this->wsdlDomDoc
      * @uses $this->wsdlDomXpath
+     * @throws Client\InvalidWsdlFileException when WSDL cannot be found.
      */
     protected function loadWsdlXpath($wsdlFilePath, $wsdlId)
     {
@@ -479,7 +480,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
                     'http://schemas.xmlsoap.org/wsdl/soap/'
                 );
             } else {
-                throw new Client\Exception('WSDL ' . $wsdlFilePath . ' could not be loaded');
+                throw new Client\InvalidWsdlFileException('WSDL ' . $wsdlFilePath . ' could not be loaded');
             }
         }
     }
@@ -558,7 +559,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      * @param string $wsdlPath
      * @param string $wsdlIdentifier
      * @return array
-     * @throws Client\Exception when the WSDL import could not be loaded.
+     * @throws Client\InvalidWsdlFileException when the WSDL import could not be loaded.
      */
     protected function getMessagesAndVersionsFromImportedWsdl($import, $wsdlPath, $wsdlIdentifier)
     {
@@ -585,7 +586,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
                 );
             }
         } else {
-            throw new Client\Exception('WSDL ' . $importPath . ' import could not be loaded');
+            throw new Client\InvalidWsdlFileException('WSDL ' . $importPath . ' import could not be loaded');
         }
 
         if ($domXpath instanceof \DOMXPath) {

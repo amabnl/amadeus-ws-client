@@ -420,6 +420,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("test description 100% is the goal", $result->messages[0]->text);
     }
 
+    public function testCanFindAirMultiAvailabilityError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyAirMultiAvailabilityErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Air_MultiAvailability');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('A08', $result->messages[0]->code);
+        $this->assertEquals("CHECK DATE", $result->messages[0]->text);
+    }
+
     public function testCanParseSecurityAuthenticateReplyOk()
     {
         $respHandler = new ResponseHandler\Base();

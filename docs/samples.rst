@@ -517,6 +517,60 @@ Convert 200 Euro to US Dollars in the exchange rate of 25th December 2015 *(this
 Air
 ***
 
+---------------------
+Air_MultiAvailability
+---------------------
+
+To request a simple Air_MultiAvailability:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
+    use Amadeus\Client\RequestOptions\Air\MultiAvailability\RequestOptions;
+    use Amadeus\Client\RequestOptions\Air\MultiAvailability\FrequentTraveller;
+
+    $opt = new AirMultiAvailabilityOptions([
+        'actionCode' => AirMultiAvailabilityOptions::ACTION_AVAILABILITY,
+        'requestOptions' => [
+            new RequestOptions([
+                'departureDate' => \DateTime::createFromFormat('Ymd-His', '20170320-000000', new \DateTimeZone('UTC')),
+                'from' => 'BRU',
+                'to' => 'LIS',
+                'requestType' => RequestOptions::REQ_TYPE_NEUTRAL_ORDER
+            ])
+        ]
+    ]);
+
+    $availabilityResult = $client->airMultiAvailability($opt);
+
+Nice - New York Schedule request, connection via Paris, flying on Air France, for 5 people,
+in premium or regular Economy, sort by arrival time:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
+    use Amadeus\Client\RequestOptions\Air\MultiAvailability\RequestOptions;
+    use Amadeus\Client\RequestOptions\Air\MultiAvailability\FrequentTraveller;
+
+    $opt = new AirMultiAvailabilityOptions([
+        'actionCode' => AirMultiAvailabilityOptions::ACTION_SCHEDULE,
+        'requestOptions' => [
+             new RequestOptions([
+                    'departureDate' => \DateTime::createFromFormat('Ymd-His', '20170215-140000', new \DateTimeZone('UTC')),
+                    'from' => 'NCE',
+                    'to' => 'NYC',
+                    'cabinCode' => RequestOptions::CABIN_ECONOMY_PREMIUM_MAIN,
+                    'includedConnections' => ['PAR'],
+                    'nrOfSeats' => 5,
+                    'includedAirlines' => ['AF'],
+                    'requestType' => RequestOptions::REQ_TYPE_BY_ARRIVAL_TIME
+                ])
+        ]
+    ]);
+
+    $availabilityResult = $client->airMultiAvailability($opt);
+
+
 --------------------------
 Air_SellFromRecommendation
 --------------------------

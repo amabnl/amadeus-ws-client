@@ -38,11 +38,9 @@ use Amadeus\Client\ResponseHandler\Base as ResponseHandlerBase;
  *
  * TODO:
  * - support older versions of SoapHeader (1)
- * - implement calls for full online booking flow:
- *      Air_MultiAvailability
- *
  * - implement more PNR_AddMultiElements:
  *      OSI segment
+ * - implement messages on supported messages todo section
  *
  * @package Amadeus
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -531,6 +529,20 @@ class Client
     public function fareConvertCurrency(RequestOptions\FareConvertCurrencyOptions $options, $messageOptions = [])
     {
         $msgName = 'Fare_ConvertCurrency';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Air_MultiAvailability
+     *
+     * @param RequestOptions\AirMultiAvailabilityOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function airMultiAvailability(RequestOptions\AirMultiAvailabilityOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Air_MultiAvailability';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }

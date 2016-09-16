@@ -106,6 +106,33 @@ class Base implements ResponseHandlerInterface
         return $ccResult;
     }
 
+    protected function analyzeAirMultiAvailabilityResponse($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $message = null;
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $codeNode = $domXpath->query("//m:errorOrWarningSection/m:errorOrWarningInfo//m:code")->item(0);
+        if ($codeNode instanceof \DOMNode) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $categoryNode = $domXpath->query("//m:errorOrWarningSection/m:errorOrWarningInfo//m:type")->item(0);
+            if ($categoryNode instanceof \DOMNode) {
+                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($categoryNode->nodeValue);
+            }
+
+            $messageNodes = $domXpath->query('//m:errorOrWarningSection/m:textInformation/m:freeText');
+            if ($messageNodes->length > 0) {
+                $message = $this->makeMessageFromMessagesNodeList($messageNodes);
+            }
+            $analyzeResponse->messages [] = new Result\NotOk($codeNode->nodeValue, $message);
+        }
+
+        return $analyzeResponse;
+    }
+
     protected function analyzeAirSellFromRecommendationResponse($response)
     {
         $analyzeResponse = new Result($response);
@@ -858,10 +885,11 @@ class Base implements ResponseHandlerInterface
     }
 
     /**
-     * @param $qualifier
+     * @param string $qualifier
+     * @param string|null $amadeusCodeList
      * @return string Result::STATUS_*
      */
-    protected function makeStatusFromErrorQualifier($qualifier)
+    protected function makeStatusFromErrorQualifier($qualifier, $amadeusCodeList = null)
     {
         $status = null;
 
@@ -876,6 +904,7 @@ class Base implements ResponseHandlerInterface
                 break;
             case 'EC':
             case 'X':
+            case '001': //Air_MultiAvailability
                 $status = Result::STATUS_ERROR;
                 break;
             case 'O':

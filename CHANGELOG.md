@@ -1,6 +1,7 @@
 # 2016-09
 
 * Implemented SalesReports_DisplayQueryReport
+* Implemented Air_MultiAvailability
 * Added support for multiple WSDL's (interfaces) in a WSAP (https://github.com/amabnl/amadeus-ws-client/issues/5)
 * PSR-2 code style enforced via StyleCI
 

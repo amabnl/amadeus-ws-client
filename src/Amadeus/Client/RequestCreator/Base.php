@@ -25,6 +25,7 @@ namespace Amadeus\Client\RequestCreator;
 use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestOptions\AirFlightInfoOptions;
+use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
 use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
 use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
@@ -358,6 +359,18 @@ class Base implements RequestCreatorInterface
     }
 
     /**
+     * Air_MultiAvailability
+     *
+     * @param AirMultiAvailabilityOptions $params
+     * @return Struct\Air\MultiAvailability
+     */
+    protected function createAirMultiAvailability(AirMultiAvailabilityOptions $params)
+    {
+        return new Struct\Air\MultiAvailability($params);
+    }
+
+    /**
+     * Air_SellFromRecommendation
      *
      * @param AirSellFromRecommendationOptions $params
      * @return Struct\Air\SellFromRecommendation
@@ -368,6 +381,7 @@ class Base implements RequestCreatorInterface
     }
 
     /**
+     * Air_FlightInfo
      *
      * @param AirFlightInfoOptions $params
      * @return Struct\Air\FlightInfo
@@ -387,7 +401,7 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * makeCommandCryptic
+     * Command_Cryptic
      *
      * @param CommandCrypticOptions $params
      * @return Struct\Command\Cryptic

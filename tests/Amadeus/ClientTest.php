@@ -1422,6 +1422,77 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendAirMultiAvailability()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('AirMultiAvailabilityReply.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Air\MultiAvailability(
+            new Client\RequestOptions\AirMultiAvailabilityOptions([
+                'actionCode' => Client\RequestOptions\AirMultiAvailabilityOptions::ACTION_AVAILABILITY,
+                'requestOptions' => [
+                    new Client\RequestOptions\Air\MultiAvailability\RequestOptions([
+                        'departureDate' => \DateTime::createFromFormat('Ymd-His', '20170320-000000', new \DateTimeZone('UTC')),
+                        'from' => 'BRU',
+                        'to' => 'LIS',
+                        'requestType' => Client\RequestOptions\Air\MultiAvailability\RequestOptions::REQ_TYPE_NEUTRAL_ORDER
+                    ])
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Air_MultiAvailability', $expectedMessageResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Air_MultiAvailability' => "14.1"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Air_MultiAvailability')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->airMultiAvailability(
+            new Client\RequestOptions\AirMultiAvailabilityOptions([
+                'actionCode' => Client\RequestOptions\AirMultiAvailabilityOptions::ACTION_AVAILABILITY,
+                'requestOptions' => [
+                    new Client\RequestOptions\Air\MultiAvailability\RequestOptions([
+                        'departureDate' => \DateTime::createFromFormat('Ymd-His', '20170320-000000', new \DateTimeZone('UTC')),
+                        'from' => 'BRU',
+                        'to' => 'LIS',
+                        'requestType' => Client\RequestOptions\Air\MultiAvailability\RequestOptions::REQ_TYPE_NEUTRAL_ORDER
+                    ])
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanSendFareMasterPricerTravelBoardSearch()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

@@ -22,9 +22,8 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
-use Amadeus\Client\RequestOptions\Pnr\Traveller;
-use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\Traveller as PnrAddMultiTraveller;
+use Amadeus\Client\RequestOptions\Pnr\Traveller as TravellerOptions;
+use Amadeus\Client\RequestOptions\Pnr\TravellerGroup as TravellerGroupOptions;
 
 /**
  * TravellerInfo
@@ -53,20 +52,20 @@ class TravellerInfo
     /**
      * TravellerInfo constructor.
      *
-     * @param Traveller|null $traveller
-     * @param TravellerGroup|null $travellerGroup
+     * @param TravellerOptions|null $traveller
+     * @param TravellerGroupOptions|null $travellerGroup
      */
     public function __construct($traveller = null, $travellerGroup = null)
     {
-        if ($traveller instanceof Traveller) {
+        if ($traveller instanceof TravellerOptions) {
             $this->loadTraveller($traveller);
-        } elseif ($travellerGroup instanceof TravellerGroup) {
+        } elseif ($travellerGroup instanceof TravellerGroupOptions) {
             $this->loadTravellerGroup($travellerGroup);
         }
     }
 
     /**
-     * @param TravellerGroup $group
+     * @param TravellerGroupOptions $group
      */
     protected function loadTravellerGroup($group)
     {
@@ -77,13 +76,13 @@ class TravellerInfo
         $this->passengerData[] = new PassengerData($group->name);
 
         $this->passengerData[0]->travellerInformation->traveller->quantity = $group->nrOfTravellers;
-        $this->passengerData[0]->travellerInformation->traveller->qualifier = PnrAddMultiTraveller::QUAL_GROUP;
+        $this->passengerData[0]->travellerInformation->traveller->qualifier = Traveller::QUAL_GROUP;
     }
 
     /**
-     * @param Traveller $traveller
+     * @param TravellerOptions $traveller
      */
-    protected function loadTraveller(Traveller $traveller)
+    protected function loadTraveller(TravellerOptions $traveller)
     {
         $this->elementManagementPassenger = new ElementManagementPassenger(
             ElementManagementPassenger::SEG_NAME
@@ -124,7 +123,7 @@ class TravellerInfo
      * - infant with only first name provided
      * - infant with first name, last name & date of birth provided.
      *
-     * @param Traveller $traveller
+     * @param TravellerOptions $traveller
      */
     protected function addInfant($traveller)
     {
@@ -133,7 +132,7 @@ class TravellerInfo
         if ($traveller->withInfant && is_null($traveller->infant)) {
             $this->makePassengerIfNeeded();
             $this->passengerData[0]->travellerInformation->passenger[0]->infantIndicator = Passenger::INF_NOINFO;
-        } elseif ($traveller->infant instanceof Traveller) {
+        } elseif ($traveller->infant instanceof TravellerOptions) {
             if (empty($traveller->infant->lastName)) {
                 $this->makePassengerIfNeeded();
                 $this->passengerData[0]->travellerInformation->passenger[0]->infantIndicator = Passenger::INF_GIVEN;

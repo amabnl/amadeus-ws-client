@@ -21,6 +21,7 @@ This is the list of messages that are at least partially supported at this time:
 - Fare_InformativePricingWithoutPNR
 - Fare_ConvertCurrency
 - Fare_CheckRules
+- Air_MultiAvailability
 - Air_SellFromRecommendation
 - Air_FlightInfo
 - Air_RetrieveSeatMap
@@ -38,7 +39,6 @@ This is the list of messages that are at least partially supported at this time:
 
 On the to-do list / work in progress:
 
-- Air_MultiAvailability
 - Fare_InformativeBestPricingWithoutPNR
 - Fare_PricePNRWithLowerFares
 - Fare_PricePNRWithLowestFare

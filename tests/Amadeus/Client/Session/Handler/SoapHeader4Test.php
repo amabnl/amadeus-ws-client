@@ -698,7 +698,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
     {
         \PHPUnit_Framework_Error_Warning::$enabled = FALSE;
 
-        $this->setExpectedException('\Amadeus\Client\Exception', 'could not be loaded');
+        $this->setExpectedException('\Amadeus\Client\InvalidWsdlFileException', 'could not be loaded');
 
         $sessionHandlerParams = $this->makeSessionHandlerParams();
         $sessionHandlerParams->wsdl[] = __DIR__. DIRECTORY_SEPARATOR . 'invalidwsdl.wsdl';
@@ -711,7 +711,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
     {
         \PHPUnit_Framework_Error_Warning::$enabled = FALSE;
 
-        $this->setExpectedException('\Amadeus\Client\Exception', 'import could not be loaded');
+        $this->setExpectedException('\Amadeus\Client\InvalidWsdlFileException', 'import could not be loaded');
 
         $sessionHandlerParams = $this->makeSessionHandlerParams();
         $sessionHandlerParams->wsdl[] = __DIR__. DIRECTORY_SEPARATOR . 'testfiles' . DIRECTORY_SEPARATOR . 'mediawsdl'.DIRECTORY_SEPARATOR.'DUMMYWSAP_MediaServer_invalid.wsdl';
