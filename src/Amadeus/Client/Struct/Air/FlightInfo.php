@@ -21,6 +21,7 @@
  */
 
 namespace Amadeus\Client\Struct\Air;
+
 use Amadeus\Client\RequestOptions\AirFlightInfoOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 

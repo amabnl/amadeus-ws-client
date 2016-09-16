@@ -30,16 +30,16 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class SelectionInfo
 {
-	/**
-	 * @var SelectionDetails[]
-	 */
-	public $selectionDetails = [];
-	
-	/**
-	 * @param string $departureDayOption SelectionDetails::OPT_*
-	 */
-	public function __construct($departureDayOption = SelectionDetails::OPT_OUTBOUND_DEP_DAYS)
-	{
-		$this->selectionDetails[] = new SelectionDetails($departureDayOption);
-	}
+    /**
+     * @var SelectionDetails[]
+     */
+    public $selectionDetails = [];
+
+    /**
+     * @param string $departureDayOption SelectionDetails::OPT_*
+     */
+    public function __construct($departureDayOption = SelectionDetails::OPT_OUTBOUND_DEP_DAYS)
+    {
+        $this->selectionDetails[] = new SelectionDetails($departureDayOption);
+    }
 }

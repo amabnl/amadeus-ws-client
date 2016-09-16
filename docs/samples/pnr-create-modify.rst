@@ -10,6 +10,68 @@ Below are some examples of how to do specific things with regards to creating & 
 Creating specific PNR elements
 ******************************
 
+--------------------
+Passengers - Infants
+--------------------
+
+Add an infant to a traveller without providing extra information:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+
+    $opt = new PnrCreatePnrOptions([
+        'travellers' => [
+            new Traveller([
+                'number' => 1,
+                'lastName' => 'Bowie',
+                'firstName' => 'David',
+                'withInfant' => true
+            ])
+        ]
+    ]);
+
+Add an infant to a traveller and provide only the infant's first name:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+
+    $opt = new PnrCreatePnrOptions([
+        'travellers' => [
+            new Traveller([
+                'number' => 1,
+                'lastName' => 'Bowie',
+                'firstName' => 'David',
+                'infant' => new Traveller(['firstName' => 'Junior'])
+            ])
+        ]
+    ]);
+
+Add an infant to a traveller and provide the infant's first & last name and date of birth:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+
+    $opt = new PnrCreatePnrOptions([
+        'travellers' => [
+            new Traveller([
+                'number' => 1,
+                'lastName' => 'Bowie',
+                'firstName' => 'David',
+                'infant' => new Traveller([
+                    'firstName' => 'Junior',
+                    'lastName' => 'Dylan',
+                    'dateOfBirth' => \DateTime::createFromFormat('Y-m-d', '2016-01-08')
+                ])
+            ])
+        ]
+    ]);
+
 ---------------------
 Remark - Confidential
 ---------------------
@@ -157,7 +219,7 @@ Provide mandatory SR DOCS with APIS information for flights to the US *(must be 
                 ],
                 'references' => [
                     new Reference([
-                        'type' => Reference::TYPE_PASSENGER_TATOO,
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
                         'id' => 1
                     ])
                 ]
@@ -262,7 +324,7 @@ Add a structured billing address element (e.g. ``AB //CY-COMPANY/NA-NAME/A1-LINE
                 'zipCode' => 'ZIP CODE',
                 'references' => [
                     new Reference([
-                        'type' => Reference::TYPE_PASSENGER_TATOO,
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
                         'id' => 1
                     ])
                 ]
@@ -289,7 +351,7 @@ Add a manual Frequent Flyer number (e.g. ``SR FQTV SN-SN 111111111/P2``)
                 'number' => '111111111',
                 'references' => [
                     new Reference([
-                        'type' => Reference::TYPE_PASSENGER_TATOO,
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
                         'id' => 2
                     ])
                 ]

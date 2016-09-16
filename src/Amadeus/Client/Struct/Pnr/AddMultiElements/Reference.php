@@ -30,13 +30,13 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class Reference
 {
-    const QUAL_PASSENGER	= "PR";
+    const QUAL_PASSENGER = "PR";
 
-    const QUAL_PASSTAT		= "PT";
+    const QUAL_PASSTAT = "PT";
 
-    const QUAL_SEGTAT		= "ST";
+    const QUAL_SEGTAT = "ST";
 
-    const QUAL_OTHER        = "OT";
+    const QUAL_OTHER = "OT";
 
 
     /**
@@ -46,12 +46,12 @@ class Reference
      * 002 	Corporate identification number
      * D 	Dominant segment in a marriage
      * N 	Non dominant segment in a marriage
-     * OT 	Other element tatoo reference number
+     * OT 	Other element tattoo reference number
      * PR 	Passenger Client-request-message-defined ref. nbr
-     * PT 	Passenger tatoo reference number
+     * PT 	Passenger tattoo reference number
      * SR 	Segment Client-request-message-defined ref. nbr
-     * SS 	Segment Tatoo+SubTatoo reference number
-     * ST 	Segment Tatoo reference number
+     * SS 	Segment Tattoo+SubTattoo reference number
+     * ST 	Segment Tattoo reference number
      *
      * @var string
      */

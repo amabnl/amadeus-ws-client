@@ -41,7 +41,7 @@ use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomStayData;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\TattooReference;
 
 /**
- * ConfirmHotel
+ * Offer_ConfirmHotelOffer
  *
  * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -85,14 +85,12 @@ class ConfirmHotel extends BaseWsMessage
         }
 
         if (!empty($params->offerReference)) {
-            $this->roomStayData[] = new RoomStayData();
+            $this->makeRoomStayData();
             $this->roomStayData[0]->tattooReference = new TattooReference($params->offerReference);
         }
 
         if (!empty($params->passengers)) {
-            if (!isset($this->roomStayData[0])) {
-                $this->roomStayData[] = new RoomStayData();
-            }
+            $this->makeRoomStayData();
             $this->roomStayData[0]->globalBookingInfo = new GlobalBookingInfo();
 
             foreach ($params->passengers as $singlePass) {
@@ -106,11 +104,8 @@ class ConfirmHotel extends BaseWsMessage
         }
 
         if (!empty($params->originatorId)) {
-            if (!isset($this->roomStayData[0])) {
-                $this->roomStayData[] = new RoomStayData();
-            }
-
-            if(!($this->roomStayData[0]->globalBookingInfo instanceof GlobalBookingInfo)) {
+            $this->makeRoomStayData();
+            if (!($this->roomStayData[0]->globalBookingInfo instanceof GlobalBookingInfo)) {
                 $this->roomStayData[0]->globalBookingInfo = new GlobalBookingInfo();
             }
 
@@ -118,10 +113,7 @@ class ConfirmHotel extends BaseWsMessage
         }
 
         if (!empty($params->paymentType) && !empty($params->formOfPayment) && $params->paymentDetails instanceof PaymentDetailsOptions) {
-            if (!isset($this->roomStayData[0])) {
-                $this->roomStayData[] = new RoomStayData();
-            }
-
+            $this->makeRoomStayData();
             $this->roomStayData[0]->roomList[] = new RoomList();
 
             $this->roomStayData[0]->roomList[0]->guaranteeOrDeposit = new GuaranteeOrDeposit();
@@ -140,6 +132,18 @@ class ConfirmHotel extends BaseWsMessage
             } else {
                 throw new InvalidArgumentException('Hotel Offer Confirm Form of Payment ' . $params->formOfPayment . ' is not yet supported');
             }
+        }
+    }
+
+    /**
+     * Check for existance of RoomStayData and create if needed.
+     *
+     * @return void
+     */
+    protected function makeRoomStayData()
+    {
+        if (!isset($this->roomStayData[0])) {
+            $this->roomStayData[] = new RoomStayData();
         }
     }
 }

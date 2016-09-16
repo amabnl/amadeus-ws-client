@@ -60,7 +60,7 @@ class ConvertCurrency extends BaseWsMessage
      *
      * @param FareConvertCurrencyOptions $params
      */
-    public function __construct (FareConvertCurrencyOptions $params)
+    public function __construct(FareConvertCurrencyOptions $params)
     {
         $this->message = new MsgType(MessageFunctionDetails::FARE_CURRENCY_CONVERSION);
 

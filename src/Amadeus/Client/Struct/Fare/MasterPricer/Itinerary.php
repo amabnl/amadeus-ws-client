@@ -80,7 +80,7 @@ class Itinerary
     public $attributes;
 
     /**
-     * @param int $reqSegRef
+     * @param int|null $reqSegRef
      */
     public function __construct($reqSegRef = null)
     {

@@ -1,0 +1,6 @@
+<Queue_MoveItemReply xmlns="http://xml.amadeus.com/QUQMUQ_03_1_1A">
+    <goodResponse>
+        <responseType>G</responseType>
+        <statusCode>P</statusCode>
+    </goodResponse>
+</Queue_MoveItemReply>

@@ -30,29 +30,29 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class TravelDates
 {
-	/**
-	 * @var DateAndTimeDetails[]
-	 */
-	public $dateAndTimeDetails = [];
-	
-	/**
-	 * @param \DateTime|null $earliestDepartureDate
-	 * @param \DateTime|null $latestDepartureDate
-	 */
-	public function __construct($earliestDepartureDate = null, $latestDepartureDate = null)
-	{
-		if ($earliestDepartureDate instanceof \DateTime) {
-			$this->dateAndTimeDetails[] = new DateAndTimeDetails(
-				DateAndTimeDetails::QUAL_STARTDATE,
-				$earliestDepartureDate
-			);
-		}
-		
-		if ($latestDepartureDate instanceof \DateTime) {
-			$this->dateAndTimeDetails[] = new DateAndTimeDetails(
-					DateAndTimeDetails::QUAL_ENDDATE,
-					$latestDepartureDate
-			);
-		}
-	}
+    /**
+     * @var DateAndTimeDetails[]
+     */
+    public $dateAndTimeDetails = [];
+
+    /**
+     * @param \DateTime|null $earliestDepartureDate
+     * @param \DateTime|null $latestDepartureDate
+     */
+    public function __construct($earliestDepartureDate = null, $latestDepartureDate = null)
+    {
+        if ($earliestDepartureDate instanceof \DateTime) {
+            $this->dateAndTimeDetails[] = new DateAndTimeDetails(
+                DateAndTimeDetails::QUAL_STARTDATE,
+                $earliestDepartureDate
+            );
+        }
+
+        if ($latestDepartureDate instanceof \DateTime) {
+            $this->dateAndTimeDetails[] = new DateAndTimeDetails(
+                DateAndTimeDetails::QUAL_ENDDATE,
+                $latestDepartureDate
+            );
+        }
+    }
 }

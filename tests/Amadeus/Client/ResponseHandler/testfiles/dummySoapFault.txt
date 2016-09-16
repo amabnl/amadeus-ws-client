@@ -1,0 +1,1 @@
+<soap:Fault xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><faultcode>soap:Server</faultcode><faultstring>1929|Application|INVALID RECORD LOCATOR</faultstring><faultactor>SI:Backend</faultactor></soap:Fault>

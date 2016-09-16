@@ -54,7 +54,6 @@ class MoveItem extends BaseWsMessage
      */
     public $numberOfPNRs;
 
-
     /**
      * @param string $recordLocator
      * @param string $sourceOffice

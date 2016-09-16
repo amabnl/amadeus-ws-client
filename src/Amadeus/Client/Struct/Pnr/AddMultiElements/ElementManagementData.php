@@ -39,7 +39,7 @@ class ElementManagementData
      *
      * @var string
      */
-    const SEGNAME_RECEIVE_FROM		= "RF";
+    const SEGNAME_RECEIVE_FROM = "RF";
     /**
      * Segment name "General Remark"
      *
@@ -49,13 +49,13 @@ class ElementManagementData
      *
      * @var string
      */
-    const SEGNAME_GENERAL_REMARK	= "RM";
+    const SEGNAME_GENERAL_REMARK = "RM";
     /**
      * Segment name "Form Of Payment"
      *
      * @var string
      */
-    const SEGNAME_FORM_OF_PAYMENT	= "FP";
+    const SEGNAME_FORM_OF_PAYMENT = "FP";
     /**
      * Segment name "Ticketing Element"
      *
@@ -127,15 +127,15 @@ class ElementManagementData
      * Create new ElementManagementData
      *
      * @param string|null $segmentName one of the constants SEGNAME_* defined in this class
-     * @param int|null $tatoo Optional tatoo nr to reference this element
+     * @param int|null $tattoo Optional tattoo nr to reference this element
      */
-    public function __construct($segmentName = null, $tatoo = null)
+    public function __construct($segmentName = null, $tattoo = null)
     {
         if (!is_null($segmentName)) {
             $this->segmentName = $segmentName;
         }
-        if (!is_null($tatoo) && is_int($tatoo)) {
-            $this->reference = new Reference(Reference::QUAL_OTHER, $tatoo);
+        if (!is_null($tattoo) && is_int($tattoo)) {
+            $this->reference = new Reference(Reference::QUAL_OTHER, $tattoo);
         }
     }
 }

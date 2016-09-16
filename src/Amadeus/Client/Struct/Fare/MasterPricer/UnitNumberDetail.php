@@ -30,8 +30,8 @@ namespace Amadeus\Client\Struct\Fare\MasterPricer;
  */
 class UnitNumberDetail
 {
-    const TYPE_PASS		= "PX";
-    const TYPE_RESULTS	= "RC";
+    const TYPE_PASS = "PX";
+    const TYPE_RESULTS = "RC";
 
     /**
      * @var int

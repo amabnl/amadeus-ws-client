@@ -1,0 +1,21 @@
+<Air_SellFromRecommendationReply xmlns="http://xml.amadeus.com/ITARES_05_2_IA">
+    <message>
+        <messageFunctionDetails>
+            <messageFunction>183</messageFunction>
+        </messageFunctionDetails>
+    </message>
+    <errorAtMessageLevel>
+        <errorSegment>
+            <errorDetails>
+                <errorCode>390</errorCode>
+                <errorCategory>EC</errorCategory>
+            </errorDetails>
+        </errorSegment>
+    </errorAtMessageLevel>
+    <itineraryDetails>
+        <originDestination>
+            <origin>MSP</origin>
+            <destination>MIA</destination>
+        </originDestination>
+    </itineraryDetails>
+</Air_SellFromRecommendationReply>

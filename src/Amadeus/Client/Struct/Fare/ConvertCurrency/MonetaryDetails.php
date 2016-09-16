@@ -44,7 +44,7 @@ class MonetaryDetails
     public $typeQualifier;
 
     /**
-     * @var string
+     * @var int|string
      */
     public $amount;
 

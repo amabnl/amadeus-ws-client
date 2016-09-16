@@ -34,6 +34,7 @@ class FlightIdentification
      * @var string
      */
     public $flightNumber;
+
     /**
      * 1	Request all non-displayable RBD's
      * 2	Request all RBD's including non-displayable RBD's.
@@ -46,10 +47,16 @@ class FlightIdentification
      * @var string
      */
     public $bookingClass;
+
     /**
      * @var string
      */
     public $operationalSuffix;
+
+    /**
+     * @var string
+     */
+    public $modifier;
 
     /**
      * FlightIdentification constructor.

@@ -37,12 +37,13 @@ class SessionHandlerParams
     /**
      * Full file & path to the WSDL file to be used
      *
-     * @var string
+     * @var string[]
      */
-    public $wsdl;
+    public $wsdl = [];
 
     /**
      * Which Soap Header version to be used
+     *
      * @var string
      */
     public $soapHeaderVersion = Client::HEADER_V4;
@@ -68,11 +69,29 @@ class SessionHandlerParams
     public $logger;
 
     /**
+     * Override the default \SoapClient options
+     *
+     * used when constructing \SoapClient
+     *
+     * See Amadeus\Client\Session\Handler\Base::$soapClientOptions for defaults
+     *
+     * @var array
+     */
+    public $soapClientOptions = [];
+
+    /**
      * Overridden soap client
      *
      * @var \SoapClient
      */
     public $overrideSoapClient;
+
+    /**
+     * Override SoapClient WSDL name
+     *
+     * @var string
+     */
+    public $overrideSoapClientWsdlName;
 
     /**
      * @param array $params
@@ -88,26 +107,113 @@ class SessionHandlerParams
      * @param array $params
      * @return void
      */
-    protected function loadFromArray(array $params) {
+    protected function loadFromArray(array $params)
+    {
         if (count($params) > 0) {
             if (isset($params['soapHeaderVersion'])) {
                 $this->soapHeaderVersion = $params['soapHeaderVersion'];
             }
-            $this->wsdl = (isset($params['wsdl'])) ? $params['wsdl'] : null;
-            $this->stateful = (isset($params['stateful'])) ? $params['stateful'] : true;
-            $this->logger = (isset($params['logger']) && $params['logger'] instanceof LoggerInterface) ? $params['logger'] : null;
 
-            if (isset($params['authParams'])) {
-                if ($params['authParams'] instanceof AuthParams) {
-                    $this->authParams = $params['authParams'];
-                } elseif (is_array($params['authParams'])) {
-                    $this->authParams = new AuthParams($params['authParams']);
-                }
-            }
+            $this->loadWsdl($params);
+            $this->loadStateful($params);
+            $this->loadLogger($params);
 
-            if (isset($params['overrideSoapClient']) && $params['overrideSoapClient'] instanceof \SoapClient) {
-                $this->overrideSoapClient = $params['overrideSoapClient'];
+            $this->loadAuthParams($params);
+
+            $this->loadOverrideSoapClient($params);
+            $this->loadSoapClientOptions($params);
+        }
+    }
+
+    /**
+     * Load WSDL from config
+     *
+     * Either a single WSDL location as string or a list of WSDL locations as array.
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadWsdl($params)
+    {
+        if (isset($params['wsdl'])) {
+            if (is_string($params['wsdl'])) {
+                $this->wsdl = [
+                    $params['wsdl']
+                ];
+            } elseif (is_array($params['wsdl'])) {
+                $this->wsdl = $params['wsdl'];
             }
+        }
+    }
+
+    /**
+     * Load Stateful param from config
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadStateful($params)
+    {
+        $this->stateful = (isset($params['stateful'])) ? $params['stateful'] : true;
+    }
+
+
+    /**
+     * Load Logger from config
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadLogger($params)
+    {
+        if ((isset($params['logger']) && $params['logger'] instanceof LoggerInterface)) {
+            $this->logger = $params['logger'];
+        }
+    }
+
+    /**
+     * Load Authentication parameters from config
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadAuthParams($params)
+    {
+        if (isset($params['authParams'])) {
+            if ($params['authParams'] instanceof AuthParams) {
+                $this->authParams = $params['authParams'];
+            } elseif (is_array($params['authParams'])) {
+                $this->authParams = new AuthParams($params['authParams']);
+            }
+        }
+    }
+
+    /**
+     * Load Override SoapClient parameter from config
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadOverrideSoapClient($params)
+    {
+        if (isset($params['overrideSoapClient']) && $params['overrideSoapClient'] instanceof \SoapClient) {
+            $this->overrideSoapClient = $params['overrideSoapClient'];
+        }
+        if (isset($params['overrideSoapClientWsdlName'])) {
+            $this->overrideSoapClientWsdlName = $params['overrideSoapClientWsdlName'];
+        }
+    }
+
+    /**
+     * Load SoapClient Options from config
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadSoapClientOptions($params)
+    {
+        if (isset($params['soapClientOptions']) && is_array($params['soapClientOptions'])) {
+            $this->soapClientOptions = $params['soapClientOptions'];
         }
     }
 }

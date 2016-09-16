@@ -22,26 +22,99 @@
 
 namespace Amadeus\Client\Struct\Offer;
 
+use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\Offer\ConfirmCar\AddressUsageDetails;
+use Amadeus\Client\Struct\Offer\ConfirmCar\DeliveryAndCollection;
+use Amadeus\Client\Struct\Offer\ConfirmCar\PaxTattooNbr;
+use Amadeus\Client\Struct\Offer\ConfirmCar\PnrInfo;
+use Amadeus\Client\Struct\Offer\ConfirmCar\TattooReference;
+use Amadeus\Client\Struct\Pnr\Retrieve\ReservationOrProfileIdentifier;
 
 /**
- * ConfirmCar
+ * Offer_ConfirmCarOffer
  *
  * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class ConfirmCar extends BaseWsMessage
 {
-    //TODO
+    /**
+     * @var ConfirmCar\PnrInfo
+     */
+    public $pnrInfo;
+
+    public $bookingType;
+
+    /**
+     * @var ConfirmCar\DeliveryAndCollection[]
+     */
+    public $deliveryAndCollection = [];
+
+    public $vehicleInformation;
+
+    public $arrivalInfo;
+
+    public $fFlyerNbr;
+
+    public $rateInfo;
+
+    public $payment;
+
+    public $attributeData;
+
+    public $billingData;
+
+    public $supleInfo;
+
+    public $estimatedDistance;
+
+    public $agentInformation;
+
+    public $trackingOpt;
+
+    public $customerEmail;
+
+    public $retryProcess;
+
+    public $ruleReference;
+
+    public $action;
 
     /**
      * ConfirmCar constructor.
      *
      * @param OfferConfirmCarOptions $params
+     * @throws MessageVersionUnsupportedException
      */
     public function __construct($params)
     {
-        //TODO
+        $this->pnrInfo = new PnrInfo();
+
+        if (!empty($params->passengerTattoo)) {
+            $this->pnrInfo->paxTattooNbr = new PaxTattooNbr($params->passengerTattoo);
+        }
+
+        if (!empty($params->offerTattoo)) {
+            $this->pnrInfo->tattooReference = new TattooReference($params->offerTattoo);
+        }
+
+        if (!empty($params->recordLocator)) {
+            $this->pnrInfo->pnrRecLoc = new ReservationOrProfileIdentifier($params->recordLocator);
+        }
+
+        if (!empty($params->pickUpInfo)) {
+            $this->deliveryAndCollection[] = new DeliveryAndCollection(
+                AddressUsageDetails::PURPOSE_COLLECTION,
+                $params->pickUpInfo
+            );
+        }
+        if (!empty($params->dropOffInfo)) {
+            $this->deliveryAndCollection[] = new DeliveryAndCollection(
+                AddressUsageDetails::PURPOSE_DELIVERY,
+                $params->dropOffInfo
+            );
+        }
     }
 }

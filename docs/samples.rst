@@ -2,103 +2,7 @@
 EXAMPLES
 ========
 
-Here are some examples of how you can handle some problems you might encounter and how to send specific messages.
-
-***********************************************
-Switching between stateful & stateless messages
-***********************************************
-
-If you do not require an active context in your session, you're better off using stateless messages.
-
-However, for many operations, you'll need an active context (a PNR context, a pricing context, ...).
-
-You can easily switch from stateful to stateless messages at runtime with:
-
-.. code-block:: php
-
-    $client->setStateful(false); //Enable stateless messages
-
-    $client->setStateful(true); //Enable stateful messages
-
-
-It's also possible to specify the default stateful setting at construction time of the client **(stateful is enabled by default)**:
-
-.. code-block:: php
-
-    use Amadeus\Client;
-    use Amadeus\Client\Params;
-
-    $params = new Params([
-        'sessionHandlerParams' => [
-            //... other parameters omitted for clarity ...
-            'stateful' => false,
-        ]
-    ]);
-
-    $client = new Client($params);
-
-
-*************************
-Ending a stateful session
-*************************
-
-After doing multiple calls with a stateful session, there are two ways to end the session:
-
-- do a Security_SignOut call:
-
-.. code-block:: php
-
-    $client->signOut(); //Terminates an active stateful session. There is no active session with stateless messages.
-
-- set an 'endSession' message option on the last call you want to make:
-
-.. code-block:: php
-
-    $client->pnrRetrieve(
-        new PnrRetrieveOptions(['recordLocator' => 'ABC123']),
-        ['endSession' => true]
-    );
-
-
-*********************
-Handling the response
-*********************
-
-Sometimes it's useful if the result from the SOAP call gets returned as a PHP object,
-sometimes a string containing the XML document of the SOAP-BODY is more useful.
-
-For example, when trying to extract specific information from a PNR, it can be useful to load the
-PNR_Reply as a ``\DOMDocument`` and query it using a ``\DOMXPath`` object.
-
-The library supports this through the message option 'asString':
-
-- Retrieving a PNR's contents and requesting the result as a string:
-
-.. code-block:: php
-
-    $client->pnrRetrieve(
-        new PnrRetrieveOptions(['recordLocator' => 'ABC123']),
-        ['asString' => true] //This is the default setting for the pnrRetrieve() method
-    );
-
-- Retrieving a PNR's contents and requesting the result as a PHP Object:
-
-.. code-block:: php
-
-    $client->pnrRetrieve(
-        new PnrRetrieveOptions(['recordLocator' => 'ABC123']),
-        ['asString' => false]
-    );
-
-******
-Errors
-******
-
-The Amadeus web services can be tricky with regards to error detection. In most verbs, you have to look for the presence of error nodes in the response to see if everything went allright.
-
-We try to ease your pain a little by analyzing the messages we support and look for error nodes. If any are found, we throw them as exceptions.
-
-To override this behaviour, look at the ``Amadeus\Client\ResponseHandler\ResponseHandlerInterface``.
+Here are some examples of how to send specific messages.
 
 ***
 PNR
@@ -175,6 +79,8 @@ Retrieving a PNR:
         new PnrRetrieveOptions(['recordLocator' => 'ABC123'])
     );
 
+**Note:** Retrieving a PNR this way is identical to performing a ``RT<recordlocator>`` cryptic entry in Amadeus Selling Platform:
+This will implicitly place the PNR in the session's context *(if this action is performed in a stateful session)*.
 
 ----------------------
 PNR_RetrieveAndDisplay
@@ -211,7 +117,7 @@ Cancel the entire itinerary of the PNR in context and do an end transact to save
     );
 
 
-Cancel a PNR element with tatoo number 15 and do an End and Retrieve (ER) to receive the resulting PNR_Reply:
+Cancel a PNR element with tattoo number 15 and do an End and Retrieve (ER) to receive the resulting PNR_Reply:
 
 .. code-block:: php
 
@@ -219,7 +125,7 @@ Cancel a PNR element with tatoo number 15 and do an End and Retrieve (ER) to rec
 
     $cancelReply = $client->pnrCancel(
         new PnrCancelOptions([
-            'elementsByTatoo' => [15],
+            'elementsByTattoo' => [15],
             'actionCode' => PnrCancelOptions::ACTION_END_TRANSACT_RETRIEVE
         ])
     );
@@ -233,7 +139,7 @@ Same as before, but this time without having a PNR in context (you must provide 
     $cancelReply = $client->pnrCancel(
         new PnrCancelOptions([
             'recordLocator' => 'ABC123,
-            'elementsByTatoo' => [15],
+            'elementsByTattoo' => [15],
             'actionCode' => PnrCancelOptions::ACTION_END_TRANSACT_RETRIEVE
         ])
     );
@@ -261,6 +167,106 @@ Remove passenger with passenger reference 2 from the PNR:
             'passengers' => [2]
         ])
     );
+
+------------------
+PNR_DisplayHistory
+------------------
+
+Retrieve the full history of a PNR:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
+
+    $historyResult = $client->pnrDisplayHistory(
+        new PnrDisplayHistoryOptions([
+            'recordLocator' => 'ABC123'
+        ])
+    );
+
+Retrieve the PNR history envelopes containing RF lines only:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
+    use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\Predicate;
+    use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\PredicateDetail;
+
+    $historyResult = $client->pnrDisplayHistory(
+        new PnrDisplayHistoryOptions([
+            'recordLocator' => 'ABC123',
+            'predicates' => [
+                new Predicate([
+                    'details' => [
+                        new PredicateDetail([
+                            'option' => PredicateDetail::OPT_KEEP_HISTORY_MATCHING_CRITERION,
+                            'associatedOption' => PredicateDetail::ASSOC_OPT_PREDICATE_TYPE
+                        ]),
+                        new PredicateDetail([
+                            'option' => PredicateDetail::OPT_DISPLAY_ENVELOPES_CONTAINING_RF_LINE_ONLY,
+                            'associatedOption' => PredicateDetail::ASSOC_OPT_MATCH_QUEUE_UPDATE
+                        ]),
+                    ]
+                ])
+            ]
+        ])
+    );
+
+Retrieve the PNR history - return maximum 20 results:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
+
+    $historyResult = $client->pnrDisplayHistory(
+        new PnrDisplayHistoryOptions([
+            'recordLocator' => 'ABC123',
+            'scrollingMax' => 20
+        ])
+    );
+
+Retrieve the PNR history for AIR segments and exclude Queue updates:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
+    use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\Predicate;
+    use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\PredicateDetail;
+    use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\PredicateType;
+
+   $historyResult = $client->pnrDisplayHistory(
+        new PnrDisplayHistoryOptions([
+            'recordLocator' => 'ABC123',
+            'predicates' => [
+                new Predicate([
+                    'details' => [
+                        new PredicateDetail([
+                            'option' => PredicateDetail::OPT_KEEP_HISTORY_MATCHING_CRITERION,
+                            'associatedOption' => PredicateDetail::ASSOC_OPT_PREDICATE_TYPE
+                        ]),
+                    ],
+                    'types' => [
+                        new PredicateType([
+                            'elementName' => 'AIR'
+                        ])
+                    ]
+                ]),
+                new Predicate([
+                    'details' => [
+                        new PredicateDetail([
+                            'option' => PredicateDetail::OPT_DISCARD_HISTORY_MATCHING_CRITERION,
+                            'associatedOption' => PredicateDetail::ASSOC_OPT_MATCH_QUEUE_UPDATE
+                        ]),
+                        new PredicateDetail([
+                            'option' => PredicateDetail::OPT_DISPLAY_HISTORY_WITH_QUEUEING_UPDATES,
+                            'associatedOption' => PredicateDetail::ASSOC_OPT_PREDICATE_TYPE
+                        ]),
+                    ],
+                ])
+            ]
+        ])
+   );
+
 
 *****
 Queue
@@ -409,6 +415,52 @@ Do a pricing on the PNR in context:
         ])
     );
 
+
+---------------------------------
+Fare_InformativePricingWithoutPNR
+---------------------------------
+
+Do an informative pricing on BRU-LIS flight with 2 adults and no special pricing options:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
+
+    $informativePricingResponse = $client->fareInformativePricingWithoutPnr(
+        new FareInformativePricingWithoutPnrOptions([
+            'passengers' => [
+                new Passenger([
+                    'tattoos' => [1, 2],
+                    'type' => Passenger::TYPE_ADULT
+                ])
+            ],
+            'segments' => [
+                new Segment([
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-11-21 09:15:00'),
+                    'from' => 'BRU',
+                    'to' => 'LIS',
+                    'marketingCompany' => 'TP',
+                    'flightNumber' => '4652',
+                    'bookingClass' => 'Y',
+                    'segmentTattoo' => 1,
+                    'groupNumber' => 1
+                ]),
+                new Segment([
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-11-28 14:20:00'),
+                    'from' => 'LIS',
+                    'to' => 'BRU',
+                    'marketingCompany' => 'TP',
+                    'flightNumber' => '3581',
+                    'bookingClass' => 'C',
+                    'segmentTattoo' => 2,
+                    'groupNumber' => 2
+                ])
+            ]
+        ])
+    );
+
 ---------------
 Fare_CheckRules
 ---------------
@@ -461,10 +513,63 @@ Convert 200 Euro to US Dollars in the exchange rate of 25th December 2015 *(this
         ])
     );
 
-
 ***
 Air
 ***
+
+---------------------
+Air_MultiAvailability
+---------------------
+
+To request a simple Air_MultiAvailability:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
+    use Amadeus\Client\RequestOptions\Air\MultiAvailability\RequestOptions;
+    use Amadeus\Client\RequestOptions\Air\MultiAvailability\FrequentTraveller;
+
+    $opt = new AirMultiAvailabilityOptions([
+        'actionCode' => AirMultiAvailabilityOptions::ACTION_AVAILABILITY,
+        'requestOptions' => [
+            new RequestOptions([
+                'departureDate' => \DateTime::createFromFormat('Ymd-His', '20170320-000000', new \DateTimeZone('UTC')),
+                'from' => 'BRU',
+                'to' => 'LIS',
+                'requestType' => RequestOptions::REQ_TYPE_NEUTRAL_ORDER
+            ])
+        ]
+    ]);
+
+    $availabilityResult = $client->airMultiAvailability($opt);
+
+Nice - New York Schedule request, connection via Paris, flying on Air France, for 5 people,
+in premium or regular Economy, sort by arrival time:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
+    use Amadeus\Client\RequestOptions\Air\MultiAvailability\RequestOptions;
+    use Amadeus\Client\RequestOptions\Air\MultiAvailability\FrequentTraveller;
+
+    $opt = new AirMultiAvailabilityOptions([
+        'actionCode' => AirMultiAvailabilityOptions::ACTION_SCHEDULE,
+        'requestOptions' => [
+             new RequestOptions([
+                    'departureDate' => \DateTime::createFromFormat('Ymd-His', '20170215-140000', new \DateTimeZone('UTC')),
+                    'from' => 'NCE',
+                    'to' => 'NYC',
+                    'cabinCode' => RequestOptions::CABIN_ECONOMY_PREMIUM_MAIN,
+                    'includedConnections' => ['PAR'],
+                    'nrOfSeats' => 5,
+                    'includedAirlines' => ['AF'],
+                    'requestType' => RequestOptions::REQ_TYPE_BY_ARRIVAL_TIME
+                ])
+        ]
+    ]);
+
+    $availabilityResult = $client->airMultiAvailability($opt);
+
 
 --------------------------
 Air_SellFromRecommendation
@@ -521,6 +626,73 @@ Get flight info for a specific flight:
         ])
     );
 
+-------------------
+Air_RetrieveSeatMap
+-------------------
+
+Get seat map information for a specific flight:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
+
+    $seatmapInfo = $client->airRetrieveSeatMap(
+        new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'departureDate' => \DateTime::createFromFormat('Ymd', '20170419'),
+                'departure' => 'BRU',
+                'arrival' => 'FCO',
+                'airline' => 'SN',
+                'flightNumber' => '3175'
+            ])
+        ])
+    );
+
+Get seat map information for a specific flight, specifying a specific booking class:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
+
+    $seatmapInfo = $client->airRetrieveSeatMap(
+        new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'departureDate' => \DateTime::createFromFormat('Ymd', '20170419'),
+                'departure' => 'BRU',
+                'arrival' => 'FCO',
+                'airline' => 'SN',
+                'flightNumber' => '3175',
+                'bookingClass' => 'C'
+            ])
+        ])
+    );
+
+Get seat map information for a specific flight and specify Frequent Flyer:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FrequentFlyer;
+
+    $seatmapInfo = $client->airRetrieveSeatMap(
+        new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'departureDate' => \DateTime::createFromFormat('Ymd', '20170419'),
+                'departure' => 'BRU',
+                'arrival' => 'FCO',
+                'airline' => 'SN',
+                'flightNumber' => '3175'
+            ]),
+            'frequentFlyer' => new FrequentFlyer([
+                'company' => 'SN',
+                'cardNumber' => '4099913025539611',
+                'tierLevel' => 1
+            ])
+        ])
+    );
 
 ******
 Ticket
@@ -554,6 +726,89 @@ Ticket_DisplayTST
 View the TST's of a PNR:
 
 
+***********
+DocIssuance
+***********
+
+-----------------------
+DocIssuance_IssueTicket
+-----------------------
+
+Issue ticket for an entire PNR as e-Ticket (TTP/ET):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
+
+    $issueTicketResponse = $client->docIssuanceIssueTicket(
+        new DocIssuanceIssueTicketOptions([
+            'options' => [
+                DocIssuanceIssueTicketOptions::OPTION_ETICKET
+            ]
+        ])
+    );
+
+Issue e-Ticket for one single TST and retrieve PNR (TTP/T1/ET/RT):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
+
+    $issueTicketResponse = $client->docIssuanceIssueTicket(
+        new DocIssuanceIssueTicketOptions([
+            'options' => [
+                DocIssuanceIssueTicketOptions::OPTION_ETICKET,
+                DocIssuanceIssueTicketOptions::OPTION_RETRIEVE_PNR
+            ],
+            'tsts' => [1]
+        ])
+    );
+
+****
+Info
+****
+---------------------
+Info_EncodeDecodeCity
+---------------------
+
+Get information about IATA code 'OPO':
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
+
+    $infoResponse = $client->infoEncodeDecodeCity(
+        new InfoEncodeDecodeCityOptions([
+            'locationCode' => 'OPO'
+        ])
+    );
+
+Do a phonetic search for locations sounding like "Brussels":
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
+
+    $infoResponse = $client->infoEncodeDecodeCity(
+        new InfoEncodeDecodeCityOptions([
+            'locationName' => 'brussels',
+            'searchMode' => InfoEncodeDecodeCityOptions::SEARCHMODE_PHONETIC
+        ])
+    );
+
+Find all train stations in New York:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
+
+    $infoResponse = $client->infoEncodeDecodeCity(
+        new InfoEncodeDecodeCityOptions([
+            'locationCode' => 'NYC',
+            'selectResult' => InfoEncodeDecodeCityOptions::SELECT_TRAIN_STATIONS
+        ])
+    );
+
 *****
 Offer
 *****
@@ -576,7 +831,7 @@ Verify if an offer is still valid:
 ---------------------
 Offer_ConfirmAirOffer
 ---------------------
-Confirm a given AIR offer by providing office reference / tatoo:
+Confirm a given AIR offer by providing office reference / tattoo:
 
 .. code-block:: php
 
@@ -584,7 +839,7 @@ Confirm a given AIR offer by providing office reference / tatoo:
 
     $response = $client->offerConfirmAir(
         new OfferConfirmAirOptions([
-            'tatooNumber' => 1
+            'tattooNumber' => 1
         ])
     );
 
@@ -592,6 +847,60 @@ Confirm a given AIR offer by providing office reference / tatoo:
 Offer_ConfirmHotelOffer
 -----------------------
 Confirm a given HOTEL offer:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
+    use Amadeus\Client\RequestOptions\Offer\PaymentDetails;
+
+    $opt = new OfferConfirmHotelOptions([
+        'recordLocator' => 'ABC123',
+        'offerReference' => 2,
+        'passengers' => [1],
+        'originatorId' => '123456',
+        'paymentType' => OfferConfirmHotelOptions::PAYMENT_GUARANTEED,
+        'formOfPayment' => OfferConfirmHotelOptions::FOP_CREDIT_CARD,
+        'paymentDetails' => new PaymentDetails([
+            'ccCardNumber' => '4444333322221111',
+            'ccCardHolder' => 'David Bowie',
+            'ccExpiry' => '1117',
+            'ccVendor' => 'AX',
+        ])
+    ]);
+
+    $response = $client->offerConfirmHotel($opt);
+
+---------------------
+Offer_ConfirmCarOffer
+---------------------
+Confirm a given CAR offer:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
+    use Amadeus\Client\RequestOptions\Offer\CarLocationInfo;
+
+    $opt = new OfferConfirmCarOptions([
+        'passengerTattoo' => 1,
+        'offerTattoo' => 2,
+        'recordLocator' => 'ABC123',
+        'pickUpInfo' => new CarLocationInfo([
+            'address' => 'RUE DE LA LIBERATION',
+            'city' => 'NICE',
+            'zipCode' => '06000',
+            'countryCode' => 'FR',
+            'phoneNumber' => '1234567890'
+        ]),
+        'dropOffInfo' => new CarLocationInfo([
+            'address' => 'ROUTE DE VALBONNE',
+            'city' => 'BIOT',
+            'zipCode' => '06410',
+            'countryCode' => 'FR',
+            'phoneNumber' => '0123456789'
+        ]),
+    ]);
+
+    $response = $client->offerConfirmCar($opt);
 
 ********
 MiniRule
@@ -607,7 +916,7 @@ Get MiniRules for a pricing in context (either a TST pricing, Offers or a pricin
     use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingRecOptions;
     use Amadeus\Client\RequestOptions\MiniRule\Pricing;
 
-    $miniRules = $client->miniRuleGetFromPricingRec(
+    $miniRulesResponse = $client->miniRuleGetFromPricingRec(
         new MiniRuleGetFromPricingRecOptions([
             'pricings' => [
                 new Pricing([
@@ -656,4 +965,26 @@ Request a basic Extreme Search result:
     ]);
 
     $extremeSearchResult = $client->priceXplorerExtremeSearch($opt);
+
+*******************************
+SalesReports_DisplayQueryReport
+*******************************
+
+Request a sales report from a certain date to another date, issued in all offices sharing the same IATA number;
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\SalesReportsDisplayQueryReportOptions;
+
+    $opt = new SalesReportsDisplayQueryReportOptions([
+        'requestOptions' => [
+            SalesReportsDisplayQueryReportOptions::SELECT_ALL_OFFICES_SHARING_IATA_NR
+        ],
+        'agencySourceType' => SalesReportsDisplayQueryReportOptions::AGENCY_SRC_REPORTING_OFFICE,
+        'agencyIataNumber' => '23491193',
+        'startDate' => \DateTime::createFromFormat('Ymd', '20150101', new \DateTimeZone('UTC')),
+        'endDate' => \DateTime::createFromFormat('Ymd', '20160331', new \DateTimeZone('UTC'))
+    ]);
+
+    $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
 

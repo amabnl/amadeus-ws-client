@@ -26,6 +26,7 @@ namespace Amadeus\Client\RequestOptions;
  * TicketCreateTstFromPricingOptions
  *
  * @package Amadeus\Client\RequestOptions
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class TicketCreateTstFromPricingOptions extends Base
 {
@@ -40,7 +41,6 @@ class TicketCreateTstFromPricingOptions extends Base
      * This PNR record locator is used for tracing purpose, no internal retrieve
      *
      * @var string
-     * @deprecated
      */
     public $informationalRecordLocator;
 }

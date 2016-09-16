@@ -26,6 +26,7 @@ namespace Amadeus\Client\RequestOptions;
  * PnrCancelOptions
  *
  * @package Amadeus\Client\RequestOptions
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class PnrCancelOptions extends PnrBase
 {
@@ -57,7 +58,6 @@ class PnrCancelOptions extends PnrBase
      */
     public $actionCode = 0;
 
-
     /**
      * All Passengers by name element number to be removed
      *
@@ -66,11 +66,11 @@ class PnrCancelOptions extends PnrBase
     public $passengers = [];
 
     /**
-     * All elements by Tatoo number to be removed
+     * All elements by Tattoo number to be removed
      *
      * @var int[]
      */
-    public $elementsByTatoo = [];
+    public $elementsByTattoo = [];
 
     /**
      * Set to true if you want to cancel the entire itinerary of the PNR.

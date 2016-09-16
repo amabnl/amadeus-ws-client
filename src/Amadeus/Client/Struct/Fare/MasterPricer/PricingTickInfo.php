@@ -46,5 +46,4 @@ class PricingTickInfo
     public $journeyOriginPoint;
 
     public $corporateId;
-
 }

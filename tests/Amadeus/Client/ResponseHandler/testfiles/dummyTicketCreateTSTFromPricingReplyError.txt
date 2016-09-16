@@ -1,0 +1,13 @@
+<Ticket_CreateTSTFromPricingReply xmlns="http://xml.amadeus.com/TAUTCR_04_1_1A">
+    <applicationError>
+        <applicationErrorInfo>
+            <applicationErrorDetail>
+                <applicationErrorCode>CM01959</applicationErrorCode>
+                <codeListQualifier>EC</codeListQualifier>
+            </applicationErrorDetail>
+        </applicationErrorInfo>
+        <errorText>
+            <errorFreeText>NEED PNR</errorFreeText>
+        </errorText>
+    </applicationError>
+</Ticket_CreateTSTFromPricingReply>

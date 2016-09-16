@@ -30,43 +30,43 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class DateAndTimeDetails
 {
-	const QUAL_DATEOFDEP = "D";
-	const QUAL_ENDDATE = "E";
-	const QUAL_RETURNDATE = "R";
-	const QUAL_STARTDATE = "S";
-	
-	/**
-	 * @var string self::QUAL_*
-	 */
-	public $qualifier;
-	
-	/**
-	 * @var string Format: ddmmyy
-	 */
-	public $date;
-	
-	/**
-	 * @var string
-	 */
-	public $time;
-	
-	/**
-	 * @var string
-	 */
-	public $otherQualifier;
-	
-	/**
-	 * @var string
-	 */
-	public $otherTime;
+    const QUAL_DATEOFDEP = "D";
+    const QUAL_ENDDATE = "E";
+    const QUAL_RETURNDATE = "R";
+    const QUAL_STARTDATE = "S";
+    
+    /**
+     * @var string self::QUAL_*
+     */
+    public $qualifier;
+    
+    /**
+     * @var string Format: ddmmyy
+     */
+    public $date;
+    
+    /**
+     * @var string
+     */
+    public $time;
+    
+    /**
+     * @var string
+     */
+    public $otherQualifier;
+    
+    /**
+     * @var string
+     */
+    public $otherTime;
 
-	/**
-	 * @param string $qualifier self::QUAL_*
-	 * @param \DateTime $date
-	 */
-	public function __construct($qualifier, $date)
-	{
-		$this->qualifier = $qualifier;
-		$this->date = $date->format('dmy');
-	}
+    /**
+     * @param string $qualifier self::QUAL_*
+     * @param \DateTime $date
+     */
+    public function __construct($qualifier, $date)
+    {
+        $this->qualifier = $qualifier;
+        $this->date = $date->format('dmy');
+    }
 }

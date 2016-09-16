@@ -71,6 +71,5 @@ class CcInfo
         $this->cardNumber = $number;
         $this->expiryDate = $expiry;
         $this->securityId = $secId;
-
     }
 }

@@ -44,7 +44,6 @@ class SecurityHostedUser
     public function __construct($pseudoCityCode, $requestorType = "U", $posType = 1, $agentDutyCode = null)
     {
         $data = [
-            /*"_" => "",*/
             "RequestorType" => $requestorType,
             "PseudoCityCode" => $pseudoCityCode,
             "POS_Type" => $posType
@@ -54,7 +53,6 @@ class SecurityHostedUser
             $data["AgentDutyCode"] = $agentDutyCode;
         }
 
-        //$this->UserID = new \SoapVar($data, SOAP_ENC_OBJECT, null, 'http://xml.amadeus.com/2010/06/Security_v1');
         $this->UserID = new UserId($data);
     }
 }

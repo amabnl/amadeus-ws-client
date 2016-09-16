@@ -1,0 +1,9 @@
+<Queue_MoveItemReply xmlns="http://xml.amadeus.com/QUQMUQ_03_1_1A">
+    <errorReturn>
+        <errorDefinition>
+            <errorDetails>
+                <errorCode>79D</errorCode>
+            </errorDetails>
+        </errorDefinition>
+    </errorReturn>
+</Queue_MoveItemReply>

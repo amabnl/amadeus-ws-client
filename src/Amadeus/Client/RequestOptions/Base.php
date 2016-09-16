@@ -36,5 +36,4 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 abstract class Base extends LoadParamsFromArray implements RequestOptionsInterface
 {
-
 }

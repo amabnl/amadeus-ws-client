@@ -27,6 +27,7 @@ use Amadeus\Client\Params;
 use Amadeus\Client\RequestCreator\RequestCreatorInterface;
 use Amadeus\Client\RequestOptions;
 use Amadeus\Client\ResponseHandler\ResponseHandlerInterface;
+use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\HandlerFactory;
 use Amadeus\Client\RequestCreator\Factory as RequestCreatorFactory;
 use Amadeus\Client\Session\Handler\HandlerInterface;
@@ -36,14 +37,10 @@ use Amadeus\Client\ResponseHandler\Base as ResponseHandlerBase;
  * Amadeus Web Service Client.
  *
  * TODO:
- * - have a solution for session pooling for stateful sessions (soapheader 1 & 2)
- * - support older versions of SoapHeader (1, 2)
- * - implement calls for full online booking flow:
- *      SalesReports_DisplayQueryReport
- *      Air_MultiAvailability
- *
+ * - support older versions of SoapHeader (1)
  * - implement more PNR_AddMultiElements:
  *      OSI segment
+ * - implement messages on supported messages todo section
  *
  * @package Amadeus
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -69,6 +66,7 @@ class Client
      * @var string
      */
     const version = "0.0.1dev";
+
     /**
      * An identifier string for the library (to be used in Received From entries)
      *
@@ -98,6 +96,18 @@ class Client
     protected $responseHandler;
 
     /**
+     * Authentication parameters
+     *
+     * @var Params\AuthParams
+     */
+    protected $authParams;
+
+    /**
+     * @var string
+     */
+    protected $lastMessage;
+
+    /**
      * Set the session as stateful (true) or stateless (false)
      *
      * @param bool $newStateful
@@ -122,7 +132,17 @@ class Client
      */
     public function getLastRequest()
     {
-        return $this->sessionHandler->getLastRequest();
+        return $this->sessionHandler->getLastRequest($this->lastMessage);
+    }
+
+    /**
+     * Get the last raw XML message that was received
+     *
+     * @return string|null
+     */
+    public function getLastResponse()
+    {
+        return $this->sessionHandler->getLastResponse($this->lastMessage);
     }
 
     /**
@@ -134,19 +154,22 @@ class Client
      *
      * @return array|null
      */
-    public function getSessionInfo()
+    public function getSessionData()
     {
         return $this->sessionHandler->getSessionData();
     }
 
     /**
-     * Get the last raw XML message that was received
+     * Restore a previously used session
      *
-     * @return string|null
+     * To be used when implementing your own session pooling system on legacy Soap Header 2 applications.
+     *
+     * @param array $sessionData
+     * @return bool
      */
-    public function getLastResponse()
+    public function setSessionData(array $sessionData)
     {
-        return $this->sessionHandler->getLastResponse();
+        return $this->sessionHandler->setSessionData($sessionData);
     }
 
     /**
@@ -156,6 +179,13 @@ class Client
      */
     public function __construct($params)
     {
+        if ($params->authParams instanceof Params\AuthParams) {
+            $this->authParams = $params->authParams;
+            if (isset($params->sessionHandlerParams) && $params->sessionHandlerParams instanceof Params\SessionHandlerParams) {
+                $params->sessionHandlerParams->authParams = $this->authParams;
+            }
+        }
+
         $this->sessionHandler = $this->loadSessionHandler(
             $params->sessionHandler,
             $params->sessionHandlerParams
@@ -175,23 +205,42 @@ class Client
     }
 
     /**
+     * Authenticate.
+     *
+     * Parameters were provided at construction time (sessionhandlerparams)
+     *
+     * @return Result
+     * @throws Exception
+     */
+    public function securityAuthenticate()
+    {
+        $msgName = 'Security_Authenticate';
+
+        return $this->callMessage(
+            $msgName,
+            new RequestOptions\SecurityAuthenticateOptions(
+                $this->authParams
+            ),
+            [],
+            false
+        );
+    }
+
+    /**
      * Terminate a session - only applicable to non-stateless mode.
      *
-     * @return \stdClass
+     * @return Result
      * @throws Exception
      */
     public function securitySignOut()
     {
         $msgName = 'Security_SignOut';
-        $messageOptions = $this->makeMessageOptions([], false, true);
 
-        return $this->sessionHandler->sendMessage(
+        return $this->callMessage(
             $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                new RequestOptions\SecuritySignOutOptions()
-            ),
-            $messageOptions
+            new RequestOptions\SecuritySignOutOptions(),
+            [],
+            true
         );
     }
 
@@ -201,28 +250,18 @@ class Client
      * By default, the result will be the PNR_Reply XML as string.
      * That way you can easily parse the PNR's contents with XPath.
      *
-     * Set $responseAsString FALSE to get the response as a PHP object.
-     *
      * https://webservices.amadeus.com/extranet/viewService.do?id=27&flavourId=1&menuId=functional
      *
      * @param RequestOptions\PnrRetrieveOptions $options
      * @param array $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_Reply as a PHP object.
-     * @return string|\stdClass|null
+     * @return Result
      * @throws Exception
      */
     public function pnrRetrieve(RequestOptions\PnrRetrieveOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_Retrieve';
-        $messageOptions = $this->makeMessageOptions($messageOptions, true);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -230,21 +269,13 @@ class Client
      *
      * @param RequestOptions\PnrCreatePnrOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function pnrCreatePnr(RequestOptions\PnrCreatePnrOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_AddMultiElements';
-        $messageOptions = $this->makeMessageOptions($messageOptions, true);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -255,21 +286,13 @@ class Client
      * @todo implement message creation - maybe split up in separate Create & Modify PNR?
      * @param RequestOptions\PnrAddMultiElementsOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function pnrAddMultiElements(RequestOptions\PnrAddMultiElementsOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_AddMultiElements';
-        $messageOptions = $this->makeMessageOptions($messageOptions, true);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -286,22 +309,14 @@ class Client
      *
      * @param RequestOptions\PnrRetrieveAndDisplayOptions $options Amadeus Record Locator for PNR
      * @param array $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_RetrieveAndDisplayReply as a PHP object.
-     * @return string|\stdClass|null
+     * @return Result
      * @throws Exception
      **/
     public function pnrRetrieveAndDisplay(RequestOptions\PnrRetrieveAndDisplayOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_RetrieveAndDisplay';
-        $messageOptions = $this->makeMessageOptions($messageOptions, true);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -309,21 +324,27 @@ class Client
      *
      * @param RequestOptions\PnrCancelOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function pnrCancel(RequestOptions\PnrCancelOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_Cancel';
-        $messageOptions = $this->makeMessageOptions($messageOptions, true);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * PNR_DisplayHistory
+     *
+     * @param RequestOptions\PnrDisplayHistoryOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function pnrDisplayHistory(RequestOptions\PnrDisplayHistoryOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PNR_DisplayHistory';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -333,25 +354,13 @@ class Client
      *
      * @param RequestOptions\QueueListOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function queueList(RequestOptions\QueueListOptions $options, $messageOptions = [])
     {
         $msgName = 'Queue_List';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        $wsResult = $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
-
-        $this->responseHandler->analyzeResponse($this->getLastResponse(), $msgName);
-
-        return $wsResult;
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -359,21 +368,13 @@ class Client
      *
      * @param RequestOptions\QueuePlacePnrOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function queuePlacePnr(RequestOptions\QueuePlacePnrOptions $options, $messageOptions = [])
     {
         $msgName = 'Queue_PlacePNR';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -381,21 +382,13 @@ class Client
      *
      * @param RequestOptions\QueueRemoveItemOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function queueRemoveItem(RequestOptions\QueueRemoveItemOptions $options, $messageOptions = [])
     {
         $msgName = 'Queue_RemoveItem';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -403,21 +396,13 @@ class Client
      *
      * @param RequestOptions\QueueMoveItemOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function queueMoveItem(RequestOptions\QueueMoveItemOptions $options, $messageOptions = [])
     {
         $msgName = 'Queue_MoveItem';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -427,21 +412,13 @@ class Client
      *
      * @param RequestOptions\OfferVerifyOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function offerVerify(RequestOptions\OfferVerifyOptions $options, $messageOptions = [])
     {
         $msgName = 'Offer_VerifyOffer';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -449,21 +426,13 @@ class Client
      *
      * @param RequestOptions\OfferConfirmAirOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function offerConfirmAir(RequestOptions\OfferConfirmAirOptions $options, $messageOptions = [])
     {
         $msgName = 'Offer_ConfirmAirOffer';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -471,21 +440,13 @@ class Client
      *
      * @param RequestOptions\OfferConfirmHotelOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function offerConfirmHotel(RequestOptions\OfferConfirmHotelOptions $options, $messageOptions = [])
     {
         $msgName = 'Offer_ConfirmHotelOffer';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -493,21 +454,13 @@ class Client
      *
      * @param RequestOptions\OfferConfirmCarOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function offerConfirmCar(RequestOptions\OfferConfirmCarOptions $options, $messageOptions = [])
     {
         $msgName = 'Offer_ConfirmCarOffer';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -515,21 +468,13 @@ class Client
      *
      * @param RequestOptions\FareMasterPricerTbSearch $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function fareMasterPricerTravelBoardSearch(RequestOptions\FareMasterPricerTbSearch $options, $messageOptions = [])
     {
         $msgName = 'Fare_MasterPricerTravelBoardSearch';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -537,21 +482,27 @@ class Client
      *
      * @param RequestOptions\FarePricePnrWithBookingClassOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function farePricePnrWithBookingClass(RequestOptions\FarePricePnrWithBookingClassOptions $options, $messageOptions = [])
     {
         $msgName = 'Fare_PricePNRWithBookingClass';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Fare_InformativePricingWithoutPNR
+     *
+     * @param RequestOptions\FareInformativePricingWithoutPnrOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function fareInformativePricingWithoutPnr(RequestOptions\FareInformativePricingWithoutPnrOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Fare_InformativePricingWithoutPNR';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -559,21 +510,13 @@ class Client
      *
      * @param RequestOptions\FareCheckRulesOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function fareCheckRules(RequestOptions\FareCheckRulesOptions $options, $messageOptions = [])
     {
         $msgName = 'Fare_CheckRules';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -581,21 +524,27 @@ class Client
      *
      * @param RequestOptions\FareConvertCurrencyOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function fareConvertCurrency(RequestOptions\FareConvertCurrencyOptions $options, $messageOptions = [])
     {
         $msgName = 'Fare_ConvertCurrency';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Air_MultiAvailability
+     *
+     * @param RequestOptions\AirMultiAvailabilityOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function airMultiAvailability(RequestOptions\AirMultiAvailabilityOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Air_MultiAvailability';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -603,21 +552,13 @@ class Client
      *
      * @param RequestOptions\AirSellFromRecommendationOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function airSellFromRecommendation(RequestOptions\AirSellFromRecommendationOptions $options, $messageOptions = [])
     {
         $msgName = 'Air_SellFromRecommendation';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -625,21 +566,27 @@ class Client
      *
      * @param RequestOptions\AirFlightInfoOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function airFlightInfo(RequestOptions\AirFlightInfoOptions $options, $messageOptions = [])
     {
         $msgName = 'Air_FlightInfo';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Air_RetrieveSeatMap
+     *
+     * @param RequestOptions\AirRetrieveSeatMapOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function airRetrieveSeatMap(RequestOptions\AirRetrieveSeatMapOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Air_RetrieveSeatMap';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -647,21 +594,13 @@ class Client
      *
      * @param RequestOptions\CommandCrypticOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function commandCryptic(RequestOptions\CommandCrypticOptions $options, $messageOptions = [])
     {
         $msgName = 'Command_Cryptic';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -669,21 +608,13 @@ class Client
      *
      * @param RequestOptions\MiniRuleGetFromPricingRecOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function miniRuleGetFromPricingRec(RequestOptions\MiniRuleGetFromPricingRecOptions $options, $messageOptions = [])
     {
         $msgName = 'MiniRule_GetFromPricingRec';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -691,21 +622,13 @@ class Client
      *
      * @param RequestOptions\InfoEncodeDecodeCityOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function infoEncodeDecodeCity(RequestOptions\InfoEncodeDecodeCityOptions $options, $messageOptions = [])
     {
         $msgName = 'Info_EncodeDecodeCity';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
 
@@ -714,21 +637,27 @@ class Client
      *
      * @param RequestOptions\TicketCreateTstFromPricingOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function ticketCreateTSTFromPricing(RequestOptions\TicketCreateTstFromPricingOptions $options, $messageOptions = [])
     {
         $msgName = 'Ticket_CreateTSTFromPricing';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
-            $this->requestCreator->createRequest(
-                $msgName,
-                $options
-            ),
-            $messageOptions
-        );
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * DocIssuance_IssueTicket
+     *
+     * @param RequestOptions\DocIssuanceIssueTicketOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function docIssuanceIssueTicket(RequestOptions\DocIssuanceIssueTicketOptions $options, $messageOptions = [])
+    {
+        $msgName = 'DocIssuance_IssueTicket';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
 
     /**
@@ -736,20 +665,63 @@ class Client
      *
      * @param RequestOptions\PriceXplorerExtremeSearchOptions $options
      * @param array $messageOptions
-     * @return mixed
+     * @return Result
      */
     public function priceXplorerExtremeSearch(RequestOptions\PriceXplorerExtremeSearchOptions $options, $messageOptions = [])
     {
         $msgName = 'PriceXplorer_ExtremeSearch';
-        $messageOptions = $this->makeMessageOptions($messageOptions);
 
-        return $this->sessionHandler->sendMessage(
-            $msgName,
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * SalesReports_DisplayQueryReport
+     *
+     * @param RequestOptions\SalesReportsDisplayQueryReportOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function salesReportsDisplayQueryReport(RequestOptions\SalesReportsDisplayQueryReportOptions $options, $messageOptions = [])
+    {
+        $msgName = 'SalesReports_DisplayQueryReport';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Call a message with the given parameters
+     *
+     * @param string $messageName
+     * @param RequestOptions\RequestOptionsInterface $options
+     * @param array $messageOptions
+     * @param bool $endSession
+     * @return Result
+     * @throws Client\Exception
+     * @throws Client\Struct\InvalidArgumentException
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws \RuntimeException
+     * @throws \InvalidArgumentException
+     * @throws \SoapFault
+     */
+    protected function callMessage($messageName, $options, $messageOptions, $endSession = false)
+    {
+        $messageOptions = $this->makeMessageOptions($messageOptions, $endSession);
+
+        $this->lastMessage = $messageName;
+
+        $sendResult = $this->sessionHandler->sendMessage(
+            $messageName,
             $this->requestCreator->createRequest(
-                $msgName,
+                $messageName,
                 $options
             ),
             $messageOptions
+        );
+
+        return $this->responseHandler->analyzeResponse(
+            $sendResult,
+            $messageName
         );
     }
 
@@ -758,24 +730,17 @@ class Client
      *
      * Message options are meta options when sending a message to the amadeus web services
      * - (if stateful) should we end the current session after sending this call?
-     * - do you want the response as a PHP object or as a string?
      * - ... ?
      *
      * @param array $incoming The Message options chosen by the caller - if any.
-     * @param bool $asString Switch if the response should be returned as a string (true) or a PHP object (false).
      * @param bool $endSession Switch if you want to terminate the current session after making the call.
      * @return array
      */
-    protected function makeMessageOptions(array $incoming, $asString = false, $endSession = false)
+    protected function makeMessageOptions(array $incoming, $endSession = false)
     {
         $options = [
-            'asString' => $asString,
             'endSession' => $endSession
         ];
-
-        if (array_key_exists('asString', $incoming)) {
-            $options['asString'] = $incoming['asString'];
-        }
 
         if (array_key_exists('endSession', $incoming)) {
             $options['endSession'] = $incoming['endSession'];

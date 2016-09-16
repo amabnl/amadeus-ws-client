@@ -20,15 +20,43 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr;
+namespace Amadeus\Client\Struct\DocIssuance;
 
 /**
- * Passenger
+ * OverrideDate
  *
- * @package Amadeus\Client\RequestOptions\Pnr
+ * @package Amadeus\Client\Struct\DocIssuance
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Passenger
+class OverrideDate
 {
+    const OPT_ALTERNATE_DATE_VALIDATION = "ADV";
 
+    const OPT_OVERRIDE_PAST_DATE_TST = "OPD";
+
+    /**
+     * self::OPT_*
+     *
+     * @var string
+     */
+    public $businessSemantic;
+
+    /**
+     * @var DocIssuanceDateTime
+     */
+    public $dateTime;
+
+    /**
+     * OverrideDate constructor.
+     *
+     * @param string $option self::OPT_*
+     * @param \DateTime|null $date
+     */
+    public function __construct($option, $date = null)
+    {
+        $this->businessSemantic = $option;
+        if ($date instanceof \DateTime) {
+            $this->dateTime = new DocIssuanceDateTime($date);
+        }
+    }
 }

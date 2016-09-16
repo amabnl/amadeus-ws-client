@@ -62,10 +62,32 @@ class FlightDate
     /**
      * FlightDate constructor.
      *
-     * @param string $departureDate in format DDMMYY
+     * @param string|\DateTime $departureDate in format DDMMYY or \DateTime
      */
     public function __construct($departureDate)
     {
-        $this->departureDate = $departureDate;
+        if (!($departureDate instanceof \DateTime)) {
+            $this->departureDate = $departureDate;
+        } else {
+            $this->departureDate = $departureDate->format('dmy');
+            $time = $departureDate->format('Hi');
+            if ($time !== "0000") {
+                $this->departureTime = $time;
+            }
+        }
+    }
+
+    /**
+     * Load Arrival date info from \DateTime
+     *
+     * @param \DateTime $arrivalDate
+     */
+    public function setArrivalDate(\DateTime $arrivalDate)
+    {
+        $this->arrivalDate = $arrivalDate->format('dmy');
+        $time = $arrivalDate->format('Hi');
+        if ($time !== "0000") {
+            $this->arrivalTime = $time;
+        }
     }
 }

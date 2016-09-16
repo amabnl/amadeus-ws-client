@@ -42,11 +42,11 @@ class MultiCity
 
     /**
      * @param string $locationId
-     * @param string $qualif
+     * @param string|null $qualifier
      */
-    public function __construct($locationId, $qualif = null)
+    public function __construct($locationId, $qualifier = null)
     {
         $this->locationId = $locationId;
-        $this->airportCityQualifier = $qualif;
+        $this->airportCityQualifier = $qualifier;
     }
 }

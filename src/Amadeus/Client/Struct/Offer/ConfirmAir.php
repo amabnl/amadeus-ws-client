@@ -26,7 +26,7 @@ use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * ConfirmAir
+ * Offer_ConfirmAirOffer
  *
  * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -34,11 +34,11 @@ use Amadeus\Client\Struct\BaseWsMessage;
 class ConfirmAir extends BaseWsMessage
 {
     /**
-     * Offer tatoo to be confirmed
+     * Offer tattoo to be confirmed
      *
-     * @var OfferTatoo
+     * @var OfferTattoo
      */
-    public $offerTatoo;
+    public $offerTattoo;
 
     /**
      * Group for pax reconciliation between Pax PNR and passenger types prices at offer creation time
@@ -53,9 +53,9 @@ class ConfirmAir extends BaseWsMessage
     public function __construct($options = null)
     {
         if (!is_null($options)) {
-            $this->offerTatoo = new OfferTatoo($options->tatooNumber);
+            $this->offerTattoo = new OfferTattoo($options->tattooNumber);
 
-            foreach($options->passengerReassociation as $reAssoc) {
+            foreach ($options->passengerReassociation as $reAssoc) {
                 $this->passengerReassociation[] = new PassengerReassociation(
                     $reAssoc->pricingReference,
                     $reAssoc->paxReferences

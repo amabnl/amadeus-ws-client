@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PriceXplorer_ExtremeSearchReply xmlns="http://xml.amadeus.com/FAESXR_10_4_1A">
+	<errorOrWarningGroup>
+		<errorOrWarningCodeDetails>
+			<errorDetails>
+				<errorCode>1004</errorCode>
+				<errorCategory>EC</errorCategory>
+			</errorDetails>
+		</errorOrWarningCodeDetails>
+		<errorWarningDescription>
+			<freeTextDetails>
+				<textSubjectQualifier>3</textSubjectQualifier>
+				<source>M</source>
+				<encoding>1</encoding>
+			</freeTextDetails>
+			<freeText>Invalid departure dates range</freeText>
+		</errorWarningDescription>
+	</errorOrWarningGroup>
+</PriceXplorer_ExtremeSearchReply>

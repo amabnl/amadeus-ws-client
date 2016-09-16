@@ -32,7 +32,7 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class MPPassenger extends LoadParamsFromArray
 {
-    CONST TYPE_ADULT = "ADT";
+    const TYPE_ADULT = "ADT";
 
     const TYPE_CHILD = "CH";
 

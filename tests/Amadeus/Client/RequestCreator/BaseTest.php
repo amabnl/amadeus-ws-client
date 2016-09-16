@@ -24,6 +24,7 @@ namespace Test\Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestCreator\Base;
+use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
@@ -154,11 +155,11 @@ class BaseTest extends BaseTestCase
 
         $this->assertInstanceOf('Amadeus\Client\Struct\Offer\Verify', $message);
         /** @var Verify $message */
-        $this->assertInstanceOf('Amadeus\Client\Struct\Offer\OfferTatoo', $message->offerTatoo);
-        $this->assertEquals('AIR', $message->offerTatoo->segmentName);
-        $this->assertInstanceOf('Amadeus\Client\Struct\Offer\Reference', $message->offerTatoo->reference);
-        $this->assertEquals(Reference::TYPE_OFFER_TATOO, $message->offerTatoo->reference->type);
-        $this->assertEquals(1, $message->offerTatoo->reference->value);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Offer\OfferTattoo', $message->offerTattoo);
+        $this->assertEquals('AIR', $message->offerTattoo->segmentName);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Offer\Reference', $message->offerTattoo->reference);
+        $this->assertEquals(Reference::TYPE_OFFER_TATTOO, $message->offerTattoo->reference->type);
+        $this->assertEquals(1, $message->offerTattoo->reference->value);
     }
 
     public function testCanCreateQueueListMessage()
@@ -202,5 +203,26 @@ class BaseTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Struct\Queue\SortOption', $message->sortCriteria->sortOption[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Queue\SelectionDetails', $message->sortCriteria->sortOption[0]->selectionDetails);
         $this->assertEquals(SelectionDetails::LIST_OPTION_SORT_CREATION, $message->sortCriteria->sortOption[0]->selectionDetails->option);
+    }
+
+    public function testCanCreateFareInformativePricingMessageV12()
+    {
+        $this->setExpectedException('Amadeus\Client\RequestCreator\MessageVersionUnsupportedException');
+
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['Fare_InformativePricingWithoutPNR' => '12.3']
+        ]);
+
+        $rq = new Base($par);
+
+        $rq->createRequest(
+            'Fare_InformativePricingWithoutPNR',
+            new FareInformativePricingWithoutPnrOptions([
+
+            ])
+        );
+
     }
 }

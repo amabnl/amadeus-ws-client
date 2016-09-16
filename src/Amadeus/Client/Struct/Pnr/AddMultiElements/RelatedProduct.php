@@ -24,7 +24,7 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
  * RelatedProduct
- * 
+ *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */

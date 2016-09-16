@@ -46,7 +46,7 @@ interface HandlerInterface
      * @param string $messageName The Method name to be called (from the WSDL)
      * @param BaseWsMessage $messageBody The message's body to be sent to the server
      * @param array $messageOptions Optional options on how to handle this particular message.
-     * @return string|\stdClass
+     * @return SendResult
      */
     public function sendMessage($messageName, BaseWsMessage $messageBody, $messageOptions);
 
@@ -81,6 +81,14 @@ interface HandlerInterface
     public function getSessionData();
 
     /**
+     * Set the session data to continue a previously started session.
+     *
+     * @param array $sessionData
+     * @return bool success or failure
+     */
+    public function setSessionData(array $sessionData);
+
+    /**
      * Get the current stateful mode (true is stateful, false is stateless)
      *
      * @return bool
@@ -90,14 +98,16 @@ interface HandlerInterface
     /**
      * Get the last raw XML message that was sent out
      *
+     * @param string $msgName
      * @return string|null
      */
-    public function getLastRequest();
+    public function getLastRequest($msgName);
 
     /**
      * Get the last raw XML message that was received
      *
+     * @param string $msgName
      * @return string|null
      */
-    public function getLastResponse();
+    public function getLastResponse($msgName);
 }

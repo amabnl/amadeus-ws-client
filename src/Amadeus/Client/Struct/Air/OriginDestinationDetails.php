@@ -32,5 +32,4 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestination as AddMultiElem
  */
 class OriginDestinationDetails extends AddMultiElementsOriginDestination
 {
-
 }

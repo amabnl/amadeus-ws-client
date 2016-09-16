@@ -55,9 +55,11 @@ class HandlerFactory
                 $theHandler = new SoapHeader4($handlerParams);
                 break;
             case Client::HEADER_V2:
+                $theHandler = new SoapHeader2($handlerParams);
+                break;
             case Client::HEADER_V1:
             default:
-                //TODO implement Client::HEADER_V2 & Client::HEADER_V1
+                //TODO implement Client::HEADER_V1
                 throw new \InvalidArgumentException(
                     'No Session Handler found for soapHeaderVersion ' . $handlerParams->soapHeaderVersion
                 );

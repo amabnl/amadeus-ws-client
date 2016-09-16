@@ -20,49 +20,50 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Offer;
+namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
 
 /**
- * OfferTatoo
+ * DateDetails
  *
- * @package Amadeus\Client\Struct\Offer
+ * @package Amadeus\Client\Struct\SalesReports\DisplayQueryReport
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class OfferTatoo
+class DateDetails
 {
-    /**
-     * AIR	Air segment
-     */
-    const SEGMENT_AIR = "AIR";
-    /**
-     * HHL	Automated Hotel auxiliary segment
-     */
-    const SEGMENT_HOTEL = "HHL";
-    /**
-     * CCR	Automated Car auxiliary segment
-     */
-    const SEGMENT_CAR = "CCR";
+    const DATE_TYPE_CURRENT = "C";
+
+    const DATE_TYPE_SALES_REPORT_CLOSURE = "D";
+
+    const DATE_TYPE_ISSUANCE = "I";
+
+    const DATE_TYPE_REFUNDING = "R";
+
+    const DATE_TYPE_SPECIFIC = "S";
 
     /**
-     * @var Reference
-     */
-    public $reference;
-
-    /**
-     * self::SEGMENT_*
+     * self::DATE_TYPE_*
      *
      * @var string
      */
-    public $segmentName;
+    public $businessSemantic;
 
     /**
-     * @param int $referenceNr
-     * @param string $segmentName
+     * @var DateTime
      */
-    public function __construct($referenceNr, $segmentName = self::SEGMENT_AIR)
-    {
-        $this->reference = new Reference($referenceNr);
+    public $dateTime;
 
-        $this->segmentName = $segmentName;
+    /**
+     * DateDetails constructor.
+     *
+     * @param string $dateType
+     * @param \DateTime|null $date
+     */
+    public function __construct($dateType, $date)
+    {
+        $this->businessSemantic = $dateType;
+
+        if (!empty($date)) {
+            $this->dateTime = new DateTime($date);
+        }
     }
 }

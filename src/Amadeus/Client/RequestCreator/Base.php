@@ -25,10 +25,14 @@ namespace Amadeus\Client\RequestCreator;
 use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestOptions\AirFlightInfoOptions;
+use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
+use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
 use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
+use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
 use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
 use Amadeus\Client\RequestOptions\FareConvertCurrencyOptions;
+use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
@@ -37,11 +41,10 @@ use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
-use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsBase;
-use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
 use Amadeus\Client\RequestOptions\PnrCancelOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
 use Amadeus\Client\RequestOptions\PriceXplorerExtremeSearchOptions;
@@ -50,6 +53,8 @@ use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
 use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
 use Amadeus\Client\RequestOptions\QueueRemoveItemOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
+use Amadeus\Client\RequestOptions\SalesReportsDisplayQueryReportOptions;
+use Amadeus\Client\RequestOptions\SecurityAuthenticateOptions;
 use Amadeus\Client\RequestOptions\TicketCreateTstFromPricingOptions;
 use Amadeus\Client\Struct;
 
@@ -111,12 +116,23 @@ class Base implements RequestCreatorInterface
     }
 
     /**
+     * Create request object for Security_Authenticate message
+     *
+     * @param SecurityAuthenticateOptions $params
+     * @return Struct\Security\Authenticate
+     */
+    protected function createSecurityAuthenticate(SecurityAuthenticateOptions $params)
+    {
+        return new Struct\Security\Authenticate($params);
+    }
+
+    /**
      * Create request object for PNR_Retrieve message
      *
      * @param PnrRetrieveOptions $params
      * @return Struct\Pnr\Retrieve
      */
-    protected function createPnrRetrieve(PnrRetrieveOptions $params)
+    protected function createPNRRetrieve(PnrRetrieveOptions $params)
     {
         $retrieveRequest = new Struct\Pnr\Retrieve(
             Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
@@ -130,7 +146,7 @@ class Base implements RequestCreatorInterface
      * @param PnrRetrieveAndDisplayOptions $params
      * @return Struct\Pnr\RetrieveAndDisplay
      */
-    protected function createPnrRetrieveAndDisplay(PnrRetrieveAndDisplayOptions $params)
+    protected function createPNRRetrieveAndDisplay(PnrRetrieveAndDisplayOptions $params)
     {
         $req = new Struct\Pnr\RetrieveAndDisplay(
             $params->recordLocator,
@@ -144,7 +160,7 @@ class Base implements RequestCreatorInterface
      * @param PnrAddMultiElementsBase $params
      * @return Struct\Pnr\AddMultiElements
      */
-    protected function createPnrAddMultiElements(PnrAddMultiElementsBase $params)
+    protected function createPNRAddMultiElements(PnrAddMultiElementsBase $params)
     {
         if ($params instanceof PnrCreatePnrOptions && empty($params->receivedFrom)) {
             //Automagically add RF if not present:
@@ -163,6 +179,15 @@ class Base implements RequestCreatorInterface
     protected function createPNRCancel(PnrCancelOptions $params)
     {
         return new Struct\Pnr\Cancel($params);
+    }
+
+    /**
+     * @param PnrDisplayHistoryOptions $params
+     * @return Struct\Pnr\DisplayHistory
+     */
+    protected function createPNRDisplayHistory(PnrDisplayHistoryOptions $params)
+    {
+        return new Struct\Pnr\DisplayHistory($params);
     }
 
     /**
@@ -249,7 +274,6 @@ class Base implements RequestCreatorInterface
     }
 
 
-
     /**
      * @param OfferConfirmHotelOptions $params
      * @return Struct\Offer\ConfirmHotel
@@ -302,8 +326,51 @@ class Base implements RequestCreatorInterface
         return new Struct\Fare\ConvertCurrency($params);
     }
 
+    /**
+     * makeFarePricePnrWithBookingClass
+     *
+     * @param FarePricePnrWithBookingClassOptions $params
+     * @return Struct\Fare\PricePNRWithBookingClass12|Struct\Fare\PricePNRWithBookingClass13
+     */
+    protected function createFarePricePnrWithBookingClass(FarePricePnrWithBookingClassOptions $params)
+    {
+        $version = $this->getActiveVersionFor('Fare_PricePNRWithBookingClass');
+        if ($version < 13) {
+            return new Struct\Fare\PricePNRWithBookingClass12($params);
+        } else {
+            return new Struct\Fare\PricePNRWithBookingClass13($params);
+        }
+    }
 
     /**
+     * createFareInformativePricingWithoutPNR
+     *
+     * @param FareInformativePricingWithoutPnrOptions $params
+     * @return Struct\Fare\InformativePricingWithoutPNR12|Struct\Fare\InformativePricingWithoutPNR13
+     */
+    protected function createFareInformativePricingWithoutPNR(FareInformativePricingWithoutPnrOptions $params)
+    {
+        $version = $this->getActiveVersionFor('Fare_InformativePricingWithoutPNR');
+        if ($version < 13) {
+            return new Struct\Fare\InformativePricingWithoutPNR12($params);
+        } else {
+            return new Struct\Fare\InformativePricingWithoutPNR13($params);
+        }
+    }
+
+    /**
+     * Air_MultiAvailability
+     *
+     * @param AirMultiAvailabilityOptions $params
+     * @return Struct\Air\MultiAvailability
+     */
+    protected function createAirMultiAvailability(AirMultiAvailabilityOptions $params)
+    {
+        return new Struct\Air\MultiAvailability($params);
+    }
+
+    /**
+     * Air_SellFromRecommendation
      *
      * @param AirSellFromRecommendationOptions $params
      * @return Struct\Air\SellFromRecommendation
@@ -314,6 +381,7 @@ class Base implements RequestCreatorInterface
     }
 
     /**
+     * Air_FlightInfo
      *
      * @param AirFlightInfoOptions $params
      * @return Struct\Air\FlightInfo
@@ -324,7 +392,16 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * makeCommandCryptic
+     * @param AirRetrieveSeatMapOptions $params
+     * @return Struct\Air\RetrieveSeatMap
+     */
+    protected function createAirRetrieveSeatMap(AirRetrieveSeatMapOptions $params)
+    {
+        return new Struct\Air\RetrieveSeatMap($params);
+    }
+
+    /**
+     * Command_Cryptic
      *
      * @param CommandCrypticOptions $params
      * @return Struct\Command\Cryptic
@@ -357,24 +434,9 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * makeFarePricePnrWithBookingClass
+     * Ticket_CreateTstFromPricing
      *
-     * @param FarePricePnrWithBookingClassOptions $params
-     * @return Struct\Fare\PricePNRWithBookingClass12|Struct\Fare\PricePNRWithBookingClass13
-     */
-    protected function createFarePricePnrWithBookingClass(FarePricePnrWithBookingClassOptions $params)
-    {
-        $version = $this->getActiveVersionFor('Fare_PricePNRWithBookingClass');
-        if ($version < 13) {
-            return new Struct\Fare\PricePNRWithBookingClass12($params);
-        } else {
-            return new Struct\Fare\PricePNRWithBookingClass13($params);
-        }
-    }
-
-    /**
      * @param TicketCreateTstFromPricingOptions $params
-     *
      * @return Struct\Ticket\CreateTSTFromPricing
      */
     protected function createTicketCreateTSTFromPricing(TicketCreateTstFromPricingOptions $params)
@@ -383,13 +445,36 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * @param PriceXplorerExtremeSearchOptions $params
+     * DocIssuance_IssueTicket
      *
+     * @param DocIssuanceIssueTicketOptions $params
+     * @return Struct\DocIssuance\IssueTicket
+     */
+    protected function createDocIssuanceIssueTicket(DocIssuanceIssueTicketOptions $params)
+    {
+        return new Struct\DocIssuance\IssueTicket($params);
+    }
+
+    /**
+     * PriceXplorer_ExtremeSearch
+     *
+     * @param PriceXplorerExtremeSearchOptions $params
      * @return Struct\PriceXplorer\ExtremeSearch
      */
     protected function createPriceXplorerExtremeSearch(PriceXplorerExtremeSearchOptions $params)
     {
         return new Struct\PriceXplorer\ExtremeSearch($params);
+    }
+
+    /**
+     * SalesReports_DisplayQueryReport
+     *
+     * @param SalesReportsDisplayQueryReportOptions $params
+     * @return Struct\SalesReports\DisplayQueryReport
+     */
+    protected function createSalesReportsDisplayQueryReport(SalesReportsDisplayQueryReportOptions $params)
+    {
+        return new Struct\SalesReports\DisplayQueryReport($params);
     }
 
     /**
@@ -408,7 +493,7 @@ class Base implements RequestCreatorInterface
     /**
      * Get the version number active in the WSDL for the given message
      *
-     * @param $messageName
+     * @param string $messageName
      * @return float|string
      */
     protected function getActiveVersionFor($messageName)

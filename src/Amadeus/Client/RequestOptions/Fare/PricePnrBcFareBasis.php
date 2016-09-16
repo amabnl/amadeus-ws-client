@@ -21,6 +21,7 @@
  */
 
 namespace Amadeus\Client\RequestOptions\Fare;
+
 use Amadeus\Client\LoadParamsFromArray;
 
 /**
@@ -32,6 +33,7 @@ use Amadeus\Client\LoadParamsFromArray;
 class PricePnrBcFareBasis extends LoadParamsFromArray
 {
     const SEGREFTYPE_SEGMENT = 'S';
+
     const SEGREFTYPE_CONNECTING = 'X';
 
     /**
@@ -44,7 +46,7 @@ class PricePnrBcFareBasis extends LoadParamsFromArray
     public $fareBasisCode;
 
     /**
-     * The key is the segment tatoo number, the value is the segment type (self::SEGREFTYPE_*)
+     * The key is the segment tattoo number, the value is the segment type (self::SEGREFTYPE_*)
      *
      * @var array
      */

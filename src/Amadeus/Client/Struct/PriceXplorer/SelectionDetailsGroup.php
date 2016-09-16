@@ -30,29 +30,28 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class SelectionDetailsGroup
 {
-	
-	/**
-	 * @var SelectionDetailsInfo
-	 */
-	public $selectionDetailsInfo;
-	
-	/**
-	 * @var NbOfUnitsInfo
-	 */
-	public $nbOfUnitsInfo;
-	
-	/**
-	 * @var DateAndTimeInfo
-	 */
-	public $dateAndTimeInfo;
-	
-	/**
-	 * @var QuantityInfo
-	 */
-	public $quantityInfo;
-	
-	/**
-	 * @var array
-	 */
-	public $attributeInfo = [];
+    /**
+     * @var SelectionDetailsInfo
+     */
+    public $selectionDetailsInfo;
+    
+    /**
+     * @var NbOfUnitsInfo
+     */
+    public $nbOfUnitsInfo;
+    
+    /**
+     * @var DateAndTimeInfo
+     */
+    public $dateAndTimeInfo;
+    
+    /**
+     * @var QuantityInfo
+     */
+    public $quantityInfo;
+    
+    /**
+     * @var array
+     */
+    public $attributeInfo = [];
 }

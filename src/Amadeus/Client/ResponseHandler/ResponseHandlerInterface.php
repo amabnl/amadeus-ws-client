@@ -23,6 +23,8 @@
 namespace Amadeus\Client\ResponseHandler;
 
 use Amadeus\Client\Exception;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 
 /**
  * ResponseHandlerInterface
@@ -35,12 +37,12 @@ interface ResponseHandlerInterface
     /**
      * Analyze the response from the server and throw an exception when an error has been detected.
      *
-     * @param string $response The last response received by the client
+     * @param SendResult $sendResult The Send Result from the Session Handler
      * @param string $messageName The message that was called
      *
      * @throws Exception When an error is detected
      * @throws \RuntimeException When there is a problem calling the response handler
-     * @return mixed Will return true if no problems occurred.
+     * @return Result
      */
-    public function analyzeResponse($response, $messageName);
+    public function analyzeResponse($sendResult, $messageName);
 }

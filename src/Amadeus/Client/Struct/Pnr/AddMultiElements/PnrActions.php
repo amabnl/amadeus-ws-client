@@ -38,7 +38,7 @@ class PnrActions
      * [Option element codesets (Ref: 106P 1A 00.1.2)]
      * @var int
      */
-    const ACTIONOPTION_NO_SPECIAL_PROCESSING	= 0;
+    const ACTIONOPTION_NO_SPECIAL_PROCESSING = 0;
     /**
      * PNR action option: End Transact
      *
@@ -47,7 +47,7 @@ class PnrActions
      * [Option element codesets (Ref: 106P 1A 00.1.2)]
      * @var int
      */
-    const ACTIONOPTION_END_TRANSACT				= 10;
+    const ACTIONOPTION_END_TRANSACT = 10;
     /**
      * PNR action option: End transact with retrieve
      *
@@ -56,7 +56,7 @@ class PnrActions
      * [Option element codesets (Ref: 106P 1A 00.1.2)]
      * @var int
      */
-    const ACTIONOPTION_END_TRANSACT_W_RETRIEVE	= 11;
+    const ACTIONOPTION_END_TRANSACT_W_RETRIEVE = 11;
     /**
      * PNR Action Option: Ignore PNR
      *
@@ -65,7 +65,7 @@ class PnrActions
      * [Option element codesets (Ref: 106P 1A 00.1.2)]
      * @var int
      */
-    const ACTIONOPTION_IGNORE					= 20;
+    const ACTIONOPTION_IGNORE = 20;
     /**
      * PNR Action Option: Ignore PNR and retrieve
      *
@@ -74,7 +74,7 @@ class PnrActions
      * [Option element codesets (Ref: 106P 1A 00.1.2)]
      * @var int
      */
-    const ACTIONOPTION_IGNORE_W_RETRIEVE		= 21;
+    const ACTIONOPTION_IGNORE_W_RETRIEVE = 21;
 
     /**
      * PNR_AddMultiElements/pnrActions/optionCode

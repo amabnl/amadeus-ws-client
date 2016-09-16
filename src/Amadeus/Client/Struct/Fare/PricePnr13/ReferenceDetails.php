@@ -20,16 +20,41 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct;
+namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
 /**
- * Class SessionHeaderV2
+ * ReferenceDetails
  *
- * @todo NOT YET IMPLEMENTED
- * @package Amadeus\Client\Struct
+ * @package Amadeus\Client\Struct\Fare\PricePnr13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class SessionHeaderV2
+class ReferenceDetails
 {
-    //TODO
+    /**
+     * P	Passenger/traveller reference number
+     * PA	Adult Passenger
+     * PI	Infant Passenger
+     * S	Segment/service reference number
+     * T	TST
+     *
+     * @var string
+     */
+    public $type;
+
+    /**
+     * @var string
+     */
+    public $value;
+
+    /**
+     * ReferenceDetails constructor.
+     *
+     * @param string $value
+     * @param string $type
+     */
+    public function __construct($value, $type)
+    {
+        $this->value = $value;
+        $this->type = $type;
+    }
 }

@@ -1,0 +1,16 @@
+<Security_SignOutReply xmlns="http://xml.amadeus.com/VLSSOR_04_1_1A">
+    <errorSection>
+        <applicationError>
+            <errorDetails>
+                <errorCode>1</errorCode>
+            </errorDetails>
+        </applicationError>
+        <interactiveFreeText>
+            <freeTextQualification>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <language>EN</language>
+            </freeTextQualification>
+            <freeText>ERROR</freeText>
+        </interactiveFreeText>
+    </errorSection>
+</Security_SignOutReply>

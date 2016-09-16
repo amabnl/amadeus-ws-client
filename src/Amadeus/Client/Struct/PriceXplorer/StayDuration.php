@@ -30,20 +30,20 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class StayDuration
 {
-	/**
-	 * @var NbOfUnitsInfo
-	 */
-	public $nbOfUnitsInfo;
-	/**
-	 * @var FlexibilityInfo
-	 */
-	public $flexibilityInfo;
-	
-	/**
-	 * @param int $numberOfDays
-	 */
-	public function __construct($numberOfDays = null)
-	{
-		$this->nbOfUnitsInfo = new NbOfUnitsInfo($numberOfDays);
-	}
+    /**
+     * @var NbOfUnitsInfo
+     */
+    public $nbOfUnitsInfo;
+    /**
+     * @var FlexibilityInfo
+     */
+    public $flexibilityInfo;
+
+    /**
+     * @param int $numberOfDays
+     */
+    public function __construct($numberOfDays = null)
+    {
+        $this->nbOfUnitsInfo = new NbOfUnitsInfo($numberOfDays);
+    }
 }

@@ -1,0 +1,20 @@
+<DocIssuance_IssueTicketReply xmlns="http://xml.amadeus.com/TTKTIR_09_1_1A">
+    <processingStatus>
+        <statusCode>X</statusCode>
+    </processingStatus>
+    <errorGroup>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>120</errorCode>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <source>M</source>
+                <encoding>1</encoding>
+            </freeTextDetails>
+            <freeText>UNABLE TO PROCESS</freeText>
+        </errorWarningDescription>
+    </errorGroup>
+</DocIssuance_IssueTicketReply>

@@ -68,5 +68,4 @@ class Ticketing extends Element
      * @var Queue
      */
     public $ticketQueue;
-
 }

@@ -1,6 +1,6 @@
 # amadeus-ws-client: PHP client for the Amadeus GDS SOAP Web Service interface
 
-[![Build Status](https://travis-ci.org/amabnl/amadeus-ws-client.svg?branch=master)](https://travis-ci.org/amabnl/amadeus-ws-client) [![Coverage Status](https://coveralls.io/repos/github/amabnl/amadeus-ws-client/badge.svg?branch=master)](https://coveralls.io/github/amabnl/amadeus-ws-client?branch=master)
+[![Build Status](https://travis-ci.org/amabnl/amadeus-ws-client.svg?branch=master)](https://travis-ci.org/amabnl/amadeus-ws-client) [![Coverage Status](https://coveralls.io/repos/github/amabnl/amadeus-ws-client/badge.svg?branch=master)](https://coveralls.io/github/amabnl/amadeus-ws-client?branch=master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/amabnl/amadeus-ws-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/amabnl/amadeus-ws-client/?branch=master) [![Style Status - PSR-2](https://styleci.io/repos/49078536/shield?branch=master)](https://styleci.io/repos/49078536)
 
 This client library provides access to the Amadeus GDS SOAP Web Service interface. 
 
@@ -14,7 +14,7 @@ The Amadeus documentation portal can be found at https://webservices.amadeus.com
 
 * PHP 5.4+
 * SOAP and XSL extensions activated
-* A WSDL & authentication details from Amadeus
+* A WSDL & authentication details from Amadeus _(SoapHeader 4 or SoapHeader 2)_
 
 # Installation
 
@@ -46,5 +46,13 @@ For now, if you want the bleeding edge, point your composer.json towards `dev-de
 
 # Usage
 
-- [About & Get Started](docs/about-get-started.rst)
+- [About &amp; Get Started](docs/about-get-started.rst)
+- [List of supported messages](docs/list-of-supported-messages.rst)
+- [How to](docs/how-to.rst)
 - [Examples](docs/samples.rst)
+
+---------------------------------------
+
+[Changelog](CHANGELOG.md)
+
+[Example applications](docs/sample-applications.rst)

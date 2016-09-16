@@ -30,41 +30,41 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class AttributeDetails
 {
-	const TYPE_DEPARTURE_DAY = "DAY";
-	
-	const TYPE_DESTINATION = "DES";
-	
-	const TYPE_MONTH = "MTH";
-	
-	const TYPE_PASSENGER_TYPE_PROFILE = "PRO";
-	
-	const TYPE_STAY_DURATION = "SD";
-	
-	const TYPE_WEEK = "WEEK";
-	
-	const TYPE_COUNTRY = "CTRY";
-	
-	/**
-	 * DAY 	Per departure day
-	 * DES 	Per destination
-	 * MTH 	Per month
-	 * PRO 	Passenger type profile
-	 * SD 	Per stay duration
-	 * WEEK 	Per week
-	 * 
-	 * @var string self::TYPE_*
-	 */
-	public $attributeType;
-	/**
-	 * @var string
-	 */
-	public $attributeDescription;
-	
-	/**
-	 * @param string $type self::TYPE_*
-	 */
-	public function __construct($type)
-	{
-		$this->attributeType = $type;
-	}
+    const TYPE_DEPARTURE_DAY = "DAY";
+    
+    const TYPE_DESTINATION = "DES";
+    
+    const TYPE_MONTH = "MTH";
+    
+    const TYPE_PASSENGER_TYPE_PROFILE = "PRO";
+    
+    const TYPE_STAY_DURATION = "SD";
+    
+    const TYPE_WEEK = "WEEK";
+    
+    const TYPE_COUNTRY = "CTRY";
+    
+    /**
+     * DAY     Per departure day
+     * DES     Per destination
+     * MTH     Per month
+     * PRO     Passenger type profile
+     * SD     Per stay duration
+     * WEEK     Per week
+     *
+     * @var string self::TYPE_*
+     */
+    public $attributeType;
+    /**
+     * @var string
+     */
+    public $attributeDescription;
+    
+    /**
+     * @param string $type self::TYPE_*
+     */
+    public function __construct($type)
+    {
+        $this->attributeType = $type;
+    }
 }

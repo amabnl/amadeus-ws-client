@@ -30,5 +30,28 @@ namespace Amadeus\Client\RequestOptions;
  */
 class OfferConfirmCarOptions extends Base
 {
-    //TODO
+    /**
+     * @var int
+     */
+    public $passengerTattoo;
+
+    /**
+     * @var int
+     */
+    public $offerTattoo;
+
+    /**
+     * @var string
+     */
+    public $recordLocator;
+
+    /**
+     * @var Offer\CarLocationInfo
+     */
+    public $pickUpInfo;
+
+    /**
+     * @var Offer\CarLocationInfo
+     */
+    public $dropOffInfo;
 }

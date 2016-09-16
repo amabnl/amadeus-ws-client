@@ -30,23 +30,23 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class ItineraryInfo
 {
-	/**
-	 * @var string
-	 */
-	public $origin;
-	
-	/**
-	 * @var string
-	 */
-	public $destination;
-	
-	/**
-	 * @param string $origin
-	 * @param string $destination
-	 */
-	public function __construct($origin = null, $destination = null)
-	{
-		$this->origin = $origin;
-		$this->destination = $destination;
-	}
+    /**
+     * @var string
+     */
+    public $origin;
+
+    /**
+     * @var string
+     */
+    public $destination;
+
+    /**
+     * @param string $origin
+     * @param string $destination
+     */
+    public function __construct($origin = null, $destination = null)
+    {
+        $this->origin = $origin;
+        $this->destination = $destination;
+    }
 }

@@ -48,18 +48,18 @@ class CancelTest extends BaseTestCase
         $this->assertEquals(1, count($message->cancelElements));
         $this->assertEquals(Cancel\Elements::ENTRY_ELEMENT, $message->cancelElements[0]->entryType);
         $this->assertEquals(1, count($message->cancelElements[0]->element));
-        $this->assertEquals(Cancel\Element::IDENT_OFFER_TATOO, $message->cancelElements[0]->element[0]->identifier);
+        $this->assertEquals(Cancel\Element::IDENT_OFFER_TATTOO, $message->cancelElements[0]->element[0]->identifier);
         $this->assertEquals(2, $message->cancelElements[0]->element[0]->number);
         $this->assertNull($message->cancelElements[0]->element[0]->subElement);
     }
 
-    public function testCanMakeCancelByTatooMessageWithPnrRetrieve()
+    public function testCanMakeCancelByTattooMessageWithPnrRetrieve()
     {
         $message = new Cancel(
             new PnrCancelOptions([
                 'recordLocator' => 'ABC123',
                 'actionCode' => 0,
-                'elementsByTatoo' => [14, 16, 20]
+                'elementsByTattoo' => [14, 16, 20]
             ])
         );
 
@@ -68,11 +68,11 @@ class CancelTest extends BaseTestCase
         $this->assertEquals(1, count($message->cancelElements));
         $this->assertEquals(Cancel\Elements::ENTRY_ELEMENT, $message->cancelElements[0]->entryType);
         $this->assertEquals(3, count($message->cancelElements[0]->element));
-        $this->assertEquals(Cancel\Element::IDENT_OTHER_TATOO, $message->cancelElements[0]->element[0]->identifier);
+        $this->assertEquals(Cancel\Element::IDENT_OTHER_TATTOO, $message->cancelElements[0]->element[0]->identifier);
         $this->assertEquals(14, $message->cancelElements[0]->element[0]->number);
-        $this->assertEquals(Cancel\Element::IDENT_OTHER_TATOO, $message->cancelElements[0]->element[1]->identifier);
+        $this->assertEquals(Cancel\Element::IDENT_OTHER_TATTOO, $message->cancelElements[0]->element[1]->identifier);
         $this->assertEquals(16, $message->cancelElements[0]->element[1]->number);
-        $this->assertEquals(Cancel\Element::IDENT_OTHER_TATOO, $message->cancelElements[0]->element[2]->identifier);
+        $this->assertEquals(Cancel\Element::IDENT_OTHER_TATTOO, $message->cancelElements[0]->element[2]->identifier);
         $this->assertEquals(20, $message->cancelElements[0]->element[2]->number);
     }
 
@@ -105,7 +105,7 @@ class CancelTest extends BaseTestCase
         $this->assertEquals(1, count($message->cancelElements));
         $this->assertEquals(Cancel\Elements::ENTRY_ELEMENT, $message->cancelElements[0]->entryType);
         $this->assertEquals(1, count($message->cancelElements[0]->element));
-        $this->assertEquals(Cancel\Element::IDENT_PASSENGER_TATOO, $message->cancelElements[0]->element[0]->identifier);
+        $this->assertEquals(Cancel\Element::IDENT_PASSENGER_TATTOO, $message->cancelElements[0]->element[0]->identifier);
         $this->assertEquals(3, $message->cancelElements[0]->element[0]->number);
     }
 
@@ -123,9 +123,9 @@ class CancelTest extends BaseTestCase
         $this->assertEquals(1, count($message->cancelElements));
         $this->assertEquals(Cancel\Elements::ENTRY_NAME_INTEGRATION, $message->cancelElements[0]->entryType);
         $this->assertEquals(2, count($message->cancelElements[0]->element));
-        $this->assertEquals(Cancel\Element::IDENT_PASSENGER_TATOO, $message->cancelElements[0]->element[0]->identifier);
+        $this->assertEquals(Cancel\Element::IDENT_PASSENGER_TATTOO, $message->cancelElements[0]->element[0]->identifier);
         $this->assertEquals(5, $message->cancelElements[0]->element[0]->number);
-        $this->assertEquals(Cancel\Element::IDENT_PASSENGER_TATOO, $message->cancelElements[0]->element[1]->identifier);
+        $this->assertEquals(Cancel\Element::IDENT_PASSENGER_TATTOO, $message->cancelElements[0]->element[1]->identifier);
         $this->assertEquals(6, $message->cancelElements[0]->element[1]->number);
     }
 
@@ -141,9 +141,9 @@ class CancelTest extends BaseTestCase
         $this->assertEquals(1, count($message->cancelElements));
         $this->assertEquals(Cancel\Elements::ENTRY_ELEMENT, $message->cancelElements[0]->entryType);
         $this->assertEquals(2, count($message->cancelElements[0]->element));
-        $this->assertEquals(Cancel\Element::IDENT_SEGMENT_TATOO, $message->cancelElements[0]->element[0]->identifier);
+        $this->assertEquals(Cancel\Element::IDENT_SEGMENT_TATTOO, $message->cancelElements[0]->element[0]->identifier);
         $this->assertEquals(3, $message->cancelElements[0]->element[0]->number);
-        $this->assertEquals(Cancel\Element::IDENT_SEGMENT_TATOO, $message->cancelElements[0]->element[1]->identifier);
+        $this->assertEquals(Cancel\Element::IDENT_SEGMENT_TATTOO, $message->cancelElements[0]->element[1]->identifier);
         $this->assertEquals(4, $message->cancelElements[0]->element[1]->number);
     }
 }

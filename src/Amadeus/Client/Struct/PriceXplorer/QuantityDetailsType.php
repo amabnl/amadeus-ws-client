@@ -30,49 +30,49 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class QuantityDetailsType
 {
-	/**
-	 * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2338&serviceVersionId=2304&isQuery=true#
-	 * PriceXplorer_ExtremeSearch/itineraryGrp/quantityInfo/quantityDetails/unit
-	 * UNITS: 
-	 * DAY 	Day
-	 * MTH 	Month
-	 * WK 	Week
-	 */
-	const UNIT_DAY = "DAY";
-	
-	const UNIT_WEEK = "WK";
-	
-	const UNIT_MONTH = "MTH";
-	
-	/**
-	 * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2338&serviceVersionId=2304&isQuery=true#
-	 * PriceXplorer_ExtremeSearch/itineraryGrp/quantityInfo/quantityDetails/qualifier
-	 * @var string
-	 */
-	const QUAL_PLUS = "P";
-	
-	/**
-	 * @var string
-	 */
-	public $qualifier;
-	/**
-	 * @var int
-	 */
-	public $value;
-	/**
-	 * @var string
-	 */
-	public $unit;
-	
-	/**
-	 * @param int $value
-	 * @param string $unit
-	 * @param string $qualifier
-	 */
-	public function __construct($value, $unit = self::UNIT_DAY, $qualifier = self::QUAL_PLUS)
-	{
-		$this->value = $value;
-		$this->unit = $unit;
-		$this->qualifier = $qualifier;
-	}
+    /**
+     * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2338&serviceVersionId=2304&isQuery=true#
+     * PriceXplorer_ExtremeSearch/itineraryGrp/quantityInfo/quantityDetails/unit
+     * UNITS:
+     * DAY     Day
+     * MTH     Month
+     * WK     Week
+     */
+    const UNIT_DAY = "DAY";
+
+    const UNIT_WEEK = "WK";
+
+    const UNIT_MONTH = "MTH";
+
+    /**
+     * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2338&serviceVersionId=2304&isQuery=true#
+     * PriceXplorer_ExtremeSearch/itineraryGrp/quantityInfo/quantityDetails/qualifier
+     * @var string
+     */
+    const QUAL_PLUS = "P";
+
+    /**
+     * @var string
+     */
+    public $qualifier;
+    /**
+     * @var int
+     */
+    public $value;
+    /**
+     * @var string
+     */
+    public $unit;
+
+    /**
+     * @param int $value
+     * @param string $unit
+     * @param string $qualifier
+     */
+    public function __construct($value, $unit = self::UNIT_DAY, $qualifier = self::QUAL_PLUS)
+    {
+        $this->value = $value;
+        $this->unit = $unit;
+        $this->qualifier = $qualifier;
+    }
 }

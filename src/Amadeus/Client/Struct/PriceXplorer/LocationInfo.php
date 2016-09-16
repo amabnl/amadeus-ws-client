@@ -30,35 +30,35 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class LocationInfo
 {
-	/**
-	 * Location Types: 
-	 * 25 	City
-	 * 26 	Country
-	 * A 	Airport
-	 * R 	Region
-	 */
-	const LOC_CITY = 25;
-	
-	const LOC_COUNTRY = 26;
-	
-	const LOC_AIRPORT = "A";
-	
-	const LOC_REGION = "R";
-	
-	/**
-	 * @var string
-	 */
-	public $locationType;
-	/**
-	 * @var LocationIdentificationType
-	 */
-	public $locationDescription;
-	
-	/**
-	 * @param string|int $locationType One of the constants self::LOC_*
-	 */
-	public function __construct($locationType)
-	{
-		$this->locationType = $locationType;
-	}
+    /**
+     * Location Types:
+     * 25     City
+     * 26     Country
+     * A     Airport
+     * R     Region
+     */
+    const LOC_CITY = 25;
+
+    const LOC_COUNTRY = 26;
+
+    const LOC_AIRPORT = "A";
+
+    const LOC_REGION = "R";
+
+    /**
+     * @var string
+     */
+    public $locationType;
+    /**
+     * @var LocationIdentificationType
+     */
+    public $locationDescription;
+
+    /**
+     * @param string|int $locationType One of the constants self::LOC_*
+     */
+    public function __construct($locationType)
+    {
+        $this->locationType = $locationType;
+    }
 }

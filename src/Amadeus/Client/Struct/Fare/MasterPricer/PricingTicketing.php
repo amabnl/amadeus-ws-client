@@ -33,7 +33,7 @@ class PricingTicketing
     const PRICETYPE_TICKETABILITY_PRECHECK = 'TAC';
     const PRICETYPE_UNIFARES = 'RU';
     const PRICETYPE_PUBLICFARES = 'RP';
-	const PRICETYPE_CORPORATE_UNIFARES = 'RW';
+    const PRICETYPE_CORPORATE_UNIFARES = 'RW';
 
     /**
      * self::PRICETYPE_*

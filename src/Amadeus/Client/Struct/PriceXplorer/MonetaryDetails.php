@@ -30,32 +30,32 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class MonetaryDetails
 {
-	const QUAL_MAX_BUDGET = "MAX";
-	
-	const QUAL_MIN_BUDGET = "MIN";
-	
-	/**
-	 * @var string self::QUAL_*
-	 */
-	public $typeQualifier;
-	/**
-	 * @var string
-	 */
-	public $amount;
-	/**
-	 * @var string
-	 */
-	public $currency;
-	
-	/**
-	 * @param double|string $amount
-	 * @param string $qualifier MonetaryDetails::QUAL_*
-	 * @param string $currency Currency code
-	 */
-	public function __construct($amount, $qualifier = self::QUAL_MAX_BUDGET, $currency = "EUR")
-	{
-		$this->amount = $amount;
-		$this->typeQualifier = $qualifier;
-		$this->currency = $currency;
-	}
+    const QUAL_MAX_BUDGET = "MAX";
+
+    const QUAL_MIN_BUDGET = "MIN";
+
+    /**
+     * @var string self::QUAL_*
+     */
+    public $typeQualifier;
+    /**
+     * @var string
+     */
+    public $amount;
+    /**
+     * @var string
+     */
+    public $currency;
+
+    /**
+     * @param double|string $amount
+     * @param string $qualifier MonetaryDetails::QUAL_*
+     * @param string $currency Currency code
+     */
+    public function __construct($amount, $qualifier = self::QUAL_MAX_BUDGET, $currency = "EUR")
+    {
+        $this->amount = $amount;
+        $this->typeQualifier = $qualifier;
+        $this->currency = $currency;
+    }
 }

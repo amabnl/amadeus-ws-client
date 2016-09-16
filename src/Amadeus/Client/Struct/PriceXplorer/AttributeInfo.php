@@ -30,30 +30,30 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class AttributeInfo
 {
-	const FUNC_GROUPING = "GRP";
-	
-	const FUNC_PASSENGER = "PSG";
-	
-	/**
-	 * @var string self::FUNC_*
-	 */
-	public $attributeFunction;
-	
-	/**
-	 * @var AttributeDetails[]
-	 */
-	public $attributeDetails = [];
-	
-	/**
-	 * @param string $function self::FUNC_*
-	 * @param array $groupTypes AttributeDetails::TYPE_* strings
-	 */
-	public function __construct($function = self::FUNC_GROUPING, $groupTypes = [])
-	{
-		$this->attributeFunction = $function;
-		
-		foreach ($groupTypes as $groupType) {
-			$this->attributeDetails[] = new AttributeDetails($groupType);
-		}
-	}
+    const FUNC_GROUPING = "GRP";
+    
+    const FUNC_PASSENGER = "PSG";
+    
+    /**
+     * @var string self::FUNC_*
+     */
+    public $attributeFunction;
+    
+    /**
+     * @var AttributeDetails[]
+     */
+    public $attributeDetails = [];
+    
+    /**
+     * @param string $function self::FUNC_*
+     * @param array $groupTypes AttributeDetails::TYPE_* strings
+     */
+    public function __construct($function = self::FUNC_GROUPING, $groupTypes = [])
+    {
+        $this->attributeFunction = $function;
+        
+        foreach ($groupTypes as $groupType) {
+            $this->attributeDetails[] = new AttributeDetails($groupType);
+        }
+    }
 }

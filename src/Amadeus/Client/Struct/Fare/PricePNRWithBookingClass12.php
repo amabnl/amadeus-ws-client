@@ -25,6 +25,7 @@ namespace Amadeus\Client\Struct\Fare;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\PricePnr12\AttributeDetails;
+use Amadeus\Client\Struct\Fare\PricePnr12\CurrencyOverride;
 use Amadeus\Client\Struct\Fare\PricePnr12\OverrideInformation;
 use Amadeus\Client\Struct\Fare\PricePnr12\PricingFareBase;
 use Amadeus\Client\Struct\Fare\PricePnr12\ValidatingCarrier;
@@ -53,6 +54,9 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
 
     public $cityOverride;
 
+    /**
+     * @var PricePnr12\CurrencyOverride
+     */
     public $currencyOverride;
 
     public $taxDetails;
@@ -94,11 +98,15 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
             }
         }
 
+        if (!empty($options->currencyOverride)) {
+            $this->currencyOverride = new CurrencyOverride($options->currencyOverride);
+        }
+
         if (is_string($options->validatingCarrier)) {
             $this->validatingCarrier = new ValidatingCarrier($options->validatingCarrier);
         }
 
-        if (in_array(AttributeDetails::OVERRIDE_FAREBASIS, $options->overrideOptions)) {
+        if (in_array(AttributeDetails::OVERRIDE_FAREBASIS, $options->overrideOptions) && !empty($options->pricingsFareBasis)) {
             foreach ($options->pricingsFareBasis as $pricingFareBasis) {
                 $this->pricingFareBase[] = new PricingFareBase($pricingFareBasis);
             }

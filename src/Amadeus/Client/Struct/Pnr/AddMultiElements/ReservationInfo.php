@@ -30,5 +30,4 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class ReservationInfo extends \Amadeus\Client\Struct\Pnr\ReservationInfo
 {
-
 }

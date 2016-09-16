@@ -1,0 +1,13 @@
+<Fare_ConvertCurrencyReply xmlns="http://xml.amadeus.com/FCUQCR_08_1_1A">
+    <errorInfo>
+        <errorIdentification>
+            <errorDetails>
+                <errorCode>0123</errorCode>
+                <errorCategory>EC</errorCategory>
+            </errorDetails>
+        </errorIdentification>
+        <errorWarningDescription>
+            <freeText>VERIFY CURRENCY</freeText>
+        </errorWarningDescription>
+    </errorInfo>
+</Fare_ConvertCurrencyReply>

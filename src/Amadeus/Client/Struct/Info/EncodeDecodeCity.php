@@ -22,25 +22,98 @@
 
 namespace Amadeus\Client\Struct\Info;
 
+use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
 use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * EncodeDecodeCity
+ * Info_EncodeDecodeCity
  *
  * @package Amadeus\Client\Struct\Info
  */
 class EncodeDecodeCity extends BaseWsMessage
 {
+    /**
+     * @var LocationInformation
+     */
+    public $locationInformation;
 
+    /**
+     * @var RequestOption
+     */
+    public $requestOption;
+
+    /**
+     * @var Language
+     */
+    public $language;
+
+    /**
+     * @var CountryStateRestriction
+     */
+    public $countryStateRestriction;
 
     /**
      * EncodeDecodeCity constructor.
      *
      * @param InfoEncodeDecodeCityOptions $params
+     * @throws MessageVersionUnsupportedException
      */
     public function __construct(InfoEncodeDecodeCityOptions $params)
     {
+        if (!empty($params->locationCode)) {
+            $this->locationInformation = new LocationInformation(
+                LocationInformation::TYPE_LOCATION,
+                strtoupper($params->locationCode),
+                null
+            );
+        } elseif (!empty($params->locationName)) {
+            //Only allow lowercase input for phonetic searches
+            if ($params->searchMode !== InfoEncodeDecodeCityOptions::SEARCHMODE_PHONETIC) {
+                $params->locationName = strtoupper($params->locationName);
+            }
 
+            $this->locationInformation = new LocationInformation(
+                LocationInformation::TYPE_ALL,
+                null,
+                $params->locationName
+            );
+        }
+
+        if (!empty($params->searchMode)) {
+            $this->requestOption = new RequestOption(
+                $params->searchMode,
+                SelectionDetails::OPT_SEARCH_ALGORITHM
+            );
+        }
+
+        if (!empty($params->selectResult)) {
+            $selDet = new SelectionDetails(
+                $params->selectResult,
+                SelectionDetails::OPT_LOCATION_TYPE
+            );
+
+            if (!($this->requestOption instanceof RequestOption)) {
+                $this->requestOption = new RequestOption();
+                $this->requestOption->selectionDetails = $selDet;
+            } else {
+                $this->requestOption->otherSelectionDetails[] = $selDet;
+            }
+        }
+
+        if (!is_null($params->restrictCountry) || !is_null($params->restrictState)) {
+            $params->restrictState = (!is_null($params->restrictState)) ?
+                strtoupper($params->restrictState) :
+                $params->restrictState;
+
+            $params->restrictCountry = (!is_null($params->restrictCountry)) ?
+                strtoupper($params->restrictCountry) :
+                $params->restrictCountry;
+
+            $this->countryStateRestriction = new CountryStateRestriction(
+                $params->restrictCountry,
+                $params->restrictState
+            );
+        }
     }
 }

@@ -30,33 +30,33 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class SelectionDetails
 {
-	const OPT_INBOUND_DEP_DAYS = "I";
-	
-	const OPT_OUTBOUND_DEP_DAYS = "O";
-	
-	/*
-	 * PRD 	Price result distribution
-	 * TWD 	Time window distribution
-	 */
-	const OPT_PRICE_RESULT_DISTRIBUTION = "PRD";
-	
-	const OPT_TIME_WINDOW_DISTRIBUTION = "TWD";
-	
-	
-	/**
-	 * @var string
-	 */
-	public $option;
-	/**
-	 * @var string
-	 */
-	public $optionInformation;
-	
-	/**
-	 * @param string $option self::OPT_*
-	 */
-	public function __construct($option)
-	{
-		$this->option = $option;
-	}
+    const OPT_INBOUND_DEP_DAYS = "I";
+
+    const OPT_OUTBOUND_DEP_DAYS = "O";
+
+    /*
+     * PRD     Price result distribution
+     * TWD     Time window distribution
+     */
+    const OPT_PRICE_RESULT_DISTRIBUTION = "PRD";
+
+    const OPT_TIME_WINDOW_DISTRIBUTION = "TWD";
+
+
+    /**
+     * @var string
+     */
+    public $option;
+    /**
+     * @var string
+     */
+    public $optionInformation;
+
+    /**
+     * @param string $option self::OPT_*
+     */
+    public function __construct($option)
+    {
+        $this->option = $option;
+    }
 }

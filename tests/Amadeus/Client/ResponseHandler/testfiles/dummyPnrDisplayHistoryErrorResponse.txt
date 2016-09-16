@@ -1,0 +1,22 @@
+<PNR_DisplayHistoryReply xmlns="http://xml.amadeus.com/PHIDRR_16_1_1A">
+    <generalErrorGroup>
+        <errorNumber>
+            <errorDetails>
+                <errorCode>20</errorCode>
+            </errorDetails>
+        </errorNumber>
+        <genrealErrorText>
+            <freeTextDetails>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <source>A</source>
+                <encoding>2</encoding>
+            </freeTextDetails>
+            <freeText>RESTRICTED</freeText>
+        </genrealErrorText>
+    </generalErrorGroup>
+    <pnrRloc>
+        <rlocInfo>
+            <recordLocator>ABC987</recordLocator>
+        </rlocInfo>
+    </pnrRloc>
+</PNR_DisplayHistoryReply>

@@ -56,5 +56,17 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
         $this->assertEquals(2, $message->pricingFareBase[0]->fareBasisSegReference[0]->refDetails->refNumber);
         $this->assertEquals(PricePnrBcFareBasis::SEGREFTYPE_SEGMENT, $message->pricingFareBase[0]->fareBasisSegReference[0]->refDetails->refQualifier);
         $this->assertEquals('BA', $message->validatingCarrier->carrierInformation->carrierCode);
+        $this->assertEquals('EUR', $message->currencyOverride->firstRateDetail->currencyCode);
+    }
+
+
+    public function testCanDoPricePnrCallWithNoOptions()
+    {
+        $opt = new FarePricePnrWithBookingClassOptions();
+
+        $message = new PricePNRWithBookingClass12($opt);
+
+        $this->assertCount(1, $message->overrideInformation->attributeDetails);
+        $this->assertEquals(FarePricePnrWithBookingClassOptions::OVERRIDE_NO_OPTION, $message->overrideInformation->attributeDetails[0]->attributeType);
     }
 }

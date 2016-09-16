@@ -24,7 +24,7 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
  * ElementManagementItinerary
- * 
+ *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
@@ -95,12 +95,12 @@ class ElementManagementItinerary
     /**
      * ElementManagementItinerary constructor.
      *
-     * @param int $tatooNr
+     * @param int $tattooNr
      * @param string $segmentName
      */
-    public function __construct($tatooNr, $segmentName)
+    public function __construct($tattooNr, $segmentName)
     {
         $this->segmentName = $segmentName;
-        $this->reference = new Reference(Reference::QUAL_OTHER, $tatooNr);
+        $this->reference = new Reference(Reference::QUAL_OTHER, $tattooNr);
     }
 }

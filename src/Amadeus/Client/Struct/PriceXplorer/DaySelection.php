@@ -30,24 +30,24 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class DaySelection
 {
-	/**
-	 * Each wanted day of the week in a string
-	 * 
-	 * e.g. "123" for Monday, Tuesday and Wednesday.
-	 * Must be consecutive.
-	 * 
-	 * @var string
-	 */
-	public $dayOfWeek;
-	
-	/**
-	 * @param array $weekDays Week days in array format: e.g. array(1, 2) for Monday and Tuesday. MUST BE CONSECUTIVE DAYS
-	 */
-	public function __construct($weekDays)
-	{
-		$this->dayOfWeek = "";
-		foreach ($weekDays as $weekDay) {
-			$this->dayOfWeek .= $weekDay;
-		}
-	}
+    /**
+     * Each wanted day of the week in a string
+     *
+     * e.g. "123" for Monday, Tuesday and Wednesday.
+     * Must be consecutive.
+     *
+     * @var string
+     */
+    public $dayOfWeek;
+
+    /**
+     * @param array $weekDays Week days in array format: e.g. array(1, 2) for Monday and Tuesday. MUST BE CONSECUTIVE DAYS
+     */
+    public function __construct($weekDays)
+    {
+        $this->dayOfWeek = "";
+        foreach ($weekDays as $weekDay) {
+            $this->dayOfWeek .= $weekDay;
+        }
+    }
 }

@@ -30,7 +30,13 @@ namespace Amadeus\Client\Struct\Air;
  */
 class PointDetails
 {
+    const ID_ARRIVAL_UNKNOWN = "ARNK";
+
+    const ID_ALL_CITIES = "ZZZ";
+
     /**
+     * self::ID_* or a location code
+     *
      * @var string
      */
     public $trueLocationId;

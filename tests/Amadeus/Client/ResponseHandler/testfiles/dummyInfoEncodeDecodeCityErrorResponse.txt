@@ -1,0 +1,14 @@
+<Info_EncodeDecodeCityReply xmlns="http://xml.amadeus.com/YDANRQ_05_1_1A">
+    <errorDescription>
+        <appliErrorData>
+            <errorDetails>
+                <errorCode>11177</errorCode>
+                <errorCategory>EC</errorCategory>
+            </errorDetails>
+        </appliErrorData>
+        <freeTextInfo>
+            <freeTextDetails></freeTextDetails>
+            <freeText>Invalid value (TTT) for IATA code (TTT) field</freeText>
+        </freeTextInfo>
+    </errorDescription>
+</Info_EncodeDecodeCityReply>

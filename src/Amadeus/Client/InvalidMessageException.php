@@ -32,5 +32,4 @@ namespace Amadeus\Client;
  */
 class InvalidMessageException extends Exception
 {
-
 }

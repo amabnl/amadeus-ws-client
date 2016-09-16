@@ -32,5 +32,4 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class SignOut extends BaseWsMessage
 {
-
 }

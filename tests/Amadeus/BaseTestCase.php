@@ -69,4 +69,19 @@ class BaseTestCase extends \PHPUnit_Framework_TestCase
         $fullPath = realpath($path . DIRECTORY_SEPARATOR . "testfiles" . DIRECTORY_SEPARATOR . $fileName);
         return file_get_contents($fullPath);
     }
+
+    /**
+     * @param $theArray
+     * @param $theObject
+     * @return bool
+     */
+    protected function assertArrayContainsSameObject($theArray, $theObject)
+    {
+        foreach($theArray as $arrayItem) {
+            if($arrayItem == $theObject) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

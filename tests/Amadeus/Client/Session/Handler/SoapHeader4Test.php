@@ -430,7 +430,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $overrideSoapClient
             ->expects($this->any())
             ->method('PNR_Retrieve')
-            ->will($this->returnValue(''));
+            ->will($this->returnValue(new \stdClass()));
 
         $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
@@ -443,17 +443,20 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $messageResponse = $sessionHandler->sendMessage(
             'PNR_Retrieve',
             $pnrRetrieveMessage,
-            ['asString'=>true,'endSession'=>false]
+            ['endSession'=>false]
         );
 
-        $this->assertInternalType('string', $messageResponse);
-        $this->assertEquals($dummyPnrReplyExtractedMessage, $messageResponse);
+        $expectedResult = new Client\Session\Handler\SendResult();
+        $expectedResult->responseXml = $dummyPnrReplyExtractedMessage;
+        $expectedResult->responseObject = new \stdClass();
+        $expectedResult->messageVersion = '11.3';
+
+
+        $this->assertEquals($expectedResult, $messageResponse);
     }
 
-    public function testCanHandleMessageThrowingSoapFault()
+    public function testCanSendMessageInExistingSession()
     {
-        $this->setExpectedException('\SoapFault');
-
         $overrideSoapClient = $this->getMock(
             'Amadeus\Client\SoapClient',
             ['__getLastRequest', '__getLastResponse', 'PNR_Retrieve'],
@@ -479,7 +482,75 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $overrideSoapClient
             ->expects($this->any())
             ->method('PNR_Retrieve')
-            ->will($this->throwException(new \SoapFault("Sender", "SECURED PNR")));
+            ->will($this->returnValue(new \stdClass()));
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $sessionHandler->setSessionData([
+            'sessionId' => '01ZWHV5EMT',
+            'sequenceNumber' => 1,
+            'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'
+        ]);
+
+        $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
+            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
+            'ABC123'
+        );
+
+        $messageResponse = $sessionHandler->sendMessage(
+            'PNR_Retrieve',
+            $pnrRetrieveMessage,
+            ['endSession'=>false]
+        );
+
+        $expectedResult = new Client\Session\Handler\SendResult();
+        $expectedResult->responseXml = $dummyPnrReplyExtractedMessage;
+        $expectedResult->responseObject = new \stdClass();
+        $expectedResult->messageVersion = '11.3';
+
+        $this->assertEquals($expectedResult, $messageResponse);
+
+        $postMessageSession = $sessionHandler->getSessionData();
+
+        $this->assertEquals(
+            [
+                'sessionId' => '01ZWHV5EMT',
+                'sequenceNumber' => 2,
+                'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'
+            ],
+            $postMessageSession
+        );
+    }
+
+    public function testCanHandleMessageWithSoapFault()
+    {
+        $overrideSoapClient = $this->getMock(
+            'Amadeus\Client\SoapClient',
+            ['__getLastRequest', '__getLastResponse', 'PNR_Retrieve'],
+            [],
+            '',
+            false
+        );
+
+        $dummyPnrRequest = $this->getTestFile('dummyPnrRequest.txt');
+        $dummyPnrReply = $this->getTestFile('sessionheadertestresponse.txt');
+        //$dummyPnrReplyExtractedMessage = $this->getTestFile('dummyPnrReplyExtractedMessage.txt');
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastRequest')
+            ->will($this->returnValue($dummyPnrRequest));
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastResponse')
+            ->will($this->returnValue($dummyPnrReply));
+
+        $overrideSoapClient
+            ->expects($this->any())
+            ->method('PNR_Retrieve')
+            ->will($this->throwException(new \SoapFault("Sender", "284|Application|SECURED PNR")));
 
         $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
@@ -489,11 +560,17 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
             'ABC123'
         );
 
-        $sessionHandler->sendMessage(
+        $sendResult = $sessionHandler->sendMessage(
             'PNR_Retrieve',
             $pnrRetrieveMessage,
-            ['asString'=>true,'endSession'=>false]
+            ['endSession'=>false]
         );
+
+        $this->assertInstanceOf('Amadeus\Client\Session\Handler\SendResult', $sendResult);
+        $this->assertInstanceOf('\SoapFault', $sendResult->exception);
+        $this->assertEquals('284|Application|SECURED PNR', $sendResult->exception->getMessage());
+        $this->assertEquals('11.3', $sendResult->messageVersion);
+        $this->assertEquals(Client\Util\MsgBodyExtractor::extract($dummyPnrReply), $sendResult->responseXml);
     }
 
     public function testCanHandleMessageThrowingNonSoapFaultException()
@@ -510,7 +587,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
 
         $dummyPnrRequest = $this->getTestFile('dummyPnrRequest.txt');
         $dummyPnrReply = $this->getTestFile('sessionheadertestresponse.txt');
-        $dummyPnrReplyExtractedMessage = $this->getTestFile('dummyPnrReplyExtractedMessage.txt');
+        //$dummyPnrReplyExtractedMessage = $this->getTestFile('dummyPnrReplyExtractedMessage.txt');
 
         $overrideSoapClient
             ->expects($this->atLeastOnce())
@@ -538,7 +615,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $sessionHandler->sendMessage(
             'PNR_Retrieve',
             $pnrRetrieveMessage,
-            ['asString'=>true,'endSession'=>false]
+            ['endSession'=>false]
         );
     }
 
@@ -580,16 +657,21 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $messageResponse = $sessionHandler->sendMessage(
             'PNR_Retrieve',
             $pnrRetrieveMessage,
-            ['asString'=>true,'endSession'=>false]
+            ['endSession' => false]
         );
 
-        $this->assertEquals($this->getTestFile('acspnrreply.xml'), $messageResponse);
+        $expectedResult = new Client\Session\Handler\SendResult();
+        $expectedResult->responseXml = $this->getTestFile('acspnrreply.xml');
+        $expectedResult->responseObject = $this->getTestFile('acspnr.xml');
+        $expectedResult->messageVersion = '11.3';
+
+        $this->assertEquals($expectedResult, $messageResponse);
 
         $sessionData = $sessionHandler->getSessionData();
 
         $expectedSession = [
             'sessionId' => '002C3V0DMO',
-            'sequenceNumber' => '1',
+            'sequenceNumber' => 1,
             'securityToken' => '1UPC20RZJXARQ20H3J0TMJQU4H',
         ];
 
@@ -602,21 +684,168 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $sessionHandlerParams = $this->makeSessionHandlerParams();
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
-        $expected = [
-            'PNR_Retrieve' => '11.3',
-            'Security_SignOut' => '4.1',
-        ];
+        $actual = $sessionHandler->getMessagesAndVersions();
+
+        $this->assertCount(2, $actual);
+        $this->assertEquals(['PNR_Retrieve', 'Security_SignOut'], array_keys($actual));
+        $this->assertEquals('11.3', $actual['PNR_Retrieve']['version']);
+        $this->assertInternalType('string', $actual['PNR_Retrieve']['wsdl']);
+        $this->assertEquals('4.1', $actual['Security_SignOut']['version']);
+        $this->assertInternalType('string', $actual['Security_SignOut']['wsdl']);
+    }
+
+    public function testCanHandleInvalidWsdlWhenLoadingMessagesAndVersions()
+    {
+        \PHPUnit_Framework_Error_Warning::$enabled = FALSE;
+
+        $this->setExpectedException('\Amadeus\Client\InvalidWsdlFileException', 'could not be loaded');
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandlerParams->wsdl[] = __DIR__. DIRECTORY_SEPARATOR . 'invalidwsdl.wsdl';
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $sessionHandler->getMessagesAndVersions();
+    }
+
+    public function testCanHandleInvalidImportWsdlWhenLoadingMessagesAndVersions()
+    {
+        \PHPUnit_Framework_Error_Warning::$enabled = FALSE;
+
+        $this->setExpectedException('\Amadeus\Client\InvalidWsdlFileException', 'import could not be loaded');
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandlerParams->wsdl[] = __DIR__. DIRECTORY_SEPARATOR . 'testfiles' . DIRECTORY_SEPARATOR . 'mediawsdl'.DIRECTORY_SEPARATOR.'DUMMYWSAP_MediaServer_invalid.wsdl';
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $sessionHandler->getMessagesAndVersions();
+    }
+
+    public function testCanExtractMessagesAndVersionsFromMediaWsdl()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams(null, true);
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
         $actual = $sessionHandler->getMessagesAndVersions();
 
-        $this->assertEquals($expected, $actual);
-
+        $this->assertInternalType('array', $actual);
+        $this->assertCount(3, $actual);
+        $this->assertEquals(['PNR_Retrieve', 'Security_SignOut', 'Media_GetMedia'], array_keys($actual));
+        $this->assertEquals('11.3', $actual['PNR_Retrieve']['version']);
+        $this->assertInternalType('string', $actual['PNR_Retrieve']['wsdl']);
+        $this->assertEquals('4.1', $actual['Security_SignOut']['version']);
+        $this->assertInternalType('string', $actual['Security_SignOut']['wsdl']);
+        $this->assertEquals('1.000', $actual['Media_GetMedia']['version']);
+        $this->assertInternalType('string', $actual['Media_GetMedia']['wsdl']);
+        $this->assertNotEquals($actual['PNR_Retrieve']['wsdl'], $actual['Media_GetMedia']['wsdl']);
     }
+
+    public function testCanMakeSoapClientOptionsWithOverrides()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandlerParams->soapClientOptions['compression'] = SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP;
+
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $expected = [
+            'trace' 		=> 1,
+            'exceptions' 	=> 1,
+            'soap_version' 	=> SOAP_1_1,
+            'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP,
+            'classmap' => Client\Session\Handler\Classmap::$soapheader4map
+        ];
+
+        $meth = self::getMethod($sessionHandler, 'makeSoapClientOptions');
+        $result = $meth->invoke($sessionHandler);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testCanMakeSessionHandlerWithoutLogger()
+    {
+        $overrideSoapClient = $this->getMock(
+            'Amadeus\Client\SoapClient',
+            ['__getLastRequest', '__getLastResponse', 'PNR_Retrieve'],
+            [],
+            '',
+            false
+        );
+
+        $dummyPnrRequest = $this->getTestFile('dummyPnrRequest.txt');
+        $dummyPnrReply = $this->getTestFile('sessionheadertestresponse.txt');
+        $dummyPnrReplyExtractedMessage = $this->getTestFile('dummyPnrReplyExtractedMessage.txt');
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastRequest')
+            ->will($this->returnValue($dummyPnrRequest));
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastResponse')
+            ->will($this->returnValue($dummyPnrReply));
+
+        $overrideSoapClient
+            ->expects($this->any())
+            ->method('PNR_Retrieve')
+            ->will($this->returnValue(new \stdClass()));
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
+        $sessionHandlerParams->logger = null;
+
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
+            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
+            'ABC123'
+        );
+
+        $messageResponse = $sessionHandler->sendMessage(
+            'PNR_Retrieve',
+            $pnrRetrieveMessage,
+            ['endSession'=>false]
+        );
+
+        $expectedResult = new Client\Session\Handler\SendResult();
+        $expectedResult->responseXml = $dummyPnrReplyExtractedMessage;
+        $expectedResult->responseObject = new \stdClass();
+        $expectedResult->messageVersion = '11.3';
+
+        $this->assertEquals($expectedResult, $messageResponse);
+    }
+
+    public function testCanTryAuthenticateWithInvalidSessionData()
+    {
+        $invalidSessionData = [
+            'noSessionID' => 'ABCA2312KJL',
+            'wrongSequence' => 3
+        ];
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $isAuthenticated = $sessionHandler->setSessionData($invalidSessionData);
+
+        $this->assertFalse($isAuthenticated);
+    }
+
+    public function testGetLastRequestEmptyWithNoMessages()
+    {
+
+        $handlerParams = $this->makeSessionHandlerParams();
+
+        $handler = new SoapHeader4($handlerParams);
+
+        $result = $handler->getLastRequest('PNR_Retrieve');
+
+        $this->assertNull($result);
+    }
+
 
     /**
      * @return SessionHandlerParams
      */
-    protected function makeSessionHandlerParams($overrideSoapClient = null)
+    protected function makeSessionHandlerParams($overrideSoapClient = null, $withMediaWsdl = false)
     {
         $wsdlpath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'testfiles' . DIRECTORY_SEPARATOR . 'testwsdl.wsdl';
 
@@ -626,7 +855,6 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
             'soapHeaderVersion' => Client::HEADER_V4,
             'receivedFrom' => 'unittests',
             'logger' => new NullLogger(),
-            'overrideSoapClient' => $overrideSoapClient,
             'authParams' => [
                 'officeId' => 'BRUXX0000',
                 'originatorTypeCode' => 'U',
@@ -636,6 +864,16 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
                 'passwordData' => 'dGhlIHBhc3N3b3Jk'
             ]
         ]);
+
+        if (!is_null($overrideSoapClient)) {
+            $par->overrideSoapClient = $overrideSoapClient;
+            $par->overrideSoapClientWsdlName  = sprintf('%x', crc32($wsdlpath));
+        }
+
+        if ($withMediaWsdl) {
+            $par->wsdl[] = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'testfiles' .
+                DIRECTORY_SEPARATOR . 'mediawsdl' . DIRECTORY_SEPARATOR . 'DUMMYWSAP_MediaServer.wsdl';
+        }
 
         return $par;
     }

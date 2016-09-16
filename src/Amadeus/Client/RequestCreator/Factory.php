@@ -25,7 +25,7 @@ namespace Amadeus\Client\RequestCreator;
 use Amadeus\Client\Params\RequestCreatorParams;
 
 /**
- * Factory
+ * Request Creator Factory
  *
  * @package Amadeus\Client\RequestCreator
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -33,6 +33,8 @@ use Amadeus\Client\Params\RequestCreatorParams;
 class Factory
 {
     /**
+     * Create a Request Creator
+     *
      * @param RequestCreatorParams $params
      * @param string $libIdentifier
      * @return RequestCreatorInterface
@@ -40,8 +42,6 @@ class Factory
      */
     public static function createRequestCreator($params, $libIdentifier)
     {
-        $theRequestCreator = null;
-
         $params->receivedFrom = self::makeReceivedFrom(
             $params->receivedFrom,
             $libIdentifier

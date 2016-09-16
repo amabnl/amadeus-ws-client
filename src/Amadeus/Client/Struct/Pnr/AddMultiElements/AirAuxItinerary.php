@@ -27,7 +27,7 @@ use Amadeus\Client\Struct\InvalidArgumentException;
 
 /**
  * AirAuxItinerary
- * 
+ *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
@@ -62,7 +62,7 @@ class AirAuxItinerary
      */
     public function __construct($segmentType, $segmentContent)
     {
-        switch($segmentType) {
+        switch ($segmentType) {
             case 'Miscellaneous':
                 $this->loadMiscellaneous($segmentContent);
                 break;

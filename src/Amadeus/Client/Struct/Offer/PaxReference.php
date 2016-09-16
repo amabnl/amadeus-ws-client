@@ -45,7 +45,7 @@ class PaxReference
         if (!is_null($paxRefs)) {
             foreach ($paxRefs as $paxRef) {
                 $this->passengerReference[] = new PassengerReference(
-                    $paxRef->passengerTatoo,
+                    $paxRef->passengerTattoo,
                     $paxRef->passengerType
                 );
             }

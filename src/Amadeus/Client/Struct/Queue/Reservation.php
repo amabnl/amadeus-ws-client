@@ -31,5 +31,4 @@ use Amadeus\Client\Struct\Pnr;
  */
 class Reservation extends Pnr\Reservation
 {
-
 }

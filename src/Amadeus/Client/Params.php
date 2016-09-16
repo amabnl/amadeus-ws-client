@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client;
 
+use Amadeus\Client\Params\AuthParams;
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\Params\SessionHandlerParams;
 use Amadeus\Client\RequestCreator\RequestCreatorInterface;
@@ -58,6 +59,13 @@ class Params
     public $responseHandler;
 
     /**
+     * Parameters for authenticating to the Amadeus Web Services
+     *
+     * @var Params\AuthParams
+     */
+    public $authParams;
+
+    /**
      * Parameters required to create the Session Handler
      *
      * @var Params\SessionHandlerParams
@@ -70,7 +78,6 @@ class Params
      * @var Params\RequestCreatorParams
      */
     public $requestCreatorParams;
-
 
 
     /**
@@ -87,17 +94,83 @@ class Params
      * @param array $params
      * @return void
      */
-    protected function loadFromArray(array $params) {
+    protected function loadFromArray(array $params)
+    {
+        $this->loadRequestCreator($params);
+        $this->loadSessionHandler($params);
+        $this->loadResponseHandler($params);
+
+        $this->loadAuthParams($params);
+
+        $this->loadSessionHandlerParams($params);
+        $this->loadRequestCreatorParams($params);
+    }
+
+    /**
+     * Load Request Creator
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadRequestCreator($params)
+    {
         if (isset($params['requestCreator']) && $params['requestCreator'] instanceof RequestCreatorInterface) {
             $this->requestCreator = $params['requestCreator'];
         }
+    }
+
+
+    /**
+     * Load Session Handler
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadSessionHandler($params)
+    {
         if (isset($params['sessionHandler']) && $params['sessionHandler'] instanceof Session\Handler\HandlerInterface) {
             $this->sessionHandler = $params['sessionHandler'];
         }
+    }
+
+    /**
+     * Load Response Handler
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadResponseHandler($params)
+    {
         if (isset($params['responseHandler']) && $params['responseHandler'] instanceof ResponseHandlerInterface) {
             $this->responseHandler = $params['responseHandler'];
         }
+    }
 
+    /**
+     * Load Authentication Parameters
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadAuthParams($params)
+    {
+        if (isset($params['authParams'])) {
+            if ($params['authParams'] instanceof AuthParams) {
+                $this->authParams = $params['authParams'];
+            } elseif (is_array($params['authParams'])) {
+                $this->authParams = new AuthParams($params['authParams']);
+            }
+        }
+    }
+
+    /**
+     * Load Session Handler Parameters
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadSessionHandlerParams($params)
+    {
         if (isset($params['sessionHandlerParams'])) {
             if ($params['sessionHandlerParams'] instanceof SessionHandlerParams) {
                 $this->sessionHandlerParams = $params['sessionHandlerParams'];
@@ -105,7 +178,16 @@ class Params
                 $this->sessionHandlerParams = new SessionHandlerParams($params['sessionHandlerParams']);
             }
         }
+    }
 
+    /**
+     * Load Request Creator Parameters
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadRequestCreatorParams($params)
+    {
         if (isset($params['requestCreatorParams'])) {
             if ($params['requestCreatorParams'] instanceof RequestCreatorParams) {
                 $this->requestCreatorParams = $params['requestCreatorParams'];

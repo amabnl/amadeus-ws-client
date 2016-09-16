@@ -31,6 +31,7 @@ namespace Amadeus\Client\Struct\HeaderV4;
 class Password
 {
     public $_;
+
     public $Type;
 
     /**

@@ -1,0 +1,82 @@
+<PNR_DisplayHistoryReply xmlns="http://xml.amadeus.com/PHIDRR_16_1_1A">
+    <actionDetails>
+        <lastItemsDetails>
+            <numberOfItems>0</numberOfItems>
+        </lastItemsDetails>
+    </actionDetails>
+    <pnrRloc>
+        <rlocInfo>
+            <recordLocator>3J6YFG</recordLocator>
+            <creationDate>20150106</creationDate>
+        </rlocInfo>
+    </pnrRloc>
+    <pnrHistory>
+        <pnrHistoryData>
+            <currentRecord>0</currentRecord>
+            <actionType>O</actionType>
+            <elementType>NM</elementType>
+            <textInformation>SMITH/TED</textInformation>
+        </pnrHistoryData>
+    </pnrHistory>
+    <pnrHistory>
+        <pnrHistoryData>
+            <currentRecord>0</currentRecord>
+            <actionType>O</actionType>
+            <elementType>SS</elementType>
+            <textInformation>6X9800 Y 15JAN 4 HELLHR LK1 0730 0800/NN *1A/E*</textInformation>
+        </pnrHistoryData>
+    </pnrHistory>
+    <pnrHistory>
+        <pnrHistoryData>
+            <currentRecord>0</currentRecord>
+            <actionType>Z</actionType>
+            <textInformation>G CR-MUC1A0701 00000000 PR 9999BM/DS-09B12CA3 06JAN1521Z</textInformation>
+        </pnrHistoryData>
+    </pnrHistory>
+    <pnrHistory>
+        <pnrHistoryData>
+            <currentRecord>1</currentRecord>
+            <actionType>A</actionType>
+            <elementType>7</elementType>
+            <textInformation>RM REMARK</textInformation>
+        </pnrHistoryData>
+    </pnrHistory>
+    <pnrHistory>
+        <pnrHistoryData>
+            <currentRecord>1</currentRecord>
+            <actionType>Z</actionType>
+            <textInformation>G CR-MUC1A0701 00000000 PR 9999BM/DS-09B12CA3 06JAN1521Z</textInformation>
+        </pnrHistoryData>
+    </pnrHistory>
+    <pnrHistory>
+        <pnrHistoryData>
+            <currentRecord>2</currentRecord>
+            <actionType>A</actionType>
+            <elementType>SR</elementType>
+            <textInformation>*SSR VGML6XHK1/6X9800 Y 15JAN HELLHR/SMITH/TED</textInformation>
+        </pnrHistoryData>
+    </pnrHistory>
+    <pnrHistory>
+        <pnrHistoryData>
+            <currentRecord>2</currentRecord>
+            <actionType>A</actionType>
+            <elementType>OP</elementType>
+            <textInformation>OPW-12JAN</textInformation>
+        </pnrHistoryData>
+    </pnrHistory>
+    <pnrHistory>
+        <pnrHistoryData>
+            <currentRecord>2</currentRecord>
+            <actionType>A</actionType>
+            <elementType>OP</elementType>
+            <textInformation>OPC-13JAN</textInformation>
+        </pnrHistoryData>
+    </pnrHistory>
+    <pnrHistory>
+        <pnrHistoryData>
+            <currentRecord>2</currentRecord>
+            <actionType>Z</actionType>
+            <textInformation>G CR-MUC1A0701 00000000 PR 9999BM/DS-09B12CA3 06JAN1525Z</textInformation>
+        </pnrHistoryData>
+    </pnrHistory>
+</PNR_DisplayHistoryReply>

@@ -25,7 +25,7 @@ namespace Amadeus\Client\Struct\Offer;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * Verify
+ * Offer_VerifyOffer
  *
  * @package Amadeus\Client\Struct\Offer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -33,9 +33,9 @@ use Amadeus\Client\Struct\BaseWsMessage;
 class Verify extends BaseWsMessage
 {
     /**
-     * @var OfferTatoo
+     * @var OfferTattoo
      */
-    public $offerTatoo;
+    public $offerTattoo;
 
     /**
      * @param string $referenceNr
@@ -43,6 +43,6 @@ class Verify extends BaseWsMessage
      */
     public function __construct($referenceNr, $segmentName)
     {
-        $this->offerTatoo = new OfferTatoo($referenceNr, $segmentName);
+        $this->offerTattoo = new OfferTattoo($referenceNr, $segmentName);
     }
 }

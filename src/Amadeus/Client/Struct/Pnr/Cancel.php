@@ -68,51 +68,97 @@ class Cancel extends BaseWsMessage
             $this->cancelElements[] = new Cancel\Elements(Elements::ENTRY_ITINERARY);
         }
 
-        if (!empty($params->elementsByTatoo)) {
+        $this->loadElements($params);
+
+        $this->loadSegments($params);
+
+        $this->loadGroupPassengers($params);
+
+        $this->loadPassengers($params);
+
+        $this->loadOffers($params);
+    }
+
+    /**
+     * @param PnrCancelOptions $params
+     * @return void
+     */
+    protected function loadElements(PnrCancelOptions $params)
+    {
+        if (!empty($params->elementsByTattoo)) {
             $tmp = new Cancel\Elements(Elements::ENTRY_ELEMENT);
 
-            foreach ($params->elementsByTatoo as $tatoo) {
-                $tmp->element[] = new Element($tatoo, Element::IDENT_OTHER_TATOO);
+            foreach ($params->elementsByTattoo as $tattoo) {
+                $tmp->element[] = new Element($tattoo, Element::IDENT_OTHER_TATTOO);
             }
 
             $this->cancelElements[] = $tmp;
         }
+    }
 
+    /**
+     * @param PnrCancelOptions $params
+     * @return void
+     */
+    protected function loadSegments(PnrCancelOptions $params)
+    {
         if (!empty($params->segments)) {
             $tmp = new Cancel\Elements(Elements::ENTRY_ELEMENT);
 
             foreach ($params->segments as $tatoo) {
-                $tmp->element[] = new Element($tatoo, Element::IDENT_SEGMENT_TATOO);
+                $tmp->element[] = new Element($tatoo, Element::IDENT_SEGMENT_TATTOO);
             }
 
             $this->cancelElements[] = $tmp;
         }
+    }
 
+    /**
+     * @param PnrCancelOptions $params
+     * @return void
+     */
+    protected function loadGroupPassengers(PnrCancelOptions $params)
+    {
         if (!empty($params->groupPassengers)) {
             $tmp = new Cancel\Elements(Elements::ENTRY_NAME_INTEGRATION);
 
             foreach ($params->groupPassengers as $offerRef) {
-                $tmp->element[] = new Element($offerRef, Element::IDENT_PASSENGER_TATOO);
+                $tmp->element[] = new Element($offerRef, Element::IDENT_PASSENGER_TATTOO);
             }
 
             $this->cancelElements[] = $tmp;
         }
+    }
 
+    /**
+     * @param PnrCancelOptions $params
+     * @return void
+     */
+    protected function loadPassengers(PnrCancelOptions $params)
+    {
         if (!empty($params->passengers)) {
             $tmp = new Cancel\Elements(Elements::ENTRY_ELEMENT);
 
             foreach ($params->passengers as $offerRef) {
-                $tmp->element[] = new Element($offerRef, Element::IDENT_PASSENGER_TATOO);
+                $tmp->element[] = new Element($offerRef, Element::IDENT_PASSENGER_TATTOO);
             }
 
             $this->cancelElements[] = $tmp;
         }
+    }
 
+    /**
+     * @param PnrCancelOptions $params
+     * @return void
+     *
+     */
+    protected function loadOffers(PnrCancelOptions $params)
+    {
         if (!empty($params->offers)) {
             $tmp = new Cancel\Elements(Elements::ENTRY_ELEMENT);
 
             foreach ($params->offers as $offerRef) {
-                $tmp->element[] = new Element($offerRef, Element::IDENT_OFFER_TATOO);
+                $tmp->element[] = new Element($offerRef, Element::IDENT_OFFER_TATTOO);
             }
 
             $this->cancelElements[] = $tmp;
