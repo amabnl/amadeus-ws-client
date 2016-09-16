@@ -6,6 +6,7 @@
  */
 
 namespace Amadeus\Client\Struct\Air\MultiAvailability;
+
 use Amadeus\Client\RequestOptions\Air\MultiAvailability\RequestOptions;
 
 /**
