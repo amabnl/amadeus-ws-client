@@ -29,7 +29,18 @@ namespace Amadeus\Client\Struct\Ticket;
  */
 class ItemReference
 {
+    /**
+     * TST	TST/fare reference number
+     */
     const REFTYPE_TST = 'TST';
+    /**
+     * Passenger/traveller reference number
+     */
+    const REFTYPE_PASSENGER = "P";
+    /**
+     * Segment/service reference number
+     */
+    const REFTYPE_SEGMENT = "S";
 
     /**
      * self::REFTYPE_*
@@ -44,14 +55,24 @@ class ItemReference
     public $uniqueReference;
 
     /**
+     * @var IdDescription
+     */
+    public $iDDescription;
+
+    /**
      * ItemReference constructor.
      *
      * @param int $reference
      * @param string $type
+     * @param int|null $sequenceNr
      */
-    public function __construct($reference, $type = self::REFTYPE_TST)
+    public function __construct($reference, $type = self::REFTYPE_TST, $sequenceNr = null)
     {
         $this->uniqueReference = $reference;
         $this->referenceType = $type;
+
+        if (!is_null($sequenceNr)) {
+            $this->iDDescription = new IdDescription($sequenceNr);
+        }
     }
 }

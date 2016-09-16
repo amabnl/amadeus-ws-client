@@ -520,6 +520,10 @@ class Base implements ResponseHandlerInterface
         return $analyzeResponse;
     }
 
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
     protected function analyzeFareMasterPricerTravelBoardSearchResponse($response)
     {
         $analyzeResponse = new Result($response);
@@ -586,6 +590,19 @@ class Base implements ResponseHandlerInterface
         return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
     }
 
+    /**
+     * @param SendResult $response Ticket_DeleteTST result
+     * @return Result
+     */
+    protected function analyzeTicketDeleteTSTResponse($response)
+    {
+        return $this->analyzeTicketCreateTSTFromPricingResponse($response);
+    }
+
+    /**
+     * @param SendResult $response Ticket_CreateTSTFromPricing result
+     * @return Result
+     */
     protected function analyzeTicketCreateTSTFromPricingResponse($response)
     {
         $analyzeResponse = new Result($response);

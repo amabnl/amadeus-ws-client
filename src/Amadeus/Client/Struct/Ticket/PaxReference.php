@@ -33,4 +33,17 @@ class PaxReference
      * @var RefDetails[]
      */
     public $refDetails = [];
+
+    /**
+     * PaxReference constructor.
+     *
+     * @param int $segNum
+     * @param string $segQual RefDetails::QUAL_*
+     */
+    public function __construct($segNum = null, $segQual = null)
+    {
+        if (!is_null($segNum) && !is_null($segQual)) {
+            $this->refDetails[] = new RefDetails($segNum, $segQual);
+        }
+    }
 }

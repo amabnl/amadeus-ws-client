@@ -647,6 +647,20 @@ class Client
     }
 
     /**
+     * Ticket_DeleteTST
+     *
+     * @param RequestOptions\TicketDeleteTstOptions $options
+     * @param array $messageOptions
+     * @return Result
+     */
+    public function ticketDeleteTST(RequestOptions\TicketDeleteTstOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Ticket_DeleteTST';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocIssuance_IssueTicket
      *
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options

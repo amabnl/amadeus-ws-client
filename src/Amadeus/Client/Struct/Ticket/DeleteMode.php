@@ -23,38 +23,25 @@
 namespace Amadeus\Client\Struct\Ticket;
 
 /**
- * PsaList
+ * DeleteMode
  *
  * @package Amadeus\Client\Struct\Ticket
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PsaList
+class DeleteMode
 {
     /**
-     * Reference of the fare selected.
-     *
-     * A fare may have been calculated by Fare Quote for several passengers
-     * but there is still the possibility to create a TST only for a part of these passengers.
-     *
-     * @var ItemReference
+     * @var AttributeDetails
      */
-    public $itemReference;
+    public $attributeDetails;
 
     /**
-     * Reference information on passengers.
+     * DeleteMode constructor.
      *
-     * @var PaxReference
+     * @param string $deleteMode
      */
-    public $paxReference;
-
-    /**
-     * PsaList constructor.
-     *
-     * @param int $itemRef
-     * @param string $itemRefType
-     * @param int|null $sequenceNr
-     */
-    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST, $sequenceNr = null)
+    public function __construct($deleteMode)
     {
-        $this->itemReference = new ItemReference($itemRef, $itemRefType, $sequenceNr);
+        $this->attributeDetails = new AttributeDetails($deleteMode);
     }
 }

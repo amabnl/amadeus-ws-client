@@ -719,6 +719,24 @@ Create a TST from a Pricing made by a Fare_PricePNRWithBookingClass call:
         ])
     );
 
+----------------
+Ticket_DeleteTST
+----------------
+
+Delete the TST with number 2:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketDeleteTstOptions;
+
+    $deleteTstResult = $client->ticketDeleteTST(
+        new TicketDeleteTstOptions([
+            'deleteMode' => TicketDeleteTstOptions::DELETE_MODE_SELECTIVE,
+            'tstNumber' => 1
+        ])
+    );
+
+
 -----------------
 Ticket_DisplayTST
 -----------------

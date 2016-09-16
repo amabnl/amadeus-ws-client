@@ -56,6 +56,7 @@ use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\RequestOptions\SalesReportsDisplayQueryReportOptions;
 use Amadeus\Client\RequestOptions\SecurityAuthenticateOptions;
 use Amadeus\Client\RequestOptions\TicketCreateTstFromPricingOptions;
+use Amadeus\Client\RequestOptions\TicketDeleteTstOptions;
 use Amadeus\Client\Struct;
 
 /**
@@ -442,6 +443,17 @@ class Base implements RequestCreatorInterface
     protected function createTicketCreateTSTFromPricing(TicketCreateTstFromPricingOptions $params)
     {
         return new Struct\Ticket\CreateTSTFromPricing($params);
+    }
+
+    /**
+     * Ticket_DeleteTST
+     *
+     * @param TicketDeleteTstOptions $params
+     * @return Struct\Ticket\DeleteTST
+     */
+    protected function createTicketDeleteTST(TicketDeleteTstOptions $params)
+    {
+        return new Struct\Ticket\DeleteTST($params);
     }
 
     /**

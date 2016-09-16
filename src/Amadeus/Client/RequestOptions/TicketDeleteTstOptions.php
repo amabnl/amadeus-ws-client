@@ -20,41 +20,54 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * PsaList
+ * TicketDeleteTstOptions
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\RequestOptions
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PsaList
+class TicketDeleteTstOptions extends Base
 {
-    /**
-     * Reference of the fare selected.
-     *
-     * A fare may have been calculated by Fare Quote for several passengers
-     * but there is still the possibility to create a TST only for a part of these passengers.
-     *
-     * @var ItemReference
-     */
-    public $itemReference;
+    const DELETE_MODE_ALL = "ALL";
+
+    const DELETE_MODE_SELECTIVE = "SEL";
 
     /**
-     * Reference information on passengers.
+     * Delete all TST's or delete selectively?
      *
-     * @var PaxReference
+     * self::DELETE_MODE_*
+     *
+     * @var string
      */
-    public $paxReference;
+    public $deleteMode;
 
     /**
-     * PsaList constructor.
+     * Delete TST by Tattoo number
      *
-     * @param int $itemRef
-     * @param string $itemRefType
-     * @param int|null $sequenceNr
+     * @var string
      */
-    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST, $sequenceNr = null)
-    {
-        $this->itemReference = new ItemReference($itemRef, $itemRefType, $sequenceNr);
-    }
+    public $tstTattooNr;
+
+    /**
+     * Delete TST by TST number
+     *
+     * @var int
+     */
+    public $tstNumber;
+
+    /**
+     * Delete TST by passenger number
+     *
+     * @var int
+     */
+    public $passengerNumber;
+
+    /**
+     * Delete TST by segment number
+     *
+     * @var int
+     */
+    public $segmentNumber;
 }

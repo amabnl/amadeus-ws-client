@@ -23,38 +23,31 @@
 namespace Amadeus\Client\Struct\Ticket;
 
 /**
- * PsaList
+ * AttributeDetails
  *
  * @package Amadeus\Client\Struct\Ticket
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PsaList
+class AttributeDetails
 {
-    /**
-     * Reference of the fare selected.
-     *
-     * A fare may have been calculated by Fare Quote for several passengers
-     * but there is still the possibility to create a TST only for a part of these passengers.
-     *
-     * @var ItemReference
-     */
-    public $itemReference;
+    const MODE_ALL = "ALL";
+
+    const MODE_SELECTIVE = "SEL";
 
     /**
-     * Reference information on passengers.
+     * self::MODE_*
      *
-     * @var PaxReference
+     * @var string
      */
-    public $paxReference;
+    public $attributeType;
 
     /**
-     * PsaList constructor.
+     * AttributeDetails constructor.
      *
-     * @param int $itemRef
-     * @param string $itemRefType
-     * @param int|null $sequenceNr
+     * @param string $attributeType
      */
-    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST, $sequenceNr = null)
+    public function __construct($attributeType)
     {
-        $this->itemReference = new ItemReference($itemRef, $itemRefType, $sequenceNr);
+        $this->attributeType = $attributeType;
     }
 }

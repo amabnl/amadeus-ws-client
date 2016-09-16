@@ -786,6 +786,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("NEED PNR", $result->messages[0]->text);
     }
 
+    public function testCanHandleTicketDeleteTSTErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketDeleteTSTReplyError.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_DeleteTST');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('CM01959', $result->messages[0]->code);
+        $this->assertEquals("NEED PNR", $result->messages[0]->text);
+    }
+
     public function testCanHandleMiniRuleGetFromPricingRecErrResponse()
     {
         $respHandler = new ResponseHandler\Base();
