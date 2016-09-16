@@ -4,6 +4,8 @@ EXAMPLES
 
 Here are some examples of how to send specific messages.
 
+.. contents::
+
 ***
 PNR
 ***
