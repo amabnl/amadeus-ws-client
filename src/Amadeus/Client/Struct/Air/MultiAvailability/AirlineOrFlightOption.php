@@ -33,7 +33,7 @@ class AirlineOrFlightOption
     /**
      * AirlineOrFlightOption constructor.
      * @param string[] $airlines
-     * @param string $flightNumber
+     * @param string|null $flightNumber
      * @param int|null $indicator
      */
     public function __construct($airlines, $flightNumber = null, $indicator = null)

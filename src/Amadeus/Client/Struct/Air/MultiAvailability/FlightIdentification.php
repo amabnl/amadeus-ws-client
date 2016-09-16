@@ -40,7 +40,7 @@ class FlightIdentification
      * FlightIdentification constructor.
      *
      * @param string $airline Airline code
-     * @param string $flightNumber
+     * @param string|null $flightNumber
      */
     public function __construct($airline, $flightNumber = null)
     {

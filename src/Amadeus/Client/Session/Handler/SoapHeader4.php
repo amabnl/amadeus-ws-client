@@ -278,8 +278,7 @@ class SoapHeader4 extends Base
             //We are authenticated and stateful: provide session header to continue or terminate session
             $statusCode =
                 (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) ?
-                    "End" :
-                    "InSeries";
+                    "End" : "InSeries";
 
             array_push(
                 $headersToSet,
@@ -344,7 +343,7 @@ class SoapHeader4 extends Base
      */
     protected function generateGuid()
     {
-        mt_srand((double)microtime()*10000);
+        mt_srand((double) microtime() * 10000);
         $charId = strtoupper(md5(uniqid(rand(), true)));
         $hyphen = chr(45); // "-"
 

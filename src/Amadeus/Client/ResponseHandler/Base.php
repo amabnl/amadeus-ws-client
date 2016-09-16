@@ -886,10 +886,9 @@ class Base implements ResponseHandlerInterface
 
     /**
      * @param string $qualifier
-     * @param string|null $amadeusCodeList
      * @return string Result::STATUS_*
      */
-    protected function makeStatusFromErrorQualifier($qualifier, $amadeusCodeList = null)
+    protected function makeStatusFromErrorQualifier($qualifier)
     {
         $status = null;
 
