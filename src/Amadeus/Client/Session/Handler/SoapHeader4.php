@@ -365,12 +365,12 @@ class SoapHeader4 extends Base
     protected function generateSecurityHeaderRawXml($originator, $nonce, $pwDigest, $creationTimeString)
     {
         return $xml = '<oas:Security xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
-    <oas:UsernameToken xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" oas1:Id="UsernameToken-1">
-  <oas:Username>' . $originator . '</oas:Username>
-  <oas:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">' . $nonce . '</oas:Nonce>
-  <oas:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">' . $pwDigest . '</oas:Password>
-  <oas1:Created>' . $creationTimeString . '</oas1:Created>
-    </oas:UsernameToken>
+	<oas:UsernameToken xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" oas1:Id="UsernameToken-1">
+		<oas:Username>' . $originator . '</oas:Username>
+		<oas:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">' . $nonce . '</oas:Nonce>
+		<oas:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">' . $pwDigest . '</oas:Password>
+		<oas1:Created>' . $creationTimeString . '</oas1:Created>
+	</oas:UsernameToken>
 </oas:Security>';
     }
 
