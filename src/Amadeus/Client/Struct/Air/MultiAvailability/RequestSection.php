@@ -185,7 +185,7 @@ class RequestSection
     protected function loadAvailabilityOptions($availabilityOptions)
     {
         if (!empty($availabilityOptions)) {
-            foreach ($availabilityOptions as $type=>$argument) {
+            foreach ($availabilityOptions as $type => $argument) {
                 $this->availabilityOptions->optionInfo[] = new OptionInfo($type, $argument);
             }
         }

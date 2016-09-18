@@ -25,7 +25,7 @@ namespace Amadeus\Client\RequestOptions\Pnr\Element;
 use Amadeus\Client\RequestOptions\Pnr\Element;
 
 /**
- * MiscellaneousRemark element
+ * MiscellaneousRemark element - RM element
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Element
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>

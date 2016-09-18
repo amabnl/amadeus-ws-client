@@ -294,7 +294,10 @@ class ExtremeSearch extends BaseWsMessage
     protected function loadDepartureDaysOutIn(PriceXplorerExtremeSearchOptions $params)
     {
         if (!empty($params->departureDaysInbound)) {
-            $this->departureDays[] = new DepartureDays($params->departureDaysInbound, SelectionDetails::OPT_INBOUND_DEP_DAYS);
+            $this->departureDays[] = new DepartureDays(
+                $params->departureDaysInbound,
+                SelectionDetails::OPT_INBOUND_DEP_DAYS
+            );
         }
         if (!empty($params->departureDaysOutbound)) {
             $this->departureDays[] = new DepartureDays(

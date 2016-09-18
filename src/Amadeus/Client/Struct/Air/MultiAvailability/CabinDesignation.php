@@ -22,7 +22,7 @@ class CabinDesignation
     const CABIN_ECONOMY_PREMIUM = 5;
 
     /**
-     * 700	Request for cabin is expanded to include non matching cabins in the connections
+     * 700 Request for cabin is expanded to include non matching cabins in the connections
      *
      * @var string
      */

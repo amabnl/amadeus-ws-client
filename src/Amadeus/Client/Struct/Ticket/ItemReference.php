@@ -30,7 +30,7 @@ namespace Amadeus\Client\Struct\Ticket;
 class ItemReference
 {
     /**
-     * TST	TST/fare reference number
+     * TST TST/fare reference number
      */
     const REFTYPE_TST = 'TST';
     /**

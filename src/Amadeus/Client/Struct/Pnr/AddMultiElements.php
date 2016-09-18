@@ -142,7 +142,8 @@ class AddMultiElements extends BaseWsMessage
             $tattooCounter++;
 
             $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(
-                new ReceivedFrom(['receivedFrom' => $params->receivedFrom]), $tattooCounter
+                new ReceivedFrom(['receivedFrom' => $params->receivedFrom]),
+                $tattooCounter
             );
         }
     }
@@ -278,7 +279,10 @@ class AddMultiElements extends BaseWsMessage
 
         foreach ($elements as $element) {
             if ($element instanceof Element) {
-                $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement($element, $tattooCounter);
+                $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(
+                    $element,
+                    $tattooCounter
+                );
             }
 
             if ($element instanceof ReceivedFrom) {
@@ -288,7 +292,8 @@ class AddMultiElements extends BaseWsMessage
 
         if ($receivedFromString !== null && !$explicitRf) {
             $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(
-                new ReceivedFrom(['receivedFrom' => $receivedFromString]), $tattooCounter
+                new ReceivedFrom(['receivedFrom' => $receivedFromString]),
+                $tattooCounter
             );
         }
     }
@@ -358,35 +363,65 @@ class AddMultiElements extends BaseWsMessage
                 break;
             case 'ServiceRequest':
                 /** @var Element\ServiceRequest $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST, $tattooCounter);
+                $createdElement = new DataElementsIndiv(
+                    ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST,
+                    $tattooCounter
+                );
                 $createdElement->serviceRequest = new ServiceRequest($element);
                 break;
             case 'Ticketing':
                 /** @var Element\Ticketing $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_TICKETING_ELEMENT, $tattooCounter);
+                $createdElement = new DataElementsIndiv(
+                    ElementManagementData::SEGNAME_TICKETING_ELEMENT,
+                    $tattooCounter
+                );
                 $createdElement->ticketElement = new TicketElement($element);
                 break;
             case 'AccountingInfo':
                 /** @var Element\AccountingInfo $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_ACCOUNTING_INFORMATION, $tattooCounter);
+                $createdElement = new DataElementsIndiv(
+                    ElementManagementData::SEGNAME_ACCOUNTING_INFORMATION,
+                    $tattooCounter
+                );
                 $createdElement->accounting = new Accounting($element);
                 break;
             case 'Address':
                 /** @var Element\Address $element */
                 $createdElement = new DataElementsIndiv($element->type, $tattooCounter);
-                if ($element->type === ElementManagementData::SEGNAME_ADDRESS_BILLING_UNSTRUCTURED || $element->type === ElementManagementData::SEGNAME_ADDRESS_MAILING_UNSTRUCTURED) {
-                    $createdElement->freetextData = new FreetextData($element->freeText, FreetextDetail::TYPE_MAILING_ADDRESS);
+                if ($element->type === ElementManagementData::SEGNAME_ADDRESS_BILLING_UNSTRUCTURED ||
+                    $element->type === ElementManagementData::SEGNAME_ADDRESS_MAILING_UNSTRUCTURED
+                ) {
+                    $createdElement->freetextData = new FreetextData(
+                        $element->freeText,
+                        FreetextDetail::TYPE_MAILING_ADDRESS
+                    );
                 } else {
                     $createdElement->structuredAddress = new StructuredAddress($element);
                 }
                 break;
             case 'FrequentFlyer':
                 /** @var Element\FrequentFlyer $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST, $tattooCounter);
+                $createdElement = new DataElementsIndiv(
+                    ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST,
+                    $tattooCounter
+                );
                 $createdElement->serviceRequest = new ServiceRequest();
                 $createdElement->serviceRequest->ssr->type = 'FQTV';
                 $createdElement->serviceRequest->ssr->companyId = $element->airline;
                 $createdElement->frequentTravellerData = new FrequentTravellerData($element);
+                break;
+            case 'OtherServiceInfo':
+                /** @var Element\OtherServiceInfo $element */
+                $createdElement = new DataElementsIndiv(
+                    ElementManagementData::SEGNAME_OTHER_SERVICE_INFORMATION,
+                    $tattooCounter
+                );
+                $createdElement->freetextData = new FreetextData(
+                    $element->freeText,
+                    FreetextDetail::TYPE_OSI_ELEMENT
+                );
+                $createdElement->freetextData->freetextDetail->companyId = $element->airline;
+                $createdElement->freetextData->freetextDetail->subjectQualifier = FreetextDetail::QUALIFIER_LITERALTEXT;
                 break;
             default:
                 throw new InvalidArgumentException('Element type ' . $elementType . ' is not supported');

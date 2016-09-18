@@ -55,8 +55,8 @@ class ItineraryDetails
     public function __construct(Itinerary $itinerary)
     {
         $this->originDestinationDetails = new OriginDestinationDetails(
-           $itinerary->from,
-           $itinerary->to
+            $itinerary->from,
+            $itinerary->to
         );
         $this->message = new Message(MessageFunctionDetails::MSGFUNC_LOWEST_FARE);
         foreach ($itinerary->segments as $segment) {

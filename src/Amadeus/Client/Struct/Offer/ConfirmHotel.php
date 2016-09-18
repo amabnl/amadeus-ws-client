@@ -112,7 +112,10 @@ class ConfirmHotel extends BaseWsMessage
             $this->roomStayData[0]->globalBookingInfo->bookingSource = new BookingSource($params->originatorId);
         }
 
-        if (!empty($params->paymentType) && !empty($params->formOfPayment) && $params->paymentDetails instanceof PaymentDetailsOptions) {
+        if (!empty($params->paymentType) &&
+            !empty($params->formOfPayment) &&
+            $params->paymentDetails instanceof PaymentDetailsOptions
+        ) {
             $this->makeRoomStayData();
             $this->roomStayData[0]->roomList[] = new RoomList();
 
@@ -130,7 +133,9 @@ class ConfirmHotel extends BaseWsMessage
                     $params->paymentDetails->ccExpiry
                 );
             } else {
-                throw new InvalidArgumentException('Hotel Offer Confirm Form of Payment ' . $params->formOfPayment . ' is not yet supported');
+                throw new InvalidArgumentException(
+                    'Hotel Offer Confirm Form of Payment ' . $params->formOfPayment . ' is not yet supported'
+                );
             }
         }
     }

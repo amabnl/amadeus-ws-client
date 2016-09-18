@@ -38,9 +38,6 @@ use Amadeus\Client\ResponseHandler\Base as ResponseHandlerBase;
  *
  * TODO:
  * - support older versions of SoapHeader (1)
- * - implement more PNR_AddMultiElements:
- *      OSI segment
- * - implement messages on supported messages todo section
  *
  * @package Amadeus
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -65,14 +62,14 @@ class Client
      *
      * @var string
      */
-    const version = "0.0.1dev";
+    const VERSION = "1.0.0";
 
     /**
      * An identifier string for the library (to be used in Received From entries)
      *
      * @var string
      */
-    const receivedFromIdentifier = "amabnl-amadeus-ws-client";
+    const RECEIVED_FROM_IDENTIFIER = "amabnl-amadeus-ws-client";
 
     /**
      * Session Handler will be sending all the messages and handling all session-related things.
@@ -181,7 +178,9 @@ class Client
     {
         if ($params->authParams instanceof Params\AuthParams) {
             $this->authParams = $params->authParams;
-            if (isset($params->sessionHandlerParams) && $params->sessionHandlerParams instanceof Params\SessionHandlerParams) {
+            if (isset($params->sessionHandlerParams) &&
+                $params->sessionHandlerParams instanceof Params\SessionHandlerParams
+            ) {
                 $params->sessionHandlerParams->authParams = $this->authParams;
             }
         }
@@ -194,7 +193,7 @@ class Client
         $this->requestCreator = $this->loadRequestCreator(
             $params->requestCreator,
             $params->requestCreatorParams,
-            self::receivedFromIdentifier . "-" .self::version,
+            self::RECEIVED_FROM_IDENTIFIER . "-" .self::VERSION,
             $this->sessionHandler->getOriginatorOffice(),
             $this->sessionHandler->getMessagesAndVersions()
         );
@@ -253,7 +252,7 @@ class Client
      * https://webservices.amadeus.com/extranet/viewService.do?id=27&flavourId=1&menuId=functional
      *
      * @param RequestOptions\PnrRetrieveOptions $options
-     * @param array $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_Reply as a PHP object.
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      * @throws Exception
      */
@@ -268,7 +267,7 @@ class Client
      * Create a PNR using PNR_AddMultiElements
      *
      * @param RequestOptions\PnrCreatePnrOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function pnrCreatePnr(RequestOptions\PnrCreatePnrOptions $options, $messageOptions = [])
@@ -283,9 +282,8 @@ class Client
      *
      * https://webservices.amadeus.com/extranet/viewService.do?id=25&flavourId=1&menuId=functional
      *
-     * @todo implement message creation - maybe split up in separate Create & Modify PNR?
      * @param RequestOptions\PnrAddMultiElementsOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function pnrAddMultiElements(RequestOptions\PnrAddMultiElementsOptions $options, $messageOptions = [])
@@ -308,7 +306,7 @@ class Client
      * https://webservices.amadeus.com/extranet/viewService.do?id=1922&flavourId=1&menuId=functional
      *
      * @param RequestOptions\PnrRetrieveAndDisplayOptions $options Amadeus Record Locator for PNR
-     * @param array $messageOptions (OPTIONAL) Set ['asString'] = 'false' to get PNR_RetrieveAndDisplayReply as a PHP object.
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      * @throws Exception
      **/
@@ -323,7 +321,7 @@ class Client
      * PNR_Cancel
      *
      * @param RequestOptions\PnrCancelOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function pnrCancel(RequestOptions\PnrCancelOptions $options, $messageOptions = [])
@@ -337,7 +335,7 @@ class Client
      * PNR_DisplayHistory
      *
      * @param RequestOptions\PnrDisplayHistoryOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function pnrDisplayHistory(RequestOptions\PnrDisplayHistoryOptions $options, $messageOptions = [])
@@ -353,7 +351,7 @@ class Client
      * https://webservices.amadeus.com/extranet/viewService.do?id=52&flavourId=1&menuId=functional
      *
      * @param RequestOptions\QueueListOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function queueList(RequestOptions\QueueListOptions $options, $messageOptions = [])
@@ -367,7 +365,7 @@ class Client
      * Queue_PlacePNR - Place a PNR on a given queue
      *
      * @param RequestOptions\QueuePlacePnrOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function queuePlacePnr(RequestOptions\QueuePlacePnrOptions $options, $messageOptions = [])
@@ -381,7 +379,7 @@ class Client
      * Queue_RemoveItem - remove an item (a PNR) from a given queue
      *
      * @param RequestOptions\QueueRemoveItemOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function queueRemoveItem(RequestOptions\QueueRemoveItemOptions $options, $messageOptions = [])
@@ -395,7 +393,7 @@ class Client
      * Queue_MoveItem - move an item (a PNR) from one queue to another.
      *
      * @param RequestOptions\QueueMoveItemOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function queueMoveItem(RequestOptions\QueueMoveItemOptions $options, $messageOptions = [])
@@ -411,7 +409,7 @@ class Client
      * To be called in the context of an open PNR
      *
      * @param RequestOptions\OfferVerifyOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function offerVerify(RequestOptions\OfferVerifyOptions $options, $messageOptions = [])
@@ -425,7 +423,7 @@ class Client
      * Offer_ConfirmAirOffer
      *
      * @param RequestOptions\OfferConfirmAirOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function offerConfirmAir(RequestOptions\OfferConfirmAirOptions $options, $messageOptions = [])
@@ -439,7 +437,7 @@ class Client
      * Offer_ConfirmHotelOffer
      *
      * @param RequestOptions\OfferConfirmHotelOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function offerConfirmHotel(RequestOptions\OfferConfirmHotelOptions $options, $messageOptions = [])
@@ -453,7 +451,7 @@ class Client
      * Offer_ConfirmCarOffer
      *
      * @param RequestOptions\OfferConfirmCarOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function offerConfirmCar(RequestOptions\OfferConfirmCarOptions $options, $messageOptions = [])
@@ -467,11 +465,13 @@ class Client
      * Fare_MasterPricerTravelBoardSearch
      *
      * @param RequestOptions\FareMasterPricerTbSearch $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
-    public function fareMasterPricerTravelBoardSearch(RequestOptions\FareMasterPricerTbSearch $options, $messageOptions = [])
-    {
+    public function fareMasterPricerTravelBoardSearch(
+        RequestOptions\FareMasterPricerTbSearch $options,
+        $messageOptions = []
+    ) {
         $msgName = 'Fare_MasterPricerTravelBoardSearch';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -481,11 +481,13 @@ class Client
      * Fare_PricePnrWithBookingClass
      *
      * @param RequestOptions\FarePricePnrWithBookingClassOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
-    public function farePricePnrWithBookingClass(RequestOptions\FarePricePnrWithBookingClassOptions $options, $messageOptions = [])
-    {
+    public function farePricePnrWithBookingClass(
+        RequestOptions\FarePricePnrWithBookingClassOptions $options,
+        $messageOptions = []
+    ) {
         $msgName = 'Fare_PricePNRWithBookingClass';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -495,11 +497,13 @@ class Client
      * Fare_InformativePricingWithoutPNR
      *
      * @param RequestOptions\FareInformativePricingWithoutPnrOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
-    public function fareInformativePricingWithoutPnr(RequestOptions\FareInformativePricingWithoutPnrOptions $options, $messageOptions = [])
-    {
+    public function fareInformativePricingWithoutPnr(
+        RequestOptions\FareInformativePricingWithoutPnrOptions $options,
+        $messageOptions = []
+    ) {
         $msgName = 'Fare_InformativePricingWithoutPNR';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -509,7 +513,7 @@ class Client
      * Fare_CheckRules
      *
      * @param RequestOptions\FareCheckRulesOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function fareCheckRules(RequestOptions\FareCheckRulesOptions $options, $messageOptions = [])
@@ -523,7 +527,7 @@ class Client
      * Fare_ConvertCurrency
      *
      * @param RequestOptions\FareConvertCurrencyOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function fareConvertCurrency(RequestOptions\FareConvertCurrencyOptions $options, $messageOptions = [])
@@ -537,11 +541,13 @@ class Client
      * Air_MultiAvailability
      *
      * @param RequestOptions\AirMultiAvailabilityOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
-    public function airMultiAvailability(RequestOptions\AirMultiAvailabilityOptions $options, $messageOptions = [])
-    {
+    public function airMultiAvailability(
+        RequestOptions\AirMultiAvailabilityOptions $options,
+        $messageOptions = []
+    ) {
         $msgName = 'Air_MultiAvailability';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -551,11 +557,13 @@ class Client
      * Air_SellFromRecommendation
      *
      * @param RequestOptions\AirSellFromRecommendationOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
-    public function airSellFromRecommendation(RequestOptions\AirSellFromRecommendationOptions $options, $messageOptions = [])
-    {
+    public function airSellFromRecommendation(
+        RequestOptions\AirSellFromRecommendationOptions $options,
+        $messageOptions = []
+    ) {
         $msgName = 'Air_SellFromRecommendation';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -565,7 +573,7 @@ class Client
      * Air_FlightInfo
      *
      * @param RequestOptions\AirFlightInfoOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function airFlightInfo(RequestOptions\AirFlightInfoOptions $options, $messageOptions = [])
@@ -579,7 +587,7 @@ class Client
      * Air_RetrieveSeatMap
      *
      * @param RequestOptions\AirRetrieveSeatMapOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function airRetrieveSeatMap(RequestOptions\AirRetrieveSeatMapOptions $options, $messageOptions = [])
@@ -593,7 +601,7 @@ class Client
      * Command_Cryptic
      *
      * @param RequestOptions\CommandCrypticOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function commandCryptic(RequestOptions\CommandCrypticOptions $options, $messageOptions = [])
@@ -607,11 +615,13 @@ class Client
      * MiniRule_GetFromPricingRec
      *
      * @param RequestOptions\MiniRuleGetFromPricingRecOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
-    public function miniRuleGetFromPricingRec(RequestOptions\MiniRuleGetFromPricingRecOptions $options, $messageOptions = [])
-    {
+    public function miniRuleGetFromPricingRec(
+        RequestOptions\MiniRuleGetFromPricingRecOptions $options,
+        $messageOptions = []
+    ) {
         $msgName = 'MiniRule_GetFromPricingRec';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -621,7 +631,7 @@ class Client
      * Info_EncodeDecodeCity
      *
      * @param RequestOptions\InfoEncodeDecodeCityOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function infoEncodeDecodeCity(RequestOptions\InfoEncodeDecodeCityOptions $options, $messageOptions = [])
@@ -636,11 +646,13 @@ class Client
      * Ticket_CreateTSTFromPricing
      *
      * @param RequestOptions\TicketCreateTstFromPricingOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
-    public function ticketCreateTSTFromPricing(RequestOptions\TicketCreateTstFromPricingOptions $options, $messageOptions = [])
-    {
+    public function ticketCreateTSTFromPricing(
+        RequestOptions\TicketCreateTstFromPricingOptions $options,
+        $messageOptions = []
+    ) {
         $msgName = 'Ticket_CreateTSTFromPricing';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -650,7 +662,7 @@ class Client
      * Ticket_DeleteTST
      *
      * @param RequestOptions\TicketDeleteTstOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
     public function ticketDeleteTST(RequestOptions\TicketDeleteTstOptions $options, $messageOptions = [])
@@ -664,11 +676,13 @@ class Client
      * DocIssuance_IssueTicket
      *
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
-    public function docIssuanceIssueTicket(RequestOptions\DocIssuanceIssueTicketOptions $options, $messageOptions = [])
-    {
+    public function docIssuanceIssueTicket(
+        RequestOptions\DocIssuanceIssueTicketOptions $options,
+        $messageOptions = []
+    ) {
         $msgName = 'DocIssuance_IssueTicket';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -678,11 +692,13 @@ class Client
      * PriceXplorer_ExtremeSearch
      *
      * @param RequestOptions\PriceXplorerExtremeSearchOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
-    public function priceXplorerExtremeSearch(RequestOptions\PriceXplorerExtremeSearchOptions $options, $messageOptions = [])
-    {
+    public function priceXplorerExtremeSearch(
+        RequestOptions\PriceXplorerExtremeSearchOptions $options,
+        $messageOptions = []
+    ) {
         $msgName = 'PriceXplorer_ExtremeSearch';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -692,11 +708,13 @@ class Client
      * SalesReports_DisplayQueryReport
      *
      * @param RequestOptions\SalesReportsDisplayQueryReportOptions $options
-     * @param array $messageOptions
+     * @param array $messageOptions (OPTIONAL)
      * @return Result
      */
-    public function salesReportsDisplayQueryReport(RequestOptions\SalesReportsDisplayQueryReportOptions $options, $messageOptions = [])
-    {
+    public function salesReportsDisplayQueryReport(
+        RequestOptions\SalesReportsDisplayQueryReportOptions $options,
+        $messageOptions = []
+    ) {
         $msgName = 'SalesReports_DisplayQueryReport';
 
         return $this->callMessage($msgName, $options, $messageOptions);

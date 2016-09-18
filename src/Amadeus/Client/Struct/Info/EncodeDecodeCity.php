@@ -102,18 +102,25 @@ class EncodeDecodeCity extends BaseWsMessage
         }
 
         if (!is_null($params->restrictCountry) || !is_null($params->restrictState)) {
-            $params->restrictState = (!is_null($params->restrictState)) ?
-                strtoupper($params->restrictState) :
-                $params->restrictState;
+            $params->restrictState = $this->upperOrNull($params->restrictState);
 
-            $params->restrictCountry = (!is_null($params->restrictCountry)) ?
-                strtoupper($params->restrictCountry) :
-                $params->restrictCountry;
+            $params->restrictCountry = $this->upperOrNull($params->restrictCountry);
 
             $this->countryStateRestriction = new CountryStateRestriction(
                 $params->restrictCountry,
                 $params->restrictState
             );
         }
+    }
+
+    /**
+     * Converts string to uppercase or null if null.
+     *
+     * @param string|null $param
+     * @return string|null
+     */
+    protected function upperOrNull($param)
+    {
+        return (!is_null($param)) ? strtoupper($param) : $param;
     }
 }

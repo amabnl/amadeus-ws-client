@@ -73,6 +73,7 @@ Amadeus sometimes provides you with multiple WSDL files in a single WSAP. New fe
 
 You can provide all the WSDL's in your WSAP by passing an array of wsdl's in the Client Params:
 
+.. code-block:: php
 
     use Amadeus\Client;
     use Amadeus\Client\Params;
@@ -96,6 +97,7 @@ You can provide all the WSDL's in your WSAP by passing an array of wsdl's in the
     ]);
 
     $client = new Client($params);
+
 
 You can now call messages from any of the loaded WSDL while staying in the same session & context.
 
@@ -147,9 +149,7 @@ Sometimes it's useful if the result from the SOAP call gets returned as a PHP ob
 sometimes a string containing the XML document of the SOAP-BODY is more useful.
 
 For example, when trying to extract specific information from a PNR, it can be useful to load the
-PNR_Reply as a ``\DOMDocument`` and query it using a ``\DOMXPath`` object.
-
-For this, you can use the ``Amadeus\Client\Result::responseXml`` from the result.
+PNR_Reply as a ``\DOMDocument`` and query it using a ``\DOMXPath`` object: for this, you can use the ``Amadeus\Client\Result::responseXml`` from the result object.
 
 ******
 Errors
@@ -173,21 +173,15 @@ You can override the default ``\SoapClient`` options by passing them in the Sess
 
     $params = new Params([
         'sessionHandlerParams' => [
-            'soapHeaderVersion' => Client::HEADER_V4, //This is the default value, can be omitted.
-            'wsdl' => '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20160101_080000.wsdl', //Points to the location of the WSDL file for your WSAP. Make sure the associated XSD's are also available.
-            'stateful' => false, //Enable stateful messages by default - can be changed at will to switch between stateless & stateful.
-            'logger' => new Psr\Log\NullLogger(),
+            // ...
+            // other parameters omitted for clarity
+            // ...
             'soapClientOptions' => [
                 'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP
             ]
-            'authParams' => [
-                'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
-                'userId' => 'WSBENXXX', //Also known as 'Originator' for Soap Header 1 & 2 WSDL's
-                'passwordData' => 'dGhlIHBhc3N3b3Jk' // **base 64 encoded** password
-            ]
-        ],
+        ]
         'requestCreatorParams' => [
-            'receivedFrom' => 'my test project' // The "Received From" string that will be visible in PNR History
+            'receivedFrom' => 'my test project'
         ]
     ]);
 

@@ -31,15 +31,15 @@ namespace Amadeus\Client\Struct\Offer;
 class PassengerReference
 {
     /**
-     * P	Passenger/traveller reference number
+     * P Passenger/traveller reference number
      */
     const TYPE_PAXREF = "P";
     /**
-     * PA	Adult Passenger
+     * PA Adult Passenger
      */
     const TYPE_ADULT = "PA";
     /**
-     * PI	Infant Passenger
+     * PI Infant Passenger
      */
     const TYPE_INFANT = "PI";
 
@@ -60,14 +60,14 @@ class PassengerReference
     /**
      * Hotel Offer types:
      *
-     * BHN	Booking Holder Non occupant pax tattoo
-     * BHO	Booking Holder Occupant pax tattoo
-     * BOP	Booking Occupant Pax tattoo
-     * GRN	GRoup Name tattoo
-     * P	Holder Pax tattoo (no information on occupancy)
-     * RMN	Room Main pax tattoo, Non occupant.
-     * RMO	Room Main pax tattoo, Occupant.
-     * ROP	Room Occupant Pax tattoo
+     * BHN Booking Holder Non occupant pax tattoo
+     * BHO Booking Holder Occupant pax tattoo
+     * BOP Booking Occupant Pax tattoo
+     * GRN GRoup Name tattoo
+     * P Holder Pax tattoo (no information on occupancy)
+     * RMN Room Main pax tattoo, Non occupant.
+     * RMO Room Main pax tattoo, Occupant.
+     * ROP Room Occupant Pax tattoo
      */
 
 

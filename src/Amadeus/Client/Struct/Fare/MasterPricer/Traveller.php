@@ -43,7 +43,7 @@ class Traveller
 
     /**
      * @param int $travellerRef
-     * @param boolean $isInfant	(OPTIONAL)
+     * @param boolean $isInfant (OPTIONAL)
      */
     public function __construct($travellerRef, $isInfant = false)
     {

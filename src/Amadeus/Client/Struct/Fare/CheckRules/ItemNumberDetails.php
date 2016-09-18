@@ -38,18 +38,18 @@ class ItemNumberDetails
     /**
      * Possible values:
      *
-     * 700	Frequent Traveler account to be decremented
-     * 701	Teletype address
-     * 702	Queue Identifier
-     * 703	Sub-queue category
-     * 704	First booked segment
-     * 705	Last booked segment
-     * A	Account number
-     * C	Customer number
-     * D	Document number
-     * FC	Fare Component
-     * P	Product number
-     * T	Total of Fare Required
+     * 700 Frequent Traveler account to be decremented
+     * 701 Teletype address
+     * 702 Queue Identifier
+     * 703 Sub-queue category
+     * 704 First booked segment
+     * 705 Last booked segment
+     * A Account number
+     * C Customer number
+     * D Document number
+     * FC Fare Component
+     * P Product number
+     * T Total of Fare Required
      *
      * @var string
      */

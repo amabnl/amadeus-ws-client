@@ -40,9 +40,9 @@ class LocationDetails
     public $distance;
     /**
      * Indicates the reference of the number of flight segment
-     * K 	Kilometers
-     * P 	Passenger/traveller reference number
-     * S 	PNR segment reference number
+     * K  Kilometers
+     * P  Passenger/traveller reference number
+     * S  PNR segment reference number
      *
      * @var string
      */
@@ -55,10 +55,10 @@ class LocationDetails
     public $locationId;
     /**
      *
-     * A 	Airport
-     * C 	City
-     * D 	Consider Destination (off point) of the PNR requested segment
-     * O 	Consider Origin (board point) of the PNR requested segment
+     * A  Airport
+     * C  City
+     * D  Consider Destination (off point) of the PNR requested segment
+     * O  Consider Origin (board point) of the PNR requested segment
      *
      * @var string
      */

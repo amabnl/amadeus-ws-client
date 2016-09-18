@@ -41,48 +41,48 @@ class UnitNumberDetail
      *
      * Possible values:
      *
-     * A 	Adult
-     * BB 	Number of best buy to be issued by FQ
-     * BD 	Bad day good day
-     * BS 	Block space
-     * C 	Child
-     * CP 	Corporate
-     * DA 	Day(s) after
-     * DB 	Day(s) before
-     * F 	Female
-     * G 	Group
-     * I 	Individual
-     * IF 	infant female
-     * IM 	infant male
-     * IN 	Infant
-     * IZ 	Individual within a group
-     * L 	Airport lounge member
-     * M 	Male
-     * ML 	Number of meals served
-     * MX 	Maximum number of flights desired
-     * N 	Military
-     * NC 	Number of columns
-     * NL 	Number of lines
-     * PX 	Number of seats occupied by passengers on board
-     * QW 	Quality weight
-     * RC 	Number of requested recommendation
-     * S 	Same surname
-     * SND 	Slice and Dice
-     * SP 	Standby positive
-     * SS 	Standby space available
-     * T 	Frequent traveler
-     * TA 	Total seats available to assign
-     * TC 	Total cabin class/compartment capacity
-     * TCA 	Total cabin/compartment seats with acknowledgment
-     * TD 	Number of ticket or document numbers
-     * TF 	Total number of flight segments
-     * TH 	Time window size type is in hours
-     * TM 	Time window size type is in minutes
-     * TS 	Total seats sold
-     * TU 	Total seats unassigned
-     * TUA 	Total unassigned seats with acknowledgment pending
-     * UM 	Unaccompanied minor
-     * WT 	distribution weight
+     * A  Adult
+     * BB  Number of best buy to be issued by FQ
+     * BD  Bad day good day
+     * BS  Block space
+     * C  Child
+     * CP  Corporate
+     * DA  Day(s) after
+     * DB  Day(s) before
+     * F  Female
+     * G  Group
+     * I  Individual
+     * IF  infant female
+     * IM  infant male
+     * IN  Infant
+     * IZ  Individual within a group
+     * L  Airport lounge member
+     * M  Male
+     * ML  Number of meals served
+     * MX  Maximum number of flights desired
+     * N  Military
+     * NC  Number of columns
+     * NL  Number of lines
+     * PX  Number of seats occupied by passengers on board
+     * QW  Quality weight
+     * RC  Number of requested recommendation
+     * S  Same surname
+     * SND  Slice and Dice
+     * SP  Standby positive
+     * SS  Standby space available
+     * T  Frequent traveler
+     * TA  Total seats available to assign
+     * TC  Total cabin class/compartment capacity
+     * TCA  Total cabin/compartment seats with acknowledgment
+     * TD  Number of ticket or document numbers
+     * TF  Total number of flight segments
+     * TH  Time window size type is in hours
+     * TM  Time window size type is in minutes
+     * TS  Total seats sold
+     * TU  Total seats unassigned
+     * TUA  Total unassigned seats with acknowledgment pending
+     * UM  Unaccompanied minor
+     * WT  distribution weight
      *
      * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2305&serviceVersionId=2286#
      *

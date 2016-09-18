@@ -42,14 +42,14 @@ class SelectionDetails
 
     /* Queue_* options:
      * QBA  copy PNR/msg to specified delay queue and keep existing
-     * QBB 	copy PNR/msg to specified queue and keep existing
-     * QBC 	copy PNR/msg to specified delay queue and remove existing
-     * QBD 	copy PNR/msg to specified queue and remove existing
-     * QWD 	copy PNR from delay planner and keep existing
-     * QWO 	copy PNR from option planner and keep existing
-     * QWR 	copy PNR from planner and remove existing
-     * QWS 	copy PNR from planner and keep existing
-     * QWT 	copy PNR from ticketing planner and keep existing
+     * QBB  copy PNR/msg to specified queue and keep existing
+     * QBC  copy PNR/msg to specified delay queue and remove existing
+     * QBD  copy PNR/msg to specified queue and remove existing
+     * QWD  copy PNR from delay planner and keep existing
+     * QWO  copy PNR from option planner and keep existing
+     * QWR  copy PNR from planner and remove existing
+     * QWS  copy PNR from planner and keep existing
+     * QWT  copy PNR from ticketing planner and keep existing
      */
 
     /**

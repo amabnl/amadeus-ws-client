@@ -73,7 +73,7 @@ class Predicate
      */
     protected function loadDetails($details)
     {
-        foreach ($details as $key=>$detail) {
+        foreach ($details as $key => $detail) {
             if ($key === 0) {
                 $this->predicateDetails = new PredicateDetails(
                     $detail->option,

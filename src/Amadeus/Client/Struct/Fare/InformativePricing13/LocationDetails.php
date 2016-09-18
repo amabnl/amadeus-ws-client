@@ -33,8 +33,8 @@ class LocationDetails
     /**
      * Identification of the name of place/location, other than 3164 City name.
      *
-     * ARNK	(for RTG use only)
-     * ZZZ	(used to designate all cities)
+     * ARNK (for RTG use only)
+     * ZZZ (used to designate all cities)
      *
      * @var string
      */

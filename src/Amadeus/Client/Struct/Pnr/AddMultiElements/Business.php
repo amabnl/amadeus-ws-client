@@ -55,18 +55,18 @@ class Business
     const FUNC_CAR_AIRLINE = 9;
 
     /**
-     * 1	Air Provider
-     * 10	Air taxi (ATX)
-     * 11	Tour (TUR), requested through airline rather than
-     * 12	Surface (SUR)
-     * 13	Tour (TTO), requested from tour operator
-     * 2	Car Provider (CCR) Hotel Provider (HHL)
-     * 3	Hotel Provider (HHL)
-     * 32	Miscellaneous
-     * 6	Rail
-     * 7	Tour
-     * 8	Hotel, requested through airline rather than hotel
-     * 9	Car, requested through airline rather than car ope
+     * 1 Air Provider
+     * 10 Air taxi (ATX)
+     * 11 Tour (TUR), requested through airline rather than
+     * 12 Surface (SUR)
+     * 13 Tour (TTO), requested from tour operator
+     * 2 Car Provider (CCR) Hotel Provider (HHL)
+     * 3 Hotel Provider (HHL)
+     * 32 Miscellaneous
+     * 6 Rail
+     * 7 Tour
+     * 8 Hotel, requested through airline rather than hotel
+     * 9 Car, requested through airline rather than car ope
      *
      * @var int
      */

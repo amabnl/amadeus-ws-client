@@ -1,8 +1,15 @@
+# Release 1.0.0 (18 September 2016)
+
+* PNR_AddMultiElements: support for adding OSI elements to a PNR.
+* Updated docs for 1.0.0 release.
+* Released version 1: now following [semantic versioning](http://semver.org/).
+
 # 2016-09
 
 * Implemented SalesReports_DisplayQueryReport
 * Implemented Air_MultiAvailability
 * Added support for multiple WSDL's (interfaces) in a WSAP (https://github.com/amabnl/amadeus-ws-client/issues/5)
+* Fixed a bug while authenticating with SoapHeader 2 (https://github.com/amabnl/amadeus-ws-client/pull/15) - Sergey Gladkovskiy
 * PSR-2 code style enforced via StyleCI
 
 # 2016-08
@@ -43,4 +50,4 @@ The library will now also convert `\SoapFault` exceptions to a FATAL result stat
 
 # UNSTABLE
 
-The library's API will be unstable until we release version 0.1.
+The library's API will be unstable until we release the first version.

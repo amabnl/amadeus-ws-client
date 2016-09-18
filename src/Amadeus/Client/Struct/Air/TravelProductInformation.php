@@ -55,64 +55,64 @@ class TravelProductInformation
      */
     public $flightTypeDetails;
     /**
-     * 700	Request is expanded to exclude connection point(s)
-     * 701	Request is expanded to exclude carriers
-     * 702	Before connection
-     * 703	After connection
-     * 704	Board point used as airport code only
-     * 705	Off point used as airport code only
-     * 706	Board point and off point used as airport code only
-     * 7SR	Stateless/refugee/etc
-     * 7TR	Transit visa
-     * ACK	Acknowledgment
-     * AF	All flights to be processed
-     * AI	Additional information
-     * AT	Alternate flight
-     * B	Boarding pass may not be issued until the mutually agreed time period.
-     * BS	Blind sell
-     * C	Contact information
-     * CD	Change of date
-     * CM1	Change date minus 1 day
-     * CN	Cascading not allowed
-     * CP2	Change date plus 2 days
-     * CY	Cascading allowed
-     * DP	Diplomatic
-     * EC	Excess bags charged
-     * EI	Excess bags identified
-     * EW	Excess bags waived
-     * F	Form of payment details
-     * FA	First available
-     * FE	Bagtag issuance required by querying system
-     * FN	No, seat request not fulfilled
-     * FT	Fare/tax/total details
-     * FY	Yes, seat request fulfilled
-     * GC	Green card/alien resident permit
-     * HP	Head of Baggage Pool
-     * J	Action based on journey
-     * MH	Bagtag issuance required by responding system
-     * MI	Military ID
-     * MP	Member of Baggage Pool
-     * MPP	Multi passenger passport
-     * N	No action required
-     * NB	No a boarding pass may not be issued
-     * NP	Not pooled
-     * NS	Requested city pair, no seat data applies
-     * P	Action required
-     * PC	Purchaser ticketing restriction/conditions
-     * PI	Partial passenger indicator
-     * PP	Partial passenger/partial segment indicator
-     * PS	Partial segment indicator
-     * PT	Passport
-     * R	Routing information
-     * RD	Reservations details
-     * SA	Seat assignment association - desires seating together
-     * SS	Seaman/ Sailor
-     * T	Total amount collected
-     * TF	This flight only to be processed
-     * TP	Action required and candidate for special Yield Management processing
-     * VI	Visa
-     * Y	Yes a boarding pass may be issued
-     * YP	Pooled
+     * 700 Request is expanded to exclude connection point(s)
+     * 701 Request is expanded to exclude carriers
+     * 702 Before connection
+     * 703 After connection
+     * 704 Board point used as airport code only
+     * 705 Off point used as airport code only
+     * 706 Board point and off point used as airport code only
+     * 7SR Stateless/refugee/etc
+     * 7TR Transit visa
+     * ACK Acknowledgment
+     * AF All flights to be processed
+     * AI Additional information
+     * AT Alternate flight
+     * B Boarding pass may not be issued until the mutually agreed time period.
+     * BS Blind sell
+     * C Contact information
+     * CD Change of date
+     * CM1 Change date minus 1 day
+     * CN Cascading not allowed
+     * CP2 Change date plus 2 days
+     * CY Cascading allowed
+     * DP Diplomatic
+     * EC Excess bags charged
+     * EI Excess bags identified
+     * EW Excess bags waived
+     * F Form of payment details
+     * FA First available
+     * FE Bagtag issuance required by querying system
+     * FN No, seat request not fulfilled
+     * FT Fare/tax/total details
+     * FY Yes, seat request fulfilled
+     * GC Green card/alien resident permit
+     * HP Head of Baggage Pool
+     * J Action based on journey
+     * MH Bagtag issuance required by responding system
+     * MI Military ID
+     * MP Member of Baggage Pool
+     * MPP Multi passenger passport
+     * N No action required
+     * NB No a boarding pass may not be issued
+     * NP Not pooled
+     * NS Requested city pair, no seat data applies
+     * P Action required
+     * PC Purchaser ticketing restriction/conditions
+     * PI Partial passenger indicator
+     * PP Partial passenger/partial segment indicator
+     * PS Partial segment indicator
+     * PT Passport
+     * R Routing information
+     * RD Reservations details
+     * SA Seat assignment association - desires seating together
+     * SS Seaman/ Sailor
+     * T Total amount collected
+     * TF This flight only to be processed
+     * TP Action required and candidate for special Yield Management processing
+     * VI Visa
+     * Y Yes a boarding pass may be issued
+     * YP Pooled
      *
      * @var string
      */
@@ -134,7 +134,6 @@ class TravelProductInformation
      */
     public function __construct($departureDate, $from, $to, $company, $flightNumber, $bookingClass)
     {
-        //$this->flightDate = new FlightDate($departureDate->format('dmy'));
         $this->flightDate = new FlightDate($departureDate);
         $this->boardPointDetails = new PointDetails($from);
         $this->offpointDetails = new PointDetails($to);

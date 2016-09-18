@@ -43,59 +43,59 @@ class PricingOptionKey
     const OPTION_NEGOTIATED_FARES = "RN";
 
     /**
-     * AC	Add Country taxes
-     * AT	Add Tax
-     * AWD	AWarD
-     * BK	Booking class override
-     * BND	Bound Input
-     * CC	Controlling Carrier Override
-     * CMP	Companions
-     * CON	Connection
-     * DAT	past DATe pricing
-     * DIA	Diagnostic Tool
-     * DO	booking Date Override
-     * ET	Exempt Taxes
-     * FBA	Fare BAsis simple override
-     * FBL	Fare Basis force override
-     * FBP	Force Break Point
-     * FCO	Fare Currency Override
-     * FCS	Fare Currency Selection
-     * FOP	Form Of Payment
-     * GRI	Global Route Indicator
-     * IP	Instant Pricing
-     * MA	Mileage Accrual
-     * MBT	Fare amount override with M/BT
-     * MC	Miles and Cash (Pricing by Points)
-     * MIT	Fare amount override with M/IT
-     * NBP	No BreakPoint
-     * NF	No ticketing Fee
-     * NOP	No Option
-     * OBF	OB Fees (include and/or exclude)
-     * PAX	Passenger discount/PTC
-     * PFF	Pricing by Fare Family
-     * PL	Pricing Logic
-     * POS	Point Of Sale
-     * POT	Point Of Ticketing override
-     * PRM	expanded PaRaMeters
-     * PRO	Promo Certificate
-     * PTA	Point of Turnaround
-     * PTC	PTC only
-     * RC	Corporate negociated fares
-     * RLI	Return LIst of fare
-     * RLO	Return LOwest possible fare
-     * RN	Negociated fare
-     * RP	Published Fares
-     * RU	Unifares
-     * RW	Corporate Unifares
-     * SEL	Passenger/Segment/Line/TST selection
-     * STO	Stopover
-     * TKT	TicKet Type
-     * TRS	Transitional Certificate
-     * VC	Validating Carrier
-     * WC	Withold Country taxes
-     * WQ	Withold Q surcharges
-     * WT	Withold Tax
-     * ZAP	ZAP-off
+     * AC Add Country taxes
+     * AT Add Tax
+     * AWD AWarD
+     * BK Booking class override
+     * BND Bound Input
+     * CC Controlling Carrier Override
+     * CMP Companions
+     * CON Connection
+     * DAT past DATe pricing
+     * DIA Diagnostic Tool
+     * DO booking Date Override
+     * ET Exempt Taxes
+     * FBA Fare BAsis simple override
+     * FBL Fare Basis force override
+     * FBP Force Break Point
+     * FCO Fare Currency Override
+     * FCS Fare Currency Selection
+     * FOP Form Of Payment
+     * GRI Global Route Indicator
+     * IP Instant Pricing
+     * MA Mileage Accrual
+     * MBT Fare amount override with M/BT
+     * MC Miles and Cash (Pricing by Points)
+     * MIT Fare amount override with M/IT
+     * NBP No BreakPoint
+     * NF No ticketing Fee
+     * NOP No Option
+     * OBF OB Fees (include and/or exclude)
+     * PAX Passenger discount/PTC
+     * PFF Pricing by Fare Family
+     * PL Pricing Logic
+     * POS Point Of Sale
+     * POT Point Of Ticketing override
+     * PRM expanded PaRaMeters
+     * PRO Promo Certificate
+     * PTA Point of Turnaround
+     * PTC PTC only
+     * RC Corporate negociated fares
+     * RLI Return LIst of fare
+     * RLO Return LOwest possible fare
+     * RN Negociated fare
+     * RP Published Fares
+     * RU Unifares
+     * RW Corporate Unifares
+     * SEL Passenger/Segment/Line/TST selection
+     * STO Stopover
+     * TKT TicKet Type
+     * TRS Transitional Certificate
+     * VC Validating Carrier
+     * WC Withold Country taxes
+     * WQ Withold Q surcharges
+     * WT Withold Tax
+     * ZAP ZAP-off
      *
      * @var string
      */

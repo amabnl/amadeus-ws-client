@@ -36,13 +36,13 @@ class FlightIdentification
     public $flightNumber;
 
     /**
-     * 1	Request all non-displayable RBD's
-     * 2	Request all RBD's including non-displayable RBD's.
-     * 3	Request all Frequent Flyer Program Award Classes
-     * 4	Total number of seats in the allotment
-     * 5	Number of seats sold in the allotment
-     * 6	Number of seats unsold in the allotment
-     * 700	Request is expanded to include nonmatching connections
+     * 1 Request all non-displayable RBD's
+     * 2 Request all RBD's including non-displayable RBD's.
+     * 3 Request all Frequent Flyer Program Award Classes
+     * 4 Total number of seats in the allotment
+     * 5 Number of seats sold in the allotment
+     * 6 Number of seats unsold in the allotment
+     * 700 Request is expanded to include nonmatching connections
      *
      * @var string
      */

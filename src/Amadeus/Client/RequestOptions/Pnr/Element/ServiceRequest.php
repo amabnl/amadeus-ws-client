@@ -67,12 +67,12 @@ class ServiceRequest extends Element
     /**
      * self::STATUS_*
      *
-     * FS	Sold (on free sales basis)
-     * HK	Holds confirmed
-     * HN	Have requested
-     * KK	Confirming
-     * NN	Need. Reply required indicating action taken using appropriate code
-     * SS	Sold
+     * FS Sold (on free sales basis)
+     * HK Holds confirmed
+     * HN Have requested
+     * KK Confirming
+     * NN Need. Reply required indicating action taken using appropriate code
+     * SS Sold
      *
      * @var string
      */
@@ -95,13 +95,13 @@ class ServiceRequest extends Element
     public $company;
 
     /**
-     * B	Boarding pass may not be issued until
-     * ICS	Informational segment for codeshare
-     * N	No action required
-     * NB	No a boarding pass may not be issued
-     * P01	Explosion indicator for SSR input
-     * P02	Validated indicator of Frequent Flyer SSR
-     * Y	Yes a boarding pass may be issued
+     * B Boarding pass may not be issued until
+     * ICS Informational segment for codeshare
+     * N No action required
+     * NB No a boarding pass may not be issued
+     * P01 Explosion indicator for SSR input
+     * P02 Validated indicator of Frequent Flyer SSR
+     * Y Yes a boarding pass may be issued
      *
      * @var string
      */

@@ -70,7 +70,7 @@ class AirAuxItinerary
                 $this->loadAir($segmentContent);
                 break;
             default:
-                throw new InvalidArgumentException('Segment type ' . $segmentType . 'is not supported');
+                throw new InvalidArgumentException('Segment type ' . $segmentType . ' is not supported');
                 break;
         }
     }

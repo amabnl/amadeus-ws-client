@@ -86,13 +86,13 @@ class Ssr
 
     /**
      *
-     * B	Boarding pass may not be issued until
-     * ICS	Informational segment for codeshare
-     * N	No action required
-     * NB	No a boarding pass may not be issued
-     * P01	Explosion indicator for SSR input
-     * P02	Validated indicator of Frequent Flyer SSR
-     * Y	Yes a boarding pass may be issued
+     * B Boarding pass may not be issued until
+     * ICS Informational segment for codeshare
+     * N No action required
+     * NB No a boarding pass may not be issued
+     * P01 Explosion indicator for SSR input
+     * P02 Validated indicator of Frequent Flyer SSR
+     * Y Yes a boarding pass may be issued
      *
      * @var string
      */

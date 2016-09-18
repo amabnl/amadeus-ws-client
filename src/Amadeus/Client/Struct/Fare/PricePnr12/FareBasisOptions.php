@@ -31,8 +31,8 @@ namespace Amadeus\Client\Struct\Fare\PricePnr12;
 class FareBasisOptions
 {
     /**
-     * HD	Half round trip fares with reversing the direction
-     * HR	Half round trip fares without reversing the direction
+     * HD Half round trip fares with reversing the direction
+     * HR Half round trip fares without reversing the direction
      *
      * @var string
      */

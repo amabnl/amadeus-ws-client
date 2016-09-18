@@ -51,15 +51,15 @@ class OptionalData
     /**
      * self::OPT_*
      *
-     * A1	Address line1
-     * A2	Address line 2
-     * CI	City
-     * CO	Country
-     * CY	Company
-     * NA	Name
-     * PO	P.O. BOX
-     * ST	State
-     * ZP	Postal code
+     * A1 Address line1
+     * A2 Address line 2
+     * CI City
+     * CO Country
+     * CY Company
+     * NA Name
+     * PO P.O. BOX
+     * ST State
+     * ZP Postal code
      *
      * @var string
      */

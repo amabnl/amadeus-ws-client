@@ -25,12 +25,24 @@ namespace Amadeus\Client\RequestOptions\Pnr\Element;
 use Amadeus\Client\RequestOptions\Pnr\Element;
 
 /**
- * OtherServiceInfo
+ * OtherServiceInfo - OSI element
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Element
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class OtherServiceInfo extends Element
 {
-    //TODO: Not yet implemented
+    /**
+     * Airline IATA code
+     *
+     * @var string
+     */
+    public $airline;
+
+    /**
+     * Free text of the OSI element
+     *
+     * @var string
+     */
+    public $freeText;
 }

@@ -40,19 +40,19 @@ class PnrCancelOptions extends PnrBase
     /**
      * How to handle the PNR after doing the Cancel operation
      *
-     * 0	No special processing
-     * 10	End transact (ET)
-     * 11	End transact with retrieve (ER)
-     * 12	End transact and change advice codes (ETK)
-     * 13	End transact with retrieve and change advice codes (ERK)
-     * 14	End transact split PNR (EF)
-     * 15	Cancel the itinerary for all PNRs connected by the AXR and end transact (ETX)
-     * 16	Cancel the itinerary for all PNRs connected by the AXR and end transact with retrieve (ERX)
-     * 20	Ignore (IG)
-     * 21	Ignore and retrieve (IR)
-     * 267	Stop EOT if segment sell error
-     * 30	Show warnings at first EOT
-     * 50	Reply with short message
+     * 0 No special processing
+     * 10 End transact (ET)
+     * 11 End transact with retrieve (ER)
+     * 12 End transact and change advice codes (ETK)
+     * 13 End transact with retrieve and change advice codes (ERK)
+     * 14 End transact split PNR (EF)
+     * 15 Cancel the itinerary for all PNRs connected by the AXR and end transact (ETX)
+     * 16 Cancel the itinerary for all PNRs connected by the AXR and end transact with retrieve (ERX)
+     * 20 Ignore (IG)
+     * 21 Ignore and retrieve (IR)
+     * 267 Stop EOT if segment sell error
+     * 30 Show warnings at first EOT
+     * 50 Reply with short message
      *
      * @var int
      */

@@ -44,16 +44,16 @@ class Reference extends LoadParamsFromArray
      * self::TYPE_*
      *
      * Possible values:
-     * 001	Customer identification number
-     * 002	Corporate identification number
-     * D	Dominant segment in a marriage
-     * N	Non dominant segment in a marriage
-     * OT	Other element tattoo reference number
-     * PR	Passenger Client-request-message-defined ref. nbr
-     * PT	Passenger tattoo reference number
-     * SR	Segment Client-request-message-defined ref. nbr
-     * SS	Segment Tattoo+SubTattoo reference number
-     * ST	Segment Tattoo reference number
+     * 001 Customer identification number
+     * 002 Corporate identification number
+     * D Dominant segment in a marriage
+     * N Non dominant segment in a marriage
+     * OT Other element tattoo reference number
+     * PR Passenger Client-request-message-defined ref. nbr
+     * PT Passenger tattoo reference number
+     * SR Segment Client-request-message-defined ref. nbr
+     * SS Segment Tattoo+SubTattoo reference number
+     * ST Segment Tattoo reference number
      *
      * @var
      */

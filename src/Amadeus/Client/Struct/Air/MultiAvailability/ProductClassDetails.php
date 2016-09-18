@@ -21,7 +21,7 @@ class ProductClassDetails
     public $serviceClass;
 
     /**
-     * N	night class
+     * N night class
      *
      * @var string
      */

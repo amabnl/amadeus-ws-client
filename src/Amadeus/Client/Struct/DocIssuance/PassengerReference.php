@@ -35,8 +35,8 @@ class PassengerReference
     const TYPE_PAX_TATTOO = "PT";
 
     /**
-     * PAX	Passenger selection
-     * PT	Passenger tatoo reference number
+     * PAX Passenger selection
+     * PT Passenger tatoo reference number
      *
      * @var string
      */

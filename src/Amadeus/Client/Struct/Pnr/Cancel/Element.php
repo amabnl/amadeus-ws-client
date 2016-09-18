@@ -44,20 +44,20 @@ class Element
      *
      * Code giving specific meaning to a reference segment or a reference number.
      *
-     * 001	Customer identification number
-     * 002	Corporate identification number
-     * D	Dominant segment in a marriage
-     * ESG	ES element with receiver type G
-     * ESI	ES element with receiver type I
-     * ESP	ES element with receiver type P
-     * N	Non dominant segment in a marriage
-     * OOT	Offers - Other element tattoo reference number
-     * OT	Other element tattoo reference number
-     * PR	Passenger Client-request-message-defined ref. nbr
-     * PT	Passenger tattoo reference number
-     * SR	Segment Client-request-message-defined ref. nbr
-     * SS	Segment Tattoo+SubTattoo reference number
-     * ST	Segment Tattoo reference number
+     * 001 Customer identification number
+     * 002 Corporate identification number
+     * D Dominant segment in a marriage
+     * ESG ES element with receiver type G
+     * ESI ES element with receiver type I
+     * ESP ES element with receiver type P
+     * N Non dominant segment in a marriage
+     * OOT Offers - Other element tattoo reference number
+     * OT Other element tattoo reference number
+     * PR Passenger Client-request-message-defined ref. nbr
+     * PT Passenger tattoo reference number
+     * SR Segment Client-request-message-defined ref. nbr
+     * SS Segment Tattoo+SubTattoo reference number
+     * ST Segment Tattoo reference number
      *
      * @var string
      */

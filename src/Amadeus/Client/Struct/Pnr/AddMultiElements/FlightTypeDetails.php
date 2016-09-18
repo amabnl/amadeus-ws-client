@@ -33,9 +33,9 @@ class FlightTypeDetails
     /**
      * Number indicating the position in a sequence.
      *
-     * LA	Local availibility
-     * S1	Availability of Sub O&D 1
-     * S2	Availability of Sub O&D 2
+     * LA Local availibility
+     * S1 Availability of Sub O&D 1
+     * S2 Availability of Sub O&D 2
      *
      * @var string
      */

@@ -43,7 +43,8 @@ class FareBasisDetails
      */
     public $fareBasisCode;
     /**
-     * Free form description allocated by the seller to identify uniquely his product group for a product or a series of products.
+     * Free form description allocated by the seller to identify uniquely
+     * this product group for a product or a series of products.
      *
      * @var string
      */

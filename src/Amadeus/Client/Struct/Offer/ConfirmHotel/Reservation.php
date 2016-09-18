@@ -32,7 +32,7 @@ class Reservation
 {
     const CONTROLTYPE_PNR_IDENTIFICATION = "P";
     /**
-     * 1A	Amadeus
+     * 1A Amadeus
      *
      * @var string
      */
@@ -44,9 +44,9 @@ class Reservation
     public $controlNumber;
 
     /**
-     * 2	Confirmation Reference
-     * P	PNR Identification
-     * X	Cancellation Reference
+     * 2 Confirmation Reference
+     * P PNR Identification
+     * X Cancellation Reference
      *
      * @var string
      */

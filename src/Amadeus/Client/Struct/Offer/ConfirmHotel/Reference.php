@@ -35,8 +35,8 @@ class Reference
     const QUAL_SEGMENT_TATTOO = "ST";
 
     /**
-     * OF	Offer element Tattoo
-     * ST	Segment Tattoo reference number
+     * OF Offer element Tattoo
+     * ST Segment Tattoo reference number
      *
      * @var string
      */

@@ -36,9 +36,9 @@ class CabinId
     const CABIN_FIRST_SUPERSONIC = "F";
 
     /**
-     * MC	Major cabin
-     * MD	Mandatory cabin for all segments
-     * RC	Recommended cabin to be used at least one segment
+     * MC Major cabin
+     * MD Mandatory cabin for all segments
+     * RC Recommended cabin to be used at least one segment
      *
      * @var string
      */

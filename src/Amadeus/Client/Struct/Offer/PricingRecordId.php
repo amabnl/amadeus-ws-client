@@ -31,7 +31,7 @@ namespace Amadeus\Client\Struct\Offer;
 class PricingRecordId
 {
     /**
-     * PQR	Product Quotation Record Reference
+     * PQR Product Quotation Record Reference
      *
      * @var string
      */

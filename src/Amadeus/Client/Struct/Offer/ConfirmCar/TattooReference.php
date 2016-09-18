@@ -40,9 +40,9 @@ class TattooReference
     public $reference;
 
     /**
-     * AIR	Air segment
-     * CCR	Automated Car auxiliary segment
-     * HHL	Automated Hotel auxiliary segment
+     * AIR Air segment
+     * CCR Automated Car auxiliary segment
+     * HHL Automated Hotel auxiliary segment
      *
      * @var string
      */

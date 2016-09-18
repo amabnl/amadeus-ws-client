@@ -38,81 +38,81 @@ class PricingTicketing
     /**
      * self::PRICETYPE_*
      *
-     * ACS	Anchored Search
-     * ADC	Airline distribution flavor 2
-     * ADI	Airline distribution flavor 1
-     * AID	Office ID Override for Flight Search purposes
-     * BAG	Additional baggages allowance
-     * CFD	Commercial fare family distribution
-     * CFF	Combine Fare Families
-     * CFS	Activate Selection of Fare Currency option
-     * CUC	Override of the currency conversion
-     * DDI	Direct Distribution
-     * DFA	Display Fare Component Amounts
-     * DNP	Distribution Non-stop Preferred
-     * ECC	Empty Cell Clarification
-     * ECT	Show sold-out flights
-     * EP	Either paper or electronic ticket is requested
-     * ERT	Easy Round Trip
-     * ET	ELECTRONIC TICKET ONLY
-     * EVD	Even distribution
-     * FCN	Minimum fee amount for credit card
-     * FCX	Maximum fee amount for credit card
-     * FDN	Minimum fee amount for debit card
-     * FDX	Maximum fee amount for debit card
-     * FEE	FEE
-     * FFS	Distribution Ratio of recommendations per FF at Requested Segment Level
-     * FLF	Flight facts
-     * FON	Minimum fee amount for any card
-     * FOX	Maximum fee amount for any card
-     * FQC	Flight Quality Control
-     * IAV	Ignore real availability
-     * IFS	In-flight services
-     * MA	Mileage accrual
-     * MC	Miles and cash
-     * MCD	Mono-Main Carrier Distribution
-     * MFA	Marginal Fare Amount
-     * MNR	Display Minirules
-     * MST	Display Max Stay Information
-     * MTH	Aggregation by month
-     * MTK	Multiple Ticket
-     * NAD	No Airline Distribution
-     * NAP	No advance purchase fares
-     * NPE	No penalties fares
-     * NPF	Force neutral fare search
-     * NR	No restriction fares
-     * NSD	Disable slice and dice process
-     * OPD	Open Return
-     * OWD	One Way Display
-     * OWP	One Way Pricing
-     * PFP	Partner Flight Process
-     * PPB	Price Per Bound
-     * PSB	Passenger Same Booking Code
-     * PT	EXCLUDE ELECTRONIC TICKET FARE
-     * PTC	Passenger type code specified in query
-     * PTP	Price to reach per proposed segment
-     * PTR	Price To Reach
-     * RCP	Reference City Pair
-     * RDG	To keep solutions with more ground time at last connecting point.
-     * RDM	To keep the best solutions per major flight
-     * RF	Refundable fares
-     * RJS	Rank in journey Server
-     * RP	Published fares
-     * RTC	Half round trip combination
-     * RU	Unifares
-     * RW	Corporate Unifares
-     * SFR	Local search failure information option
-     * SLM	Service Level minimum
-     * TAC	Ticket ability check
-     * TAN	No ticket ability check
-     * TFO	Through Fare Only option
-     * UPS	Upsell mode
-     * URC	Useless Recommendation Check
-     * WF	Web Fares
-     * WP	Waive Penalty Option
-     * XLC	No LCC fares
-     * XMX	No mix LCC/FSC fares
-     * YQR	YQ/YR option
+     * ACS Anchored Search
+     * ADC Airline distribution flavor 2
+     * ADI Airline distribution flavor 1
+     * AID Office ID Override for Flight Search purposes
+     * BAG Additional baggages allowance
+     * CFD Commercial fare family distribution
+     * CFF Combine Fare Families
+     * CFS Activate Selection of Fare Currency option
+     * CUC Override of the currency conversion
+     * DDI Direct Distribution
+     * DFA Display Fare Component Amounts
+     * DNP Distribution Non-stop Preferred
+     * ECC Empty Cell Clarification
+     * ECT Show sold-out flights
+     * EP Either paper or electronic ticket is requested
+     * ERT Easy Round Trip
+     * ET ELECTRONIC TICKET ONLY
+     * EVD Even distribution
+     * FCN Minimum fee amount for credit card
+     * FCX Maximum fee amount for credit card
+     * FDN Minimum fee amount for debit card
+     * FDX Maximum fee amount for debit card
+     * FEE FEE
+     * FFS Distribution Ratio of recommendations per FF at Requested Segment Level
+     * FLF Flight facts
+     * FON Minimum fee amount for any card
+     * FOX Maximum fee amount for any card
+     * FQC Flight Quality Control
+     * IAV Ignore real availability
+     * IFS In-flight services
+     * MA Mileage accrual
+     * MC Miles and cash
+     * MCD Mono-Main Carrier Distribution
+     * MFA Marginal Fare Amount
+     * MNR Display Minirules
+     * MST Display Max Stay Information
+     * MTH Aggregation by month
+     * MTK Multiple Ticket
+     * NAD No Airline Distribution
+     * NAP No advance purchase fares
+     * NPE No penalties fares
+     * NPF Force neutral fare search
+     * NR No restriction fares
+     * NSD Disable slice and dice process
+     * OPD Open Return
+     * OWD One Way Display
+     * OWP One Way Pricing
+     * PFP Partner Flight Process
+     * PPB Price Per Bound
+     * PSB Passenger Same Booking Code
+     * PT EXCLUDE ELECTRONIC TICKET FARE
+     * PTC Passenger type code specified in query
+     * PTP Price to reach per proposed segment
+     * PTR Price To Reach
+     * RCP Reference City Pair
+     * RDG To keep solutions with more ground time at last connecting point.
+     * RDM To keep the best solutions per major flight
+     * RF Refundable fares
+     * RJS Rank in journey Server
+     * RP Published fares
+     * RTC Half round trip combination
+     * RU Unifares
+     * RW Corporate Unifares
+     * SFR Local search failure information option
+     * SLM Service Level minimum
+     * TAC Ticket ability check
+     * TAN No ticket ability check
+     * TFO Through Fare Only option
+     * UPS Upsell mode
+     * URC Useless Recommendation Check
+     * WF Web Fares
+     * WP Waive Penalty Option
+     * XLC No LCC fares
+     * XMX No mix LCC/FSC fares
+     * YQR YQ/YR option
      *
      * @var string[]
      */

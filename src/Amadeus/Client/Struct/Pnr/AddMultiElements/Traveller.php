@@ -38,16 +38,16 @@ class Traveller
     public $surname;
     /**
      * Traveller Qualifiers:
-     * - 766 	Infant without seat
-     * - 767 	Infant with seat
-     * - C 	CBBG - Cabin Baggage
-     * - COR 	CORPORATE NAME
-     * - E 	EXST - Extra Seat
-     * - G 	Group
-     * - INF 	Infant not occupying a seat
-     * - MTH 	Month
-     * - PAX 	Passenger
-     * - YRS 	Year
+     * - 766  Infant without seat
+     * - 767  Infant with seat
+     * - C  CBBG - Cabin Baggage
+     * - COR  CORPORATE NAME
+     * - E  EXST - Extra Seat
+     * - G  Group
+     * - INF  Infant not occupying a seat
+     * - MTH  Month
+     * - PAX  Passenger
+     * - YRS  Year
      *
      * @var string
      */

@@ -41,7 +41,8 @@ class DaySelection
     public $dayOfWeek;
 
     /**
-     * @param array $weekDays Week days in array format: e.g. array(1, 2) for Monday and Tuesday. MUST BE CONSECUTIVE DAYS
+     * @param array $weekDays Week days in array format: e.g. array(1, 2)
+     *                        for Monday and Tuesday. MUST BE CONSECUTIVE DAYS
      */
     public function __construct($weekDays)
     {

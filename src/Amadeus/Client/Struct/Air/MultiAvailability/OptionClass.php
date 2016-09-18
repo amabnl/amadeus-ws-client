@@ -21,8 +21,8 @@ class OptionClass
     public $productClassDetails = [];
 
     /**
-     * 703	Request for class is expanded to include non matching classes in the connections.
-     * 704	All classes are mandatory to select the flight.
+     * 703 Request for class is expanded to include non matching classes in the connections.
+     * 704 All classes are mandatory to select the flight.
      *
      * @var string
      */

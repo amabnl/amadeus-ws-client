@@ -21,7 +21,7 @@ class LocationInfo
     public $cityAirport;
 
     /**
-     * 701	Force request to Airport/City code (depending of type of display)
+     * 701 Force request to Airport/City code (depending of type of display)
      *
      * @var string
      */

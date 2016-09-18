@@ -20,46 +20,17 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Air;
+namespace Amadeus\Client\RequestOptions\Pnr\Element;
+
+use Amadeus\Client\RequestOptions\Pnr\Element;
 
 /**
- * MarriageDetails
+ * FareDiscount
  *
- * @package Amadeus\Client\Struct\Air
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions\Pnr\Element
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MarriageDetails
+class FareDiscount extends Element
 {
-    /**
-     * A Married on-line
-     * B Non-Dominant flight
-     * C Potential marriage candidate
-     * F First host cascading
-     * I Married interline
-     * L Last host cascading
-     * M Middle host cascading (not first or last)
-     *
-     * @var string
-     */
-    public $relation;
-
-    /**
-     * @var string
-     */
-    public $marriageIdentifier;
-
-    /**
-     * @var string
-     */
-    public $lineNumber;
-
-    /**
-     * @var string
-     */
-    public $otherRelation;
-
-    /**
-     * @var string
-     */
-    public $carrierCode;
+    //TODO
 }

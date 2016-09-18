@@ -10,10 +10,23 @@ The Amadeus documentation portal can be found at https://webservices.amadeus.com
  
 ![](http://i.imgur.com/7ZcCgnj.jpg)
 
+We currently support a full AIR booking flow based on MasterPricer, as well as some additional messages useful for automation. See the full list of supported messages [here](docs/list-of-supported-messages.rst).
+
+# Purpose
+
+This library makes it much easier for developers to integrate content from the Amadeus Web Services into their projects. It takes care of:
+
+- Session management - setting the correct SOAP headers both for Soap Header 2 and 4.
+- Supports all features of Soap Header 4 such as Stateful and Stateless messages.
+- Building the correct request message based on the provided options
+- Handling exceptions and checking for error messages in the response
+- Dealing with different versions of messages
+- Dealing with multiple WSDL files in a WSAP
+
 # Requirements
 
 * PHP 5.4+
-* SOAP and XSL extensions activated
+* SOAP, XSL and DOM extensions activated
 * A WSDL & authentication details from Amadeus _(SoapHeader 4 or SoapHeader 2)_
 
 # Installation
@@ -21,7 +34,7 @@ The Amadeus documentation portal can be found at https://webservices.amadeus.com
 Install amadeus-ws-client through [Composer](http://getcomposer.org).
 
 ```bash
-composer require amabnl/amadeus-ws-client:dev-master
+composer require amabnl/amadeus-ws-client
 ```
 
 After installing, you need to require Composer's autoloader:
@@ -36,13 +49,13 @@ Update composer to get the client:
 composer update
  ```
 
-# Warning: under active development
+Once the client is installed, read the [About &amp; Get Started](docs/about-get-started.rst) page.
 
-This library is under active development. The public API's could change any time at the moment!
+# Release history
 
-We will release a 0.1 version when we feel the library is stable enough, after which we will be following semantic versioning.
+The current release is the first stable version of the library, 1.0.0. 
 
-For now, if you want the bleeding edge, point your composer.json towards `dev-develop`. If you only want what we have verified as working, go for `dev-master`.
+[Changelog](CHANGELOG.md)
 
 # Usage
 
@@ -53,6 +66,5 @@ For now, if you want the bleeding edge, point your composer.json towards `dev-de
 
 ---------------------------------------
 
-[Changelog](CHANGELOG.md)
 
-[Example applications](docs/sample-applications.rst)
+See some [example applications](docs/sample-applications.rst) built with this library.

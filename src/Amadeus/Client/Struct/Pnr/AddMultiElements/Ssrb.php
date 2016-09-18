@@ -39,15 +39,15 @@ class Ssrb
     /**
      * Seat characteristic
      *
-     * A	Aisle seat
-     * H	Seat with facilities for Handicapped/incappacited
-     * I	Seat suitable for adult with an infant
-     * K	Bulkhead seat (B in custumer profile)
-     * MA	Medicaly OK for travel
-     * N	No smoking seat
-     * S	Smoking seat
-     * U	Seat suitable for unaccompanied minor
-     * W	Window seat
+     * A Aisle seat
+     * H Seat with facilities for Handicapped/incappacited
+     * I Seat suitable for adult with an infant
+     * K Bulkhead seat (B in custumer profile)
+     * MA Medicaly OK for travel
+     * N No smoking seat
+     * S Smoking seat
+     * U Seat suitable for unaccompanied minor
+     * W Window seat
      *
      * @var string
      */

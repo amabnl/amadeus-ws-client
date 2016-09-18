@@ -29,6 +29,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element\Contact;
 use Amadeus\Client\RequestOptions\Pnr\Element\FormOfPayment;
 use Amadeus\Client\RequestOptions\Pnr\Element\FrequentFlyer;
 use Amadeus\Client\RequestOptions\Pnr\Element\MiscellaneousRemark;
+use Amadeus\Client\RequestOptions\Pnr\Element\OtherServiceInfo;
 use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest;
 use Amadeus\Client\RequestOptions\Pnr\Element\Ticketing;
@@ -595,6 +596,31 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals('SN', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->serviceRequest->ssr->companyId);
         $this->assertEquals('SN', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->frequentTravellerData->frequentTraveller->companyId);
         $this->assertEquals('1111111111', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->frequentTravellerData->frequentTraveller->membershipNumber);
+    }
+
+    public function testCanCreateOsiElement()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_NO_PROCESSING;
+        $createPnrOptions->elements[] = new OtherServiceInfo([
+            'airline' => '6X',
+            'freeText' => '6X FB00S7 B744 UMLAUF71343'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_OTHER_SERVICE_INFORMATION, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals('6X FB00S7 B744 UMLAUF71343', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->longFreetext);
+        $this->assertEquals(AddMultiElements\FreetextDetail::TYPE_OSI_ELEMENT, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->type);
+        $this->assertEquals('6X', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->companyId);
+        $this->assertEquals(AddMultiElements\FreetextDetail::QUALIFIER_LITERALTEXT, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->subjectQualifier);
     }
 
     public function testCanCreateGroupPnr()

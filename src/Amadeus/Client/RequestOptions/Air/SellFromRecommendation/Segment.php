@@ -75,15 +75,15 @@ class Segment extends LoadParamsFromArray
     /**
      * self::STATUS_*
      *
-     * HK	Confirmed
-     * HL	Waitlisted
-     * HX	Cancel refused
-     * NN	Sell Segment
-     * OX	Cancel segment
-     * SS	Link down
-     * UC	Sell refused
-     * UN	Sell refused
-     * XX	Cancel accepted
+     * HK Confirmed
+     * HL Waitlisted
+     * HX Cancel refused
+     * NN Sell Segment
+     * OX Cancel segment
+     * SS Link down
+     * UC Sell refused
+     * UN Sell refused
+     * XX Cancel accepted
      *
      * @var string
      */

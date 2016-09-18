@@ -31,10 +31,10 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
 class PenDisInformation
 {
     /**
-     * 700	Penalty information
-     * 701	Discount information
-     * OBF	OB Fees Information
-     * ZAP	ZapOff Discount Information
+     * 700 Penalty information
+     * 701 Discount information
+     * OBF OB Fees Information
+     * ZAP ZapOff Discount Information
      *
      * @var string
      */

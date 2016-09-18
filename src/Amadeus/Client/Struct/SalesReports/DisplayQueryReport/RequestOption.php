@@ -46,7 +46,7 @@ class RequestOption
      */
     public function __construct($requestOptions)
     {
-        foreach ($requestOptions as $index=>$requestOption) {
+        foreach ($requestOptions as $index => $requestOption) {
             if ($index === 0) {
                 $this->selectionDetails = new SelectionDetails($requestOption);
             } else {

@@ -31,7 +31,7 @@ namespace Amadeus\Client\Struct\Fare\PricePnr12;
 class CarrierInformation
 {
     /**
-     * 7YY	Industry fares for all carriers
+     * 7YY Industry fares for all carriers
      *
      * @var string
      */

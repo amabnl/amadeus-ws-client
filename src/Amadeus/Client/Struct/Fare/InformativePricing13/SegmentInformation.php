@@ -50,8 +50,15 @@ class SegmentInformation extends TravelProductInformation
      * @param string $flightNumber
      * @param string $bookingClass
      */
-    public function __construct($itemNumber, \DateTime $departureDate, $from, $to, $company, $flightNumber, $bookingClass)
-    {
+    public function __construct(
+        $itemNumber,
+        \DateTime $departureDate,
+        $from,
+        $to,
+        $company,
+        $flightNumber,
+        $bookingClass
+    ) {
         $this->itemNumber = $itemNumber;
 
         parent::__construct($departureDate, $from, $to, $company, $flightNumber, $bookingClass);

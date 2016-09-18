@@ -41,34 +41,34 @@ class AttributeDetails
     const OVERRIDE_RETURN_ALL = 'RLI';
 
     /**
-     * BK	Booking code override
-     * CMP	Companions
-     * DIA	Diagnostic tool
-     * EP	Electronic Paper Ticket
-     * ETK	Electronic Ticket
-     * FBA	Automated Pricing By Fare Basis (no override)
-     * FBL	Automated Pricing By Fare Basis (override)
-     * MA	Mileage Accrual
-     * MBT	Bulk Tour
-     * MC	Pricing by Points
-     * MIT	Inclusive Tour
-     * NOP	No option.
-     * PAF	Pay As you Fly option
-     * PAT	Paper Ticket
-     * PRM	Extended parameters
-     * PRO	Promo Certificate
-     * PTC	Price at specified passenger only
-     * RC	Corporate number
-     * RLI	Return list of all possible fares
-     * RLO	Return lowest fare from the list
-     * RN	Negotiated fares
-     * RP	Published fares
-     * RU	Unifares
-     * RUL	Rule override requested
-     * RW	Corporate unifares
-     * TRP	Trap option requested
-     * TRS	Transitional Certificate
-     * WQ	Withhold surcharges
+     * BK Booking code override
+     * CMP Companions
+     * DIA Diagnostic tool
+     * EP Electronic Paper Ticket
+     * ETK Electronic Ticket
+     * FBA Automated Pricing By Fare Basis (no override)
+     * FBL Automated Pricing By Fare Basis (override)
+     * MA Mileage Accrual
+     * MBT Bulk Tour
+     * MC Pricing by Points
+     * MIT Inclusive Tour
+     * NOP No option.
+     * PAF Pay As you Fly option
+     * PAT Paper Ticket
+     * PRM Extended parameters
+     * PRO Promo Certificate
+     * PTC Price at specified passenger only
+     * RC Corporate number
+     * RLI Return list of all possible fares
+     * RLO Return lowest fare from the list
+     * RN Negotiated fares
+     * RP Published fares
+     * RU Unifares
+     * RUL Rule override requested
+     * RW Corporate unifares
+     * TRP Trap option requested
+     * TRS Transitional Certificate
+     * WQ Withhold surcharges
      *
      * @var string
      */

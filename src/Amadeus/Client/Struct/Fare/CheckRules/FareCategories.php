@@ -33,33 +33,33 @@ class FareCategories
     /**
      * Possible values:
      *
-     * 700	Normal fares
-     * 701	Special Fares
-     * 702	APEX Fares
-     * 703	Super APEX Fares
-     * 704	APEX and Super APEX Fares
-     * 705	Round the World Fare
-     * 706	Circle Trip/Triangle Fares
-     * 707	Excursion Fares
-     * 708	PEX Fares
-     * 709	Super PEX Fares
-     * 710	PEX and APEX Fares
-     * 711	PEX and Super PEX Fares
-     * 712	Eurobudget fares
-     * 713	Visit USA fares
-     * 714	Military fares
-     * 715	All Fares
-     * 716	Discount Fares
-     * 717	First Class travel fares
-     * 718	Intermediate class travel fares
-     * 719	Economy class travel fares
-     * 720	Unsaleable Fares
-     * 721	Display Only Fare (fare cannot be used for pricing)
-     * 722	Government ordered fares
-     * 723	Group and Inclusive tour fares
-     * 724	Inclusive tour fares
-     * 725	Round the world and circle trip and/or triangle fares
-     * 726	Common fares in which specified airlines participate
+     * 700 Normal fares
+     * 701 Special Fares
+     * 702 APEX Fares
+     * 703 Super APEX Fares
+     * 704 APEX and Super APEX Fares
+     * 705 Round the World Fare
+     * 706 Circle Trip/Triangle Fares
+     * 707 Excursion Fares
+     * 708 PEX Fares
+     * 709 Super PEX Fares
+     * 710 PEX and APEX Fares
+     * 711 PEX and Super PEX Fares
+     * 712 Eurobudget fares
+     * 713 Visit USA fares
+     * 714 Military fares
+     * 715 All Fares
+     * 716 Discount Fares
+     * 717 First Class travel fares
+     * 718 Intermediate class travel fares
+     * 719 Economy class travel fares
+     * 720 Unsaleable Fares
+     * 721 Display Only Fare (fare cannot be used for pricing)
+     * 722 Government ordered fares
+     * 723 Group and Inclusive tour fares
+     * 724 Inclusive tour fares
+     * 725 Round the world and circle trip and/or triangle fares
+     * 726 Common fares in which specified airlines participate
      *
      * @var string
      */
@@ -68,33 +68,33 @@ class FareCategories
     /**
      * Possible values:
      *
-     * 700	Normal fares
-     * 701	Special Fares
-     * 702	APEX Fares
-     * 703	Super APEX Fares
-     * 704	APEX and Super APEX Fares
-     * 705	Round the World Fare
-     * 706	Circle Trip/Triangle Fares
-     * 707	Excursion Fares
-     * 708	PEX Fares
-     * 709	Super PEX Fares
-     * 710	PEX and APEX Fares
-     * 711	PEX and Super PEX Fares
-     * 712	Eurobudget fares
-     * 713	Visit USA fares
-     * 714	Military fares
-     * 715	All Fares
-     * 716	Discount Fares
-     * 717	First Class travel fares
-     * 718	Intermediate class travel fares
-     * 719	Economy class travel fares
-     * 720	Unsaleable Fares
-     * 721	Display Only Fare (fare cannot be used for pricing)
-     * 722	Government ordered fares
-     * 723	Group and Inclusive tour fares
-     * 724	Inclusive tour fares
-     * 725	Round the world and circle trip and/or triangle fares
-     * 726	Common fares in which specified airlines participate
+     * 700 Normal fares
+     * 701 Special Fares
+     * 702 APEX Fares
+     * 703 Super APEX Fares
+     * 704 APEX and Super APEX Fares
+     * 705 Round the World Fare
+     * 706 Circle Trip/Triangle Fares
+     * 707 Excursion Fares
+     * 708 PEX Fares
+     * 709 Super PEX Fares
+     * 710 PEX and APEX Fares
+     * 711 PEX and Super PEX Fares
+     * 712 Eurobudget fares
+     * 713 Visit USA fares
+     * 714 Military fares
+     * 715 All Fares
+     * 716 Discount Fares
+     * 717 First Class travel fares
+     * 718 Intermediate class travel fares
+     * 719 Economy class travel fares
+     * 720 Unsaleable Fares
+     * 721 Display Only Fare (fare cannot be used for pricing)
+     * 722 Government ordered fares
+     * 723 Group and Inclusive tour fares
+     * 724 Inclusive tour fares
+     * 725 Round the world and circle trip and/or triangle fares
+     * 726 Common fares in which specified airlines participate
      *
      * @var string[]
      */

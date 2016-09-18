@@ -153,7 +153,8 @@ class Base implements ResponseHandlerInterface
                 $analyzeResponse->status = $this->makeStatusFromErrorQualifier($categoryNode->nodeValue);
             }
 
-            $message = (array_key_exists($codeNode->nodeValue, $errMsgMap)) ? $errMsgMap[$codeNode->nodeValue] : 'UNKNOWN ERROR';
+            $message = (array_key_exists($codeNode->nodeValue, $errMsgMap)) ?
+                $errMsgMap[$codeNode->nodeValue] : 'UNKNOWN ERROR';
 
             $analyzeResponse->messages [] = new Result\NotOk($codeNode->nodeValue, $message);
         }
@@ -701,7 +702,9 @@ class Base implements ResponseHandlerInterface
         $msgNode = $domXpath->query('//m:errorsDescription/m:errorWarningDescription/m:freeText')->item(0);
 
         if ($msgNode instanceof \DOMNode) {
-            if (trim($msgNode->nodeValue) === "OFFER CONFIRMED SUCCESSFULLY" || trim($msgNode->nodeValue) === "OFFER VERIFIED SUCCESSFULLY") {
+            if (trim($msgNode->nodeValue) === "OFFER CONFIRMED SUCCESSFULLY" ||
+                trim($msgNode->nodeValue) === "OFFER VERIFIED SUCCESSFULLY"
+            ) {
                 $analyzeResponse->messages[] = new Result\NotOk(
                     0,
                     trim($msgNode->nodeValue)

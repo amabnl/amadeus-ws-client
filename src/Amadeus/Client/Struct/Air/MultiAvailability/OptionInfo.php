@@ -43,34 +43,34 @@ class OptionInfo
     public $type;
 
     /**
-     * 12	Time on 12 h
-     * 24	Time on 24 h
-     * EST	Enriched staff
-     * EU	Europe
-     * FR	Friday
-     * GR	Group
-     * MA	show air only
-     * MF	show ferry only
-     * MM	show air and non air services
-     * MN	show non-air-services only
-     * MO	Monday
-     * MR	show rail services only
-     * OB	Request charter and scheduled flights
-     * OC	Request connections only
-     * OD	Request direct flights only
-     * OF	Request charter flights only or geometry of display
-     * OL	Request On-line connections only
-     * OM	Request meal flights only
-     * ON	Request non-stop flights only or geometry of display
-     * OS	Request scheduled flights only
-     * RE	Redemption
-     * SA	Saterday
-     * ST	Staff
-     * SU	Sunday
-     * TH	Thursday
-     * TU	Tuesday
-     * US	USA
-     * WE	Wednesday
+     * 12 Time on 12 h
+     * 24 Time on 24 h
+     * EST Enriched staff
+     * EU Europe
+     * FR Friday
+     * GR Group
+     * MA show air only
+     * MF show ferry only
+     * MM show air and non air services
+     * MN show non-air-services only
+     * MO Monday
+     * MR show rail services only
+     * OB Request charter and scheduled flights
+     * OC Request connections only
+     * OD Request direct flights only
+     * OF Request charter flights only or geometry of display
+     * OL Request On-line connections only
+     * OM Request meal flights only
+     * ON Request non-stop flights only or geometry of display
+     * OS Request scheduled flights only
+     * RE Redemption
+     * SA Saterday
+     * ST Staff
+     * SU Sunday
+     * TH Thursday
+     * TU Tuesday
+     * US USA
+     * WE Wednesday
      *
      * @var string[]
      */

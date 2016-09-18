@@ -47,7 +47,7 @@ class SelectionDetails
      */
     const SELECT_TICKET_DELIVERY_OFFICE = "TDO";
     /**
-     *	by net remit qualifier
+     * by net remit qualifier
      */
     const SELECT_BY_NET_REMIT = "BNR";
 

@@ -40,15 +40,15 @@ class TicketElement
     /**
      * self::PASSTYPE_*
      *
-     * 766	Infant without seat
-     * 767	Infant with seat
-     * C	CBBG - Cabin Baggage
-     * E	EXST - Extra Seat
-     * G	Group
-     * INF	Infant not occupying a seat
-     * MTH	Month
-     * PAX	Passenger
-     * YRS	Year
+     * 766 Infant without seat
+     * 767 Infant with seat
+     * C CBBG - Cabin Baggage
+     * E EXST - Extra Seat
+     * G Group
+     * INF Infant not occupying a seat
+     * MTH Month
+     * PAX Passenger
+     * YRS Year
      *
      * @var string
      */

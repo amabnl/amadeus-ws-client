@@ -42,10 +42,10 @@ class OfferVerifyOptions extends Base
      *
      * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=3979&serviceVersionId=3443&isQuery=true#
      *
-     * Value	Description
-     * AIR		Air segment
-     * CCR		Automated Car auxiliary segment
-     * HHL		Automated Hotel auxiliary segment
+     * Value Description
+     * AIR  Air segment
+     * CCR  Automated Car auxiliary segment
+     * HHL  Automated Hotel auxiliary segment
      *
      * @var string
      */

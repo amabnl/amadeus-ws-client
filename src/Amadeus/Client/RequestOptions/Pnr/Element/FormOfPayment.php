@@ -25,7 +25,7 @@ namespace Amadeus\Client\RequestOptions\Pnr\Element;
 use Amadeus\Client\RequestOptions\Pnr\Element;
 
 /**
- * FormOfPayment element
+ * FormOfPayment element - FP element
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Element
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>

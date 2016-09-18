@@ -267,7 +267,7 @@ class ClientTest extends BaseTestCase
 
         $receivedFromElement = new Client\Struct\Pnr\AddMultiElements\DataElementsIndiv(Client\Struct\Pnr\AddMultiElements\ElementManagementData::SEGNAME_RECEIVE_FROM, 4);
         $receivedFromElement->freetextData = new Client\Struct\Pnr\AddMultiElements\FreetextData(
-            'some RF string amabnl-amadeus-ws-client-0.0.1dev',
+            'some RF string amabnl-amadeus-ws-client-'.Client::VERSION,
             Client\Struct\Pnr\AddMultiElements\FreetextDetail::TYPE_RECEIVE_FROM
         );
         $expectedPnrResult->dataElementsMaster->dataElementsIndiv[] = $receivedFromElement;

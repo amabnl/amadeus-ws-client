@@ -217,7 +217,6 @@ class SoapHeader4 extends Base
 
         //Send authentication info
         if ($this->isAuthenticated === false) {
-
             //Generate nonce, msg creation string & password digest:
             $password = base64_decode($params->authParams->passwordData);
             $creation = new \DateTime('now', new \DateTimeZone('UTC'));
@@ -367,10 +366,10 @@ class SoapHeader4 extends Base
     {
         return $xml = '<oas:Security xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
     <oas:UsernameToken xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" oas1:Id="UsernameToken-1">
-		<oas:Username>' . $originator . '</oas:Username>
-		<oas:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">' . $nonce . '</oas:Nonce>
-		<oas:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">' . $pwDigest . '</oas:Password>
-		<oas1:Created>' . $creationTimeString . '</oas1:Created>
+  <oas:Username>' . $originator . '</oas:Username>
+  <oas:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">' . $nonce . '</oas:Nonce>
+  <oas:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest">' . $pwDigest . '</oas:Password>
+  <oas1:Created>' . $creationTimeString . '</oas1:Created>
     </oas:UsernameToken>
 </oas:Security>';
     }
@@ -407,7 +406,8 @@ class SoapHeader4 extends Base
      *  HshPwd = 'ic3AOJElVpvkz9ZBKd105Siry28='
      *
      * @param string $password CLEARTEXT password (NOT the base64 encoded password used in Security_Authenticate)
-     * @param string $creationString message creation datetime UTC Format: yyyy-mm-ddTHH:MM:SSZ or yyyy-mm-ddTHH:MM:SS.sssZ
+     * @param string $creationString message creation datetime
+     *                               UTC Format: yyyy-mm-ddTHH:MM:SSZ or yyyy-mm-ddTHH:MM:SS.sssZ
      * @param string $messageNonce Random unique string
      * @return string The generated Password Digest
      */

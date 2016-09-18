@@ -47,7 +47,7 @@ class SalesReportsDisplayQueryReportOptions extends Base
      */
     const SELECT_TICKET_DELIVERY_OFFICE = "TDO";
     /**
-     *	by net remit qualifier
+     * by net remit qualifier
      */
     const SELECT_BY_NET_REMIT = "BNR";
 
@@ -175,36 +175,36 @@ class SalesReportsDisplayQueryReportOptions extends Base
      * The Transaction code for which you want reporting
      *
      * Possible values:
-     * ACMA	Agency credit memo
-     * ACMR	Refund credit memo
-     * ADMA	Agency debit memo
-     * BPAS	Boarding-Pass-Only
-     * CANN	Cancelled computer generated ticket number
-     * CANR	Cancellation with reversal
-     * CANX	Cancelled document
-     * EM50	Miscelaneous charges order - Electronic
-     * MCOA	Automated MCO
-     * MCOM	Miscelaneous Charges order - Manual
-     * MD50	Miscelaneous charges order - Automated
-     * PSCN	Printed stock control number
-     * PTAM	Prepaid ticket advice - Manual
-     * RCSM	Commission recall statement
-     * RENA	Automated Refund and Exchange Notice
-     * RENM	Manual Refund and Exchange Notice
-     * RFND	Refund
-     * RSCN	Regenarated stock control number
-     * SSAC	Sales summary adjustment notice - due to agent
-     * SSAD	sales summary adjustment notice - due to airline
-     * TAAD	Travel agent automated deduction
-     * TASF	Travel Agency service fee
-     * TKTA	OPTAT sale - Automated
-     * TKTB	OPATB sale - Automated
-     * TKTM	Manual sale
-     * TKTT	Electronic ticketing sale - Automated
-     * TORM	Tour order - Manual
-     * VSCN	Voided stock control number
-     * XSBA	Excess baggage Ticket - Automated
-     * XSBM	Excess baggage Ticket - Manual
+     * ACMA Agency credit memo
+     * ACMR Refund credit memo
+     * ADMA Agency debit memo
+     * BPAS Boarding-Pass-Only
+     * CANN Cancelled computer generated ticket number
+     * CANR Cancellation with reversal
+     * CANX Cancelled document
+     * EM50 Miscelaneous charges order - Electronic
+     * MCOA Automated MCO
+     * MCOM Miscelaneous Charges order - Manual
+     * MD50 Miscelaneous charges order - Automated
+     * PSCN Printed stock control number
+     * PTAM Prepaid ticket advice - Manual
+     * RCSM Commission recall statement
+     * RENA Automated Refund and Exchange Notice
+     * RENM Manual Refund and Exchange Notice
+     * RFND Refund
+     * RSCN Regenarated stock control number
+     * SSAC Sales summary adjustment notice - due to agent
+     * SSAD sales summary adjustment notice - due to airline
+     * TAAD Travel agent automated deduction
+     * TASF Travel Agency service fee
+     * TKTA OPTAT sale - Automated
+     * TKTB OPATB sale - Automated
+     * TKTM Manual sale
+     * TKTT Electronic ticketing sale - Automated
+     * TORM Tour order - Manual
+     * VSCN Voided stock control number
+     * XSBA Excess baggage Ticket - Automated
+     * XSBM Excess baggage Ticket - Manual
      *
      * @var string
      */
@@ -213,16 +213,16 @@ class SalesReportsDisplayQueryReportOptions extends Base
      * Transaction type
      *
      * Possible values:
-     * ADJA	Adustment for Agent
-     * ADJP	Adjustment for provider
-     * AUTS	Automated sale document
-     * CCAS	Cancelled cash sale document
-     * CCCS	Cancelled credit card sale document
-     * INVT	Inventory Document
-     * MANS	Manual sale document
-     * REFD	Refund document
-     * SALE	Sale document
-     * VOID	Voided document
+     * ADJA Adustment for Agent
+     * ADJP Adjustment for provider
+     * AUTS Automated sale document
+     * CCAS Cancelled cash sale document
+     * CCCS Cancelled credit card sale document
+     * INVT Inventory Document
+     * MANS Manual sale document
+     * REFD Refund document
+     * SALE Sale document
+     * VOID Voided document
      *
      * @var string
      */

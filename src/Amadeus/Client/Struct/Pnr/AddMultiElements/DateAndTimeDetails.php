@@ -43,73 +43,73 @@ class DateAndTimeDetails
      *
      * Value Description
      *
-     * 700	CRT date and time
-     * 701	Ticket effective date
-     * 702	Deposit start date
-     * 703	Deposit end date
-     * 704	Days earlier
-     * 705	Days later
-     * 706	Date of birth
-     * 707	By arrival time
-     * 708	By departure time
-     * 709	By elapsed time
-     * 710	Date Ticketed
-     * 711	Date/time queued
-     * A	Not Valid After - Last Travel Date
-     * AA	Actual arrival information
-     * ACL	Actual time, in local
-     * ACT	Actual time
-     * AD	Actual departure off blocks information
-     * AI	Airborne information
-     * ALL	Allocated time, in local
-     * ALT	Allocated time
-     * B	Not Valid Before - First Travel Date
-     * COL	Confirmed time, in local
-     * COT	Confirmed time
-     * DV	Flight diverted
-     * DX	Flight cancelled
-     * E	Early
-     * EA	Estimated arrival touchdown information
-     * EAL	Earliest time, in local
-     * EAT	Earliest time
-     * EB	Estimated on blocks information
-     * ED	Estimated departure off blocks information
-     * EET	Estimated elapsed time (EET) in HHMM
-     * ENL	End time, in local
-     * ENT	End time
-     * EO	Estimated take off information
-     * ESL	Estimated time, in local
-     * EST	Estimated time
-     * EX	Credit expiration date
-     * FLT	Estimated Flying time in HHMM
-     * FR	Forced return information
-     * HEL	Hidden Estimate, in local
-     * HET	Hidden Estimate
-     * HIL	Hidden time, in local
-     * HIT	Hidden time
-     * HNL	Hidden Next Info, in local
-     * HNT	Hidden Next Info
-     * L	Local time mode
-     * LA	Late
-     * LAL	Latest time, in local
-     * LAT	Latest time
-     * LT	Local time
-     * LX	Landing cancelled
-     * MNG	Minimum ground time in HHMM
-     * NIL	Next Info, in local
-     * NIT	Next Info
-     * OB	Actual on blocks information
-     * RC	Reclearance information
-     * REL	Recommended time, in local
-     * RET	Recommended time
-     * RR	Return to ramp information
-     * SCL	Scheduled time, in local
-     * SCT	Scheduled time
-     * STL	Start time, in local
-     * STT	Start time
-     * T	Transaction
-     * U	UTC time mode
-     * ZT	GMT time
+     * 700 CRT date and time
+     * 701 Ticket effective date
+     * 702 Deposit start date
+     * 703 Deposit end date
+     * 704 Days earlier
+     * 705 Days later
+     * 706 Date of birth
+     * 707 By arrival time
+     * 708 By departure time
+     * 709 By elapsed time
+     * 710 Date Ticketed
+     * 711 Date/time queued
+     * A Not Valid After - Last Travel Date
+     * AA Actual arrival information
+     * ACL Actual time, in local
+     * ACT Actual time
+     * AD Actual departure off blocks information
+     * AI Airborne information
+     * ALL Allocated time, in local
+     * ALT Allocated time
+     * B Not Valid Before - First Travel Date
+     * COL Confirmed time, in local
+     * COT Confirmed time
+     * DV Flight diverted
+     * DX Flight cancelled
+     * E Early
+     * EA Estimated arrival touchdown information
+     * EAL Earliest time, in local
+     * EAT Earliest time
+     * EB Estimated on blocks information
+     * ED Estimated departure off blocks information
+     * EET Estimated elapsed time (EET) in HHMM
+     * ENL End time, in local
+     * ENT End time
+     * EO Estimated take off information
+     * ESL Estimated time, in local
+     * EST Estimated time
+     * EX Credit expiration date
+     * FLT Estimated Flying time in HHMM
+     * FR Forced return information
+     * HEL Hidden Estimate, in local
+     * HET Hidden Estimate
+     * HIL Hidden time, in local
+     * HIT Hidden time
+     * HNL Hidden Next Info, in local
+     * HNT Hidden Next Info
+     * L Local time mode
+     * LA Late
+     * LAL Latest time, in local
+     * LAT Latest time
+     * LT Local time
+     * LX Landing cancelled
+     * MNG Minimum ground time in HHMM
+     * NIL Next Info, in local
+     * NIT Next Info
+     * OB Actual on blocks information
+     * RC Reclearance information
+     * REL Recommended time, in local
+     * RET Recommended time
+     * RR Return to ramp information
+     * SCL Scheduled time, in local
+     * SCT Scheduled time
+     * STL Start time, in local
+     * STT Start time
+     * T Transaction
+     * U UTC time mode
+     * ZT GMT time
      *
      * @var string
      */

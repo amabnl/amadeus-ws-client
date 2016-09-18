@@ -20,15 +20,15 @@ class LocationInformation
     const TYPE_ALL = "ALL";
 
     /**
-     * A	Airport
-     * B	Bus station
-     * C	City
-     * G	Ground transport
-     * H	Heliport
-     * L	Location
-     * O	Offpoint
-     * R	Railway station
-     * S	Associated location
+     * A Airport
+     * B Bus station
+     * C City
+     * G Ground transport
+     * H Heliport
+     * L Location
+     * O Offpoint
+     * R Railway station
+     * S Associated location
      *
      * From the Amadeus Web Services docs:
      *     The category of the input location is ignored,
@@ -51,7 +51,7 @@ class LocationInformation
      * @param string|null $code
      * @param string|null $name
      */
-    public function __construct($type = self::TYPE_LOCATION, $code, $name)
+    public function __construct($type = self::TYPE_LOCATION, $code = null, $name = null)
     {
         $this->locationType = $type;
         $this->locationDescription = new LocationDescription($code, $name);

@@ -33,7 +33,7 @@ class ConnectionOption
      */
     public function __construct($connections, $indicator = null)
     {
-        foreach ($connections as $counter=>$connection) {
+        foreach ($connections as $counter => $connection) {
             if ($counter === 0) {
                 $this->firstConnection = new Connection($connection, $indicator);
             } else {

@@ -31,15 +31,15 @@ namespace Amadeus\Client\Struct\Offer;
 class OfferTattoo
 {
     /**
-     * AIR	Air segment
+     * AIR Air segment
      */
     const SEGMENT_AIR = "AIR";
     /**
-     * HHL	Automated Hotel auxiliary segment
+     * HHL Automated Hotel auxiliary segment
      */
     const SEGMENT_HOTEL = "HHL";
     /**
-     * CCR	Automated Car auxiliary segment
+     * CCR Automated Car auxiliary segment
      */
     const SEGMENT_CAR = "CCR";
 

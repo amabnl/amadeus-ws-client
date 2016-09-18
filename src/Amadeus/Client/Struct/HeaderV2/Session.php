@@ -44,9 +44,9 @@ class Session
     public $SecurityToken;
 
     /**
-     * @param string	$sessId
-     * @param int		$seqNr
-     * @param string	$secTok
+     * @param string $sessId
+     * @param int $seqNr
+     * @param string $secTok
      */
     public function __construct($sessId, $seqNr, $secTok)
     {

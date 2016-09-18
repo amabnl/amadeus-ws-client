@@ -47,13 +47,13 @@ class ReferenceDetails
     /**
      * self::TYPE_*
      *
-     * C	Coupon number selection
-     * FAT	PNR FA TATOO
-     * FHT	PNR FHE TATOO
-     * L	Line number selection
-     * SN	Segment selection
-     * ST	Segment Tatoo reference number
-     * TS	TST selection
+     * C Coupon number selection
+     * FAT PNR FA TATOO
+     * FHT PNR FHE TATOO
+     * L Line number selection
+     * SN Segment selection
+     * ST Segment Tatoo reference number
+     * TS TST selection
      *
      * @var string
      */

@@ -46,7 +46,8 @@ interface RequestCreatorInterface
      * @param string $messageName
      * @param RequestOptionsInterface $params
      * @throws \Amadeus\Client\Struct\InvalidArgumentException when providing invalid parameters
-     * @throws \Amadeus\Client\InvalidMessageException when trying to create a request for a message that is not in your WSDL.
+     * @throws \Amadeus\Client\InvalidMessageException when trying to create a request for a message
+     *                                                 that is not in your WSDL.
      * @return mixed
      */
     public function createRequest($messageName, RequestOptionsInterface $params);

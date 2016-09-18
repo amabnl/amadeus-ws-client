@@ -31,19 +31,19 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 class StatusDetails
 {
     /**
-     * RX	Corporate Security Option
+     * RX Corporate Security Option
      */
     const IND_CORPSECOPT = "RX";
     /**
-     * SV	Service Fee
+     * SV Service Fee
      */
     const IND_SERVICEFEE = "SV";
     /**
-     * TS	Timestamp Option
+     * TS Timestamp Option
      */
     const IND_TIMESTAMPOPT = "TS";
     /**
-     * TX	Timestamp Inhibition
+     * TX Timestamp Inhibition
      */
     const IND_TIMESTAMPINHIB = "TX";
 

@@ -54,7 +54,7 @@ class PricingFareBase
     {
         $this->fareBasisOptions = new FareBasisOptions($options->fareBasisPrimaryCode, $options->fareBasisCode);
 
-        foreach ($options->segmentReference as $segNum=>$segQual) {
+        foreach ($options->segmentReference as $segNum => $segQual) {
             $this->fareBasisSegReference[] = new FareBasisSegReference($segNum, $segQual);
         }
     }

@@ -36,8 +36,8 @@ class AirSellFromRecommendationOptions extends Base
     /**
      * self::ALG_*
      *
-     * M1	Trigger Sell Optimization Algorithm, option cancel all if unsuccessful.
-     * M2	Trigger Sell Optimization Algorithm, option keep all confirmed if unsuccessful.
+     * M1 Trigger Sell Optimization Algorithm, option cancel all if unsuccessful.
+     * M2 Trigger Sell Optimization Algorithm, option keep all confirmed if unsuccessful.
      *
      * @var string
      */

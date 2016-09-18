@@ -38,7 +38,7 @@ class AirlineOrFlightOption
      */
     public function __construct($airlines, $flightNumber = null, $indicator = null)
     {
-        foreach ($airlines as $count=>$airline) {
+        foreach ($airlines as $count => $airline) {
             if ($count === 0) {
                 $this->flightIdentification[] = new FlightIdentification($airline, $flightNumber);
             } else {

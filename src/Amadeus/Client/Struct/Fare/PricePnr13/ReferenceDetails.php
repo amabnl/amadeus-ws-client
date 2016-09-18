@@ -31,11 +31,11 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
 class ReferenceDetails
 {
     /**
-     * P	Passenger/traveller reference number
-     * PA	Adult Passenger
-     * PI	Infant Passenger
-     * S	Segment/service reference number
-     * T	TST
+     * P Passenger/traveller reference number
+     * PA Adult Passenger
+     * PI Infant Passenger
+     * S Segment/service reference number
+     * T TST
      *
      * @var string
      */

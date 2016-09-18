@@ -396,7 +396,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
                             $wsdl,
                             $wsdlIdentifier
                         );
-                        foreach ($tmpMsg as $msgName=>$msgInfo) {
+                        foreach ($tmpMsg as $msgName => $msgInfo) {
                             $msgAndVer[$msgName] = $msgInfo;
                         }
                     }

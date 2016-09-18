@@ -43,7 +43,7 @@ class TarifFareRule
     public $companyDetails;
 
     /**
-     * 700	All Paragraphs
+     * 700 All Paragraphs
      *
      * @var string[]
      */
