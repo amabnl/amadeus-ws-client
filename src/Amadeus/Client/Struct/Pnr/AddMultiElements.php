@@ -32,28 +32,15 @@ use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\InvalidArgumentException;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\Accounting;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\AirAuxItinerary;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsIndiv;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementItinerary;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\Fop;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\FopExtension;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\FormOfPayment;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\FreetextData;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\FreetextDetail;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\FrequentTravellerData;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ItineraryInfo;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\MiscellaneousRemark;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\NewFopsDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\Reference;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForDataElement;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForSegment;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\ServiceRequest;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\StructuredAddress;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\TicketElement;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInfo;
 
 /**
@@ -310,122 +297,7 @@ class AddMultiElements extends BaseWsMessage
 
         $tattooCounter++;
 
-        $reflect = new \ReflectionClass($element);
-        $elementType = $reflect->getShortName();
-
-        switch ($elementType) {
-            case 'Contact':
-                /** @var Element\Contact $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_CONTACT_ELEMENT, $tattooCounter);
-                $createdElement->freetextData = new FreetextData(
-                    $element->value,
-                    $element->type
-                );
-                break;
-            case 'FormOfPayment':
-                /** @var Element\FormOfPayment $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_FORM_OF_PAYMENT, $tattooCounter);
-                $createdElement->formOfPayment = new FormOfPayment($element->type);
-                if ($element->type === Fop::IDENT_CREDITCARD) {
-                    $createdElement->formOfPayment->fop->creditCardCode = $element->creditCardType;
-                    $createdElement->formOfPayment->fop->accountNumber = $element->creditCardNumber;
-                    $createdElement->formOfPayment->fop->expiryDate = $element->creditCardExpiry;
-                    if (!is_null($element->creditCardCvcCode)) {
-                        $ext = new FopExtension(1);
-                        $ext->newFopsDetails = new NewFopsDetails();
-                        $ext->newFopsDetails->cvData = $element->creditCardCvcCode;
-                        $createdElement->fopExtension[] = $ext;
-                    }
-                } elseif ($element->type === Fop::IDENT_MISC && $element->freeText != "NONREF") {
-                    $createdElement->formOfPayment->fop->freetext = $element->freeText;
-                } elseif ($element->type === Fop::IDENT_MISC && $element->freeText === "NONREF") {
-                    $createdElement->fopExtension[] = new FopExtension(1);
-                } elseif ($element->type === Fop::IDENT_CHECK) {
-                    throw new \RuntimeException("FOP CHECK NOT YET IMPLEMENTED");
-                }
-                break;
-            case 'MiscellaneousRemark':
-                /** @var Element\MiscellaneousRemark $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_GENERAL_REMARK, $tattooCounter);
-                $createdElement->miscellaneousRemark = new MiscellaneousRemark(
-                    $element->text,
-                    $element->type,
-                    $element->category
-                );
-                break;
-            case 'ReceivedFrom':
-                /** @var Element\ReceivedFrom $element */
-                $createdElement = new DataElementsIndiv(ElementManagementData::SEGNAME_RECEIVE_FROM, $tattooCounter);
-                $createdElement->freetextData = new FreetextData(
-                    $element->receivedFrom,
-                    FreetextDetail::TYPE_RECEIVE_FROM
-                );
-                break;
-            case 'ServiceRequest':
-                /** @var Element\ServiceRequest $element */
-                $createdElement = new DataElementsIndiv(
-                    ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST,
-                    $tattooCounter
-                );
-                $createdElement->serviceRequest = new ServiceRequest($element);
-                break;
-            case 'Ticketing':
-                /** @var Element\Ticketing $element */
-                $createdElement = new DataElementsIndiv(
-                    ElementManagementData::SEGNAME_TICKETING_ELEMENT,
-                    $tattooCounter
-                );
-                $createdElement->ticketElement = new TicketElement($element);
-                break;
-            case 'AccountingInfo':
-                /** @var Element\AccountingInfo $element */
-                $createdElement = new DataElementsIndiv(
-                    ElementManagementData::SEGNAME_ACCOUNTING_INFORMATION,
-                    $tattooCounter
-                );
-                $createdElement->accounting = new Accounting($element);
-                break;
-            case 'Address':
-                /** @var Element\Address $element */
-                $createdElement = new DataElementsIndiv($element->type, $tattooCounter);
-                if ($element->type === ElementManagementData::SEGNAME_ADDRESS_BILLING_UNSTRUCTURED ||
-                    $element->type === ElementManagementData::SEGNAME_ADDRESS_MAILING_UNSTRUCTURED
-                ) {
-                    $createdElement->freetextData = new FreetextData(
-                        $element->freeText,
-                        FreetextDetail::TYPE_MAILING_ADDRESS
-                    );
-                } else {
-                    $createdElement->structuredAddress = new StructuredAddress($element);
-                }
-                break;
-            case 'FrequentFlyer':
-                /** @var Element\FrequentFlyer $element */
-                $createdElement = new DataElementsIndiv(
-                    ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST,
-                    $tattooCounter
-                );
-                $createdElement->serviceRequest = new ServiceRequest();
-                $createdElement->serviceRequest->ssr->type = 'FQTV';
-                $createdElement->serviceRequest->ssr->companyId = $element->airline;
-                $createdElement->frequentTravellerData = new FrequentTravellerData($element);
-                break;
-            case 'OtherServiceInfo':
-                /** @var Element\OtherServiceInfo $element */
-                $createdElement = new DataElementsIndiv(
-                    ElementManagementData::SEGNAME_OTHER_SERVICE_INFORMATION,
-                    $tattooCounter
-                );
-                $createdElement->freetextData = new FreetextData(
-                    $element->freeText,
-                    FreetextDetail::TYPE_OSI_ELEMENT
-                );
-                $createdElement->freetextData->freetextDetail->companyId = $element->airline;
-                $createdElement->freetextData->freetextDetail->subjectQualifier = FreetextDetail::QUALIFIER_LITERALTEXT;
-                break;
-            default:
-                throw new InvalidArgumentException('Element type ' . $elementType . ' is not supported');
-        }
+        $createdElement = new DataElementsIndiv($element, $tattooCounter);
 
         if (!empty($element->references)) {
             $createdElement->referenceForDataElement = new ReferenceForDataElement($element->references);
