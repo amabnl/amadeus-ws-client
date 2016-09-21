@@ -23,43 +23,31 @@
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * RangeOfDate
+ * PriceToBeat
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RangeOfDate
+class PriceToBeat
 {
-    const RANGEMODE_MINUS_PLUS = "C";
-    const RANGEMODE_MINUS = "M";
-    const RANGEMODE_PLUS = "P";
+    /**
+     * @var MoneyInfo
+     */
+    public $moneyInfo;
 
     /**
-     * self::RANGEMODE_*
+     * @var MoneyInfo[]
+     */
+    public $additionalMoneyInfo = [];
+
+    /**
+     * PriceToBeat constructor.
      *
-     * @var string
+     * @param int $amount
+     * @param string|null $currency
      */
-    public $rangeQualifier;
-
-    /**
-     * @var int
-     */
-    public $dayInterval;
-
-    /**
-     * @var string
-     */
-    public $timeAtdestination;
-
-    /**
-     * RangeOfDate constructor.
-     *
-     * @param string $rangeMode self::RANGEMODE_*
-     * @param int $range
-     */
-    public function __construct($rangeMode, $range)
+    public function __construct($amount, $currency = null)
     {
-        $this->dayInterval = $range;
-        $this->rangeQualifier = $rangeMode;
+        $this->moneyInfo = new MoneyInfo($amount, $currency);
     }
 }

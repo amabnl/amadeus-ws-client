@@ -36,12 +36,22 @@ class NumberOfUnit
     public $unitNumberDetail = [];
 
     /**
-     * @param int|null $mainUnitNumber
-     * @param string|null $mainUnitType
+     * @param int|null $requestedPax
+     * @param int|null $requestedResults
      */
-    public function __construct($mainUnitNumber = null, $mainUnitType = null)
+    public function __construct($requestedPax, $requestedResults)
     {
-        $this->unitNumberDetail[] =
-            new UnitNumberDetail($mainUnitNumber, $mainUnitType);
+        if (is_int($requestedPax)) {
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $requestedPax,
+                UnitNumberDetail::TYPE_PASS
+            );
+        }
+        if (is_int($requestedResults)) {
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $requestedResults,
+                UnitNumberDetail::TYPE_RESULTS
+            );
+        }
     }
 }

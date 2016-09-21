@@ -20,46 +20,26 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\MasterPricer;
+namespace Test\Amadeus\Client\Struct\Fare\MasterPricer;
+
+use Amadeus\Client\Struct\Fare\MasterPricer\PricingTicketing;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * RangeOfDate
+ * PricingTicketingTest
  *
- * @package Amadeus\Client\Struct\Fare\MasterPricer
+ * @package Test\Amadeus\Client\Struct\Fare\MasterPricer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RangeOfDate
+class PricingTicketingTest extends BaseTestCase
 {
-    const RANGEMODE_MINUS_PLUS = "C";
-    const RANGEMODE_MINUS = "M";
-    const RANGEMODE_PLUS = "P";
-
-    /**
-     * self::RANGEMODE_*
-     *
-     * @var string
-     */
-    public $rangeQualifier;
-
-    /**
-     * @var int
-     */
-    public $dayInterval;
-
-    /**
-     * @var string
-     */
-    public $timeAtdestination;
-
-    /**
-     * RangeOfDate constructor.
-     *
-     * @param string $rangeMode self::RANGEMODE_*
-     * @param int $range
-     */
-    public function __construct($rangeMode, $range)
+    public function testCanMakeWithMainPricingType()
     {
-        $this->dayInterval = $range;
-        $this->rangeQualifier = $rangeMode;
+        $opt = new PricingTicketing(
+            PricingTicketing::PRICETYPE_NO_LOWCOST
+        );
+
+        $this->assertCount(1, $opt->priceType);
+        $this->assertEquals(PricingTicketing::PRICETYPE_NO_LOWCOST, $opt->priceType[0]);
     }
 }

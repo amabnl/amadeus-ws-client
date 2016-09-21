@@ -30,4 +30,25 @@ namespace Amadeus\Client\Struct;
  */
 class BaseWsMessage
 {
+    /**
+     * Check if any parameter to the current function is not empty
+     *
+     * @param mixed
+     * @return boolean true if at least 1 parameter is not empty
+     */
+    protected function checkAnyNotEmpty()
+    {
+        $foundNotEmpty = false;
+
+        $args = func_get_args();
+
+        foreach ($args as $arg) {
+            if (!empty($arg)) {
+                $foundNotEmpty = true;
+                break;
+            }
+        }
+
+        return $foundNotEmpty;
+    }
 }

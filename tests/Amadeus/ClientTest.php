@@ -1206,6 +1206,61 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoTicketDisplayTST()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketDisplayTSTmessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\DisplayTST(
+            new Client\RequestOptions\TicketDisplayTstOptions([
+                'displayMode' => Client\RequestOptions\TicketDisplayTstOptions::MODE_ALL
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_DisplayTST', $expectedMessageResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_DisplayTST' => "04.1"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_DisplayTST')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketDisplayTST(
+            new Client\RequestOptions\TicketDisplayTstOptions([
+                'displayMode' => Client\RequestOptions\TicketDisplayTstOptions::MODE_ALL
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoOfferConfirmAirOffer()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -1578,7 +1633,9 @@ class ClientTest extends BaseTestCase
                         ])
                     ])
                 ],
-                'requestedFlightOptions' => Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
+                'requestedFlightTypes' => [
+                    Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
+                ]
             ])
         );
 
@@ -1632,7 +1689,9 @@ class ClientTest extends BaseTestCase
                         ])
                     ])
                 ],
-                'requestedFlightOptions' => Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
+                'requestedFlightTypes' => [
+                    Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
+                ]
             ])
         );
 

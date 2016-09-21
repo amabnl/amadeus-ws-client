@@ -32,22 +32,41 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class MPDate extends LoadParamsFromArray
 {
+    const RANGEMODE_MINUS_PLUS = "C";
+    const RANGEMODE_MINUS = "M";
+    const RANGEMODE_PLUS = "P";
+
+    /**
+     * Departure or arrival date & time.
+     *
+     * The time part is only used if it is not "00:00" when converted to string.
+     *
+     * @var \DateTime
+     */
+    public $dateTime;
+
+
     /**
      * Departure or arrival date
      *
      * We only use the date portion!
      *
+     * @deprecated use dateTime instead. When using both, dateTime property has priority
      * @var \DateTime
      */
     public $date;
+
     /**
      * Departure or arrival time
      *
      * We only use the time portion!
      *
+     * @deprecated use dateTime instead.  When using both, dateTime property has priority
      * @var \DateTime
      */
+
     public $time;
+
     /**
      * Whether date & time are for specifying departure
      *
@@ -56,11 +75,28 @@ class MPDate extends LoadParamsFromArray
      *
      * @var bool
      */
-    public $isDeparture;
+    public $isDeparture = true;
+
     /**
      * Window (number of hours) before/after specified time.
      *
      * @var int
      */
     public $timeWindow;
+
+    /**
+     * If you want a range of dates, provide the range mode here
+     *
+     * self::RANGEMODE_*
+     *
+     * @var string
+     */
+    public $rangeMode;
+
+    /**
+     * Date range expressed in days
+     *
+     * @var int
+     */
+    public $range;
 }

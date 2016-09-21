@@ -23,43 +23,51 @@
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * RangeOfDate
+ * CompanyIdentity
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RangeOfDate
+class CompanyIdentity
 {
-    const RANGEMODE_MINUS_PLUS = "C";
-    const RANGEMODE_MINUS = "M";
-    const RANGEMODE_PLUS = "P";
+    const QUAL_PREFERRED = "F";
+    const QUAL_MANDATORY = "M";
+    const QUAL_NIGHT_CLASS = "N";
+    const QUAL_FORCE_FULLAIRLINE_RECOMMENDATION = "O";
+    /**
+     * @deprecated
+     */
+    const QUAL_POLLED = "P";
+    /**
+     * @deprecated
+     */
+    const QUAL_FARE_FAMILY_REPARTITION = "R";
+    const QUAL_CARRIERS_LIST_BYPASS_BSP_CHECKS = "T";
+    const QUAL_MANDATORY_VALIDATING_CARRIER = "V";
+    const QUAL_EXCLUDED_VALIDATING_CARRIER = "W";
+    const QUAL_EXCLUDED = "X";
 
     /**
-     * self::RANGEMODE_*
+     * self::QUAL_*
      *
      * @var string
      */
-    public $rangeQualifier;
+    public $carrierQualifier;
 
     /**
-     * @var int
+     * @var string[]
      */
-    public $dayInterval;
+    public $carrierId = [];
 
     /**
-     * @var string
-     */
-    public $timeAtdestination;
-
-    /**
-     * RangeOfDate constructor.
+     * CompanyIdentity constructor.
      *
-     * @param string $rangeMode self::RANGEMODE_*
-     * @param int $range
+     * @param string $carrierQualifier self::QUAL_*
+     * @param \string[] $carrierId
      */
-    public function __construct($rangeMode, $range)
+    public function __construct($carrierQualifier, array $carrierId)
     {
-        $this->dayInterval = $range;
-        $this->rangeQualifier = $rangeMode;
+        $this->carrierQualifier = $carrierQualifier;
+        $this->carrierId = $carrierId;
     }
 }

@@ -118,4 +118,26 @@ class EncodeDecodeCityTest extends BaseTestCase
         $this->assertEquals('FR', $msg->countryStateRestriction->countryIdentification->countryCode);
         $this->assertNull($msg->countryStateRestriction->countryIdentification->stateCode);
     }
+
+    /**
+     * I don't think this is a valid request, but it helps with code coverage :-/
+     */
+    public function testCanMakeMessageExplicitRequestOption()
+    {
+        $opt = new InfoEncodeDecodeCityOptions([
+            'locationCode' => 'OPO',
+            'searchMode' => null,
+            'selectResult' => InfoEncodeDecodeCityOptions::SELECT_HELIPORTS
+        ]);
+
+        $msg = new EncodeDecodeCity($opt);
+
+        $this->assertEquals('OPO', $msg->locationInformation->locationDescription->code);
+        $this->assertEquals(LocationInformation::TYPE_LOCATION, $msg->locationInformation->locationType);
+
+        $this->assertEquals(SelectionDetails::OPT_LOCATION_TYPE, $msg->requestOption->selectionDetails->option);
+        $this->assertEquals(SelectionDetails::OPTINF_HELIPORT, $msg->requestOption->selectionDetails->optionInformation);
+
+        $this->assertCount(0, $msg->requestOption->otherSelectionDetails);
+    }
 }

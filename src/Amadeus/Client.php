@@ -62,7 +62,7 @@ class Client
      *
      * @var string
      */
-    const VERSION = "1.0.0";
+    const VERSION = "1.1.0-dev";
 
     /**
      * An identifier string for the library (to be used in Received From entries)
@@ -668,6 +668,20 @@ class Client
     public function ticketDeleteTST(RequestOptions\TicketDeleteTstOptions $options, $messageOptions = [])
     {
         $msgName = 'Ticket_DeleteTST';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Ticket_DisplayTST
+     *
+     * @param RequestOptions\TicketDisplayTstOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketDisplayTST(RequestOptions\TicketDisplayTstOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Ticket_DisplayTST';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }

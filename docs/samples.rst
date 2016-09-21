@@ -393,13 +393,17 @@ Make a simple Masterpricer availability & fare search:
                 'departureLocation' => new MPLocation(['city' => 'BRU']),
                 'arrivalLocation' => new MPLocation(['city' => 'LON']),
                 'date' => new MPDate([
-                    'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+                    'dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
                 ])
             ])
         ]
     ]);
 
     $recommendations = $client->fareMasterPricerTravelBoardSearch($opt);
+
+
+`More examples of MasterPricer messages <samples/masterpricertravelboard.rst>`_
+
 
 -----------------------------
 Fare_PricePNRWithBookingClass
@@ -734,7 +738,7 @@ Delete the TST with number 2:
     $deleteTstResult = $client->ticketDeleteTST(
         new TicketDeleteTstOptions([
             'deleteMode' => TicketDeleteTstOptions::DELETE_MODE_SELECTIVE,
-            'tstNumber' => 1
+            'tstNumber' => 2
         ])
     );
 
@@ -743,8 +747,30 @@ Delete the TST with number 2:
 Ticket_DisplayTST
 -----------------
 
-View the TST's of a PNR:
+View all TST's of a PNR:
 
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketDisplayTstOptions;
+
+    $deleteTstResult = $client->ticketDisplayTST(
+        new TicketDisplayTstOptions([
+            'displayMode' => TicketDisplayTstOptions::MODE_ALL
+        ])
+    );
+
+Display TST number 2:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketDisplayTstOptions;
+
+    $deleteTstResult = $client->ticketDisplayTST(
+        new TicketDisplayTstOptions([
+            'displayMode' => TicketDisplayTstOptions::MODE_SELECTIVE,
+            'tstNumbers' => [2]
+        ])
+    );
 
 ***********
 DocIssuance

@@ -1,6 +1,20 @@
+# Release 1.1.0 (unreleased)
+
+* Fare_MasterPricerTravelBoardSearch: added new request options (https://github.com/amabnl/amadeus-ws-client/issues/20):
+    - Preferred/excluded/... airlines option 'airlineOptions'.
+    - Itinerary date: support for Date range +/- 1 day.
+    - Itinerary date: Specify date & time of segment as departure or arrival date & time.
+    - Itinerary date: deprecated 'date' and 'time' properties, replaced by unified 'dateTime' property.
+    - Support for flight options such as direct flight, non-stop flight, etc.
+    - Support for Cabin Mode (Mandatory, Major, Recommended) when specifying a cabin code.
+    - Support for Fare Options such as Published Fares, Unifares, Electronic/Paper ticketing, ...
+    - Support for "Price to beat" feature.
+* Implemented Ticket_DisplayTST
+
 # Release 1.0.0 (18 September 2016)
 
 * PNR_AddMultiElements: support for adding OSI elements to a PNR.
+* Implemented Ticket_DeleteTST
 * Updated docs for 1.0.0 release.
 * Released version 1: now following [semantic versioning](http://semver.org/).
 

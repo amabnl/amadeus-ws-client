@@ -34,8 +34,14 @@ class TravelFlightInfo
      */
     public $cabinId;
 
+    /**
+     * @var CompanyIdentity[]
+     */
     public $companyIdentity = [];
 
+    /**
+     * @var FlightDetail
+     */
     public $flightDetail;
 
     public $inclusionDetail = [];
@@ -47,12 +53,28 @@ class TravelFlightInfo
     /**
      * TravelFlightInfo constructor.
      *
-     * @param string|null $cabinCode
+     * @param string|null $cabinCode CabinId::CABIN_*
+     * @param string|null $cabinOption CabinId::CABINOPT_*
+     * @param string[]|null $flightTypes
+     * @param array|null $airlineOptions
      */
-    public function __construct($cabinCode = null)
+    public function __construct($cabinCode = null, $cabinOption = null, $flightTypes = null, $airlineOptions = null)
     {
-        if (!is_null($cabinCode)) {
-            $this->cabinId = new CabinId($cabinCode);
+        if (!is_null($cabinCode) || !is_null($cabinOption)) {
+            $this->cabinId = new CabinId($cabinCode, $cabinOption);
+        }
+
+        if (is_array($flightTypes)) {
+            $this->flightDetail = new FlightDetail($flightTypes);
+        }
+
+        if (!empty($airlineOptions)) {
+            foreach ($airlineOptions as $qualifier => $airlines) {
+                $this->companyIdentity[] = new CompanyIdentity(
+                    $qualifier,
+                    $airlines
+                );
+            }
         }
     }
 }

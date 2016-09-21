@@ -160,7 +160,7 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadAgencySource($agencySourceType, $iataNumber, $officeId)
     {
-        if (!empty($agencySourceType) || !empty($iataNumber) || !empty($officeId)) {
+        if ($this->checkAnyNotEmpty($agencySourceType, $iataNumber, $officeId)) {
             $this->agencyDetails = new AgencyDetails($agencySourceType, $iataNumber, $officeId);
         }
     }
@@ -182,7 +182,7 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadTransaction($code, $type, $issueIndicator)
     {
-        if (!empty($type) || !empty($code) || !empty($issueIndicator)) {
+        if ($this->checkAnyNotEmpty($type, $code, $issueIndicator)) {
             $this->transactionData[] = new TransactionData($type, $code, $issueIndicator);
         }
     }
@@ -203,7 +203,7 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadDateRange($startDate, $endDate)
     {
-        if (!empty($startDate) || !empty($endDate)) {
+        if ($this->checkAnyNotEmpty($startDate, $endDate)) {
             $this->salesPeriodDetails = new SalesPeriodDetails($startDate, $endDate);
         }
     }
@@ -214,7 +214,7 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadDate($type, $date)
     {
-        if (!empty($type) || !empty($date)) {
+        if ($this->checkAnyNotEmpty($type, $date)) {
             $this->dateDetails = new DateDetails($type, $date);
         }
     }
@@ -225,7 +225,7 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadCurrency($type, $currency)
     {
-        if (!empty($type) || !empty($currency)) {
+        if ($this->checkAnyNotEmpty($type, $currency)) {
             $this->currencyInfo = new CurrencyInfo($type, $currency);
         }
     }
@@ -236,7 +236,7 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadFormOfPayment($type, $vendor)
     {
-        if (!empty($type) || !empty($vendor)) {
+        if ($this->checkAnyNotEmpty($type, $vendor)) {
             $this->formOfPaymentDetails = new FormOfPaymentDetails($type, $vendor);
         }
     }
@@ -257,7 +257,7 @@ class DisplayQueryReport extends BaseWsMessage
      */
     protected function loadScrolling($count, $fromItem)
     {
-        if (!empty($count) || !empty($fromItem)) {
+        if ($this->checkAnyNotEmpty($count, $fromItem)) {
             $this->actionDetails = new ActionDetails($count, $fromItem);
         }
     }

@@ -42,18 +42,21 @@ class FirstDateTimeDetail
      * @var string
      */
     public $timeQualifier;
+
     /**
      * DDMMYY
      *
      * @var string
      */
     public $date;
+
     /**
      * HHMM
      *
      * @var string
      */
     public $time;
+
     /**
      * Nr of Hours
      *

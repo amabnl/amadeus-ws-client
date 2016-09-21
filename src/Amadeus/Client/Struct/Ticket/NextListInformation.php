@@ -20,46 +20,39 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\MasterPricer;
+namespace Amadeus\Client\Struct\Ticket;
 
 /**
- * RangeOfDate
+ * NextListInformation
  *
- * @package Amadeus\Client\Struct\Fare\MasterPricer
+ * @package Amadeus\Client\Struct\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RangeOfDate
+class NextListInformation
 {
-    const RANGEMODE_MINUS_PLUS = "C";
-    const RANGEMODE_MINUS = "M";
-    const RANGEMODE_PLUS = "P";
-
     /**
-     * self::RANGEMODE_*
+     * Number indicating the position in a sequence.
      *
-     * @var string
-     */
-    public $rangeQualifier;
-
-    /**
      * @var int
      */
-    public $dayInterval;
+    public $remainingInformation;
 
     /**
-     * @var string
-     */
-    public $timeAtdestination;
-
-    /**
-     * RangeOfDate constructor.
+     * Identification number.
      *
-     * @param string $rangeMode self::RANGEMODE_*
-     * @param int $range
+     * @var int
      */
-    public function __construct($rangeMode, $range)
+    public $remainingReference;
+
+    /**
+     * NextListInformation constructor.
+     *
+     * @param int $amount
+     * @param int $start
+     */
+    public function __construct($amount, $start)
     {
-        $this->dayInterval = $range;
-        $this->rangeQualifier = $rangeMode;
+        $this->remainingInformation = $amount;
+        $this->remainingReference = $start;
     }
 }

@@ -52,13 +52,66 @@ class TimeDetails
      */
     public function __construct(MPDate $theDate)
     {
-        $this->firstDateTimeDetail = new FirstDateTimeDetail($theDate->date->format('dmy'));
+        $this->firstDateTimeDetail = new FirstDateTimeDetail(
+            $this->makeDateString($theDate->dateTime, $theDate->date)
+        );
 
-        if ($theDate->time instanceof \DateTime) {
-            $this->firstDateTimeDetail->time = $theDate->time->format('Hi');
+        $timeString = $this->makeTimeString($theDate->dateTime, $theDate->time);
+        if ($timeString !== '0000') {
+            $this->firstDateTimeDetail->time = $timeString;
         }
+
         if (is_int($theDate->timeWindow)) {
             $this->firstDateTimeDetail->timeWindow = $theDate->timeWindow;
         }
+
+        if ($theDate->isDeparture) {
+            $this->firstDateTimeDetail->timeQualifier = FirstDateTimeDetail::TIMEQUAL_DEPART_FROM;
+        } else {
+            $this->firstDateTimeDetail->timeQualifier = FirstDateTimeDetail::TIMEQUAL_ARRIVAL_BY;
+        }
+
+        if (!is_null($theDate->range) && !is_null($theDate->rangeMode)) {
+            $this->rangeOfDate = new RangeOfDate(
+                $theDate->rangeMode,
+                $theDate->range
+            );
+        }
+    }
+
+    /**
+     * @param \DateTime|null $dateTime
+     * @param \DateTime|null $date
+     * @return string
+     */
+    protected function makeDateString($dateTime, $date)
+    {
+        $dateStr = '000000';
+
+        if ($dateTime instanceof \DateTime) {
+            $dateStr = $dateTime->format('dmy');
+        } elseif ($date instanceof \DateTime) {
+            $dateStr = $date->format('dmy');
+        }
+
+        return $dateStr;
+    }
+
+    /**
+     * @param \DateTime|null $dateTime
+     * @param \DateTime|null $time
+     * @return string
+     */
+    protected function makeTimeString($dateTime, $time)
+    {
+        $timeStr = '0000';
+
+        if ($dateTime instanceof \DateTime) {
+            $timeStr = $dateTime->format('Hi');
+        } elseif ($time instanceof \DateTime) {
+            $timeStr = $time->format('Hi');
+        }
+
+        return $timeStr;
     }
 }

@@ -23,43 +23,18 @@
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * RangeOfDate
+ * FareFamilies
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RangeOfDate
+class FareFamilies
 {
-    const RANGEMODE_MINUS_PLUS = "C";
-    const RANGEMODE_MINUS = "M";
-    const RANGEMODE_PLUS = "P";
+    public $familyInformation;
 
-    /**
-     * self::RANGEMODE_*
-     *
-     * @var string
-     */
-    public $rangeQualifier;
+    public $familyCriteria;
 
-    /**
-     * @var int
-     */
-    public $dayInterval;
+    public $fareFamilySegment = [];
 
-    /**
-     * @var string
-     */
-    public $timeAtdestination;
-
-    /**
-     * RangeOfDate constructor.
-     *
-     * @param string $rangeMode self::RANGEMODE_*
-     * @param int $range
-     */
-    public function __construct($rangeMode, $range)
-    {
-        $this->dayInterval = $range;
-        $this->rangeQualifier = $rangeMode;
-    }
+    public $otherPossibleCriteria = [];
 }

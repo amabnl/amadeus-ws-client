@@ -23,43 +23,34 @@
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * RangeOfDate
+ * FlightDetail
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RangeOfDate
+class FlightDetail
 {
-    const RANGEMODE_MINUS_PLUS = "C";
-    const RANGEMODE_MINUS = "M";
-    const RANGEMODE_PLUS = "P";
+    const FLIGHT_TYPE_CONNECTING = "C";
+    const FLIGHT_TYPE_DIRECT = "D";
+    const FLIGHT_TYPE_DISABLE_NEGO_SPACE = "DN";
+    const FLIGHT_TYPE_NON_STOP = "N";
+    const FLIGHT_TYPE_RETURN_CHEAPEST_ONLINE = "OL";
+    const FLIGHT_TYPE_OVERNIGHT_NOT_ALLOWED = "OV";
 
     /**
-     * self::RANGEMODE_*
+     * self::FLIGHT_TYPE_*
      *
-     * @var string
+     * @var string[]
      */
-    public $rangeQualifier;
+    public $flightType = [];
 
     /**
-     * @var int
-     */
-    public $dayInterval;
-
-    /**
-     * @var string
-     */
-    public $timeAtdestination;
-
-    /**
-     * RangeOfDate constructor.
+     * FlightDetail constructor.
      *
-     * @param string $rangeMode self::RANGEMODE_*
-     * @param int $range
+     * @param \string[] $flightType
      */
-    public function __construct($rangeMode, $range)
+    public function __construct(array $flightType = [])
     {
-        $this->dayInterval = $range;
-        $this->rangeQualifier = $rangeMode;
+        $this->flightType = $flightType;
     }
 }

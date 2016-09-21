@@ -20,46 +20,61 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\MasterPricer;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * RangeOfDate
+ * TicketDisplayTstOptions
  *
- * @package Amadeus\Client\Struct\Fare\MasterPricer
+ * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RangeOfDate
+class TicketDisplayTstOptions extends Base
 {
-    const RANGEMODE_MINUS_PLUS = "C";
-    const RANGEMODE_MINUS = "M";
-    const RANGEMODE_PLUS = "P";
+    const MODE_ALL = "ALL";
+
+    const MODE_SELECTIVE = "SEL";
 
     /**
-     * self::RANGEMODE_*
+     * Display all TST's or display selectively?
+     *
+     * self::MODE_*
      *
      * @var string
      */
-    public $rangeQualifier;
+    public $displayMode;
 
     /**
+     * TST numbers to retrieve
+     *
+     * @var int[]
+     */
+    public $tstNumbers = [];
+
+    /**
+     * Segment Tattoo numbers for which to retrieve TST's
+     *
+     * @var int[]
+     */
+    public $segments = [];
+
+    /**
+     * Passenger Tattoo numbers for who to retrieve TST's
+     *
+     * @var int[]
+     */
+    public $passengers = [];
+
+    /**
+     * Scrolling view - display TST's starting from this number
+     *
      * @var int
      */
-    public $dayInterval;
+    public $scrollingStart;
 
     /**
-     * @var string
-     */
-    public $timeAtdestination;
-
-    /**
-     * RangeOfDate constructor.
+     * Scrolling view - how many TST's to display
      *
-     * @param string $rangeMode self::RANGEMODE_*
-     * @param int $range
+     * @var int
      */
-    public function __construct($rangeMode, $range)
-    {
-        $this->dayInterval = $range;
-        $this->rangeQualifier = $rangeMode;
-    }
+    public $scrollingCount;
 }

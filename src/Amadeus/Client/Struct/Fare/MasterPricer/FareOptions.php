@@ -54,4 +54,30 @@ class FareOptions
     public $frequentTravellerInfo;
 
     public $monetaryCabinInfo;
+
+    /**
+     * FareOptions constructor.
+     *
+     * @param array $flightOptions List of flight / fare options
+     * @param array $corpCodesUniFares list of Corporate codes for Corporate Unifares
+     * @param bool $tickPreCheck Do Ticketability pre-check?
+     */
+    public function __construct(array $flightOptions, array $corpCodesUniFares, $tickPreCheck)
+    {
+        $this->pricingTickInfo = new PricingTickInfo();
+        $this->pricingTickInfo->pricingTicketing = new PricingTicketing();
+
+        if ($tickPreCheck === true) {
+            $this->pricingTickInfo->pricingTicketing->priceType[] = PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK;
+        }
+
+        foreach ($flightOptions as $flightOption) {
+            $this->pricingTickInfo->pricingTicketing->priceType[] = $flightOption;
+
+            if ($flightOption === PricingTicketing::PRICETYPE_CORPORATE_UNIFARES) {
+                $this->corporate = new Corporate();
+                $this->corporate->corporateId[] = new CorporateId($corpCodesUniFares);
+            }
+        }
+    }
 }

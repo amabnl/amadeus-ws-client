@@ -30,7 +30,22 @@ namespace Amadeus\Client\Struct\Fare\MasterPricer;
  */
 class CorporateId
 {
+    /**
+     * @var string
+     */
     public $corporateQualifier;
+    /**
+     * @var string[]
+     */
+    public $identity = [];
 
-    public $identity;
+    /**
+     * CorporateId constructor.
+     *
+     * @param \string[] $identity
+     */
+    public function __construct(array $identity)
+    {
+        $this->identity = $identity;
+    }
 }

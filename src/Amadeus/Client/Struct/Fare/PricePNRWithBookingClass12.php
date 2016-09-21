@@ -106,9 +106,7 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
             $this->validatingCarrier = new ValidatingCarrier($options->validatingCarrier);
         }
 
-        if (in_array(AttributeDetails::OVERRIDE_FAREBASIS, $options->overrideOptions) &&
-            !empty($options->pricingsFareBasis)
-        ) {
+        if (in_array(AttributeDetails::OVERRIDE_FAREBASIS, $options->overrideOptions) && !empty($options->pricingsFareBasis)) {
             foreach ($options->pricingsFareBasis as $pricingFareBasis) {
                 $this->pricingFareBase[] = new PricingFareBase($pricingFareBasis);
             }

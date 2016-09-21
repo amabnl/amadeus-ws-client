@@ -36,6 +36,19 @@ class CabinId
     const CABIN_FIRST_SUPERSONIC = "F";
 
     /**
+     * Major cabin
+     */
+    const CABINOPT_MAJOR = "MC";
+    /**
+     * Mandatory cabin for all segments
+     */
+    const CABINOPT_MANDATORY = "MD";
+    /**
+     * Recommended cabin to be used at least one segment
+     */
+    const CABINOPT_RECOMMENDED = "RC";
+
+    /**
      * MC Major cabin
      * MD Mandatory cabin for all segments
      * RC Recommended cabin to be used at least one segment
@@ -55,9 +68,11 @@ class CabinId
      * CabinId constructor.
      *
      * @param string $cabinCode self::CABIN_*
+     * @param string $cabinOption self::CABINOPT_*
      */
-    public function __construct($cabinCode)
+    public function __construct($cabinCode, $cabinOption = null)
     {
         $this->cabin = $cabinCode;
+        $this->cabinQualifier = $cabinOption;
     }
 }

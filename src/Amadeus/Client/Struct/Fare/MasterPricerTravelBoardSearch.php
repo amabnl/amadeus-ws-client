@@ -65,15 +65,19 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
      */
     public $solutionFamily;
     /**
-     * @var mixed
+     * @var mixed[]
      */
-    public $fareFamilies;
+    public $passengerInfoGrp = [];
+    /**
+     * @var MasterPricer\FareFamilies[]
+     */
+    public $fareFamilies = [];
     /**
      * @var MasterPricer\FareOptions
      */
     public $fareOptions;
     /**
-     * @var mixed
+     * @var MasterPricer\PriceToBeat
      */
     public $priceToBeat;
     /**
@@ -84,8 +88,14 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
      * @var MasterPricer\TravelFlightInfo
      */
     public $travelFlightInfo;
-
+    /**
+     * @var array
+     */
     public $valueSearch = [];
+    /**
+     * @var array
+     */
+    public $buckets = [];
     /**
      * Itinerary
      *
@@ -128,11 +138,13 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
     {
         $this->loadNrOfPaxAndResults($options);
 
-        if ($options->doTicketabilityPreCheck === true) {
-            $this->fareOptions = new MasterPricer\FareOptions();
-            $this->fareOptions->pricingTickInfo = new MasterPricer\PricingTickInfo();
-            $this->fareOptions->pricingTickInfo->pricingTicketing = new MasterPricer\PricingTicketing(
-                MasterPricer\PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK
+        if ($options->doTicketabilityPreCheck === true ||
+            $this->checkAnyNotEmpty($options->corporateCodesUnifares, $options->flightOptions)
+        ) {
+            $this->fareOptions = new MasterPricer\FareOptions(
+                $options->flightOptions,
+                $options->corporateCodesUnifares,
+                $options->doTicketabilityPreCheck
             );
         }
 
@@ -147,8 +159,25 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
             $this->loadItinerary($itinerary, $segmentCounter);
         }
 
-        if (!empty($options->cabinClass)) {
-            $this->travelFlightInfo = new MasterPricer\TravelFlightInfo($options->cabinClass);
+        if ($this->checkAnyNotEmpty(
+            $options->cabinClass,
+            $options->cabinOption,
+            $options->requestedFlightTypes,
+            $options->airlineOptions
+        )) {
+            $this->travelFlightInfo = new MasterPricer\TravelFlightInfo(
+                $options->cabinClass,
+                $options->cabinOption,
+                $options->requestedFlightTypes,
+                $options->airlineOptions
+            );
+        }
+
+        if (!empty($options->priceToBeat)) {
+            $this->priceToBeat = new MasterPricer\PriceToBeat(
+                $options->priceToBeat,
+                $options->priceToBeatCurrency
+            );
         }
     }
 
@@ -190,18 +219,22 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
     }
 
     /**
-     * @param MPItinerary $itinerary
+     * @param MPItinerary $itineraryOptions
      * @param int $counter BYREF
      */
-    protected function loadItinerary($itinerary, &$counter)
+    protected function loadItinerary($itineraryOptions, &$counter)
     {
-        $tmpItin = new MasterPricer\Itinerary($counter);
+        $tmpItinerary = new MasterPricer\Itinerary($counter);
 
-        $tmpItin->departureLocalization = new MasterPricer\DepartureLocalization($itinerary->departureLocation);
-        $tmpItin->arrivalLocalization = new MasterPricer\ArrivalLocalization($itinerary->arrivalLocation);
-        $tmpItin->timeDetails = new MasterPricer\TimeDetails($itinerary->date);
+        $tmpItinerary->departureLocalization = new MasterPricer\DepartureLocalization(
+            $itineraryOptions->departureLocation
+        );
+        $tmpItinerary->arrivalLocalization = new MasterPricer\ArrivalLocalization(
+            $itineraryOptions->arrivalLocation
+        );
+        $tmpItinerary->timeDetails = new MasterPricer\TimeDetails($itineraryOptions->date);
 
-        $this->itinerary[] = $tmpItin;
+        $this->itinerary[] = $tmpItinerary;
 
         $counter++;
     }
@@ -213,19 +246,10 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
     protected function loadNrOfPaxAndResults(FareMasterPricerTbSearch $options)
     {
         if (is_int($options->nrOfRequestedPassengers) || is_int($options->nrOfRequestedResults)) {
-            $this->numberOfUnit = new MasterPricer\NumberOfUnit();
-            if (is_int($options->nrOfRequestedPassengers)) {
-                $this->numberOfUnit->unitNumberDetail[] = new MasterPricer\UnitNumberDetail(
-                    $options->nrOfRequestedPassengers,
-                    MasterPricer\UnitNumberDetail::TYPE_PASS
-                );
-            }
-            if (is_int($options->nrOfRequestedResults)) {
-                $this->numberOfUnit->unitNumberDetail[] = new MasterPricer\UnitNumberDetail(
-                    $options->nrOfRequestedResults,
-                    MasterPricer\UnitNumberDetail::TYPE_RESULTS
-                );
-            }
+            $this->numberOfUnit = new MasterPricer\NumberOfUnit(
+                $options->nrOfRequestedPassengers,
+                $options->nrOfRequestedResults
+            );
         }
     }
 }

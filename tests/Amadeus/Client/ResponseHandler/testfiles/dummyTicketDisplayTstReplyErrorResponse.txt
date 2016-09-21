@@ -1,0 +1,18 @@
+<Ticket_DisplayTSTReply xmlns="http://xml.amadeus.com/TTSTRR_15_1_1A">
+    <errorGroup>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>2075</errorCode>
+                <errorCategory>EC</errorCategory>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>1</textSubjectQualifier>
+                <source>M</source>
+                <encoding>7</encoding>
+            </freeTextDetails>
+            <freeText>INVALID TST NUMBER</freeText>
+        </errorWarningDescription>
+    </errorGroup>
+</Ticket_DisplayTSTReply>

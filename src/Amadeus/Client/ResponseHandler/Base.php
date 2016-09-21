@@ -595,6 +595,15 @@ class Base implements ResponseHandlerInterface
      * @param SendResult $response Ticket_DeleteTST result
      * @return Result
      */
+    protected function analyzeTicketDisplayTSTResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
+
+    /**
+     * @param SendResult $response Ticket_DeleteTST result
+     * @return Result
+     */
     protected function analyzeTicketDeleteTSTResponse($response)
     {
         return $this->analyzeTicketCreateTSTFromPricingResponse($response);

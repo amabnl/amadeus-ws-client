@@ -20,46 +20,18 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\MasterPricer;
+namespace Amadeus\Client\Struct\Ticket;
 
 /**
- * RangeOfDate
+ * PsaInformation
  *
- * @package Amadeus\Client\Struct\Fare\MasterPricer
+ * @package Amadeus\Client\Struct\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class RangeOfDate
+class PsaInformation
 {
-    const RANGEMODE_MINUS_PLUS = "C";
-    const RANGEMODE_MINUS = "M";
-    const RANGEMODE_PLUS = "P";
-
     /**
-     * self::RANGEMODE_*
-     *
-     * @var string
+     * @var RefDetails[]
      */
-    public $rangeQualifier;
-
-    /**
-     * @var int
-     */
-    public $dayInterval;
-
-    /**
-     * @var string
-     */
-    public $timeAtdestination;
-
-    /**
-     * RangeOfDate constructor.
-     *
-     * @param string $rangeMode self::RANGEMODE_*
-     * @param int $range
-     */
-    public function __construct($rangeMode, $range)
-    {
-        $this->dayInterval = $range;
-        $this->rangeQualifier = $rangeMode;
-    }
+    public $refDetails = [];
 }

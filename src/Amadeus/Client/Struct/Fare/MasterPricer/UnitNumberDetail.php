@@ -37,6 +37,7 @@ class UnitNumberDetail
      * @var int
      */
     public $numberOfUnits;
+
     /**
      *
      * Possible values:

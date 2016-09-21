@@ -27,6 +27,7 @@ This is the list of messages that are at least partially supported at this time:
 - Air_RetrieveSeatMap
 - DocIssuance_IssueTicket
 - Ticket_CreateTSTFromPricing
+- Ticket_DisplayTST
 - Ticket_DeleteTST
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
@@ -54,7 +55,6 @@ On the to-do list / work in progress:
 - Offer_CreateOffer
 - MiniRule_GetFromPricing
 - FOP_CreateFormOfPayment
-- Ticket_DisplayTST
 - Ticket_CreateTSMFromPricing
 - Media_GetMedia
 - Service_IntegratedPricing
