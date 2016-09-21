@@ -4,6 +4,9 @@ EXAMPLES
 
 Here are some examples of how to send specific messages.
 
+If you can't find an example of what you want to do here, check the unittests in the ``tests/Amadeus/Client/Struct`` folder.
+There, you can find more examples of all the options that are supported by the library.
+
 .. contents::
 
 ***

@@ -62,7 +62,7 @@ The current release is the first stable version of the library, 1.0.0.
 - [About &amp; Get Started](docs/about-get-started.rst)
 - [List of supported messages](docs/list-of-supported-messages.rst)
 - [How to](docs/how-to.rst)
-- [Examples](docs/samples.rst)
+- [Examples for sending specific messages](docs/samples.rst)
 
 ---------------------------------------
 
