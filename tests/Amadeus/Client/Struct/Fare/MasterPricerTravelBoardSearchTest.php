@@ -77,7 +77,7 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Struct\Fare\MasterPricer\FirstDateTimeDetail', $message->itinerary[0]->timeDetails->firstDateTimeDetail);
         $this->assertEquals('150117', $message->itinerary[0]->timeDetails->firstDateTimeDetail->date);
         $this->assertNull($message->itinerary[0]->timeDetails->firstDateTimeDetail->time);
-        $this->assertEquals(FirstDateTimeDetail::TIMEQUAL_DEPART_FROM, $message->itinerary[0]->timeDetails->firstDateTimeDetail->timeQualifier);
+        $this->assertNull($message->itinerary[0]->timeDetails->firstDateTimeDetail->timeQualifier);
         $this->assertEquals('BRU', $message->itinerary[0]->departureLocalization->departurePoint->locationId);
         $this->assertEquals('C', $message->itinerary[0]->departureLocalization->departurePoint->airportCityQualifier);
         $this->assertEquals('LON', $message->itinerary[0]->arrivalLocalization->arrivalPointDetails->locationId);

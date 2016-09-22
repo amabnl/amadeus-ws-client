@@ -30,11 +30,13 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
  */
 class PenDisInformation
 {
+    const QUAL_PENALTY = 700;
+    const QUAL_DISCOUNT = 701;
+    const QUAL_OB_FEES = "OBF";
+    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
+
     /**
-     * 700 Penalty information
-     * 701 Discount information
-     * OBF OB Fees Information
-     * ZAP ZapOff Discount Information
+     * self::QUAL_*
      *
      * @var string
      */

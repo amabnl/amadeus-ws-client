@@ -59,16 +59,16 @@ class TimeDetails
         $timeString = $this->makeTimeString($theDate->dateTime, $theDate->time);
         if ($timeString !== '0000') {
             $this->firstDateTimeDetail->time = $timeString;
+
+            if ($theDate->isDeparture) {
+                $this->firstDateTimeDetail->timeQualifier = FirstDateTimeDetail::TIMEQUAL_DEPART_FROM;
+            } else {
+                $this->firstDateTimeDetail->timeQualifier = FirstDateTimeDetail::TIMEQUAL_ARRIVAL_BY;
+            }
         }
 
         if (is_int($theDate->timeWindow)) {
             $this->firstDateTimeDetail->timeWindow = $theDate->timeWindow;
-        }
-
-        if ($theDate->isDeparture) {
-            $this->firstDateTimeDetail->timeQualifier = FirstDateTimeDetail::TIMEQUAL_DEPART_FROM;
-        } else {
-            $this->firstDateTimeDetail->timeQualifier = FirstDateTimeDetail::TIMEQUAL_ARRIVAL_BY;
         }
 
         if (!is_null($theDate->range) && !is_null($theDate->rangeMode)) {

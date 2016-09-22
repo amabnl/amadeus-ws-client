@@ -30,20 +30,24 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
  */
 class DiscountPenaltyDetails
 {
+    const FUNCTION_BASE_FARE = 700;
+    const FUNCTION_TOTAL_FARE = 701;
+    const FUNCTION_PENALTIES_APPLY = 704;
+    const FUNCTION_EXCLUDE_FEE = "EXF";
+    const FUNCTION_INCLUDE_FEE = "INF";
+
+    const AMOUNTTYPE_FIXED_WHOLE_AMOUNT = 707;
+    const AMOUNTTYPE_PERCENTAGE = 708;
+
     /**
-     * 700 Base fare
-     * 701 Total fare
-     * 704 Penalties apply
-     * EXF EXclude Fee
-     * INF INclude Fee
+     * self::FUNCTION_*
      *
      * @var string
      */
     public $function;
 
     /**
-     * 707 Fixed whole amount
-     * 708 Percentage
+     * self::AMOUNTTYPE_*
      *
      * @var string
      */

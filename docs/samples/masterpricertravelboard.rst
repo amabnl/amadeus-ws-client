@@ -240,7 +240,7 @@ Do a ticketability pre-check on recommendations:
         'doTicketabilityPreCheck' => true
     ]);
 
-Paris to Seattle, _arrive_ in Seattle on 13 June 2017 at 18:30 (+/- 6 hours)
+Paris to Seattle, *arrive* in Seattle on 13 June 2017 at 18:30 (+/- 6 hours)
 
 .. code-block:: php
 
