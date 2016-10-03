@@ -23,37 +23,37 @@
 namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
 /**
- * PenDisInformation
+ * TaxData
  *
  * @package Amadeus\Client\Struct\Fare\PricePnr13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class TaxData
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
+    const QUALIFIER_AMOUNT = "A";
+    const QUALIFIER_PERCENTAGE = "P";
 
     /**
-     * self::QUAL_*
+     * @var int
+     */
+    public $taxRate;
+
+    /**
+     * self::QUALIFIER_*
      *
      * @var string
      */
-    public $discountPenaltyQualifier;
+    public $taxValueQualifier;
 
     /**
-     * @var DiscountPenaltyDetails[]
-     */
-    public $discountPenaltyDetails = [];
-
-    /**
-     * PenDisInformation constructor.
+     * TaxData constructor.
      *
-     * @param string|null $discountPenaltyQualifier
+     * @param int $taxRate
+     * @param string $taxValueQualifier self::QUALIFIER_*
      */
-    public function __construct($discountPenaltyQualifier = null)
+    public function __construct($taxRate, $taxValueQualifier)
     {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
+        $this->taxRate = $taxRate;
+        $this->taxValueQualifier = $taxValueQualifier;
     }
 }

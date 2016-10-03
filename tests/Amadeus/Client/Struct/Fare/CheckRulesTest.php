@@ -24,6 +24,7 @@ namespace Test\Amadeus\Client\Struct\Fare;
 
 use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
 use Amadeus\Client\Struct\Fare\CheckRules;
+use Amadeus\Client\Struct\Fare\MessageFunctionDetails;
 use Test\Amadeus\BaseTestCase;
 
 /**
@@ -42,6 +43,8 @@ class CheckRulesTest extends BaseTestCase
 
         $message = new CheckRules($opt);
 
+        $this->assertEquals(MessageFunctionDetails::FARE_DISPLAY_RULES, $message->msgType->messageFunctionDetails->messageFunction);
+
         $this->assertEquals(1, count($message->itemNumber->itemNumberDetails));
         $this->assertEquals(1, $message->itemNumber->itemNumberDetails[0]->number);
         $this->assertEmpty($message->flightQualification);
@@ -55,6 +58,8 @@ class CheckRulesTest extends BaseTestCase
         ]);
 
         $message = new CheckRules($opt);
+
+        $this->assertEquals(MessageFunctionDetails::FARE_DISPLAY_RULES, $message->msgType->messageFunctionDetails->messageFunction);
 
         $this->assertEquals(1, count($message->itemNumber->itemNumberDetails));
         $this->assertEquals(1, $message->itemNumber->itemNumberDetails[0]->number);

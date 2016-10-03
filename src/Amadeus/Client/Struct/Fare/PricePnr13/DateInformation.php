@@ -30,4 +30,30 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
  */
 class DateInformation
 {
+    const OPT_DATE_OVERRIDE = "DAT";
+    const OPT_BOOKING_DATE_OVERRIDE = "DO";
+
+    /**
+     * self::OPT_*
+     *
+     * @var string
+     */
+    public $businessSemantic;
+
+    /**
+     * @var DateTime
+     */
+    public $dateTime;
+
+    /**
+     * DateOverride constructor.
+     *
+     * @param string $businessSemantic self::OPT_*
+     * @param \DateTime $dateTime
+     */
+    public function __construct($businessSemantic, \DateTime $dateTime)
+    {
+        $this->businessSemantic = $businessSemantic;
+        $this->dateTime = new DateTime($dateTime);
+    }
 }

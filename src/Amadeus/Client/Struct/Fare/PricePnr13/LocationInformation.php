@@ -30,4 +30,33 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
  */
 class LocationInformation
 {
+    const TYPE_POINT_OF_SALE = "POS";
+    const TYPE_POINT_OF_TICKETING = "POT";
+    const TYPE_WITHHOLD_TAX = "WT";
+    /**
+     * @var string
+     */
+    public $locationType;
+
+    /**
+     * @var LocationDetails
+     */
+    public $firstLocationDetails;
+
+    /**
+     * @var LocationDetails
+     */
+    public $secondLocationDetails;
+
+    /**
+     * LocationInformation constructor.
+     *
+     * @param string $locationType
+     * @param string $code
+     */
+    public function __construct($locationType, $code)
+    {
+        $this->locationType = $locationType;
+        $this->firstLocationDetails = new LocationDetails($code);
+    }
 }

@@ -61,9 +61,9 @@ class PricingOptionGroup
     public $monetaryInformation;
 
     /**
-     * @var TaxInformation
+     * @var TaxInformation[]
      */
-    public $taxInformation;
+    public $taxInformation = [];
 
     /**
      * @var DateInformation

@@ -23,37 +23,39 @@
 namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
 /**
- * PenDisInformation
+ * DateTime
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\Struct\Fare\PricePnr12
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class DateTime
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
-
     /**
-     * self::QUAL_*
-     *
      * @var string
      */
-    public $discountPenaltyQualifier;
+    public $year;
 
     /**
-     * @var DiscountPenaltyDetails[]
+     * @var string
      */
-    public $discountPenaltyDetails = [];
+    public $month;
 
     /**
-     * PenDisInformation constructor.
+     * @var string
+     */
+    public $day;
+
+    /**
+     * PricePnr12 DateTime constructor.
      *
-     * @param string|null $discountPenaltyQualifier
+     * @param \DateTime|null $date
      */
-    public function __construct($discountPenaltyQualifier = null)
+    public function __construct($date)
     {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
+        if ($date instanceof \DateTime) {
+            $this->year = $date->format('Y');
+            $this->month = $date->format('m');
+            $this->day = $date->format('d');
+        }
     }
 }

@@ -20,40 +20,40 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\Struct\Fare\PricePnr12;
 
 /**
- * PenDisInformation
+ * DateOverride
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\Struct\Fare\PricePnr12
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class DateOverride
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
+    const OPT_DATE_OVERRIDE = "DAT";
+    const OPT_BOOKING_DATE_OVERRIDE = "DO";
 
     /**
-     * self::QUAL_*
+     * self::OPT_*
      *
      * @var string
      */
-    public $discountPenaltyQualifier;
+    public $businessSemantic;
 
     /**
-     * @var DiscountPenaltyDetails[]
+     * @var DateTime
      */
-    public $discountPenaltyDetails = [];
+    public $dateTime;
 
     /**
-     * PenDisInformation constructor.
+     * DateOverride constructor.
      *
-     * @param string|null $discountPenaltyQualifier
+     * @param string $businessSemantic self::OPT_*
+     * @param \DateTime $dateTime
      */
-    public function __construct($discountPenaltyQualifier = null)
+    public function __construct($businessSemantic, \DateTime $dateTime)
     {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
+        $this->businessSemantic = $businessSemantic;
+        $this->dateTime = new DateTime($dateTime);
     }
 }

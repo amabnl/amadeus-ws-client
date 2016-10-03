@@ -412,7 +412,7 @@ Make a simple Masterpricer availability & fare search:
 Fare_PricePNRWithBookingClass
 -----------------------------
 
-Do a pricing on the PNR in context:
+Do a pricing on the PNR in context - price with validating carrier SN (Brussels Airlines):
 
 .. code-block:: php
 
@@ -424,6 +424,36 @@ Do a pricing on the PNR in context:
         ])
     );
 
+Price PNR: use the fare basis QNC469W2 to price segments 1 and 2 with:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'pricingsFareBasis' => [
+                    new FareBasis([
+                        'fareBasisCode' => 'QNC469W2',
+                        'references' => [
+                            new PaxSegRef([
+                                'reference' => 1,
+                                'type' => PaxSegRef::TYPE_SEGMENT
+                            ]),
+                            new PaxSegRef([
+                                'reference' => 2,
+                                'type' => PaxSegRef::TYPE_SEGMENT
+                            ])
+                        ]
+                    ])
+                ]
+        ])
+    );
+
+
+`More examples of Fare_PricePNRWithBookingClass messages <samples/pricepnr.rst>`_
 
 ---------------------------------
 Fare_InformativePricingWithoutPNR
@@ -470,6 +500,52 @@ Do an informative pricing on BRU-LIS flight with 2 adults and no special pricing
         ])
     );
 
+The Pricing options that can be used are the same pricing options as in the ``Fare_PricePNRWithBookingClass`` message:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+
+    $informativePricingResponse = $client->fareInformativePricingWithoutPnr(
+        new FareInformativePricingWithoutPnrOptions([
+            'passengers' => [
+                new Passenger([
+                    'tattoos' => [1, 2],
+                    'type' => Passenger::TYPE_ADULT
+                ])
+            ],
+            'segments' => [
+                new Segment([
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2016-11-21 09:15:00'),
+                    'from' => 'BRU',
+                    'to' => 'LIS',
+                    'marketingCompany' => 'TP',
+                    'flightNumber' => '4652',
+                    'bookingClass' => 'Y',
+                    'segmentTattoo' => 1,
+                    'groupNumber' => 1
+                ])
+            ],
+            'pricingOptions' => new PricingOptions([
+                'overrideOptions' => [
+                    PricingOptions::OVERRIDE_FARETYPE_NEG,
+                    PricingOptions::OVERRIDE_FAREBASIS
+                ],
+                'validatingCarrier' => 'BA',
+                'currencyOverride' => 'EUR',
+                'pricingsFareBasis' => [
+                    new FareBasis([
+                        'fareBasisCode' => 'QNC469W2',
+                    ])
+                ]
+            ])
+        ])
+    );
+
 ---------------
 Fare_CheckRules
 ---------------
@@ -483,6 +559,32 @@ Get Fare Rules information for a pricing in context:
     $rulesResponse = $client->fareCheckRules(
         new FareCheckRulesOptions([
             'recommendations' => [1] //Pricing nr 1
+        ])
+    );
+
+Get all rule categories available for a given pricing in context:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
+
+    $rulesResponse = $client->fareCheckRules(
+        new FareCheckRulesOptions([
+            'recommendations' => [1], //Pricing nr 1
+            'categoryList' => true
+        ])
+    );
+
+Get the fare rules for specific categories for a given pricing in context:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
+
+    $rulesResponse = $client->fareCheckRules(
+        new FareCheckRulesOptions([
+            'recommendations' => [1], //Pricing nr 1
+            'categories' => ['MX', 'SE', 'SR', 'AP', 'FL', 'CD', 'SO', 'SU']
         ])
     );
 

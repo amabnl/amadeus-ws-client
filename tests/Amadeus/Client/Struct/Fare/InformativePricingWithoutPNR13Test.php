@@ -22,10 +22,10 @@
 
 namespace Test\Amadeus\Client\Struct\Fare;
 
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
-use Amadeus\Client\RequestOptions\Fare\PricePnrBcFareBasis;
 use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
 use Amadeus\Client\Struct\Fare\InformativePricing13\FareDetails;
 use Amadeus\Client\Struct\Fare\InformativePricingWithoutPNR13;
@@ -345,7 +345,7 @@ class InformativePricingWithoutPNR13Test extends BaseTestCase
         $this->assertEquals(PricingOptionKey::OPTION_NO_OPTION, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
     }
 
-    public function testPricingOptions()
+    public function testPricingOptionsLegacyFormat()
     {
         $options = new FareInformativePricingWithoutPnrOptions([
             'passengers' => [
@@ -371,10 +371,10 @@ class InformativePricingWithoutPNR13Test extends BaseTestCase
                 'validatingCarrier' => 'BA',
                 'currencyOverride' => 'EUR',
                 'pricingsFareBasis' => [
-                    new PricePnrBcFareBasis([
+                    new FareBasis([
                         'fareBasisPrimaryCode' => 'QNC',
                         'fareBasisCode' => '469W2',
-                        'segmentReference' => [1 => PricePnrBcFareBasis::SEGREFTYPE_SEGMENT]
+                        'segmentReference' => [1 => FareBasis::SEGREFTYPE_SEGMENT]
                     ])
                 ]
             ])
@@ -421,7 +421,9 @@ class InformativePricingWithoutPNR13Test extends BaseTestCase
         $fareBasisOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
         $fareBasisOverridePo->optionDetail = new OptionDetail();
         $fareBasisOverridePo->optionDetail->criteriaDetails[] = new CriteriaDetails('QNC469W2');
-        $fareBasisOverridePo->paxSegTstReference = new PaxSegTstReference([1 => PricePnrBcFareBasis::SEGREFTYPE_SEGMENT]);
+        $fareBasisOverridePo->paxSegTstReference = new PaxSegTstReference(
+            [1 => FareBasis::SEGREFTYPE_SEGMENT]
+        );
 
         $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $fareBasisOverridePo));
 

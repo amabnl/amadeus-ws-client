@@ -30,12 +30,14 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
  */
 class ReferenceDetails
 {
+    const QUALIFIER_PAX_REFERENCE = "P";
+    const QUALIFIER_PAX_ADULT = "PA";
+    const QUALIFIER_PAX_INFANT = "PI";
+    const QUALIFIER_SEGMENT_REFERENCE = "S";
+    const QUALIFIER_TST = "T";
+
     /**
-     * P Passenger/traveller reference number
-     * PA Adult Passenger
-     * PI Infant Passenger
-     * S Segment/service reference number
-     * T TST
+     * self::QUALIFIER_*
      *
      * @var string
      */
@@ -50,7 +52,7 @@ class ReferenceDetails
      * ReferenceDetails constructor.
      *
      * @param string $value
-     * @param string $type
+     * @param string $type self::QUALIFIER_*
      */
     public function __construct($value, $type)
     {

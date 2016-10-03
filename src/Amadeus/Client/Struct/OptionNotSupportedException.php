@@ -20,40 +20,19 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\Struct;
 
 /**
- * PenDisInformation
+ * OptionNotSupportedException
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * Thrown when a message is being called with an option in the request that is not supported
+ * in that version of the message.
+ *
+ * For example, in Fare_PricePNRWithBookingClass versions < 13, there are a number of options not supported.
+ *
+ * @package Amadeus\Client\Struct
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class OptionNotSupportedException extends InvalidArgumentException
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
-
-    /**
-     * self::QUAL_*
-     *
-     * @var string
-     */
-    public $discountPenaltyQualifier;
-
-    /**
-     * @var DiscountPenaltyDetails[]
-     */
-    public $discountPenaltyDetails = [];
-
-    /**
-     * PenDisInformation constructor.
-     *
-     * @param string|null $discountPenaltyQualifier
-     */
-    public function __construct($discountPenaltyQualifier = null)
-    {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
-    }
 }

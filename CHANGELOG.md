@@ -1,6 +1,6 @@
 # Release 1.1.0 (unreleased)
 
-* Fare_MasterPricerTravelBoardSearch: added new request options (https://github.com/amabnl/amadeus-ws-client/issues/20):
+* ``Fare_MasterPricerTravelBoardSearch``: added new request options (https://github.com/amabnl/amadeus-ws-client/issues/20):
     - Preferred/excluded/... airlines option 'airlineOptions'.
     - Itinerary date: support for Date range +/- 1 day.
     - Itinerary date: Specify date & time of segment as departure or arrival date & time.
@@ -9,7 +9,23 @@
     - Support for Cabin Mode (Mandatory, Major, Recommended) when specifying a cabin code.
     - Support for Fare Options such as Published Fares, Unifares, Electronic/Paper ticketing, ...
     - Support for "Price to beat" feature.
-* Implemented Ticket_DisplayTST
+* ``Fare_PricePnrWithBookingClass``: added support for extra request options:
+    - Negotiated corporate fares
+    - Corporate unifares
+    - OB Fees *(message version 13+ only)*
+    - Pax/PTC Discounts
+    - Point of Sale and Point of Ticketing override
+    - Pricing Logic (IATA or other) *(message version 13+ only)*
+    - Ticket Type (e-ticket, paper, both)
+    - Add taxes
+    - Exempt taxes
+    - Selective pricing: select segments, passengers and/or TST's
+    - Past date pricing
+    - Award Pricing
+    
+*These pricing options are also available for the* ``Fare_InformativePricingWithoutPNR`` *message version 13+*
+
+* Implemented ``Ticket_DisplayTST``
 
 # Release 1.0.0 (18 September 2016)
 

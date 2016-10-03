@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
+use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
 /**
  * PaxSegTstReference
  *
@@ -38,12 +40,22 @@ class PaxSegTstReference
     /**
      * PaxSegTstReference constructor.
      *
-     * @param array $segmentReference
+     * @param array $segmentReference Legacy segment references format
+     * @param PaxSegRef[]|null $references New segment references format
      */
-    public function __construct($segmentReference)
+    public function __construct($segmentReference = null, $references = null)
     {
-        foreach ($segmentReference as $segNum => $segQual) {
-            $this->referenceDetails[] = new ReferenceDetails($segNum, $segQual);
+        //Support for legacy segment reference format - to be removed when breaking BC.
+        if (!empty($segmentReference)) {
+            foreach ($segmentReference as $segNum => $segQual) {
+                $this->referenceDetails[] = new ReferenceDetails($segNum, $segQual);
+            }
+        }
+
+        if (!empty($references)) {
+            foreach ($references as $ref) {
+                $this->referenceDetails[] = new ReferenceDetails($ref->reference, $ref->type);
+            }
         }
     }
 }

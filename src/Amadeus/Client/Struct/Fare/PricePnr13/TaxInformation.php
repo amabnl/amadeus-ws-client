@@ -30,4 +30,42 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
  */
 class TaxInformation
 {
+    const QUALIFIER_TAX = 7;
+
+    /**
+     * @var string
+     */
+    public $taxQualifier = self::QUALIFIER_TAX;
+
+    /**
+     * @var TaxType
+     */
+    public $taxType;
+
+    /**
+     * @var string
+     */
+    public $taxNature;
+
+    /**
+     * @var TaxData
+     */
+    public $taxData;
+
+    /**
+     * TaxInformation constructor.
+     *
+     * @param string $countryCode
+     * @param string $taxNature
+     * @param string|null $amountPercentage TaxData::QUALIFIER_*
+     * @param int|null $rate
+     */
+    public function __construct($countryCode, $taxNature, $amountPercentage = null, $rate = null)
+    {
+        $this->taxType = new TaxType($countryCode);
+        $this->taxNature = $taxNature;
+        if (!is_null($amountPercentage) && !is_null($rate)) {
+            $this->taxData = new TaxData($rate, $amountPercentage);
+        }
+    }
 }

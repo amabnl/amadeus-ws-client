@@ -30,7 +30,14 @@ namespace Amadeus\Client\Struct\Fare\PricePnr12;
  */
 class RefDetails
 {
+    const QUALIFIER_PAX_REFERENCE = "P";
+    const QUALIFIER_PAX_ADULT = "PA";
+    const QUALIFIER_PAX_INFANT = "PI";
+    const QUALIFIER_SEGMENT_REFERENCE = "S";
+
     /**
+     * self::QUALIFIER_*
+     *
      * @var string
      */
     public $refQualifier;
@@ -44,7 +51,7 @@ class RefDetails
      * RefDetails constructor.
      *
      * @param int $segNum
-     * @param string $segQual
+     * @param string $segQual self::QUALIFIER_*
      */
     public function __construct($segNum, $segQual)
     {

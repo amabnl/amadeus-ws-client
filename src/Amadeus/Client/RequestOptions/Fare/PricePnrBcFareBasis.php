@@ -22,33 +22,15 @@
 
 namespace Amadeus\Client\RequestOptions\Fare;
 
-use Amadeus\Client\LoadParamsFromArray;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
 
 /**
  * PricePnrBcFareBasis - Pricing options when pricing by fare basis (pricing type 'FBA')
  *
+ * @deprecated Use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis instead.
  * @package Amadeus\Client\RequestOptions\Fare
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class PricePnrBcFareBasis extends LoadParamsFromArray
+class PricePnrBcFareBasis extends FareBasis
 {
-    const SEGREFTYPE_SEGMENT = 'S';
-
-    const SEGREFTYPE_CONNECTING = 'X';
-
-    /**
-     * @var string
-     */
-    public $fareBasisPrimaryCode;
-    /**
-     * @var string
-     */
-    public $fareBasisCode;
-
-    /**
-     * The key is the segment tattoo number, the value is the segment type (self::SEGREFTYPE_*)
-     *
-     * @var array
-     */
-    public $segmentReference = [];
 }

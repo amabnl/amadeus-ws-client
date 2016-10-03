@@ -23,37 +23,22 @@
 namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
 /**
- * PenDisInformation
+ * TaxType
  *
  * @package Amadeus\Client\Struct\Fare\PricePnr13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class TaxType
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
+    public $isoCountry;
 
     /**
-     * self::QUAL_*
+     * TaxType constructor.
      *
-     * @var string
+     * @param $isoCountry
      */
-    public $discountPenaltyQualifier;
-
-    /**
-     * @var DiscountPenaltyDetails[]
-     */
-    public $discountPenaltyDetails = [];
-
-    /**
-     * PenDisInformation constructor.
-     *
-     * @param string|null $discountPenaltyQualifier
-     */
-    public function __construct($discountPenaltyQualifier = null)
+    public function __construct($isoCountry)
     {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
+        $this->isoCountry = $isoCountry;
     }
 }

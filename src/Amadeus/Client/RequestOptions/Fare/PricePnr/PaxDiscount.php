@@ -20,40 +20,24 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\RequestOptions\Fare\PricePnr;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * PenDisInformation
+ * PaxDiscount
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\RequestOptions\Fare\PricePnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class PaxDiscount extends LoadParamsFromArray
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
-
     /**
-     * self::QUAL_*
+     * Passenger Typecodes / Discount codes
      *
-     * @var string
-     */
-    public $discountPenaltyQualifier;
-
-    /**
-     * @var DiscountPenaltyDetails[]
-     */
-    public $discountPenaltyDetails = [];
-
-    /**
-     * PenDisInformation constructor.
+     * e.g. "YTH", "AD20", "MIL"
      *
-     * @param string|null $discountPenaltyQualifier
+     * @var string[]
      */
-    public function __construct($discountPenaltyQualifier = null)
-    {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
-    }
+    public $discountCodes = [];
 }

@@ -23,37 +23,25 @@
 namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
 /**
- * PenDisInformation
+ * LocationDetails
  *
  * @package Amadeus\Client\Struct\Fare\PricePnr13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class LocationDetails
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
-
     /**
-     * self::QUAL_*
-     *
      * @var string
      */
-    public $discountPenaltyQualifier;
+    public $code;
 
     /**
-     * @var DiscountPenaltyDetails[]
-     */
-    public $discountPenaltyDetails = [];
-
-    /**
-     * PenDisInformation constructor.
+     * LocationDetails constructor.
      *
-     * @param string|null $discountPenaltyQualifier
+     * @param string $code
      */
-    public function __construct($discountPenaltyQualifier = null)
+    public function __construct($code)
     {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
+        $this->code = $code;
     }
 }

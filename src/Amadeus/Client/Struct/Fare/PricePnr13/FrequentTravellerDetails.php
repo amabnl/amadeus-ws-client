@@ -23,66 +23,46 @@
 namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
 /**
- * DiscountPenaltyDetails
+ * FrequentTravellerDetails
  *
  * @package Amadeus\Client\Struct\Fare\PricePnr13
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DiscountPenaltyDetails
+class FrequentTravellerDetails
 {
-    const FUNCTION_BASE_FARE = 700;
-    const FUNCTION_TOTAL_FARE = 701;
-    const FUNCTION_PENALTIES_APPLY = 704;
-    const FUNCTION_EXCLUDE_FEE = "EXF";
-    const FUNCTION_INCLUDE_FEE = "INF";
-
-    const AMOUNTTYPE_FIXED_WHOLE_AMOUNT = 707;
-    const AMOUNTTYPE_PERCENTAGE = 708;
+    /**
+     * @var string
+     */
+    public $carrier;
 
     /**
-     * self::FUNCTION_*
+     * @var string
+     */
+    public $number;
+
+    /**
+     * @var string
+     */
+    public $tierLevel;
+
+    /**
+     * @var string
+     */
+    public $priorityCode;
+
+    /**
+     * FrequentTravellerDetails constructor.
      *
-     * @var string
+     * @param string $tierLevel
+     * @param string|null $number
+     * @param string|null $carrier
+     * @param string|null $priorityCode
      */
-    public $function;
-
-    /**
-     * self::AMOUNTTYPE_*
-     *
-     * @var string
-     */
-    public $amountType;
-
-    /**
-     * @var string
-     */
-    public $amount;
-
-    /**
-     * @var string
-     */
-    public $rate;
-
-    /**
-     * @var string
-     */
-    public $currency;
-
-    /**
-     * DiscountPenaltyDetails constructor.
-     *
-     * @param string $rate
-     * @param string|null $function
-     * @param string|null $amountType
-     * @param string|null $amount
-     * @param string|null $currency
-     */
-    public function __construct($rate, $function = null, $amountType = null, $amount = null, $currency = null)
+    public function __construct($tierLevel, $number = null, $carrier = null, $priorityCode = null)
     {
-        $this->rate = $rate;
-        $this->function = $function;
-        $this->amountType = $amountType;
-        $this->amount = $amount;
-        $this->currency = $currency;
+        $this->tierLevel = $tierLevel;
+        $this->number = $number;
+        $this->carrier = $carrier;
+        $this->priorityCode = $priorityCode;
     }
 }

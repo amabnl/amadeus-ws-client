@@ -20,40 +20,33 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\RequestOptions\Fare\PricePnr;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * PenDisInformation
+ * Tax
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\RequestOptions\Fare\PricePnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class Tax extends ExemptTax
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
-
     /**
-     * self::QUAL_*
+     * Amount to add
      *
-     * @var string
-     */
-    public $discountPenaltyQualifier;
-
-    /**
-     * @var DiscountPenaltyDetails[]
-     */
-    public $discountPenaltyDetails = [];
-
-    /**
-     * PenDisInformation constructor.
+     * (Provide either an amount or a percentage, not both)
      *
-     * @param string|null $discountPenaltyQualifier
+     * @var int
      */
-    public function __construct($discountPenaltyQualifier = null)
-    {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
-    }
+    public $amount;
+
+    /**
+     * Percentage to add
+     *
+     * (Provide either an amount or a percentage, not both)
+     *
+     * @var int
+     */
+    public $percentage;
 }

@@ -31,16 +31,24 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
 class PricingOptionKey
 {
     const OPTION_NO_OPTION = "NOP";
-
     const OPTION_VALIDATING_CARRIER = "VC";
-
     const OPTION_FARE_CURRENCY_OVERRIDE = "FCO";
-
     const OPTION_PASSENGER_DISCOUNT = "PAX";
-
     const OPTION_FARE_BASIS_SIMPLE_OVERRIDE = "FBA";
-
     const OPTION_NEGOTIATED_FARES = "RN";
+    const OPTION_CORPORATE_NEGOTIATED_FARES = "RC";
+    const OPTION_CORPORATE_UNIFARES = "RW";
+    const OPTION_OB_FEES = "OBF";
+    const OPTION_PASSENGER_DISCOUNT_PTC = "PAX";
+    const OPTION_POINT_OF_SALE_OVERRIDE = "POS";
+    const OPTION_POINT_OF_TICKETING_OVERRIDE = "POT";
+    const OPTION_PRICING_LOGIC = "PL";
+    const OPTION_TICKET_TYPE = "TKT";
+    const OPTION_ADD_TAX = "AT";
+    const OPTION_EXEMPT_FROM_TAX = "ET";
+    const OPTION_PAX_SEGMENT_TST_SELECTION = "SEL";
+    const OPTION_PAST_DATE_PRICING = "DAT";
+    const OPTION_AWARD_PRICING = "AWD";
 
     /**
      * AC Add Country taxes

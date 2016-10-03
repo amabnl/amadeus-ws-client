@@ -39,6 +39,10 @@ class AttributeDetails
     const OVERRIDE_FARETYPE_CORPUNI = 'RW';
     const OVERRIDE_RETURN_LOWEST = 'RLO';
     const OVERRIDE_RETURN_ALL = 'RLI';
+    const OVERRIDE_PASSENGER_TYPE_CODE = 'PTC';
+    const OVERRIDE_ELECTRONIC_TICKET = 'ETK';
+    const OVERRIDE_PAPER_TICKET = 'PAT';
+    const OVERRIDE_BOTH_TICKET = 'EP';
 
     /**
      * BK Booking code override

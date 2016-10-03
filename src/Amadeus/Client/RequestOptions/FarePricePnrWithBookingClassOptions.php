@@ -22,6 +22,11 @@
 
 namespace Amadeus\Client\RequestOptions;
 
+use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
+
 /**
  * FarePricePnrWithBookingClassOptions
  *
@@ -39,6 +44,14 @@ class FarePricePnrWithBookingClassOptions extends Base
     const OVERRIDE_FARETYPE_CORPUNI = 'RW';
     const OVERRIDE_RETURN_LOWEST = 'RLO';
     const OVERRIDE_RETURN_ALL = 'RLI';
+    const OVERRIDE_PTC_ONLY = 'PTC';
+
+    const PRICING_LOGIC_IATA = "IATA";
+    const PRICING_LOGIC_ATAF = "ATAF";
+
+    const TICKET_TYPE_ELECTRONIC = "ET";
+    const TICKET_TYPE_PAPER = "PT";
+    const TICKET_TYPE_BOTH = "EP";
 
 
     /**
@@ -47,34 +60,59 @@ class FarePricePnrWithBookingClassOptions extends Base
      * If there are no override options specified, an option NOP
      * (no option) element will be added to the call.
      *
-     * BK Booking code override
+     * AC  Add Country taxes
+     * AT  Add Tax
+     * AWD AWarD
+     * BK  Booking class override
+     * BND Bound Input
+     * CC  Controlling Carrier Override
      * CMP Companions
-     * DIA Diagnostic tool
-     * EP Electronic Paper Ticket
-     * ETK Electronic Ticket
-     * FBA Automated Pricing By Fare Basis (no override)
-     * FBL Automated Pricing By Fare Basis (override)
-     * MA Mileage Accrual
-     * MBT Bulk Tour
-     * MC Pricing by Points
-     * MIT Inclusive Tour
-     * NOP No option.
-     * PAF Pay As you Fly option
-     * PAT Paper Ticket
-     * PRM Extended parameters
+     * CON Connection
+     * DAT past DATe pricing
+     * DIA Diagnostic Tool
+     * DO  booking Date Override
+     * ET  Exempt Taxes
+     * FBA Fare BAsis simple override
+     * FBL Fare Basis force override
+     * FBP Force Break Point
+     * FCO Fare Currency Override
+     * FCS Fare Currency Selection
+     * FOP Form Of Payment
+     * GRI Global Route Indicator
+     * IP  Instant Pricing
+     * MA  Mileage Accrual
+     * MBT Fare amount override with M/BT
+     * MC  Miles and Cash (Pricing by Points)
+     * MIT Fare amount override with M/IT
+     * NBP No BreakPoint
+     * NF  No ticketing Fee
+     * NOP No Option
+     * OBF OB Fees (include and/or exclude)
+     * PAX Passenger discount/PTC
+     * PFF Pricing by Fare Family
+     * PL  Pricing Logic
+     * POS Point Of Sale
+     * POT Point Of Ticketing override
+     * PRM expanded PaRaMeters
      * PRO Promo Certificate
-     * PTC Price at specified passenger only
-     * RC Corporate number
-     * RLI Return list of all possible fares
-     * RLO Return lowest fare from the list
-     * RN Negotiated fares
-     * RP Published fares
-     * RU Unifares
-     * RUL Rule override requested
-     * RW Corporate unifares
-     * TRP Trap option requested
+     * PTA Point of Turnaround
+     * PTC PTC only
+     * RC  Corporate negociated fares
+     * RLI Return LIst of fare
+     * RLO Return LOwest possible fare
+     * RN  Negociated fare
+     * RP  Published Fares
+     * RU  Unifares
+     * RW  Corporate Unifares
+     * SEL Passenger/Segment/Line/TST selection
+     * STO Stopover
+     * TKT TicKet Type
      * TRS Transitional Certificate
-     * WQ Withhold surcharges
+     * VC  Validating Carrier
+     * WC  Withold Country taxes
+     * WQ  Withold Q surcharges
+     * WT  Withold Tax
+     * ZAP ZAP-off
      *
      * @var string[]
      */
@@ -88,6 +126,29 @@ class FarePricePnrWithBookingClassOptions extends Base
     public $validatingCarrier;
 
     /**
+     * Price with a corporate negotiated fare.
+     *
+     * @var string
+     */
+    public $corporateNegoFare;
+
+    /**
+     * Price with corporate unifares.
+     *
+     * @var string[]
+     */
+    public $corporateUniFares = [];
+
+    /**
+     * This option is used to price an itinerary applying an award program for a given carrier.
+     *
+     * must be combined with $this->corporateUniFares!
+     *
+     * @var AwardPricing
+     */
+    public $awardPricing;
+
+    /**
      * This option allows you to override the currency of the office.
      *
      * Corresponding cryptic: FXX/R,FC-USD
@@ -97,7 +158,99 @@ class FarePricePnrWithBookingClassOptions extends Base
     public $currencyOverride;
 
     /**
-     * @var Fare\PricePnrBcFareBasis[]
+     * Provide a fare basis to price with
+     *
+     * @var Fare\PricePnr\FareBasis[]
      */
     public $pricingsFareBasis = [];
+
+    /**
+     * Add up to 3 OBFees and/or to exempt up to 3 OBFees
+     *
+     * @var Fare\PricePnr\ObFee[]
+     */
+    public $obFees = [];
+
+    /**
+     * OB Fees Passenger & Segment references
+     *
+     * @var PaxSegRef[]
+     */
+    public $obFeeRefs = [];
+
+    /**
+     * Specify passenger PTC or discount codes
+     *
+     * @var string[]
+     */
+    public $paxDiscountCodes = [];
+
+    /**
+     * @var PaxSegRef[]
+     */
+    public $paxDiscountCodeRefs = [];
+
+    /**
+     * Pricing Logic IATA or ATAF
+     *
+     * self::PRICING_LOGIC_*
+     *
+     * @var string
+     */
+    public $pricingLogic;
+
+    /**
+     * Override the Point of Sale
+     *
+     * e.g. 'LON' for point of sale London
+     *
+     * @var string
+     */
+    public $pointOfSaleOverride;
+
+    /**
+     * Override the Point of Ticketing
+     *
+     * e.g. 'LON' for point of ticketing London
+     *
+     * @var string
+     */
+    public $pointOfTicketingOverride;
+
+    /**
+     * This option is used to select the type of ticket fare: paper, electronic or both.
+     *
+     * self::TICKET_TYPE_*
+     *
+     * @var string
+     */
+    public $ticketType;
+
+    /**
+     * Add Taxes
+     *
+     * @var Tax[]
+     */
+    public $taxes = [];
+
+    /**
+     * This option is used to exempt the passenger from one, several or all taxes.
+     *
+     * @var ExemptTax[]
+     */
+    public $exemptTaxes = [];
+
+    /**
+     * Target fares that were applicable on a given date.
+     *
+     * @var \DateTime
+     */
+    public $pastDatePricing;
+
+    /**
+     * Passenger, Segment or TST references to partially price the PNR
+     *
+     * @var PaxSegRef[]
+     */
+    public $references = [];
 }

@@ -22,13 +22,28 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
+use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\PricePnr12\AttributeDetails;
+use Amadeus\Client\Struct\Fare\PricePnr12\CarrierAgreements;
+use Amadeus\Client\Struct\Fare\PricePnr12\CityDetail;
 use Amadeus\Client\Struct\Fare\PricePnr12\CurrencyOverride;
+use Amadeus\Client\Struct\Fare\PricePnr12\DateOverride;
+use Amadeus\Client\Struct\Fare\PricePnr12\DiscountInformation;
+use Amadeus\Client\Struct\Fare\PricePnr12\FrequentFlyerInformation;
 use Amadeus\Client\Struct\Fare\PricePnr12\OverrideInformation;
+use Amadeus\Client\Struct\Fare\PricePnr12\PenDisData;
+use Amadeus\Client\Struct\Fare\PricePnr12\PenDisInformation;
 use Amadeus\Client\Struct\Fare\PricePnr12\PricingFareBase;
+use Amadeus\Client\Struct\Fare\PricePnr12\RefDetails;
+use Amadeus\Client\Struct\Fare\PricePnr12\ReferenceQualifier;
+use Amadeus\Client\Struct\Fare\PricePnr12\TaxDetails;
 use Amadeus\Client\Struct\Fare\PricePnr12\ValidatingCarrier;
+use Amadeus\Client\Struct\OptionNotSupportedException;
 
 /**
  * Fare_PricePNRWithBookingClass v 12 and lower structure
@@ -40,18 +55,29 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
 {
     public $pnrLocatorData;
 
+    /**
+     * @var PricePnr12\PaxSegReference
+     */
     public $paxSegReference;
+
     /**
      * @var PricePnr12\OverrideInformation
      */
     public $overrideInformation;
 
+    /**
+     * @var PricePnr12\DateOverride
+     */
     public $dateOverride;
+
     /**
      * @var PricePnr12\ValidatingCarrier
      */
     public $validatingCarrier;
 
+    /**
+     * @var PricePnr12\CityOverride
+     */
     public $cityOverride;
 
     /**
@@ -59,9 +85,15 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
      */
     public $currencyOverride;
 
-    public $taxDetails;
+    /**
+     * @var PricePnr12\TaxDetails[]
+     */
+    public $taxDetails = [];
 
-    public $discountInformation;
+    /**
+     * @var PricePnr12\DiscountInformation[]
+     */
+    public $discountInformation = [];
     /**
      * @var PricePnr12\PricingFareBase[]
      */
@@ -75,8 +107,14 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
 
     public $fopInformation;
 
+    /**
+     * @var CarrierAgreements
+     */
     public $carrierAgreements;
 
+    /**
+     * @var FrequentFlyerInformation
+     */
     public $frequentFlyerInformation;
 
     public $instantPricingOption;
@@ -88,11 +126,9 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
      */
     public function __construct(FarePricePnrWithBookingClassOptions $options)
     {
-        if (count($options->overrideOptions) === 0) {
-            $this->overrideInformation = new OverrideInformation(AttributeDetails::OVERRIDE_NO_OPTION);
-        } else {
-            $this->overrideInformation = new OverrideInformation();
+        $this->overrideInformation = new OverrideInformation();
 
+        if (count($options->overrideOptions) !== 0) {
             foreach ($options->overrideOptions as $overrideOption) {
                 $this->overrideInformation->attributeDetails[] = new AttributeDetails($overrideOption);
             }
@@ -106,10 +142,205 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
             $this->validatingCarrier = new ValidatingCarrier($options->validatingCarrier);
         }
 
-        if (in_array(AttributeDetails::OVERRIDE_FAREBASIS, $options->overrideOptions) && !empty($options->pricingsFareBasis)) {
+        $short = AttributeDetails::OVERRIDE_FAREBASIS; //Short var name because I get complaints from phpcs. No judging.
+        if (in_array($short, $options->overrideOptions) && !empty($options->pricingsFareBasis)) {
             foreach ($options->pricingsFareBasis as $pricingFareBasis) {
                 $this->pricingFareBase[] = new PricingFareBase($pricingFareBasis);
             }
         }
+
+        if ($options->corporateNegoFare !== null) {
+            $this->loadCorporateNegoFare($options->corporateNegoFare);
+        }
+
+        if (!empty($options->corporateUniFares)) {
+            $this->loadCorporateUniFares($options->corporateUniFares);
+
+            if (!empty($options->awardPricing)) {
+                $this->loadAwardPricing($options->awardPricing);
+            }
+        }
+
+        if (!empty($options->obFees)) {
+            throw new OptionNotSupportedException('OB Fees option not supported in version 12 or lower');
+        }
+
+        if (!empty($options->paxDiscountCodes)) {
+            $this->loadPaxDiscount($options->paxDiscountCodes, $options->paxDiscountCodeRefs);
+        }
+
+        if (!empty($options->pointOfSaleOverride)) {
+            $this->cityOverride = new PricePnr12\CityOverride(
+                $options->pointOfSaleOverride,
+                CityDetail::QUAL_POINT_OF_SALE
+            );
+        }
+
+        if (!empty($options->pointOfTicketingOverride)) {
+            if (empty($this->cityOverride)) {
+                $this->cityOverride = new PricePnr12\CityOverride();
+            }
+            $this->cityOverride->cityDetail[] = new PricePnr12\CityDetail(
+                $options->pointOfTicketingOverride,
+                CityDetail::QUAL_POINT_OF_TICKETING
+            );
+        }
+
+        if (!empty($options->pricingLogic)) {
+            throw new OptionNotSupportedException('Pricing Logic option not supported in version 12 or lower');
+        }
+
+        if (!empty($options->ticketType)) {
+            $this->overrideInformation->attributeDetails[] = new AttributeDetails(
+                $this->convertTicketType($options->ticketType)
+            );
+        }
+
+        if (!empty($options->taxes)) {
+            $this->loadTaxes($options->taxes);
+        }
+
+        if (!empty($options->exemptTaxes)) {
+            $this->loadExemptTaxes($options->exemptTaxes);
+        }
+
+        if (!empty($options->references)) {
+            $this->loadReferences($options->references);
+        }
+
+        if ($options->pastDatePricing instanceof \DateTime) {
+            $this->loadPastDate($options->pastDatePricing);
+        }
+
+        //No Options?
+        if (empty($this->overrideInformation->attributeDetails)) {
+            $this->overrideInformation->attributeDetails[] = new AttributeDetails(
+                AttributeDetails::OVERRIDE_NO_OPTION
+            );
+        }
+    }
+
+    /**
+     * @param string $corporateNegoFare
+     */
+    protected function loadCorporateNegoFare($corporateNegoFare)
+    {
+        $this->overrideInformation->attributeDetails[] = new AttributeDetails(
+            AttributeDetails::OVERRIDE_FARETYPE_CORPNR,
+            $corporateNegoFare
+        );
+    }
+
+    /**
+     * @param string[] $corporateUniFares
+     */
+    protected function loadCorporateUniFares($corporateUniFares)
+    {
+        foreach ($corporateUniFares as $corporateUniFare) {
+            $this->overrideInformation->attributeDetails[] = new AttributeDetails(
+                AttributeDetails::OVERRIDE_FARETYPE_CORPUNI,
+                $corporateUniFare
+            );
+        }
+    }
+
+    /**
+     * @param AwardPricing $awardPricing
+     */
+    protected function loadAwardPricing($awardPricing)
+    {
+        $this->carrierAgreements = new CarrierAgreements($awardPricing->carrier);
+        $this->frequentFlyerInformation = new FrequentFlyerInformation($awardPricing->tierLevel);
+    }
+
+    /**
+     * @param string[] $paxDiscountCodes
+     * @param PaxSegRef[] $refs
+     */
+    protected function loadPaxDiscount($paxDiscountCodes, $refs)
+    {
+        $tmp = new DiscountInformation();
+        $tmp->penDisInformation = new PenDisInformation();
+        $tmp->penDisInformation->infoQualifier = PenDisInformation::QUAL_DISCOUNT;
+
+        foreach ($paxDiscountCodes as $discountCode) {
+            $tmp->penDisInformation->penDisData[] = new PenDisData($discountCode);
+        }
+
+        if (!empty($refs)) {
+            $tmp->referenceQualifier = new ReferenceQualifier();
+
+            foreach ($refs as $ref) {
+                $tmp->referenceQualifier->refDetails[] = new RefDetails($ref->reference, $ref->type);
+            }
+        }
+
+        $this->discountInformation[] = $tmp;
+    }
+
+    /**
+     * Convert new codes (Price PNR version 13+) to old format
+     *
+     * @param string $optionsTicketType
+     * @return string|null
+     */
+    protected function convertTicketType($optionsTicketType)
+    {
+        $converted = null;
+
+        $map = [
+            FarePricePnrWithBookingClassOptions::TICKET_TYPE_ELECTRONIC => AttributeDetails::OVERRIDE_ELECTRONIC_TICKET,
+            FarePricePnrWithBookingClassOptions::TICKET_TYPE_PAPER => AttributeDetails::OVERRIDE_PAPER_TICKET,
+            FarePricePnrWithBookingClassOptions::TICKET_TYPE_BOTH => AttributeDetails::OVERRIDE_BOTH_TICKET,
+        ];
+
+        if (array_key_exists($optionsTicketType, $map)) {
+            $converted = $map[$optionsTicketType];
+        }
+
+        return $converted;
+    }
+
+    /**
+     * @param Tax[] $taxes
+     */
+    protected function loadTaxes($taxes)
+    {
+        foreach ($taxes as $tax) {
+            $this->taxDetails[] = new TaxDetails($tax);
+        }
+    }
+
+    /**
+     * @param ExemptTax[] $exemptTaxes
+     */
+    protected function loadExemptTaxes($exemptTaxes)
+    {
+        foreach ($exemptTaxes as $exemptTax) {
+            $this->taxDetails[] = new TaxDetails($exemptTax);
+        }
+    }
+
+    /**
+     * @param PaxSegRef[] $references
+     */
+    protected function loadReferences($references)
+    {
+        $this->paxSegReference = new PricePnr12\PaxSegReference();
+
+        foreach ($references as $ref) {
+            $this->paxSegReference->refDetails[] = new RefDetails(
+                $ref->reference,
+                $ref->type
+            );
+        }
+    }
+
+    /**
+     * @param \DateTime $pastDate
+     */
+    protected function loadPastDate(\DateTime $pastDate)
+    {
+        $this->dateOverride = new DateOverride(DateOverride::OPT_DATE_OVERRIDE, $pastDate);
     }
 }

@@ -22,7 +22,7 @@
 
 namespace Amadeus\Client\Struct\Fare\PricePnr12;
 
-use Amadeus\Client\RequestOptions\Fare\PricePnrBcFareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
 
 /**
  * PricingFareBase
@@ -48,14 +48,28 @@ class PricingFareBase
     /**
      * PricingFareBase constructor.
      *
-     * @param PricePnrBcFareBasis $options
+     * @param FareBasis $options
      */
-    public function __construct(PricePnrBcFareBasis $options)
+    public function __construct(FareBasis $options)
     {
-        $this->fareBasisOptions = new FareBasisOptions($options->fareBasisPrimaryCode, $options->fareBasisCode);
+        if (empty($options->fareBasisPrimaryCode)) {
+            //Support for legacy input format - to be removed when breaking BC
+            $fareBasisPrimaryCode = substr($options->fareBasisCode, 0, 3);
+            $fareBasisCode = substr($options->fareBasisCode, 3);
+        } else {
+            $fareBasisPrimaryCode = $options->fareBasisPrimaryCode;
+            $fareBasisCode = $options->fareBasisCode;
+        }
 
+        $this->fareBasisOptions = new FareBasisOptions($fareBasisPrimaryCode, $fareBasisCode);
+
+        //Support legacy segment reference format - to be removed when breaking BC
         foreach ($options->segmentReference as $segNum => $segQual) {
             $this->fareBasisSegReference[] = new FareBasisSegReference($segNum, $segQual);
+        }
+
+        foreach ($options->references as $reference) {
+            $this->fareBasisSegReference[] = new FareBasisSegReference($reference->reference, $reference->type);
         }
     }
 }

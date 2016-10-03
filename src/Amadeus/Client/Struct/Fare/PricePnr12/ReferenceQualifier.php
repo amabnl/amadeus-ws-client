@@ -20,40 +20,18 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\Struct\Fare\PricePnr12;
 
 /**
- * PenDisInformation
+ * ReferenceQualifier
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\Struct\Fare\PricePnr12
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class ReferenceQualifier
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
-
     /**
-     * self::QUAL_*
-     *
-     * @var string
+     * @var RefDetails[]
      */
-    public $discountPenaltyQualifier;
-
-    /**
-     * @var DiscountPenaltyDetails[]
-     */
-    public $discountPenaltyDetails = [];
-
-    /**
-     * PenDisInformation constructor.
-     *
-     * @param string|null $discountPenaltyQualifier
-     */
-    public function __construct($discountPenaltyQualifier = null)
-    {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
-    }
+    public $refDetails = [];
 }

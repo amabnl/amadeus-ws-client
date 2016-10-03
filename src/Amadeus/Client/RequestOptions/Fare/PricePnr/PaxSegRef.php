@@ -20,40 +20,38 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\RequestOptions\Fare\PricePnr;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * PenDisInformation
+ * PaxSegRef
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\RequestOptions\Fare\PricePnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class PaxSegRef extends LoadParamsFromArray
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
+    const TYPE_PASSENGER = 'P';
+    const TYPE_PASSENGER_INFANT = 'PI';
+    const TYPE_PASSENGER_ADULT = 'PA';
+    const TYPE_SEGMENT = 'S';
+    const TYPE_CONNECTING = 'X';
+    const TYPE_TST = 'T';
 
     /**
-     * self::QUAL_*
+     * Identifier of the reference (segment/passenger number)
+     *
+     * @var int
+     */
+    public $reference;
+
+    /**
+     * Segment or passenger ref
+     *
+     * self::TYPE_*
      *
      * @var string
      */
-    public $discountPenaltyQualifier;
-
-    /**
-     * @var DiscountPenaltyDetails[]
-     */
-    public $discountPenaltyDetails = [];
-
-    /**
-     * PenDisInformation constructor.
-     *
-     * @param string|null $discountPenaltyQualifier
-     */
-    public function __construct($discountPenaltyQualifier = null)
-    {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
-    }
+    public $type;
 }

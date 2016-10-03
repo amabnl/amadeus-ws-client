@@ -20,40 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\Struct\Fare\PricePnr12;
 
 /**
- * PenDisInformation
+ * TaxIdentification
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\Struct\Fare\PricePnr12
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class TaxIdentification
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
+    const IDENT_ADD_COUNTRY_TAX = "ADC";
+    const IDENT_ADD_TAX = "ADT";
+    const IDENT_EXEMPT_TAX = "EXM";
+    const IDENT_WITHHOLD_COUNTRY_TAX = "WHC";
+    const IDENT_WITHHOLD_TAX = "WHT";
 
     /**
-     * self::QUAL_*
-     *
+     * self::IDENT_*
      * @var string
      */
-    public $discountPenaltyQualifier;
+    public $taxIdentifier;
 
     /**
-     * @var DiscountPenaltyDetails[]
-     */
-    public $discountPenaltyDetails = [];
-
-    /**
-     * PenDisInformation constructor.
+     * TaxIdentification constructor.
      *
-     * @param string|null $discountPenaltyQualifier
+     * @param string $taxIdentifier self::IDENT_*
      */
-    public function __construct($discountPenaltyQualifier = null)
+    public function __construct($taxIdentifier)
     {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
+        $this->taxIdentifier = $taxIdentifier;
     }
 }

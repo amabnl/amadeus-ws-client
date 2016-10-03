@@ -20,40 +20,40 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\Struct\Fare\PricePnr12;
 
 /**
- * PenDisInformation
+ * CityDetail
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\Struct\Fare\PricePnr12
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class CityDetail
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
+    const QUAL_POINT_OF_SALE = 162;
+    const QUAL_POINT_OF_TICKETING = 91;
+
+    /**
+     * @var string
+     */
+    public $cityCode;
 
     /**
      * self::QUAL_*
      *
      * @var string
      */
-    public $discountPenaltyQualifier;
+    public $cityQualifier;
 
     /**
-     * @var DiscountPenaltyDetails[]
-     */
-    public $discountPenaltyDetails = [];
-
-    /**
-     * PenDisInformation constructor.
+     * CityDetail constructor.
      *
-     * @param string|null $discountPenaltyQualifier
+     * @param string $cityCode
+     * @param string $cityQualifier self::QUAL_*
      */
-    public function __construct($discountPenaltyQualifier = null)
+    public function __construct($cityCode, $cityQualifier)
     {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
+        $this->cityCode = $cityCode;
+        $this->cityQualifier = $cityQualifier;
     }
 }

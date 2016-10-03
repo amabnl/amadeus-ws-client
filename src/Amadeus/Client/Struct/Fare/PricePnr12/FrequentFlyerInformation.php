@@ -20,40 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\Struct\Fare\PricePnr12;
 
 /**
- * PenDisInformation
+ * FrequentFlyerInformation
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\Struct\Fare\PricePnr12
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PenDisInformation
+class FrequentFlyerInformation
 {
-    const QUAL_PENALTY = 700;
-    const QUAL_DISCOUNT = 701;
-    const QUAL_OB_FEES = "OBF";
-    const QUAL_ZAPOFF_DISCOUNT = "ZAP";
+    /**
+     * @var FlequentFlyerdetails
+     */
+    public $flequentFlyerdetails;
 
     /**
-     * self::QUAL_*
+     * FrequentFlyerInformation constructor.
      *
-     * @var string
+     * @param string $tierLevel
      */
-    public $discountPenaltyQualifier;
-
-    /**
-     * @var DiscountPenaltyDetails[]
-     */
-    public $discountPenaltyDetails = [];
-
-    /**
-     * PenDisInformation constructor.
-     *
-     * @param string|null $discountPenaltyQualifier
-     */
-    public function __construct($discountPenaltyQualifier = null)
+    public function __construct($tierLevel)
     {
-        $this->discountPenaltyQualifier = $discountPenaltyQualifier;
+        $this->flequentFlyerdetails = new FlequentFlyerdetails($tierLevel);
     }
 }
