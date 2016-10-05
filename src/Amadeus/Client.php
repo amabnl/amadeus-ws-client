@@ -492,6 +492,22 @@ class Client
     }
 
     /**
+     * Fare_MasterPricerCalendar
+     *
+     * @param RequestOptions\FareMasterPricerCalendarOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function fareMasterPricerCalendar(
+        RequestOptions\FareMasterPricerCalendarOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_MasterPricerCalendar';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Fare_PricePnrWithBookingClass
      *
      * @param RequestOptions\FarePricePnrWithBookingClassOptions $options

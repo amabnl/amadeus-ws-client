@@ -482,22 +482,6 @@ class Base implements ResponseHandlerInterface
 
 
     /**
-     *
-     * <Fare_PricePNRWithBookingClassReply xmlns="http://xml.amadeus.com/TPCBRR_13_2_1A">
-     * <applicationError>
-     * <errorOrWarningCodeDetails>
-     * <errorDetails>
-     * <errorCode>00477</errorCode>
-     * <errorCategory>EC</errorCategory>
-     * <errorCodeOwner>1A</errorCodeOwner>
-     * </errorDetails>
-     * </errorOrWarningCodeDetails>
-     * <errorWarningDescription>
-     * <freeText>INVALID FORMAT</freeText>
-     * </errorWarningDescription>
-     * </applicationError>
-     * </Fare_PricePNRWithBookingClassReply>
-     *
      * @param SendResult $response Fare_PricePNRWithBookingClass result
      * @return Result
      * @throws Exception
@@ -531,6 +515,15 @@ class Base implements ResponseHandlerInterface
         }
 
         return $analyzeResponse;
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeFareMasterPricerCalendarResponse($response)
+    {
+        return $this->analyzeFareMasterPricerTravelBoardSearchResponse($response);
     }
 
     /**
@@ -939,6 +932,7 @@ class Base implements ResponseHandlerInterface
                 break;
             case 'WEC':
             case 'WZZ': //Mutually defined warning
+            case 'WA': //Info line Warning - PNR_AddMultiElements
             case 'W':
                 $status = Result::STATUS_WARN;
                 break;

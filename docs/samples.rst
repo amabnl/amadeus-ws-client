@@ -459,6 +459,47 @@ Make a simple Masterpricer availability & fare search:
 
 `More examples of MasterPricer messages <samples/masterpricertravelboard.rst>`_
 
+-------------------------
+Fare_MasterPricerCalendar
+-------------------------
+
+**In general, MasterPricerCalendar request options are exactly the same as for MasterPricerTravelBoardSearch.** The one thing that MasterPricerCalendar always requires, is a date range for each given travel date.
+
+Example: Make a simple MasterPricer Calendar availability & fare search:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+
+    $opt = new FareMasterPricerCalendarOptions([
+        'nrOfRequestedResults' => 200,
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'BRU']),
+                'arrivalLocation' => new MPLocation(['city' => 'LON']),
+                'date' => new MPDate([
+                    'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC')),
+                    'rangeMode' => MPDate::RANGEMODE_MINUS_PLUS,
+                    'range' => 3,
+                ])
+            ])
+        ]
+    ]);
+
+    $recommendations = $client->fareMasterPricerCalendar($opt);
+
+`More examples of MasterPricer messages can be found in the MasterPricerTravelBoardSearch documentation <samples/masterpricertravelboard.rst>`_
 
 -----------------------------
 Fare_PricePNRWithBookingClass
@@ -1015,6 +1056,7 @@ Find all train stations in New York:
 *****
 Offer
 *****
+
 -----------------
 Offer_VerifyOffer
 -----------------

@@ -18,6 +18,7 @@ This is the list of messages that are at least partially supported at this time:
 - Queue_RemoveItem
 - Queue_MoveItem
 - Fare_MasterPricerTravelBoardSearch
+- Fare_MasterPricerCalendar
 - Fare_PricePNRWithBookingClass
 - Fare_InformativePricingWithoutPNR
 - Fare_ConvertCurrency
@@ -45,7 +46,6 @@ On the to-do list / work in progress:
 - Fare_InformativeBestPricingWithoutPNR
 - Fare_PricePNRWithLowerFares
 - Fare_PricePNRWithLowestFare
-- Fare_MasterPricerCalendar
 - Fare_DisplayFaresForCityPair
 - Fare_DisplayBookingCodeInformation
 - Fare_CalculateMileage

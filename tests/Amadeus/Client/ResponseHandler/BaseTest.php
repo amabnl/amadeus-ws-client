@@ -713,6 +713,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("Past date/time not allowed", $result->messages[0]->text);
     }
 
+    public function testCanHandleFareMasterPricerCalendarError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareMasterPricerCalendarErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_MasterPricerCalendar');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('931', $result->messages[0]->code);
+        $this->assertEquals("NO ITINERARY FOUND FOR REQUESTED SEGMENT 1", $result->messages[0]->text);
+    }
+
     public function testCanFindFarePricePnrWithBookingClassError()
     {
         $respHandler = new ResponseHandler\Base();

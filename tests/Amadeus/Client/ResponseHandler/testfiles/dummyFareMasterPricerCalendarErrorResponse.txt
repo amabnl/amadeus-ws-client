@@ -1,0 +1,15 @@
+<Fare_MasterPricerCalendarReply xmlns="http://xml.amadeus.com/FMPCAR_14_3_1A">
+    <errorMessage>
+        <applicationError>
+            <applicationErrorDetail>
+                <error>931</error>
+            </applicationErrorDetail>
+        </applicationError>
+        <errorMessageText>
+            <freeTextQualification>
+                <textSubjectQualifier>1</textSubjectQualifier>
+            </freeTextQualification>
+            <description>NO ITINERARY FOUND FOR REQUESTED SEGMENT 1</description>
+        </errorMessageText>
+    </errorMessage>
+</Fare_MasterPricerCalendarReply>

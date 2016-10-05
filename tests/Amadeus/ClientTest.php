@@ -1759,6 +1759,103 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendFareMasterPricerCalendar()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyfarepricemasterpricercalendarresponsemessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Fare\MasterPricerCalendar(
+            new Client\RequestOptions\FareMasterPricerCalendarOptions([
+                'nrOfRequestedResults' => 200,
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new Client\RequestOptions\Fare\MPPassenger([
+                        'type' => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'itinerary' => [
+                    new Client\RequestOptions\Fare\MPItinerary([
+                        'departureLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
+                        'arrivalLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
+                        'date' => new Client\RequestOptions\Fare\MPDate([
+                            'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC')),
+                            'rangeMode' => Client\RequestOptions\Fare\MPDate::RANGEMODE_MINUS_PLUS,
+                            'range' => 3,
+                        ])
+                    ])
+                ],
+                'requestedFlightTypes' => [
+                    Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Fare_MasterPricerCalendar', $expectedMessageResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Fare_MasterPricerCalendar' => "14.3"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Fare_MasterPricerCalendar')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->fareMasterPricerCalendar(
+            new Client\RequestOptions\FareMasterPricerCalendarOptions([
+                'nrOfRequestedResults' => 200,
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new Client\RequestOptions\Fare\MPPassenger([
+                        'type' => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'itinerary' => [
+                    new Client\RequestOptions\Fare\MPItinerary([
+                        'departureLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
+                        'arrivalLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
+                        'date' => new Client\RequestOptions\Fare\MPDate([
+                            'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC')),
+                            'rangeMode' => Client\RequestOptions\Fare\MPDate::RANGEMODE_MINUS_PLUS,
+                            'range' => 3,
+                        ])
+                    ])
+                ],
+                'requestedFlightTypes' => [
+                    Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanSendPriceXplorerExtremeSearch()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

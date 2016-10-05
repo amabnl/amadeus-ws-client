@@ -1,7 +1,5 @@
 # Release 1.1.0 (unreleased)
 
-* Implemented ``PNR_TransferOwnership``
-* Implemented ``Ticket_DisplayTST``
 * ``Fare_MasterPricerTravelBoardSearch``: added new request options (https://github.com/amabnl/amadeus-ws-client/issues/20):
     - Preferred/excluded/... airlines option 'airlineOptions'.
     - Itinerary date: support for Date range +/- 1 day.
@@ -31,6 +29,10 @@
     - Award Pricing
     
 *These pricing options are also available for the* ``Fare_InformativePricingWithoutPNR`` *message version 13+*
+
+* Implemented ``PNR_TransferOwnership``
+* Implemented ``Ticket_DisplayTST``
+* Implemented ``Fare_MasterPricerCalendar``
 
 # Release 1.0.0 (18 September 2016)
 

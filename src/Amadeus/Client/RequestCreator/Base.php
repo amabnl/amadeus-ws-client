@@ -33,6 +33,7 @@ use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
 use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
 use Amadeus\Client\RequestOptions\FareConvertCurrencyOptions;
 use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
+use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
@@ -313,6 +314,17 @@ class Base implements RequestCreatorInterface
     protected function createFareMasterPricerTravelBoardSearch(FareMasterPricerTbSearch $params)
     {
         return new Struct\Fare\MasterPricerTravelBoardSearch($params);
+    }
+
+    /**
+     * createFareMasterPricerCalendar
+     *
+     * @param FareMasterPricerCalendarOptions $params
+     * @return Struct\Fare\MasterPricerCalendar
+     */
+    protected function createFareMasterPricerCalendar(FareMasterPricerCalendarOptions $params)
+    {
+        return new Struct\Fare\MasterPricerCalendar($params);
     }
 
 

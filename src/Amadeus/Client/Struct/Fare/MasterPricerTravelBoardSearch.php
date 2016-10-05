@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Fare;
 
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\MasterPricer;
@@ -122,19 +123,19 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
     /**
      * MasterPricerTravelBoardSearch constructor.
      *
-     * @param FareMasterPricerTbSearch|null $options
+     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|null $options
      */
-    public function __construct(FareMasterPricerTbSearch $options = null)
+    public function __construct($options = null)
     {
-        if ($options instanceof FareMasterPricerTbSearch) {
+        if ($options instanceof FareMasterPricerTbSearch || $options instanceof FareMasterPricerCalendarOptions) {
             $this->loadOptions($options);
         }
     }
 
     /**
-     * @param FareMasterPricerTbSearch $options
+     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions $options
      */
-    protected function loadOptions(FareMasterPricerTbSearch $options)
+    protected function loadOptions($options)
     {
         $this->loadNrOfPaxAndResults($options);
 
@@ -240,7 +241,7 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
     }
 
     /**
-     * @param FareMasterPricerTbSearch $options
+     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions $options
      * @return void
      */
     protected function loadNrOfPaxAndResults(FareMasterPricerTbSearch $options)
