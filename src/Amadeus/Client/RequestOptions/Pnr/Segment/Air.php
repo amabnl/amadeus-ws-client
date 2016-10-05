@@ -25,12 +25,58 @@ namespace Amadeus\Client\RequestOptions\Pnr\Segment;
 use Amadeus\Client\RequestOptions\Pnr\Segment;
 
 /**
- * Air
+ * PNR Air Segment
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Segment
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class Air extends Segment
 {
-    //TODO
+    const SELLTYPE_LONG_SELL = 0;
+    const SELLTYPE_BASIC_BOOKING = "P10";
+
+    /**
+     * self::STATUS_*
+     *
+     * @var string
+     */
+    public $status = self::STATUS_NEED_SEGMENT;
+
+    /**
+     * @var string
+     */
+    public $flightNumber;
+
+    /**
+     * @var \DateTime
+     */
+    public $date;
+
+    /**
+     * Origin (=Departure) IATA location code
+     *
+     * @var string
+     */
+    public $origin;
+
+    /**
+     * Destination (=Arrival) IATA location code
+     *
+     * @var string
+     */
+    public $destination;
+
+    /**
+     * Class of Service
+     *
+     * @var string
+     */
+    public $bookingClass;
+
+    /**
+     * Sell type
+     *
+     * @var string|int
+     */
+    public $sellType = self::SELLTYPE_LONG_SELL;
 }

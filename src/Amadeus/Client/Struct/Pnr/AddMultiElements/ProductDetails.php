@@ -30,11 +30,33 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class ProductDetails
 {
+    /**
+     * @var string
+     */
     public $identification;
 
+    /**
+     * @var string
+     */
     public $classOfService;
 
+    /**
+     * @var string
+     */
     public $subtype;
 
+    /**
+     * @var string
+     */
     public $description;
+
+    /**
+     * ProductDetails constructor.
+     *
+     * @param string|null $identification
+     */
+    public function __construct($identification = null)
+    {
+        $this->identification = $identification;
+    }
 }

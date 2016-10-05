@@ -23,6 +23,7 @@ Creating a PNR (simplified example containing only the most basic PNR elements n
 
     use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
     use Amadeus\Client\RequestOptions\Pnr\Traveller;
+    use Amadeus\Client\RequestOptions\Pnr\Itinerary;
     use Amadeus\Client\RequestOptions\Pnr\Segment;
     use Amadeus\Client\RequestOptions\Pnr\Segment\Miscellaneous;
     use Amadeus\Client\RequestOptions\Pnr\Element\Ticketing;
@@ -35,14 +36,17 @@ Creating a PNR (simplified example containing only the most basic PNR elements n
         'firstName' => 'FirstName',
         'lastName' => 'LastName'
     ]);
-    $opt->tripSegments[] = new Miscellaneous([
-        'status ' => Segment::STATUS_CONFIRMED,
-        'company' => '1A',
-        'date' => \DateTime::createFromFormat('Ymd', '20161022', new \DateTimeZone('UTC')),
-        'cityCode' => 'BRU',
-        'freeText' => 'DUMMY MISCELLANEOUS SEGMENT'
+    $opt->itinerary[] = new Itinerary([
+        'segments' => [
+            new Miscellaneous([
+                'status ' => Segment::STATUS_CONFIRMED,
+                'company' => '1A',
+                'date' => \DateTime::createFromFormat('Ymd', '20161022', new \DateTimeZone('UTC')),
+                'cityCode' => 'BRU',
+                'freeText' => 'DUMMY MISCELLANEOUS SEGMENT'
+            ])
+        ]
     ]);
-
     $opt->elements[] = new Amadeus\Client\RequestOptions\Pnr\Element\Ticketing([
         'ticketMode' => Ticketing::TICKETMODE_OK
     ]);

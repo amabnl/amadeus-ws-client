@@ -40,6 +40,13 @@ class PnrAddMultiElementsOptions extends PnrAddMultiElementsBase
     public $recordLocator;
 
     /**
+     * A group of travellers
+     *
+     * @var Pnr\TravellerGroup
+     */
+    public $travellerGroup;
+
+    /**
      * Non-group travellers (max 9)
      *
      * Will be added to the existing PNR
@@ -53,9 +60,21 @@ class PnrAddMultiElementsOptions extends PnrAddMultiElementsBase
     /**
      * (originDestinationDetails)
      *
+     * WARNING: IMPLIES NO CONNECTED FLIGHTS, USE $this->itinerary instead!
+     *
+     * @deprecated use $this->itinerary instead
      * @var Pnr\Segment[]
      */
     public $tripSegments = [];
+
+    /**
+     * Itineraries in the PNR.
+     *
+     * Used for grouping segments together
+     *
+     * @var Pnr\Itinerary[]
+     */
+    public $itineraries = [];
 
     /**
      * (dataElementsMaster\dataElementsIndiv)

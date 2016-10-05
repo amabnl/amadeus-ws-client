@@ -112,6 +112,13 @@ class ElementManagementData
     const SEGNAME_ADDRESS_MAILING_UNSTRUCTURED = "AMU";
 
     /**
+     * FT - Tour Code element
+     *
+     * @var string
+     */
+    const SEGNAME_TOUR_CODE = "FT";
+
+    /**
      * @var Reference
      */
     public $reference;

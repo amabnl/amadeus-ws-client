@@ -396,3 +396,156 @@ Create a PNR for a group of 25 people and already provide 3 of the travellers:
             ])
         ]
     ]);
+
+---------------------------
+Adding a single AIR segment
+---------------------------
+
+Add a single AIR segment to a PNR:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+    use Amadeus\Client\RequestOptions\Pnr\Itinerary;
+    use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
+
+    $createPnrOptions = new PnrCreatePnrOptions([
+        'travellers' => [
+            new Traveller([
+                'number' => 1,
+                'lastName' => 'Bowie'
+            ])
+        ],
+        'actionCode' => PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE,
+        'itineraries' => [
+            new Itinerary([
+                'origin' => 'CDG',
+                'destination' => 'HEL',
+                'segments' => [
+                    new Air([
+                        'date' => \DateTime::createFromFormat('Y-m-d His', "2013-10-02 000000", new \DateTimeZone('UTC')),
+                        'origin' => 'CDG',
+                        'destination' => 'HEL',
+                        'flightNumber' => '3278',
+                        'bookingClass' => 'Y',
+                        'company' => '7S'
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+-----------------------------
+Adding connected AIR segments
+-----------------------------
+
+Itinerary AMS to SLC via connected flights AMS-LHR, LHR-LAX, LAX-SLC:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+    use Amadeus\Client\RequestOptions\Pnr\Itinerary;
+    use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
+
+    $createPnrOptions = new PnrCreatePnrOptions([
+        'travellers' => [
+            new Traveller([
+                'number' => 1,
+                'lastName' => 'Bowie'
+            ])
+        ],
+        'actionCode' => PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE,
+        'itineraries' => [
+            new Itinerary([
+                'origin' => 'AMS',
+                'destination' => 'SLC',
+                'segments' => [
+                    new Air([
+                        'date' => \DateTime::createFromFormat('Y-m-d His', "2013-05-17 000000", new \DateTimeZone('UTC')),
+                        'origin' => 'AMS',
+                        'destination' => 'LHR',
+                        'flightNumber' => '1288',
+                        'bookingClass' => 'K',
+                        'company' => '7S'
+                    ]),
+                    new Air([
+                        'date' => \DateTime::createFromFormat('Y-m-d His', "2013-05-17 000000", new \DateTimeZone('UTC')),
+                        'origin' => 'LHR',
+                        'destination' => 'LAX',
+                        'flightNumber' => '1286',
+                        'bookingClass' => 'B',
+                        'company' => '7S'
+                    ]),
+                    new Air([
+                        'date' => \DateTime::createFromFormat('Y-m-d His', "2013-05-21 000000", new \DateTimeZone('UTC')),
+                        'origin' => 'LAX',
+                        'destination' => 'SLC',
+                        'flightNumber' => '4690',
+                        'bookingClass' => 'Y',
+                        'company' => '6X'
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+------------------------------------------------
+Adding AIR segments with ARNK segment in between
+------------------------------------------------
+
+Outbound trip BRU-LIS, inbound trip FAO-BRU with an ARNK (Arrival Unknown) segment in between:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+    use Amadeus\Client\RequestOptions\Pnr\Itinerary;
+    use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
+
+    $createPnrOptions = new PnrAddMultiElementsOptions([
+        'travellers' => [
+            new Traveller([
+                'number' => 1,
+                'lastName' => 'Bowie'
+            ])
+        ],
+        'actionCode' => PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE,
+        'itineraries' => [
+            new Itinerary([
+                'origin' => 'BRU',
+                'destination' => 'LIS',
+                'segments' => [
+                    new Air([
+                        'date' => \DateTime::createFromFormat('Y-m-d His', "2008-06-10 000000", new \DateTimeZone('UTC')),
+                        'origin' => 'BRU',
+                        'destination' => 'LIS',
+                        'flightNumber' => '349',
+                        'bookingClass' => 'Y',
+                        'company' => 'TP'
+                    ])
+                ]
+            ]),
+            new Itinerary([
+                'segments' => [
+                    new ArrivalUnknown()
+                ]
+            ]),
+            new Itinerary([
+                'origin' => 'FAO',
+                'destination' => 'BRU',
+                'segments' => [
+                    new Air([
+                        'date' => \DateTime::createFromFormat('Y-m-d His', "2008-06-25 000000", new \DateTimeZone('UTC')),
+                        'origin' => 'FAO',
+                        'destination' => 'BRU',
+                        'flightNumber' => '355',
+                        'bookingClass' => 'Y',
+                        'company' => 'TP'
+                    ])
+                ]
+            ]),
+        ]
+    ]);
+

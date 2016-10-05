@@ -23,7 +23,10 @@
 namespace Amadeus\Client\Util;
 
 /**
- * SomewhatRandomGenerator
+ * SomewhatRandomGenerator - for generating somewhat random strings.
+ *
+ * Utilized to generate a base random string used to generate a Nonce
+ * for the Soap Header 4 message headers.
  *
  * @package Amadeus\Client\Util
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -33,7 +36,7 @@ class SomewhatRandomGenerator
     /**
      * Generates a somewhat random string of a given length
      *
-     * @param $length
+     * @param int $length
      * @return string
      */
     public static function generateSomewhatRandomString($length = 22)

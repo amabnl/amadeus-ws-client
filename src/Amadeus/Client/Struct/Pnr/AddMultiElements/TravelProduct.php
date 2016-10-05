@@ -36,30 +36,35 @@ class TravelProduct
      * @var Product
      */
     public $product;
+
     /**
      * boardpoint details
      *
      * @var BoardOffPointDetail
      */
     public $boardpointDetail;
+
     /**
      * offpoint details
      *
      * @var BoardOffPointDetail
      */
     public $offpointDetail;
+
     /**
      * airline or system code
      *
      * @var Company
      */
     public $company;
+
     /**
      * product details - number and class
      *
      * @var ProductDetails
      */
     public $productDetails;
+
     /**
      * Product type details. Here: availability context.
      *
@@ -82,16 +87,22 @@ class TravelProduct
     /**
      * TravelProduct constructor.
      *
-     * @param \DateTime $date
-     * @param string $cityCode
-     * @param string $company
+     * @param \DateTime|null $date
+     * @param string|null $departureCode
+     * @param string|null $company
      */
-    public function __construct($date, $cityCode, $company)
+    public function __construct($date = null, $departureCode = null, $company = null)
     {
-        $this->product = new Product($date);
+        if ($date instanceof \DateTime) {
+            $this->product = new Product($date);
+        }
 
-        $this->boardpointDetail = new BoardOffPointDetail($cityCode);
+        if (!empty($departureCode)) {
+            $this->boardpointDetail = new BoardOffPointDetail($departureCode);
+        }
 
-        $this->company = new Company($company);
+        if (!empty($company)) {
+            $this->company = new Company($company);
+        }
     }
 }

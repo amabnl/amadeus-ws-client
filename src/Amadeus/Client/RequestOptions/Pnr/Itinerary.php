@@ -20,28 +20,36 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Test\Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\RequestOptions\Pnr;
 
-use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
-use Amadeus\Client\RequestOptions\Pnr\Segment\Ghost;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\AirAuxItinerary;
-use Test\Amadeus\BaseTestCase;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * AirAuxItineraryTest
+ * Itinerary - connecting segments grouped together.
  *
- * @package Test\Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class AirAuxItineraryTest extends BaseTestCase
+class Itinerary extends LoadParamsFromArray
 {
-    public function testGhostWillThrowException()
-    {
-        $this->setExpectedException(
-            '\Amadeus\Client\Struct\InvalidArgumentException',
-            'Segment type Ghost is not supported'
-        );
+    /**
+     * Origin location of this itinerary
+     *
+     * @var string
+     */
+    public $origin;
 
-        $obj = new AirAuxItinerary('Ghost', new Ghost());
-    }
+    /**
+     * Destination location of this itinerary
+     *
+     * @var string
+     */
+    public $destination;
+
+    /**
+     * List of segments in this itinerary
+     *
+     * @var Segment[]
+     */
+    public $segments = [];
 }

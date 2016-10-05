@@ -54,6 +54,8 @@ class Business
 
     const FUNC_CAR_AIRLINE = 9;
 
+    const FUNC_ARNK = 0;
+
     /**
      * 1 Air Provider
      * 10 Air taxi (ATX)

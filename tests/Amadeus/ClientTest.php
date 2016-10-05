@@ -247,14 +247,19 @@ class ClientTest extends BaseTestCase
             'firstName' => 'FirstName',
             'lastName' => 'LastName'
         ]);
-        $options->tripSegments[] = new Client\RequestOptions\Pnr\Segment\Miscellaneous([
-            'status ' => Client\RequestOptions\Pnr\Segment::STATUS_CONFIRMED,
-            'company' => '1A',
-            'date' => \DateTime::createFromFormat('Ymd', '20161022', new \DateTimeZone('UTC')),
-            'cityCode' => 'BRU',
-            'freeText' => 'DUMMY MISCELLANEOUS SEGMENT'
-        ]);
-
+        $options->itineraries = [
+            new Client\RequestOptions\Pnr\Itinerary([
+                'segments' => [
+                    new Client\RequestOptions\Pnr\Segment\Miscellaneous([
+                        'status ' => Client\RequestOptions\Pnr\Segment::STATUS_CONFIRMED,
+                        'company' => '1A',
+                        'date' => \DateTime::createFromFormat('Ymd', '20161022', new \DateTimeZone('UTC')),
+                        'cityCode' => 'BRU',
+                        'freeText' => 'DUMMY MISCELLANEOUS SEGMENT'
+                    ])
+                ]
+            ])
+        ];
         $options->elements[] = new Client\RequestOptions\Pnr\Element\Ticketing([
             'ticketMode' => 'OK'
         ]);

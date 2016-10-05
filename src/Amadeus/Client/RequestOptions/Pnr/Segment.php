@@ -34,6 +34,20 @@ class Segment extends LoadParamsFromArray
 {
     const STATUS_CONFIRMED = "HK";
 
+    const STATUS_WAITLIST_CLOSED = "HL";
+
+    const STATUS_NEED_SEGMENT = "NN";
+
+    const STATUS_GHOST_HOLD_CONFIRMED = "GK";
+
+    const STATUS_GHOST_HOLD_WAITLISTED = "GK";
+
+    const STATUS_GHOST_NEED = "GN";
+
+    const STATUS_PASSIVE_CONFIRMED = "PK";
+
+    const STATUS_PASSIVE_WAITLISTED = "PL";
+
     /**
      * self::STATUS_*
      *

@@ -37,18 +37,27 @@ class AirAuxItinerary
      * @var TravelProduct
      */
     public $travelProduct;
+
     /**
      * @var MessageAction
      */
     public $messageAction;
+
     /**
      * @var RelatedProduct
      */
     public $relatedProduct;
 
+    /**
+     * @var SelectionDetailsAir
+     */
     public $selectionDetailsAir;
 
+    /**
+     * @var ReservationInfoSell
+     */
     public $reservationInfoSell;
+
     /**
      * @var FreetextItinerary
      */
@@ -57,14 +66,17 @@ class AirAuxItinerary
     /**
      * AirAuxItinerary constructor.
      *
-     * @param string $segmentType
-     * @param Segment $segmentContent
+     * @param string $segmentType The type of segment to be constructed
+     * @param Segment $segmentContent The segment's content.
      */
     public function __construct($segmentType, $segmentContent)
     {
         switch ($segmentType) {
             case 'Miscellaneous':
                 $this->loadMiscellaneous($segmentContent);
+                break;
+            case 'ArrivalUnknown':
+                $this->loadArnk($segmentContent);
                 break;
             case 'Air':
                 $this->loadAir($segmentContent);
@@ -93,10 +105,36 @@ class AirAuxItinerary
     }
 
     /**
+     * Load Arrival Unknown element
+     *
+     * @param Segment\ArrivalUnknown $segment
+     */
+    protected function loadArnk(Segment\ArrivalUnknown $segment)
+    {
+        $this->travelProduct = new TravelProduct();
+        $this->travelProduct->productDetails = new ProductDetails($segment->identification);
+        $this->messageAction = new MessageAction(Business::FUNC_ARNK);
+    }
+
+    /**
      * @param Segment\Air $segment
      */
     protected function loadAir(Segment\Air $segment)
     {
-        throw new \RuntimeException('NOT YET IMPLEMENTED');
+        $this->travelProduct = new TravelProduct(
+            $segment->date,
+            $segment->origin,
+            $segment->company
+        );
+
+        $this->travelProduct->offpointDetail = new BoardOffPointDetail($segment->destination);
+        $this->travelProduct->productDetails = new ProductDetails($segment->flightNumber);
+        $this->travelProduct->productDetails->classOfService = $segment->bookingClass;
+
+        $this->messageAction = new MessageAction(Business::FUNC_AIR);
+
+        $this->relatedProduct = new RelatedProduct($segment->status, $segment->quantity);
+
+        $this->selectionDetailsAir = new SelectionDetailsAir($segment->sellType);
     }
 }

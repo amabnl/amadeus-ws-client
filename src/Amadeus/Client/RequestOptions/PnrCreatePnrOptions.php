@@ -47,9 +47,21 @@ class PnrCreatePnrOptions extends PnrAddMultiElementsBase
     /**
      * (originDestinationDetails)
      *
+     * WARNING: IMPLIES NO CONNECTED FLIGHTS, USE $this->itinerary instead!
+     *
+     * @deprecated use $this->itinerary instead
      * @var Pnr\Segment[]
      */
     public $tripSegments = [];
+
+    /**
+     * Itineraries in the PNR.
+     *
+     * Used for grouping segments together
+     *
+     * @var Pnr\Itinerary[]
+     */
+    public $itineraries = [];
 
     /**
      * (dataElementsMaster\dataElementsIndiv)

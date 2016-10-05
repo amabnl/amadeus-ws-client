@@ -20,28 +20,17 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Test\Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\RequestOptions\Pnr\Segment;
 
-use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
-use Amadeus\Client\RequestOptions\Pnr\Segment\Ghost;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\AirAuxItinerary;
-use Test\Amadeus\BaseTestCase;
+use Amadeus\Client\RequestOptions\Pnr\Segment;
 
 /**
- * AirAuxItineraryTest
+ * ArrivalUnknown
  *
- * @package Test\Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\RequestOptions\Pnr\Segment
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class AirAuxItineraryTest extends BaseTestCase
+class ArrivalUnknown extends Segment
 {
-    public function testGhostWillThrowException()
-    {
-        $this->setExpectedException(
-            '\Amadeus\Client\Struct\InvalidArgumentException',
-            'Segment type Ghost is not supported'
-        );
-
-        $obj = new AirAuxItinerary('Ghost', new Ghost());
-    }
+    public $identification = 'ARNK';
 }

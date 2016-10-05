@@ -32,9 +32,28 @@ class RelatedProduct
 {
     const STATUS_CONFIRMED = "HK";
 
+    const STATUS_WAITLIST_CLOSED = "HL";
+
+    const STATUS_NEED_SEGMENT = "NN";
+
+    const STATUS_GHOST_HOLD_CONFIRMED = "GK";
+
+    const STATUS_GHOST_HOLD_WAITLISTED = "GK";
+
+    const STATUS_GHOST_NEED = "GN";
+
+    const STATUS_PASSIVE_CONFIRMED = "PK";
+
+    const STATUS_PASSIVE_WAITLISTED = "PL";
+
+    /**
+     * @var int
+     */
     public $quantity;
 
     /**
+     * self::STATUS_*
+     *
      * AG Space available for Group (SUA only)
      * CK Codeshare - Guaranteed Sell
      * CL Codeshare - Waitlist
@@ -106,7 +125,7 @@ class RelatedProduct
     /**
      * RelatedProduct constructor.
      *
-     * @param string $status
+     * @param string $status self::STATUS_*
      * @param int $quantity
      */
     public function __construct($status, $quantity = 1)

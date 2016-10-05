@@ -1,5 +1,8 @@
 # Release 1.1.0 (unreleased)
 
+* Implemented ``PNR_TransferOwnership``
+* Implemented ``Ticket_DisplayTST``
+* Implemented support for adding AIR and ARNK segments in ``PNR_AddMultiElements`` 
 * ``Fare_MasterPricerTravelBoardSearch``: added new request options (https://github.com/amabnl/amadeus-ws-client/issues/20):
     - Preferred/excluded/... airlines option 'airlineOptions'.
     - Itinerary date: support for Date range +/- 1 day.
@@ -9,6 +12,11 @@
     - Support for Cabin Mode (Mandatory, Major, Recommended) when specifying a cabin code.
     - Support for Fare Options such as Published Fares, Unifares, Electronic/Paper ticketing, ...
     - Support for "Price to beat" feature.
+* ``PNR_AddMultiElements``: Support for new request options:
+    - Add support for adding AIR when creating or updating a PNR.
+    - Add support for adding ARNK segments when creating or updating a PNR.
+    - Add support for Group PNR in the regular PNR_AddMultiElements call (previously this was only in the pnrCreatePnr)
+    - Add support for connected segments in an itinerary (deprecated 'tripSegments' option)
 * ``Fare_PricePnrWithBookingClass``: added support for extra request options:
     - Negotiated corporate fares
     - Corporate unifares
@@ -25,40 +33,37 @@
     
 *These pricing options are also available for the* ``Fare_InformativePricingWithoutPNR`` *message version 13+*
 
-* Implemented ``Ticket_DisplayTST``
-* Implemented ``PNR_TransferOwnership``
-
 # Release 1.0.0 (18 September 2016)
 
-* PNR_AddMultiElements: support for adding OSI elements to a PNR.
-* Implemented Ticket_DeleteTST
+* ``PNR_AddMultiElements``: support for adding OSI elements to a PNR.
+* Implemented ``Ticket_DeleteTST``
 * Updated docs for 1.0.0 release.
 * Released version 1: now following [semantic versioning](http://semver.org/).
 
 # 2016-09
 
-* Implemented SalesReports_DisplayQueryReport
-* Implemented Air_MultiAvailability
+* Implemented ``SalesReports_DisplayQueryReport``
+* Implemented ``Air_MultiAvailability``
 * Added support for multiple WSDL's (interfaces) in a WSAP (https://github.com/amabnl/amadeus-ws-client/issues/5)
 * Fixed a bug while authenticating with SoapHeader 2 (https://github.com/amabnl/amadeus-ws-client/pull/15) - Sergey Gladkovskiy
 * PSR-2 code style enforced via StyleCI
 
 # 2016-08
 
-* Implemented PNR_DisplayHistory
-* Implemented Fare_InformativePricingWithoutPNR (https://github.com/amabnl/amadeus-ws-client/issues/13)
+* Implemented ``PNR_DisplayHistory``
+* Implemented ``Fare_InformativePricingWithoutPNR`` (https://github.com/amabnl/amadeus-ws-client/issues/13)
 
 # 2016-07
 
-* Implemented Air_RetrieveSeatMap
+* Implemented ``Air_RetrieveSeatMap``
 
 # 2016-06
 
-* Implemented Fare_PricePNRWithBookingClass version 13 and up (https://github.com/amabnl/amadeus-ws-client/issues/6)
-* Implemented DocIssuance_IssueTicket (https://github.com/amabnl/amadeus-ws-client/issues/7)
-* Implemented Info_EncodeDecodeCity
-* Implemented Offer_ConfirmCarOffer
-* Implemented checking for response errors for all supported messages _except Command_Cryptic_. For Command_Cryptic, you need to parse the response yourself to check for errors.
+* Implemented ``Fare_PricePNRWithBookingClass`` version 13 and up (https://github.com/amabnl/amadeus-ws-client/issues/6)
+* Implemented ``DocIssuance_IssueTicket`` (https://github.com/amabnl/amadeus-ws-client/issues/7)
+* Implemented ``Info_EncodeDecodeCity``
+* Implemented ``Offer_ConfirmCarOffer``
+* Implemented checking for response errors for all supported messages _except Command_Cryptic_. For ``Command_Cryptic``, you need to parse the response yourself to check for errors.
 * Removed the 'asString' request option - the `Amadeus\Client\Result` object now always contains the result XML in the `responseXml` property.
 
 # 2016-05

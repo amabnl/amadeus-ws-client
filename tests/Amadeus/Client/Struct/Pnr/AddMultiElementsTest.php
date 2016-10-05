@@ -33,8 +33,10 @@ use Amadeus\Client\RequestOptions\Pnr\Element\OtherServiceInfo;
 use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest;
 use Amadeus\Client\RequestOptions\Pnr\Element\Ticketing;
+use Amadeus\Client\RequestOptions\Pnr\Itinerary;
 use Amadeus\Client\RequestOptions\Pnr\Reference;
 use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
+use Amadeus\Client\RequestOptions\Pnr\Segment\ArrivalUnknown;
 use Amadeus\Client\RequestOptions\Pnr\Segment\Ghost;
 use Amadeus\Client\RequestOptions\Pnr\Segment\Hotel;
 use Amadeus\Client\RequestOptions\Pnr\Segment\Miscellaneous;
@@ -694,6 +696,78 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $requestStruct->travellerInfo[3]->passengerData[0]->travellerInformation->passenger[0]->type);
     }
 
+    public function testCanAddGroupToPnr()
+    {
+        $addmultiOptions = new PnrAddMultiElementsOptions();
+        $addmultiOptions->recordLocator = 'ABC123';
+        $addmultiOptions->receivedFrom = "unittest";
+        $addmultiOptions->travellerGroup = new TravellerGroup([
+            'name' => 'Group Name',
+            'nrOfTravellers' => 25,
+            'travellers' => [
+                new Traveller([
+                    'number' => 1,
+                    'lastName' => 'Bowie',
+                    'firstName' => 'David'
+                ]),
+                new Traveller([
+                    'number' => 2,
+                    'lastName' => 'Bowie',
+                    'firstName' => 'Ziggy'
+                ]),
+                new Traveller([
+                    'number' => 3,
+                    'lastName' => 'Jones',
+                    'firstName' => 'David'
+                ])
+            ]
+        ]);
+
+        $addmultiOptions->actionCode = PnrCreatePnrOptions::ACTION_NO_PROCESSING;
+        $addmultiOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'company' => '1A'
+        ]);
+
+        $requestStruct = new AddMultiElements($addmultiOptions);
+
+        $this->assertEquals(4, count($requestStruct->travellerInfo));
+        $this->assertEquals(PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING, $requestStruct->pnrActions->optionCode);
+        $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_GROUPNAME, $requestStruct->travellerInfo[0]->elementManagementPassenger->segmentName);
+        $this->assertEquals('Group Name', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->surname);
+        $this->assertEquals(AddMultiElements\Traveller::QUAL_GROUP, $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->qualifier);
+        $this->assertEquals(25, $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->quantity);
+
+        $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[1]->elementManagementPassenger->segmentName);
+        $this->assertEquals(1, $requestStruct->travellerInfo[1]->elementManagementPassenger->reference->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $requestStruct->travellerInfo[1]->elementManagementPassenger->reference->qualifier);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[1]->passengerData));
+        $this->assertEquals('Bowie', $requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->traveller->surname);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->passenger));
+        $this->assertEquals('David', $requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->passenger[0]->firstName);
+        $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->passenger[0]->type);
+
+        $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[2]->elementManagementPassenger->segmentName);
+        $this->assertEquals(2, $requestStruct->travellerInfo[2]->elementManagementPassenger->reference->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $requestStruct->travellerInfo[2]->elementManagementPassenger->reference->qualifier);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[2]->passengerData));
+        $this->assertEquals('Bowie', $requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->traveller->surname);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->passenger));
+        $this->assertEquals('Ziggy', $requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->passenger[0]->firstName);
+        $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->passenger[0]->type);
+
+        $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[3]->elementManagementPassenger->segmentName);
+        $this->assertEquals(3, $requestStruct->travellerInfo[3]->elementManagementPassenger->reference->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $requestStruct->travellerInfo[3]->elementManagementPassenger->reference->qualifier);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[3]->passengerData));
+        $this->assertEquals('Jones', $requestStruct->travellerInfo[3]->passengerData[0]->travellerInformation->traveller->surname);
+        $this->assertEquals(1, count($requestStruct->travellerInfo[3]->passengerData[0]->travellerInformation->passenger));
+        $this->assertEquals('David', $requestStruct->travellerInfo[3]->passengerData[0]->travellerInformation->passenger[0]->firstName);
+        $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $requestStruct->travellerInfo[3]->passengerData[0]->travellerInformation->passenger[0]->type);
+    }
+
     public function testCanCreatePnrWithChild()
     {
         $createPnrOptions = new PnrCreatePnrOptions();
@@ -984,25 +1058,6 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\Passenger::PASST_INFANT, $msg->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[1]->type);
     }
 
-    public function testCreateAirSegmentWillThrowException()
-    {
-        $this->setExpectedException('\RuntimeException', 'NOT YET IMPLEMENTED');
-
-        $createPnrOptions = new PnrCreatePnrOptions();
-        $createPnrOptions->receivedFrom = "unittest";
-        $createPnrOptions->travellers[] = new Traveller([
-            'number' => 1,
-            'lastName' => 'Bowie',
-            'firstName' => 'David'
-        ]);
-        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
-        $createPnrOptions->tripSegments[] = new Air([
-
-        ]);
-
-        new AddMultiElements($createPnrOptions);
-    }
-
     public function testCreateGhostSegmentWillThrowException()
     {
         $this->setExpectedException('\RuntimeException', 'NOT YET IMPLEMENTED');
@@ -1060,5 +1115,225 @@ class AddMultiElementsTest extends BaseTestCase
         $createPnrOptions->elements[] = new ManualIssuedTicket();
 
         new AddMultiElements($createPnrOptions);
+    }
+
+    public function testCanCreateAirSegment()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions([
+            'receivedFrom' => 'unittest',
+            'travellers' => [
+                new Traveller([
+                    'number' => 1,
+                    'lastName' => 'Bowie'
+                ])
+            ],
+            'actionCode' => PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE,
+            'itineraries' => [
+                new Itinerary([
+                    'origin' => 'CDG',
+                    'destination' => 'HEL',
+                    'segments' => [
+                        new Air([
+                            'date' => \DateTime::createFromFormat('Y-m-d His', "2013-10-02 000000", new \DateTimeZone('UTC')),
+                            'origin' => 'CDG',
+                            'destination' => 'HEL',
+                            'flightNumber' => '3278',
+                            'bookingClass' => 'Y',
+                            'company' => '7S'
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new AddMultiElements($createPnrOptions);
+
+        $this->assertCount(1, $msg->originDestinationDetails);
+        $this->assertEquals('CDG', $msg->originDestinationDetails[0]->originDestination->origin);
+        $this->assertEquals('HEL', $msg->originDestinationDetails[0]->originDestination->destination);
+
+        $this->assertCount(1, $msg->originDestinationDetails[0]->itineraryInfo);
+        $this->assertEquals(AddMultiElements\ElementManagementItinerary::SEGMENT_AIR, $msg->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->segmentName);
+
+        $this->assertNull($msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->freetextItinerary);
+        $this->assertNull($msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->reservationInfoSell);
+
+        $this->assertEquals('CDG', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->boardpointDetail->cityCode);
+        $this->assertEquals('HEL', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->offpointDetail->cityCode);
+        $this->assertEquals('7S', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->company->identification);
+        $this->assertNull($msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->flightTypeDetails);
+        $this->assertEquals('021013', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->product->depDate);
+        $this->assertEquals('3278', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->productDetails->identification);
+        $this->assertEquals('Y', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->productDetails->classOfService);
+
+        $this->assertEquals(1, $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->quantity);
+        $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_NEED_SEGMENT, $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
+    }
+
+    public function testCanCreateAirSegmentFromBare()
+    {
+        $createPnrOptions = new PnrAddMultiElementsOptions([
+            'receivedFrom' => 'unittest',
+            'travellers' => [
+                new Traveller([
+                    'number' => 1,
+                    'lastName' => 'Bowie'
+                ])
+            ],
+            'actionCode' => PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE,
+            'itineraries' => [
+                new Itinerary([
+                    'origin' => 'CDG',
+                    'destination' => 'HEL',
+                    'segments' => [
+                        new Air([
+                            'date' => \DateTime::createFromFormat('Y-m-d His', "2013-10-02 000000", new \DateTimeZone('UTC')),
+                            'origin' => 'CDG',
+                            'destination' => 'HEL',
+                            'flightNumber' => '3278',
+                            'bookingClass' => 'Y',
+                            'company' => '7S'
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new AddMultiElements($createPnrOptions);
+
+        $this->assertCount(1, $msg->originDestinationDetails);
+        $this->assertEquals('CDG', $msg->originDestinationDetails[0]->originDestination->origin);
+        $this->assertEquals('HEL', $msg->originDestinationDetails[0]->originDestination->destination);
+
+        $this->assertCount(1, $msg->originDestinationDetails[0]->itineraryInfo);
+        $this->assertEquals(AddMultiElements\ElementManagementItinerary::SEGMENT_AIR, $msg->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->segmentName);
+
+        $this->assertNull($msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->freetextItinerary);
+        $this->assertNull($msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->reservationInfoSell);
+
+        $this->assertEquals('CDG', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->boardpointDetail->cityCode);
+        $this->assertEquals('HEL', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->offpointDetail->cityCode);
+        $this->assertEquals('7S', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->company->identification);
+        $this->assertNull($msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->flightTypeDetails);
+        $this->assertEquals('021013', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->product->depDate);
+        $this->assertEquals('3278', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->productDetails->identification);
+        $this->assertEquals('Y', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->productDetails->classOfService);
+
+        $this->assertEquals(1, $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->quantity);
+        $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_NEED_SEGMENT, $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
+    }
+
+    public function testCanCreateItineraryWithArnk()
+    {
+        $createPnrOptions = new PnrAddMultiElementsOptions([
+            'receivedFrom' => 'unittest',
+            'travellers' => [
+                new Traveller([
+                    'number' => 1,
+                    'lastName' => 'Bowie'
+                ])
+            ],
+            'actionCode' => PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE,
+            'itineraries' => [
+                new Itinerary([
+                    'origin' => 'BRU',
+                    'destination' => 'LIS',
+                    'segments' => [
+                        new Air([
+                            'date' => \DateTime::createFromFormat('Y-m-d His', "2008-06-10 000000", new \DateTimeZone('UTC')),
+                            'origin' => 'BRU',
+                            'destination' => 'LIS',
+                            'flightNumber' => '349',
+                            'bookingClass' => 'Y',
+                            'company' => 'TP'
+                        ])
+                    ]
+                ]),
+                new Itinerary([
+                    'segments' => [
+                        new ArrivalUnknown()
+                    ]
+                ]),
+                new Itinerary([
+                    'origin' => 'FAO',
+                    'destination' => 'BRU',
+                    'segments' => [
+                        new Air([
+                            'date' => \DateTime::createFromFormat('Y-m-d His', "2008-06-25 000000", new \DateTimeZone('UTC')),
+                            'origin' => 'FAO',
+                            'destination' => 'BRU',
+                            'flightNumber' => '355',
+                            'bookingClass' => 'Y',
+                            'company' => 'TP'
+                        ])
+                    ]
+                ]),
+            ]
+        ]);
+
+        $msg = new AddMultiElements($createPnrOptions);
+
+        $this->assertCount(3, $msg->originDestinationDetails);
+        $this->assertEquals('BRU', $msg->originDestinationDetails[0]->originDestination->origin);
+        $this->assertEquals('LIS', $msg->originDestinationDetails[0]->originDestination->destination);
+
+        $this->assertCount(1, $msg->originDestinationDetails[0]->itineraryInfo);
+        $this->assertEquals(AddMultiElements\ElementManagementItinerary::SEGMENT_AIR, $msg->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->segmentName);
+
+        $this->assertNull($msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->freetextItinerary);
+        $this->assertNull($msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->reservationInfoSell);
+
+        $this->assertEquals('BRU', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->boardpointDetail->cityCode);
+        $this->assertEquals('LIS', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->offpointDetail->cityCode);
+        $this->assertEquals('TP', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->company->identification);
+        $this->assertNull($msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->flightTypeDetails);
+        $this->assertEquals('100608', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->product->depDate);
+        $this->assertEquals('349', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->productDetails->identification);
+        $this->assertEquals('Y', $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->travelProduct->productDetails->classOfService);
+
+        $this->assertEquals(1, $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->quantity);
+        $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_NEED_SEGMENT, $msg->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
+
+        $this->assertNull($msg->originDestinationDetails[1]->originDestination);
+
+        $this->assertNull($msg->originDestinationDetails[1]->originDestination);
+        $this->assertEquals(AddMultiElements\ElementManagementItinerary::SEGMENT_AIR, $msg->originDestinationDetails[1]->itineraryInfo[0]->elementManagementItinerary->segmentName);
+
+        $this->assertNull($msg->originDestinationDetails[1]->itineraryInfo[0]->airAuxItinerary->freetextItinerary);
+        $this->assertNull($msg->originDestinationDetails[1]->itineraryInfo[0]->airAuxItinerary->reservationInfoSell);
+        $this->assertNull($msg->originDestinationDetails[1]->itineraryInfo[0]->airAuxItinerary->selectionDetailsAir);
+        $this->assertEquals(0, $msg->originDestinationDetails[1]->itineraryInfo[0]->airAuxItinerary->messageAction->business->function);
+
+        $this->assertEquals('ARNK', $msg->originDestinationDetails[1]->itineraryInfo[0]->airAuxItinerary->travelProduct->productDetails->identification);
+        $this->assertNull($msg->originDestinationDetails[1]->itineraryInfo[0]->airAuxItinerary->travelProduct->productDetails->classOfService);
+
+        $this->assertNull($msg->originDestinationDetails[1]->itineraryInfo[0]->airAuxItinerary->travelProduct->boardpointDetail);
+        $this->assertNull($msg->originDestinationDetails[1]->itineraryInfo[0]->airAuxItinerary->travelProduct->offpointDetail);
+        $this->assertNull($msg->originDestinationDetails[1]->itineraryInfo[0]->airAuxItinerary->travelProduct->company);
+        $this->assertNull($msg->originDestinationDetails[1]->itineraryInfo[0]->airAuxItinerary->travelProduct->flightTypeDetails);
+        $this->assertNull($msg->originDestinationDetails[1]->itineraryInfo[0]->airAuxItinerary->travelProduct->processingIndicator);
+        $this->assertNull($msg->originDestinationDetails[1]->itineraryInfo[0]->airAuxItinerary->travelProduct->product);
+
+        $this->assertEquals('FAO', $msg->originDestinationDetails[2]->originDestination->origin);
+        $this->assertEquals('BRU', $msg->originDestinationDetails[2]->originDestination->destination);
+
+        $this->assertCount(1, $msg->originDestinationDetails[2]->itineraryInfo);
+        $this->assertEquals(AddMultiElements\ElementManagementItinerary::SEGMENT_AIR, $msg->originDestinationDetails[2]->itineraryInfo[0]->elementManagementItinerary->segmentName);
+
+        $this->assertNull($msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->freetextItinerary);
+        $this->assertNull($msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->reservationInfoSell);
+
+        $this->assertEquals('FAO', $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->travelProduct->boardpointDetail->cityCode);
+        $this->assertEquals('BRU', $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->travelProduct->offpointDetail->cityCode);
+        $this->assertEquals('TP', $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->travelProduct->company->identification);
+        $this->assertNull($msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->travelProduct->flightTypeDetails);
+        $this->assertEquals('250608', $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->travelProduct->product->depDate);
+        $this->assertEquals('355', $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->travelProduct->productDetails->identification);
+        $this->assertEquals('Y', $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->travelProduct->productDetails->classOfService);
+
+        $this->assertEquals(1, $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->relatedProduct->quantity);
+        $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_NEED_SEGMENT, $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
+
+
     }
 }

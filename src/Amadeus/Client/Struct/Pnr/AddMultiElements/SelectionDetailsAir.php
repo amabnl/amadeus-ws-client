@@ -20,28 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Test\Amadeus\Client\Struct\Pnr\AddMultiElements;
-
-use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
-use Amadeus\Client\RequestOptions\Pnr\Segment\Ghost;
-use Amadeus\Client\Struct\Pnr\AddMultiElements\AirAuxItinerary;
-use Test\Amadeus\BaseTestCase;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * AirAuxItineraryTest
+ * SelectionDetailsAir
  *
- * @package Test\Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class AirAuxItineraryTest extends BaseTestCase
+class SelectionDetailsAir
 {
-    public function testGhostWillThrowException()
-    {
-        $this->setExpectedException(
-            '\Amadeus\Client\Struct\InvalidArgumentException',
-            'Segment type Ghost is not supported'
-        );
+    /**
+     * @var Selection[]
+     */
+    public $selection = [];
 
-        $obj = new AirAuxItinerary('Ghost', new Ghost());
+    /**
+     * SelectionDetailsAir constructor.
+     *
+     * @param string $option SelectionDetailsAir::OPT_*
+     */
+    public function __construct($option)
+    {
+        $this->selection[] = new Selection($option);
     }
 }

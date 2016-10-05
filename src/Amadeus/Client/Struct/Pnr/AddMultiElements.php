@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Pnr;
 
 use Amadeus\Client\RequestOptions\Pnr\Element;
 use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
+use Amadeus\Client\RequestOptions\Pnr\Itinerary;
 use Amadeus\Client\RequestOptions\Pnr\Segment;
 use Amadeus\Client\RequestOptions\Pnr\Traveller;
 use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
@@ -37,6 +38,7 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsIndiv;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementItinerary;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ItineraryInfo;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestination;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\Reference;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\ReferenceForDataElement;
@@ -109,10 +111,18 @@ class AddMultiElements extends BaseWsMessage
 
         $tattooCounter = 0;
 
-        $this->addTravellers($params->travellers);
+        if ($params->travellerGroup !== null) {
+            $this->addTravellerGroup($params->travellerGroup);
+        } else {
+            $this->addTravellers($params->travellers);
+        }
 
         if (!empty($params->tripSegments)) {
             $this->addSegments($params->tripSegments, $tattooCounter);
+        }
+
+        if (!empty($params->itineraries)) {
+            $this->addItineraries($params->itineraries, $tattooCounter);
         }
 
         if (!empty($params->elements)) {
@@ -155,7 +165,13 @@ class AddMultiElements extends BaseWsMessage
             $this->addTravellers($params->travellers);
         }
 
-        $this->addSegments($params->tripSegments, $tattooCounter);
+        if (!empty($params->tripSegments)) {
+            $this->addSegments($params->tripSegments, $tattooCounter);
+        }
+
+        if (!empty($params->itineraries)) {
+            $this->addItineraries($params->itineraries, $tattooCounter);
+        }
 
         $this->addElements(
             $params->elements,
@@ -165,10 +181,29 @@ class AddMultiElements extends BaseWsMessage
     }
 
     /**
+     * @param Itinerary[] $itineraries
+     * @param int $tattooCounter (BYREF)
+     */
+    protected function addItineraries($itineraries, &$tattooCounter)
+    {
+        foreach ($itineraries as $itinerary) {
+            $this->addSegments(
+                $itinerary->segments,
+                $tattooCounter,
+                $itinerary->origin,
+                $itinerary->destination
+            );
+        }
+    }
+
+    /**
      * @param Segment[] $segments
      * @param int $tattooCounter
+     * @param string|null $origin
+     * @param string|null $destination
+     *
      */
-    protected function addSegments($segments, &$tattooCounter)
+    protected function addSegments($segments, &$tattooCounter, $origin = null, $destination = null)
     {
         $tmpOrigDest = new OriginDestinationDetails();
 
@@ -176,12 +211,16 @@ class AddMultiElements extends BaseWsMessage
             $tmpOrigDest->itineraryInfo[] = $this->createSegment($segment, $tattooCounter);
         }
 
+        if (!is_null($origin) && !is_null($destination)) {
+            $tmpOrigDest->originDestination = new OriginDestination($origin, $destination);
+        }
+
         $this->originDestinationDetails[] = $tmpOrigDest;
     }
 
     /**
      * @param Segment $segment
-     * @param $tattooCounter
+     * @param int $tattooCounter (BYREF)
      * @return ItineraryInfo
      */
     protected function createSegment($segment, &$tattooCounter)
@@ -200,7 +239,14 @@ class AddMultiElements extends BaseWsMessage
                 $createdSegment->airAuxItinerary = new AirAuxItinerary($segmentType, $segment);
                 break;
             case 'Air':
-                throw new \RuntimeException('NOT YET IMPLEMENTED');
+                /** @var Segment\Air $segment */
+                $createdSegment = new ItineraryInfo($tattooCounter, ElementManagementItinerary::SEGMENT_AIR);
+                $createdSegment->airAuxItinerary = new AirAuxItinerary($segmentType, $segment);
+                break;
+            case 'ArrivalUnknown':
+                /** @var Segment\ArrivalUnknown $segment */
+                $createdSegment = new ItineraryInfo($tattooCounter, ElementManagementItinerary::SEGMENT_AIR);
+                $createdSegment->airAuxItinerary = new AirAuxItinerary($segmentType, $segment);
                 break;
             case 'Ghost':
                 throw new \RuntimeException('NOT YET IMPLEMENTED');
