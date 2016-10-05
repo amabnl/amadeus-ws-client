@@ -2,7 +2,6 @@
 
 * Implemented ``PNR_TransferOwnership``
 * Implemented ``Ticket_DisplayTST``
-* Implemented support for adding AIR and ARNK segments in ``PNR_AddMultiElements`` 
 * ``Fare_MasterPricerTravelBoardSearch``: added new request options (https://github.com/amabnl/amadeus-ws-client/issues/20):
     - Preferred/excluded/... airlines option 'airlineOptions'.
     - Itinerary date: support for Date range +/- 1 day.
