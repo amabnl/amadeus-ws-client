@@ -1,0 +1,31 @@
+<PNR_TransferOwnershipReply xmlns="http://xml.amadeus.com/POWNUR_04_1_1A">
+    <generalError>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>1931</errorCode>
+                <errorCategory>EC</errorCategory>
+                <errorCodeOwner>1A</errorCodeOwner>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <source>A</source>
+                <encoding>2</encoding>
+            </freeTextDetails>
+            <freeText>NO MATCH FOR RECORD LOCATOR</freeText>
+        </errorWarningDescription>
+    </generalError>
+    <recordLocator>
+        <reservation>
+            <controlNumber>ABC123</controlNumber>
+        </reservation>
+    </recordLocator>
+    <officeIdentification>
+        <officeIdentificator>
+            <originatorDetails>
+                <inHouseIdentification1>NCE6X0980</inHouseIdentification1>
+            </originatorDetails>
+        </officeIdentificator>
+    </officeIdentification>
+</PNR_TransferOwnershipReply>

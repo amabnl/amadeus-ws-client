@@ -12,6 +12,7 @@ This is the list of messages that are at least partially supported at this time:
 - PNR_AddMultiElements (possibility to do actionCode operations on a PNR in context without further actions)
 - PNR_Cancel
 - PNR_DisplayHistory
+- PNR_TransferOwnership
 - Queue_List
 - Queue_PlacePNR
 - Queue_RemoveItem
@@ -48,7 +49,10 @@ On the to-do list / work in progress:
 - Fare_DisplayFaresForCityPair
 - Fare_DisplayBookingCodeInformation
 - Fare_CalculateMileage
-- PNR_TransferOwnership
+- Fare_PriceUpsellWithoutPNR
+- Fare_PriceUpsellPNR
+- Fare_GetFareFamilyDescription
+- Fare_RebookAndCreateTST
 - PNR_NameChange
 - PointOfRef_Search
 - PointOfRef_CategoryList
@@ -59,3 +63,4 @@ On the to-do list / work in progress:
 - Media_GetMedia
 - Service_IntegratedPricing
 - DocIssuance_IssueMiscellaneousDocuments
+- DocIssuance_IssueCombined

@@ -1,0 +1,31 @@
+<PNR_TransferOwnershipReply xmlns="http://xml.amadeus.com/POWNUR_04_1_1A">
+    <recordLocator>
+        <reservation>
+            <controlNumber>ABC123</controlNumber>
+        </reservation>
+    </recordLocator>
+    <officeIdentification>
+        <officeIdentificator>
+            <originatorDetails>
+                <inHouseIdentification1>NCE6X0980</inHouseIdentification1>
+            </originatorDetails>
+        </officeIdentificator>
+        <officeError>
+                <errorOrWarningCodeDetails>
+                    <errorDetails>
+                        <errorCode>1533</errorCode>
+                        <errorCategory>EC</errorCategory>
+                        <errorCodeOwner>1A</errorCodeOwner>
+                    </errorDetails>
+                </errorOrWarningCodeDetails>
+                <errorWarningDescription>
+                    <freeTextDetails>
+                        <textSubjectQualifier>3</textSubjectQualifier>
+                        <source>S</source>
+                        <encoding>2</encoding>
+                    </freeTextDetails>
+                    <freeText>INVALID OFFICE IDENTIFICATION CODE</freeText>
+                </errorWarningDescription>
+            </officeError>
+    </officeIdentification>
+</PNR_TransferOwnershipReply>

@@ -346,6 +346,20 @@ class Client
     }
 
     /**
+     * PNR_TransferOwnership
+     *
+     * @param RequestOptions\PnrTransferOwnershipOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function pnrTransferOwnership(RequestOptions\PnrTransferOwnershipOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PNR_TransferOwnership';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Queue_List - get a list of all PNR's on a given queue
      *
      * https://webservices.amadeus.com/extranet/viewService.do?id=52&flavourId=1&menuId=functional

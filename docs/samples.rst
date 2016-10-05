@@ -272,6 +272,54 @@ Retrieve the PNR history for AIR segments and exclude Queue updates:
         ])
    );
 
+---------------------
+PNR_TransferOwnership
+---------------------
+
+Transfer ownership of a retrieved PNR, changing also the ticketing office, the queueing office and the office specified in the option queue element, without spreading through the AXR.:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrTransferOwnershipOptions;
+
+    $transferResult = $client->pnrTransferOwnership(
+        new PnrTransferOwnershipOptions([
+            'recordLocator' => 'ABC654',
+            'newOffice' => 'NCE6X0980',
+            'inhibitPropagation' => true,
+            'changeTicketingOffice' => true,
+            'changeQueueingOffice' => true,
+            'changeOptionQueueElement' => true,
+        ])
+    );
+
+Transfer of ownership to a third party identification on a retrieved PNR:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrTransferOwnershipOptions;
+
+    $transferResult = $client->pnrTransferOwnership(
+        new PnrTransferOwnershipOptions([
+            'recordLocator' => 'ABC987',
+            'newThirdParty' => 'HDQRM',
+        ])
+    );
+
+Transfer both the office Ownership and the owner User Security Entity. The Queueing office is changed as well:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrTransferOwnershipOptions;
+
+    $transferResult = $client->pnrTransferOwnership(
+        new PnrTransferOwnershipOptions([
+            'recordLocator' => 'ABC987',
+            'newOffice' => 'LON6X0980',
+            'newUserSecurityEntity' => 'AgencyLON',
+            'changeQueueingOffice' => true
+        ])
+    );
 
 *****
 Queue

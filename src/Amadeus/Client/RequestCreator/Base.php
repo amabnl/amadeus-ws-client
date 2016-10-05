@@ -47,6 +47,7 @@ use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+use Amadeus\Client\RequestOptions\PnrTransferOwnershipOptions;
 use Amadeus\Client\RequestOptions\PriceXplorerExtremeSearchOptions;
 use Amadeus\Client\RequestOptions\QueueListOptions;
 use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
@@ -190,6 +191,15 @@ class Base implements RequestCreatorInterface
     protected function createPNRDisplayHistory(PnrDisplayHistoryOptions $params)
     {
         return new Struct\Pnr\DisplayHistory($params);
+    }
+
+    /**
+     * @param PnrTransferOwnershipOptions $params
+     * @return Struct\Pnr\TransferOwnership
+     */
+    protected function createPNRTransferOwnership(PnrTransferOwnershipOptions $params)
+    {
+        return new Struct\Pnr\TransferOwnership($params);
     }
 
     /**

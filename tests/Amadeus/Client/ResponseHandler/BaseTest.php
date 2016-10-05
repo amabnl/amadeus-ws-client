@@ -186,6 +186,38 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(0, count($result->messages));
     }
 
+    public function testCanHandlePnrTransferOwnershipError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPnrTransferOwnershipErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_TransferOwnership');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('1931', $result->messages[0]->code);
+        $this->assertEquals("NO MATCH FOR RECORD LOCATOR", $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+    }
+
+    public function testCanHandlePnrTransferOwnershipOfficeError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPnrTransferOwnershipOfficeErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_TransferOwnership');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('1533', $result->messages[0]->code);
+        $this->assertEquals("INVALID OFFICE IDENTIFICATION CODE", $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+    }
+
     public function testCanHandleQueueRemoveItemOk()
     {
         $respHandler = new ResponseHandler\Base();

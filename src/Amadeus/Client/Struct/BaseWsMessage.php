@@ -51,4 +51,26 @@ class BaseWsMessage
 
         return $foundNotEmpty;
     }
+
+    /**
+     * Check if any parameter to the current function is true
+     *
+     * @param mixed
+     * @return boolean true if at least 1 parameter is true
+     */
+    protected function checkAnyTrue()
+    {
+        $foundTrue = false;
+
+        $args = func_get_args();
+
+        foreach ($args as $arg) {
+            if ($arg === true) {
+                $foundTrue = true;
+                break;
+            }
+        }
+
+        return $foundTrue;
+    }
 }

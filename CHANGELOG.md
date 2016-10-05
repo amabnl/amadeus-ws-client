@@ -26,6 +26,7 @@
 *These pricing options are also available for the* ``Fare_InformativePricingWithoutPNR`` *message version 13+*
 
 * Implemented ``Ticket_DisplayTST``
+* Implemented ``PNR_TransferOwnership``
 
 # Release 1.0.0 (18 September 2016)
 

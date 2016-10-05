@@ -371,6 +371,18 @@ class Base implements ResponseHandlerInterface
     }
 
     /**
+     * Analysing a PNR_TransferOwnershipReply
+     *
+     * @param SendResult $response PNR_TransferOwnership response
+     * @return Result
+     * @throws Exception
+     */
+    protected function analyzePNRTransferOwnershipResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
+
+    /**
      * Analysing a PNR_DisplayHistoryReply
      *
      * @param SendResult $response PNR_DisplayHistoryReply result
