@@ -27,7 +27,6 @@ use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
-use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxDiscount;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
@@ -85,47 +84,45 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
     {
         $priceOptions = [];
 
-        if ($options->validatingCarrier !== null) {
-            $priceOptions[] = self::makePricingOptionForValidatingCarrier($options->validatingCarrier);
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::makePricingOptionForValidatingCarrier($options->validatingCarrier)
+        );
 
-        if ($options->currencyOverride !== null) {
-            $priceOptions[] = self::makePricingOptionForCurrencyOverride($options->currencyOverride);
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::makePricingOptionForCurrencyOverride($options->currencyOverride)
+        );
 
-        if ($options->pricingsFareBasis !== null) {
-            foreach ($options->pricingsFareBasis as $pricingFareBasis) {
-                $priceOptions[] = self::makePricingOptionFareBasisOverride($pricingFareBasis);
-            }
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::makePricingOptionFareBasisOverride($options->pricingsFareBasis)
+        );
 
-        if (!empty($options->overrideOptions)) {
-            foreach ($options->overrideOptions as $overrideOption) {
-                if (!self::hasPricingGroup($overrideOption, $priceOptions)) {
-                    $priceOptions[] = new PricingOptionGroup($overrideOption);
-                }
-            }
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::makeOverrideOptions($options->overrideOptions, $priceOptions)
+        );
 
-        if ($options->corporateNegoFare !== null) {
-            $priceOptions[] = self::loadCorpNegoFare($options->corporateNegoFare);
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadCorpNegoFare($options->corporateNegoFare)
+        );
 
-        if (!empty($options->corporateUniFares)) {
-            $priceOptions[] = self::loadCorpUniFares($options->corporateUniFares);
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadCorpUniFares($options->corporateUniFares, $options->awardPricing)
+        );
 
-            if (!empty($options->awardPricing)) {
-                $priceOptions[] = self::loadAwardPricing($options->awardPricing);
-            }
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadObFees($options->obFees, $options->obFeeRefs)
+        );
 
-        if (!empty($options->obFees)) {
-            $priceOptions[] = self::loadObFees($options->obFees, $options->obFeeRefs);
-        }
-
-        if (!empty($options->paxDiscountCodes)) {
-            $priceOptions[] = self::loadPaxDiscount($options->paxDiscountCodes, $options->paxDiscountCodeRefs);
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadPaxDiscount($options->paxDiscountCodes, $options->paxDiscountCodeRefs)
+        );
 
         if (!empty($options->pointOfSaleOverride)) {
             $priceOptions[] = self::loadPointOfSaleOverride($options->pointOfSaleOverride);
@@ -169,88 +166,145 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
     }
 
     /**
-     * @param string $validatingCarrier
-     * @return PricePnr13\PricingOptionGroup
+     * @param string[] $overrideOptions
+     * @param PricingOptionGroup[] $priceOptions
+     * @return PricingOptionGroup[]
+     */
+    protected static function makeOverrideOptions($overrideOptions, $priceOptions)
+    {
+        $opt = [];
+
+        if (!empty($overrideOptions)) {
+            foreach ($overrideOptions as $overrideOption) {
+                if (!self::hasPricingGroup($overrideOption, $priceOptions)) {
+                    $opt[] = new PricingOptionGroup($overrideOption);
+                }
+            }
+        }
+
+        return $opt;
+    }
+
+    /**
+     * @param string|null $validatingCarrier
+     * @return PricePnr13\PricingOptionGroup[]
      */
     protected static function makePricingOptionForValidatingCarrier($validatingCarrier)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_VALIDATING_CARRIER);
+        $opt = [];
 
-        $po->carrierInformation = new CarrierInformation($validatingCarrier);
+        if ($validatingCarrier !== null) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_VALIDATING_CARRIER);
 
-        return $po;
+            $po->carrierInformation = new CarrierInformation($validatingCarrier);
+
+            $opt[] = $po;
+        }
+
+        return $opt;
     }
 
     /**
-     * @param string $currency
-     * @return PricePnr13\PricingOptionGroup
+     * @param string|null $currency
+     * @return PricePnr13\PricingOptionGroup[]
      */
     protected static function makePricingOptionForCurrencyOverride($currency)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE);
+        $opt = [];
 
-        $po->currency = new Currency($currency, FirstCurrencyDetails::QUAL_CURRENCY_OVERRIDE);
+        if ($currency !== null) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE);
 
-        return $po;
+            $po->currency = new Currency($currency, FirstCurrencyDetails::QUAL_CURRENCY_OVERRIDE);
+
+            $opt[] = $po;
+        }
+
+        return $opt;
     }
 
     /**
-     * @param FareBasis $pricingFareBasis
-     * @return PricePnr13\PricingOptionGroup
+     * @param FareBasis[] $pricingsFareBasis
+     * @return PricePnr13\PricingOptionGroup[]
      */
-    protected static function makePricingOptionFareBasisOverride($pricingFareBasis)
+    protected static function makePricingOptionFareBasisOverride($pricingsFareBasis)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
+        $opt = [];
 
-        $po->optionDetail = new OptionDetail();
+        if ($pricingsFareBasis !== null) {
+            foreach ($pricingsFareBasis as $pricingFareBasis) {
+                $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
 
-        //Support for legacy fareBasisPrimaryCode to be removed when breaking BC:
-        $po->optionDetail->criteriaDetails[] = new CriteriaDetails(
-            $pricingFareBasis->fareBasisPrimaryCode . $pricingFareBasis->fareBasisCode
-        );
+                $po->optionDetail = new OptionDetail();
 
-        //Support for legacy segmentReference to be removed when breaking BC:
-        $po->paxSegTstReference = new PaxSegTstReference(
-            $pricingFareBasis->segmentReference,
-            $pricingFareBasis->references
-        );
+                //Support for legacy fareBasisPrimaryCode to be removed when breaking BC:
+                $po->optionDetail->criteriaDetails[] = new CriteriaDetails(
+                    $pricingFareBasis->fareBasisPrimaryCode . $pricingFareBasis->fareBasisCode
+                );
 
-        return $po;
+                //Support for legacy segmentReference to be removed when breaking BC:
+                $po->paxSegTstReference = new PaxSegTstReference(
+                    $pricingFareBasis->segmentReference,
+                    $pricingFareBasis->references
+                );
+
+                $opt[] = $po;
+            }
+        }
+
+        return $opt;
     }
 
     /**
      * Load corporate negofare
      *
-     * @param string $corporateNegoFare
-     * @return PricingOptionGroup
+     * @param string|null $corporateNegoFare
+     * @return PricingOptionGroup[]
      */
     protected static function loadCorpNegoFare($corporateNegoFare)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_CORPORATE_NEGOTIATED_FARES);
+        $opt = [];
 
-        $po->optionDetail = new OptionDetail();
-        $po->optionDetail->criteriaDetails[] = new CriteriaDetails($corporateNegoFare);
+        if ($corporateNegoFare !== null) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_CORPORATE_NEGOTIATED_FARES);
 
-        return $po;
+            $po->optionDetail = new OptionDetail();
+            $po->optionDetail->criteriaDetails[] = new CriteriaDetails($corporateNegoFare);
+
+            $opt[] = $po;
+        }
+
+        return $opt;
     }
 
     /**
      * Load corporate unifares
      *
      * @param string[] $corporateUniFares
-     * @return PricingOptionGroup
+     * @param AwardPricing|null $awardPricing
+     * @return PricingOptionGroup[]
      */
-    protected static function loadCorpUniFares($corporateUniFares)
+    protected static function loadCorpUniFares($corporateUniFares, $awardPricing)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_CORPORATE_UNIFARES);
+        $opt = [];
 
-        $po->optionDetail = new OptionDetail();
+        if (!empty($corporateUniFares)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_CORPORATE_UNIFARES);
 
-        foreach ($corporateUniFares as $corporateUniFare) {
-            $po->optionDetail->criteriaDetails[] = new CriteriaDetails($corporateUniFare);
+            $po->optionDetail = new OptionDetail();
+
+            foreach ($corporateUniFares as $corporateUniFare) {
+                $po->optionDetail->criteriaDetails[] = new CriteriaDetails($corporateUniFare);
+            }
+
+            $opt[] = $po;
+
+            if (!empty($awardPricing)) {
+                $opt[] = self::loadAwardPricing($awardPricing);
+            }
         }
 
-        return $po;
+        return $opt;
     }
 
     /**
@@ -278,57 +332,69 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
      *
      * @param ObFee[] $obFees
      * @param PaxSegRef[] $obFeeRefs
-     * @return PricingOptionGroup
+     * @return PricingOptionGroup[]
      */
     protected static function loadObFees($obFees, $obFeeRefs)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_OB_FEES);
+        $opt = [];
 
-        $po->penDisInformation = new PenDisInformation(PenDisInformation::QUAL_OB_FEES);
+        if (!empty($obFees)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_OB_FEES);
 
-        foreach ($obFees as $obFee) {
-            $amountType = (!empty($obFee->amount)) ?
-                DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT :
-                DiscountPenaltyDetails::AMOUNTTYPE_PERCENTAGE;
+            $po->penDisInformation = new PenDisInformation(PenDisInformation::QUAL_OB_FEES);
 
-            $rate = (!empty($obFee->amount)) ? $obFee->amount : $obFee->percentage;
+            foreach ($obFees as $obFee) {
+                $amountType = (!empty($obFee->amount)) ?
+                    DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT :
+                    DiscountPenaltyDetails::AMOUNTTYPE_PERCENTAGE;
 
-            $po->penDisInformation->discountPenaltyDetails[] = new DiscountPenaltyDetails(
-                $obFee->rate,
-                self::makeObFeeFunction($obFee->include),
-                $amountType,
-                $rate,
-                $obFee->currency
-            );
+                $rate = (!empty($obFee->amount)) ? $obFee->amount : $obFee->percentage;
+
+                $po->penDisInformation->discountPenaltyDetails[] = new DiscountPenaltyDetails(
+                    $obFee->rate,
+                    self::makeObFeeFunction($obFee->include),
+                    $amountType,
+                    $rate,
+                    $obFee->currency
+                );
+            }
+
+            if (!empty($obFeeRefs)) {
+                $po->paxSegTstReference = new PaxSegTstReference(null, $obFeeRefs);
+            }
+
+            $opt[] = $po;
         }
 
-        if (!empty($obFeeRefs)) {
-            $po->paxSegTstReference = new PaxSegTstReference(null, $obFeeRefs);
-        }
-
-        return $po;
+        return $opt;
     }
 
     /**
      * @param string[] $paxDiscount
      * @param PaxSegRef[] $paxDiscountCodeRefs
-     * @return PricingOptionGroup
+     * @return PricingOptionGroup[]
      */
     protected static function loadPaxDiscount($paxDiscount, $paxDiscountCodeRefs)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_PASSENGER_DISCOUNT_PTC);
+        $opt = [];
 
-        $po->penDisInformation = new PenDisInformation(PenDisInformation::QUAL_DISCOUNT);
+        if (!empty($paxDiscount)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_PASSENGER_DISCOUNT_PTC);
 
-        foreach ($paxDiscount as $discount) {
-            $po->penDisInformation->discountPenaltyDetails[] = new DiscountPenaltyDetails($discount);
+            $po->penDisInformation = new PenDisInformation(PenDisInformation::QUAL_DISCOUNT);
+
+            foreach ($paxDiscount as $discount) {
+                $po->penDisInformation->discountPenaltyDetails[] = new DiscountPenaltyDetails($discount);
+            }
+
+            if (!empty($paxDiscountCodeRefs)) {
+                $po->paxSegTstReference = new PaxSegTstReference(null, $paxDiscountCodeRefs);
+            }
+
+            $opt[] = $po;
         }
 
-        if (!empty($paxDiscountCodeRefs)) {
-            $po->paxSegTstReference = new PaxSegTstReference(null, $paxDiscountCodeRefs);
-        }
-
-        return $po;
+        return $opt;
     }
 
     /**
@@ -495,5 +561,24 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
         }
 
         return $found;
+    }
+
+    /**
+     * Merges Pricing options
+     *
+     * @param PricingOptionGroup[] $existingOptions
+     * @param PricingOptionGroup[] $newOptions
+     * @return PricingOptionGroup[] merged array
+     */
+    protected static function mergeOptions($existingOptions, $newOptions)
+    {
+        if (!empty($newOptions)) {
+            $existingOptions = array_merge(
+                $existingOptions,
+                $newOptions
+            );
+        }
+
+        return $existingOptions;
     }
 }
