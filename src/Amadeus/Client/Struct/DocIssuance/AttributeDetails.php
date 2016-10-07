@@ -23,26 +23,50 @@
 namespace Amadeus\Client\Struct\DocIssuance;
 
 /**
- * OtherCompoundOptions
+ * AttributeDetails
  *
  * @package Amadeus\Client\Struct\DocIssuance
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class OtherCompoundOptions
+class AttributeDetails
 {
-    /**
-     * @var AttributeDetails
-     */
-    public $attributeDetails;
+    const TYPE_REA_PRINTING = "ERP";
+    const TYPE_ET_CONSOLIDATOR = "ETC";
+    const TYPE_LOGICAL_PRINTER_ADDRESS = "LPA";
+    const TYPE_OVERRIDE_CONTRACT_NATURE = "OCN";
+    const TYPE_OPEN_SEGMENTS = "OPEN";
+    const TYPE_PRICING = "PRE";
+    const TYPE_SERVICE_PROVIDER = "SP";
+    const TYPE_SATELLITE_TICKETING_PRINTING = "ST";
+    const TYPE_REPORTING_TICKETING_INDICATOR = "STR";
+    const TYPE_TIME_FORMAT = "TO";
+    const TYPE_REVALIDATION = "TRV";
 
     /**
-     * OtherCompoundOptions constructor.
+     * Give tag for a pair tag, value
      *
-     * @param string $attributeType AttributeDetails::TYPE_*
+     * self::TYPE_*
+     *
+     * @var string
+     */
+    public $attributeType;
+
+    /**
+     * Free form description of an attribute
+     *
+     * @var string
+     */
+    public $attributeDescription;
+
+    /**
+     * AttributeDetails constructor.
+     *
+     * @param string $attributeType self::TYPE_*
      * @param string $attributeDescription
      */
     public function __construct($attributeType, $attributeDescription)
     {
-        $this->attributeDetails = new AttributeDetails($attributeType, $attributeDescription);
+        $this->attributeType = $attributeType;
+        $this->attributeDescription = $attributeDescription;
     }
 }

@@ -1008,6 +1008,27 @@ Issue e-Ticket for one single TST and retrieve PNR (TTP/T1/ET/RT):
         ])
     );
 
+Issue e-Ticket with Consolidator Method:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
+    use Amadeus\Client\RequestOptions\DocIssuance\CompoundOption;
+
+    $issueTicketResponse = $client->docIssuanceIssueTicket(
+        new DocIssuanceIssueTicketOptions([
+            'options' => [
+                DocIssuanceIssueTicketOptions::OPTION_ETICKET
+            ],
+            'compoundOptions' => [
+                new CompoundOption([
+                    'type' => CompoundOption::TYPE_ET_CONSOLIDATOR,
+                    'details' => '1A'
+                ])
+            ]
+        ])
+    );
+
 ****
 Info
 ****

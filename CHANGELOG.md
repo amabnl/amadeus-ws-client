@@ -14,6 +14,7 @@
     - Add support for adding ARNK segments when creating or updating a PNR.
     - Add support for Group PNR in the regular PNR_AddMultiElements call (previously this was only in the pnrCreatePnr)
     - Add support for connected segments in an itinerary (deprecated 'tripSegments' option)
+* ``DocIssuance_IssueTicket``: Support for Compound Options in request, such as Consolidator method (https://github.com/amabnl/amadeus-ws-client/issues/23)
 * ``Fare_PricePnrWithBookingClass``: added support for extra request options:
     - Negotiated corporate fares
     - Corporate unifares
@@ -33,6 +34,7 @@
 * Implemented ``PNR_TransferOwnership``
 * Implemented ``Ticket_DisplayTST``
 * Implemented ``Fare_MasterPricerCalendar``
+* Implemented ``Fare_InformativeBestPricingWithoutPNR``
 
 # Release 1.0.0 (18 September 2016)
 

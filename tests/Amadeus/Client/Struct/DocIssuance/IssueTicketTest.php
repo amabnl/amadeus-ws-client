@@ -22,12 +22,15 @@
 
 namespace Test\Amadeus\Client\Struct\DocIssuance;
 
+use Amadeus\Client\RequestOptions\DocIssuance\CompoundOption;
 use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
+use Amadeus\Client\Struct\DocIssuance\AttributeDetails;
 use Amadeus\Client\Struct\DocIssuance\InternalIdDetails;
 use Amadeus\Client\Struct\DocIssuance\IssueTicket;
 use Amadeus\Client\Struct\DocIssuance\OverrideDate;
 use Amadeus\Client\Struct\DocIssuance\PassengerReference;
 use Amadeus\Client\Struct\DocIssuance\ReferenceDetails;
+use Amadeus\Client\Struct\DocIssuance\StatusDetails;
 use Test\Amadeus\BaseTestCase;
 
 /**
@@ -140,5 +143,45 @@ class IssueTicketTest extends BaseTestCase
 
         $this->assertCount(0, $message->optionGroup);
         $this->assertEquals(DocIssuanceIssueTicketOptions::PAX_TYPE_ADULT, $message->infantOrAdultAssociation->paxDetails->type);
+    }
+
+    public function testCanMakeIssueTicketRequestWithConsolidatorMethod()
+    {
+        $opt = new DocIssuanceIssueTicketOptions([
+            'options' => [
+                DocIssuanceIssueTicketOptions::OPTION_ETICKET
+            ],
+            'compoundOptions' => [
+                new CompoundOption([
+                    'type' => CompoundOption::TYPE_ET_CONSOLIDATOR,
+                    'details' => '1A'
+                ])
+            ]
+        ]);
+
+        $message = new IssueTicket($opt);
+
+        $this->assertCount(1, $message->optionGroup);
+        $this->assertEquals(
+            DocIssuanceIssueTicketOptions::OPTION_ETICKET,
+            $message->optionGroup[0]->switches->statusDetails->indicator
+        );
+
+        $this->assertCount(1, $message->otherCompoundOptions);
+        $this->assertEquals(
+            AttributeDetails::TYPE_ET_CONSOLIDATOR,
+            $message->otherCompoundOptions[0]->attributeDetails->attributeType
+        );
+        $this->assertEquals(
+            '1A',
+            $message->otherCompoundOptions[0]->attributeDetails->attributeDescription
+        );
+
+        $this->assertNull($message->overrideDate);
+        $this->assertNull($message->infantOrAdultAssociation);
+        $this->assertNull($message->agentInfo);
+        $this->assertEmpty($message->paxSelection);
+        $this->assertEmpty($message->selection);
+        $this->assertNull($message->stock);
     }
 }

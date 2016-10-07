@@ -91,14 +91,11 @@ class IssueTicket extends BaseWsMessage
             }
         }
 
-        if ($options->alternateDateValidation instanceof \DateTime) {
-            $this->overrideDate = new OverrideDate(
-                OverrideDate::OPT_ALTERNATE_DATE_VALIDATION,
-                $options->alternateDateValidation
-            );
-        } elseif ($options->overridePastDateTst === true) {
-            $this->overrideDate = new OverrideDate(OverrideDate::OPT_OVERRIDE_PAST_DATE_TST);
-        }
+        $this->loadOverrideDate($options);
+
+        $this->loadReferences($options);
+
+        $this->loadOptions($options);
 
         if (!empty($options->agentCode)) {
             $this->agentInfo = new AgentInfo($options->agentCode);
@@ -107,7 +104,40 @@ class IssueTicket extends BaseWsMessage
         if (!empty($options->passengerType)) {
             $this->infantOrAdultAssociation = new InfantOrAdultAssociation($options->passengerType);
         }
+    }
 
+    /**
+     * @param ReferenceDetails $ref
+     */
+    protected function addSelectionItem(ReferenceDetails $ref)
+    {
+        if (is_null($this->selection) || empty($this->selection)) {
+            $this->selection[] = new Selection();
+        }
+
+        $this->selection[0]->referenceDetails[] = $ref;
+    }
+
+    /**
+     * @param DocIssuanceIssueTicketOptions $options
+     */
+    protected function loadOverrideDate(DocIssuanceIssueTicketOptions $options)
+    {
+        if ($options->alternateDateValidation instanceof \DateTime) {
+            $this->overrideDate = new OverrideDate(
+                OverrideDate::OPT_ALTERNATE_DATE_VALIDATION,
+                $options->alternateDateValidation
+            );
+        } elseif ($options->overridePastDateTst === true) {
+            $this->overrideDate = new OverrideDate(OverrideDate::OPT_OVERRIDE_PAST_DATE_TST);
+        }
+    }
+
+    /**
+     * @param DocIssuanceIssueTicketOptions $options
+     */
+    protected function loadReferences(DocIssuanceIssueTicketOptions $options)
+    {
         if (!empty($options->passengerTattoos)) {
             foreach ($options->passengerTattoos as $passengerTattoo) {
                 $this->paxSelection[] = new PaxSelection($passengerTattoo);
@@ -124,23 +154,26 @@ class IssueTicket extends BaseWsMessage
                 );
             }
         }
+    }
 
+    /**
+     * @param DocIssuanceIssueTicketOptions $options
+     */
+    protected function loadOptions(DocIssuanceIssueTicketOptions $options)
+    {
         if (!empty($options->options)) {
             foreach ($options->options as $option) {
                 $this->optionGroup[] = new OptionGroup($option);
             }
         }
-    }
 
-    /**
-     * @param ReferenceDetails $ref
-     */
-    protected function addSelectionItem(ReferenceDetails $ref)
-    {
-        if (is_null($this->selection) || empty($this->selection)) {
-            $this->selection[] = new Selection();
+        if (!empty($options->compoundOptions)) {
+            foreach ($options->compoundOptions as $compoundOption) {
+                $this->otherCompoundOptions[] = new OtherCompoundOptions(
+                    $compoundOption->type,
+                    $compoundOption->details
+                );
+            }
         }
-
-        $this->selection[0]->referenceDetails[] = $ref;
     }
 }
