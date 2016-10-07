@@ -21,6 +21,7 @@
  */
 
 namespace Amadeus\Client\ResponseHandler;
+
 use Amadeus\Client\Exception;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
@@ -52,7 +53,7 @@ abstract class BaseUtils implements ResponseHandlerInterface
      * @throws \RuntimeException
      * @return Result
      */
-    public abstract function analyzeResponse($sendResult, $messageName);
+    abstract public function analyzeResponse($sendResult, $messageName);
 
     /**
      * Analysing a PNR_Reply
