@@ -788,6 +788,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("INVALID FORMAT", $result->messages[0]->text);
     }
 
+    public function testCanHandleFareInformativeBestPricingWithoutPNRError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareInformativeBestPricingWithoutPNRErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_InformativeBestPricingWithoutPNR');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('00477', $result->messages[0]->code);
+        $this->assertEquals("INVALID FORMAT", $result->messages[0]->text);
+    }
+
     public function testCanHandleDocIssuanceIssueTicketOkResponse()
     {
         $respHandler = new ResponseHandler\Base();

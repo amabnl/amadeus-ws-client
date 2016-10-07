@@ -24,6 +24,7 @@ namespace Test\Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestCreator\Base;
+use Amadeus\Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
@@ -223,6 +224,25 @@ class BaseTest extends BaseTestCase
 
             ])
         );
+    }
 
+    public function testCanCreateFareInformativeBestPricingMessageV12()
+    {
+        $this->setExpectedException('Amadeus\Client\RequestCreator\MessageVersionUnsupportedException');
+
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['Fare_InformativeBestPricingWithoutPNR' => '12.3']
+        ]);
+
+        $rq = new Base($par);
+
+        $rq->createRequest(
+            'Fare_InformativeBestPricingWithoutPNR',
+            new FareInformativeBestPricingWithoutPnrOptions([
+
+            ])
+        );
     }
 }

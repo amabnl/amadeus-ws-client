@@ -21,6 +21,7 @@ This is the list of messages that are at least partially supported at this time:
 - Fare_MasterPricerCalendar
 - Fare_PricePNRWithBookingClass
 - Fare_InformativePricingWithoutPNR
+- Fare_InformativeBestPricingWithoutPNR
 - Fare_ConvertCurrency
 - Fare_CheckRules
 - Air_MultiAvailability
@@ -43,7 +44,6 @@ This is the list of messages that are at least partially supported at this time:
 
 On the to-do list / work in progress:
 
-- Fare_InformativeBestPricingWithoutPNR
 - Fare_PricePNRWithLowerFares
 - Fare_PricePNRWithLowestFare
 - Fare_DisplayFaresForCityPair

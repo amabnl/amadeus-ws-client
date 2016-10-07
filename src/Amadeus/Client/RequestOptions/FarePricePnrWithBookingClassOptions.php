@@ -43,6 +43,7 @@ class FarePricePnrWithBookingClassOptions extends Base
     const OVERRIDE_FARETYPE_CORPNR = 'RC';
     const OVERRIDE_FARETYPE_CORPUNI = 'RW';
     const OVERRIDE_RETURN_LOWEST = 'RLO';
+    const OVERRIDE_RETURN_LOWEST_AVAILABLE = 'RLA';
     const OVERRIDE_RETURN_ALL = 'RLI';
     const OVERRIDE_PTC_ONLY = 'PTC';
 

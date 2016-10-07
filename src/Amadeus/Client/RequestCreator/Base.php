@@ -32,6 +32,7 @@ use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
 use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
 use Amadeus\Client\RequestOptions\FareConvertCurrencyOptions;
+use Amadeus\Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
@@ -379,6 +380,22 @@ class Base implements RequestCreatorInterface
             return new Struct\Fare\InformativePricingWithoutPNR12($params);
         } else {
             return new Struct\Fare\InformativePricingWithoutPNR13($params);
+        }
+    }
+
+    /**
+     * createFareInformativeBestPricingWithoutPNR
+     *
+     * @param FareInformativeBestPricingWithoutPnrOptions $params
+     * @return Struct\Fare\InformativeBestPricingWithoutPNR12|Struct\Fare\InformativeBestPricingWithoutPNR13
+     */
+    protected function createFareInformativeBestPricingWithoutPNR(FareInformativeBestPricingWithoutPnrOptions $params)
+    {
+        $version = $this->getActiveVersionFor('Fare_InformativeBestPricingWithoutPNR');
+        if ($version < 13) {
+            return new Struct\Fare\InformativeBestPricingWithoutPNR12($params);
+        } else {
+            return new Struct\Fare\InformativeBestPricingWithoutPNR13($params);
         }
     }
 

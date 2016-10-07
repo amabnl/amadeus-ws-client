@@ -36,6 +36,8 @@ class PricingOptionKey
     const OPTION_PASSENGER_DISCOUNT = "PAX";
     const OPTION_FARE_BASIS_SIMPLE_OVERRIDE = "FBA";
     const OPTION_NEGOTIATED_FARES = "RN";
+    const OPTION_PUBLISHED_FARES = "RP";
+    const OPTION_UNIFARES = "RU";
     const OPTION_CORPORATE_NEGOTIATED_FARES = "RC";
     const OPTION_CORPORATE_UNIFARES = "RW";
     const OPTION_OB_FEES = "OBF";
@@ -49,6 +51,10 @@ class PricingOptionKey
     const OPTION_PAX_SEGMENT_TST_SELECTION = "SEL";
     const OPTION_PAST_DATE_PRICING = "DAT";
     const OPTION_AWARD_PRICING = "AWD";
+    const OPTION_RETURN_LOWEST = 'RLO';
+    const OPTION_RETURN_LOWEST_AVAILABLE = 'RLA';
+    const OPTION_RETURN_ALL = 'RLI';
+    const OPTION_PTC_ONLY = 'PTC';
 
     /**
      * AC Add Country taxes

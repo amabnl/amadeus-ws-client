@@ -2243,6 +2243,51 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanFareInformativeBestPricingWithoutPnrVersion15()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('fareInformativeBestPricingWithoutPnrReply14.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Fare\InformativeBestPricingWithoutPNR13(
+            new Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions([
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Fare_InformativeBestPricingWithoutPNR', $expectedMessageResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));;
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Fare_InformativeBestPricingWithoutPNR' => "14.1"]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+
+        $response = $client->fareInformativeBestPricingWithoutPnr(
+            new Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions([
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoSignOutCall()
     {
         $mockedSendResult = new Client\Session\Handler\SendResult();

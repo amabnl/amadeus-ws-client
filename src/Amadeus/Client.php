@@ -540,6 +540,22 @@ class Client
     }
 
     /**
+     * Fare_InformativeBestPricingWithoutPNR
+     *
+     * @param RequestOptions\FareInformativeBestPricingWithoutPnrOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function fareInformativeBestPricingWithoutPnr(
+        RequestOptions\FareInformativeBestPricingWithoutPnrOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_InformativeBestPricingWithoutPNR';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Fare_CheckRules
      *
      * @param RequestOptions\FareCheckRulesOptions $options

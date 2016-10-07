@@ -639,6 +639,78 @@ The Pricing options that can be used are the same pricing options as in the ``Fa
         ])
     );
 
+-------------------------------------
+Fare_InformativeBestPricingWithoutPNR
+-------------------------------------
+
+**Fare_InformativeBestPricingWithoutPNR request options are exactly the same as for Fare_InformativePricingWithoutPNR.**
+
+Pricing example of a CDG-LHR-CDG trip for 2 passengers, with options below:
+
+- take into account published fares (RP)
+- take into account Unifares (RU)
+- use PTC "CH" for passenger 2 (PAX)
+- convert fare into USD (FCO)
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions;
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
+    $informativePricingResponse = $client->fareInformativeBestPricingWithoutPnr(
+        new FareInformativeBestPricingWithoutPnrOptions([
+             'passengers' => [
+                new Passenger([
+                    'tattoos' => [1, 2],
+                    'type' => Passenger::TYPE_ADULT
+                ])
+            ],
+            'segments' => [
+                new Segment([
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2013-12-01 07:30:00', new \DateTimeZone('UTC')),
+                    'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2013-12-01 07:50:00', new \DateTimeZone('UTC')),
+                    'from' => 'CDG',
+                    'to' => 'LHR',
+                    'marketingCompany' => '6X',
+                    'operatingCompany' => '6X',
+                    'flightNumber' => '1680',
+                    'bookingClass' => 'T',
+                    'segmentTattoo' => 1,
+                    'groupNumber' => 1
+                ]),
+                new Segment([
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2013-12-10 06:40:00', new \DateTimeZone('UTC')),
+                    'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2013-12-10 09:00:00', new \DateTimeZone('UTC')),
+                    'from' => 'LHR',
+                    'to' => 'CDG',
+                    'marketingCompany' => '6X',
+                    'operatingCompany' => '6X',
+                    'flightNumber' => '1381',
+                    'bookingClass' => 'V',
+                    'segmentTattoo' => 2,
+                    'groupNumber' => 1
+                ])
+            ],
+            'pricingOptions' => new PricingOptions([
+                'overrideOptions' => [
+                    PricingOptions::OVERRIDE_FARETYPE_PUB,
+                    PricingOptions::OVERRIDE_FARETYPE_UNI
+                ],
+                'currencyOverride' => 'USD',
+                'paxDiscountCodes' => ['CH'],
+                'paxDiscountCodeRefs' => [
+                    new PaxSegRef([
+                        'type' => PaxSegRef::TYPE_PASSENGER,
+                        'reference' => 2
+                    ])
+                ]
+            ])
+        ])
+    );
+
 ---------------
 Fare_CheckRules
 ---------------
