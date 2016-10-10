@@ -20,34 +20,47 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\Struct\MiniRule;
 
 /**
- * OptionDetail
+ * FareRecommendationId
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\Struct\MiniRule
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class OptionDetail
+class FareRecommendationId
 {
     /**
-     * @var CriteriaDetails[]
+     * Fare Recommendation Number
      */
-    public $criteriaDetails = [];
+    const REFERENCE_TYPE_FARE_RECOMMENDATION_NUMBER = "FRN";
 
     /**
-     * OptionDetail constructor.
-     *
-     * @param string|array|null $options
+     * To retrieve minirules for ALL pricings.
      */
-    public function __construct($options = null)
+    const PRICING_ID_ALL = "ALL";
+
+    /**
+     * self::REFERENCE_TYPE_*
+     *
+     * @var string
+     */
+    public $referenceType = self::REFERENCE_TYPE_FARE_RECOMMENDATION_NUMBER;
+
+    /**
+     * Identification number or self::PRICING_ID_ALL for all
+     *
+     * @var int|string
+     */
+    public $uniqueReference;
+
+    /**
+     * FareRecommendationId constructor.
+     *
+     * @param int|string $pricingId a reference or self::PRICING_ID_ALL
+     */
+    public function __construct($pricingId)
     {
-        if (is_string($options)) {
-            $this->criteriaDetails[] = new CriteriaDetails($options);
-        } elseif (is_array($options)) {
-            foreach ($options as $option) {
-                $this->criteriaDetails[] = new CriteriaDetails($option);
-            }
-        }
+        $this->uniqueReference = $pricingId;
     }
 }

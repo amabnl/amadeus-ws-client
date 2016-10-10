@@ -20,33 +20,40 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\Struct\MiniRule;
+
+use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingOptions;
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * OptionDetail
+ * GetFromPricing
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\Struct\MiniRule
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class OptionDetail
+class GetFromPricing extends BaseWsMessage
 {
     /**
-     * @var CriteriaDetails[]
+     * Fare Recommendation ID
+     *
+     * @var FareRecommendationId[]
      */
-    public $criteriaDetails = [];
+    public $fareRecommendationId = [];
 
     /**
-     * OptionDetail constructor.
+     * GetFromPricing constructor.
      *
-     * @param string|array|null $options
+     * @param MiniRuleGetFromPricingOptions $options
      */
-    public function __construct($options = null)
+    public function __construct(MiniRuleGetFromPricingOptions $options)
     {
-        if (is_string($options)) {
-            $this->criteriaDetails[] = new CriteriaDetails($options);
-        } elseif (is_array($options)) {
-            foreach ($options as $option) {
-                $this->criteriaDetails[] = new CriteriaDetails($option);
+        if (empty($options->pricings)) {
+            $this->fareRecommendationId[] = new FareRecommendationId(
+                FareRecommendationId::PRICING_ID_ALL
+            );
+        } else {
+            foreach ($options->pricings as $pricing) {
+                $this->fareRecommendationId[] = new FareRecommendationId($pricing);
             }
         }
     }

@@ -664,6 +664,10 @@ class Base extends BaseUtils
         return $this->analyzeGenericOfferResponse($response);
     }
 
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
     protected function analyzeMiniRuleGetFromPricingRecResponse($response)
     {
         $analyzeResponse = new Result($response);
@@ -691,6 +695,15 @@ class Base extends BaseUtils
         }
 
         return $analyzeResponse;
+    }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeMiniRuleGetFromPricingResponse($response)
+    {
+        return $this->analyzeMiniRuleGetFromPricingRecResponse($response);
     }
 
     /**

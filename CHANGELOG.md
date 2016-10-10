@@ -37,6 +37,7 @@
 * Implemented ``Fare_InformativeBestPricingWithoutPNR``
 * Implemented ``Fare_PricePNRWithLowerFares``
 * Implemented ``Fare_PricePNRWithLowestFare``
+* Implemented ``MiniRule_GetFromPricing``
 
 # Release 1.0.0 (18 September 2016)
 

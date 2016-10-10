@@ -242,10 +242,8 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
             foreach ($pricingsFareBasis as $pricingFareBasis) {
                 $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
 
-                $po->optionDetail = new OptionDetail();
-
                 //Support for legacy fareBasisPrimaryCode to be removed when breaking BC:
-                $po->optionDetail->criteriaDetails[] = new CriteriaDetails(
+                $po->optionDetail = new OptionDetail(
                     $pricingFareBasis->fareBasisPrimaryCode . $pricingFareBasis->fareBasisCode
                 );
 
@@ -275,8 +273,7 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
         if ($corporateNegoFare !== null) {
             $po = new PricingOptionGroup(PricingOptionKey::OPTION_CORPORATE_NEGOTIATED_FARES);
 
-            $po->optionDetail = new OptionDetail();
-            $po->optionDetail->criteriaDetails[] = new CriteriaDetails($corporateNegoFare);
+            $po->optionDetail = new OptionDetail($corporateNegoFare);
 
             $opt[] = $po;
         }
@@ -297,13 +294,7 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
 
         if (!empty($corporateUniFares)) {
             $po = new PricingOptionGroup(PricingOptionKey::OPTION_CORPORATE_UNIFARES);
-
-            $po->optionDetail = new OptionDetail();
-
-            foreach ($corporateUniFares as $corporateUniFare) {
-                $po->optionDetail->criteriaDetails[] = new CriteriaDetails($corporateUniFare);
-            }
-
+            $po->optionDetail = new OptionDetail($corporateUniFares);
             $opt[] = $po;
 
             if (!empty($awardPricing)) {
@@ -321,8 +312,6 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
     protected static function loadAwardPricing($awardPricing)
     {
         $po = new PricingOptionGroup(PricingOptionKey::OPTION_AWARD_PRICING);
-
-        $po->optionDetail = new OptionDetail();
 
         $po->carrierInformation = new CarrierInformation($awardPricing->carrier);
 
@@ -448,9 +437,7 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
 
         if (!empty($pricingLogic)) {
             $po = new PricingOptionGroup(PricingOptionKey::OPTION_PRICING_LOGIC);
-
-            $po->optionDetail = new OptionDetail();
-            $po->optionDetail->criteriaDetails[] = new CriteriaDetails($pricingLogic);
+            $po->optionDetail = new OptionDetail($pricingLogic);
             $opt[] = $po;
         }
 
@@ -468,8 +455,7 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
         if (!empty($ticketType)) {
             $po = new PricingOptionGroup(PricingOptionKey::OPTION_TICKET_TYPE);
 
-            $po->optionDetail = new OptionDetail();
-            $po->optionDetail->criteriaDetails[] = new CriteriaDetails($ticketType);
+            $po->optionDetail = new OptionDetail($ticketType);
 
             $opt[] = $po;
         }

@@ -39,6 +39,7 @@ This is the list of messages that are at least partially supported at this time:
 - Offer_ConfirmHotelOffer
 - Offer_ConfirmCarOffer
 - MiniRule_GetFromPricingRec
+- MiniRule_GetFromPricing
 - Info_EncodeDecodeCity
 - Command_Cryptic
 - PriceXplorer_ExtremeSearch
@@ -59,7 +60,6 @@ On the to-do list / work in progress:
 - PointOfRef_Search
 - PointOfRef_CategoryList
 - Offer_CreateOffer
-- MiniRule_GetFromPricing
 - FOP_CreateFormOfPayment
 - Ticket_CreateTSMFromPricing
 - Media_GetMedia

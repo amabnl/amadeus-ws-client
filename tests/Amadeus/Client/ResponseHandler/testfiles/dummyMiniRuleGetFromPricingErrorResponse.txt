@@ -1,0 +1,22 @@
+<MiniRule_GetFromPricingReply xmlns="http://xml.amadeus.com/TMRCRR_11_1_1A">
+    <responseDetails>
+        <statusCode>N</statusCode>
+    </responseDetails>
+    <errorWarningGroup>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>20</errorCode>
+                <errorCategory>EC</errorCategory>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <language>EN</language>
+                <source>S</source>
+                <encoding>1</encoding>
+            </freeTextDetails>
+            <freeText>RESTRICTED</freeText>
+        </errorWarningDescription>
+    </errorWarningGroup>
+</MiniRule_GetFromPricingReply>

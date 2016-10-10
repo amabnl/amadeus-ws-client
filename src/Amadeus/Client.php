@@ -706,6 +706,22 @@ class Client
     }
 
     /**
+     * MiniRule_GetFromPricing
+     *
+     * @param RequestOptions\MiniRuleGetFromPricingOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function miniRuleGetFromPricing(
+        RequestOptions\MiniRuleGetFromPricingOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'MiniRule_GetFromPricing';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Info_EncodeDecodeCity
      *
      * @param RequestOptions\InfoEncodeDecodeCityOptions $options

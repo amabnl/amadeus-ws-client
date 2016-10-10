@@ -20,34 +20,22 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * OptionDetail
+ * MiniRuleGetFromPricingOptions
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class OptionDetail
+class MiniRuleGetFromPricingOptions extends Base
 {
     /**
-     * @var CriteriaDetails[]
-     */
-    public $criteriaDetails = [];
-
-    /**
-     * OptionDetail constructor.
+     * To limit the result to specific recommendations, enter the recommendation numbers here.
      *
-     * @param string|array|null $options
+     * If left empty: all pricings are assumed.
+     *
+     * @var int[]
      */
-    public function __construct($options = null)
-    {
-        if (is_string($options)) {
-            $this->criteriaDetails[] = new CriteriaDetails($options);
-        } elseif (is_array($options)) {
-            foreach ($options as $option) {
-                $this->criteriaDetails[] = new CriteriaDetails($option);
-            }
-        }
-    }
+    public $pricings = [];
 }

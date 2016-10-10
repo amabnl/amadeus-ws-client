@@ -27,6 +27,7 @@ use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
 use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
+use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingOptions;
 use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingRecOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
@@ -176,7 +177,7 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * makeMiniRuleGetFromPricingRec
+     * createMiniRuleGetFromPricingRec
      *
      * @param MiniRuleGetFromPricingRecOptions $params
      * @return Struct\MiniRule\GetFromPricingRec
@@ -184,6 +185,17 @@ class Base implements RequestCreatorInterface
     protected function createMiniRuleGetFromPricingRec(MiniRuleGetFromPricingRecOptions $params)
     {
         return new Struct\MiniRule\GetFromPricingRec($params);
+    }
+
+    /**
+     * createMiniRuleGetFromPricing
+     *
+     * @param MiniRuleGetFromPricingOptions $params
+     * @return Struct\MiniRule\GetFromPricing
+     */
+    protected function createMiniRuleGetFromPricing(MiniRuleGetFromPricingOptions $params)
+    {
+        return new Struct\MiniRule\GetFromPricing($params);
     }
 
     /**

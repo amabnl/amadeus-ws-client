@@ -39,21 +39,34 @@ class Pricing extends LoadParamsFromArray
 
     /**
      * Offer element tattoo
+     *
+     * Only to be used with MiniRule_GetFromPricingRec
      */
     const TYPE_OFFER = "OF";
 
     /**
      * Transitional Stored Ticket
+     *
+     * Only to be used with MiniRule_GetFromPricingRec
      */
     const TYPE_TST = "TST";
 
     /**
      * Product Quotation Record Reference
+     *
+     * Only to be used with MiniRule_GetFromPricingRec
      */
     const TYPE_PROD_QUOTATION = "PQR";
 
     /**
-     * self::ALL_PRICINGS or a number indicating a specific pricing
+     * Fare Recommendation Number
+     *
+     * Only to be used with MiniRule_GetFromPricing
+     */
+    const TYPE_FARE_RECOMMENDATION_NUMBER = "FRN";
+
+    /**
+     * self::ALL_PRICINGS to indicate ALL or a number indicating a specific pricing
      *
      * @var int|string
      */
@@ -61,6 +74,9 @@ class Pricing extends LoadParamsFromArray
 
     /**
      * self::TYPE_*
+     *
+     * Only necessary for MiniRule_GetFromPricingRec:
+     * For MiniRule_GetFromPricing, "FRN" is assumed.
      *
      * @var string
      */

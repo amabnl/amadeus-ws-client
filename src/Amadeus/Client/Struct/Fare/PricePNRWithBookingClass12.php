@@ -27,6 +27,8 @@ use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions as LowerFareOpt;
+use Amadeus\Client\RequestOptions\FarePricePnrWithLowestFareOptions as LowestFareOpt;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\PricePnr12\AttributeDetails;
 use Amadeus\Client\Struct\Fare\PricePnr12\CarrierAgreements;
@@ -122,7 +124,7 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     /**
      * PricePNRWithBookingClass12 constructor.
      *
-     * @param FarePricePnrWithBookingClassOptions|PricePNRWithLowerFares12 $options
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
      */
     public function __construct($options)
     {
@@ -157,10 +159,10 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     }
 
     /**
-     * @param FarePricePnrWithBookingClassOptions $options
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
      * @throws OptionNotSupportedException
      */
-    protected function checkUnsupportedOptions(FarePricePnrWithBookingClassOptions $options)
+    protected function checkUnsupportedOptions($options)
     {
         if (!empty($options->obFees)) {
             throw new OptionNotSupportedException('OB Fees option not supported in version 12 or lower');
@@ -172,9 +174,9 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     }
 
     /**
-     * @param FarePricePnrWithBookingClassOptions $options
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
      */
-    protected function loadOverrideOptions(FarePricePnrWithBookingClassOptions $options)
+    protected function loadOverrideOptions($options)
     {
         if (count($options->overrideOptions) !== 0) {
             foreach ($options->overrideOptions as $overrideOption) {
@@ -217,9 +219,9 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     }
 
     /**
-     * @param FarePricePnrWithBookingClassOptions $options
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
      */
-    protected function loadCorporateFares(FarePricePnrWithBookingClassOptions $options)
+    protected function loadCorporateFares($options)
     {
         if ($options->corporateNegoFare !== null) {
             $this->loadCorporateNegoFare($options->corporateNegoFare);
@@ -268,10 +270,9 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     }
 
     /**
-     * @param FarePricePnrWithBookingClassOptions $options
-     *
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
      */
-    protected function loadOverrideLocations(FarePricePnrWithBookingClassOptions $options)
+    protected function loadOverrideLocations($options)
     {
         if (!empty($options->pointOfSaleOverride)) {
             $this->cityOverride = new PricePnr12\CityOverride(
@@ -292,9 +293,9 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     }
 
     /**
-     * @param FarePricePnrWithBookingClassOptions $options
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
      */
-    protected function loadValidatingCarrier(FarePricePnrWithBookingClassOptions $options)
+    protected function loadValidatingCarrier($options)
     {
         if (is_string($options->validatingCarrier)) {
             $this->validatingCarrier = new ValidatingCarrier($options->validatingCarrier);
@@ -302,10 +303,10 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     }
 
     /**
-     * @param FarePricePnrWithBookingClassOptions $options
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
      *
      */
-    protected function loadFareBasis(FarePricePnrWithBookingClassOptions $options)
+    protected function loadFareBasis($options)
     {
         $short = AttributeDetails::OVERRIDE_FAREBASIS; //Short var name because I get complaints from phpcs. No judging.
         if (in_array($short, $options->overrideOptions) && !empty($options->pricingsFareBasis)) {
@@ -316,10 +317,9 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     }
 
     /**
-     * @param FarePricePnrWithBookingClassOptions $options
-     *
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
      */
-    protected function loadTaxOptions(FarePricePnrWithBookingClassOptions $options)
+    protected function loadTaxOptions($options)
     {
         if (!empty($options->taxes)) {
             $this->loadTaxes($options->taxes);

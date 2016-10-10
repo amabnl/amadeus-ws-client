@@ -1317,6 +1317,7 @@ Confirm a given CAR offer:
 ********
 MiniRule
 ********
+
 --------------------------
 MiniRule_GetFromPricingRec
 --------------------------
@@ -1336,6 +1337,35 @@ Get MiniRules for a pricing in context (either a TST pricing, Offers or a pricin
                     'id' => Pricing::ALL_PRICINGS
                 ])
             ]
+        ])
+    );
+
+-----------------------
+MiniRule_GetFromPricing
+-----------------------
+
+Get MiniRules for a pricing in context *(After a Fare_PricePNRWithBookingClass, Fare_PricePNRWithLowerFares, FarePricePNRWithLowestFare, Fare_InformativePricingWithoutPNR or Fare_InformativeBestPricingWithoutPNR message)*:
+
+Get Minirules for all pricings returned:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingOptions;
+    use Amadeus\Client\RequestOptions\MiniRule\Pricing;
+
+    $miniRulesResponse = $client->miniRuleGetFromPricing(new MiniRuleGetFromPricingOptions());
+
+
+Get Minirules for specific recommendations *(recommendations nr 1 & 2 in this example)*:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingOptions;
+    use Amadeus\Client\RequestOptions\MiniRule\Pricing;
+
+    $miniRulesResponse = $client->miniRuleGetFromPricing(
+        new MiniRuleGetFromPricingOptions([
+            'pricings' => [1, 2]
         ])
     );
 
