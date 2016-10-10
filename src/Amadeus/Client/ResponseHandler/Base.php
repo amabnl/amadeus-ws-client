@@ -451,6 +451,26 @@ class Base extends BaseUtils
     }
 
     /**
+     * @param SendResult $response Fare_PricePNRWithLowerFares result
+     * @return Result
+     * @throws Exception
+     */
+    protected function analyzeFarePricePNRWithLowerFaresResponse($response)
+    {
+        return $this->analyzeFarePricePNRWithBookingClassResponse($response);
+    }
+
+    /**
+     * @param SendResult $response Fare_PricePNRWithLowestFare result
+     * @return Result
+     * @throws Exception
+     */
+    protected function analyzeFarePricePNRWithLowestFareResponse($response)
+    {
+        return $this->analyzeFarePricePNRWithBookingClassResponse($response);
+    }
+
+    /**
      * @param SendResult $response
      * @return Result
      */

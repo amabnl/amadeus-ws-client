@@ -524,6 +524,38 @@ class Client
     }
 
     /**
+     * Fare_PricePnrWithLowerFares
+     *
+     * @param RequestOptions\FarePricePnrWithLowerFaresOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function farePricePnrWithLowerFares(
+        RequestOptions\FarePricePnrWithLowerFaresOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_PricePNRWithLowerFares';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Fare_PricePnrWithLowestFare
+     *
+     * @param RequestOptions\FarePricePnrWithLowestFareOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function farePricePnrWithLowestFare(
+        RequestOptions\FarePricePnrWithLowestFareOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_PricePNRWithLowestFare';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Fare_InformativePricingWithoutPNR
      *
      * @param RequestOptions\FareInformativePricingWithoutPnrOptions $options

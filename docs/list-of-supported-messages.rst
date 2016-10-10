@@ -20,6 +20,8 @@ This is the list of messages that are at least partially supported at this time:
 - Fare_MasterPricerTravelBoardSearch
 - Fare_MasterPricerCalendar
 - Fare_PricePNRWithBookingClass
+- Fare_PricePNRWithLowerFares
+- Fare_PricePNRWithLowestFare
 - Fare_InformativePricingWithoutPNR
 - Fare_InformativeBestPricingWithoutPNR
 - Fare_ConvertCurrency
@@ -44,8 +46,6 @@ This is the list of messages that are at least partially supported at this time:
 
 On the to-do list / work in progress:
 
-- Fare_PricePNRWithLowerFares
-- Fare_PricePNRWithLowestFare
 - Fare_DisplayFaresForCityPair
 - Fare_DisplayBookingCodeInformation
 - Fare_CalculateMileage
@@ -53,6 +53,8 @@ On the to-do list / work in progress:
 - Fare_PriceUpsellPNR
 - Fare_GetFareFamilyDescription
 - Fare_RebookAndCreateTST
+- Air_RebookAirSegment
+- Air_TLAGetAvailability
 - PNR_NameChange
 - PointOfRef_Search
 - PointOfRef_CategoryList
@@ -64,3 +66,4 @@ On the to-do list / work in progress:
 - Service_IntegratedPricing
 - DocIssuance_IssueMiscellaneousDocuments
 - DocIssuance_IssueCombined
+

@@ -35,6 +35,8 @@
 * Implemented ``Ticket_DisplayTST``
 * Implemented ``Fare_MasterPricerCalendar``
 * Implemented ``Fare_InformativeBestPricingWithoutPNR``
+* Implemented ``Fare_PricePNRWithLowerFares``
+* Implemented ``Fare_PricePNRWithLowestFare``
 
 # Release 1.0.0 (18 September 2016)
 

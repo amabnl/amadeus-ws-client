@@ -160,7 +160,6 @@ class InformativeBestPricingWithoutPNR13Test extends BaseTestCase
         $this->assertEquals('CH', $msg->pricingOptionGroup[3]->penDisInformation->discountPenaltyDetails[0]->rate);
         $this->assertEquals(ReferenceDetails::QUALIFIER_PAX_REFERENCE, $msg->pricingOptionGroup[3]->paxSegTstReference->referenceDetails[0]->type);
         $this->assertEquals(2, $msg->pricingOptionGroup[3]->paxSegTstReference->referenceDetails[0]->value);
-
     }
 }
 

@@ -1,0 +1,14 @@
+<Fare_PricePNRWithLowerFaresReply xmlns="http://xml.amadeus.com/TPLFRR_14_1_1A">
+    <applicationError>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>00477</errorCode>
+                <errorCategory>EC</errorCategory>
+                <errorCodeOwner>1A</errorCodeOwner>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeText>INVALID FORMAT</freeText>
+        </errorWarningDescription>
+    </applicationError>
+</Fare_PricePNRWithLowerFaresReply>

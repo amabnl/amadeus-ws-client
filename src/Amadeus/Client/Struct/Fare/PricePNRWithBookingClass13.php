@@ -30,6 +30,8 @@ use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions as LowerFareOpt;
+use Amadeus\Client\RequestOptions\FarePricePnrWithLowestFareOptions as LowestFareOpt;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\PricePnr13\CarrierInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\CriteriaDetails;
@@ -64,10 +66,10 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
     /**
      * PricePNRWithBookingClass13 constructor.
      *
-     * @param FarePricePnrWithBookingClassOptions $options
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
      * @throws MessageVersionUnsupportedException
      */
-    public function __construct(FarePricePnrWithBookingClassOptions $options)
+    public function __construct($options)
     {
         $this->pricingOptionGroup = $this->loadPricingOptionsFromRequestOptions($options);
     }
@@ -77,10 +79,10 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
      *
      * Extracted because this method is also used in the InformativePricingWithoutPnr messages.
      *
-     * @param FarePricePnrWithBookingClassOptions $options
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
      * @return PricingOptionGroup[]
      */
-    public static function loadPricingOptionsFromRequestOptions(FarePricePnrWithBookingClassOptions $options)
+    public static function loadPricingOptionsFromRequestOptions($options)
     {
         $priceOptions = [];
 

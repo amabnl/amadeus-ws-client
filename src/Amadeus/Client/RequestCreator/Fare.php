@@ -29,6 +29,8 @@ use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions;
+use Amadeus\Client\RequestOptions\FarePricePnrWithLowestFareOptions;
 use Amadeus\Client\Struct;
 
 /**
@@ -90,7 +92,7 @@ class Fare
     }
 
     /**
-     * makeFarePricePnrWithBookingClass
+     * createFarePricePnrWithBookingClass
      *
      * @param FarePricePnrWithBookingClassOptions $params
      * @param string $version
@@ -102,6 +104,38 @@ class Fare
             return new Struct\Fare\PricePNRWithBookingClass12($params);
         } else {
             return new Struct\Fare\PricePNRWithBookingClass13($params);
+        }
+    }
+
+    /**
+     * createFarePricePnrWithLowerFares
+     *
+     * @param FarePricePnrWithLowerFaresOptions $params
+     * @param string $version
+     * @return Struct\Fare\PricePNRWithLowerFares12|Struct\Fare\PricePNRWithLowerFares13
+     */
+    public function createFarePricePnrWithLowerFares(FarePricePnrWithLowerFaresOptions $params, $version)
+    {
+        if ($version < 13) {
+            return new Struct\Fare\PricePNRWithLowerFares12($params);
+        } else {
+            return new Struct\Fare\PricePNRWithLowerFares13($params);
+        }
+    }
+
+    /**
+     * createFarePricePnrWithLowestFare
+     *
+     * @param FarePricePnrWithLowestFareOptions $params
+     * @param string $version
+     * @return Struct\Fare\PricePNRWithLowestFare12|Struct\Fare\PricePNRWithLowestFare13
+     */
+    public function createFarePricePnrWithLowestFare(FarePricePnrWithLowestFareOptions $params, $version)
+    {
+        if ($version < 13) {
+            return new Struct\Fare\PricePNRWithLowestFare12($params);
+        } else {
+            return new Struct\Fare\PricePNRWithLowestFare13($params);
         }
     }
 

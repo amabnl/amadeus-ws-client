@@ -24,10 +24,6 @@ namespace Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params\RequestCreatorParams;
-use Amadeus\Client\RequestOptions\AirFlightInfoOptions;
-use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
-use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
-use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
 use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
@@ -37,10 +33,6 @@ use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\PriceXplorerExtremeSearchOptions;
-use Amadeus\Client\RequestOptions\QueueListOptions;
-use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
-use Amadeus\Client\RequestOptions\QueuePlacePnrOptions;
-use Amadeus\Client\RequestOptions\QueueRemoveItemOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\RequestOptions\SalesReportsDisplayQueryReportOptions;
 use Amadeus\Client\RequestOptions\SecurityAuthenticateOptions;
@@ -120,66 +112,6 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * @param QueueListOptions $params
-     * @return Struct\Queue\QueueList
-     */
-    protected function createQueueList(QueueListOptions $params)
-    {
-        $queueListRequest = new Struct\Queue\QueueList(
-            $params->queue->queue,
-            $params->queue->category
-        );
-
-        return $queueListRequest;
-    }
-
-    /**
-     * @param QueuePlacePnrOptions $params
-     * @return Struct\Queue\PlacePnr
-     */
-    protected function createQueuePlacePnr(QueuePlacePnrOptions $params)
-    {
-        $req = new Struct\Queue\PlacePnr(
-            $params->recordLocator,
-            $params->sourceOfficeId,
-            $params->targetQueue
-        );
-
-        return $req;
-    }
-
-    /**
-     * @param QueueRemoveItemOptions $params
-     * @return Struct\Queue\RemoveItem
-     */
-    protected function createQueueRemoveItem(QueueRemoveItemOptions $params)
-    {
-        $req = new Struct\Queue\RemoveItem(
-            $params->queue,
-            $params->recordLocator,
-            $params->originatorOfficeId
-        );
-
-        return $req;
-    }
-
-    /**
-     * @param QueueMoveItemOptions $params
-     * @return Struct\Queue\MoveItem
-     */
-    protected function createQueueMoveItem(QueueMoveItemOptions $params)
-    {
-        $req = new Struct\Queue\MoveItem(
-            $params->recordLocator,
-            $params->officeId,
-            $params->sourceQueue,
-            $params->destinationQueue
-        );
-
-        return $req;
-    }
-
-    /**
      * @param OfferVerifyOptions $params
      * @return Struct\Offer\Verify
      */
@@ -219,50 +151,6 @@ class Base implements RequestCreatorInterface
     protected function createOfferConfirmCarOffer(OfferConfirmCarOptions $params)
     {
         return new Struct\Offer\ConfirmCar($params);
-    }
-
-
-
-    /**
-     * Air_MultiAvailability
-     *
-     * @param AirMultiAvailabilityOptions $params
-     * @return Struct\Air\MultiAvailability
-     */
-    protected function createAirMultiAvailability(AirMultiAvailabilityOptions $params)
-    {
-        return new Struct\Air\MultiAvailability($params);
-    }
-
-    /**
-     * Air_SellFromRecommendation
-     *
-     * @param AirSellFromRecommendationOptions $params
-     * @return Struct\Air\SellFromRecommendation
-     */
-    protected function createAirSellFromRecommendation(AirSellFromRecommendationOptions $params)
-    {
-        return new Struct\Air\SellFromRecommendation($params);
-    }
-
-    /**
-     * Air_FlightInfo
-     *
-     * @param AirFlightInfoOptions $params
-     * @return Struct\Air\FlightInfo
-     */
-    protected function createAirFlightInfo(AirFlightInfoOptions $params)
-    {
-        return new Struct\Air\FlightInfo($params);
-    }
-
-    /**
-     * @param AirRetrieveSeatMapOptions $params
-     * @return Struct\Air\RetrieveSeatMap
-     */
-    protected function createAirRetrieveSeatMap(AirRetrieveSeatMapOptions $params)
-    {
-        return new Struct\Air\RetrieveSeatMap($params);
     }
 
     /**
@@ -409,6 +297,12 @@ class Base implements RequestCreatorInterface
                 break;
             case 'pnr':
                 $builder = new Pnr($this->params);
+                break;
+            case 'air':
+                $builder = new Air();
+                break;
+            case 'queue':
+                $builder = new Queue();
                 break;
             default:
                 $builder = $this;

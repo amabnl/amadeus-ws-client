@@ -743,6 +743,51 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("INVALID FORMAT", $result->messages[0]->text);
     }
 
+    public function testCanFindFarePricePnrWithBookingClass12Error()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFarePricePnrWithBookingClass12ErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePnrWithBookingClass');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('00477', $result->messages[0]->code);
+        $this->assertEquals("INVALID FORMAT", $result->messages[0]->text);
+    }
+
+    public function testCanFindFarePricePnrWithLowerFares14Error()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFarePricePnrWithLowerFares14ErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePnrWithLowerFares');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('00477', $result->messages[0]->code);
+        $this->assertEquals("INVALID FORMAT", $result->messages[0]->text);
+    }
+
+    public function testCanFindFarePricePnrWithLowestFare14Error()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFarePricePnrWithLowestFare14ErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePnrWithLowestFare');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('00477', $result->messages[0]->code);
+        $this->assertEquals("INVALID FORMAT", $result->messages[0]->text);
+    }
+
     public function testCanHandleFareConvertCurrencyError()
     {
         $respHandler = new ResponseHandler\Base();

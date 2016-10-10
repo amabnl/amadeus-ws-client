@@ -548,6 +548,80 @@ Price PNR: use the fare basis QNC469W2 to price segments 1 and 2 with:
 
 `More examples of Fare_PricePNRWithBookingClass messages <samples/pricepnr.rst>`_
 
+---------------------------
+Fare_PricePNRWithLowerFares
+---------------------------
+
+**Fare_PricePNRWithLowerFares request options are exactly the same as for Fare_PricePNRWithBookingClass.**
+
+An example of pricing, with options listed below:
+
+- take published fares into account (RP)
+- take Unifares into account (RU)
+- use PTC "CH" for passenger 2 (PAX)
+- convert fare into USD (FCO)
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
+    $pricingResponse = $client->farePricePnrWithLowerFares(
+        new FarePricePnrWithLowerFaresOptions([
+            'overrideOptions' => [
+                FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_PUB,
+                FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_UNI
+            ],
+            'currencyOverride' => 'USD',
+            'paxDiscountCodes' => ['CH'],
+            'paxDiscountCodeRefs' => [
+                new PaxSegRef([
+                    'type' => PaxSegRef::TYPE_PASSENGER,
+                    'reference' => 2
+                ])
+            ]
+        ])
+    );
+
+`More examples of Pricing messages <samples/pricepnr.rst>`_
+
+---------------------------
+Fare_PricePNRWithLowestFare
+---------------------------
+
+**Fare_PricePNRWithLowestFare request options are exactly the same as for Fare_PricePNRWithBookingClass.**
+
+An example of pricing, with options listed below:
+
+- take published fares into account (RP)
+- take Unifares into account (RU)
+- use PTC "CH" for passenger 2 (PAX)
+- convert fare into USD (FCO)
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithLowestFareOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
+    $pricingResponse = $client->farePricePnrWithLowestFare(
+        new FarePricePnrWithLowestFareOptions([
+            'overrideOptions' => [
+                FarePricePnrWithLowestFareOptions::OVERRIDE_FARETYPE_PUB,
+                FarePricePnrWithLowestFareOptions::OVERRIDE_FARETYPE_UNI
+            ],
+            'currencyOverride' => 'USD',
+            'paxDiscountCodes' => ['CH'],
+            'paxDiscountCodeRefs' => [
+                new PaxSegRef([
+                    'type' => PaxSegRef::TYPE_PASSENGER,
+                    'reference' => 2
+                ])
+            ]
+        ])
+    );
+
+`More examples of Pricing messages <samples/pricepnr.rst>`_
+
 ---------------------------------
 Fare_InformativePricingWithoutPNR
 ---------------------------------

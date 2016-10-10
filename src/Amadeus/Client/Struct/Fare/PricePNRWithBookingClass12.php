@@ -122,9 +122,9 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     /**
      * PricePNRWithBookingClass12 constructor.
      *
-     * @param FarePricePnrWithBookingClassOptions $options
+     * @param FarePricePnrWithBookingClassOptions|PricePNRWithLowerFares12 $options
      */
-    public function __construct(FarePricePnrWithBookingClassOptions $options)
+    public function __construct($options)
     {
         $this->checkUnsupportedOptions($options);
 
