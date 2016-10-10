@@ -30,26 +30,12 @@ use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
 use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
-use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
-use Amadeus\Client\RequestOptions\FareConvertCurrencyOptions;
-use Amadeus\Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions;
-use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
-use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
-use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
-use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
 use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingRecOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
-use Amadeus\Client\RequestOptions\PnrAddMultiElementsBase;
-use Amadeus\Client\RequestOptions\PnrCancelOptions;
-use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
-use Amadeus\Client\RequestOptions\PnrDisplayHistoryOptions;
-use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
-use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
-use Amadeus\Client\RequestOptions\PnrTransferOwnershipOptions;
 use Amadeus\Client\RequestOptions\PriceXplorerExtremeSearchOptions;
 use Amadeus\Client\RequestOptions\QueueListOptions;
 use Amadeus\Client\RequestOptions\QueueMoveItemOptions;
@@ -103,10 +89,12 @@ class Base implements RequestCreatorInterface
     {
         $this->checkMessageIsInWsdl($messageName);
 
+        $builder = $this->findBuilderForMessage($messageName);
+
         $methodName = 'create' . str_replace("_", "", $messageName);
 
-        if (method_exists($this, $methodName)) {
-            return $this->$methodName($params);
+        if (method_exists($builder, $methodName)) {
+            return $builder->$methodName($params, $this->getActiveVersionFor($messageName));
         } else {
             throw new \RuntimeException('Message ' . $methodName . ' is not implemented in ' . __CLASS__);
         }
@@ -129,79 +117,6 @@ class Base implements RequestCreatorInterface
     protected function createSecurityAuthenticate(SecurityAuthenticateOptions $params)
     {
         return new Struct\Security\Authenticate($params);
-    }
-
-    /**
-     * Create request object for PNR_Retrieve message
-     *
-     * @param PnrRetrieveOptions $params
-     * @return Struct\Pnr\Retrieve
-     */
-    protected function createPNRRetrieve(PnrRetrieveOptions $params)
-    {
-        $retrieveRequest = new Struct\Pnr\Retrieve(
-            Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
-            $params->recordLocator
-        );
-
-        return $retrieveRequest;
-    }
-
-    /**
-     * @param PnrRetrieveAndDisplayOptions $params
-     * @return Struct\Pnr\RetrieveAndDisplay
-     */
-    protected function createPNRRetrieveAndDisplay(PnrRetrieveAndDisplayOptions $params)
-    {
-        $req = new Struct\Pnr\RetrieveAndDisplay(
-            $params->recordLocator,
-            $params->retrieveOption
-        );
-
-        return $req;
-    }
-
-    /**
-     * @param PnrAddMultiElementsBase $params
-     * @return Struct\Pnr\AddMultiElements
-     */
-    protected function createPNRAddMultiElements(PnrAddMultiElementsBase $params)
-    {
-        if ($params instanceof PnrCreatePnrOptions && empty($params->receivedFrom)) {
-            //Automagically add RF if not present:
-            $params->receivedFrom = $this->params->receivedFrom;
-        }
-
-        $req = new Struct\Pnr\AddMultiElements($params);
-
-        return $req;
-    }
-
-    /**
-     * @param PnrCancelOptions $params
-     * @return Struct\Pnr\Cancel
-     */
-    protected function createPNRCancel(PnrCancelOptions $params)
-    {
-        return new Struct\Pnr\Cancel($params);
-    }
-
-    /**
-     * @param PnrDisplayHistoryOptions $params
-     * @return Struct\Pnr\DisplayHistory
-     */
-    protected function createPNRDisplayHistory(PnrDisplayHistoryOptions $params)
-    {
-        return new Struct\Pnr\DisplayHistory($params);
-    }
-
-    /**
-     * @param PnrTransferOwnershipOptions $params
-     * @return Struct\Pnr\TransferOwnership
-     */
-    protected function createPNRTransferOwnership(PnrTransferOwnershipOptions $params)
-    {
-        return new Struct\Pnr\TransferOwnership($params);
     }
 
     /**
@@ -306,98 +221,7 @@ class Base implements RequestCreatorInterface
         return new Struct\Offer\ConfirmCar($params);
     }
 
-    /**
-     * createFareMasterPricerTravelBoardSearch
-     *
-     * @param FareMasterPricerTbSearch $params
-     * @return Struct\Fare\MasterPricerTravelBoardSearch
-     */
-    protected function createFareMasterPricerTravelBoardSearch(FareMasterPricerTbSearch $params)
-    {
-        return new Struct\Fare\MasterPricerTravelBoardSearch($params);
-    }
 
-    /**
-     * createFareMasterPricerCalendar
-     *
-     * @param FareMasterPricerCalendarOptions $params
-     * @return Struct\Fare\MasterPricerCalendar
-     */
-    protected function createFareMasterPricerCalendar(FareMasterPricerCalendarOptions $params)
-    {
-        return new Struct\Fare\MasterPricerCalendar($params);
-    }
-
-
-    /**
-     * createFareCheckRules
-     *
-     * @param FareCheckRulesOptions $params
-     * @return Struct\Fare\CheckRules
-     */
-    protected function createFareCheckRules(FareCheckRulesOptions $params)
-    {
-        return new Struct\Fare\CheckRules($params);
-    }
-
-    /**
-     * createFareConvertCurrency
-     *
-     * @param FareConvertCurrencyOptions $params
-     * @return Struct\Fare\ConvertCurrency
-     */
-    protected function createFareConvertCurrency(FareConvertCurrencyOptions $params)
-    {
-        return new Struct\Fare\ConvertCurrency($params);
-    }
-
-    /**
-     * makeFarePricePnrWithBookingClass
-     *
-     * @param FarePricePnrWithBookingClassOptions $params
-     * @return Struct\Fare\PricePNRWithBookingClass12|Struct\Fare\PricePNRWithBookingClass13
-     */
-    protected function createFarePricePnrWithBookingClass(FarePricePnrWithBookingClassOptions $params)
-    {
-        $version = $this->getActiveVersionFor('Fare_PricePNRWithBookingClass');
-        if ($version < 13) {
-            return new Struct\Fare\PricePNRWithBookingClass12($params);
-        } else {
-            return new Struct\Fare\PricePNRWithBookingClass13($params);
-        }
-    }
-
-    /**
-     * createFareInformativePricingWithoutPNR
-     *
-     * @param FareInformativePricingWithoutPnrOptions $params
-     * @return Struct\Fare\InformativePricingWithoutPNR12|Struct\Fare\InformativePricingWithoutPNR13
-     */
-    protected function createFareInformativePricingWithoutPNR(FareInformativePricingWithoutPnrOptions $params)
-    {
-        $version = $this->getActiveVersionFor('Fare_InformativePricingWithoutPNR');
-        if ($version < 13) {
-            return new Struct\Fare\InformativePricingWithoutPNR12($params);
-        } else {
-            return new Struct\Fare\InformativePricingWithoutPNR13($params);
-        }
-    }
-
-    /**
-     * createFareInformativeBestPricingWithoutPNR
-     *
-     * @param FareInformativeBestPricingWithoutPnrOptions $params
-     * @return Struct\Fare\InformativeBestPricingWithoutPNR12|Struct\Fare\InformativeBestPricingWithoutPNR13
-     */
-    protected function createFareInformativeBestPricingWithoutPNR(FareInformativeBestPricingWithoutPnrOptions $params)
-    {
-        $version = $this->getActiveVersionFor('Fare_InformativeBestPricingWithoutPNR');
-        if ($version < 13) {
-            return new Struct\Fare\InformativeBestPricingWithoutPNR12($params);
-        } else {
-            return new Struct\Fare\InformativeBestPricingWithoutPNR13($params);
-        }
-    }
 
     /**
      * Air_MultiAvailability
@@ -562,5 +386,35 @@ class Base implements RequestCreatorInterface
     protected function getActiveVersionFor($messageName)
     {
         return $this->messagesAndVersions[$messageName];
+    }
+
+    /**
+     * Find the correct builder for a given message
+     *
+     * Message build methods in all builders must adhere to the
+     * 'create'<message name without underscores> logic as used in createRequest method.
+     *
+     * @param string $messageName
+     * @return Base|Fare|Pnr
+     */
+    protected function findBuilderForMessage($messageName)
+    {
+        $builder = null;
+
+        $section = strtolower(substr($messageName, 0, strpos($messageName, '_')));
+
+        switch ($section) {
+            case 'fare':
+                $builder = new Fare();
+                break;
+            case 'pnr':
+                $builder = new Pnr($this->params);
+                break;
+            default:
+                $builder = $this;
+                break;
+        }
+
+        return $builder;
     }
 }

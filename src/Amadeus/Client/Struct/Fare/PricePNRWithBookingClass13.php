@@ -124,38 +124,43 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
             self::loadPaxDiscount($options->paxDiscountCodes, $options->paxDiscountCodeRefs)
         );
 
-        if (!empty($options->pointOfSaleOverride)) {
-            $priceOptions[] = self::loadPointOfSaleOverride($options->pointOfSaleOverride);
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadPointOverrides(
+                $options->pointOfSaleOverride,
+                $options->pointOfTicketingOverride
+            )
+        );
 
-        if (!empty($options->pointOfTicketingOverride)) {
-            $priceOptions[] = self::loadPointOfTicketingOverride($options->pointOfTicketingOverride);
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadPricingLogic($options->pricingLogic)
+        );
 
-        if (!empty($options->pricingLogic)) {
-            $priceOptions[] = self::loadPricingLogic($options->pricingLogic);
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadTicketType($options->ticketType)
+        );
 
-        if (!empty($options->ticketType)) {
-            $priceOptions[] =  self::loadTicketType($options->ticketType);
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadTaxes($options->taxes)
+        );
 
-        if (!empty($options->taxes)) {
-            $priceOptions[] = self::loadTaxes($options->taxes);
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadExemptTaxes($options->exemptTaxes)
+        );
 
-        if (!empty($options->exemptTaxes)) {
-            $priceOptions[] = self::loadExemptTaxes($options->exemptTaxes);
-        }
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadPastDate($options->pastDatePricing)
+        );
 
-        if ($options->pastDatePricing instanceof \DateTime) {
-            $priceOptions[] = self::loadPastDate($options->pastDatePricing);
-        }
-
-        if (!empty($options->references)) {
-            $priceOptions[] = self::loadReferences($options->references);
-        }
-
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadReferences($options->references)
+        );
 
         // All options processed, no options found:
         if (empty($priceOptions)) {
@@ -398,133 +403,169 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
     }
 
     /**
-     * @param string $posOverride
-     * @return PricingOptionGroup
+     * @param string|null $posOverride
+     * @param string|null $potOverride
+     * @return PricingOptionGroup[]
      */
-    protected static function loadPointOfSaleOverride($posOverride)
+    protected static function loadPointOverrides($posOverride, $potOverride)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_POINT_OF_SALE_OVERRIDE);
+        $opt = [];
 
-        $po->locationInformation = new LocationInformation(
-            LocationInformation::TYPE_POINT_OF_SALE,
-            $posOverride
-        );
+        if (!empty($posOverride)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_POINT_OF_SALE_OVERRIDE);
 
-        return $po;
+            $po->locationInformation = new LocationInformation(
+                LocationInformation::TYPE_POINT_OF_SALE,
+                $posOverride
+            );
+
+            $opt[] = $po;
+        }
+
+        if (!empty($potOverride)) {
+            $po2 = new PricingOptionGroup(PricingOptionKey::OPTION_POINT_OF_TICKETING_OVERRIDE);
+
+            $po2->locationInformation = new LocationInformation(
+                LocationInformation::TYPE_POINT_OF_TICKETING,
+                $potOverride
+            );
+
+            $opt[] = $po2;
+        }
+
+        return $opt;
     }
 
     /**
-     * @param string $potOverride
-     * @return PricingOptionGroup
-     */
-    protected static function loadPointOfTicketingOverride($potOverride)
-    {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_POINT_OF_TICKETING_OVERRIDE);
-
-        $po->locationInformation = new LocationInformation(
-            LocationInformation::TYPE_POINT_OF_TICKETING,
-            $potOverride
-        );
-
-        return $po;
-    }
-
-    /**
-     * @param string $pricingLogic
-     * @return PricingOptionGroup
+     * @param string|null $pricingLogic
+     * @return PricingOptionGroup[]
      */
     protected static function loadPricingLogic($pricingLogic)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_PRICING_LOGIC);
+        $opt = [];
 
-        $po->optionDetail = new OptionDetail();
-        $po->optionDetail->criteriaDetails[] = new CriteriaDetails($pricingLogic);
+        if (!empty($pricingLogic)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_PRICING_LOGIC);
 
-        return $po;
+            $po->optionDetail = new OptionDetail();
+            $po->optionDetail->criteriaDetails[] = new CriteriaDetails($pricingLogic);
+            $opt[] = $po;
+        }
+
+        return $opt;
     }
 
     /**
-     * @param string $ticketType
-     * @return PricingOptionGroup
+     * @param string|null $ticketType
+     * @return PricingOptionGroup[]
      */
     protected static function loadTicketType($ticketType)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_TICKET_TYPE);
+        $opt = [];
 
-        $po->optionDetail = new OptionDetail();
-        $po->optionDetail->criteriaDetails[] = new CriteriaDetails($ticketType);
+        if (!empty($ticketType)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_TICKET_TYPE);
 
-        return $po;
+            $po->optionDetail = new OptionDetail();
+            $po->optionDetail->criteriaDetails[] = new CriteriaDetails($ticketType);
+
+            $opt[] = $po;
+        }
+
+        return $opt;
     }
 
     /**
      * @param Tax[] $taxes
-     * @return PricingOptionGroup
+     * @return PricingOptionGroup[]
      */
     protected static function loadTaxes($taxes)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_ADD_TAX);
+        $opt = [];
 
-        foreach ($taxes as $tax) {
-            $qualifier = (!empty($tax->amount)) ? TaxData::QUALIFIER_AMOUNT : TaxData::QUALIFIER_PERCENTAGE;
-            $rate = (!empty($tax->amount)) ? $tax->amount : $tax->percentage;
+        if (!empty($taxes)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_ADD_TAX);
 
-            $po->taxInformation[] = new TaxInformation(
-                $tax->countryCode,
-                $tax->taxNature,
-                $qualifier,
-                $rate
-            );
+            foreach ($taxes as $tax) {
+                $qualifier = (!empty($tax->amount)) ? TaxData::QUALIFIER_AMOUNT : TaxData::QUALIFIER_PERCENTAGE;
+                $rate = (!empty($tax->amount)) ? $tax->amount : $tax->percentage;
+
+                $po->taxInformation[] = new TaxInformation(
+                    $tax->countryCode,
+                    $tax->taxNature,
+                    $qualifier,
+                    $rate
+                );
+            }
+            $opt[] = $po;
         }
 
-        return $po;
+        return $opt;
     }
 
     /**
      * @param ExemptTax[] $exemptTaxes
-     * @return PricingOptionGroup
+     * @return PricingOptionGroup[]
      */
     protected static function loadExemptTaxes($exemptTaxes)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_EXEMPT_FROM_TAX);
+        $opt = [];
 
-        foreach ($exemptTaxes as $tax) {
-            $po->taxInformation[] = new TaxInformation(
-                $tax->countryCode,
-                $tax->taxNature
-            );
+        if (!empty($exemptTaxes)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_EXEMPT_FROM_TAX);
+
+            foreach ($exemptTaxes as $tax) {
+                $po->taxInformation[] = new TaxInformation(
+                    $tax->countryCode,
+                    $tax->taxNature
+                );
+            }
+
+            $opt[] = $po;
         }
 
-        return $po;
+        return $opt;
     }
 
     /**
-     * @param \DateTime $pastDate
-     * @return PricingOptionGroup
+     * @param \DateTime|null $pastDate
+     * @return PricingOptionGroup[]
      */
-    protected static function loadPastDate(\DateTime $pastDate)
+    protected static function loadPastDate($pastDate)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_PAST_DATE_PRICING);
+        $opt = [];
 
-        $po->dateInformation = new DateInformation(
-            DateInformation::OPT_DATE_OVERRIDE,
-            $pastDate
-        );
+        if ($pastDate instanceof \DateTime) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_PAST_DATE_PRICING);
 
-        return $po;
+            $po->dateInformation = new DateInformation(
+                DateInformation::OPT_DATE_OVERRIDE,
+                $pastDate
+            );
+
+            $opt[] = $po;
+        }
+
+        return $opt;
     }
 
     /**
      * @param PaxSegRef[] $references
-     * @return PricingOptionGroup
+     * @return PricingOptionGroup[]
      */
     protected static function loadReferences($references)
     {
-        $po = new PricingOptionGroup(PricingOptionKey::OPTION_PAX_SEGMENT_TST_SELECTION);
+        $opt = [];
 
-        $po->paxSegTstReference = new PaxSegTstReference(null, $references);
+        if (!empty($references)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_PAX_SEGMENT_TST_SELECTION);
 
-        return $po;
+            $po->paxSegTstReference = new PaxSegTstReference(null, $references);
+
+            $opt[] = $po;
+        }
+
+        return $opt;
     }
 
     /**
