@@ -40,7 +40,7 @@ class PaxSegTstReference
     /**
      * PaxSegTstReference constructor.
      *
-     * @param array $segmentReference Legacy segment references format
+     * @param array|null $segmentReference Legacy segment references format
      * @param PaxSegRef[]|null $references New segment references format
      */
     public function __construct($segmentReference = null, $references = null)

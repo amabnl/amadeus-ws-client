@@ -41,6 +41,8 @@ class Reference extends LoadParamsFromArray
     const TYPE_SEGMENT_REQUEST = "SR";
 
     /**
+     * Reference type
+     *
      * self::TYPE_*
      *
      * Possible values:
@@ -55,12 +57,14 @@ class Reference extends LoadParamsFromArray
      * SS Segment Tattoo+SubTattoo reference number
      * ST Segment Tattoo reference number
      *
-     * @var
+     * @var string
      */
     public $type;
 
     /**
-     * @var
+     * Tattoo or reference number
+     *
+     * @var string
      */
     public $id;
 }

@@ -36,6 +36,8 @@ class Air extends Segment
     const SELLTYPE_BASIC_BOOKING = "P10";
 
     /**
+     * Segment status
+     *
      * self::STATUS_*
      *
      * @var string
@@ -43,11 +45,15 @@ class Air extends Segment
     public $status = self::STATUS_NEED_SEGMENT;
 
     /**
+     * Flight Number
+     *
      * @var string
      */
     public $flightNumber;
 
     /**
+     * Departure date
+     *
      * @var \DateTime
      */
     public $date;

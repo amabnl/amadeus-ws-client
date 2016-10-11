@@ -44,10 +44,12 @@ class ServiceRequest
     /**
      * ServiceRequest constructor.
      *
-     * @param ServiceRequestOptions $options
+     * @param ServiceRequestOptions|null $options
      */
     public function __construct(ServiceRequestOptions $options = null)
     {
-        $this->ssr = new Ssr($options);
+        if ($options !== null) {
+            $this->ssr = new Ssr($options);
+        }
     }
 }

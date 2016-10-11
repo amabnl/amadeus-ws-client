@@ -68,7 +68,7 @@ class CabinId
      * CabinId constructor.
      *
      * @param string $cabinCode self::CABIN_*
-     * @param string $cabinOption self::CABINOPT_*
+     * @param string|null $cabinOption self::CABINOPT_*
      */
     public function __construct($cabinCode, $cabinOption = null)
     {

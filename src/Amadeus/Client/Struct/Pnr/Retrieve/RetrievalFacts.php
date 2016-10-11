@@ -57,7 +57,7 @@ class RetrievalFacts
      * Construct retrievalFacts element
      *
      * @param string $retrievalType
-     * @param string $recordLocator (OPTIONAL)
+     * @param string|null $recordLocator (OPTIONAL)
      */
     public function __construct($retrievalType, $recordLocator = null)
     {

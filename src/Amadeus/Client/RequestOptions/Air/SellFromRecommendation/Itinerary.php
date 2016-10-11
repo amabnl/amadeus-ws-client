@@ -33,15 +33,22 @@ use Amadeus\Client\LoadParamsFromArray;
 class Itinerary extends LoadParamsFromArray
 {
     /**
+     * Departure location
+     *
      * @var string
      */
     public $from;
+
     /**
+     * Arrival location
+     *
      * @var string
      */
     public $to;
 
     /**
+     * Flight segments
+     *
      * @var Segment[]
      */
     public $segments;

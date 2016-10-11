@@ -33,11 +33,15 @@ use Amadeus\Client\LoadParamsFromArray;
 class PassengerReAssocOptions extends LoadParamsFromArray
 {
     /**
+     * Pricing reference
+     *
      * @var string
      */
     public $pricingReference;
 
     /**
+     * Passenger associations
+     *
      * @var PassengerDef[]
      */
     public $paxReferences = [];

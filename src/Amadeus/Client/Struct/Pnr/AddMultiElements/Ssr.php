@@ -130,7 +130,7 @@ class Ssr
             $this->companyId = $options->company;
             $this->indicator = $options->indicator;
             $this->boardpoint = $options->boardPoint;
-            $this->offPoint = $options->offPoint;
+            $this->offpoint = $options->offPoint;
             $this->freetext = $options->freeText;
         }
     }

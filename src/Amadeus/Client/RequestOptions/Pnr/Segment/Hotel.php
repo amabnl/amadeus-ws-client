@@ -25,7 +25,7 @@ namespace Amadeus\Client\RequestOptions\Pnr\Segment;
 use Amadeus\Client\RequestOptions\Pnr\Segment;
 
 /**
- * Hotel
+ * Hotel segment - not yet implemented
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Segment
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>

@@ -78,11 +78,11 @@ class Ticket
      */
     public $airlineCode;
     /**
-     * @var string
+     * @var int|string
      */
     public $queueNumber;
     /**
-     * @var string
+     * @var int|string
      */
     public $queueCategory;
 

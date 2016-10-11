@@ -47,9 +47,9 @@ class FlightDetail
     /**
      * FlightDetail constructor.
      *
-     * @param \string[] $flightType
+     * @param string[] $flightType
      */
-    public function __construct(array $flightType = [])
+    public function __construct($flightType = [])
     {
         $this->flightType = $flightType;
     }

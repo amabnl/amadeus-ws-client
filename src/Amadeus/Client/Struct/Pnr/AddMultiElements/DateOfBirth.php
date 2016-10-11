@@ -40,7 +40,7 @@ class DateOfBirth
      */
     public function __construct($birthDate = null)
     {
-        if ($birthDate != null) {
+        if ($birthDate !== null) {
             $this->dateAndTimeDetails = new DateAndTimeDetails(
                 $birthDate,
                 DateAndTimeDetails::QUAL_DATEOFBIRTH

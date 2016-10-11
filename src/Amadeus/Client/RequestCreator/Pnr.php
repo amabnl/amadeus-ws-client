@@ -46,12 +46,15 @@ use Amadeus\Client\Struct;
 class Pnr
 {
     /**
+     * Parameters
+     *
      * @var RequestCreatorParams
      */
     protected $params;
 
     /**
-     * Pnr constructor.
+     * Pnr Request Creator constructor.
+     *
      * @param RequestCreatorParams $params
      */
     public function __construct(RequestCreatorParams $params)
@@ -76,6 +79,8 @@ class Pnr
     }
 
     /**
+     * PNR_RetrieveAndDisplay
+     *
      * @param PnrRetrieveAndDisplayOptions $params
      * @return Struct\Pnr\RetrieveAndDisplay
      */
@@ -90,6 +95,8 @@ class Pnr
     }
 
     /**
+     * PNR_AddMultiElements
+     *
      * @param PnrAddMultiElementsBase $params
      * @return Struct\Pnr\AddMultiElements
      */
@@ -106,6 +113,8 @@ class Pnr
     }
 
     /**
+     * PNR_Cancel
+     *
      * @param PnrCancelOptions $params
      * @return Struct\Pnr\Cancel
      */
@@ -115,6 +124,8 @@ class Pnr
     }
 
     /**
+     * PNR_DisplayHistory
+     *
      * @param PnrDisplayHistoryOptions $params
      * @return Struct\Pnr\DisplayHistory
      */
@@ -124,6 +135,8 @@ class Pnr
     }
 
     /**
+     * PNR_TransferOwnership
+     *
      * @param PnrTransferOwnershipOptions $params
      * @return Struct\Pnr\TransferOwnership
      */

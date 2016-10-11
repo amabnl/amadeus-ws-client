@@ -42,9 +42,9 @@ class CorporateId
     /**
      * CorporateId constructor.
      *
-     * @param \string[] $identity
+     * @param string[] $identity
      */
-    public function __construct(array $identity)
+    public function __construct($identity)
     {
         $this->identity = $identity;
     }

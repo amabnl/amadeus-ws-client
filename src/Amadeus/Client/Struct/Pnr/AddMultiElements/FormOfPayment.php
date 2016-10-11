@@ -30,13 +30,18 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class FormOfPayment
 {
+    /**
+     * @var Fop
+     */
     public $fop;
 
     /**
-     * @param string $identification One of the constants Fop::IDENT_*
+     * @param string|null $identification One of the constants Fop::IDENT_*
      */
     public function __construct($identification = null)
     {
-        $this->fop = new Fop($identification);
+        if (!is_null($identification)) {
+            $this->fop = new Fop($identification);
+        }
     }
 }

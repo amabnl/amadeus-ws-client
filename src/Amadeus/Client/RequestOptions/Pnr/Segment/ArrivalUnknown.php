@@ -25,7 +25,9 @@ namespace Amadeus\Client\RequestOptions\Pnr\Segment;
 use Amadeus\Client\RequestOptions\Pnr\Segment;
 
 /**
- * ArrivalUnknown
+ * Arrival Unknown segment (ARNK)
+ *
+ * Used when connecting 2 flight segments which have different destination -> departure
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Segment
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>

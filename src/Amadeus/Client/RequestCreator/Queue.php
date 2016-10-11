@@ -42,6 +42,8 @@ use Amadeus\Client\Struct;
 class Queue
 {
     /**
+     * Queue_List
+     *
      * @param QueueListOptions $params
      * @return Struct\Queue\QueueList
      */
@@ -56,6 +58,8 @@ class Queue
     }
 
     /**
+     * Queue_PlacePNR
+     *
      * @param QueuePlacePnrOptions $params
      * @return Struct\Queue\PlacePnr
      */
@@ -71,6 +75,8 @@ class Queue
     }
 
     /**
+     * Queue_RemoveItem
+     *
      * @param QueueRemoveItemOptions $params
      * @return Struct\Queue\RemoveItem
      */
@@ -86,6 +92,8 @@ class Queue
     }
 
     /**
+     * Queue_MoveItem
+     *
      * @param QueueMoveItemOptions $params
      * @return Struct\Queue\MoveItem
      */

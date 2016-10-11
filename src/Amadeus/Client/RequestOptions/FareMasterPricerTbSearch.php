@@ -155,7 +155,7 @@ class FareMasterPricerTbSearch extends Base
      *
      * self::CABINOPT_*
      *
-     * @var string[]
+     * @var string
      */
     public $cabinOption;
 

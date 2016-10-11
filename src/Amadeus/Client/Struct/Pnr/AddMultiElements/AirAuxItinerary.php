@@ -23,6 +23,9 @@
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 use Amadeus\Client\RequestOptions\Pnr\Segment;
+use Amadeus\Client\RequestOptions\Pnr\Segment\Miscellaneous;
+use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
+use Amadeus\Client\RequestOptions\Pnr\Segment\ArrivalUnknown;
 use Amadeus\Client\Struct\InvalidArgumentException;
 
 /**
@@ -67,7 +70,7 @@ class AirAuxItinerary
      * AirAuxItinerary constructor.
      *
      * @param string $segmentType The type of segment to be constructed
-     * @param Segment $segmentContent The segment's content.
+     * @param Segment|Miscellaneous|Air|ArrivalUnknown $segmentContent The segment's content.
      */
     public function __construct($segmentType, $segmentContent)
     {

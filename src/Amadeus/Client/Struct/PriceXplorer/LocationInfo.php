@@ -46,7 +46,7 @@ class LocationInfo
     const LOC_REGION = "R";
 
     /**
-     * @var string
+     * @var int|string
      */
     public $locationType;
     /**

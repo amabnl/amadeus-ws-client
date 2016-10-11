@@ -22,11 +22,15 @@ class FrequentTraveller extends LoadParamsFromArray
     const REF_CORPORATE_FREQUENT_FLYER = "CFF";
 
     /**
+     * First Name
+     *
      * @var string
      */
     public $firstName;
 
     /**
+     * Last Name
+     *
      * @var string
      */
     public $lastName;

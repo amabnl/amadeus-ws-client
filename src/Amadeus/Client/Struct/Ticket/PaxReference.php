@@ -37,8 +37,8 @@ class PaxReference
     /**
      * PaxReference constructor.
      *
-     * @param int $segNum
-     * @param string $segQual RefDetails::QUAL_*
+     * @param int|null $segNum
+     * @param string|null $segQual RefDetails::QUAL_*
      */
     public function __construct($segNum = null, $segQual = null)
     {

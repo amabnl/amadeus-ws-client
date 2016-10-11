@@ -25,7 +25,7 @@ namespace Amadeus\Client\RequestOptions\Pnr;
 use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * Traveller is
+ * Traveller in a PNR
  *
  * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -46,27 +46,40 @@ class Traveller extends LoadParamsFromArray
     public $number;
 
     /**
+     * Travels with infant?
+     *
+     * Only required to set to "true" when there is no further information available
+     * about said infant. If a first name, last name and/or date of birth is known
+     * of the infant, you can just add this information in the $this->infant property.
+     *
      * @var bool
      */
     public $withInfant = false;
 
     /**
      * Type of traveller
+     *
      * @var string
      */
     public $travellerType = self::TRAV_TYPE_ADULT;
 
     /**
+     * First name
+     *
      * @var string
      */
     public $firstName;
 
     /**
+     * Last name
+     *
      * @var string
      */
     public $lastName;
 
     /**
+     * Date of Birth
+     *
      * @var \DateTime
      */
     public $dateOfBirth;

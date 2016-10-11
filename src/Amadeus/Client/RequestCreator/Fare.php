@@ -47,7 +47,7 @@ use Amadeus\Client\Struct;
 class Fare
 {
     /**
-     * createFareMasterPricerTravelBoardSearch
+     * Fare_MasterPricerTravelBoardSearch
      *
      * @param FareMasterPricerTbSearch $params
      * @return Struct\Fare\MasterPricerTravelBoardSearch
@@ -58,7 +58,7 @@ class Fare
     }
 
     /**
-     * createFareMasterPricerCalendar
+     * Fare_MasterPricerCalendar
      *
      * @param FareMasterPricerCalendarOptions $params
      * @return Struct\Fare\MasterPricerCalendar
@@ -68,9 +68,8 @@ class Fare
         return new Struct\Fare\MasterPricerCalendar($params);
     }
 
-
     /**
-     * createFareCheckRules
+     * Fare_CheckRules
      *
      * @param FareCheckRulesOptions $params
      * @return Struct\Fare\CheckRules
@@ -92,7 +91,7 @@ class Fare
     }
 
     /**
-     * createFarePricePnrWithBookingClass
+     * Fare_PricePNRWithBookingClass
      *
      * @param FarePricePnrWithBookingClassOptions $params
      * @param string $version
@@ -108,7 +107,7 @@ class Fare
     }
 
     /**
-     * createFarePricePnrWithLowerFares
+     * Fare_PricePNRWithLowerFares
      *
      * @param FarePricePnrWithLowerFaresOptions $params
      * @param string $version
@@ -124,7 +123,7 @@ class Fare
     }
 
     /**
-     * createFarePricePnrWithLowestFare
+     * Fare_PricePNRWithLowestFare
      *
      * @param FarePricePnrWithLowestFareOptions $params
      * @param string $version
@@ -140,7 +139,7 @@ class Fare
     }
 
     /**
-     * createFareInformativePricingWithoutPNR
+     * Fare_InformativePricingWithoutPNR
      *
      * @param FareInformativePricingWithoutPnrOptions $params
      * @param string $version
@@ -156,7 +155,7 @@ class Fare
     }
 
     /**
-     * createFareInformativeBestPricingWithoutPNR
+     * Fare_InformativeBestPricingWithoutPNR
      *
      * @param FareInformativeBestPricingWithoutPnrOptions $params
      * @param string $version

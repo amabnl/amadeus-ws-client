@@ -245,6 +245,8 @@ class DataElementsIndiv
     }
 
     /**
+     * Create the correct element identifier for a given element
+     *
      * @param string $elementType
      * @param Element $element
      * @return string

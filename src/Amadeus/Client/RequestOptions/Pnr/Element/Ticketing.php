@@ -65,6 +65,8 @@ class Ticketing extends Element
     public $date;
 
     /**
+     * Queue to place the PNR on (for TICKETMODE_TIMELIMIT)
+     *
      * @var Queue
      */
     public $ticketQueue;

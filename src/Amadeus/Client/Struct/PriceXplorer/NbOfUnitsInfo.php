@@ -36,7 +36,7 @@ class NbOfUnitsInfo
     public $quantityDetails = [];
 
     /**
-     * @param int $numberOfDays
+     * @param int|null $numberOfDays
      */
     public function __construct($numberOfDays = null)
     {

@@ -124,37 +124,39 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     /**
      * PricePNRWithBookingClass12 constructor.
      *
-     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt|null $options
      */
     public function __construct($options)
     {
-        $this->checkUnsupportedOptions($options);
+        if (!is_null($options)) {
+            $this->checkUnsupportedOptions($options);
 
-        $this->overrideInformation = new OverrideInformation();
+            $this->overrideInformation = new OverrideInformation();
 
-        $this->loadOverrideOptions($options);
+            $this->loadOverrideOptions($options);
 
-        $this->loadValidatingCarrier($options);
+            $this->loadValidatingCarrier($options);
 
-        $this->loadFareBasis($options);
+            $this->loadFareBasis($options);
 
-        $this->loadCorporateFares($options);
+            $this->loadCorporateFares($options);
 
-        $this->loadPaxDiscount($options->paxDiscountCodes, $options->paxDiscountCodeRefs);
+            $this->loadPaxDiscount($options->paxDiscountCodes, $options->paxDiscountCodeRefs);
 
-        $this->loadOverrideLocations($options);
+            $this->loadOverrideLocations($options);
 
-        $this->loadTaxOptions($options);
+            $this->loadTaxOptions($options);
 
-        $this->loadReferences($options->references);
+            $this->loadReferences($options->references);
 
-        $this->loadPastDate($options->pastDatePricing);
+            $this->loadPastDate($options->pastDatePricing);
 
-        //No Options?
-        if (empty($this->overrideInformation->attributeDetails)) {
-            $this->overrideInformation->attributeDetails[] = new AttributeDetails(
-                AttributeDetails::OVERRIDE_NO_OPTION
-            );
+            //No Options?
+            if (empty($this->overrideInformation->attributeDetails)) {
+                $this->overrideInformation->attributeDetails[] = new AttributeDetails(
+                    AttributeDetails::OVERRIDE_NO_OPTION
+                );
+            }
         }
     }
 

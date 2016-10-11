@@ -46,7 +46,7 @@ class DepartureDays
     /**
      * @param array $weekDays Week days in array format: e.g. array(1, 2)
      *                        for Monday and Tuesday. MUST BE CONSECUTIVE DAYS
-     * @param string $departureDayOption
+     * @param string|null $departureDayOption
      */
     public function __construct($weekDays = [], $departureDayOption = null)
     {

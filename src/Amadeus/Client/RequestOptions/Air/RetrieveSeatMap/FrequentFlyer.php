@@ -58,6 +58,8 @@ class FrequentFlyer extends LoadParamsFromArray
     public $tierLevel;
 
     /**
+     * Frequent flyer type
+     *
      * self::TYPE_*
      *
      * @var int

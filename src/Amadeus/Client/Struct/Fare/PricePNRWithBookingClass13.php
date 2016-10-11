@@ -34,7 +34,6 @@ use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions as LowerFare
 use Amadeus\Client\RequestOptions\FarePricePnrWithLowestFareOptions as LowestFareOpt;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\PricePnr13\CarrierInformation;
-use Amadeus\Client\Struct\Fare\PricePnr13\CriteriaDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\Currency;
 use Amadeus\Client\Struct\Fare\PricePnr13\DateInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\DiscountPenaltyDetails;
@@ -66,12 +65,14 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
     /**
      * PricePNRWithBookingClass13 constructor.
      *
-     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt|null $options
      * @throws MessageVersionUnsupportedException
      */
     public function __construct($options)
     {
-        $this->pricingOptionGroup = $this->loadPricingOptionsFromRequestOptions($options);
+        if (!is_null($options)) {
+            $this->pricingOptionGroup = $this->loadPricingOptionsFromRequestOptions($options);
+        }
     }
 
     /**

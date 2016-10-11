@@ -36,7 +36,7 @@ class ReservationOrProfileIdentifier
     public $reservation;
 
     /**
-     * @param string $recLoc
+     * @param string|null $recLoc
      */
     public function __construct($recLoc = null)
     {

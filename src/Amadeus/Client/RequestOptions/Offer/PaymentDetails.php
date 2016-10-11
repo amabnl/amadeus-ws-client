@@ -54,6 +54,7 @@ class PaymentDetails extends LoadParamsFromArray
 
     /**
      * The credit card number
+     *
      * @var string
      */
     public $ccCardNumber;

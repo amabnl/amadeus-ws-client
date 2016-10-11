@@ -202,9 +202,6 @@ class Base extends BaseUtils
     {
         $analyzeResponse = new Result($response);
 
-        $code = null;
-        $message = null;
-
         $domXpath = $this->makeDomXpath($response->responseXml);
 
         $errorCodeNode = $domXpath->query('//m:errorInformation/m:errorDetails/m:code');
@@ -213,7 +210,6 @@ class Base extends BaseUtils
 
             $errCode = $errorCodeNode->item(0)->nodeValue;
             $level = null;
-            $errDesc = null;
 
             $errorLevelNode = $domXpath->query('//m:errorInformation/m:errorDetails/m:processingLevel');
             if ($errorLevelNode->length > 0) {
@@ -240,7 +236,6 @@ class Base extends BaseUtils
 
             $warnCode = $codeNode->item(0)->nodeValue;
             $level = null;
-            $warnDesc = null;
 
             $levelNode = $domXpath->query('//m:warningInformation/m:warningDetails/m:processingLevel');
             if ($levelNode->length > 0) {
@@ -679,7 +674,9 @@ class Base extends BaseUtils
             $code = $statusNode->nodeValue;
 
             if ($code !== 'O') {
-                $categoryNode = $domXpath->query('//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCategory')->item(0);
+                $categoryNode = $domXpath->query(
+                    '//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCategory'
+                )->item(0);
                 $analyzeResponse->status = $this->makeStatusFromErrorQualifier($categoryNode->nodeValue);
 
                 $codeNode = $domXpath->query('//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCode')->item(0);

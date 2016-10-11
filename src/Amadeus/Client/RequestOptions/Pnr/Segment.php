@@ -49,6 +49,8 @@ class Segment extends LoadParamsFromArray
     const STATUS_PASSIVE_WAITLISTED = "PL";
 
     /**
+     * Segment status
+     *
      * self::STATUS_*
      *
      * @var string
@@ -63,7 +65,7 @@ class Segment extends LoadParamsFromArray
     public $quantity = 1;
 
     /**
-     * The company code
+     * Company code (airline)
      *
      * @var string
      */

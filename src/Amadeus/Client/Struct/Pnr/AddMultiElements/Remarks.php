@@ -108,8 +108,8 @@ class Remarks
 
     /**
      * @param string $text
-     * @param string $type self::TYPE_*
-     * @param string $cat
+     * @param string|null $type self::TYPE_*
+     * @param string|null $cat
      */
     public function __construct($text, $type = self::TYPE_MISCELLANEOUS, $cat = null)
     {

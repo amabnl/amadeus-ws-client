@@ -45,7 +45,6 @@ class MPDate extends LoadParamsFromArray
      */
     public $dateTime;
 
-
     /**
      * Departure or arrival date
      *
@@ -68,17 +67,17 @@ class MPDate extends LoadParamsFromArray
     public $time;
 
     /**
-     * Whether date & time are for specifying departure
+     * Whether time is for specifying departure time or arrival time
      *
-     * if true: departure date & time
-     * if false: arrival date & time
+     * if true: departure time
+     * if false: arrival time
      *
      * @var bool
      */
     public $isDeparture = true;
 
     /**
-     * Window (number of hours) before/after specified time.
+     * Allowed time window (expressed in hours) before/after specified time.
      *
      * @var int
      */
@@ -95,6 +94,9 @@ class MPDate extends LoadParamsFromArray
 
     /**
      * Date range expressed in days
+     *
+     * For MasterPricerTravelBoardSearch, this can be 1 or 0.
+     * For MasterPricerCalendar, higher values are supported.
      *
      * @var int
      */

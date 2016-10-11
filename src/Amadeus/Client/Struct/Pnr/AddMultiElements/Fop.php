@@ -77,7 +77,7 @@ class Fop
     public $currencyCode;
 
     /**
-     * @param string $identification One of the constants IDENT_* defined in this class.
+     * @param string|null $identification One of the constants IDENT_* defined in this class.
      */
     public function __construct($identification = null)
     {

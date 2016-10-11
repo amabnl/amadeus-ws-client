@@ -654,7 +654,14 @@ class ClientTest extends BaseTestCase
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $expectedMessageResult = new Client\Struct\Queue\PlacePnr('ABC123', 'BRUXX0000', new Client\RequestOptions\Queue(['queue'=> 50, 'category' => 0]));
+        $expectedMessageResult = new Client\Struct\Queue\PlacePnr(
+            'ABC123',
+            'BRUXX0000',
+            new Client\RequestOptions\Queue([
+                'queue'=> 50,
+                'category' => 0
+            ])
+        );
 
         $mockSessionHandler
             ->expects($this->once())

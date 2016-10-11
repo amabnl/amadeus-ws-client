@@ -25,8 +25,8 @@ namespace Amadeus\Client\RequestCreator;
 use Amadeus\Client;
 
 /**
- * MessageVersionUnsupportedException is thrown when a message requires a version-specific message, but the particular
- * version active in the current WSDL is not yet supported.
+ * MessageVersionUnsupportedException is thrown when a message requires a version-specific message,
+ * but the particular version active in the current WSDL is not yet supported.
  *
  * Pull request material!
  *

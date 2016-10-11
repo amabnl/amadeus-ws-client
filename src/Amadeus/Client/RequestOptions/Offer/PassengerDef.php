@@ -33,6 +33,8 @@ use Amadeus\Client\LoadParamsFromArray;
 class PassengerDef extends LoadParamsFromArray
 {
     /**
+     * Type of passenger
+     *
     * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2326&serviceVersionId=2298&isQuery=true#
     *
     * Offer_CreateOffer/airPricingRecommendation/paxReference/passengerReference/type
@@ -47,6 +49,8 @@ class PassengerDef extends LoadParamsFromArray
     public $passengerType = "P";
 
     /**
+     * Passenger Tattoo
+     *
      * @var int
      */
     public $passengerTattoo;

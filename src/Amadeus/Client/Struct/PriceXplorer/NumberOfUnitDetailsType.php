@@ -63,7 +63,7 @@ class NumberOfUnitDetailsType
     /**
      * Create NumberOfUnitDetailsType
      *
-     * @param int $numberOfUnit
+     * @param int|null $numberOfUnit
      * @param string $qualifier One of the constants self::QUAL_*
      */
     public function __construct($numberOfUnit = null, $qualifier = self::QUAL_DAY)

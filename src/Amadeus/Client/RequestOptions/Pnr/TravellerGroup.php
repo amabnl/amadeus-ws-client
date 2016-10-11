@@ -47,6 +47,8 @@ class TravellerGroup extends LoadParamsFromArray
     public $nrOfTravellers;
 
     /**
+     * Initial list of travellers in the group
+     *
      * @var Traveller[]
      */
     public $travellers;

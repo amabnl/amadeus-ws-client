@@ -25,14 +25,13 @@ namespace Amadeus\Client\RequestOptions\Pnr;
 use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * Base Element
+ * Base PNR Element
  *
  * @package Amadeus\Client\RequestOptions\Pnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class Element extends LoadParamsFromArray
 {
-
     /**
      * Passenger / Segment associations
      *

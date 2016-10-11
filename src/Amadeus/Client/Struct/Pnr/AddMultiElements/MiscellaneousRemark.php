@@ -37,8 +37,8 @@ class MiscellaneousRemark
 
     /**
      * @param string $text The remark body
-     * @param string $type Remarks::TYPE_*
-     * @param string $cat 1 character category indicator
+     * @param string|null $type Remarks::TYPE_*
+     * @param string|null $cat 1 character category indicator
      */
     public function __construct($text, $type = null, $cat = null)
     {

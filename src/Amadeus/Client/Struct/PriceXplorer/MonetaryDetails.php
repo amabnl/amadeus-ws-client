@@ -39,7 +39,7 @@ class MonetaryDetails
      */
     public $typeQualifier;
     /**
-     * @var string
+     * @var double|string
      */
     public $amount;
     /**

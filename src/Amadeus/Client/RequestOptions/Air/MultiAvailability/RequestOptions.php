@@ -145,6 +145,8 @@ class RequestOptions extends LoadParamsFromArray
     public $nrOfSeats;
 
     /**
+     * Which type of availability request?
+     *
      * self::REQ_TYPE_*
      *
      * @var string
@@ -181,7 +183,7 @@ class RequestOptions extends LoadParamsFromArray
      * ON Request non-stop flights only or geometry of display
      * OS Request scheduled flights only
      * RE Redemption
-     * SA Saterday
+     * SA Saturday
      * ST Staff
      * SU Sunday
      * TH Thursday
@@ -189,7 +191,7 @@ class RequestOptions extends LoadParamsFromArray
      * US USA
      * WE Wednesday
      *
-     * @var array
+     * @var string[]
      */
     public $availabilityOptions = [];
 }

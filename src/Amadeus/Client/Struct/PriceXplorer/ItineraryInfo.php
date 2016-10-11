@@ -41,8 +41,8 @@ class ItineraryInfo
     public $destination;
 
     /**
-     * @param string $origin
-     * @param string $destination
+     * @param string|null $origin
+     * @param string|null $destination
      */
     public function __construct($origin = null, $destination = null)
     {

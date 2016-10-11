@@ -63,15 +63,17 @@ class InformativePricingWithoutPNR13 extends BaseWsMessage
     /**
      * InformativePricingWithoutPNR13 constructor.
      *
-     * @param FareInformativePricingWithoutPnrOptions $options
+     * @param FareInformativePricingWithoutPnrOptions|null $options
      */
-    public function __construct(FareInformativePricingWithoutPnrOptions $options)
+    public function __construct($options)
     {
-        $this->loadPassengers($options->passengers);
+        if (!is_null($options)) {
+            $this->loadPassengers($options->passengers);
 
-        $this->loadSegments($options->segments);
+            $this->loadSegments($options->segments);
 
-        $this->loadPricingOptions($options->pricingOptions);
+            $this->loadPricingOptions($options->pricingOptions);
+        }
     }
 
     /**

@@ -63,9 +63,9 @@ class CompanyIdentity
      * CompanyIdentity constructor.
      *
      * @param string $carrierQualifier self::QUAL_*
-     * @param \string[] $carrierId
+     * @param string[] $carrierId
      */
-    public function __construct($carrierQualifier, array $carrierId)
+    public function __construct($carrierQualifier, $carrierId)
     {
         $this->carrierQualifier = $carrierQualifier;
         $this->carrierId = $carrierId;

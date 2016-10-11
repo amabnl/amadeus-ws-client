@@ -33,26 +33,36 @@ use Amadeus\Client\LoadParamsFromArray;
 class CarLocationInfo extends LoadParamsFromArray
 {
     /**
+     * Address
+     *
      * @var string
      */
     public $address;
 
     /**
+     * City code
+     *
      * @var string
      */
     public $city;
 
     /**
+     * Postal (zip) code
+     *
      * @var string
      */
     public $zipCode;
 
     /**
+     * Country code
+     *
      * @var string
      */
     public $countryCode;
 
     /**
+     * Phone number
+     *
      * @var string
      */
     public $phoneNumber;

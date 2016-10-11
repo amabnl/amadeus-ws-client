@@ -35,7 +35,7 @@ use Amadeus\Client\Util\SomewhatRandomGenerator;
 class HandlerFactory
 {
     /**
-     * @param SessionHandlerParams $handlerParams
+     * @param SessionHandlerParams|null $handlerParams
      * @return HandlerInterface
      * @throws \InvalidArgumentException when the parameters to create the handler do not make sense.
      */

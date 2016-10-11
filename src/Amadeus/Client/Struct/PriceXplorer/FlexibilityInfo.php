@@ -36,7 +36,7 @@ class FlexibilityInfo
     public $quantityDetails = [];
 
     /**
-     * @param int $flexibilityDays Number of flexible days
+     * @param int|null $flexibilityDays Number of flexible days
      */
     public function __construct($flexibilityDays = null)
     {

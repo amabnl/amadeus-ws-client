@@ -75,6 +75,8 @@ class Air
     }
 
     /**
+     * Air_RetrieveSeatMap
+     *
      * @param AirRetrieveSeatMapOptions $params
      * @return Struct\Air\RetrieveSeatMap
      */

@@ -25,7 +25,7 @@ namespace Amadeus\Client\RequestOptions\Pnr\Segment;
 use Amadeus\Client\RequestOptions\Pnr\Segment;
 
 /**
- * Miscellaneous
+ * Miscellaneous Segment
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Segment
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -33,16 +33,22 @@ use Amadeus\Client\RequestOptions\Pnr\Segment;
 class Miscellaneous extends Segment
 {
     /**
+     * Date
+     *
      * @var \DateTime
      */
     public $date;
 
     /**
+     * City code
+     *
      * @var string
      */
     public $cityCode;
 
     /**
+     * Free text
+     *
      * @var string
      */
     public $freeText;

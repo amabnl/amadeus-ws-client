@@ -25,7 +25,7 @@ namespace Amadeus\Client\RequestOptions\Air\SellFromRecommendation;
 use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * Segment
+ * A single flight segment to sell.
  *
  * @package Amadeus\Client\RequestOptions\Air\SellFromRecommendation
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
@@ -43,36 +43,57 @@ class Segment extends LoadParamsFromArray
     const STATUS_CANCEL_ACCEPTED = "XX";
 
     /**
+     * Departure date
+     *
      * @var \DateTime
      */
     public $departureDate;
+
     /**
+     * Departure location
+     *
      * @var string
      */
     public $from;
+
     /**
+     * Arrival location
+     *
      * @var string
      */
     public $to;
+
     /**
+     * Airline code
+     *
      * @var string
      */
     public $companyCode;
+
     /**
+     * Flight number
+     *
      * @var string
      */
     public $flightNumber;
+
     /**
+     * Booking Class
+     *
      * @var string
      */
     public $bookingClass;
 
     /**
+     * Number of passengers
+     *
      * @var int
      */
     public $nrOfPassengers;
 
     /**
+     * Segment status code
+     *
      * self::STATUS_*
      *
      * HK Confirmed

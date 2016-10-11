@@ -46,7 +46,7 @@ class ElementManagementPassenger
     public $segmentName;
 
     /**
-     * @param string $segmentName one of the defined constants SEG_* in this class
+     * @param string|null $segmentName one of the defined constants SEG_* in this class
      */
     public function __construct($segmentName = null)
     {

@@ -31,7 +31,7 @@ namespace Amadeus\Client\Struct\HeaderV4;
 class SecurityHostedUser
 {
     /**
-     * @var \SoapVar
+     * @var \SoapVar|UserId
      */
     public $UserID;
 
