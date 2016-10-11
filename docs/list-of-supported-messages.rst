@@ -34,6 +34,7 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_CreateTSTFromPricing
 - Ticket_DisplayTST
 - Ticket_DeleteTST
+- Offer_CreateOffer
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
 - Offer_ConfirmHotelOffer
@@ -59,7 +60,6 @@ On the to-do list / work in progress:
 - PNR_NameChange
 - PointOfRef_Search
 - PointOfRef_CategoryList
-- Offer_CreateOffer
 - FOP_CreateFormOfPayment
 - Ticket_CreateTSMFromPricing
 - Media_GetMedia

@@ -991,6 +991,81 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoOfferCreateCall()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('offerCreateOfferReply132.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Offer\Create(
+            new Client\RequestOptions\OfferCreateOptions([
+                'airRecommendations' => [
+                    new Client\RequestOptions\Offer\AirRecommendation([
+                        'type' => Client\RequestOptions\Offer\AirRecommendation::TYPE_FARE_RECOMMENDATION_NR,
+                        'id' => 2,
+                        'paxReferences' => [
+                            new Client\RequestOptions\Offer\PassengerDef([
+                                'passengerTattoo' => 1
+                            ])
+                        ]
+                    ])
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Offer_CreateOffer', $expectedMessageResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Offer_CreateOffer' => "13.2"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Offer_CreateOffer')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->offerCreate(
+            new Client\RequestOptions\OfferCreateOptions([
+                'airRecommendations' => [
+                    new Client\RequestOptions\Offer\AirRecommendation([
+                        'type' => Client\RequestOptions\Offer\AirRecommendation::TYPE_FARE_RECOMMENDATION_NR,
+                        'id' => 2,
+                        'paxReferences' => [
+                            new Client\RequestOptions\Offer\PassengerDef([
+                                'passengerTattoo' => 1
+                            ])
+                        ]
+                    ])
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoOfferVerifyCall()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

@@ -642,6 +642,8 @@ class Base extends BaseUtils
     }
 
     /**
+     * Offer_ConfirmAirOffer
+     *
      * @param SendResult $response
      * @return Result
      */
@@ -651,10 +653,23 @@ class Base extends BaseUtils
     }
 
     /**
+     * Offer_VerifyOffer
+     *
      * @param SendResult $response
      * @return Result
      */
     protected function analyzeOfferVerifyOfferResponse($response)
+    {
+        return $this->analyzeGenericOfferResponse($response);
+    }
+
+    /**
+     * Offer_CreateOffer
+     *
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeOfferCreateOfferResponse($response)
     {
         return $this->analyzeGenericOfferResponse($response);
     }

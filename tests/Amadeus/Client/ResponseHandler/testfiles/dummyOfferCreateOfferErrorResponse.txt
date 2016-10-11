@@ -1,0 +1,27 @@
+<Offer_CreateOfferReply xmlns="http://xml.amadeus.com/POFRCR_13_2_1A">
+    <offerResponse>
+        <offerCharacteristics>
+            <offerStatus>OFU</offerStatus>
+        </offerCharacteristics>
+        <responseDetails>
+            <statusCode>X</statusCode>
+        </responseDetails>
+        <errorsDescription>
+            <errorOrWarningCodeDetails>
+                <errorDetails>
+                    <errorCode>27568</errorCode>
+                    <errorCategory>EC</errorCategory>
+                    <errorCodeOwner>1A</errorCodeOwner>
+                </errorDetails>
+            </errorOrWarningCodeDetails>
+            <errorWarningDescription>
+                <freeTextDetails>
+                    <textSubjectQualifier>1</textSubjectQualifier>
+                    <source>M</source>
+                    <encoding>8</encoding>
+                </freeTextDetails>
+                <freeText>Offer creation not possible on ticketed segment</freeText>
+            </errorWarningDescription>
+        </errorsDescription>
+    </offerResponse>
+</Offer_CreateOfferReply>

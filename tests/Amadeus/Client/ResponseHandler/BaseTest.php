@@ -662,6 +662,37 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('27706', $result->messages[0]->code);
     }
 
+    public function testCanHandleOfferCreateOfferErr()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyOfferCreateOfferErrorResponse.txt');
+        $sendResult->messageVersion = '13.2';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Offer_CreateOffer');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('Offer creation not possible on ticketed segment', $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+        $this->assertEquals('27568', $result->messages[0]->code);
+    }
+
+    public function testCanHandleOfferCreateOfferOk()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyOfferCreateOfferOkResponse.txt');
+        $sendResult->messageVersion = '13.2';
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Offer_CreateOffer');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
     public function testCanHandleSoapFault()
     {
         $respHandler = new ResponseHandler\Base();

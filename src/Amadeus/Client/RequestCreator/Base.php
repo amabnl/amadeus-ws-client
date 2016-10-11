@@ -32,6 +32,7 @@ use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingRecOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
+use Amadeus\Client\RequestOptions\OfferCreateOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\PriceXplorerExtremeSearchOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
@@ -45,12 +46,20 @@ use Amadeus\Client\Struct;
 /**
  * Base request creator - the default request creator.
  *
+ * In charge of building the request objects that are used by the Soap Client.
+ * They are built depending on:
+ * - Which message is being created.
+ * - Which request options were provided.
+ * - What message version is active in the current WSDL?
+ *
  * @package Amadeus\Client\RequestCreator
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class Base implements RequestCreatorInterface
 {
     /**
+     * Parameters
+     *
      * @var RequestCreatorParams
      */
     protected $params;
@@ -63,7 +72,9 @@ class Base implements RequestCreatorInterface
     protected $messagesAndVersions = [];
 
     /**
-     * @param $params
+     * Base Request Creator constructor.
+     *
+     * @param RequestCreatorParams $params
      */
     public function __construct(RequestCreatorParams $params)
     {
@@ -72,6 +83,8 @@ class Base implements RequestCreatorInterface
     }
 
     /**
+     * Create a request message for a given message with a set of options.
+     *
      * @param string $messageName the message name as named in the WSDL
      * @param RequestOptionsInterface $params
      * @throws Struct\InvalidArgumentException When invalid input is detected during message creation.
@@ -94,6 +107,8 @@ class Base implements RequestCreatorInterface
     }
 
     /**
+     * Security_SignOut
+     *
      * @return Struct\Security\SignOut
      */
     protected function createSecuritySignOut()
@@ -113,6 +128,8 @@ class Base implements RequestCreatorInterface
     }
 
     /**
+     * Offer_VerifyOffer
+     *
      * @param OfferVerifyOptions $params
      * @return Struct\Offer\Verify
      */
@@ -137,6 +154,8 @@ class Base implements RequestCreatorInterface
 
 
     /**
+     * Offer_ConfirmHotelOffer
+     *
      * @param OfferConfirmHotelOptions $params
      * @return Struct\Offer\ConfirmHotel
      */
@@ -152,6 +171,19 @@ class Base implements RequestCreatorInterface
     protected function createOfferConfirmCarOffer(OfferConfirmCarOptions $params)
     {
         return new Struct\Offer\ConfirmCar($params);
+    }
+
+    /**
+     * Offer_CreateOffer
+     *
+     * Ok, I just realised this function name is a bit confusing. Sorry.
+     *
+     * @param OfferCreateOptions $params
+     * @return Struct\Offer\Create
+     */
+    protected function createOfferCreateOffer(OfferCreateOptions $params)
+    {
+        return new Struct\Offer\Create($params);
     }
 
     /**
@@ -177,7 +209,7 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * createMiniRuleGetFromPricingRec
+     * MiniRule_GetFromPricingRec
      *
      * @param MiniRuleGetFromPricingRecOptions $params
      * @return Struct\MiniRule\GetFromPricingRec
@@ -188,7 +220,7 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * createMiniRuleGetFromPricing
+     * MiniRule_GetFromPricing
      *
      * @param MiniRuleGetFromPricingOptions $params
      * @return Struct\MiniRule\GetFromPricing
@@ -265,9 +297,9 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * Check if a given message is in the active WSDL. Throws exception if it isn't.
+     * Check if a given message is in the active WSDL(s). Throws exception if it isn't.
      *
-     * @throws InvalidMessageException if message is not in WSDL.
+     * @throws InvalidMessageException if message is not in loaded WSDL(s).
      * @param string $messageName
      */
     protected function checkMessageIsInWsdl($messageName)
@@ -295,7 +327,7 @@ class Base implements RequestCreatorInterface
      * 'create'<message name without underscores> logic as used in createRequest method.
      *
      * @param string $messageName
-     * @return Base|Fare|Pnr
+     * @return Fare|Pnr|Queue|Base|Air
      */
     protected function findBuilderForMessage($messageName)
     {

@@ -1225,6 +1225,83 @@ Offer
 *****
 
 -----------------
+Offer_CreateOffer
+-----------------
+
+Create an offer for AIR pricing recommendation 1, for Passenger 1
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\OfferCreateOptions;
+    use Amadeus\Client\RequestOptions\Offer\AirRecommendation;
+    use Amadeus\Client\RequestOptions\Offer\PassengerDef;
+
+    $offerCreateResponse = $client->offerCreate(
+        new OfferCreateOptions([
+            'airRecommendations' => [
+                new AirRecommendation([
+                    'type' => AirRecommendation::TYPE_FARE_RECOMMENDATION_NR,
+                    'id' => 1,
+                    'paxReferences' => [
+                        new PassengerDef([
+                            'passengerTattoo' => 1
+                        ])
+                    ]
+                ])
+            ]
+        ])
+    );
+
+Create a Hotel offer for Hotel pricing with booking code 000000C and hotel property code RDLON308:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\OfferCreateOptions;
+    use Amadeus\Client\RequestOptions\Offer\ProductReference;
+
+    $offerCreateResponse = $client->offerCreate(
+        new OfferCreateOptions([
+            'productReferences' => [
+                new ProductReference([
+                    'reference' => '000000C',
+                    'referenceType' => ProductReference::PRODREF_BOOKING_CODE,
+                ]),
+                new ProductReference([
+                    'reference' => 'RDLON308',
+                    'referenceType' => ProductReference::PRODREF_HOTEL_PROPERTY_CODE,
+                ]),
+            ]
+        ])
+    );
+
+Create an offer for AIR pricing recommendation 1, for Adult Passenger 1 with a Markup of EUR 20:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\OfferCreateOptions;
+    use Amadeus\Client\RequestOptions\Offer\AirRecommendation;
+    use Amadeus\Client\RequestOptions\Offer\PassengerDef;
+
+    $offerCreateResponse = $client->offerCreate(
+        new OfferCreateOptions([
+            'airRecommendations' => [
+                new AirRecommendation([
+                    'type' => AirRecommendation::TYPE_FARE_RECOMMENDATION_NR,
+                    'id' => 2,
+                    'paxReferences' => [
+                        new PassengerDef([
+                            'passengerTattoo' => 1,
+                            'passengerType' => 'PA'
+                        ])
+                    ]
+                ])
+            ],
+            'markupAmount' => 20,
+            'markupCurrency' => 'EUR'
+        ])
+    );
+
+-----------------
 Offer_VerifyOffer
 -----------------
 Verify if an offer is still valid:

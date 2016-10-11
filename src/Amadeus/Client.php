@@ -418,6 +418,20 @@ class Client
     }
 
     /**
+     * Offer_CreateOffer
+     *
+     * @param RequestOptions\OfferCreateOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function offerCreate(RequestOptions\OfferCreateOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Offer_CreateOffer';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Offer_VerifyOffer
      *
      * To be called in the context of an open PNR
@@ -895,7 +909,7 @@ class Client
      * Either load the provided session handler or create one depending on incoming parameters.
      *
      * @param HandlerInterface|null $sessionHandler
-     * @param Params\SessionHandlerParams $params
+     * @param Params\SessionHandlerParams|null $params
      * @return HandlerInterface
      */
     protected function loadSessionHandler($sessionHandler, $params)
