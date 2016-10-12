@@ -55,7 +55,7 @@ class PenDisInformation
      * @param string|null $discountPenaltyQualifier
      * @param mixed $data
      */
-    public function __construct($discountPenaltyQualifier = null, $data)
+    public function __construct($discountPenaltyQualifier, $data)
     {
         $this->discountPenaltyQualifier = $discountPenaltyQualifier;
 
@@ -76,8 +76,7 @@ class PenDisInformation
     {
         foreach ($obFees as $obFee) {
             $amountType = (!empty($obFee->amount)) ?
-                DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT :
-                DiscountPenaltyDetails::AMOUNTTYPE_PERCENTAGE;
+                DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT : DiscountPenaltyDetails::AMOUNTTYPE_PERCENTAGE;
 
             $rate = (!empty($obFee->amount)) ? $obFee->amount : $obFee->percentage;
 

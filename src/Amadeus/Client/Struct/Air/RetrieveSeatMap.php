@@ -10,7 +10,12 @@ namespace Amadeus\Client\Struct\Air;
 use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo as RequestFlightInfo;
 use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FrequentFlyer;
 use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+use Amadeus\Client\Struct\Air\RetrieveSeatMap\ConversionRate;
 use Amadeus\Client\Struct\Air\RetrieveSeatMap\FrequentTravelerInfo;
+use Amadeus\Client\Struct\Air\RetrieveSeatMap\ProductInformation;
+use Amadeus\Client\Struct\Air\RetrieveSeatMap\ResControlInfo;
+use Amadeus\Client\Struct\Air\RetrieveSeatMap\SeatRequestParameters;
+use Amadeus\Client\Struct\Air\RetrieveSeatMap\Traveller;
 use Amadeus\Client\Struct\Air\RetrieveSeatMap\TravelProductIdent;
 use Amadeus\Client\Struct\BaseWsMessage;
 
@@ -27,8 +32,14 @@ class RetrieveSeatMap extends BaseWsMessage
      */
     public $travelProductIdent;
 
+    /**
+     * @var RetrieveSeatMap\SeatRequestParameters
+     */
     public $seatRequestParameters;
 
+    /**
+     * @var RetrieveSeatMap\ProductInformation
+     */
     public $productInformation;
 
     /**
@@ -36,14 +47,23 @@ class RetrieveSeatMap extends BaseWsMessage
      */
     public $frequentTravelerInfo;
 
+    /**
+     * @var RetrieveSeatMap\ResControlInfo
+     */
     public $resControlInfo;
 
     public $equipmentInformation;
 
     public $additionalInfo;
 
+    /**
+     * @var RetrieveSeatMap\ConversionRate
+     */
     public $conversionRate;
 
+    /**
+     * @var RetrieveSeatMap\Traveller[]
+     */
     public $traveler = [];
 
     public $suitablePassenger;
@@ -65,6 +85,72 @@ class RetrieveSeatMap extends BaseWsMessage
 
         if ($options->frequentFlyer instanceof FrequentFlyer) {
             $this->frequentTravelerInfo = new FrequentTravelerInfo($options->frequentFlyer);
+        }
+
+        $this->loadSeatRequestParameters($options);
+
+        $this->loadConversionRate($options);
+
+        $this->loadRecordLocator($options);
+
+        $this->loadProductInformation($options);
+
+        $this->loadPassengers($options);
+    }
+
+    /**
+     * @param AirRetrieveSeatMapOptions $options
+     */
+    protected function loadSeatRequestParameters($options)
+    {
+        if (!empty($options->cabinCode) || $options->requestPrices === true) {
+            $this->seatRequestParameters = new SeatRequestParameters(
+                $options->cabinCode,
+                $options->requestPrices
+            );
+        }
+    }
+
+    /**
+     * @param AirRetrieveSeatMapOptions $options
+     */
+    protected function loadRecordLocator($options)
+    {
+        if (!empty($options->recordLocator)) {
+            $this->resControlInfo = new ResControlInfo($options->recordLocator);
+        }
+    }
+
+    /**
+     * @param AirRetrieveSeatMapOptions $options
+     */
+    protected function loadProductInformation($options)
+    {
+        if (!empty($options->nrOfPassengers) || !empty($options->bookingStatus)) {
+            $this->productInformation = new ProductInformation(
+                $options->nrOfPassengers,
+                $options->bookingStatus
+            );
+        }
+    }
+
+    /**
+     * @param AirRetrieveSeatMapOptions $options
+     */
+    protected function loadConversionRate($options)
+    {
+        if (!empty($options->currency)) {
+            $this->conversionRate = new ConversionRate($options->currency);
+        }
+    }
+
+    /**
+     * @param AirRetrieveSeatMapOptions $options
+     */
+    protected function loadPassengers($options)
+    {
+        foreach ($options->travellers as $traveller) {
+            $this->traveler[] = new Traveller($traveller);
         }
     }
 }

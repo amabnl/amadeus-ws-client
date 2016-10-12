@@ -1044,6 +1044,93 @@ Get seat map information for a specific flight and specify Frequent Flyer:
         ])
     );
 
+Get seat map information for a specific flight, request prices and specify Cabin class:
+
+*Cabin class overrides any booking class info provided*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
+
+    $seatmapInfo = $client->airRetrieveSeatMap(
+        new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'departureDate' => \DateTime::createFromFormat('Ymd', '20170419'),
+                'departure' => 'BRU',
+                'arrival' => 'FCO',
+                'airline' => 'SN',
+                'flightNumber' => '3175'
+            ]),
+            'requestPrices' => true,
+            'cabinCode' => 'B'
+        ])
+    );
+
+
+Complex example: Seat Map with Prices
+
+* Query: 2 passengers,
+* options for pricing:
+    * record locator,
+    * conversion into USD,
+    * ticket designator for the 1st passenger along with date of birth and fare basis.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FrequentFlyer;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\Traveller;
+
+    $seatmapInfo = $client->airRetrieveSeatMap(
+        new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'airline' => 'AF',
+                'flightNumber' => '0346',
+                'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2015-06-15 00:00:00', new \DateTimeZone('UTC')),
+                'departure' => 'CDG',
+                'arrival' => 'YUL',
+                'bookingClass' => 'Y'
+            ]),
+            'requestPrices' => true,
+            'nrOfPassengers' => 2,
+            'bookingStatus' => 'HK',
+            'recordLocator' => '7BFHEJ',
+            'currency' => 'USD',
+            'travellers' => [
+                new Traveller([
+                    'uniqueId' => 1,
+                    'firstName' => 'KENNETH MR',
+                    'lastName' => 'NELSON',
+                    'type' => Traveller::TYPE_ADULT,
+                    'dateOfBirth' => \DateTime::createFromFormat('Y-m-d H:i:s', '1966-04-05 00:00:00', new \DateTimeZone('UTC')), //05041966
+                    'passengerTypeCode' => 'MIL',
+                    'ticketDesignator' => 'B2BAB2B',
+                    'ticketNumber' => '17225466644554',
+                    'fareBasisOverride' => 'YIF',
+                    'frequentTravellerInfo' => new FrequentFlyer([
+                        'company' => 'QF',
+                        'cardNumber' => '987654321',
+                        'tierLevel' => 'FFBR',
+                    ]),
+                ]),
+                new Traveller([
+                    'uniqueId' => 2,
+                    'firstName' => 'PHILIP MR',
+                    'lastName' => 'NELSON',
+                    'type' => Traveller::TYPE_ADULT,
+                    'frequentTravellerInfo' => new FrequentFlyer([
+                        'company' => 'QF',
+                        'cardNumber' => '1234567',
+                        'tierLevel' => 'FFSL',
+                    ]),
+                ]),
+            ]
+        ])
+    );
+
+
 ******
 Ticket
 ******

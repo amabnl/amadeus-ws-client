@@ -246,11 +246,6 @@ class Client
     /**
      * PNR_Retrieve - Retrieve an Amadeus PNR by record locator
      *
-     * By default, the result will be the PNR_Reply XML as string.
-     * That way you can easily parse the PNR's contents with XPath.
-     *
-     * https://webservices.amadeus.com/extranet/viewService.do?id=27&flavourId=1&menuId=functional
-     *
      * @param RequestOptions\PnrRetrieveOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result

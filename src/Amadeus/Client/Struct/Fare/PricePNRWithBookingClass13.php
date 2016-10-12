@@ -242,7 +242,7 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
 
                 //Support for legacy fareBasisPrimaryCode to be removed when breaking BC:
                 $po->optionDetail = new OptionDetail(
-                    $pricingFareBasis->fareBasisPrimaryCode . $pricingFareBasis->fareBasisCode
+                    $pricingFareBasis->fareBasisPrimaryCode.$pricingFareBasis->fareBasisCode
                 );
 
                 //Support for legacy segmentReference to be removed when breaking BC:

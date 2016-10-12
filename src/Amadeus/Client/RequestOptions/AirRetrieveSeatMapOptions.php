@@ -27,8 +27,6 @@ namespace Amadeus\Client\RequestOptions;
  *
  * Options available for the Air_RetrieveSeatMap message.
  *
- * Currently only supported option is flight information.
- *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
@@ -47,4 +45,58 @@ class AirRetrieveSeatMapOptions extends Base
      * @var Air\RetrieveSeatMap\FrequentFlyer
      */
     public $frequentFlyer;
+
+    /**
+     * Traveller information
+     *
+     * @var Air\RetrieveSeatMap\Traveller[]
+     */
+    public $travellers = [];
+
+    /**
+     * Cabin code
+     *
+     * When both a cabin code and a booking class are specified,
+     * the cabin code information takes precedence over the booking class information.
+     *
+     * @var string
+     */
+    public $cabinCode;
+
+    /**
+     * Set to true to retrieve prices
+     *
+     * (processing indicator FT)
+     *
+     * @var bool
+     */
+    public $requestPrices = false;
+
+    /**
+     * Currency code - override pricing currency
+     *
+     * @var string
+     */
+    public $currency;
+
+    /**
+     * Record locator of PNR
+     *
+     * @var string
+     */
+    public $recordLocator;
+
+    /**
+     * Number of passengers
+     *
+     * @var int
+     */
+    public $nrOfPassengers;
+
+    /**
+     * Booking status code (e.g. HK)
+     *
+     * @var string
+     */
+    public $bookingStatus;
 }

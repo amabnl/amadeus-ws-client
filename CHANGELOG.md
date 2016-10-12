@@ -15,6 +15,14 @@
     - Add support for Group PNR in the regular PNR_AddMultiElements call (previously this was only in the pnrCreatePnr)
     - Add support for connected segments in an itinerary (deprecated 'tripSegments' option)
 * ``DocIssuance_IssueTicket``: Support for Compound Options in request, such as Consolidator method (https://github.com/amabnl/amadeus-ws-client/issues/23)
+* ``Air_RetrieveSeatMap``: Support for new request options:
+    - Request prices
+    - Cabin code
+    - Provide Record Locator
+    - Number of passengers
+    - Booking status
+    - Currency conversion
+    - Traveller information
 * ``Fare_PricePnrWithBookingClass``: added support for extra request options:
     - Negotiated corporate fares
     - Corporate unifares
