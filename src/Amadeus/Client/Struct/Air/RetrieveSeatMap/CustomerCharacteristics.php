@@ -30,5 +30,4 @@ namespace Amadeus\Client\Struct\Air\RetrieveSeatMap;
  */
 class CustomerCharacteristics
 {
-
 }
