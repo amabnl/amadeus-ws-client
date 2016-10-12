@@ -164,23 +164,8 @@ class SoapHeader2 extends Base
     }
 
     /**
-     * @param string $wsdlId
-     * @return \SoapClient
-     */
-    protected function initSoapClient($wsdlId)
-    {
-        $wsdlPath = $this->wsdlIds[$wsdlId];
-
-        $client = new Client\SoapClient(
-            $wsdlPath,
-            $this->makeSoapClientOptions(),
-            $this->params->logger
-        );
-
-        return $client;
-    }
-
-    /**
+     * Make SoapClient options for Soap Header 2 handler
+     *
      * @return array
      */
     protected function makeSoapClientOptions()

@@ -36,7 +36,6 @@ use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\PricePnr13\CarrierInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\Currency;
 use Amadeus\Client\Struct\Fare\PricePnr13\DateInformation;
-use Amadeus\Client\Struct\Fare\PricePnr13\DiscountPenaltyDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\FirstCurrencyDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\FrequentFlyerInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\FrequentTravellerDetails;
@@ -182,11 +181,9 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
     {
         $opt = [];
 
-        if (!empty($overrideOptions)) {
-            foreach ($overrideOptions as $overrideOption) {
-                if (!self::hasPricingGroup($overrideOption, $priceOptions)) {
-                    $opt[] = new PricingOptionGroup($overrideOption);
-                }
+        foreach ($overrideOptions as $overrideOption) {
+            if (!self::hasPricingGroup($overrideOption, $priceOptions)) {
+                $opt[] = new PricingOptionGroup($overrideOption);
             }
         }
 
@@ -338,23 +335,10 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
         if (!empty($obFees)) {
             $po = new PricingOptionGroup(PricingOptionKey::OPTION_OB_FEES);
 
-            $po->penDisInformation = new PenDisInformation(PenDisInformation::QUAL_OB_FEES);
-
-            foreach ($obFees as $obFee) {
-                $amountType = (!empty($obFee->amount)) ?
-                    DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT :
-                    DiscountPenaltyDetails::AMOUNTTYPE_PERCENTAGE;
-
-                $rate = (!empty($obFee->amount)) ? $obFee->amount : $obFee->percentage;
-
-                $po->penDisInformation->discountPenaltyDetails[] = new DiscountPenaltyDetails(
-                    $obFee->rate,
-                    self::makeObFeeFunction($obFee->include),
-                    $amountType,
-                    $rate,
-                    $obFee->currency
-                );
-            }
+            $po->penDisInformation = new PenDisInformation(
+                PenDisInformation::QUAL_OB_FEES,
+                $obFees
+            );
 
             if (!empty($obFeeRefs)) {
                 $po->paxSegTstReference = new PaxSegTstReference(null, $obFeeRefs);
@@ -378,11 +362,10 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
         if (!empty($paxDiscount)) {
             $po = new PricingOptionGroup(PricingOptionKey::OPTION_PASSENGER_DISCOUNT_PTC);
 
-            $po->penDisInformation = new PenDisInformation(PenDisInformation::QUAL_DISCOUNT);
-
-            foreach ($paxDiscount as $discount) {
-                $po->penDisInformation->discountPenaltyDetails[] = new DiscountPenaltyDetails($discount);
-            }
+            $po->penDisInformation = new PenDisInformation(
+                PenDisInformation::QUAL_DISCOUNT,
+                $paxDiscount
+            );
 
             if (!empty($paxDiscountCodeRefs)) {
                 $po->paxSegTstReference = new PaxSegTstReference(null, $paxDiscountCodeRefs);
@@ -556,19 +539,6 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
 
         return $opt;
     }
-
-    /**
-     * Make the correct function code
-     *
-     * @param bool $include
-     * @return string
-     */
-    protected static function makeObFeeFunction($include)
-    {
-        return ($include === true) ? ObFee::FUNCTION_INCLUDE : ObFee::FUNCTION_EXCLUDE;
-    }
-
-
 
     /**
      * Avoid double pricing groups when combining an explicitly provided override option with a specific parameter

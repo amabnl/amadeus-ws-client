@@ -914,8 +914,6 @@ class Client
      */
     protected function loadSessionHandler($sessionHandler, $params)
     {
-        $newSessionHandler = null;
-
         if ($sessionHandler instanceof HandlerInterface) {
             $newSessionHandler = $sessionHandler;
         } else {
@@ -940,8 +938,6 @@ class Client
      */
     protected function loadRequestCreator($requestCreator, $params, $libIdentifier, $originatorOffice, $mesVer)
     {
-        $newRequestCreator = null;
-
         if ($requestCreator instanceof RequestCreatorInterface) {
             $newRequestCreator = $requestCreator;
         } else {
@@ -961,14 +957,11 @@ class Client
      * Load a response handler
      *
      * @param ResponseHandlerInterface|null $responseHandler
-     *
      * @return ResponseHandlerInterface
      * @throws \RuntimeException
      */
     protected function loadResponseHandler($responseHandler)
     {
-        $newResponseHandler = null;
-
         if ($responseHandler instanceof ResponseHandlerInterface) {
             $newResponseHandler = $responseHandler;
         } else {

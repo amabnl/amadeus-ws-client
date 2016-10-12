@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\PricePnr12;
 
+use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
 /**
  * DiscountInformation
  *
@@ -39,4 +41,29 @@ class DiscountInformation
      * @var ReferenceQualifier
      */
     public $referenceQualifier;
+
+    /**
+     * DiscountInformation constructor.
+     */
+
+    /**
+     * DiscountInformation constructor.
+     *
+     * @param string $qual
+     * @param array $discounts
+     * @param PaxSegRef[] $refs
+     */
+    public function __construct($qual, $discounts, $refs)
+    {
+        $this->penDisInformation = new PenDisInformation();
+        $this->penDisInformation->infoQualifier = $qual;
+
+        foreach ($discounts as $discountCode) {
+            $this->penDisInformation->penDisData[] = new PenDisData($discountCode);
+        }
+
+        if (!empty($refs)) {
+            $this->referenceQualifier = new ReferenceQualifier($refs);
+        }
+    }
 }

@@ -284,8 +284,6 @@ abstract class BaseUtils implements ResponseHandlerInterface
      */
     protected function makeStatusFromErrorQualifier($qualifier)
     {
-        $status = null;
-
         switch ($qualifier) {
             case 'INF':
                 $status = Result::STATUS_INFO;

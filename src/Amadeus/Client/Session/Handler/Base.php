@@ -547,7 +547,25 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      * @param string $wsdlId
      * @return \SoapClient
      */
-    abstract protected function initSoapClient($wsdlId);
+    protected function initSoapClient($wsdlId)
+    {
+        $wsdlPath = $this->wsdlIds[$wsdlId];
+
+        $client = new Client\SoapClient(
+            $wsdlPath,
+            $this->makeSoapClientOptions(),
+            $this->params->logger
+        );
+
+        return $client;
+    }
+
+    /**
+     * Make Soap Header specific SoapClient options
+     *
+     * @return array
+     */
+    abstract protected function makeSoapClientOptions();
 
     /**
      * Get Messages & Versions from an imported WSDL file

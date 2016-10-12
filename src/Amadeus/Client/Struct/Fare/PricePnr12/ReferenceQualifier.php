@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\PricePnr12;
 
+use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
 /**
  * ReferenceQualifier
  *
@@ -34,4 +36,18 @@ class ReferenceQualifier
      * @var RefDetails[]
      */
     public $refDetails = [];
+
+    /**
+     * ReferenceQualifier constructor.
+     *
+     * @param PaxSegRef[]|null $refs
+     */
+    public function __construct($refs = null)
+    {
+        if (is_array($refs)) {
+            foreach ($refs as $ref) {
+                $this->refDetails[] = new RefDetails($ref->reference, $ref->type);
+            }
+        }
+    }
 }

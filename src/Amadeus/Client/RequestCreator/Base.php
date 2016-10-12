@@ -331,8 +331,6 @@ class Base implements RequestCreatorInterface
      */
     protected function findBuilderForMessage($messageName)
     {
-        $builder = null;
-
         $section = strtolower(substr($messageName, 0, strpos($messageName, '_')));
 
         switch ($section) {

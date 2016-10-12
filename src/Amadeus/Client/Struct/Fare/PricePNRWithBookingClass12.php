@@ -22,10 +22,7 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
-use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
-use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
-use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions as LowerFareOpt;
 use Amadeus\Client\RequestOptions\FarePricePnrWithLowestFareOptions as LowestFareOpt;
@@ -38,11 +35,8 @@ use Amadeus\Client\Struct\Fare\PricePnr12\DateOverride;
 use Amadeus\Client\Struct\Fare\PricePnr12\DiscountInformation;
 use Amadeus\Client\Struct\Fare\PricePnr12\FrequentFlyerInformation;
 use Amadeus\Client\Struct\Fare\PricePnr12\OverrideInformation;
-use Amadeus\Client\Struct\Fare\PricePnr12\PenDisData;
 use Amadeus\Client\Struct\Fare\PricePnr12\PenDisInformation;
 use Amadeus\Client\Struct\Fare\PricePnr12\PricingFareBase;
-use Amadeus\Client\Struct\Fare\PricePnr12\RefDetails;
-use Amadeus\Client\Struct\Fare\PricePnr12\ReferenceQualifier;
 use Amadeus\Client\Struct\Fare\PricePnr12\TaxDetails;
 use Amadeus\Client\Struct\Fare\PricePnr12\ValidatingCarrier;
 use Amadeus\Client\Struct\OptionNotSupportedException;
@@ -128,36 +122,37 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
      */
     public function __construct($options)
     {
+        $this->overrideInformation = new OverrideInformation();
+
         if (!is_null($options)) {
-            $this->checkUnsupportedOptions($options);
-
-            $this->overrideInformation = new OverrideInformation();
-
-            $this->loadOverrideOptions($options);
-
-            $this->loadValidatingCarrier($options);
-
-            $this->loadFareBasis($options);
-
-            $this->loadCorporateFares($options);
-
-            $this->loadPaxDiscount($options->paxDiscountCodes, $options->paxDiscountCodeRefs);
-
-            $this->loadOverrideLocations($options);
-
-            $this->loadTaxOptions($options);
-
-            $this->loadReferences($options->references);
-
-            $this->loadPastDate($options->pastDatePricing);
-
-            //No Options?
-            if (empty($this->overrideInformation->attributeDetails)) {
-                $this->overrideInformation->attributeDetails[] = new AttributeDetails(
-                    AttributeDetails::OVERRIDE_NO_OPTION
-                );
-            }
+            $this->loadPricingOptions($options);
         }
+    }
+
+    /**
+     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
+     */
+    protected function loadPricingOptions($options)
+    {
+        $this->checkUnsupportedOptions($options);
+
+        $this->loadOverrideOptionsAndCorpFares($options);
+
+        $this->loadCurrencyOverride($options->currencyOverride);
+
+        $this->loadValidatingCarrier($options);
+
+        $this->loadFareBasis($options);
+
+        $this->loadPaxDiscount($options->paxDiscountCodes, $options->paxDiscountCodeRefs);
+
+        $this->loadOverrideLocations($options);
+
+        $this->loadTaxOptions($options);
+
+        $this->loadReferences($options->references);
+
+        $this->loadPastDate($options->pastDatePricing);
     }
 
     /**
@@ -178,22 +173,49 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     /**
      * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
      */
-    protected function loadOverrideOptions($options)
+    protected function loadOverrideOptionsAndCorpFares($options)
     {
-        if (count($options->overrideOptions) !== 0) {
-            foreach ($options->overrideOptions as $overrideOption) {
-                $this->overrideInformation->attributeDetails[] = new AttributeDetails($overrideOption);
-            }
-        }
-
-        if (!empty($options->currencyOverride)) {
-            $this->currencyOverride = new CurrencyOverride($options->currencyOverride);
+        foreach ($options->overrideOptions as $overrideOption) {
+            $this->overrideInformation->attributeDetails[] = new AttributeDetails($overrideOption);
         }
 
         if (!empty($options->ticketType)) {
             $this->overrideInformation->attributeDetails[] = new AttributeDetails(
                 $this->convertTicketType($options->ticketType)
             );
+        }
+
+        if ($options->corporateNegoFare !== null) {
+            $this->overrideInformation->attributeDetails[] = new AttributeDetails(
+                AttributeDetails::OVERRIDE_FARETYPE_CORPNR,
+                $options->corporateNegoFare
+            );
+        }
+
+        if (!empty($options->corporateUniFares)) {
+            $this->loadCorporateUniFares($options->corporateUniFares);
+
+            if (!empty($options->awardPricing)) {
+                $this->carrierAgreements = new CarrierAgreements($options->awardPricing->carrier);
+                $this->frequentFlyerInformation = new FrequentFlyerInformation($options->awardPricing->tierLevel);
+            }
+        }
+
+        //No Options?
+        if (empty($this->overrideInformation->attributeDetails)) {
+            $this->overrideInformation->attributeDetails[] = new AttributeDetails(
+                AttributeDetails::OVERRIDE_NO_OPTION
+            );
+        }
+    }
+
+    /**
+     * @param string|null $currencyOverride
+     */
+    protected function loadCurrencyOverride($currencyOverride)
+    {
+        if (!empty($currencyOverride)) {
+            $this->currencyOverride = new CurrencyOverride($currencyOverride);
         }
     }
 
@@ -221,35 +243,6 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     }
 
     /**
-     * @param FarePricePnrWithBookingClassOptions|LowerFareOpt|LowestFareOpt $options
-     */
-    protected function loadCorporateFares($options)
-    {
-        if ($options->corporateNegoFare !== null) {
-            $this->loadCorporateNegoFare($options->corporateNegoFare);
-        }
-
-        if (!empty($options->corporateUniFares)) {
-            $this->loadCorporateUniFares($options->corporateUniFares);
-
-            if (!empty($options->awardPricing)) {
-                $this->loadAwardPricing($options->awardPricing);
-            }
-        }
-    }
-
-    /**
-     * @param string $corporateNegoFare
-     */
-    protected function loadCorporateNegoFare($corporateNegoFare)
-    {
-        $this->overrideInformation->attributeDetails[] = new AttributeDetails(
-            AttributeDetails::OVERRIDE_FARETYPE_CORPNR,
-            $corporateNegoFare
-        );
-    }
-
-    /**
      * @param string[] $corporateUniFares
      */
     protected function loadCorporateUniFares($corporateUniFares)
@@ -260,15 +253,6 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
                 $corporateUniFare
             );
         }
-    }
-
-    /**
-     * @param AwardPricing $awardPricing
-     */
-    protected function loadAwardPricing($awardPricing)
-    {
-        $this->carrierAgreements = new CarrierAgreements($awardPricing->carrier);
-        $this->frequentFlyerInformation = new FrequentFlyerInformation($awardPricing->tierLevel);
     }
 
     /**
@@ -323,31 +307,11 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
      */
     protected function loadTaxOptions($options)
     {
-        if (!empty($options->taxes)) {
-            $this->loadTaxes($options->taxes);
-        }
-
-        if (!empty($options->exemptTaxes)) {
-            $this->loadExemptTaxes($options->exemptTaxes);
-        }
-    }
-
-    /**
-     * @param Tax[] $taxes
-     */
-    protected function loadTaxes($taxes)
-    {
-        foreach ($taxes as $tax) {
+        foreach ($options->taxes as $tax) {
             $this->taxDetails[] = new TaxDetails($tax);
         }
-    }
 
-    /**
-     * @param ExemptTax[] $exemptTaxes
-     */
-    protected function loadExemptTaxes($exemptTaxes)
-    {
-        foreach ($exemptTaxes as $exemptTax) {
+        foreach ($options->exemptTaxes as $exemptTax) {
             $this->taxDetails[] = new TaxDetails($exemptTax);
         }
     }
@@ -359,23 +323,11 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     protected function loadPaxDiscount($paxDiscountCodes, $refs)
     {
         if (!empty($paxDiscountCodes)) {
-            $tmp = new DiscountInformation();
-            $tmp->penDisInformation = new PenDisInformation();
-            $tmp->penDisInformation->infoQualifier = PenDisInformation::QUAL_DISCOUNT;
-
-            foreach ($paxDiscountCodes as $discountCode) {
-                $tmp->penDisInformation->penDisData[] = new PenDisData($discountCode);
-            }
-
-            if (!empty($refs)) {
-                $tmp->referenceQualifier = new ReferenceQualifier();
-
-                foreach ($refs as $ref) {
-                    $tmp->referenceQualifier->refDetails[] = new RefDetails($ref->reference, $ref->type);
-                }
-            }
-
-            $this->discountInformation[] = $tmp;
+            $this->discountInformation[] = new DiscountInformation(
+                PenDisInformation::QUAL_DISCOUNT,
+                $paxDiscountCodes,
+                $refs
+            );
         }
     }
 
@@ -385,14 +337,7 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
     protected function loadReferences($references)
     {
         if (!empty($references)) {
-            $this->paxSegReference = new PricePnr12\PaxSegReference();
-
-            foreach ($references as $ref) {
-                $this->paxSegReference->refDetails[] = new RefDetails(
-                    $ref->reference,
-                    $ref->type
-                );
-            }
+            $this->paxSegReference = new PricePnr12\PaxSegReference($references);
         }
     }
 

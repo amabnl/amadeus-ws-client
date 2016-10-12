@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
+use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
+
 /**
  * PenDisInformation
  *
@@ -51,9 +53,62 @@ class PenDisInformation
      * PenDisInformation constructor.
      *
      * @param string|null $discountPenaltyQualifier
+     * @param mixed $data
      */
-    public function __construct($discountPenaltyQualifier = null)
+    public function __construct($discountPenaltyQualifier = null, $data)
     {
         $this->discountPenaltyQualifier = $discountPenaltyQualifier;
+
+        switch ($discountPenaltyQualifier) {
+            case PenDisInformation::QUAL_OB_FEES:
+                $this->loadObFees($data);
+                break;
+            case PenDisInformation::QUAL_DISCOUNT:
+                $this->loadPaxDiscounts($data);
+                break;
+        }
+    }
+
+    /**
+     * @param ObFee[] $obFees
+     */
+    protected function loadObFees($obFees)
+    {
+        foreach ($obFees as $obFee) {
+            $amountType = (!empty($obFee->amount)) ?
+                DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT :
+                DiscountPenaltyDetails::AMOUNTTYPE_PERCENTAGE;
+
+            $rate = (!empty($obFee->amount)) ? $obFee->amount : $obFee->percentage;
+
+            $this->discountPenaltyDetails[] = new DiscountPenaltyDetails(
+                $obFee->rate,
+                self::makeObFeeFunction($obFee->include),
+                $amountType,
+                $rate,
+                $obFee->currency
+            );
+        }
+    }
+
+    /**
+     * @param string[] $discounts
+     */
+    protected function loadPaxDiscounts($discounts)
+    {
+        foreach ($discounts as $discount) {
+            $this->discountPenaltyDetails[] = new DiscountPenaltyDetails($discount);
+        }
+    }
+
+    /**
+     * Make the correct function code
+     *
+     * @param bool $include
+     * @return string
+     */
+    protected static function makeObFeeFunction($include)
+    {
+        return ($include === true) ? ObFee::FUNCTION_INCLUDE : ObFee::FUNCTION_EXCLUDE;
     }
 }
