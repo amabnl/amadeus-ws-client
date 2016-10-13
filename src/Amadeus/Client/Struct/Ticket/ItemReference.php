@@ -34,6 +34,10 @@ class ItemReference
      */
     const REFTYPE_TST = 'TST';
     /**
+     * TSM TSM/fare reference number
+     */
+    const REFTYPE_TSM = 'TSM';
+    /**
      * Passenger/traveller reference number
      */
     const REFTYPE_PASSENGER = "P";

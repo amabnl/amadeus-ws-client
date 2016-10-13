@@ -41,6 +41,7 @@
 
 * Implemented ``PNR_TransferOwnership``
 * Implemented ``Ticket_DisplayTST``
+* Implemented ``Ticket_CreateTSMFromPricing``
 * Implemented ``Fare_MasterPricerCalendar``
 * Implemented ``Fare_InformativeBestPricingWithoutPNR``
 * Implemented ``Fare_PricePNRWithLowerFares``

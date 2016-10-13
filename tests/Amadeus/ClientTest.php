@@ -1349,6 +1349,69 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoTicketCreateTSMFromPricing()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketCreateTSMFromPricingmessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\CreateTSMFromPricing(
+            new Client\RequestOptions\TicketCreateTsmFromPricingOptions([
+                'pricings' => [
+                    new Client\RequestOptions\Ticket\Pricing([
+                        'tsmNumber' => 1
+                    ])
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_CreateTSMFromPricing', $expectedMessageResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_CreateTSMFromPricing' => "09.1"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_CreateTSMFromPricing')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketCreateTSMFromPricing(
+            new Client\RequestOptions\TicketCreateTsmFromPricingOptions([
+                'pricings' => [
+                    new Client\RequestOptions\Ticket\Pricing([
+                        'tsmNumber' => 1
+                    ])
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoTicketDeleteTST()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

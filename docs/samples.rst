@@ -1139,7 +1139,7 @@ Ticket
 Ticket_CreateTSTFromPricing
 ---------------------------
 
-Create a TST from a Pricing made by a Fare_PricePNRWithBookingClass call:
+Create a TST from a Pricing made by a ``Fare_PricePNRWithBookingClass`` call:
 
 .. code-block:: php
 
@@ -1151,6 +1151,34 @@ Create a TST from a Pricing made by a Fare_PricePNRWithBookingClass call:
             'pricings' => [
                 new Pricing([
                     'tstNumber' => 1
+                ])
+            ]
+        ])
+    );
+
+---------------------------
+Ticket_CreateTSMFromPricing
+---------------------------
+
+Create a TSM from a Pricing previously made by a ``Service_IntegratedPricing`` call:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCreateTsmFromPricingOptions;
+    use Amadeus\Client\RequestOptions\Ticket\Pricing;
+    use Amadeus\Client\RequestOptions\Ticket\PassengerReference;
+
+    $createTstResponse = $client->ticketCreateTSMFromPricing(
+        new TicketCreateTsmFromPricingOptions([
+            'pricings' => [
+                new Pricing([
+                    'tsmNumber' => 1
+                ])
+            ],
+            'passengerReferences' => [
+                new PassengerReference([
+                    'id' => 1,
+                    'type' => PassengerReference::TYPE_PASSENGER
                 ])
             ]
         ])

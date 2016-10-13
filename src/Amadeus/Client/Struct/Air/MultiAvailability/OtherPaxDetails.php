@@ -26,7 +26,7 @@ class OtherPaxDetails
     public $type;
 
     /**
-     * @var string
+     * @var string|int
      */
     public $uniqueCustomerIdentifier;
 

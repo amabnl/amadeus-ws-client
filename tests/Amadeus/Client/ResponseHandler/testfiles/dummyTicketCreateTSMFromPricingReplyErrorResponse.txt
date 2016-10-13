@@ -1,0 +1,13 @@
+<Ticket_CreateTSMFromPricingReply xmlns="http://xml.amadeus.com/TAUSCR_09_1_1A">
+    <applicationError>
+        <applicationErrorInfo>
+            <applicationErrorDetail>
+                <applicationErrorCode>CM01908</applicationErrorCode>
+                <codeListQualifier>EC</codeListQualifier>
+            </applicationErrorDetail>
+        </applicationErrorInfo>
+        <errorText>
+            <errorFreeText>CHECK PASSENGER NUMBER</errorFreeText>
+        </errorText>
+    </applicationError>
+</Ticket_CreateTSMFromPricingReply>

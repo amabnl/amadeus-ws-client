@@ -38,6 +38,7 @@ use Amadeus\Client\RequestOptions\PriceXplorerExtremeSearchOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\RequestOptions\SalesReportsDisplayQueryReportOptions;
 use Amadeus\Client\RequestOptions\SecurityAuthenticateOptions;
+use Amadeus\Client\RequestOptions\TicketCreateTsmFromPricingOptions;
 use Amadeus\Client\RequestOptions\TicketCreateTstFromPricingOptions;
 use Amadeus\Client\RequestOptions\TicketDeleteTstOptions;
 use Amadeus\Client\RequestOptions\TicketDisplayTstOptions;
@@ -239,6 +240,17 @@ class Base implements RequestCreatorInterface
     protected function createTicketCreateTSTFromPricing(TicketCreateTstFromPricingOptions $params)
     {
         return new Struct\Ticket\CreateTSTFromPricing($params);
+    }
+
+    /**
+     * Ticket_CreateTSMFromPricing
+     *
+     * @param TicketCreateTsmFromPricingOptions $params
+     * @return Struct\Ticket\CreateTSMFromPricing
+     */
+    protected function createTicketCreateTSMFromPricing(TicketCreateTsmFromPricingOptions $params)
+    {
+        return new Struct\Ticket\CreateTSMFromPricing($params);
     }
 
     /**

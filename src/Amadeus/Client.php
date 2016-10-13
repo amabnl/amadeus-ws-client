@@ -762,6 +762,22 @@ class Client
     }
 
     /**
+     * Ticket_CreateTSMFromPricing
+     *
+     * @param RequestOptions\TicketCreateTsmFromPricingOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketCreateTSMFromPricing(
+        RequestOptions\TicketCreateTsmFromPricingOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_CreateTSMFromPricing';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Ticket_DeleteTST
      *
      * @param RequestOptions\TicketDeleteTstOptions $options

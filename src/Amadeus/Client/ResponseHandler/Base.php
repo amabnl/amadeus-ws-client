@@ -603,6 +603,15 @@ class Base extends BaseUtils
     }
 
     /**
+     * @param SendResult $response Ticket_CreateTSMFromPricing result
+     * @return Result
+     */
+    protected function analyzeTicketCreateTSMFromPricingResponse($response)
+    {
+        return $this->analyzeTicketCreateTSTFromPricingResponse($response);
+    }
+
+    /**
      * @param SendResult $response
      * @return Result
      */

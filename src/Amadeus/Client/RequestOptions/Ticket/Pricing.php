@@ -27,14 +27,25 @@ use Amadeus\Client\LoadParamsFromArray;
 /**
  * Pricing
  *
+ * Used both for TST and TSM pricings, use the correct parameter!
+ *
  * @package Amadeus\Client\RequestOptions\Ticket
  */
 class Pricing extends LoadParamsFromArray
 {
     /**
+     * TST reference number
+     *
      * @var int
      */
     public $tstNumber;
+
+    /**
+     * TSM reference number
+     *
+     * @var int
+     */
+    public $tsmNumber;
 
     /**
      * @var PassengerReference[]

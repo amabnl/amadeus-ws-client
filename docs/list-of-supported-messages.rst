@@ -32,6 +32,7 @@ This is the list of messages that are at least partially supported at this time:
 - Air_RetrieveSeatMap
 - DocIssuance_IssueTicket
 - Ticket_CreateTSTFromPricing
+- Ticket_CreateTSMFromPricing
 - Ticket_DisplayTST
 - Ticket_DeleteTST
 - Offer_CreateOffer
@@ -61,9 +62,16 @@ On the to-do list / work in progress:
 - PointOfRef_Search
 - PointOfRef_CategoryList
 - FOP_CreateFormOfPayment
-- Ticket_CreateTSMFromPricing
+- Ticket_ProcessEDoc
+- Ticket_CreateTSMFareElement
+- Ticket_RetrieveListOfTSM
+- Ticket_DisplayTSMP
+- Ticket_DeleteTSMP
 - Media_GetMedia
 - Service_IntegratedPricing
+- Service_IntegratedCatalogue
+- Service_PriceServiceViaCatalogue
+- Service_PriceIntegratedMode
 - DocIssuance_IssueMiscellaneousDocuments
 - DocIssuance_IssueCombined
 

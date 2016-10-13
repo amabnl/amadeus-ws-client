@@ -31,6 +31,8 @@ namespace Amadeus\Client\RequestOptions;
 class TicketCreateTstFromPricingOptions extends Base
 {
     /**
+     * References to the Pricings for which a TST/TSM must be created
+     *
      * @var Ticket\Pricing[]
      */
     public $pricings = [];
