@@ -54,4 +54,33 @@ class SelectionDetailsGroup
      * @var array
      */
     public $attributeInfo = [];
+
+    /**
+     * SelectionDetailsGroup constructor.
+     *
+     * @param bool $cheapestNonStop
+     * @param bool $cheapestOverall
+     */
+    public function __construct($cheapestNonStop, $cheapestOverall)
+    {
+        $this->selectionDetailsInfo = new SelectionDetailsInfo(
+            SelectionDetails::OPT_PRICE_RESULT_DISTRIBUTION
+        );
+
+        $this->nbOfUnitsInfo = new NbOfUnitsInfo();
+
+        if ($cheapestNonStop === true) {
+            $this->nbOfUnitsInfo->quantityDetails[] = new NumberOfUnitDetailsType(
+                null,
+                NumberOfUnitDetailsType::QUAL_CHEAPEST_NONSTOP
+            );
+        }
+
+        if ($cheapestOverall === true) {
+            $this->nbOfUnitsInfo->quantityDetails[] = new NumberOfUnitDetailsType(
+                null,
+                NumberOfUnitDetailsType::QUAL_CHEAPEST_OVERALL
+            );
+        }
+    }
 }

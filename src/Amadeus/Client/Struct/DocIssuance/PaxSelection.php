@@ -35,8 +35,14 @@ class PaxSelection
      */
     public $passengerReference;
 
-    public function __construct($passengerTattoo)
+    /**
+     * PaxSelection constructor.
+     *
+     * @param int|string $passengerTattoo
+     * @param string $paxType
+     */
+    public function __construct($passengerTattoo, $paxType = PassengerReference::TYPE_PAX_TATTOO)
     {
-        $this->passengerReference = new PassengerReference($passengerTattoo);
+        $this->passengerReference = new PassengerReference($passengerTattoo, $paxType);
     }
 }

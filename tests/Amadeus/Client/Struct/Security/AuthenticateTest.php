@@ -65,6 +65,5 @@ class AuthenticateTest extends BaseTestCase
         $this->assertEquals(PasswordInfo::DATA_TYPE_EDIFACT , $message->passwordInfo->dataType);
         $this->assertEquals(4 , $message->passwordInfo->dataLength);
         $this->assertEquals(base64_encode('TEST') , $message->passwordInfo->binaryData);
-
     }
 }

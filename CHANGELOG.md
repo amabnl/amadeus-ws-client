@@ -36,13 +36,14 @@
     - Selective pricing: select segments, passengers and/or TST's
     - Past date pricing
     - Award Pricing
-    
+
 *These pricing options are also available for the* ``Fare_InformativePricingWithoutPNR`` *message version 13+*
 
 * Implemented ``PNR_TransferOwnership``
 * Implemented ``Ticket_DisplayTST``
 * Implemented ``Ticket_CreateTSMFromPricing``
 * Implemented ``Service_IntegratedPricing``
+* Implemented ``DocIssuance_IssueMiscellaneousDocuments``
 * Implemented ``Fare_MasterPricerCalendar``
 * Implemented ``Fare_InformativeBestPricingWithoutPNR``
 * Implemented ``Fare_PricePNRWithLowerFares``

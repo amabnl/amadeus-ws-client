@@ -909,6 +909,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("UNABLE TO PROCESS", $result->messages[0]->text);
     }
 
+    public function testCanHandleDocIssuanceIssueMiscDocErrorResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyDocIssuanceIssueMiscDocReplyError.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'DocIssuance_IssueMiscellaneousDocuments');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('6043', $result->messages[0]->code);
+        $this->assertEquals("UNABLE TO PROCESS - EDIFACT ERROR", $result->messages[0]->text);
+    }
+
     public function testCanHandleTicketCreateTSTFromPricingErrResponse()
     {
         $respHandler = new ResponseHandler\Base();

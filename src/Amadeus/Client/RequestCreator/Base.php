@@ -25,6 +25,7 @@ namespace Amadeus\Client\RequestCreator;
 use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
+use Amadeus\Client\RequestOptions\DocIssuanceIssueMiscDocOptions;
 use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
 use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
 use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingOptions;
@@ -285,6 +286,17 @@ class Base implements RequestCreatorInterface
     protected function createDocIssuanceIssueTicket(DocIssuanceIssueTicketOptions $params)
     {
         return new Struct\DocIssuance\IssueTicket($params);
+    }
+
+    /**
+     * DocIssuance_IssueMiscellaneousDocuments
+     *
+     * @param DocIssuanceIssueMiscDocOptions $params
+     * @return Struct\DocIssuance\IssueTicket
+     */
+    protected function createDocIssuanceIssueMiscellaneousDocuments(DocIssuanceIssueMiscDocOptions $params)
+    {
+        return new Struct\DocIssuance\IssueMiscellaneousDocuments($params);
     }
 
     /**

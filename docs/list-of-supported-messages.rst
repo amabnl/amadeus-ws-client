@@ -30,11 +30,12 @@ This is the list of messages that are at least partially supported at this time:
 - Air_SellFromRecommendation
 - Air_FlightInfo
 - Air_RetrieveSeatMap
-- DocIssuance_IssueTicket
 - Ticket_CreateTSTFromPricing
 - Ticket_CreateTSMFromPricing
 - Ticket_DisplayTST
 - Ticket_DeleteTST
+- DocIssuance_IssueTicket
+- DocIssuance_IssueMiscellaneousDocuments
 - Offer_CreateOffer
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
@@ -59,6 +60,7 @@ On the to-do list / work in progress:
 - Air_RebookAirSegment
 - Air_TLAGetAvailability
 - PNR_NameChange
+- PNR_AddAuxiliarySegment
 - PointOfRef_Search
 - PointOfRef_CategoryList
 - FOP_CreateFormOfPayment
@@ -67,11 +69,24 @@ On the to-do list / work in progress:
 - Ticket_RetrieveListOfTSM
 - Ticket_DisplayTSMP
 - Ticket_DeleteTSMP
+- Ticket_AddDocNumber
 - Media_GetMedia
 - Service_IntegratedPricing
 - Service_IntegratedCatalogue
 - Service_PriceServiceViaCatalogue
 - Service_PriceIntegratedMode
-- DocIssuance_IssueMiscellaneousDocuments
 - DocIssuance_IssueCombined
+
+Even further down the to-do list: Hotel & Car booking support:
+
+- Hotel_MultiSingleAvailability
+- Hotel_DescriptiveInfo
+- Hotel_EnhancedPricing
+- Hotel_Sell
+- Hotel_CompleteReservationDetails
+- Car_Availability
+- Car_RateInformationFromAvailability
+- Car_Sell
+- Car_RateInformationFromCarSegment
+- Car_Modify
 

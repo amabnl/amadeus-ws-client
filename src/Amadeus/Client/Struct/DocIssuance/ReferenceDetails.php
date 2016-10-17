@@ -44,16 +44,22 @@ class ReferenceDetails
 
     const TYPE_PNR_FHE_TATTOO = "FHT";
 
+    const TYPE_TSM = "M";
+
+    const TYPE_TSM_TATTOO = "TMT";
+
     /**
      * self::TYPE_*
      *
-     * C Coupon number selection
+     * C   Coupon number selection
      * FAT PNR FA TATOO
      * FHT PNR FHE TATOO
-     * L Line number selection
-     * SN Segment selection
-     * ST Segment Tatoo reference number
-     * TS TST selection
+     * L   Line number selection
+     * SN  Segment selection
+     * ST  Segment Tatoo reference number
+     * TS  TST selection
+     * M   TSM selection
+     * TMT TSM Tatoo
      *
      * @var string
      */

@@ -23,15 +23,14 @@
 namespace Amadeus\Client\Struct\DocIssuance;
 
 use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * DocIssuance_IssueTicket
+ * DocIssuance_IssueTicket request structure
  *
  * @package Amadeus\Client\Struct\DocIssuance
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class IssueTicket extends BaseWsMessage
+class IssueTicket extends DocIssuanceBaseMsg
 {
     /**
      * @var AgentInfo
@@ -43,35 +42,6 @@ class IssueTicket extends BaseWsMessage
      */
     public $overrideDate;
 
-    /**
-     * @var Selection[]
-     */
-    public $selection = [];
-
-    /**
-     * @var PaxSelection[]
-     */
-    public $paxSelection = [];
-
-    /**
-     * @var Stock
-     */
-    public $stock;
-
-    /**
-     * @var OptionGroup[]
-     */
-    public $optionGroup = [];
-
-    /**
-     * @var InfantOrAdultAssociation
-     */
-    public $infantOrAdultAssociation;
-
-    /**
-     * @var OtherCompoundOptions[]
-     */
-    public $otherCompoundOptions = [];
 
     /**
      * IssueTicket constructor.
@@ -80,42 +50,26 @@ class IssueTicket extends BaseWsMessage
      */
     public function __construct(DocIssuanceIssueTicketOptions $options)
     {
-        if (!empty($options->tsts)) {
-            foreach ($options->tsts as $tst) {
-                $this->addSelectionItem(
-                    new ReferenceDetails(
-                        $tst,
-                        ReferenceDetails::TYPE_TST
-                    )
-                );
-            }
+        foreach ($options->tsts as $tst) {
+            $this->addSelectionItem(
+                new ReferenceDetails(
+                    $tst,
+                    ReferenceDetails::TYPE_TST
+                )
+            );
         }
 
         $this->loadOverrideDate($options);
 
         $this->loadReferences($options);
 
-        $this->loadOptions($options);
+        $this->loadOptions($options->options, $options->compoundOptions);
 
         if (!empty($options->agentCode)) {
             $this->agentInfo = new AgentInfo($options->agentCode);
         }
 
-        if (!empty($options->passengerType)) {
-            $this->infantOrAdultAssociation = new InfantOrAdultAssociation($options->passengerType);
-        }
-    }
-
-    /**
-     * @param ReferenceDetails $ref
-     */
-    protected function addSelectionItem(ReferenceDetails $ref)
-    {
-        if (is_null($this->selection) || empty($this->selection)) {
-            $this->selection[] = new Selection();
-        }
-
-        $this->selection[0]->referenceDetails[] = $ref;
+        $this->loadPassType($options->passengerType);
     }
 
     /**
@@ -138,42 +92,17 @@ class IssueTicket extends BaseWsMessage
      */
     protected function loadReferences(DocIssuanceIssueTicketOptions $options)
     {
-        if (!empty($options->passengerTattoos)) {
-            foreach ($options->passengerTattoos as $passengerTattoo) {
-                $this->paxSelection[] = new PaxSelection($passengerTattoo);
-            }
+        foreach ($options->passengerTattoos as $passengerTattoo) {
+            $this->paxSelection[] = new PaxSelection($passengerTattoo);
         }
 
-        if (!empty($options->segmentTattoos)) {
-            foreach ($options->segmentTattoos as $segmentTattoo) {
-                $this->addSelectionItem(
-                    new ReferenceDetails(
-                        $segmentTattoo,
-                        ReferenceDetails::TYPE_SEGMENT_TATTOO
-                    )
-                );
-            }
-        }
-    }
-
-    /**
-     * @param DocIssuanceIssueTicketOptions $options
-     */
-    protected function loadOptions(DocIssuanceIssueTicketOptions $options)
-    {
-        if (!empty($options->options)) {
-            foreach ($options->options as $option) {
-                $this->optionGroup[] = new OptionGroup($option);
-            }
-        }
-
-        if (!empty($options->compoundOptions)) {
-            foreach ($options->compoundOptions as $compoundOption) {
-                $this->otherCompoundOptions[] = new OtherCompoundOptions(
-                    $compoundOption->type,
-                    $compoundOption->details
-                );
-            }
+        foreach ($options->segmentTattoos as $segmentTattoo) {
+            $this->addSelectionItem(
+                new ReferenceDetails(
+                    $segmentTattoo,
+                    ReferenceDetails::TYPE_SEGMENT_TATTOO
+                )
+            );
         }
     }
 }

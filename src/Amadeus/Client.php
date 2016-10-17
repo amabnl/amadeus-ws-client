@@ -822,6 +822,22 @@ class Client
     }
 
     /**
+     * DocIssuance_IssueMiscellaneousDocuments
+     *
+     * @param RequestOptions\DocIssuanceIssueMiscDocOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function docIssuanceIssueMiscellaneousDocuments(
+        RequestOptions\DocIssuanceIssueMiscDocOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'DocIssuance_IssueMiscellaneousDocuments';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * PriceXplorer_ExtremeSearch
      *
      * @param RequestOptions\PriceXplorerExtremeSearchOptions $options

@@ -115,10 +115,6 @@ class ExtremeSearch extends BaseWsMessage
 
         $this->loadDestinations($params);
 
-        if (!empty($params->destinationCountries)) {
-            $this->loadDestinationCountries($params->destinationCountries);
-        }
-
         $this->loadDepartureDaysOutIn($params);
 
         $this->loadStayDuration($params->stayDurationDays, $params->stayDurationFlexibilityDays);
@@ -145,24 +141,6 @@ class ExtremeSearch extends BaseWsMessage
     }
 
     /**
-     * @param array $destinationCountries
-     */
-    protected function loadDestinationCountries($destinationCountries)
-    {
-        foreach ($destinationCountries as $destinationCountry) {
-            $tmpGrp = new ItineraryGrp();
-
-            $tmpGrp->locationInfo = new LocationInfo(LocationInfo::LOC_COUNTRY);
-
-            $tmpGrp->locationInfo->locationDescription = new LocationIdentificationType();
-            $tmpGrp->locationInfo->locationDescription->qualifier = LocationIdentificationType::QUAL_DESTINATION;
-            $tmpGrp->locationInfo->locationDescription->code = $destinationCountry;
-
-            $this->itineraryGrp[] = $tmpGrp;
-        }
-    }
-
-    /**
      * @param int|null $stayDuration
      * @param int|null $flexibility
      */
@@ -184,30 +162,7 @@ class ExtremeSearch extends BaseWsMessage
     protected function loadCheapestQualifiers($cheapestNonStop, $cheapestOverall)
     {
         if ($cheapestNonStop || $cheapestOverall) {
-            $tmpSelDet = new SelectionDetailsGroup();
-
-            $tmpSelDet->selectionDetailsInfo = new SelectionDetailsInfo();
-            $tmpSelDet->selectionDetailsInfo->selectionDetails[] = new SelectionDetails(
-                SelectionDetails::OPT_PRICE_RESULT_DISTRIBUTION
-            );
-
-            $tmpSelDet->nbOfUnitsInfo = new NbOfUnitsInfo();
-
-            if ($cheapestNonStop) {
-                $tmpSelDet->nbOfUnitsInfo->quantityDetails[] = new NumberOfUnitDetailsType(
-                    null,
-                    NumberOfUnitDetailsType::QUAL_CHEAPEST_NONSTOP
-                );
-            }
-
-            if ($cheapestOverall) {
-                $tmpSelDet->nbOfUnitsInfo->quantityDetails[] = new NumberOfUnitDetailsType(
-                    null,
-                    NumberOfUnitDetailsType::QUAL_CHEAPEST_OVERALL
-                );
-            }
-
-            $this->selectionDetailsGroup[] = $tmpSelDet;
+            $this->selectionDetailsGroup[] = new SelectionDetailsGroup($cheapestNonStop, $cheapestOverall);
         }
     }
 
@@ -219,12 +174,10 @@ class ExtremeSearch extends BaseWsMessage
         if ($resultAggregationOption !== null) {
             $groupTypes = $this->makeAggregationGroupTypes($resultAggregationOption);
 
-            $tmpAttrInfo = new AttributeInfo(
+            $this->attributeInfo[] = new AttributeInfo(
                 AttributeInfo::FUNC_GROUPING,
                 $groupTypes
             );
-
-            $this->attributeInfo[] = $tmpAttrInfo;
         }
     }
 
@@ -280,10 +233,20 @@ class ExtremeSearch extends BaseWsMessage
      */
     protected function loadDestinations(PriceXplorerExtremeSearchOptions $params)
     {
-        if (!empty($params->destinations)) {
-            foreach ($params->destinations as $destination) {
-                $this->itineraryGrp[] = new ItineraryGrp(null, $destination);
-            }
+        foreach ($params->destinations as $destination) {
+            $this->itineraryGrp[] = new ItineraryGrp(null, $destination);
+        }
+
+        foreach ($params->destinationCountries as $destinationCountry) {
+            $tmpGrp = new ItineraryGrp();
+
+            $tmpGrp->locationInfo = new LocationInfo(LocationInfo::LOC_COUNTRY);
+
+            $tmpGrp->locationInfo->locationDescription = new LocationIdentificationType();
+            $tmpGrp->locationInfo->locationDescription->qualifier = LocationIdentificationType::QUAL_DESTINATION;
+            $tmpGrp->locationInfo->locationDescription->code = $destinationCountry;
+
+            $this->itineraryGrp[] = $tmpGrp;
         }
     }
 

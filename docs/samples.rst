@@ -9,6 +9,7 @@ There, you can find more examples of all the options that are supported by the l
 
 .. contents::
 
+
 ***
 PNR
 ***
@@ -1070,11 +1071,11 @@ Get seat map information for a specific flight, request prices and specify Cabin
 
 Complex example: Seat Map with Prices
 
-* Query: 2 passengers,
-* options for pricing:
-    * record locator,
-    * conversion into USD,
-    * ticket designator for the 1st passenger along with date of birth and fare basis.
+- Query: 2 passengers
+- Options for pricing:
+    - record locator,
+    - conversion into USD,
+    - ticket designator for the 1st passenger along with date of birth and fare basis.
 
 .. code-block:: php
 
@@ -1289,6 +1290,94 @@ Issue e-Ticket with Consolidator Method:
             ]
         ])
     );
+
+---------------------------------------
+DocIssuance_IssueMiscellaneousDocuments
+---------------------------------------
+
+Issue miscellaneous document - Electronic override
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueMiscDocOptions;
+
+    $issueDocResponse = $client->docIssuanceIssueMiscellaneousDocuments(
+        new DocIssuanceIssueMiscDocOptions([
+            'options' => [
+                DocIssuanceIssueMiscDocOptions::OPTION_EMD_ISSUANCE
+            ]
+        ])
+    );
+
+Issue miscellaneous document with Consolidator Method:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueMiscDocOptions;
+    use Amadeus\Client\RequestOptions\DocIssuance\CompoundOption;
+
+    $issueDocResponse = $client->docIssuanceIssueMiscellaneousDocuments(
+        new DocIssuanceIssueMiscDocOptions([
+            'compoundOptions' => [
+                new CompoundOption([
+                    'type' => CompoundOption::TYPE_ET_CONSOLIDATOR,
+                    'details' => '1A'
+                ])
+            ]
+        ])
+    );
+
+Specify TSM numbers or TSM tattoo's to issue:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueMiscDocOptions;
+
+    //TSM Numbers:
+    $issueDocResponse = $client->docIssuanceIssueMiscellaneousDocuments(
+        new DocIssuanceIssueMiscDocOptions([
+            'tsmNumbers' => [1]
+        ])
+    );
+
+    //TSM Tattoos:
+    $issueDocResponse = $client->docIssuanceIssueMiscellaneousDocuments(
+        new DocIssuanceIssueMiscDocOptions([
+            'tsmTattoos' => [3]
+        ])
+    );
+
+Specify specific passengers for which to issue the EMD's:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueMiscDocOptions;
+
+    //Pax Numbers:
+    $issueDocResponse = $client->docIssuanceIssueMiscellaneousDocuments(
+        new DocIssuanceIssueMiscDocOptions([
+            'passengerNumbers' => [1, 2]
+        ])
+    );
+
+    //Pax Tattoos:
+    $issueDocResponse = $client->docIssuanceIssueMiscellaneousDocuments(
+        new DocIssuanceIssueMiscDocOptions([
+            'passengerTattoos' => [3, 4]
+        ])
+    );
+
+
+
+*******
+Service
+*******
+
+-------------------------
+Service_IntegratedPricing
+-------------------------
+
+*Coming soon*
 
 ****
 Info

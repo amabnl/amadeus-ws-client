@@ -30,4 +30,13 @@ namespace Amadeus\Client\Struct\DocIssuance;
  */
 class Stock
 {
+    /**
+     * @var StockTicketNumberDetails
+     */
+    public $stockTicketNumberDetails;
+
+    public function __construct($stockRef)
+    {
+        $this->stockTicketNumberDetails = new StockTicketNumberDetails($stockRef);
+    }
 }

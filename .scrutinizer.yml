@@ -11,3 +11,10 @@ coding_style:
 build: 
     environment:
         php: 5.6
+    tests:
+        override:
+            -
+                command: 'phpunit --coverage-clover=build/logs/clover.xml'
+                coverage:
+                    file: 'build/logs/clover.xml'
+                    format: 'clover'

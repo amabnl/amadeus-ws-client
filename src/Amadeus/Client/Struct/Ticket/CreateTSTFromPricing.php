@@ -22,6 +22,9 @@
 
 namespace Amadeus\Client\Struct\Ticket;
 
+use Amadeus\Client\RequestOptions\Ticket\PassengerReference;
+use Amadeus\Client\RequestOptions\Ticket\Pricing;
+use Amadeus\Client\RequestOptions\TicketCreateTsmFromPricingOptions;
 use Amadeus\Client\RequestOptions\TicketCreateTstFromPricingOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 
@@ -56,32 +59,55 @@ class CreateTSTFromPricing extends BaseWsMessage
     /**
      * CreateTSTFromPricing constructor.
      *
-     * @param TicketCreateTstFromPricingOptions $params
+     * @param TicketCreateTstFromPricingOptions|TicketCreateTsmFromPricingOptions $params
      */
-    public function __construct(TicketCreateTstFromPricingOptions $params)
+    public function __construct($params)
     {
         foreach ($params->pricings as $pricing) {
-            $tmp = new PsaList(
-                $pricing->tstNumber,
-                ItemReference::REFTYPE_TST
-            );
-
-            if (!empty($pricing->passengerReferences)) {
-                $tmp->paxReference = new PaxReference();
-
-                foreach ($pricing->passengerReferences as $passengerReference) {
-                    $tmp->paxReference->refDetails[] = new RefDetails(
-                        $passengerReference->id,
-                        $passengerReference->type
-                    );
-                }
-            }
-
-            $this->psaList[] = $tmp;
+            $this->psaList[] = $this->makePsaList($pricing);
         }
 
         if (!is_null($params->informationalRecordLocator)) {
             $this->pnrLocatorData = new PnrLocatorData($params->informationalRecordLocator);
         }
+    }
+
+    /**
+     * @param Pricing $pricing
+     * @return PsaList
+     */
+    protected function makePsaList($pricing)
+    {
+        $refType = (!empty($pricing->tstNumber)) ? ItemReference::REFTYPE_TST : ItemReference::REFTYPE_TSM;
+        $ref = (!empty($pricing->tstNumber)) ? $pricing->tstNumber : $pricing->tsmNumber;
+
+        $list = new PsaList(
+            $ref,
+            $refType
+        );
+
+        if (!empty($pricing->passengerReferences)) {
+            $list->paxReference = $this->makePaxRef($pricing->passengerReferences);
+        }
+
+        return $list;
+    }
+
+    /**
+     * @param PassengerReference[] $passengerReferences
+     * @return PaxReference
+     */
+    protected function makePaxRef($passengerReferences)
+    {
+        $paxRef = new PaxReference();
+
+        foreach ($passengerReferences as $passengerReference) {
+            $paxRef->refDetails[] = new RefDetails(
+                $passengerReference->id,
+                $passengerReference->type
+            );
+        }
+
+        return $paxRef;
     }
 }

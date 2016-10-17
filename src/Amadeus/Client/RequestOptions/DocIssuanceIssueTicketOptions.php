@@ -52,11 +52,11 @@ class DocIssuanceIssueTicketOptions extends Base
      *
      * CCC Concealed Credit Card
      * CCO Credit Card Override
-     * ET Electronic Override
+     * ET  Electronic Override
      * ETR ET Revalidation
      * EXC Exchange ticketing
      * GRP Group Identifier
-     * HT Hotel Terms
+     * HT  Hotel Terms
      * IBJ Print Basic Joint Itinerary
      * IBP Print Basic Itinerary
      * ICP Inhibit Credit Card Charge Form Coupon Print
@@ -81,8 +81,8 @@ class DocIssuanceIssueTicketOptions extends Base
      * OVR Revalidation Override
      * PCC Present Credit Card
      * POD Payment On Demand
-     * PT Paper override
-     * RT Retrieve PNR
+     * PT  Paper override
+     * RT  Retrieve PNR
      * TKA Ticket Only
      * TKP Electronic ticketing via TCH
      * TKT Pre-issue validation
@@ -92,7 +92,7 @@ class DocIssuanceIssueTicketOptions extends Base
      *
      * TTP/<OPTION>
      *
-     * @var array
+     * @var string[]
      */
     public $options = [];
 
@@ -124,7 +124,7 @@ class DocIssuanceIssueTicketOptions extends Base
     public $overridePastDateTst = false;
 
     /**
-     * The list of TST's to be ticketed
+     * The list of TST's numbers to be ticketed
      *
      * TTP/T1
      *

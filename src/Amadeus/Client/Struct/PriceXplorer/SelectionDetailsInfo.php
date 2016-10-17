@@ -34,4 +34,14 @@ class SelectionDetailsInfo
      * @var SelectionDetails[]
      */
     public $selectionDetails = [];
+
+    /**
+     * SelectionDetailsInfo constructor.
+     *
+     * @param string $option SelectionDetails::OPT_*
+     */
+    public function __construct($option)
+    {
+        $this->selectionDetails[] = new SelectionDetails($option);
+    }
 }

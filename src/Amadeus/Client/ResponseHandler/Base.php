@@ -544,10 +544,23 @@ class Base extends BaseUtils
     }
 
     /**
+     * DocIssuance_IssueTicket
+     *
      * @param SendResult $response
      * @return Result
      */
     protected function analyzeDocIssuanceIssueTicketResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
+    }
+
+    /**
+     * DocIssuance_IssueMiscellaneousDocuments
+     *
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeDocIssuanceIssueMiscellaneousDocumentsResponse($response)
     {
         return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
     }

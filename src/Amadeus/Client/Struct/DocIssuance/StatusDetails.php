@@ -40,6 +40,12 @@ class StatusDetails
     const OPTION_PRINT_EXTENDED_JOINT_ITIN = "IEJ";
     const OPTION_TICKET_ONLY = "TKA";
 
+    const OPTION_EMD_ISSUANCE = "ED";
+    const OPTION_BASIC_INVOICE = "INV";
+    const OPTION_BASIC_JOINT_INVOICE_ALL_PAX = "IVJ";
+    const OPTION_EXTENDED_INVOICE = "INE";
+    const OPTION_EXTENDED_INVOICE_ALL_PAX = "INJ";
+
     /**
      * CCC Concealed Credit Card
      * CCO Credit Card Override

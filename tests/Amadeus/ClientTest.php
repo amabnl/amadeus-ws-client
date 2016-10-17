@@ -2981,6 +2981,61 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendDocIssuanceIssueMiscellaneousDocuments()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummydocissuanceissueticketresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\DocIssuance\IssueMiscellaneousDocuments(
+            new Client\RequestOptions\DocIssuanceIssueMiscDocOptions([
+                'options' => [Client\RequestOptions\DocIssuanceIssueMiscDocOptions::OPTION_EMD_ISSUANCE]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('DocIssuance_IssueMiscellaneousDocuments', $expectedMessageResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['DocIssuance_IssueMiscellaneousDocuments' => "15.1"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'DocIssuance_IssueMiscellaneousDocuments')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->docIssuanceIssueMiscellaneousDocuments(
+            new Client\RequestOptions\DocIssuanceIssueMiscDocOptions([
+                'options' => [Client\RequestOptions\DocIssuanceIssueMiscDocOptions::OPTION_EMD_ISSUANCE]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     /**
      * @return array
      */
