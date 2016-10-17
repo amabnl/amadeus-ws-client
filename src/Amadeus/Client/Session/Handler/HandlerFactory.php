@@ -61,7 +61,7 @@ class HandlerFactory
             default:
                 //TODO implement Client::HEADER_V1
                 throw new \InvalidArgumentException(
-                    'No Session Handler found for soapHeaderVersion ' . $handlerParams->soapHeaderVersion
+                    'No Session Handler found for soapHeaderVersion '.$handlerParams->soapHeaderVersion
                 );
         }
 

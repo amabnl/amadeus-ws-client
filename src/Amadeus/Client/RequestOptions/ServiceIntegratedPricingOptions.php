@@ -20,18 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Queue;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * Scroll
+ * ServiceIntegratedPricingOptions
  *
- * @package Amadeus\Client\Struct\Queue
+ * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Scroll
+class ServiceIntegratedPricingOptions extends Base
 {
-    /**
-     * @var NumberOfItemsDetails
-     */
-    public $numberOfItemsDetails;
 }

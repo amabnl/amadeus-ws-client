@@ -91,9 +91,9 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
     {
         $newRequest = null;
 
-        $xsltFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::REMOVE_EMPTY_XSLT_LOCATION;
+        $xsltFile = dirname(__FILE__).DIRECTORY_SEPARATOR.self::REMOVE_EMPTY_XSLT_LOCATION;
         if (!is_readable($xsltFile)) {
-            throw new Exception('XSLT file "' . $xsltFile . '" is not readable!');
+            throw new Exception('XSLT file "'.$xsltFile.'" is not readable!');
         }
 
         $dom = new \DOMDocument('1.0', 'UTF-8');
@@ -108,7 +108,7 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
         if ($transform === false) {
             $this->logger->log(
                 Log\LogLevel::ERROR,
-                __METHOD__ . "__doRequest(): XSLTProcessor::transformToXml "
+                __METHOD__."__doRequest(): XSLTProcessor::transformToXml "
                 . "returned FALSE: could not perform transformation!!"
             );
             $newRequest = $request;

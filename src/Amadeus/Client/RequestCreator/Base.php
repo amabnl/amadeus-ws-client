@@ -39,6 +39,7 @@ use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\RequestOptions\SalesReportsDisplayQueryReportOptions;
 use Amadeus\Client\RequestOptions\SecurityAuthenticateOptions;
 use Amadeus\Client\RequestOptions\TicketCreateTsmFromPricingOptions;
+use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
 use Amadeus\Client\RequestOptions\TicketCreateTstFromPricingOptions;
 use Amadeus\Client\RequestOptions\TicketDeleteTstOptions;
 use Amadeus\Client\RequestOptions\TicketDisplayTstOptions;
@@ -98,12 +99,12 @@ class Base implements RequestCreatorInterface
 
         $builder = $this->findBuilderForMessage($messageName);
 
-        $methodName = 'create' . str_replace("_", "", $messageName);
+        $methodName = 'create'.str_replace("_", "", $messageName);
 
         if (method_exists($builder, $methodName)) {
             return $builder->$methodName($params, $this->getActiveVersionFor($messageName));
         } else {
-            throw new \RuntimeException('Message ' . $methodName . ' is not implemented in ' . __CLASS__);
+            throw new \RuntimeException('Message '.$methodName.' is not implemented in '.__CLASS__);
         }
     }
 
@@ -306,6 +307,17 @@ class Base implements RequestCreatorInterface
     protected function createSalesReportsDisplayQueryReport(SalesReportsDisplayQueryReportOptions $params)
     {
         return new Struct\SalesReports\DisplayQueryReport($params);
+    }
+
+    /**
+     * Service_IntegratedPricing
+     *
+     * @param ServiceIntegratedPricingOptions $params
+     * @return Struct\Service\IntegratedPricing
+     */
+    protected function createServiceIntegratedPricing(ServiceIntegratedPricingOptions $params)
+    {
+        return new Struct\Service\IntegratedPricing($params);
     }
 
     /**

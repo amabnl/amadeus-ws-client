@@ -74,7 +74,7 @@ class DeleteTST extends BaseWsMessage
             }
 
             if (!empty($params->passengerNumber)) {
-                $tmp =  new PsaList(
+                $tmp = new PsaList(
                     null,
                     ItemReference::REFTYPE_TST
                 );
@@ -88,7 +88,7 @@ class DeleteTST extends BaseWsMessage
             }
 
             if (!empty($params->segmentNumber)) {
-                $tmp =  new PsaList(
+                $tmp = new PsaList(
                     null,
                     ItemReference::REFTYPE_TST
                 );

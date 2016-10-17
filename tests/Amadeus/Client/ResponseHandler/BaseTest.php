@@ -1044,6 +1044,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("NO DATA FOUND", $result->messages[0]->text);
     }
 
+    public function testCanHandleServiceIntegratedPricing()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyServiceIntegratedPricingErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Service_IntegratedPricing');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('432', $result->messages[0]->code);
+        $this->assertEquals("INVALID CURRENCY CODE", $result->messages[0]->text);
+    }
+
     public function testCanHandleInvalidXmlDocument()
     {
         $this->setExpectedException('Amadeus\Client\Exception');

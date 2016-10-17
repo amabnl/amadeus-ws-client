@@ -134,7 +134,7 @@ class ConfirmHotel extends BaseWsMessage
                 );
             } else {
                 throw new InvalidArgumentException(
-                    'Hotel Offer Confirm Form of Payment ' . $params->formOfPayment . ' is not yet supported'
+                    'Hotel Offer Confirm Form of Payment '.$params->formOfPayment.' is not yet supported'
                 );
             }
         }

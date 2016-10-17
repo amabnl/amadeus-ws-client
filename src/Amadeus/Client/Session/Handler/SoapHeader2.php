@@ -125,7 +125,7 @@ class SoapHeader2 extends Base
             if ($sessionId) {
                 $newSessionData['sessionId'] = $sessionId;
             }
-            $sequence = (int)$responseDomDoc->getElementsByTagName(self::NODENAME_SEQENCENR)->item(0)->nodeValue;
+            $sequence = (int) $responseDomDoc->getElementsByTagName(self::NODENAME_SEQENCENR)->item(0)->nodeValue;
             if ($sequence) {
                 $newSessionData['sequenceNumber'] = $sequence;
             }

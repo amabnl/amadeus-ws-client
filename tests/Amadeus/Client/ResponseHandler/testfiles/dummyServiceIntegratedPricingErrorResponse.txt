@@ -1,0 +1,17 @@
+<Service_IntegratedPricingReply xmlns="http://xml.amadeus.com/TPISGR_15_1_1A">
+    <errorGroup>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>432</errorCode>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <source>M</source>
+                <encoding>1</encoding>
+            </freeTextDetails>
+            <freeText>INVALID CURRENCY CODE</freeText>
+        </errorWarningDescription>
+    </errorGroup>
+</Service_IntegratedPricingReply>

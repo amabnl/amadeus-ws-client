@@ -41,55 +41,55 @@ class ElementManagementItinerary
      */
     public $reference;
     /**
-      * PNR_AddMultiElements/originDestinationDetails/itineraryInfo/elementManagementItinerary/segmentName
-      *
-      * AB Billing Address element
-      * ABU Unstructured Billing Address element
-      * AI Accounting Information element
-      * AIR Air segment
-      * AM Mailing address element
-      * AMU Unstructured Mailing Address Element
-      * AP Contact element
-      * AU ATX - Non-automated Air Taxi auxiliary segment
-      * CU Non-automated Car auxiliary segment
-      * ES Individual PNR Security element
-      * FD Fare Discount element
-      * FE Endorsements / Restrictions element
-      * FF Frequent Flyer entry
-      * FH Manual Document Registration element
-      * FHA Automated ticket number
-      * FHE Electronic ticket number
-      * FHM Manual ticket number/document registration element
-      * FK AIR destination
-      * FM Commission element
-      * FO Original Issue / Issue in Exchange For element
-      * FP Form of Payment element
-      * FS Miscellaneous Ticketing Information element
-      * FT Tour Code element
-      * FV Ticketing Carrier Designator element
-      * FY Fare print override element
-      * FZ Miscellaneous Information element
-      * HU Non-automated Hotel auxiliary segment
-      * NG Group Name element
-      * NM Name element
-      * NZ Non Commerciak PNR Name element
-      * OP Option element
-      * OS Other Special Information element
-      * RC Confidential Remark element
-      * RF Receive From element
-      * RI Invoice remark
-      * RM General Remark elementt
-      * RQ Quality control remark element
-      * RU Non-automated Miscellaneous auxiliary segment
-      * RX Corporate Remark
-      * SK Special Keyword elements
-      * SSR SSR element
-      * STR Seat Request
-      * TK Ticket element
-      * TU Non-automated Tour auxiliary segment
-      *
-      * @var string
-      */
+     * PNR_AddMultiElements/originDestinationDetails/itineraryInfo/elementManagementItinerary/segmentName
+     *
+     * AB Billing Address element
+     * ABU Unstructured Billing Address element
+     * AI Accounting Information element
+     * AIR Air segment
+     * AM Mailing address element
+     * AMU Unstructured Mailing Address Element
+     * AP Contact element
+     * AU ATX - Non-automated Air Taxi auxiliary segment
+     * CU Non-automated Car auxiliary segment
+     * ES Individual PNR Security element
+     * FD Fare Discount element
+     * FE Endorsements / Restrictions element
+     * FF Frequent Flyer entry
+     * FH Manual Document Registration element
+     * FHA Automated ticket number
+     * FHE Electronic ticket number
+     * FHM Manual ticket number/document registration element
+     * FK AIR destination
+     * FM Commission element
+     * FO Original Issue / Issue in Exchange For element
+     * FP Form of Payment element
+     * FS Miscellaneous Ticketing Information element
+     * FT Tour Code element
+     * FV Ticketing Carrier Designator element
+     * FY Fare print override element
+     * FZ Miscellaneous Information element
+     * HU Non-automated Hotel auxiliary segment
+     * NG Group Name element
+     * NM Name element
+     * NZ Non Commerciak PNR Name element
+     * OP Option element
+     * OS Other Special Information element
+     * RC Confidential Remark element
+     * RF Receive From element
+     * RI Invoice remark
+     * RM General Remark elementt
+     * RQ Quality control remark element
+     * RU Non-automated Miscellaneous auxiliary segment
+     * RX Corporate Remark
+     * SK Special Keyword elements
+     * SSR SSR element
+     * STR Seat Request
+     * TK Ticket element
+     * TU Non-automated Tour auxiliary segment
+     *
+     * @var string
+     */
     public $segmentName;
 
     /**

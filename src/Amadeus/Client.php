@@ -193,7 +193,7 @@ class Client
         $this->requestCreator = $this->loadRequestCreator(
             $params->requestCreator,
             $params->requestCreatorParams,
-            self::RECEIVED_FROM_IDENTIFIER . "-" .self::VERSION,
+            self::RECEIVED_FROM_IDENTIFIER."-".self::VERSION,
             $this->sessionHandler->getOriginatorOffice(),
             $this->sessionHandler->getMessagesAndVersions()
         );
@@ -849,6 +849,22 @@ class Client
         $messageOptions = []
     ) {
         $msgName = 'SalesReports_DisplayQueryReport';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Service_IntegratedPricing
+     *
+     * @param RequestOptions\ServiceIntegratedPricingOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function serviceIntegratedPricing(
+        RequestOptions\ServiceIntegratedPricingOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Service_IntegratedPricing';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }

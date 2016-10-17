@@ -36,7 +36,7 @@ class MPPassenger extends LoadParamsFromArray
 
     const TYPE_CHILD = "CH";
 
-    const TYPE_INFANT= "INF";
+    const TYPE_INFANT = "INF";
 
     /**
      * What type of passengers? self::TYPE_*

@@ -35,17 +35,17 @@ class PassengerDef extends LoadParamsFromArray
     /**
      * Type of passenger
      *
-    * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2326&serviceVersionId=2298&isQuery=true#
-    *
-    * Offer_CreateOffer/airPricingRecommendation/paxReference/passengerReference/type
-    * Reference qualifier codesets
-    * Value   Description
-    * P       Passenger/traveller reference number
-    * PA      Adult Passenger
-    * PI      Infant Passenger
+     * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2326&serviceVersionId=2298&isQuery=true#
+     *
+     * Offer_CreateOffer/airPricingRecommendation/paxReference/passengerReference/type
+     * Reference qualifier codesets
+     * Value   Description
+     * P       Passenger/traveller reference number
+     * PA      Adult Passenger
+     * PI      Infant Passenger
      *
      * @var string
-    */
+     */
     public $passengerType = "P";
 
     /**

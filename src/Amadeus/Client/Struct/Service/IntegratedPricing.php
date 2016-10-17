@@ -20,18 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Queue;
+namespace Amadeus\Client\Struct\Service;
+
+use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * Scroll
+ * Service_IntegratedPricing request structure
  *
- * @package Amadeus\Client\Struct\Queue
+ * @package Amadeus\Client\Struct\Service
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Scroll
+class IntegratedPricing extends BaseWsMessage
 {
     /**
-     * @var NumberOfItemsDetails
+     * @var IntegratedPricing\PricingOption[]
      */
-    public $numberOfItemsDetails;
+    public $pricingOption = [];
+
+    /**
+     * IntegratedPricing constructor.
+     *
+     * @param ServiceIntegratedPricingOptions $options
+     */
+    public function __construct($options)
+    {
+        //TODO
+    }
 }

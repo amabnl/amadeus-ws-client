@@ -753,4 +753,13 @@ class Base extends BaseUtils
     {
         return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
     }
+
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
+    protected function analyzeServiceIntegratedPricingResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
 }

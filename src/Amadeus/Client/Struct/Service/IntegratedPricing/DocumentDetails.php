@@ -20,18 +20,39 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Queue;
+namespace Amadeus\Client\Struct\Service\IntegratedPricing;
 
 /**
- * Scroll
+ * DocumentDetails
  *
- * @package Amadeus\Client\Struct\Queue
+ * @package Amadeus\Client\Struct\Service\IntegratedPricing
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Scroll
+class DocumentDetails
 {
+
     /**
-     * @var NumberOfItemsDetails
+     * @var string
      */
-    public $numberOfItemsDetails;
+    public $number;
+
+    /**
+     * @var string
+     */
+    public $type;
+
+    /**
+     * @var int
+     */
+    public $numberOfBooklets;
+
+    /**
+     * @var string
+     */
+    public $dataIndicator;
+
+    /**
+     * @var string
+     */
+    public $requestNotification;
 }

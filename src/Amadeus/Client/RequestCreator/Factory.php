@@ -59,6 +59,6 @@ class Factory
      */
     protected static function makeReceivedFrom($original, $libIdentifier)
     {
-        return $original . " " . $libIdentifier;
+        return $original." ".$libIdentifier;
     }
 }

@@ -189,6 +189,57 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertEquals(RangeOfDate::RANGEMODE_PLUS, $message->itinerary[1]->timeDetails->rangeOfDate->rangeQualifier);
     }
 
+    public function testCanMakeMasterPricerMessageWithDeprecatedDateAndTimeParams()
+    {
+        $opt = new FareMasterPricerTbSearch();
+        $opt->nrOfRequestedResults = 200;
+        $opt->nrOfRequestedPassengers = 1;
+        $opt->passengers[] = new MPPassenger([
+            'type' => MPPassenger::TYPE_ADULT,
+            'count' => 1
+        ]);
+        $opt->itinerary[] = new MPItinerary([
+            'departureLocation' => new MPLocation(['city' => 'BRU']),
+            'arrivalLocation' => new MPLocation(['city' => 'LON']),
+            'date' => new MPDate([
+                'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC')),
+                'time' => new \DateTime('0000-00-00T15:45:00+0000', new \DateTimeZone('UTC'))
+            ])
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertEquals('150117', $message->itinerary[0]->timeDetails->firstDateTimeDetail->date);
+        $this->assertEquals('1545', $message->itinerary[0]->timeDetails->firstDateTimeDetail->time);
+        $this->assertNull($message->itinerary[0]->timeDetails->firstDateTimeDetail->timeWindow);
+        $this->assertEquals(FirstDateTimeDetail::TIMEQUAL_DEPART_FROM, $message->itinerary[0]->timeDetails->firstDateTimeDetail->timeQualifier);
+        $this->assertNull($message->itinerary[0]->timeDetails->rangeOfDate);
+    }
+
+    public function testCanMakeMasterPricerMessageWithEmptyDateParams()
+    {
+        $opt = new FareMasterPricerTbSearch();
+        $opt->nrOfRequestedResults = 200;
+        $opt->nrOfRequestedPassengers = 1;
+        $opt->passengers[] = new MPPassenger([
+            'type' => MPPassenger::TYPE_ADULT,
+            'count' => 1
+        ]);
+        $opt->itinerary[] = new MPItinerary([
+            'departureLocation' => new MPLocation(['city' => 'BRU']),
+            'arrivalLocation' => new MPLocation(['city' => 'LON']),
+            'date' => new MPDate([
+            ])
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertEquals('000000', $message->itinerary[0]->timeDetails->firstDateTimeDetail->date);
+        $this->assertNull($message->itinerary[0]->timeDetails->firstDateTimeDetail->time);
+        $this->assertNull($message->itinerary[0]->timeDetails->firstDateTimeDetail->timeWindow);
+        $this->assertNull($message->itinerary[0]->timeDetails->rangeOfDate);
+    }
+
     public function testCanMakeMasterPricerMessageWithCabinClass()
     {
         $opt = new FareMasterPricerTbSearch();
