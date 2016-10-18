@@ -6,13 +6,12 @@ Samples for specific PNR Creation / modification scenario's
 
 Below are some examples of how to do specific things with regards to creating & modifying PNR's:
 
-******************************
+------------------------------
 Creating specific PNR elements
-******************************
+------------------------------
 
---------------------
 Passengers - Infants
---------------------
+====================
 
 Add an infant to a traveller without providing extra information:
 
@@ -72,9 +71,11 @@ Add an infant to a traveller and provide the infant's first & last name and date
         ]
     ]);
 
-------------------------
-Remark - Confidential RC
-------------------------
+Remarks
+=======
+
+Confidential RC
+---------------
 
 Add a Confidential Remark to a PNR (e.g. ``RC This remark is confidential``):
 
@@ -92,9 +93,8 @@ Add a Confidential Remark to a PNR (e.g. ``RC This remark is confidential``):
         ]
     ]);
 
----------------------
-Remark - Category RMx
----------------------
+Category RMx
+------------
 
 Add a remark with a specific category to a PNR (e.g. ``RMZ/A REMARK WITH CATEGORY Z``):
 
@@ -113,13 +113,11 @@ Add a remark with a specific category to a PNR (e.g. ``RMZ/A REMARK WITH CATEGOR
         ]
     ]);
 
---------------------
 Ticketing element TK
---------------------
+====================
 
-*****
 TK TL
-*****
+-----
 
 Add a TKTL element (e.g. ``TKTL 10 MAR``):
 
@@ -158,9 +156,8 @@ Add a TKTL element and specify ticketing queue (e.g. ``TKTL 10 MAR/Q50C1``):
         ]
     ]);
 
-*****
 TK XL
-*****
+-----
 
 Add a TKXL element and specify a date (e.g. ``TKXL15APR``) for automatic cancellation:
 
@@ -179,9 +176,8 @@ Add a TKXL element and specify a date (e.g. ``TKXL15APR``) for automatic cancell
         ]
     ]);
 
-*****
 TK OK
-*****
+-----
 
 Add a TK OK element to indicate ticketing is done:
 
@@ -199,9 +195,8 @@ Add a TK OK element to indicate ticketing is done:
         ]
     ]);
 
---------------------------
 Contact Element AP/APM/APE
---------------------------
+==========================
 
 Add an APE-element with a personal e-mail address (e.g. ``APE-dummy@example.com``)
 
@@ -235,16 +230,14 @@ Add an AP element with a contact phone number(e.g. ``AP 003222222222``)
         ]
     ]);
 
----------------------------
 Special Service Requests SR
----------------------------
+===========================
 
 In general for Special Service Request (SSR) elements, you need to provide the correct "type" of SSR element.
 You can find a list of all SSR elements on the `Amadeus e-Support centre on this page <https://mye-supportcentre.amadeus.com/c/portal/viewsolution/cas13fe9015f8100/kb-en-GB>`_.
 
-******************************
 APIS passport or identity card
-******************************
+------------------------------
 
 Provide mandatory SR DOCS with APIS information for flights to the US *(must be associated with the correct passenger)*:
 
@@ -274,9 +267,8 @@ Provide mandatory SR DOCS with APIS information for flights to the US *(must be 
         ]
     ]);
 
-************
 Meal request
-************
+------------
 
 Request a Gluten intolerant meal for passenger 2 on flight 3 (`See all meal request codes here <https://mye-supportcentre.amadeus.com/eTass/viewsolution/kb-en-GB/cas13a512f4f0800>`_):
 
@@ -304,9 +296,8 @@ Request a Gluten intolerant meal for passenger 2 on flight 3 (`See all meal requ
         ]
     ]);
 
-**********
 Wheelchair
-**********
+----------
 
 Request a wheelchair for passenger 1 on flights 1 and 2 (SSR code is ``WHCR```):
 
@@ -338,9 +329,8 @@ Request a wheelchair for passenger 1 on flights 1 and 2 (SSR code is ``WHCR```):
         ]
     ]);
 
-**************
 Frequent Flyer
-**************
+--------------
 
 Add a manual Frequent Flyer number (e.g. ``SR FQTV SN-SN 111111111/P2``)
 
@@ -365,9 +355,8 @@ Add a manual Frequent Flyer number (e.g. ``SR FQTV SN-SN 111111111/P2``)
         ]
     ]);
 
-------------------
 Form of Payment FP
-------------------
+==================
 
 Add an ``FP CASH`` element to the PNR to indicate the PNR is to be paid in cash:
 
@@ -403,9 +392,8 @@ Add an ``FP CC`` element to the PNR to perform PNR payment by Credit Card throug
         ]
     ]);
 
--------------------------
 Accounting Information AI
--------------------------
+=========================
 
 Provide an Account Number in an AI element (e.g. ``AI AN THEACCOUNT``)
 
@@ -422,9 +410,8 @@ Provide an Account Number in an AI element (e.g. ``AI AN THEACCOUNT``)
         ]
     ]);
 
--------------------------------------
 Mailing & Billing Address information
--------------------------------------
+=====================================
 
 Add a free-flow mailing address element (e.g. ``AM NAME,ADDRESS,CITY``)
 
@@ -470,9 +457,8 @@ Add a structured billing address element (e.g. ``AB //CY-COMPANY/NA-NAME/A1-LINE
         ]
     ]);
 
----------
 Group PNR
----------
+=========
 
 Create a PNR for a group of 25 people and already provide 3 of the travellers:
 
@@ -508,9 +494,8 @@ Create a PNR for a group of 25 people and already provide 3 of the travellers:
         ]
     ]);
 
----------------------------
 Adding a single AIR segment
----------------------------
+===========================
 
 Add a single AIR segment to a PNR:
 
@@ -547,9 +532,8 @@ Add a single AIR segment to a PNR:
         ]
     ]);
 
------------------------------
 Adding connected AIR segments
------------------------------
+=============================
 
 Itinerary AMS to SLC via connected flights AMS-LHR, LHR-LAX, LAX-SLC:
 
@@ -602,9 +586,8 @@ Itinerary AMS to SLC via connected flights AMS-LHR, LHR-LAX, LAX-SLC:
         ]
     ]);
 
-------------------------------------------------
 Adding AIR segments with ARNK segment in between
-------------------------------------------------
+================================================
 
 Outbound trip BRU-LIS, inbound trip FAO-BRU with an ARNK (Arrival Unknown) segment in between:
 

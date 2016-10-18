@@ -292,7 +292,7 @@ class Base implements RequestCreatorInterface
      * DocIssuance_IssueMiscellaneousDocuments
      *
      * @param DocIssuanceIssueMiscDocOptions $params
-     * @return Struct\DocIssuance\IssueTicket
+     * @return Struct\DocIssuance\IssueMiscellaneousDocuments
      */
     protected function createDocIssuanceIssueMiscellaneousDocuments(DocIssuanceIssueMiscDocOptions $params)
     {

@@ -67,7 +67,7 @@ class DocIssuanceBaseMsg extends BaseWsMessage
 
 
     /**
-     * @param string[] $options,
+     * @param string[] $options
      * @param CompoundOption[] $compoundOptions
      */
     protected function loadOptions($options, $compoundOptions)
