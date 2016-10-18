@@ -195,9 +195,12 @@ Add an APE-element with a personal e-mail address (e.g. ``APE-dummy@example.com`
         ]
     ]);
 
------------------------
-Service Request: SRDOCS
------------------------
+------------------------
+Special Service Requests
+------------------------
+
+In general for Special Service Request (SSR) elements, you need to provide the correct "type" of SSR element.
+You can find a list of all SSR elements on the `Amadeus e-Support centre on this page <https://mye-supportcentre.amadeus.com/c/portal/viewsolution/cas13fe9015f8100/kb-en-GB>`_.
 
 Provide mandatory SR DOCS with APIS information for flights to the US *(must be associated with the correct passenger)*:
 
@@ -221,6 +224,62 @@ Provide mandatory SR DOCS with APIS information for flights to the US *(must be 
                     new Reference([
                         'type' => Reference::TYPE_PASSENGER_TATTOO,
                         'id' => 1
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+Request a Gluten intolerant meal for passenger 2 on flight 3 (`See all meal request codes here <https://github.com/amabnl/amadeus-ws-client/issues/24#issuecomment-254443416>`_):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $opt = new PnrCreatePnrOptions([
+        'elements' => [
+            new ServiceRequest([
+                'type' => 'GFML',
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
+                        'id' => 2
+                    ]),
+                    new Reference([
+                        'type' => Reference::TYPE_SEGMENT_TATTOO,
+                        'id' => 3
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+Request a wheelchair for passenger 1 on flights 1 and 2 (SSR code is ``WHCR```):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $opt = new PnrCreatePnrOptions([
+        'elements' => [
+            new ServiceRequest([
+                'type' => 'WHCR',
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
+                        'id' => 1
+                    ]),
+                    new Reference([
+                        'type' => Reference::TYPE_SEGMENT_TATTOO,
+                        'id' => 1
+                    ]),
+                    new Reference([
+                        'type' => Reference::TYPE_SEGMENT_TATTOO,
+                        'id' => 2
                     ])
                 ]
             ])
