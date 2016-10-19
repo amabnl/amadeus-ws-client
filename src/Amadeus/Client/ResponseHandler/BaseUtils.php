@@ -341,7 +341,7 @@ abstract class BaseUtils implements ResponseHandlerInterface
         return implode(
             ' - ',
             array_map(
-                function($item) {
+                function ($item) {
                     return trim($item->nodeValue);
                 },
                 iterator_to_array($errorTextNodeList)
