@@ -51,7 +51,7 @@ class Base extends BaseUtils
      */
     public function analyzeResponse($sendResult, $messageName)
     {
-        $methodName = 'analyze' . str_replace('_', '', ucfirst($messageName)) . 'Response';
+        $methodName = 'analyze'.str_replace('_', '', ucfirst($messageName)).'Response';
 
         if (!empty($sendResult->exception)) {
             return $this->makeResultForException($sendResult);

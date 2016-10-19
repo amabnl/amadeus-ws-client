@@ -53,9 +53,9 @@ Once the client is installed, read the [About &amp; Get Started](docs/about-get-
 
 # Release history
 
-The current release is the first stable version of the library, 1.0.0. 
+The current release is version 1.1.0. 
 
-[Changelog](CHANGELOG.md)
+See the [Changelog](CHANGELOG.md).
 
 # Usage
 

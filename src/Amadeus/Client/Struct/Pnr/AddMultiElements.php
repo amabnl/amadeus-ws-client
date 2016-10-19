@@ -247,7 +247,7 @@ class AddMultiElements extends BaseWsMessage
                 throw new \RuntimeException('NOT YET IMPLEMENTED');
                 break;
             default:
-                throw new InvalidArgumentException('Segment type ' . $segmentType . ' is not supported');
+                throw new InvalidArgumentException('Segment type '.$segmentType.' is not supported');
                 break;
         }
 

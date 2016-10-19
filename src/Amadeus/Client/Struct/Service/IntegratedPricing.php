@@ -43,14 +43,14 @@ use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOption;
 class IntegratedPricing extends BasePricingMessage
 {
     /**
-     * @var IntegratedPricing\PricingOption[]
+     * @var PricingOption[]
      */
     public $pricingOption = [];
 
     /**
      * IntegratedPricing constructor.
      *
-     * @param ServiceIntegratedPricingOptions $options
+     * @param ServiceIntegratedPricingOptions|null $options
      */
     public function __construct($options = null)
     {
@@ -283,5 +283,24 @@ class IntegratedPricing extends BasePricingMessage
         }
 
         return $opt;
+    }
+
+    /**
+     * Merges Pricing options
+     *
+     * @param PricingOption[] $existingOptions
+     * @param PricingOption[] $newOptions
+     * @return PricingOption[] merged array
+     */
+    protected static function mergeOptions($existingOptions, $newOptions)
+    {
+        if (!empty($newOptions)) {
+            $existingOptions = array_merge(
+                $existingOptions,
+                $newOptions
+            );
+        }
+
+        return $existingOptions;
     }
 }

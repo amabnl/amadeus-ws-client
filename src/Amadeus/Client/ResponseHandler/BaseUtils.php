@@ -255,7 +255,7 @@ abstract class BaseUtils implements ResponseHandlerInterface
         $errorMessage = (array_key_exists($errorCode, $recognizedErrors)) ? $recognizedErrors[$errorCode] : '';
 
         if ($errorMessage === '') {
-            $errorMessage = "QUEUE ERROR '" . $errorCode . "' (Error message unavailable)";
+            $errorMessage = "QUEUE ERROR '".$errorCode."' (Error message unavailable)";
         }
 
         return $errorMessage;
@@ -290,7 +290,7 @@ abstract class BaseUtils implements ResponseHandlerInterface
             'INF' => Result::STATUS_INFO,
             'WEC' => Result::STATUS_WARN,
             'WZZ' => Result::STATUS_WARN, //Mutually defined warning
-            'WA' => Result::STATUS_WARN,  //Info line Warning - PNR_AddMultiElements
+            'WA' => Result::STATUS_WARN, //Info line Warning - PNR_AddMultiElements
             'W' => Result::STATUS_WARN,
             'EC' => Result::STATUS_ERROR,
             'X' => Result::STATUS_ERROR,
@@ -341,7 +341,7 @@ abstract class BaseUtils implements ResponseHandlerInterface
         return implode(
             ' - ',
             array_map(
-                function ($item) {
+                function($item) {
                     return trim($item->nodeValue);
                 },
                 iterator_to_array($errorTextNodeList)

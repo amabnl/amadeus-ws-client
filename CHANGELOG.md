@@ -1,4 +1,4 @@
-# Release 1.1.0 (unreleased)
+# Release 1.1.0 (19 October 2016)
 
 * ``Fare_MasterPricerTravelBoardSearch``: added new request options (https://github.com/amabnl/amadeus-ws-client/issues/20):
     - Preferred/excluded/... airlines option 'airlineOptions'.

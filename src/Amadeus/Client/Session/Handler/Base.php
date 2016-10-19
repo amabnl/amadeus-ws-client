@@ -446,9 +446,9 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      */
     protected function extractMessageVersion($fullVersionString)
     {
-        $marker = strpos($fullVersionString, '_', strpos($fullVersionString, '_')+1);
+        $marker = strpos($fullVersionString, '_', strpos($fullVersionString, '_') + 1);
 
-        $num = substr($fullVersionString, $marker+1);
+        $num = substr($fullVersionString, $marker + 1);
 
         return str_replace('_', '.', $num);
     }
@@ -480,7 +480,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
                     'http://schemas.xmlsoap.org/wsdl/soap/'
                 );
             } else {
-                throw new Client\InvalidWsdlFileException('WSDL ' . $wsdlFilePath . ' could not be loaded');
+                throw new Client\InvalidWsdlFileException('WSDL '.$wsdlFilePath.' could not be loaded');
             }
         }
     }
@@ -584,7 +584,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
         $msgAndVer = [];
         $domXpath = null;
 
-        $importPath = realpath(dirname($wsdlPath)) . DIRECTORY_SEPARATOR . $import;
+        $importPath = realpath(dirname($wsdlPath)).DIRECTORY_SEPARATOR.$import;
         $wsdlContent = file_get_contents($importPath);
 
         if ($wsdlContent !== false) {
@@ -603,7 +603,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
                 );
             }
         } else {
-            throw new Client\InvalidWsdlFileException('WSDL ' . $importPath . ' import could not be loaded');
+            throw new Client\InvalidWsdlFileException('WSDL '.$importPath.' import could not be loaded');
         }
 
         if ($domXpath instanceof \DOMXPath) {
@@ -637,11 +637,11 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     {
         $this->log(
             LogLevel::INFO,
-            'Called ' . $messageName . ' with request: ' . $this->getSoapClient($messageName)->__getLastRequest()
+            'Called '.$messageName.' with request: '.$this->getSoapClient($messageName)->__getLastRequest()
         );
         $this->log(
             LogLevel::INFO,
-            'Response:  ' . $this->getSoapClient($messageName)->__getLastResponse()
+            'Response:  '.$this->getSoapClient($messageName)->__getLastResponse()
         );
     }
 

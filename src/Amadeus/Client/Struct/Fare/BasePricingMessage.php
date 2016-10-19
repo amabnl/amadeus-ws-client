@@ -62,9 +62,9 @@ class BasePricingMessage extends BaseWsMessage
     /**
      * Merges Pricing options
      *
-     * @param PricingOptionGroup[]|ServicePriceOpt[] $existingOptions
-     * @param PricingOptionGroup[]|ServicePriceOpt[] $newOptions
-     * @return PricingOptionGroup[]|ServicePriceOpt[] merged array
+     * @param PricingOptionGroup[] $existingOptions
+     * @param PricingOptionGroup[] $newOptions
+     * @return PricingOptionGroup[] merged array
      */
     protected static function mergeOptions($existingOptions, $newOptions)
     {

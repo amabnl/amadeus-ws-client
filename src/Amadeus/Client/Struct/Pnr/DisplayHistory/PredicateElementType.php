@@ -58,7 +58,7 @@ class PredicateElementType
      * Original Issue / Issue in Exchange For element
      */
     const SEGNAME_ORIGINAL_ISSUE = "FO";
-    const SEGNAME_FORM_OF_PAYMENT= "FP";
+    const SEGNAME_FORM_OF_PAYMENT = "FP";
     const SEGNAME_FERRY = "FRR";
     const SEGNAME_MISCELLANEOUS_TICKETING_INFORMATION = "FS";
     const SEGNAME_TOUR_CODE = "FT";
