@@ -99,6 +99,8 @@ class AddMultiElements extends BaseWsMessage
      */
     protected function loadBare(PnrAddMultiElementsOptions $params)
     {
+        $tattooCounter = 0;
+
         if (!is_null($params->actionCode)) {
             $this->pnrActions = new AddMultiElements\PnrActions(
                 $params->actionCode
@@ -109,21 +111,13 @@ class AddMultiElements extends BaseWsMessage
             $this->reservationInfo = new AddMultiElements\ReservationInfo($params->recordLocator);
         }
 
-        $tattooCounter = 0;
-
         if ($params->travellerGroup !== null) {
             $this->addTravellerGroup($params->travellerGroup);
         } else {
             $this->addTravellers($params->travellers);
         }
 
-        if (!empty($params->tripSegments)) {
-            $this->addSegments($params->tripSegments, $tattooCounter);
-        }
-
-        if (!empty($params->itineraries)) {
-            $this->addItineraries($params->itineraries, $tattooCounter);
-        }
+        $this->addItineraries($params->itineraries, $params->tripSegments, $tattooCounter);
 
         if (!empty($params->elements)) {
             $this->addElements(
@@ -165,13 +159,7 @@ class AddMultiElements extends BaseWsMessage
             $this->addTravellers($params->travellers);
         }
 
-        if (!empty($params->tripSegments)) {
-            $this->addSegments($params->tripSegments, $tattooCounter);
-        }
-
-        if (!empty($params->itineraries)) {
-            $this->addItineraries($params->itineraries, $tattooCounter);
-        }
+        $this->addItineraries($params->itineraries, $params->tripSegments, $tattooCounter);
 
         $this->addElements(
             $params->elements,
@@ -181,11 +169,18 @@ class AddMultiElements extends BaseWsMessage
     }
 
     /**
+     * Load Segment itinerary
+     *
      * @param Itinerary[] $itineraries
+     * @param Segment[] $legacySegments
      * @param int $tattooCounter (BYREF)
      */
-    protected function addItineraries($itineraries, &$tattooCounter)
+    protected function addItineraries($itineraries, $legacySegments, &$tattooCounter)
     {
+        if (!empty($legacySegments)) {
+            $this->addSegments($legacySegments, $tattooCounter);
+        }
+
         foreach ($itineraries as $itinerary) {
             $this->addSegments(
                 $itinerary->segments,

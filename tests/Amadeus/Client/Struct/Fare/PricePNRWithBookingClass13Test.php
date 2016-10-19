@@ -82,7 +82,7 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $fareBasisOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
         $fareBasisOverridePo->optionDetail = new OptionDetail();
         $fareBasisOverridePo->optionDetail->criteriaDetails[] = new CriteriaDetails('QNC469W2');
-        $fareBasisOverridePo->paxSegTstReference = new PaxSegTstReference([2 => FareBasis::SEGREFTYPE_SEGMENT]);
+        $fareBasisOverridePo->paxSegTstReference = new PaxSegTstReference(null, [2 => FareBasis::SEGREFTYPE_SEGMENT]);
 
         $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $fareBasisOverridePo));
 
@@ -125,7 +125,7 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $fareBasisOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
         $fareBasisOverridePo->optionDetail = new OptionDetail();
         $fareBasisOverridePo->optionDetail->criteriaDetails[] = new CriteriaDetails('QNC469W2');
-        $fareBasisOverridePo->paxSegTstReference = new PaxSegTstReference(null, [new PaxSegRef(['type'=> PaxSegRef::TYPE_SEGMENT, 'reference' => 2])]);
+        $fareBasisOverridePo->paxSegTstReference = new PaxSegTstReference([new PaxSegRef(['type'=> PaxSegRef::TYPE_SEGMENT, 'reference' => 2])]);
 
         $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $fareBasisOverridePo));
 
@@ -196,7 +196,6 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $fareBasisOverridePo->optionDetail = new OptionDetail();
         $fareBasisOverridePo->optionDetail->criteriaDetails[] = new CriteriaDetails('QNC469W2');
         $fareBasisOverridePo->paxSegTstReference = new PaxSegTstReference(
-            null,
             [new PaxSegRef(['type'=> PaxSegRef::TYPE_SEGMENT, 'reference' => 2])]
         );
 

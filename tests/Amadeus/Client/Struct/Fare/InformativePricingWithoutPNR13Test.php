@@ -422,6 +422,7 @@ class InformativePricingWithoutPNR13Test extends BaseTestCase
         $fareBasisOverridePo->optionDetail = new OptionDetail();
         $fareBasisOverridePo->optionDetail->criteriaDetails[] = new CriteriaDetails('QNC469W2');
         $fareBasisOverridePo->paxSegTstReference = new PaxSegTstReference(
+            null, 
             [1 => FareBasis::SEGREFTYPE_SEGMENT]
         );
 

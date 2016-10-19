@@ -20,44 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\RequestOptions\Service;
 
 /**
- * ReferenceDetails
+ * PaxSegRef
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\RequestOptions\Service
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ReferenceDetails
+class PaxSegRef extends \Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef
 {
-    const QUALIFIER_PAX_REFERENCE = "P";
-    const QUALIFIER_PAX_ADULT = "PA";
-    const QUALIFIER_PAX_INFANT = "PI";
-    const QUALIFIER_SEGMENT_REFERENCE = "S";
-    const QUALIFIER_TST = "T";
-    const QUALIFIER_ELEMENT = "E"; //Service_IntegratedPricing
-
-    /**
-     * self::QUALIFIER_*
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
-     * @var string
-     */
-    public $value;
-
-    /**
-     * ReferenceDetails constructor.
-     *
-     * @param string $value
-     * @param string $type self::QUALIFIER_*
-     */
-    public function __construct($value, $type)
-    {
-        $this->value = $value;
-        $this->type = $type;
-    }
 }

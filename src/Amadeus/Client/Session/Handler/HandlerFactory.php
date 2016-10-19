@@ -41,8 +41,6 @@ class HandlerFactory
      */
     public static function createHandler($handlerParams)
     {
-        $theHandler = null;
-
         if (!($handlerParams instanceof SessionHandlerParams) ||
             !($handlerParams->authParams instanceof Client\Params\AuthParams)) {
             throw new \InvalidArgumentException('Invalid parameters');

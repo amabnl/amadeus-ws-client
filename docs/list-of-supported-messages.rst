@@ -36,6 +36,7 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_DeleteTST
 - DocIssuance_IssueTicket
 - DocIssuance_IssueMiscellaneousDocuments
+- Service_IntegratedPricing
 - Offer_CreateOffer
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
@@ -71,7 +72,6 @@ On the to-do list / work in progress:
 - Ticket_DeleteTSMP
 - Ticket_AddDocNumber
 - Media_GetMedia
-- Service_IntegratedPricing
 - Service_IntegratedCatalogue
 - Service_PriceServiceViaCatalogue
 - Service_PriceIntegratedMode

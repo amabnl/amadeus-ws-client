@@ -30,20 +30,11 @@ use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
 use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
 use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingOptions;
 use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingRecOptions;
-use Amadeus\Client\RequestOptions\OfferConfirmAirOptions;
-use Amadeus\Client\RequestOptions\OfferConfirmCarOptions;
-use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
-use Amadeus\Client\RequestOptions\OfferCreateOptions;
-use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\PriceXplorerExtremeSearchOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
 use Amadeus\Client\RequestOptions\SalesReportsDisplayQueryReportOptions;
 use Amadeus\Client\RequestOptions\SecurityAuthenticateOptions;
-use Amadeus\Client\RequestOptions\TicketCreateTsmFromPricingOptions;
 use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
-use Amadeus\Client\RequestOptions\TicketCreateTstFromPricingOptions;
-use Amadeus\Client\RequestOptions\TicketDeleteTstOptions;
-use Amadeus\Client\RequestOptions\TicketDisplayTstOptions;
 use Amadeus\Client\Struct;
 
 /**
@@ -75,6 +66,13 @@ class Base implements RequestCreatorInterface
     protected $messagesAndVersions = [];
 
     /**
+     * List of Request creator builders that have been split off from this class
+     *
+     * @var array
+     */
+    protected $separateBuilders = [];
+
+    /**
      * Base Request Creator constructor.
      *
      * @param RequestCreatorParams $params
@@ -83,6 +81,15 @@ class Base implements RequestCreatorInterface
     {
         $this->params = $params;
         $this->messagesAndVersions = $params->messagesAndVersions;
+
+        $this->separateBuilders = [
+            'fare' => new Fare(),
+            'pnr' => new Pnr($this->params),
+            'air' => new Air(),
+            'queue' => new Queue(),
+            'offer' => new Offer(),
+            'ticket' => new Ticket()
+        ];
     }
 
     /**
@@ -131,65 +138,6 @@ class Base implements RequestCreatorInterface
     }
 
     /**
-     * Offer_VerifyOffer
-     *
-     * @param OfferVerifyOptions $params
-     * @return Struct\Offer\Verify
-     */
-    protected function createOfferVerifyOffer(OfferVerifyOptions $params)
-    {
-        $req = new Struct\Offer\Verify(
-            $params->offerReference,
-            $params->segmentName
-        );
-
-        return $req;
-    }
-
-    /**
-     * @param OfferConfirmAirOptions $params
-     * @return Struct\Offer\ConfirmAir
-     */
-    protected function createOfferConfirmAirOffer(OfferConfirmAirOptions $params)
-    {
-        return new Struct\Offer\ConfirmAir($params);
-    }
-
-
-    /**
-     * Offer_ConfirmHotelOffer
-     *
-     * @param OfferConfirmHotelOptions $params
-     * @return Struct\Offer\ConfirmHotel
-     */
-    protected function createOfferConfirmHotelOffer(OfferConfirmHotelOptions $params)
-    {
-        return new Struct\Offer\ConfirmHotel($params);
-    }
-
-    /**
-     * @param OfferConfirmCarOptions $params
-     * @return Struct\Offer\ConfirmCar
-     */
-    protected function createOfferConfirmCarOffer(OfferConfirmCarOptions $params)
-    {
-        return new Struct\Offer\ConfirmCar($params);
-    }
-
-    /**
-     * Offer_CreateOffer
-     *
-     * Ok, I just realised this function name is a bit confusing. Sorry.
-     *
-     * @param OfferCreateOptions $params
-     * @return Struct\Offer\Create
-     */
-    protected function createOfferCreateOffer(OfferCreateOptions $params)
-    {
-        return new Struct\Offer\Create($params);
-    }
-
-    /**
      * Command_Cryptic
      *
      * @param CommandCrypticOptions $params
@@ -231,50 +179,6 @@ class Base implements RequestCreatorInterface
     protected function createMiniRuleGetFromPricing(MiniRuleGetFromPricingOptions $params)
     {
         return new Struct\MiniRule\GetFromPricing($params);
-    }
-
-    /**
-     * Ticket_CreateTstFromPricing
-     *
-     * @param TicketCreateTstFromPricingOptions $params
-     * @return Struct\Ticket\CreateTSTFromPricing
-     */
-    protected function createTicketCreateTSTFromPricing(TicketCreateTstFromPricingOptions $params)
-    {
-        return new Struct\Ticket\CreateTSTFromPricing($params);
-    }
-
-    /**
-     * Ticket_CreateTSMFromPricing
-     *
-     * @param TicketCreateTsmFromPricingOptions $params
-     * @return Struct\Ticket\CreateTSMFromPricing
-     */
-    protected function createTicketCreateTSMFromPricing(TicketCreateTsmFromPricingOptions $params)
-    {
-        return new Struct\Ticket\CreateTSMFromPricing($params);
-    }
-
-    /**
-     * Ticket_DeleteTST
-     *
-     * @param TicketDeleteTstOptions $params
-     * @return Struct\Ticket\DeleteTST
-     */
-    protected function createTicketDeleteTST(TicketDeleteTstOptions $params)
-    {
-        return new Struct\Ticket\DeleteTST($params);
-    }
-
-    /**
-     * Ticket_DisplayTST
-     *
-     * @param TicketDisplayTstOptions $params
-     * @return Struct\Ticket\DisplayTST
-     */
-    protected function createTicketDisplayTST(TicketDisplayTstOptions $params)
-    {
-        return new Struct\Ticket\DisplayTST($params);
     }
 
     /**
@@ -369,22 +273,10 @@ class Base implements RequestCreatorInterface
     {
         $section = strtolower(substr($messageName, 0, strpos($messageName, '_')));
 
-        switch ($section) {
-            case 'fare':
-                $builder = new Fare();
-                break;
-            case 'pnr':
-                $builder = new Pnr($this->params);
-                break;
-            case 'air':
-                $builder = new Air();
-                break;
-            case 'queue':
-                $builder = new Queue();
-                break;
-            default:
-                $builder = $this;
-                break;
+        if (array_key_exists($section, $this->separateBuilders)) {
+            $builder = $this->separateBuilders[$section];
+        } else {
+            $builder = $this;
         }
 
         return $builder;

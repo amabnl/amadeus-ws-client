@@ -30,7 +30,6 @@ use Amadeus\Client\Struct\Fare\PricePnr13\FrequentFlyerInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\LocationInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\OptionDetail;
 use Amadeus\Client\Struct\Fare\PricePnr13\PaxSegTstReference;
-use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionKey;
 
 /**
  * PricingOption

@@ -77,12 +77,27 @@ class DisplayTST extends BaseWsMessage
      */
     protected function loadSelective($params)
     {
-        if (!empty($params->tstNumbers)) {
-            foreach ($params->tstNumbers as $tstNumber) {
-                $this->tstReference[] = new TstReference($tstNumber);
-            }
+        foreach ($params->tstNumbers as $tstNumber) {
+            $this->tstReference[] = new TstReference($tstNumber);
         }
 
+        $this->loadReferences($params);
+
+        if ($this->checkAllNotEmpty($params->scrollingCount, $params->scrollingStart)) {
+            $this->scrollingInformation = new ScrollingInformation(
+                $params->scrollingCount,
+                $params->scrollingStart
+            );
+        }
+    }
+
+    /**
+     * Load passenger & segment references
+     *
+     * @param TicketDisplayTstOptions $params
+     */
+    protected function loadReferences($params)
+    {
         if ($this->checkAnyNotEmpty($params->passengers, $params->segments)) {
             $this->psaInformation = new PsaInformation();
 
@@ -93,13 +108,6 @@ class DisplayTST extends BaseWsMessage
             foreach ($params->segments as $segment) {
                 $this->psaInformation->refDetails[] = new RefDetails($segment, RefDetails::QUAL_SEGMENT_REFERENCE);
             }
-        }
-
-        if (!empty($params->scrollingCount) && !empty($params->scrollingStart)) {
-            $this->scrollingInformation = new ScrollingInformation(
-                $params->scrollingCount,
-                $params->scrollingStart
-            );
         }
     }
 }

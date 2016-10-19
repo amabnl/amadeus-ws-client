@@ -20,44 +20,45 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\RequestOptions\Service;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * ReferenceDetails
+ * FrequentFlyer
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * CURRENTLY NOT IN USE
+ *
+ * @package Amadeus\Client\RequestOptions\Service
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ReferenceDetails
+class FrequentFlyer extends LoadParamsFromArray
 {
-    const QUALIFIER_PAX_REFERENCE = "P";
-    const QUALIFIER_PAX_ADULT = "PA";
-    const QUALIFIER_PAX_INFANT = "PI";
-    const QUALIFIER_SEGMENT_REFERENCE = "S";
-    const QUALIFIER_TST = "T";
-    const QUALIFIER_ELEMENT = "E"; //Service_IntegratedPricing
-
     /**
-     * self::QUALIFIER_*
+     * 2-character airline code
      *
      * @var string
      */
-    public $type;
+    public $company;
 
     /**
+     * A code to uniquely identify a frequent traveller.
+     *
      * @var string
      */
-    public $value;
+    public $number;
 
     /**
-     * ReferenceDetails constructor.
+     * Description of a membership level.
      *
-     * @param string $value
-     * @param string $type self::QUALIFIER_*
+     * @var string
      */
-    public function __construct($value, $type)
-    {
-        $this->value = $value;
-        $this->type = $type;
-    }
+    public $tierLevel;
+
+    /**
+     * A unique number assigned by the sender to identify a level within a hierarchical structure.
+     *
+     * @var string
+     */
+    public $priorityCode;
 }

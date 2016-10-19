@@ -40,21 +40,21 @@ class PaxSegTstReference
     /**
      * PaxSegTstReference constructor.
      *
-     * @param array|null $segmentReference Legacy segment references format
      * @param PaxSegRef[]|null $references New segment references format
+     * @param array|null $segmentReference Legacy segment references format
      */
-    public function __construct($segmentReference = null, $references = null)
+    public function __construct($references = null, $segmentReference = null)
     {
+        if (!empty($references)) {
+            foreach ($references as $ref) {
+                $this->referenceDetails[] = new ReferenceDetails($ref->reference, $ref->type);
+            }
+        }
+
         //Support for legacy segment reference format - to be removed when breaking BC.
         if (!empty($segmentReference)) {
             foreach ($segmentReference as $segNum => $segQual) {
                 $this->referenceDetails[] = new ReferenceDetails($segNum, $segQual);
-            }
-        }
-
-        if (!empty($references)) {
-            foreach ($references as $ref) {
-                $this->referenceDetails[] = new ReferenceDetails($ref->reference, $ref->type);
             }
         }
     }

@@ -53,6 +53,28 @@ class BaseWsMessage
     }
 
     /**
+     * Check if all parameters to the current function are not empty
+     *
+     * @param mixed
+     * @return boolean true if all parameters are not empty
+     */
+    protected function checkAllNotEmpty()
+    {
+        $foundEmpty = false;
+
+        $args = func_get_args();
+
+        foreach ($args as $arg) {
+            if (empty($arg)) {
+                $foundEmpty = true;
+                break;
+            }
+        }
+
+        return !$foundEmpty;
+    }
+
+    /**
      * Check if any parameter to the current function is true
      *
      * @param mixed

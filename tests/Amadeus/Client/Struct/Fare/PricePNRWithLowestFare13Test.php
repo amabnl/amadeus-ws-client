@@ -74,14 +74,14 @@ class PricePNRWithLowestFare13Test extends BaseTestCase
         $this->assertEquals('USD', $message->pricingOptionGroup[0]->currency->firstCurrencyDetails->currencyIsoCode);
         $this->assertEquals(FirstCurrencyDetails::QUAL_CURRENCY_OVERRIDE, $message->pricingOptionGroup[0]->currency->firstCurrencyDetails->currencyQualifier);
 
-        $this->assertEquals(PricingOptionKey::OPTION_PUBLISHED_FARES, $message->pricingOptionGroup[1]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(PricingOptionKey::OPTION_PASSENGER_DISCOUNT, $message->pricingOptionGroup[1]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(PenDisInformation::QUAL_DISCOUNT, $message->pricingOptionGroup[1]->penDisInformation->discountPenaltyQualifier);
+        $this->assertEquals('CH', $message->pricingOptionGroup[1]->penDisInformation->discountPenaltyDetails[0]->rate);
+        $this->assertEquals(ReferenceDetails::QUALIFIER_PAX_REFERENCE, $message->pricingOptionGroup[1]->paxSegTstReference->referenceDetails[0]->type);
+        $this->assertEquals(2, $message->pricingOptionGroup[1]->paxSegTstReference->referenceDetails[0]->value);
 
-        $this->assertEquals(PricingOptionKey::OPTION_UNIFARES, $message->pricingOptionGroup[2]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(PricingOptionKey::OPTION_PUBLISHED_FARES, $message->pricingOptionGroup[2]->pricingOptionKey->pricingOptionKey);
 
-        $this->assertEquals(PricingOptionKey::OPTION_PASSENGER_DISCOUNT, $message->pricingOptionGroup[3]->pricingOptionKey->pricingOptionKey);
-        $this->assertEquals(PenDisInformation::QUAL_DISCOUNT, $message->pricingOptionGroup[3]->penDisInformation->discountPenaltyQualifier);
-        $this->assertEquals('CH', $message->pricingOptionGroup[3]->penDisInformation->discountPenaltyDetails[0]->rate);
-        $this->assertEquals(ReferenceDetails::QUALIFIER_PAX_REFERENCE, $message->pricingOptionGroup[3]->paxSegTstReference->referenceDetails[0]->type);
-        $this->assertEquals(2, $message->pricingOptionGroup[3]->paxSegTstReference->referenceDetails[0]->value);
+        $this->assertEquals(PricingOptionKey::OPTION_UNIFARES, $message->pricingOptionGroup[3]->pricingOptionKey->pricingOptionKey);
     }
 }

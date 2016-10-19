@@ -32,11 +32,9 @@ use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions as LowerFareOpt;
 use Amadeus\Client\RequestOptions\FarePricePnrWithLowestFareOptions as LowestFareOpt;
-use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\PricePnr13\CarrierInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\Currency;
 use Amadeus\Client\Struct\Fare\PricePnr13\DateInformation;
-use Amadeus\Client\Struct\Fare\PricePnr13\FirstCurrencyDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\FrequentFlyerInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\FrequentTravellerDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\LocationInformation;
@@ -54,7 +52,7 @@ use Amadeus\Client\Struct\Fare\PricePnr13\TaxInformation;
  * @package Amadeus\Client\Struct\Fare
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class PricePNRWithBookingClass13 extends BaseWsMessage
+class PricePNRWithBookingClass13 extends BasePricingMessage
 {
     /**
      * @var PricePnr13\PricingOptionGroup[]
@@ -99,11 +97,6 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makePricingOptionFareBasisOverride($options->pricingsFareBasis)
-        );
-
-        $priceOptions = self::mergeOptions(
-            $priceOptions,
-            self::makeOverrideOptions($options->overrideOptions, $priceOptions)
         );
 
         $priceOptions = self::mergeOptions(
@@ -164,6 +157,11 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
             self::loadReferences($options->references)
         );
 
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::makeOverrideOptions($options->overrideOptions, $priceOptions)
+        );
+
         // All options processed, no options found:
         if (empty($priceOptions)) {
             $priceOptions[] = new PricingOptionGroup(PricingOptionKey::OPTION_NO_OPTION);
@@ -220,7 +218,7 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
         if ($currency !== null) {
             $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE);
 
-            $po->currency = new Currency($currency, FirstCurrencyDetails::QUAL_CURRENCY_OVERRIDE);
+            $po->currency = new Currency($currency);
 
             $opt[] = $po;
         }
@@ -247,8 +245,8 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
 
                 //Support for legacy segmentReference to be removed when breaking BC:
                 $po->paxSegTstReference = new PaxSegTstReference(
-                    $pricingFareBasis->segmentReference,
-                    $pricingFareBasis->references
+                    $pricingFareBasis->references,
+                    $pricingFareBasis->segmentReference
                 );
 
                 $opt[] = $po;
@@ -341,7 +339,7 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
             );
 
             if (!empty($obFeeRefs)) {
-                $po->paxSegTstReference = new PaxSegTstReference(null, $obFeeRefs);
+                $po->paxSegTstReference = new PaxSegTstReference($obFeeRefs);
             }
 
             $opt[] = $po;
@@ -368,7 +366,7 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
             );
 
             if (!empty($paxDiscountCodeRefs)) {
-                $po->paxSegTstReference = new PaxSegTstReference(null, $paxDiscountCodeRefs);
+                $po->paxSegTstReference = new PaxSegTstReference($paxDiscountCodeRefs);
             }
 
             $opt[] = $po;
@@ -532,53 +530,11 @@ class PricePNRWithBookingClass13 extends BaseWsMessage
         if (!empty($references)) {
             $po = new PricingOptionGroup(PricingOptionKey::OPTION_PAX_SEGMENT_TST_SELECTION);
 
-            $po->paxSegTstReference = new PaxSegTstReference(null, $references);
+            $po->paxSegTstReference = new PaxSegTstReference($references);
 
             $opt[] = $po;
         }
 
         return $opt;
-    }
-
-    /**
-     * Avoid double pricing groups when combining an explicitly provided override option with a specific parameter
-     * that uses the same override option.
-     *
-     * Backwards compatibility with PricePnrWithBookingClass12
-     *
-     * @param string $optionKey
-     * @param PricingOptionGroup[] $priceOptions
-     * @return bool
-     */
-    protected static function hasPricingGroup($optionKey, $priceOptions)
-    {
-        $found = false;
-
-        foreach ($priceOptions as $pog) {
-            if ($pog->pricingOptionKey->pricingOptionKey === $optionKey) {
-                $found = true;
-            }
-        }
-
-        return $found;
-    }
-
-    /**
-     * Merges Pricing options
-     *
-     * @param PricingOptionGroup[] $existingOptions
-     * @param PricingOptionGroup[] $newOptions
-     * @return PricingOptionGroup[] merged array
-     */
-    protected static function mergeOptions($existingOptions, $newOptions)
-    {
-        if (!empty($newOptions)) {
-            $existingOptions = array_merge(
-                $existingOptions,
-                $newOptions
-            );
-        }
-
-        return $existingOptions;
     }
 }

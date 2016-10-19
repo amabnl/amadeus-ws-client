@@ -30,4 +30,13 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
  */
 class FormOfPaymentInformation
 {
+    /**
+     * @var FormOfPayment
+     */
+    public $formOfPayment;
+
+    /**
+     * @var FormOfPayment[]
+     */
+    public $otherFormOfPayment = [];
 }

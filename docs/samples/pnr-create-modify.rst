@@ -299,7 +299,7 @@ Request a Gluten intolerant meal for passenger 2 on flight 3 (`See all meal requ
 Wheelchair
 ----------
 
-Request a wheelchair for passenger 1 on flights 1 and 2 (SSR code is ``WHCR```):
+Request a wheelchair for passenger 1 on flights 1 and 2 (SSR code is ``WHCR``):
 
 .. code-block:: php
 

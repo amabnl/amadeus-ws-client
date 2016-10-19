@@ -30,11 +30,9 @@ use Amadeus\Client\Struct\Offer\ConfirmHotel\BookingSource;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\GlobalBookingInfo;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\GroupCreditCardInfo;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\GuaranteeOrDeposit;
-use Amadeus\Client\Struct\Offer\ConfirmHotel\OccupantList;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\PaymentDetails;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\PaymentInfo;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\PnrInfo;
-use Amadeus\Client\Struct\Offer\ConfirmHotel\RepresentativeParties;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\Reservation;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomList;
 use Amadeus\Client\Struct\Offer\ConfirmHotel\RoomStayData;
@@ -84,36 +82,28 @@ class ConfirmHotel extends BaseWsMessage
             $this->pnrInfo = new PnrInfo($params->recordLocator, null, Reservation::CONTROLTYPE_PNR_IDENTIFICATION);
         }
 
-        if (!empty($params->offerReference)) {
-            $this->makeRoomStayData();
-            $this->roomStayData[0]->tattooReference = new TattooReference($params->offerReference);
+        $this->loadRoomStayData($params);
+        $this->loadPaymentInfo($params);
+    }
+
+    /**
+     * Check for existence of RoomStayData and create if needed.
+     *
+     * @return void
+     */
+    protected function makeRoomStayData()
+    {
+        if (!isset($this->roomStayData[0])) {
+            $this->roomStayData[] = new RoomStayData();
         }
+    }
 
-        if (!empty($params->passengers)) {
-            $this->makeRoomStayData();
-            $this->roomStayData[0]->globalBookingInfo = new GlobalBookingInfo();
-
-            foreach ($params->passengers as $singlePass) {
-                $tmp = new RepresentativeParties();
-                $tmp->occupantList = new OccupantList(
-                    $singlePass,
-                    PassengerReference::TYPE_PAXREF
-                );
-                $this->roomStayData[0]->globalBookingInfo->representativeParties[] = $tmp;
-            }
-        }
-
-        if (!empty($params->originatorId)) {
-            $this->makeRoomStayData();
-            if (!($this->roomStayData[0]->globalBookingInfo instanceof GlobalBookingInfo)) {
-                $this->roomStayData[0]->globalBookingInfo = new GlobalBookingInfo();
-            }
-
-            $this->roomStayData[0]->globalBookingInfo->bookingSource = new BookingSource($params->originatorId);
-        }
-
-        if (!empty($params->paymentType) &&
-            !empty($params->formOfPayment) &&
+    /**
+     * @param OfferConfirmHotelOptions $params
+     */
+    protected function loadPaymentInfo(OfferConfirmHotelOptions $params)
+    {
+        if ($this->checkAllNotEmpty($params->paymentType, $params->formOfPayment) &&
             $params->paymentDetails instanceof PaymentDetailsOptions
         ) {
             $this->makeRoomStayData();
@@ -134,21 +124,34 @@ class ConfirmHotel extends BaseWsMessage
                 );
             } else {
                 throw new InvalidArgumentException(
-                    'Hotel Offer Confirm Form of Payment '.$params->formOfPayment.' is not yet supported'
+                    'Hotel Offer Confirm Form of Payment ' . $params->formOfPayment . ' is not yet supported'
                 );
             }
         }
     }
 
     /**
-     * Check for existance of RoomStayData and create if needed.
-     *
-     * @return void
+     * @param OfferConfirmHotelOptions $params
      */
-    protected function makeRoomStayData()
+    protected function loadRoomStayData(OfferConfirmHotelOptions $params)
     {
-        if (!isset($this->roomStayData[0])) {
-            $this->roomStayData[] = new RoomStayData();
+        if (!empty($params->offerReference)) {
+            $this->makeRoomStayData();
+            $this->roomStayData[0]->tattooReference = new TattooReference($params->offerReference);
+        }
+
+        if (!empty($params->passengers)) {
+            $this->makeRoomStayData();
+            $this->roomStayData[0]->globalBookingInfo = new GlobalBookingInfo($params->passengers);
+        }
+
+        if (!empty($params->originatorId)) {
+            $this->makeRoomStayData();
+            if (!($this->roomStayData[0]->globalBookingInfo instanceof GlobalBookingInfo)) {
+                $this->roomStayData[0]->globalBookingInfo = new GlobalBookingInfo();
+            }
+
+            $this->roomStayData[0]->globalBookingInfo->bookingSource = new BookingSource($params->originatorId);
         }
     }
 }

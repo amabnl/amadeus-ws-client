@@ -20,17 +20,15 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
-
-use Amadeus\Client\RequestOptions\Service\PaxSegRef;
+namespace Amadeus\Client\Struct\Service\IntegratedPricing;
 
 /**
- * ServiceIntegratedPricingOptions
+ * PricingOptionKey
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Service\IntegratedPricing
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ServiceIntegratedPricingOptions extends Base
+class PricingOptionKey
 {
     const OVERRIDE_ACCOUNT_CODE = "ACC";
     const OVERRIDE_PRICING_ALL_SERVICES = "ALL";
@@ -54,11 +52,6 @@ class ServiceIntegratedPricingOptions extends Base
     const OVERRIDE_SHOW_PRICING_DESCRIPTION = "SPD";
     const OVERRIDE_TICKET_DESIGNATOR = "TKD";
     const OVERRIDE_VALIDATING_CARRIER = "VC ";
-
-    const AWARDPRICING_MILES = "MIL";
-    const AWARDPRICING_POINTS = "PTS";
-    const AWARDPRICING_E_VOUCHER = "EVO";
-
 
     /**
      * self::OVERRIDE_*
@@ -86,71 +79,17 @@ class ServiceIntegratedPricingOptions extends Base
      * TKD   Ticket designator
      * VC    Validating carrier
      *
-     * @var string[]
-     */
-    public $overrideOptions = [];
-
-    /**
-     * self::AWARDPRICING_*
-     *
      * @var string
      */
-    public $awardPricing;
+    public $pricingOptionKey;
 
     /**
-     * Specify the validating carrier
+     * PricingOptionKey constructor.
      *
-     * @var string
+     * @param string $key self::OVERRIDE_*
      */
-    public $validatingCarrier;
-
-    /**
-     * @var string
-     */
-    public $accountCode;
-
-    /**
-     * @var PaxSegRef[]
-     */
-    public $accountCodeRefs;
-
-    /**
-     * @var string
-     */
-    public $corporationNumber;
-
-    /**
-     * @var string
-     */
-    public $ticketDesignator;
-
-    /**
-     * This option allows you to override the currency of the office.
-     *
-     * @var string
-     */
-    public $currencyOverride;
-
-    /**
-     * Override the Point of Sale
-     *
-     * e.g. 'LON' for point of sale London
-     *
-     * @var string
-     */
-    public $pointOfSaleOverride;
-
-    /**
-     * Overrides the pricing date.
-     *
-     * @var \DateTime
-     */
-    public $overrideDate;
-
-    /**
-     * Passenger, Segment or TST references to partially price the PNR
-     *
-     * @var PaxSegRef[]
-     */
-    public $references = [];
+    public function __construct($key)
+    {
+        $this->pricingOptionKey = $key;
+    }
 }

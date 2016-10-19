@@ -582,7 +582,6 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     protected function getMessagesAndVersionsFromImportedWsdl($import, $wsdlPath, $wsdlIdentifier)
     {
         $msgAndVer = [];
-        $domDoc = null;
         $domXpath = null;
 
         $importPath = realpath(dirname($wsdlPath)) . DIRECTORY_SEPARATOR . $import;

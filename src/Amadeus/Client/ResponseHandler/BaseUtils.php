@@ -279,38 +279,34 @@ abstract class BaseUtils implements ResponseHandlerInterface
     }
 
     /**
+     * Converts a status code found in an error message to the appropriate status level
+     *
      * @param string $qualifier
      * @return string Result::STATUS_*
      */
     protected function makeStatusFromErrorQualifier($qualifier)
     {
-        switch ($qualifier) {
-            case 'INF':
-                $status = Result::STATUS_INFO;
-                break;
-            case 'WEC':
-            case 'WZZ': //Mutually defined warning
-            case 'WA': //Info line Warning - PNR_AddMultiElements
-            case 'W':
-                $status = Result::STATUS_WARN;
-                break;
-            case 'EC':
-            case 'X':
-            case '001': //Air_MultiAvailability
-                $status = Result::STATUS_ERROR;
-                break;
-            case 'O':
-                $status = Result::STATUS_OK;
-                break;
-            case 'ZZZ': //Mutually defined
-            default:
-                $status = Result::STATUS_UNKNOWN;
-                break;
+        $statusQualMapping = [
+            'INF' => Result::STATUS_INFO,
+            'WEC' => Result::STATUS_WARN,
+            'WZZ' => Result::STATUS_WARN, //Mutually defined warning
+            'WA' => Result::STATUS_WARN,  //Info line Warning - PNR_AddMultiElements
+            'W' => Result::STATUS_WARN,
+            'EC' => Result::STATUS_ERROR,
+            'X' => Result::STATUS_ERROR,
+            '001' => Result::STATUS_ERROR, //Air_MultiAvailability
+            'O' => Result::STATUS_OK,
+            'ZZZ' => Result::STATUS_UNKNOWN
+        ];
+
+        if (array_key_exists($qualifier, $statusQualMapping)) {
+            $status = $statusQualMapping[$qualifier];
+        } else {
+            $status = Result::STATUS_UNKNOWN;
         }
 
         return $status;
     }
-
 
     /**
      * Make a Xpath-queryable object for an XML string

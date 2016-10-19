@@ -1377,7 +1377,111 @@ Service
 Service_IntegratedPricing
 -------------------------
 
-*Coming soon*
+Price all services in PNR without any option:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+
+    $pricingResponse = $client->serviceIntegratedPricing(new ServiceIntegratedPricingOptions());
+
+Override the validating carrier while pricing ancillary services:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+
+    $pricingResponse = $client->serviceIntegratedPricing(
+        new ServiceIntegratedPricingOptions([
+            'validatingCarrier' => 'BA'
+        ])
+    );
+
+Price a single Service, for a single flight and a single passenger:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+    use Amadeus\Client\RequestOptions\Service\PaxSegRef;
+
+    $pricingResponse = $client->serviceIntegratedPricing(
+        new ServiceIntegratedPricingOptions([
+            'references' => [
+                new PaxSegRef([
+                    'type' => PaxSegRef::TYPE_PASSENGER,
+                    'reference' => 1
+                ]),
+                new PaxSegRef([
+                    'type' => PaxSegRef::TYPE_SEGMENT,
+                    'reference' => 2
+                ]),
+                new PaxSegRef([
+                    'type' => PaxSegRef::TYPE_SERVICE,
+                    'reference' => 16
+                ])
+            ]
+        ])
+    );
+
+Override the pricing date:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+
+    $pricingResponse = $client->serviceIntegratedPricing(
+        new ServiceIntegratedPricingOptions([
+            'overrideDate' => \DateTime::createFromFormat(
+                \DateTime::ISO8601,
+                "2012-06-27T00:00:00+0000",
+                new \DateTimeZone('UTC')
+            )
+        ])
+    );
+
+Override the point of Sale:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+
+    $pricingResponse = $client->serviceIntegratedPricing(
+        new ServiceIntegratedPricingOptions([
+            'pointOfSaleOverride' => 'MUC'
+        ])
+    );
+
+Award Pricing option:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+
+    $pricingResponse = $client->serviceIntegratedPricing(
+        new ServiceIntegratedPricingOptions([
+            'awardPricing' => ServiceIntegratedPricingOptions::AWARDPRICING_MILES
+        ])
+    );
+
+Assign an account code to a passenger:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+    use Amadeus\Client\RequestOptions\Service\PaxSegRef;
+
+    $pricingResponse = $client->serviceIntegratedPricing(
+        new ServiceIntegratedPricingOptions([
+            'accountCode' => 'AAA123456',
+            'accountCodeRefs' => [
+                new PaxSegRef([
+                    'type' => PaxSegRef::TYPE_PASSENGER,
+                    'reference' => 1
+                ])
+            ]
+        ])
+    );
+
 
 ****
 Info

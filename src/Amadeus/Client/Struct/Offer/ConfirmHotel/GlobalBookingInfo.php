@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Offer\ConfirmHotel;
 
+use Amadeus\Client\Struct\Offer\PassengerReference;
+
 /**
  * GlobalBookingInfo
  *
@@ -66,4 +68,23 @@ class GlobalBookingInfo
      * @var KeyValueTree[]
      */
     public $keyValueTree = [];
+
+    /**
+     * GlobalBookingInfo constructor.
+     *
+     * @param int[]|null $passengers
+     */
+    public function __construct($passengers = null)
+    {
+        if (!is_null($passengers)) {
+            foreach ($passengers as $singlePass) {
+                $tmp = new RepresentativeParties();
+                $tmp->occupantList = new OccupantList(
+                    $singlePass,
+                    PassengerReference::TYPE_PAXREF
+                );
+                $this->representativeParties[] = $tmp;
+            }
+        }
+    }
 }
