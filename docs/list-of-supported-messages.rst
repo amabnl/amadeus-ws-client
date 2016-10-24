@@ -49,7 +49,11 @@ This is the list of messages that are at least partially supported at this time:
 - PriceXplorer_ExtremeSearch
 - SalesReports_DisplayQueryReport
 
-On the to-do list / work in progress:
+**********
+To-do list
+**********
+
+These messages will be implemented at some point in the future. *Pull requests are welcome!*
 
 - Fare_DisplayFaresForCityPair
 - Fare_DisplayBookingCodeInformation
@@ -76,9 +80,6 @@ On the to-do list / work in progress:
 - Service_PriceServiceViaCatalogue
 - Service_PriceIntegratedMode
 - DocIssuance_IssueCombined
-
-Even further down the to-do list: Hotel & Car booking support:
-
 - Hotel_MultiSingleAvailability
 - Hotel_DescriptiveInfo
 - Hotel_EnhancedPricing
@@ -89,4 +90,3 @@ Even further down the to-do list: Hotel & Car booking support:
 - Car_Sell
 - Car_RateInformationFromCarSegment
 - Car_Modify
-

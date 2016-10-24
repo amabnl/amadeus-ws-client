@@ -62,7 +62,7 @@ class Client
      *
      * @var string
      */
-    const VERSION = "1.1.0";
+    const VERSION = "1.2.0-dev";
 
     /**
      * An identifier string for the library (to be used in Received From entries)

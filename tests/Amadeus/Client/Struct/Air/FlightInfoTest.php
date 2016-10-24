@@ -23,7 +23,7 @@
 namespace Amadeus\Client\Struct\Air;
 
 use Amadeus\Client\RequestOptions\AirFlightInfoOptions;
-use Test\Amadeus\Client\RequestCreator\BaseTest;
+use Test\Amadeus\BaseTestCase;
 
 /**
  * FlightInfoTest
@@ -31,7 +31,7 @@ use Test\Amadeus\Client\RequestCreator\BaseTest;
  * @package Amadeus\Client\Struct\Air
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FlightInfoTest extends BaseTest
+class FlightInfoTest extends BaseTestCase
 {
     public function testCanMakeBasicFlightInfoMessage()
     {

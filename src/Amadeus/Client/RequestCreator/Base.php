@@ -24,6 +24,7 @@ namespace Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params\RequestCreatorParams;
+use Amadeus\Client\RequestCreator\Converter\ConvertInterface;
 use Amadeus\Client\RequestOptions\CommandCrypticOptions;
 use Amadeus\Client\RequestOptions\DocIssuanceIssueMiscDocOptions;
 use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
@@ -66,11 +67,11 @@ class Base implements RequestCreatorInterface
     protected $messagesAndVersions = [];
 
     /**
-     * List of Request creator builders that have been split off from this class
+     * All message builders already instantiated
      *
      * @var array
      */
-    protected $separateBuilders = [];
+    protected $messageBuilders = [];
 
     /**
      * Base Request Creator constructor.
@@ -81,15 +82,6 @@ class Base implements RequestCreatorInterface
     {
         $this->params = $params;
         $this->messagesAndVersions = $params->messagesAndVersions;
-
-        $this->separateBuilders = [
-            'fare' => new Fare(),
-            'pnr' => new Pnr($this->params),
-            'air' => new Air(),
-            'queue' => new Queue(),
-            'offer' => new Offer(),
-            'ticket' => new Ticket()
-        ];
     }
 
     /**
@@ -107,133 +99,11 @@ class Base implements RequestCreatorInterface
 
         $builder = $this->findBuilderForMessage($messageName);
 
-        $methodName = 'create'.str_replace("_", "", $messageName);
-
-        if (method_exists($builder, $methodName)) {
-            return $builder->$methodName($params, $this->getActiveVersionFor($messageName));
+        if ($builder instanceof ConvertInterface) {
+            return $builder->convert($params, $this->getActiveVersionFor($messageName));
         } else {
-            throw new \RuntimeException('Message '.$methodName.' is not implemented in '.__CLASS__);
+            throw new \RuntimeException('No builder found for message '.$messageName);
         }
-    }
-
-    /**
-     * Security_SignOut
-     *
-     * @return Struct\Security\SignOut
-     */
-    protected function createSecuritySignOut()
-    {
-        return new Struct\Security\SignOut();
-    }
-
-    /**
-     * Create request object for Security_Authenticate message
-     *
-     * @param SecurityAuthenticateOptions $params
-     * @return Struct\Security\Authenticate
-     */
-    protected function createSecurityAuthenticate(SecurityAuthenticateOptions $params)
-    {
-        return new Struct\Security\Authenticate($params);
-    }
-
-    /**
-     * Command_Cryptic
-     *
-     * @param CommandCrypticOptions $params
-     * @return Struct\Command\Cryptic
-     */
-    protected function createCommandCryptic(CommandCrypticOptions $params)
-    {
-        return new Struct\Command\Cryptic($params->entry);
-    }
-
-    /**
-     * Info_EncodeDecodeCity
-     *
-     * @param InfoEncodeDecodeCityOptions $params
-     * @return Struct\Info\EncodeDecodeCity
-     */
-    protected function createInfoEncodeDecodeCity(InfoEncodeDecodeCityOptions $params)
-    {
-        return new Struct\Info\EncodeDecodeCity($params);
-    }
-
-    /**
-     * MiniRule_GetFromPricingRec
-     *
-     * @param MiniRuleGetFromPricingRecOptions $params
-     * @return Struct\MiniRule\GetFromPricingRec
-     */
-    protected function createMiniRuleGetFromPricingRec(MiniRuleGetFromPricingRecOptions $params)
-    {
-        return new Struct\MiniRule\GetFromPricingRec($params);
-    }
-
-    /**
-     * MiniRule_GetFromPricing
-     *
-     * @param MiniRuleGetFromPricingOptions $params
-     * @return Struct\MiniRule\GetFromPricing
-     */
-    protected function createMiniRuleGetFromPricing(MiniRuleGetFromPricingOptions $params)
-    {
-        return new Struct\MiniRule\GetFromPricing($params);
-    }
-
-    /**
-     * DocIssuance_IssueTicket
-     *
-     * @param DocIssuanceIssueTicketOptions $params
-     * @return Struct\DocIssuance\IssueTicket
-     */
-    protected function createDocIssuanceIssueTicket(DocIssuanceIssueTicketOptions $params)
-    {
-        return new Struct\DocIssuance\IssueTicket($params);
-    }
-
-    /**
-     * DocIssuance_IssueMiscellaneousDocuments
-     *
-     * @param DocIssuanceIssueMiscDocOptions $params
-     * @return Struct\DocIssuance\IssueMiscellaneousDocuments
-     */
-    protected function createDocIssuanceIssueMiscellaneousDocuments(DocIssuanceIssueMiscDocOptions $params)
-    {
-        return new Struct\DocIssuance\IssueMiscellaneousDocuments($params);
-    }
-
-    /**
-     * PriceXplorer_ExtremeSearch
-     *
-     * @param PriceXplorerExtremeSearchOptions $params
-     * @return Struct\PriceXplorer\ExtremeSearch
-     */
-    protected function createPriceXplorerExtremeSearch(PriceXplorerExtremeSearchOptions $params)
-    {
-        return new Struct\PriceXplorer\ExtremeSearch($params);
-    }
-
-    /**
-     * SalesReports_DisplayQueryReport
-     *
-     * @param SalesReportsDisplayQueryReportOptions $params
-     * @return Struct\SalesReports\DisplayQueryReport
-     */
-    protected function createSalesReportsDisplayQueryReport(SalesReportsDisplayQueryReportOptions $params)
-    {
-        return new Struct\SalesReports\DisplayQueryReport($params);
-    }
-
-    /**
-     * Service_IntegratedPricing
-     *
-     * @param ServiceIntegratedPricingOptions $params
-     * @return Struct\Service\IntegratedPricing
-     */
-    protected function createServiceIntegratedPricing(ServiceIntegratedPricingOptions $params)
-    {
-        return new Struct\Service\IntegratedPricing($params);
     }
 
     /**
@@ -263,20 +133,37 @@ class Base implements RequestCreatorInterface
     /**
      * Find the correct builder for a given message
      *
-     * Message build methods in all builders must adhere to the
-     * 'create'<message name without underscores> logic as used in createRequest method.
+     * Builder classes implement the ConvertInterface and are used to build only one kind of message.
+     *
+     * The standard converter class is
+     * __NAMESPACE__ \ Converter \ Sectionname \ Messagename + "Conv"
+     * e.g.
+     * Amadeus\Client\RequestCreator\Converter\DocIssuance\IssueTicketConv
      *
      * @param string $messageName
-     * @return Fare|Pnr|Queue|Base|Air
+     * @return ConvertInterface|null
      */
     protected function findBuilderForMessage($messageName)
     {
-        $section = strtolower(substr($messageName, 0, strpos($messageName, '_')));
+        $builder = null;
 
-        if (array_key_exists($section, $this->separateBuilders)) {
-            $builder = $this->separateBuilders[$section];
+        if (array_key_exists($messageName, $this->messageBuilders) &&
+            $this->messageBuilders[$messageName] instanceof ConvertInterface
+        ) {
+            $builder = $this->messageBuilders[$messageName];
         } else {
-            $builder = $this;
+            $section = substr($messageName, 0, strpos($messageName, '_'));
+            $message = substr($messageName, strpos($messageName, '_') + 1);
+
+            $builderClass = __NAMESPACE__.'\\Converter\\'.$section.'\\'.$message."Conv";
+
+            if (class_exists($builderClass)) {
+                /** @var ConvertInterface $builder */
+                $builder = new $builderClass();
+                $builder->setParams($this->params);
+
+                $this->messageBuilders[$messageName] = $builder;
+            }
         }
 
         return $builder;

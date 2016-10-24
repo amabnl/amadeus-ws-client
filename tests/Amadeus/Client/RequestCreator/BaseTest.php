@@ -24,6 +24,7 @@ namespace Test\Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestCreator\Base;
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
 use Amadeus\Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
@@ -51,7 +52,7 @@ class BaseTest extends BaseTestCase
     {
         $this->setExpectedException(
             '\RuntimeException',
-            'Message createFareDisplayCurrencyIATARates is not implemented'
+            'No builder found for message Fare_DisplayCurrencyIATARates'
         );
 
         $par = new RequestCreatorParams([
@@ -242,6 +243,37 @@ class BaseTest extends BaseTestCase
             'Fare_InformativeBestPricingWithoutPNR',
             new FareInformativeBestPricingWithoutPnrOptions([
 
+            ])
+        );
+    }
+
+    public function testCanTryBuildingSameMessageTwiceWillReuseBuilder()
+    {
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['Fare_InformativeBestPricingWithoutPNR' => '14.1']
+        ]);
+
+        $rq = new Base($par);
+
+        $rq->createRequest(
+            'Fare_InformativeBestPricingWithoutPNR',
+            new FareInformativeBestPricingWithoutPnrOptions([
+
+            ])
+        );
+
+        $rq->createRequest(
+            'Fare_InformativeBestPricingWithoutPNR',
+            new FareInformativeBestPricingWithoutPnrOptions([
+                'pricingOptions' => new PricingOptions([
+                    'overrideOptions' => [
+                        PricingOptions::OVERRIDE_FARETYPE_PUB,
+                        PricingOptions::OVERRIDE_FARETYPE_NEG,
+                        PricingOptions::OVERRIDE_FARETYPE_UNI
+                    ]
+                ])
             ])
         );
     }

@@ -23,7 +23,7 @@
 namespace Test\Amadeus\Client\Struct\HeaderV4;
 
 use Amadeus\Client\Struct\HeaderV4\Security;
-use Test\Amadeus\Client\RequestCreator\BaseTest;
+use Test\Amadeus\BaseTestCase;
 
 /**
  * SecurityTest
@@ -31,7 +31,7 @@ use Test\Amadeus\Client\RequestCreator\BaseTest;
  * @package Test\Amadeus\Client\Struct\HeaderV4
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class SecurityTest extends BaseTest
+class SecurityTest extends BaseTestCase
 {
     public function testCanBuildSecurityHeader()
     {

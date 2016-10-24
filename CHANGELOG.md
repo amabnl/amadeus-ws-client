@@ -1,9 +1,12 @@
+# Release 1.2.0 (Unreleased)
+* Request Creator split up in 1 dedicated class per message.
+
 # Release 1.1.0 (19 October 2016)
 
 * ``Fare_MasterPricerTravelBoardSearch``: added new request options (https://github.com/amabnl/amadeus-ws-client/issues/20):
     - Preferred/excluded/... airlines option 'airlineOptions'.
     - Itinerary date: support for Date range +/- 1 day.
-    - Itinerary date: Specify date & time of segment as departure or arrival date & time.
+    - Itinerary date: Specify date &amp; time of segment as departure or arrival date &amp; time.
     - Itinerary date: deprecated 'date' and 'time' properties, replaced by unified 'dateTime' property.
     - Support for flight options such as direct flight, non-stop flight, etc.
     - Support for Cabin Mode (Mandatory, Major, Recommended) when specifying a cabin code.
