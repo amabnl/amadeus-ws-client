@@ -36,6 +36,7 @@ class RetrieveSeatMapConv extends BaseConverter
 {
     /**
      * @param AirRetrieveSeatMapOptions $requestOptions
+     * @param int|string $version
      * @return Struct\Air\RetrieveSeatMap
      */
     public function convert($requestOptions, $version)

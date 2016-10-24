@@ -36,6 +36,7 @@ class CancelConv extends BaseConverter
 {
     /**
      * @param PnrCancelOptions $requestOptions
+     * @param int|string $version
      * @return Struct\Pnr\Cancel
      */
     public function convert($requestOptions, $version)

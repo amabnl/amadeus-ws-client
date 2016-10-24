@@ -36,6 +36,7 @@ class RetrieveAndDisplayConv extends BaseConverter
 {
     /**
      * @param PnrRetrieveAndDisplayOptions $requestOptions
+     * @param int|string $version
      * @return Struct\Pnr\RetrieveAndDisplay
      */
     public function convert($requestOptions, $version)

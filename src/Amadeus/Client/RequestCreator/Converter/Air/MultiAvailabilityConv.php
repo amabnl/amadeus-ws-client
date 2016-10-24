@@ -36,6 +36,7 @@ class MultiAvailabilityConv extends BaseConverter
 {
     /**
      * @param AirMultiAvailabilityOptions $requestOptions
+     * @param int|string $version
      * @return Struct\Air\MultiAvailability
      */
     public function convert($requestOptions, $version)

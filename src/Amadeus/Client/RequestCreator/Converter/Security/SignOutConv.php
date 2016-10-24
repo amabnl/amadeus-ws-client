@@ -36,6 +36,7 @@ class SignOutConv extends BaseConverter
 {
     /**
      * @param RequestOptionsInterface $requestOptions
+     * @param int|string $version
      * @return Security\SignOut
      */
     public function convert($requestOptions, $version)

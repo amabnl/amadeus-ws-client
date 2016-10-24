@@ -36,6 +36,7 @@ class DisplayQueryReportConv extends BaseConverter
 {
     /**
      * @param SalesReportsDisplayQueryReportOptions $requestOptions
+     * @param int|string $version
      * @return Struct\SalesReports\DisplayQueryReport
      */
     public function convert($requestOptions, $version)

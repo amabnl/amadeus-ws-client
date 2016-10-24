@@ -36,6 +36,7 @@ class AuthenticateConv extends BaseConverter
 {
     /**
      * @param SecurityAuthenticateOptions $requestOptions
+     * @param int|string $version
      * @return Security\Authenticate
      */
     public function convert($requestOptions, $version)

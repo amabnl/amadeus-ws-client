@@ -36,6 +36,7 @@ class GetFromPricingConv extends BaseConverter
 {
     /**
      * @param MiniRuleGetFromPricingOptions $requestOptions
+     * @param int|string $version
      * @return Struct\MiniRule\GetFromPricing
      */
     public function convert($requestOptions, $version)

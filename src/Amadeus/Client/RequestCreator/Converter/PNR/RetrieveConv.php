@@ -36,6 +36,7 @@ class RetrieveConv extends BaseConverter
 {
     /**
      * @param PnrRetrieveOptions $requestOptions
+     * @param int|string $version
      * @return Struct\Pnr\Retrieve
      */
     public function convert($requestOptions, $version)

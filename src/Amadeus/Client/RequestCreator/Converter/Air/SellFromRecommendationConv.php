@@ -36,6 +36,7 @@ class SellFromRecommendationConv extends BaseConverter
 {
     /**
      * @param AirSellFromRecommendationOptions $requestOptions
+     * @param int|string $version
      * @return Struct\Air\SellFromRecommendation
      */
     public function convert($requestOptions, $version)

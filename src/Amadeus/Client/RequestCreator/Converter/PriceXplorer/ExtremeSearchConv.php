@@ -36,6 +36,7 @@ class ExtremeSearchConv extends BaseConverter
 {
     /**
      * @param PriceXplorerExtremeSearchOptions $requestOptions
+     * @param int|string $version
      * @return Struct\PriceXplorer\ExtremeSearch
      */
     public function convert($requestOptions, $version)

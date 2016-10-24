@@ -36,6 +36,7 @@ class FlightInfoConv extends BaseConverter
 {
     /**
      * @param AirFlightInfoOptions $requestOptions
+     * @param int|string $version
      * @return Struct\Air\FlightInfo
      */
     public function convert($requestOptions, $version)

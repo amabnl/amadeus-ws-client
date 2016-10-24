@@ -36,6 +36,7 @@ class DisplayHistoryConv extends BaseConverter
 {
     /**
      * @param PnrDisplayHistoryOptions $requestOptions
+     * @param int|string $version
      * @return Struct\Pnr\DisplayHistory
      */
     public function convert($requestOptions, $version)

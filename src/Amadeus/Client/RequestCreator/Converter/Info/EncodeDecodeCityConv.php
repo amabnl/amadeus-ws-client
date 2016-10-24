@@ -36,6 +36,7 @@ class EncodeDecodeCityConv extends BaseConverter
 {
     /**
      * @param InfoEncodeDecodeCityOptions $requestOptions
+     * @param int|string $version
      * @return Struct\Info\EncodeDecodeCity
      */
     public function convert($requestOptions, $version)

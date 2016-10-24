@@ -36,6 +36,7 @@ class TransferOwnershipConv extends BaseConverter
 {
     /**
      * @param PnrTransferOwnershipOptions $requestOptions
+     * @param int|string $version
      * @return Struct\Pnr\TransferOwnership
      */
     public function convert($requestOptions, $version)

@@ -37,7 +37,8 @@ class AddMultiElementsConv extends BaseConverter
 {
     /**
      * @param PnrAddMultiElementsBase $requestOptions
-     * @return Struct\Pnr\RetrieveAndDisplay
+     * @param int|string $version
+     * @return Struct\Pnr\AddMultiElements
      */
     public function convert($requestOptions, $version)
     {

@@ -36,7 +36,8 @@ class IssueMiscellaneousDocumentsConv extends BaseConverter
 {
     /**
      * @param DocIssuanceIssueMiscDocOptions $requestOptions
-     * @return Struct\DocIssuance\IssueTicket
+     * @param int|string $version
+     * @return Struct\DocIssuance\IssueMiscellaneousDocuments
      */
     public function convert($requestOptions, $version)
     {

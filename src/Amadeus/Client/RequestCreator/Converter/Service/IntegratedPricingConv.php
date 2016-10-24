@@ -36,6 +36,7 @@ class IntegratedPricingConv extends BaseConverter
 {
     /**
      * @param ServiceIntegratedPricingOptions $requestOptions
+     * @param int|string $version
      * @return Struct\Service\IntegratedPricing
      */
     public function convert($requestOptions, $version)

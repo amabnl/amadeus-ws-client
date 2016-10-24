@@ -36,6 +36,7 @@ class IssueTicketConv extends BaseConverter
 {
     /**
      * @param DocIssuanceIssueTicketOptions $requestOptions
+     * @param int|string $version
      * @return Struct\DocIssuance\IssueTicket
      */
     public function convert($requestOptions, $version)

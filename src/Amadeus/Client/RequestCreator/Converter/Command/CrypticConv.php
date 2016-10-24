@@ -36,6 +36,7 @@ class CrypticConv extends BaseConverter
 {
     /**
      * @param CommandCrypticOptions $requestOptions
+     * @param int|string $version
      * @return Struct\Command\Cryptic
      */
     public function convert($requestOptions, $version)
