@@ -792,6 +792,20 @@ class Client
     }
 
     /**
+     * Ticket_DeleteTSMP
+     *
+     * @param RequestOptions\TicketDeleteTsmpOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketDeleteTSMP(RequestOptions\TicketDeleteTsmpOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Ticket_DeleteTSMP';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Ticket_DisplayTST
      *
      * @param RequestOptions\TicketDisplayTstOptions $options

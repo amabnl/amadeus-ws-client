@@ -584,6 +584,15 @@ class Base extends BaseUtils
     }
 
     /**
+     * @param SendResult $response Ticket_DeleteTSMP result
+     * @return Result
+     */
+    protected function analyzeTicketDeleteTSMPResponse($response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
+
+    /**
      * @param SendResult $response Ticket_CreateTSTFromPricing result
      * @return Result
      */

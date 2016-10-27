@@ -1,5 +1,6 @@
 # Release 1.2.0 (Unreleased)
 * Request Creator split up in 1 dedicated class per message.
+* Implemented ``Ticket_DeleteTSMP``
 
 # Release 1.1.0 (19 October 2016)
 

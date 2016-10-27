@@ -1,0 +1,8 @@
+<Ticket_DeleteTSMPReply xmlns="http://xml.amadeus.com/TTSMDR_08_1_1A">
+    <applicationErrorCode>
+        <errorDetails>
+            <errorCode>911</errorCode>
+            <errorCategory>EC</errorCategory>
+        </errorDetails>
+    </applicationErrorCode>
+</Ticket_DeleteTSMPReply>

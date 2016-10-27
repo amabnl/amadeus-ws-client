@@ -1202,6 +1202,45 @@ Delete the TST with number 2:
         ])
     );
 
+-----------------
+Ticket_DeleteTSMP
+-----------------
+
+Delete TSMs attached to passengers with tattoos 2 and 3:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketDeleteTsmpOptions;
+
+    $deleteTstResult = $client->ticketDeleteTSMP(
+        new TicketDeleteTsmpOptions([
+            'paxTattoos' => [2, 3]
+        ])
+    );
+
+Delete TSMs attached to the infant of passenger with tattoo 1:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketDeleteTsmpOptions;
+
+    $deleteTstResult = $client->ticketDeleteTSMP(
+        new TicketDeleteTsmpOptions([
+            'infantTattoos' => [1]
+        ])
+    );
+
+Delete TSMs for TSMs tattoo 2 and 4:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketDeleteTsmpOptions;
+
+    $deleteTstResult = $client->ticketDeleteTSMP(
+        new TicketDeleteTsmpOptions([
+            'tsmTattoos' => [2, 4]
+        ])
+    );
 
 -----------------
 Ticket_DisplayTST
