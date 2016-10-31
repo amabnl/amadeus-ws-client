@@ -38,6 +38,13 @@ class FareCheckRulesOptions extends Base
     public $recommendations = [];
 
     /**
+     * List of Fare Components of pricing references for which to get the fare rules
+     *
+     * @var int[]
+     */
+    public $fareComponents = [];
+
+    /**
      * Whether to request a list of categories for the requested fare
      *
      * @var bool

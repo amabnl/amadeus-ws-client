@@ -1,5 +1,6 @@
 # Release 1.2.0 (Unreleased)
 * Request Creator split up in 1 dedicated class per message.
+* Added support for requesting rules for specific Fare Components after a pricing request in ``Fare_CheckRules`` (https://github.com/amabnl/amadeus-ws-client/issues/21)
 
 # Release 1.1.0 (19 October 2016)
 

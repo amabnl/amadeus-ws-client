@@ -104,8 +104,11 @@ class CheckRules extends BaseWsMessage
     {
         $this->msgType = new MsgType(MessageFunctionDetails::FARE_DISPLAY_RULES);
 
-        if (!empty($params->recommendations)) {
-            $this->itemNumber = new CheckRules\ItemNumber($params->recommendations);
+        if ($this->checkAnyNotEmpty($params->recommendations, $params->fareComponents)) {
+            $this->itemNumber = new CheckRules\ItemNumber(
+                $params->recommendations,
+                $params->fareComponents
+            );
         }
 
         if ($params->categoryList === true) {

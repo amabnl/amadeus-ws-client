@@ -802,6 +802,18 @@ Get Fare Rules information for a pricing in context:
         ])
     );
 
+Get Fare Rules information after a pricing request, specify a specific Fare Component:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
+
+    $rulesResponse = $client->fareCheckRules(
+        new FareCheckRulesOptions([
+            'recommendations' => [1] //Pricing nr 1
+        ])
+    );
+
 Get all rule categories available for a given pricing in context:
 
 .. code-block:: php

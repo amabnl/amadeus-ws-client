@@ -150,3 +150,9 @@ Messages supported
 ******************
 
 See the `list of supported messages <list-of-supported-messages.rst>`_.
+
+****************
+Message examples
+****************
+
+See the `examples how to send various messages <samples.rst>`_.

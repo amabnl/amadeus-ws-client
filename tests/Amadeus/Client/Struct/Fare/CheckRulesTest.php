@@ -83,4 +83,34 @@ class CheckRulesTest extends BaseTestCase
         $this->assertEquals(1, count($message->fareRule->tarifFareRule->ruleSectionId));
         $this->assertEquals('RU', $message->fareRule->tarifFareRule->ruleSectionId[0]);
     }
+
+    /**
+     * Operation: Examples after a pricing request
+     *
+     * Display list of rule categories relevant to fare component 2 of fare offer 2
+     *
+     * In this example, 2 elements of ITM are filled:
+     *
+     * In the first one, there is no qualifier. In this case, the default value applies and this element is a reference to the mother transaction (in this case: 1st recommendation)
+     * Here we have a qualifier (FC = Fare Component), meaning that the displayed information will be about the second fare component.
+     */
+    public function testCanMakeMessageWithFareComponentAfterPricingRequest()
+    {
+        $opt = new FareCheckRulesOptions([
+            'recommendations' => [2],
+            'fareComponents' => [2],
+            'categoryList' => true
+        ]);
+
+        $message = new CheckRules($opt);
+
+        $this->assertEquals(2, count($message->itemNumber->itemNumberDetails));
+        $this->assertEquals(2, $message->itemNumber->itemNumberDetails[0]->number);
+        $this->assertNull($message->itemNumber->itemNumberDetails[0]->type);
+        $this->assertEquals(2, $message->itemNumber->itemNumberDetails[1]->number);
+        $this->assertEquals(CheckRules\ItemNumberDetails::TYPE_FARE_COMPONENT, $message->itemNumber->itemNumberDetails[1]->type);
+
+        $this->assertEquals(1, count($message->flightQualification));
+        $this->assertEquals(CheckRules\DiscountDetails::FAREQUAL_RULE_CATEGORIES, $message->flightQualification[0]->discountDetails[0]->fareQualifier);
+    }
 }

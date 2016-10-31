@@ -30,6 +30,8 @@ namespace Amadeus\Client\Struct\Fare\CheckRules;
  */
 class ItemNumberDetails
 {
+    const TYPE_FARE_COMPONENT = "FC";
+
     /**
      * @var string
      */

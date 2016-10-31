@@ -39,8 +39,9 @@ class ItemNumber
      * ItemNumber constructor.
      *
      * @param array|string|null $itemNum
+     * @param int[] $fareComponents
      */
-    public function __construct($itemNum = null)
+    public function __construct($itemNum = null, $fareComponents = null)
     {
         if (is_array($itemNum)) {
             foreach ($itemNum as $item) {
@@ -48,6 +49,15 @@ class ItemNumber
             }
         } elseif (!is_null($itemNum)) {
             $this->itemNumberDetails[] = new ItemNumberDetails($itemNum);
+        }
+
+        if (is_array($fareComponents)) {
+            foreach ($fareComponents as $fareComponent) {
+                $this->itemNumberDetails[] = new ItemNumberDetails(
+                    $fareComponent,
+                    ItemNumberDetails::TYPE_FARE_COMPONENT
+                );
+            }
         }
     }
 }
