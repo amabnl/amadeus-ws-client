@@ -1,0 +1,14 @@
+<Ticket_DeleteTSMPReply xmlns="http://xml.amadeus.com/TTSMDR_08_1_1A">
+    <tsmTattoos>
+        <referenceDetails>
+            <type>TSM</type>
+            <value>1</value>
+        </referenceDetails>
+    </tsmTattoos>
+    <tsmTattoos>
+        <referenceDetails>
+            <type>TSM</type>
+            <value>2</value>
+        </referenceDetails>
+    </tsmTattoos>
+</Ticket_DeleteTSMPReply>
