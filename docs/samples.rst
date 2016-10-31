@@ -810,7 +810,9 @@ Get Fare Rules information after a pricing request, specify a specific Fare Comp
 
     $rulesResponse = $client->fareCheckRules(
         new FareCheckRulesOptions([
-            'recommendations' => [1] //Pricing nr 1
+            'recommendations' => [2],
+            'fareComponents' => [2],
+            'categoryList' => true
         ])
     );
 
