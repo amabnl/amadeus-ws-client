@@ -13,6 +13,7 @@ This is the list of messages that are at least partially supported at this time:
 - PNR_Cancel
 - PNR_DisplayHistory
 - PNR_TransferOwnership
+- PNR_NameChange
 - Queue_List
 - Queue_PlacePNR
 - Queue_RemoveItem
@@ -34,6 +35,7 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_CreateTSMFromPricing
 - Ticket_DisplayTST
 - Ticket_DeleteTST
+- Ticket_DeleteTSMP
 - DocIssuance_IssueTicket
 - DocIssuance_IssueMiscellaneousDocuments
 - Service_IntegratedPricing
@@ -64,7 +66,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Fare_RebookAndCreateTST
 - Air_RebookAirSegment
 - Air_TLAGetAvailability
-- PNR_NameChange
 - PNR_AddAuxiliarySegment
 - PointOfRef_Search
 - PointOfRef_CategoryList
@@ -73,7 +74,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Ticket_CreateTSMFareElement
 - Ticket_RetrieveListOfTSM
 - Ticket_DisplayTSMP
-- Ticket_DeleteTSMP
 - Ticket_AddDocNumber
 - Media_GetMedia
 - Service_IntegratedCatalogue

@@ -39,7 +39,7 @@ class ItemNumber
      * ItemNumber constructor.
      *
      * @param array|string|null $itemNum
-     * @param int[] $fareComponents
+     * @param int[]|null $fareComponents
      */
     public function __construct($itemNum = null, $fareComponents = null)
     {

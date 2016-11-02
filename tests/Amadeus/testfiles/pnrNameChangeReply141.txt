@@ -1,0 +1,31 @@
+<PNR_NameChangeReply xmlns="http://xml.amadeus.com/NMERES_14_1_1A">
+    <processStatus>
+        <responseType>U</responseType>
+        <statusCode>O</statusCode>
+    </processStatus>
+    <enhancedPassengerGroup>
+        <elementManagementPassenger>
+            <reference>
+                <type>PT</type>
+                <value>1</value>
+            </reference>
+        </elementManagementPassenger>
+        <enhancedPassengerInformation>
+            <enhancedPassengerDetails>
+                <travellerNameInfo>
+                    <quantity>1</quantity>
+                    <type>ADT</type>
+                    <uniqueCustomerIdentifier>1</uniqueCustomerIdentifier>
+                    <infantIndicator>3</infantIndicator>
+                </travellerNameInfo>
+                <otherPaxNamesDetails>
+                    <nameType>UN</nameType>
+                    <referenceName>Y</referenceName>
+                    <displayedName>Y</displayedName>
+                    <surname>SURNAME</surname>
+                    <givenName>GIVENNAME MR</givenName>
+                </otherPaxNamesDetails>
+            </enhancedPassengerDetails>
+        </enhancedPassengerInformation>
+    </enhancedPassengerGroup>
+</PNR_NameChangeReply>

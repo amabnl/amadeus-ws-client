@@ -1,0 +1,23 @@
+<PNR_NameChangeReply xmlns="http://xml.amadeus.com/NMERES_14_1_1A">
+    <processStatus>
+        <responseType>U</responseType>
+        <statusCode>X</statusCode>
+    </processStatus>
+    <generalError>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>1194</errorCode>
+                <errorCategory>EC</errorCategory>
+                <errorCodeOwner>1A</errorCodeOwner>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>ZZZ</textSubjectQualifier>
+                <source>M</source>
+                <encoding>ZZZ</encoding>
+            </freeTextDetails>
+            <freeText>INVALID NUMBER IN PARTY</freeText>
+        </errorWarningDescription>
+    </generalError>
+</PNR_NameChangeReply>

@@ -20,14 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct;
+namespace Amadeus\Client\Struct\Pnr\NameChange;
 
 /**
- * BaseWsMessage Base Web Service message class
+ * ElementManagementPassenger
  *
- * @package Amadeus\Client\Struct
+ * @package Amadeus\Client\Struct\Pnr\NameChange
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class BaseWsMessage extends WsMessageUtility
+class ElementManagementPassenger
 {
+    /**
+     * @var Reference
+     */
+    public $reference;
+
+    /**
+     * ElementManagementPassenger constructor.
+     *
+     * @param int $paxRef Passenger Reference
+     */
+    public function __construct($paxRef)
+    {
+        $this->reference = new Reference($paxRef);
+    }
 }

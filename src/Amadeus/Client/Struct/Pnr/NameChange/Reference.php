@@ -20,14 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct;
+namespace Amadeus\Client\Struct\Pnr\NameChange;
 
 /**
- * BaseWsMessage Base Web Service message class
+ * Reference
  *
- * @package Amadeus\Client\Struct
+ * @package Amadeus\Client\Struct\Pnr\NameChange
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class BaseWsMessage extends WsMessageUtility
+class Reference
 {
+    const TYPE_PASSENGER_TATTOO = "PT";
+
+    /**
+     * @var string
+     */
+    public $type = self::TYPE_PASSENGER_TATTOO;
+
+    /**
+     * @var int
+     */
+    public $value;
+
+    /**
+     * Reference constructor.
+     *
+     * @param int $value Passenger Reference
+     */
+    public function __construct($value)
+    {
+        $this->value = $value;
+    }
 }

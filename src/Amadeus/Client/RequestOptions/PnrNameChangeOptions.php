@@ -20,14 +20,29 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * BaseWsMessage Base Web Service message class
+ * PnrNameChangeOptions
  *
- * @package Amadeus\Client\Struct
+ * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class BaseWsMessage extends WsMessageUtility
+class PnrNameChangeOptions extends Base
 {
+    const OPERATION_CHANGE = "CHG";
+    const OPERATION_COMPLETE = "CMP";
+    const OPERATION_UPDATE = "UPD";
+
+    /**
+     * self::OPERATION_*
+     *
+     * @var string
+     */
+    public $operation;
+
+    /**
+     * @var Pnr\NameChange\Passenger[]
+     */
+    public $passengers = [];
 }

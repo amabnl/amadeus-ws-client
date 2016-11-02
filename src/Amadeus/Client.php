@@ -355,6 +355,20 @@ class Client
     }
 
     /**
+     * PNR_NameChange
+     *
+     * @param RequestOptions\PnrNameChangeOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function pnrNameChange(RequestOptions\PnrNameChangeOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PNR_NameChange';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Queue_List - get a list of all PNR's on a given queue
      *
      * https://webservices.amadeus.com/extranet/viewService.do?id=52&flavourId=1&menuId=functional

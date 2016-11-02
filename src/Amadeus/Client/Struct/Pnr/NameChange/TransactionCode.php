@@ -20,14 +20,34 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct;
+namespace Amadeus\Client\Struct\Pnr\NameChange;
 
 /**
- * BaseWsMessage Base Web Service message class
+ * TransactionCode
  *
- * @package Amadeus\Client\Struct
+ * @package Amadeus\Client\Struct\Pnr\NameChange
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class BaseWsMessage extends WsMessageUtility
+class TransactionCode
 {
+    const CODE_CHANGE = "CHG";
+    const CODE_COMPLETE = "CMP";
+    const CODE_UPDATE = "UPD";
+
+    /**
+     * self::CODE_*
+     *
+     * @var string
+     */
+    public $actionRequestCode;
+
+    /**
+     * TransactionCode constructor.
+     *
+     * @param string $actionRequestCode self::CODE_*
+     */
+    public function __construct($actionRequestCode)
+    {
+        $this->actionRequestCode = $actionRequestCode;
+    }
 }

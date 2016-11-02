@@ -20,14 +20,53 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct;
+namespace Amadeus\Client\RequestOptions\Pnr\NameChange;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * BaseWsMessage Base Web Service message class
+ * Infant accompanying a passenger
  *
- * @package Amadeus\Client\Struct
+ * @package Amadeus\Client\RequestOptions\Pnr\NameChange
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class BaseWsMessage extends WsMessageUtility
+class Infant extends LoadParamsFromArray
 {
+    /**
+     * Infant Last Name
+     *
+     * @var string
+     */
+    public $lastName;
+
+    /**
+     * Infant First Name
+     *
+     * @var string
+     */
+    public $firstName;
+
+    /**
+     * Infant title
+     *
+     * @var string
+     */
+    public $title;
+
+    /**
+     * @var string
+     */
+    public $nativeLastName;
+
+    /**
+     * @var string
+     */
+    public $nativeFirstName;
+
+    /**
+     * Infant Date of Birth
+     *
+     * @var \DateTime
+     */
+    public $dateOfBirth;
 }

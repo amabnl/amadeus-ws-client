@@ -218,6 +218,38 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('', $result->messages[0]->level);
     }
 
+    public function testCanHandlePnrNameChangePassengerError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPnrNameChangePassengerErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_NameChange');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('42', $result->messages[0]->code);
+        $this->assertEquals("INVALID/DUPLICATE NAME EXISTS", $result->messages[0]->text);
+        $this->assertEquals('passenger', $result->messages[0]->level);
+    }
+
+    public function testCanHandlePnrNameChangeError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPnrNameChangeErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_NameChange');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('1194', $result->messages[0]->code);
+        $this->assertEquals("INVALID NUMBER IN PARTY", $result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+    }
+
     public function testCanHandleQueueRemoveItemOk()
     {
         $respHandler = new ResponseHandler\Base();

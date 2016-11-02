@@ -20,14 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct;
+namespace Amadeus\Client\RequestCreator\Converter\PNR;
+
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\PnrNameChangeOptions;
+use Amadeus\Client\Struct;
 
 /**
- * BaseWsMessage Base Web Service message class
+ * NameChangeOpt
  *
- * @package Amadeus\Client\Struct
+ * @package Amadeus\Client\RequestCreator\Converter\PNR
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class BaseWsMessage extends WsMessageUtility
+class NameChangeConv extends BaseConverter
 {
+    /**
+     * @param PnrNameChangeOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\Pnr\NameChange
+     */
+    public function convert($requestOptions, $version)
+    {
+        return new Struct\Pnr\NameChange($requestOptions);
+    }
 }

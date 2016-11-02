@@ -588,6 +588,76 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendPnrNameChange()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->dummyProp = 'A dummy message result'; // Not an actual Soap reply.
+        $mockedSendResult->responseXml = $this->getTestFile('pnrNameChangeReply141.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedPnrResult = new Client\Struct\Pnr\NameChange(
+            new Client\RequestOptions\PnrNameChangeOptions([
+                'operation' => Client\RequestOptions\PnrNameChangeOptions::OPERATION_CHANGE,
+                'passengers' => [
+                    new Client\RequestOptions\Pnr\NameChange\Passenger([
+                        'reference' => 1,
+                        'type' => 'ADT',
+                        'lastName' => 'SURNAME',
+                        'firstName' => 'GIVENNAME MR'
+                    ])
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_NameChange', $expectedPnrResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_NameChange' => '14.1']));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'PNR_NameChange')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->pnrNameChange(
+            new Client\RequestOptions\PnrNameChangeOptions([
+                'operation' => Client\RequestOptions\PnrNameChangeOptions::OPERATION_CHANGE,
+                'passengers' => [
+                    new Client\RequestOptions\Pnr\NameChange\Passenger([
+                        'reference' => 1,
+                        'type' => 'ADT',
+                        'lastName' => 'SURNAME',
+                        'firstName' => 'GIVENNAME MR'
+                    ])
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
 
     public function testCanDoDummyQueueListCall()
     {

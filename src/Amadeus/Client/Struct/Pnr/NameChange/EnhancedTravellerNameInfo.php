@@ -20,14 +20,23 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct;
+namespace Amadeus\Client\Struct\Pnr\NameChange;
 
 /**
- * BaseWsMessage Base Web Service message class
+ * EnhancedTravellerNameInfo
  *
- * @package Amadeus\Client\Struct
+ * @package Amadeus\Client\Struct\Pnr\NameChange
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class BaseWsMessage extends WsMessageUtility
+class EnhancedTravellerNameInfo
 {
+    /**
+     * @var TravellerNameInfo
+     */
+    public $travellerNameInfo;
+
+    /**
+     * @var OtherPaxNamesDetails[]
+     */
+    public $otherPaxNamesDetails = [];
 }

@@ -311,6 +311,48 @@ class Base extends BaseUtils
     }
 
     /**
+     * Analysing a PNR_NameChangeReply
+     *
+     * @param SendResult $response PNR_NameChange response
+     * @return Result
+     * @throws Exception
+     */
+    protected function analyzePNRNameChangeResponse($response)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $qPassErrors = "//m:passengerErrorInEnhancedData//m:errorDetails/m:errorCode";
+        $qPassErrorCat = "//m:passengerErrorInEnhancedData//m:errorDetails/m:errorCategory";
+        $qPassErrorMsg = "//m:passengerErrorInEnhancedData//m:freeText";
+
+
+        $errorCodeNodeList = $domXpath->query($qPassErrors);
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $errorCatNode = $domXpath->query($qPassErrorCat)->item(0);
+            if ($errorCatNode instanceof \DOMNode) {
+                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
+            }
+
+            $code = $errorCodeNodeList->item(0)->nodeValue;
+            $errorTextNodeList = $domXpath->query($qPassErrorMsg);
+            $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
+
+            $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'passenger');
+        }
+
+        if (empty($analyzeResponse->messages) && $analyzeResponse->status === Result::STATUS_OK) {
+            $analyzeResponse = $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
      * Analysing a PNR_DisplayHistoryReply
      *
      * @param SendResult $response PNR_DisplayHistoryReply result

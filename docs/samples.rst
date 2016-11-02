@@ -326,6 +326,48 @@ Transfer both the office Ownership and the owner User Security Entity. The Queue
         ])
     );
 
+--------------
+PNR_NameChange
+--------------
+
+Example: Name change on retrieved PNR
+
+The example shows the message required to change the name of the passenger specified by the reference number with the following data:
+
+- Passenger surname: SURNAME
+- Passenger given name / title: GIVENNAME MR
+- Passenger reference number: 1
+- Passenger type code: ADT
+- Infant name: SMITH
+- Infant given name: BABY
+- Infant date of birth: 15 SEP 2007
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrNameChangeOptions;
+    use Amadeus\Client\RequestOptions\Pnr\NameChange\Passenger;
+    use Amadeus\Client\RequestOptions\Pnr\NameChange\Infant;
+
+    $changeResult = $client->pnrNameChange(
+        new PnrNameChangeOptions([
+            'operation' => PnrNameChangeOptions::OPERATION_CHANGE,
+            'passengers' => [
+                new Passenger([
+                    'reference' => 1,
+                    'type' => 'ADT',
+                    'lastName' => 'SURNAME',
+                    'firstName' => 'GIVENNAME MR',
+                    'infant' => new Infant([
+                        'lastName' => 'SMITH',
+                        'firstName' => 'BABY',
+                        'dateOfBirth' => \DateTime::createFromFormat('Y-m-d', '2007-09-15', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ]
+        ])
+    );
+
+
 *****
 Queue
 *****
