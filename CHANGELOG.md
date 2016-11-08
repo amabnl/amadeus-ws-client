@@ -3,6 +3,7 @@
 * Added support for requesting rules for specific Fare Components after a pricing request in ``Fare_CheckRules`` (https://github.com/amabnl/amadeus-ws-client/issues/21)
 * Implemented ``Ticket_DeleteTSMP`` message
 * Implemented ``PNR_NameChange`` message
+* Implemented ``PointOfRef_Search`` message
 
 # Release 1.1.0 (19 October 2016)
 

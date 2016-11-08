@@ -758,6 +758,20 @@ class Client
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 
+    /**
+     * PointOfRef_Search
+     *
+     * @param RequestOptions\PointOfRefSearchOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function pointOfRefSearch(RequestOptions\PointOfRefSearchOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PointOfRef_Search';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
 
     /**
      * Ticket_CreateTSTFromPricing

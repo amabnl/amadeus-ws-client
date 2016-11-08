@@ -1623,6 +1623,87 @@ Find all train stations in New York:
         ])
     );
 
+**********
+PointOfRef
+**********
+
+-----------------
+PointOfRef_Search
+-----------------
+
+**By Criteria POR name City IATA code:**
+
+This scenario consists in displaying all PORs with the name 'quasino' in Nice (IATA code: NCE). The default search algorithm is Phonetic.
+
+*The search for PORs with the name 'casino' in Nice (IATA code: NCE) yields the same result.*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PointOfRefSearchOptions;
+
+    $porResult = $client->pointOfRefSearch(
+        new PointOfRefSearchOptions([
+            'iata' => 'NCE',
+            'name' => 'quasino'
+        ])
+    );
+
+**Search by Criteria - 5 hotels in Rio de Janeiro state Brazil:**
+
+This scenario consists in displaying 5 hotels in the state of Rio de Janeiro, Brazil.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PointOfRefSearchOptions;
+
+    $porResult = $client->pointOfRefSearch(
+        new PointOfRefSearchOptions([
+            'maxNrOfResults' => 5,
+            'country' => 'BR',
+            'state' => 'RJ'
+        ])
+    );
+
+**Operation: Search by Area Center defined by business ID short list type:**
+
+This scenario consists in displaying all PORs on a 500m area around the airport (category code: APT) of Nice (foreign key: NCE).
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PointOfRefSearchOptions;
+
+    $porResult = $client->pointOfRefSearch(
+        new PointOfRefSearchOptions([
+            'listType' => PointOfRefSearchOptions::LIST_TYPE_SHORT,
+            'businessCategory' => 'APT',
+            'businessForeignKey' => 'NCE'
+        ])
+    );
+
+
+**Operation: Search both by Area and Criteria POR name center defined by geo-code:**
+
+This scenario consists in displaying all PORs with the name 'casino' on a 5km area around geo-code (7.17510°, 43.65655°).
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PointOfRefSearchOptions;
+
+    $porResult = $client->pointOfRefSearch(
+        new PointOfRefSearchOptions([
+            'latitude' => '4365655',
+            'longitude' => '717510',
+            'searchRadius' => '5000',
+            'name' => 'casino'
+        ])
+    );
+
+-----------------------
+PointOfRef_CategoryList
+-----------------------
+
+*coming soon*
+
 *****
 Offer
 *****

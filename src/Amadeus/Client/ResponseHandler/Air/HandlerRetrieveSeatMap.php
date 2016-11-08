@@ -22,14 +22,24 @@
 
 namespace Amadeus\Client\ResponseHandler\Air;
 
+use Amadeus\Client\Exception;
+use Amadeus\Client\ResponseHandler\MessageResponseHandler;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
+
 /**
  * Utility class to get proper error messages from an Air_RetrieveSeatMapReply message
  *
  * @package Amadeus\Client\ResponseHandler\Air
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-abstract class RetrieveSeatMap
+class HandlerRetrieveSeatMap implements MessageResponseHandler
 {
+    public function analyze(SendResult $response)
+    {
+        // TODO: Implement analyze() method.
+    }
+
     /**
      * Find the error message for a given error code
      *

@@ -47,6 +47,7 @@ This is the list of messages that are at least partially supported at this time:
 - MiniRule_GetFromPricingRec
 - MiniRule_GetFromPricing
 - Info_EncodeDecodeCity
+- PointOfRef_Search
 - Command_Cryptic
 - PriceXplorer_ExtremeSearch
 - SalesReports_DisplayQueryReport
@@ -67,7 +68,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Air_RebookAirSegment
 - Air_TLAGetAvailability
 - PNR_AddAuxiliarySegment
-- PointOfRef_Search
 - PointOfRef_CategoryList
 - FOP_CreateFormOfPayment
 - Ticket_ProcessEDoc
@@ -85,6 +85,7 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Hotel_EnhancedPricing
 - Hotel_Sell
 - Hotel_CompleteReservationDetails
+- Hotel_Terms
 - Car_Availability
 - Car_RateInformationFromAvailability
 - Car_Sell

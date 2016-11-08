@@ -1076,6 +1076,19 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("Invalid value (TTT) for IATA code (TTT) field", $result->messages[0]->text);
     }
 
+    public function testCanHandlePointOfRefSearchOkResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPointOfRefSearchOkResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PointOfRef_Search');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
     public function testCanHandlePriceXplorerExtremeSearchErrResponse()
     {
         $respHandler = new ResponseHandler\Base();
