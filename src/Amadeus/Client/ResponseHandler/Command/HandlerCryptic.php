@@ -20,28 +20,34 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler;
+namespace Amadeus\Client\ResponseHandler\Command;
 
-use Amadeus\Client\Exception;
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * MessageResponseHandler
+ * HandlerCryptic
  *
- * The interface used to implement the analysis of a response from a specific Web Service message response.
+ * Unknown response for Command_Cryptic because you need to analyse the cryptic response yourself
  *
- * @package Amadeus\Client\ResponseHandler
+ * @package Amadeus\Client\ResponseHandler\Command
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface MessageResponseHandler
+class HandlerCryptic extends StandardResponseHandler
 {
     /**
-     * Analyze the result from the message operation and check for any error messages
-     *
      * @param SendResult $response
      * @return Result
-     * @throws Exception
      */
-    public function analyze(SendResult $response);
+    public function analyze(SendResult $response)
+    {
+        $ccResult = new Result($response, Result::STATUS_UNKNOWN);
+        $ccResult->messages[] = new Result\NotOk(
+            0,
+            "Response handling not supported for cryptic entries"
+        );
+
+        return $ccResult;
+    }
 }

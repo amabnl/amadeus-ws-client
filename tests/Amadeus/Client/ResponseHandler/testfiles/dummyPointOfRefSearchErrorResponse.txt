@@ -1,0 +1,1 @@
+<soap:Fault xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><faultcode>soap:Server</faultcode><faultstring>11185|Application|Result list type not supported:P</faultstring><faultactor>SI:Backend</faultactor></soap:Fault>

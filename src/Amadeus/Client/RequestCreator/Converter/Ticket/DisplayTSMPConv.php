@@ -20,28 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler;
+namespace Amadeus\Client\RequestCreator\Converter\Ticket;
 
-use Amadeus\Client\Exception;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\TicketDisplayTsmpOptions;
+use Amadeus\Client\Struct;
 
 /**
- * MessageResponseHandler
+ * Ticket_DisplayTSMP Request converter
  *
- * The interface used to implement the analysis of a response from a specific Web Service message response.
- *
- * @package Amadeus\Client\ResponseHandler
+ * @package Amadeus\Client\RequestCreator\Converter\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface MessageResponseHandler
+class DisplayTSMPConv extends BaseConverter
 {
     /**
-     * Analyze the result from the message operation and check for any error messages
-     *
-     * @param SendResult $response
-     * @return Result
-     * @throws Exception
+     * @param TicketDisplayTsmpOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\Ticket\DisplayTSMP
      */
-    public function analyze(SendResult $response);
+    public function convert($requestOptions, $version)
+    {
+        return new Struct\Ticket\DisplayTSMP($requestOptions);
+    }
 }

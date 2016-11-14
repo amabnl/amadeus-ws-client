@@ -20,28 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler;
-
-use Amadeus\Client\Exception;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+namespace Amadeus\Client\Struct\Ticket;
 
 /**
- * MessageResponseHandler
+ * TattooOfTSM
  *
- * The interface used to implement the analysis of a response from a specific Web Service message response.
- *
- * @package Amadeus\Client\ResponseHandler
+ * @package Amadeus\Client\Struct\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface MessageResponseHandler
+class TattooOfTSM
 {
     /**
-     * Analyze the result from the message operation and check for any error messages
-     *
-     * @param SendResult $response
-     * @return Result
-     * @throws Exception
+     * @var string|int
      */
-    public function analyze(SendResult $response);
+    public $uniqueReference;
+
+    /**
+     * TattooOfTSM constructor.
+     *
+     * @param int|string $uniqueReference
+     */
+    public function __construct($uniqueReference)
+    {
+        $this->uniqueReference = $uniqueReference;
+    }
 }

@@ -20,28 +20,30 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler;
+namespace Test\Amadeus\Client\ResponseHandler;
 
-use Amadeus\Client\Exception;
+use Amadeus\Client\ResponseHandler\Ticket\HandlerCreateTSTFromPricing;
 use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * MessageResponseHandler
+ * StandardResponseHandlerTest
  *
- * The interface used to implement the analysis of a response from a specific Web Service message response.
- *
- * @package Amadeus\Client\ResponseHandler
+ * @package Test\Amadeus\Client\ResponseHandler
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface MessageResponseHandler
+class StandardResponseHandlerTest extends BaseTestCase
 {
-    /**
-     * Analyze the result from the message operation and check for any error messages
-     *
-     * @param SendResult $response
-     * @return Result
-     * @throws Exception
-     */
-    public function analyze(SendResult $response);
+    public function testCanGetUnknownStatusForUnknownErrorCode()
+    {
+        //Sweet sweet 100% coverage
+
+        $respHandler = new HandlerCreateTSTFromPricing();
+
+        $meth = $this->getMethod('Amadeus\Client\ResponseHandler\StandardResponseHandler', 'makeStatusFromErrorQualifier');
+
+        $result = $meth->invoke($respHandler, 'ZZO');
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result);
+    }
 }

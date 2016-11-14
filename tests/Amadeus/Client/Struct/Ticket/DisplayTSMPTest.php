@@ -20,28 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler;
+namespace Test\Amadeus\Client\Struct\Ticket;
 
-use Amadeus\Client\Exception;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+use Amadeus\Client\RequestOptions\TicketDisplayTsmpOptions;
+use Amadeus\Client\Struct\Ticket\DisplayTSMP;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * MessageResponseHandler
+ * DisplayTSMPTest
  *
- * The interface used to implement the analysis of a response from a specific Web Service message response.
- *
- * @package Amadeus\Client\ResponseHandler
+ * @package Test\Amadeus\Client\Struct\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface MessageResponseHandler
+class DisplayTSMPTest extends BaseTestCase
 {
-    /**
-     * Analyze the result from the message operation and check for any error messages
-     *
-     * @param SendResult $response
-     * @return Result
-     * @throws Exception
-     */
-    public function analyze(SendResult $response);
+    public function testCanMakeMessage()
+    {
+        $opt = new TicketDisplayTsmpOptions([
+            'tattoo' => 3
+        ]);
+
+        $msg = new DisplayTSMP($opt);
+
+        $this->assertEquals(3, $msg->tattooOfTSM->uniqueReference);
+    }
 }

@@ -1320,12 +1320,29 @@ Display TST number 2:
 
     use Amadeus\Client\RequestOptions\TicketDisplayTstOptions;
 
-    $deleteTstResult = $client->ticketDisplayTST(
+    $displayTstResult = $client->ticketDisplayTST(
         new TicketDisplayTstOptions([
             'displayMode' => TicketDisplayTstOptions::MODE_SELECTIVE,
             'tstNumbers' => [2]
         ])
     );
+
+------------------
+Ticket_DisplayTSMP
+------------------
+
+Display a TSM-P in a PNR in context with tattoo 3:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketDisplayTsmpOptions;
+
+    $displayTsmpResult = $client->ticketDisplayTSMP(
+        new TicketDisplayTsmpOptions([
+            'tattoo' => 3
+        ])
+    );
+
 
 ***********
 DocIssuance

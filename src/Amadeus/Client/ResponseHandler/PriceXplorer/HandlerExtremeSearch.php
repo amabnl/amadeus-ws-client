@@ -20,28 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler;
+namespace Amadeus\Client\ResponseHandler\PriceXplorer;
 
 use Amadeus\Client\Exception;
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * MessageResponseHandler
+ * HandlerExtremeSearch
  *
- * The interface used to implement the analysis of a response from a specific Web Service message response.
- *
- * @package Amadeus\Client\ResponseHandler
+ * @package Amadeus\Client\ResponseHandler\PriceXplorer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface MessageResponseHandler
+class HandlerExtremeSearch extends StandardResponseHandler
 {
     /**
-     * Analyze the result from the message operation and check for any error messages
-     *
      * @param SendResult $response
      * @return Result
-     * @throws Exception
      */
-    public function analyze(SendResult $response);
+    public function analyze(SendResult $response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
+    }
 }

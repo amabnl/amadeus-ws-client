@@ -34,6 +34,7 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_CreateTSTFromPricing
 - Ticket_CreateTSMFromPricing
 - Ticket_DisplayTST
+- Ticket_DisplayTSMP
 - Ticket_DeleteTST
 - Ticket_DeleteTSMP
 - DocIssuance_IssueTicket
@@ -73,7 +74,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Ticket_ProcessEDoc
 - Ticket_CreateTSMFareElement
 - Ticket_RetrieveListOfTSM
-- Ticket_DisplayTSMP
 - Ticket_AddDocNumber
 - Media_GetMedia
 - Service_IntegratedCatalogue

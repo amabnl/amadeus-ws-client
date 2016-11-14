@@ -1089,6 +1089,22 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(0, count($result->messages));
     }
 
+    public function testCanHandlePointOfRefSearchErrorResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPointOfRefSearchErrorResponse.txt');
+        $sendResult->exception = new \SoapFault("Server", "11185|Application|Result list type not supported:P");
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PointOfRef_Search');
+
+        $this->assertEquals(Result::STATUS_FATAL, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('11185', $result->messages[0]->code);
+        $this->assertEquals("Result list type not supported:P", $result->messages[0]->text);
+    }
+
     public function testCanHandlePriceXplorerExtremeSearchErrResponse()
     {
         $respHandler = new ResponseHandler\Base();
@@ -1167,16 +1183,33 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("Response handling not supported for cryptic entries", $result->messages[0]->text);
     }
 
-    public function testCanGetUnknownStatusForUnknownErrorCode()
+    public function testCanTryAnalyzingSameMessageTwiceWillReuseHandler()
     {
-        //Sweet sweet 100% coverage
-
         $respHandler = new ResponseHandler\Base();
 
-        $meth = $this->getMethod('Amadeus\Client\ResponseHandler\Base', 'makeStatusFromErrorQualifier');
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyServiceIntegratedPricingErrorResponse.txt');
 
-        $result = $meth->invoke($respHandler, ['ZZZ']);
+        $result = $respHandler->analyzeResponse($sendResult, 'Service_IntegratedPricing');
 
-        $this->assertEquals(Result::STATUS_UNKNOWN, $result);
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('432', $result->messages[0]->code);
+        $this->assertEquals("INVALID CURRENCY CODE", $result->messages[0]->text);
+
+        $prop = $this->getProperty($respHandler, 'responseHandlers');
+        $propval = $prop->getValue($respHandler);
+
+        $this->assertInstanceOf('\Amadeus\Client\ResponseHandler\Service\HandlerIntegratedPricing', $propval['Service_IntegratedPricing']);
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyServiceIntegratedPricingErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Service_IntegratedPricing');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('432', $result->messages[0]->code);
+        $this->assertEquals("INVALID CURRENCY CODE", $result->messages[0]->text);
     }
 }

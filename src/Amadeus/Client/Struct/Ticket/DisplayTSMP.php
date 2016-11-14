@@ -20,28 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler;
+namespace Amadeus\Client\Struct\Ticket;
 
-use Amadeus\Client\Exception;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+use Amadeus\Client\RequestOptions\TicketDisplayTsmpOptions;
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * MessageResponseHandler
+ * Ticket_DisplayTSMP request structure
  *
- * The interface used to implement the analysis of a response from a specific Web Service message response.
- *
- * @package Amadeus\Client\ResponseHandler
+ * @package Amadeus\Client\Struct\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface MessageResponseHandler
+class DisplayTSMP extends BaseWsMessage
 {
     /**
-     * Analyze the result from the message operation and check for any error messages
-     *
-     * @param SendResult $response
-     * @return Result
-     * @throws Exception
+     * @var TattooOfTSM
      */
-    public function analyze(SendResult $response);
+    public $tattooOfTSM;
+
+    /**
+     * DisplayTSMP constructor.
+     *
+     * @param TicketDisplayTsmpOptions $params
+     */
+    public function __construct(TicketDisplayTsmpOptions $params)
+    {
+        $this->tattooOfTSM = new TattooOfTSM($params->tattoo);
+    }
 }

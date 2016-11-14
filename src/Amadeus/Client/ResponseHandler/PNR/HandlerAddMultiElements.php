@@ -20,28 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler;
-
-use Amadeus\Client\Exception;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+namespace Amadeus\Client\ResponseHandler\PNR;
 
 /**
- * MessageResponseHandler
+ * HandlerAddMultiElements
  *
- * The interface used to implement the analysis of a response from a specific Web Service message response.
- *
- * @package Amadeus\Client\ResponseHandler
+ * @package Amadeus\Client\ResponseHandler\PNR
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface MessageResponseHandler
+class HandlerAddMultiElements extends HandlerRetrieve
 {
-    /**
-     * Analyze the result from the message operation and check for any error messages
-     *
-     * @param SendResult $response
-     * @return Result
-     * @throws Exception
-     */
-    public function analyze(SendResult $response);
 }

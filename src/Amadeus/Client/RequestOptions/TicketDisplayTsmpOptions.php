@@ -20,28 +20,20 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler;
-
-use Amadeus\Client\Exception;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * MessageResponseHandler
+ * Ticket_DisplayTSMP Request options.
  *
- * The interface used to implement the analysis of a response from a specific Web Service message response.
- *
- * @package Amadeus\Client\ResponseHandler
+ * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-interface MessageResponseHandler
+class TicketDisplayTsmpOptions extends Base
 {
     /**
-     * Analyze the result from the message operation and check for any error messages
+     * Tattoo of the TSM-P to display.
      *
-     * @param SendResult $response
-     * @return Result
-     * @throws Exception
+     * @var int
      */
-    public function analyze(SendResult $response);
+    public $tattoo;
 }

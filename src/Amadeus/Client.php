@@ -848,6 +848,20 @@ class Client
     }
 
     /**
+     * Ticket_DisplayTSMP
+     *
+     * @param RequestOptions\TicketDisplayTsmpOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketDisplayTSMP(RequestOptions\TicketDisplayTsmpOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Ticket_DisplayTSMP';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocIssuance_IssueTicket
      *
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options

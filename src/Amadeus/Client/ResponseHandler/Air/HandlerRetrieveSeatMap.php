@@ -22,8 +22,7 @@
 
 namespace Amadeus\Client\ResponseHandler\Air;
 
-use Amadeus\Client\Exception;
-use Amadeus\Client\ResponseHandler\MessageResponseHandler;
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
 
@@ -33,11 +32,71 @@ use Amadeus\Client\Session\Handler\SendResult;
  * @package Amadeus\Client\ResponseHandler\Air
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class HandlerRetrieveSeatMap implements MessageResponseHandler
+class HandlerRetrieveSeatMap extends StandardResponseHandler
 {
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
     public function analyze(SendResult $response)
     {
-        // TODO: Implement analyze() method.
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $errorCodeNode = $domXpath->query('//m:errorInformation/m:errorDetails/m:code');
+        if ($errorCodeNode->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $errCode = $errorCodeNode->item(0)->nodeValue;
+            $level = null;
+
+            $errorLevelNode = $domXpath->query('//m:errorInformation/m:errorDetails/m:processingLevel');
+            if ($errorLevelNode->length > 0) {
+                $level = self::decodeProcessingLevel($errorLevelNode->item(0)->nodeValue);
+            }
+
+            $errorDescNode = $domXpath->query('//m:errorInformation/m:errorDetails/m:description');
+            if ($errorDescNode->length > 0) {
+                $errDesc = $errorDescNode->item(0)->nodeValue;
+            } else {
+                $errDesc = self::findMessage($errCode);
+            }
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $errCode,
+                $errDesc,
+                $level
+            );
+        }
+
+        $codeNode = $domXpath->query('//m:warningInformation/m:warningDetails/m:number');
+        if ($codeNode->length > 0) {
+            $analyzeResponse->status = Result::STATUS_WARN;
+
+            $warnCode = $codeNode->item(0)->nodeValue;
+            $level = null;
+
+            $levelNode = $domXpath->query('//m:warningInformation/m:warningDetails/m:processingLevel');
+            if ($levelNode->length > 0) {
+                $level = self::decodeProcessingLevel($levelNode->item(0)->nodeValue);
+            }
+
+            $descNode = $domXpath->query('//m:warningInformation/m:warningDetails/m:description');
+            if ($descNode->length > 0) {
+                $warnDesc = $descNode->item(0)->nodeValue;
+            } else {
+                $warnDesc = self::findMessage($warnCode);
+            }
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $warnCode,
+                $warnDesc,
+                $level
+            );
+        }
+
+        return $analyzeResponse;
     }
 
     /**
