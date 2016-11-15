@@ -42,20 +42,62 @@ abstract class StandardResponseHandler implements MessageResponseHandler
     const XMLNS_PREFIX = "m";
 
     /**
-     * @param SendResult $response WebService message Send Result
+     * Analyze response by looking for error, category and message with the provided XPATH queries
+     *
+     * xpath queries must be prefixed with the namespace self::XMLNS_PREFIX
+     *
+     * @param SendResult $response
+     * @param string $qErr XPATH query for fetching error code (first node is used)
+     * @param string $qCat XPATH query for fetching error category (first node is used)
+     * @param string $qMsg XPATH query for fetching error messages (all nodes are used)
      * @return Result
-     * @throws Exception
      */
-    protected function analyzeSimpleResponseErrorCodeAndMessage($response)
+    protected function analyzeWithErrCodeCategoryMsgQuery(SendResult $response, $qErr, $qCat, $qMsg)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $errorCodeNodeList = $domXpath->query($qErr);
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $errorCatNode = $domXpath->query($qCat)->item(0);
+            if ($errorCatNode instanceof \DOMNode) {
+                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
+            }
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $errorCodeNodeList->item(0)->nodeValue,
+                $this->makeMessageFromMessagesNodeList(
+                    $domXpath->query($qMsg)
+                )
+            );
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
+     * Analyze response by looking for error, category and message in nodes specified by name
+     *
+     * @param SendResult $response
+     * @param string $nodeErr Node name of the node containing the error code (first node is used)
+     * @param string $nodeCat Node name of the node containing the error category (first node is used)
+     * @param string $nodeMsg Node name of the node containing the error messages (all nodes are used)
+     * @return Result
+     */
+    protected function analyzeWithErrCodeCategoryMsgNodeName(SendResult $response, $nodeErr, $nodeCat, $nodeMsg)
     {
         $analyzeResponse = new Result($response);
 
         $domDoc = $this->loadDomDocument($response->responseXml);
 
-        $errorCodeNode = $domDoc->getElementsByTagName("errorCode")->item(0);
+        $errorCodeNode = $domDoc->getElementsByTagName($nodeErr)->item(0);
 
         if (!is_null($errorCodeNode)) {
-            $errorCatNode = $domDoc->getElementsByTagName("errorCategory")->item(0);
+            $errorCatNode = $domDoc->getElementsByTagName($nodeCat)->item(0);
             if ($errorCatNode instanceof \DOMNode) {
                 $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
             } else {
@@ -63,7 +105,7 @@ abstract class StandardResponseHandler implements MessageResponseHandler
             }
 
             $errorCode = $errorCodeNode->nodeValue;
-            $errorTextNodeList = $domDoc->getElementsByTagName("freeText");
+            $errorTextNodeList = $domDoc->getElementsByTagName($nodeMsg);
 
             $analyzeResponse->messages[] = new Result\NotOk(
                 $errorCode,
@@ -79,32 +121,29 @@ abstract class StandardResponseHandler implements MessageResponseHandler
      * @return Result
      * @throws Exception
      */
+    protected function analyzeSimpleResponseErrorCodeAndMessage($response)
+    {
+        return $this->analyzeWithErrCodeCategoryMsgNodeName(
+            $response,
+            "errorCode",
+            "errorCategory",
+            "freeText"
+        );
+    }
+
+    /**
+     * @param SendResult $response WebService message Send Result
+     * @return Result
+     * @throws Exception
+     */
     protected function analyzeSimpleResponseErrorCodeAndMessageStatusCode($response)
     {
-        $analyzeResponse = new Result($response);
-
-        $domDoc = $this->loadDomDocument($response->responseXml);
-
-        $errorCodeNode = $domDoc->getElementsByTagName("errorCode")->item(0);
-
-        if (!is_null($errorCodeNode)) {
-            $analyzeResponse->status = Result::STATUS_ERROR;
-
-            $errorCatNode = $domDoc->getElementsByTagName("statusCode")->item(0);
-            if ($errorCatNode instanceof \DOMNode) {
-                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
-            }
-
-            $errorCode = $errorCodeNode->nodeValue;
-            $errorTextNodeList = $domDoc->getElementsByTagName("freeText");
-
-            $analyzeResponse->messages[] = new Result\NotOk(
-                $errorCode,
-                $this->makeMessageFromMessagesNodeList($errorTextNodeList)
-            );
-        }
-
-        return $analyzeResponse;
+        return $this->analyzeWithErrCodeCategoryMsgNodeName(
+            $response,
+            "errorCode",
+            "statusCode",
+            "freeText"
+        );
     }
 
     /**

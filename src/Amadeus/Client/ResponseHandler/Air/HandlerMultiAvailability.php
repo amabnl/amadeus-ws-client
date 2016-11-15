@@ -41,28 +41,11 @@ class HandlerMultiAvailability extends StandardResponseHandler
      */
     public function analyze(SendResult $response)
     {
-        $analyzeResponse = new Result($response);
-
-        $message = null;
-
-        $domXpath = $this->makeDomXpath($response->responseXml);
-
-        $codeNode = $domXpath->query("//m:errorOrWarningSection/m:errorOrWarningInfo//m:code")->item(0);
-        if ($codeNode instanceof \DOMNode) {
-            $analyzeResponse->status = Result::STATUS_ERROR;
-
-            $categoryNode = $domXpath->query("//m:errorOrWarningSection/m:errorOrWarningInfo//m:type")->item(0);
-            if ($categoryNode instanceof \DOMNode) {
-                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($categoryNode->nodeValue);
-            }
-
-            $messageNodes = $domXpath->query('//m:errorOrWarningSection/m:textInformation/m:freeText');
-            if ($messageNodes->length > 0) {
-                $message = $this->makeMessageFromMessagesNodeList($messageNodes);
-            }
-            $analyzeResponse->messages [] = new Result\NotOk($codeNode->nodeValue, $message);
-        }
-
-        return $analyzeResponse;
+        return $this->analyzeWithErrCodeCategoryMsgQuery(
+            $response,
+            "//m:errorOrWarningSection/m:errorOrWarningInfo//m:code",
+            "//m:errorOrWarningSection/m:errorOrWarningInfo//m:type",
+            "//m:errorOrWarningSection/m:textInformation/m:freeText"
+        );
     }
 }

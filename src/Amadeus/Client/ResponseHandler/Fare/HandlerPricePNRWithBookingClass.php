@@ -34,38 +34,21 @@ use Amadeus\Client\Session\Handler\SendResult;
  */
 class HandlerPricePNRWithBookingClass extends StandardResponseHandler
 {
+    const Q_ERR_CODE = "//m:applicationError//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCode";
+    const Q_ERR_CAT = "//m:applicationError//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCategory";
+    const Q_ERR_MSG = "//m:applicationError/m:errorWarningDescription/m:freeText";
+
     /**
      * @param SendResult $response
      * @return Result
      */
     public function analyze(SendResult $response)
     {
-        $analyzeResponse = new Result($response);
-
-        $domXpath = $this->makeDomXpath($response->responseXml);
-
-        $queryErrorCode = "//m:applicationError//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCode";
-        $queryErrorCategory = "//m:applicationError//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCategory";
-        $queryErrorMsg = "//m:applicationError/m:errorWarningDescription/m:freeText";
-
-        $errorCodeNodeList = $domXpath->query($queryErrorCode);
-
-        if ($errorCodeNodeList->length > 0) {
-            $analyzeResponse->status = Result::STATUS_ERROR;
-
-            $errorCatNode = $domXpath->query($queryErrorCategory)->item(0);
-            if ($errorCatNode instanceof \DOMNode) {
-                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
-            }
-
-            $analyzeResponse->messages[] = new Result\NotOk(
-                $errorCodeNodeList->item(0)->nodeValue,
-                $this->makeMessageFromMessagesNodeList(
-                    $domXpath->query($queryErrorMsg)
-                )
-            );
-        }
-
-        return $analyzeResponse;
+        return $this->analyzeWithErrCodeCategoryMsgQuery(
+            $response,
+            self::Q_ERR_CODE,
+            self::Q_ERR_CAT,
+            self::Q_ERR_MSG
+        );
     }
 }
