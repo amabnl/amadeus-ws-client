@@ -798,7 +798,7 @@ class BaseTest extends BaseTestCase
         $sendResult = new SendResult();
         $sendResult->responseXml = $this->getTestFile('dummyFarePricePnrWithBookingClassReplyError.txt');
 
-        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePnrWithBookingClass');
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePNRWithBookingClass');
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
         $this->assertEquals(1, count($result->messages));
@@ -813,7 +813,7 @@ class BaseTest extends BaseTestCase
         $sendResult = new SendResult();
         $sendResult->responseXml = $this->getTestFile('dummyFarePricePnrWithBookingClass12ErrorResponse.txt');
 
-        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePnrWithBookingClass');
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePNRWithBookingClass');
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
         $this->assertEquals(1, count($result->messages));
@@ -828,7 +828,7 @@ class BaseTest extends BaseTestCase
         $sendResult = new SendResult();
         $sendResult->responseXml = $this->getTestFile('dummyFarePricePnrWithLowerFares14ErrorResponse.txt');
 
-        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePnrWithLowerFares');
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePNRWithLowerFares');
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
         $this->assertEquals(1, count($result->messages));
@@ -843,7 +843,7 @@ class BaseTest extends BaseTestCase
         $sendResult = new SendResult();
         $sendResult->responseXml = $this->getTestFile('dummyFarePricePnrWithLowestFare14ErrorResponse.txt');
 
-        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePnrWithLowestFare');
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePNRWithLowestFare');
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
         $this->assertEquals(1, count($result->messages));
