@@ -862,6 +862,22 @@ class Client
     }
 
     /**
+     * Ticket_DisplayTSMFareElement
+     *
+     * @param RequestOptions\TicketDisplayTsmFareElOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketDisplayTSMFareElement(
+        RequestOptions\TicketDisplayTsmFareElOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_DisplayTSMFareElement';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocIssuance_IssueTicket
      *
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options

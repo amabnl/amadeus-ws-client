@@ -1343,6 +1343,34 @@ Display a TSM-P in a PNR in context with tattoo 3:
         ])
     );
 
+----------------------------
+Ticket_DisplayTSMFareElement
+----------------------------
+
+Get the details of all fare elements associated to the TSM of tattoo 18:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketDisplayTsmFareElOptions;
+
+    $displayTsmpResult = $client->ticketDisplayTSMFareElement(
+        new TicketDisplayTsmFareElOptions([
+            'tattoo' => 18
+        ])
+    );
+
+Get details of the form of payment associated to TSM of tattoo 18:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketDisplayTsmFareElOptions;
+
+    $displayTsmpResult = $client->ticketDisplayTSMFareElement(
+        new TicketDisplayTsmFareElOptions([
+            'tattoo' => 18,
+            'type' => TicketDisplayTsmFareElOptions::TYPE_FORM_OF_PAYMENT
+        ])
+    );
 
 ***********
 DocIssuance

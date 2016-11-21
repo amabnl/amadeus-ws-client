@@ -1031,6 +1031,36 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("INVALID TST NUMBER", $result->messages[0]->text);
     }
 
+    public function testCanHandleTicketDisplayTSPErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketDisplayTsmpReplyErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_DisplayTSMP');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('09922', $result->messages[0]->code);
+        $this->assertEquals("CHECK TSM NUMBER", $result->messages[0]->text);
+    }
+
+    public function testCanHandleTicketDisplayTSMFareElementErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketDisplayTsmFareElementReplyErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_DisplayTSMFareElement');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('02085', $result->messages[0]->code);
+        $this->assertEquals("CHECK FARE ELEMENTS", $result->messages[0]->text);
+    }
+
     public function testCanHandleMiniRuleGetFromPricingRecErrResponse()
     {
         $respHandler = new ResponseHandler\Base();

@@ -1,0 +1,18 @@
+<Ticket_DisplayTSMFareElementReply xmlns="http://xml.amadeus.com/TFRERR_13_1_1A">
+    <errorWarningGroup>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>02085</errorCode>
+                <errorCategory>EC</errorCategory>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>1</textSubjectQualifier>
+                <source>M</source>
+                <encoding>3</encoding>
+            </freeTextDetails>
+            <freeText>CHECK FARE ELEMENTS</freeText>
+        </errorWarningDescription>
+    </errorWarningGroup>
+</Ticket_DisplayTSMFareElementReply>

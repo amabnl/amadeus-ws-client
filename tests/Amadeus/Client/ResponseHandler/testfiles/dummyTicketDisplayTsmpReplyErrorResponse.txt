@@ -1,0 +1,18 @@
+<Ticket_DisplayTSMPReply xmlns="http://xml.amadeus.com/TTSMRR_15_1_1A">
+    <errorWarningGroup>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>09922</errorCode>
+                <errorCategory>EC</errorCategory>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>1</textSubjectQualifier>
+                <source>M</source>
+                <encoding>3</encoding>
+            </freeTextDetails>
+            <freeText>CHECK TSM NUMBER</freeText>
+        </errorWarningDescription>
+    </errorWarningGroup>
+</Ticket_DisplayTSMPReply>
