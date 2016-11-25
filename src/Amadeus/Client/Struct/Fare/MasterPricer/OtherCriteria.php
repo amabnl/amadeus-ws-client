@@ -20,34 +20,42 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
-
-use \Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest as ServiceRequestOptions;
+namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * ServiceRequest
+ * OtherCriteria
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Fare\MasterPricer
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ServiceRequest
+class OtherCriteria
 {
-    /**
-     * @var Ssr
-     */
-    public $ssr;
+    const NAME_CHANGEABILITY = "CHG";
+    const NAME_DATE_RESTRICTIONS = "DAT";
+    const NAME_EXPANDED_PARAMETERS = "EXP";
+    const NAME_REFUNDABILITY = "REF";
 
     /**
-     * @var Ssrb[]
-     */
-    public $ssrb = [];
-
-    /**
-     * ServiceRequest constructor.
+     * self::NAME_*
      *
-     * @param ServiceRequestOptions|null $options
+     * @var string
      */
-    public function __construct(ServiceRequestOptions $options = null)
+    public $name;
+
+    /**
+     * @var string
+     */
+    public $value;
+
+    /**
+     * OtherCriteria constructor.
+     *
+     * @param string $value
+     * @param string $name self::NAME_*
+     */
+    public function __construct($value, $name)
     {
-        $this->ssr = new Ssr($options);
+        $this->name = $name;
+        $this->value = $value;
     }
 }

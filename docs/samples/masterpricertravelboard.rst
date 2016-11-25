@@ -2,6 +2,12 @@
 Fare_MasterPricerTravelBoardSearch examples
 ===========================================
 
+.. contents::
+
+
+Return flight, multiple passengers, date range
+==============================================
+
 Brussels - Madrid return flight with 2 adults and 1 child.
 Outbound flight 5 (or +/- 1 day) March 2017 at 10:00 (+/- 5 hours).
 Inbound flight 12 (or + 1 day) March 2017 at 18:00 (+/- 5 hours).
@@ -52,6 +58,8 @@ Maximum 30 recommendations:
         ]
     ]);
 
+One-way flight with flight types option
+=======================================
 
 Brussels - Lisbon one-way flight on 15 January 2017 - only direct & non-stop flights:
 
@@ -87,6 +95,8 @@ Note that the :code:`dateTime` property of the requested flight has the time par
         ]
     ]);
 
+Setting Mandatory Cabin class
+=============================
 
 London - New York return flight with mandatory Cabin class Business:
 
@@ -127,6 +137,9 @@ London - New York return flight with mandatory Cabin class Business:
         'cabinOption' => FareMasterPricerTbSearch::CABINOPT_MANDATORY
     ]);
 
+Preferred airlines
+==================
+
 Brussels - London with preferred airlines BA or SN:
 
 .. code-block:: php
@@ -161,6 +174,10 @@ Brussels - London with preferred airlines BA or SN:
     ]);
 
     $message = new MasterPricerTravelBoardSearch($opt);
+
+
+Multi-city & airline exclusion
+==============================
 
 Multi-city request: Brussels or Charleroi to Valencia or Alicante for 2 passengers - exclude airline Vueling:
 
@@ -202,6 +219,9 @@ Multi-city request: Brussels or Charleroi to Valencia or Alicante for 2 passenge
     $message = new MasterPricerTravelBoardSearch($opt);
 
 
+Ticketability pre-check
+=======================
+
 Do a ticketability pre-check on recommendations:
 
 .. code-block:: php
@@ -240,6 +260,10 @@ Do a ticketability pre-check on recommendations:
         'doTicketabilityPreCheck' => true
     ]);
 
+
+Specify arrival date & time
+===========================
+
 Paris to Seattle, *arrive* in Seattle on 13 June 2017 at 18:30 (+/- 6 hours)
 
 .. code-block:: php
@@ -271,6 +295,10 @@ Paris to Seattle, *arrive* in Seattle on 13 June 2017 at 18:30 (+/- 6 hours)
             ])
         ]
     ]);
+
+
+Fare types & corporate codes
+============================
 
 Simple flight, request published fares, unifares and corporate unifares (with a corporate number):
 
@@ -308,6 +336,10 @@ Simple flight, request published fares, unifares and corporate unifares (with a 
         'corporateCodesUnifares' => ['123456']
     ]);
 
+
+Price to beat option
+====================
+
 Simple flight, set "price to beat" at 500 EURO: Recommendations returned must be cheaper than 500 EURO.
 
 .. code-block:: php
@@ -339,3 +371,284 @@ Simple flight, set "price to beat" at 500 EURO: Recommendations returned must be
         'priceToBeat' => 500,
         'priceToBeatCurrency' => 'EUR',
     ]);
+
+Parametrized Fare Families
+==========================
+
+This example illustrates a Lowest Fare request including 6 parametrized fare families defined by many attributes sets, each attribute has many occurrences:
+
+* Itinerary: Round Trip : NCE-AMS
+* Date: 01OCT09 - 08OCT09
+* 1 ADT
+* 6 Fare Families
+
+1st Parameterized fare family:
+
+* name: FFAMILY1
+* ranking 10
+* not combinable (NCO)
+* Attributes Set 1:
+    * publishing carrier AF
+    * fare basis NAP30
+    * Public fare or Atp Nego fare
+
+2nd Parameterized fare family:
+
+* name: FFAMILY2
+* ranking 50
+* Attributes Set 1:
+    * publishing carriers AF or KL
+    * fare basis NCD or NRT or NRF or LCO or LCD
+
+3rd Parameterized fare family:
+
+* FFAMILY3
+* ranking 80
+* Attributes Set 1:
+    * publishing carrier AF
+    * Corporate Fares
+    * Cabin Y
+* Attributes Set 2:
+    * publishing carrier AF
+    * Non-Corporate Fares
+    * Cabin Y or C
+    * Expanded Parameter NAP (Fares with no advance purchase)
+    * Expanded Parameter NPE (Fares with no penalty)
+* Attributes Set 3:
+    * publishing carrier KL
+    * Cabin M, W, C
+
+4th Parameterized fare family:
+
+* FFAMILY4
+* ranking 60
+* Attributes Set 1:
+    * publishing carrier AF
+    * fare basis NCD
+* Attributes Set 2:
+    * publishing carriers AF,KL
+    * fare basis NRT
+* Attributes Set 3:
+    * publishing carrier KL
+    * any fare basis including JUNIOR
+
+5th Parameterized fare family:
+
+* name: FFAMILY5
+* ranking 100
+* Attributes Set 1:
+    * Booking code L, M, N, O, P, Q, R, S, T or U
+
+6th Parameterized fare family:
+
+* OTHERS
+* Ranking 0
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptionsFare\MPPassenger;
+    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
+    use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFCriteria;
+    use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFOtherCriteria;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedResults' => 200,
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'NCE']),
+                'arrivalLocation' => new MPLocation(['city' => 'AMS']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2009-10-01T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ]),
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'AMS']),
+                'arrivalLocation' => new MPLocation(['city' => 'NCE']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2009-10-08T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ])
+        ],
+        'flightOptions' => [
+            FareMasterPricerTbSearch::FLIGHTOPT_PUBLISHED,
+            FareMasterPricerTbSearch::FLIGHTOPT_UNIFARES,
+            FareMasterPricerTbSearch::FLIGHTOPT_CORPORATE_UNIFARES,
+        ],
+        'corporateCodesUnifares' => ['000001'],
+        'fareFamilies' => [
+            new MPFareFamily([
+                'name' => 'FFAMILY1',
+                'ranking' => 10,
+                'criteria' => new FFCriteria([
+                    'combinable' => false,
+                    'carriers' => ['AF'],
+                    'fareBasis' => ['NAP30'],
+                    'fareType' => ['RP', 'RA']
+                ])
+            ]),
+            new MPFareFamily([
+                'name' => 'FFAMILY2',
+                'ranking' => 50,
+                'criteria' => new FFCriteria([
+                    'carriers' => ['AF', 'KL'],
+                    'fareBasis' => ['NCD', 'NRT', 'NRF', 'LCO', 'LCD']
+                ])
+            ]),
+            new MPFareFamily([
+                'name' => 'FFAMILY3',
+                'ranking' => 80,
+                'criteria' => new FFCriteria([
+                    'carriers' => ['AF'],
+                    'corporateCodes' => ['CORP'],
+                    'cabins' => ['Y']
+                ]),
+                'otherCriteria' => [
+                    new FFOtherCriteria([
+                        'criteria' => new FFCriteria([
+                            'carriers' => ['AF'],
+                            'corporateCodes' => ['NONCORP'],
+                            'cabins' => ['Y', 'C'],
+                            'expandedParameters' => ['NAP', 'NPE']
+                        ])
+                    ]),
+                    new FFOtherCriteria([
+                        'criteria' => new FFCriteria([
+                            'carriers' => ['KL'],
+                            'cabins' => ['M', 'W', 'C']
+                        ])
+                    ])
+                ]
+            ]),
+            new MPFareFamily([
+                'name' => 'FFAMILY4',
+                'ranking' => 60,
+                'criteria' => new FFCriteria([
+                    'carriers' => ['AF'],
+                    'fareBasis' => ['NCD']
+                ]),
+                'otherCriteria' => [
+                    new FFOtherCriteria([
+                        'criteria' => new FFCriteria([
+                            'carriers' => ['AF', 'KL'],
+                            'fareBasis' => ['NRT']
+                        ])
+                    ]),
+                    new FFOtherCriteria([
+                        'criteria' => new FFCriteria([
+                            'carriers' => ['KL'],
+                            'fareBasis' => ['-JUNIOR']
+                        ])
+                    ])
+                ]
+            ]),
+            new MPFareFamily([
+                'name' => 'FFAMILY5',
+                'ranking' => 100,
+                'criteria' => new FFCriteria([
+                    'bookingCode' => ['L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U']
+                ])
+            ]),
+            new MPFareFamily([
+                'name' => 'OTHERS',
+                'ranking' => '0'
+            ])
+        ]
+    ]);
+
+
+Parametrized Fare Families - Alternate price
+============================================
+
+Example of Fare Families with Alternate Price option:
+
+This functionality allows to return for each recommendations belonging to the eligible fare family,
+the cheapest available alternate recommendation for the exact same journey and cabin.
+
+The query illustrates two fare families:
+
+Fare Family Eligible:
+
+* name: FF1
+* ranking: 20
+* flag: alternatePrice
+* Attributes:
+    * Corporate Codes: NET and PKG
+
+Alternate Fare Family:
+
+* name: FF2
+* ranking: 10
+* flag: alternatePrice
+* Attributes:
+    * Fare Type Published(RP) or Private(RV)
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptionsFare\MPPassenger;
+    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
+    use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFCriteria;
+    use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFOtherCriteria;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'LAX']),
+                'arrivalLocation' => new MPLocation(['city' => 'SYD']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2015-02-17T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ]),
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'SYD']),
+                'arrivalLocation' => new MPLocation(['city' => 'LAX']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2015-02-28T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ])
+        ],
+        'flightOptions' => [
+            FareMasterPricerTbSearch::FLIGHTOPT_PUBLISHED,
+            FareMasterPricerTbSearch::FLIGHTOPT_UNIFARES
+        ],
+        'fareFamilies' => [
+            new MPFareFamily([
+                'name' => 'FF1',
+                'ranking' => '20',
+                'criteria' => new FFCriteria([
+                    'alternatePrice' => true,
+                    'corporateNames' => ['NET', 'PKG']
+                ])
+            ]),
+            new MPFareFamily([
+                'name' => 'FF2',
+                'ranking' => '10',
+                'criteria' => new FFCriteria([
+                    'alternatePrice' => true,
+                    'fareType' => ['RV', 'RP']
+                ])
+            ])
+        ]
+    ]);
+

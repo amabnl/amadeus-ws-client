@@ -20,34 +20,24 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Test\Amadeus\Client\Struct\Fare\MasterPricer;
 
-use \Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest as ServiceRequestOptions;
+use Amadeus\Client\Struct\Fare\MasterPricer\DateTimeDetails;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * ServiceRequest
+ * DateTimeDetailsTest
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Test\Amadeus\Client\Struct\Fare\MasterPricer
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ServiceRequest
+class DateTimeDetailsTest extends BaseTestCase
 {
-    /**
-     * @var Ssr
-     */
-    public $ssr;
-
-    /**
-     * @var Ssrb[]
-     */
-    public $ssrb = [];
-
-    /**
-     * ServiceRequest constructor.
-     *
-     * @param ServiceRequestOptions|null $options
-     */
-    public function __construct(ServiceRequestOptions $options = null)
+    public function testCanCreate()
     {
-        $this->ssr = new Ssr($options);
+        $obj = new DateTimeDetails('250516');
+
+        $this->assertEquals('250516', $obj->date);
+        $this->assertNull($obj->otherDate);
     }
 }

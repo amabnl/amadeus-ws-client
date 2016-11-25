@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
+use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\Fare\MPPassenger;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
@@ -180,6 +181,8 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
                 $options->priceToBeatCurrency
             );
         }
+
+        $this->loadFareFamilies($options->fareFamilies);
     }
 
     /**
@@ -251,6 +254,16 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
                 $options->nrOfRequestedPassengers,
                 $options->nrOfRequestedResults
             );
+        }
+    }
+
+    /**
+     * @param MPFareFamily[] $fareFamilies
+     */
+    protected function loadFareFamilies($fareFamilies)
+    {
+        foreach ($fareFamilies as $fareFamily) {
+            $this->fareFamilies[] = new MasterPricer\FareFamilies($fareFamily);
         }
     }
 }

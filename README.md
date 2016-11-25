@@ -18,10 +18,10 @@ This library makes it much easier for developers to integrate content from the A
 
 - Session management - setting the correct SOAP headers both for Soap Header 2 and 4.
 - Supports all features of Soap Header 4 such as Stateful and Stateless messages.
-- Building the correct request message based on the provided options
-- Handling exceptions and checking for error messages in the response
-- Dealing with different versions of messages
-- Dealing with multiple WSDL files in a WSAP
+- Building the correct request message based on the provided options: the library tries to simplify overly complex request structures where possible.
+- Handling exceptions and checking for error messages in the response.
+- Dealing with different versions of messages.
+- Dealing with multiple WSDL files in a WSAP.
 
 # Requirements
 

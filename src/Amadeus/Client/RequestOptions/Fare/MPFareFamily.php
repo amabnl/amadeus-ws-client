@@ -20,34 +20,43 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\RequestOptions\Fare;
 
-use \Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest as ServiceRequestOptions;
+use Amadeus\Client\LoadParamsFromArray;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFCriteria;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFOtherCriteria;
 
 /**
- * ServiceRequest
+ * MasterPricer Fare Family request options.
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\RequestOptions\Fare
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ServiceRequest
+class MPFareFamily extends LoadParamsFromArray
 {
     /**
-     * @var Ssr
-     */
-    public $ssr;
-
-    /**
-     * @var Ssrb[]
-     */
-    public $ssrb = [];
-
-    /**
-     * ServiceRequest constructor.
+     * Fare Family Short name
      *
-     * @param ServiceRequestOptions|null $options
+     * @var string
      */
-    public function __construct(ServiceRequestOptions $options = null)
-    {
-        $this->ssr = new Ssr($options);
-    }
+    public $name;
+
+    /**
+     * Fare Family ranking (hierarchy)
+     *
+     * @var int
+     */
+    public $ranking;
+
+    /**
+     * Criteria
+     *
+     * @var FFCriteria
+     */
+    public $criteria;
+
+    /**
+     * @var FFOtherCriteria[]
+     */
+    public $otherCriteria = [];
 }

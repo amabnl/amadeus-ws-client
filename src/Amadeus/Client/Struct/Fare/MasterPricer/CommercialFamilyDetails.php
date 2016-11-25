@@ -20,34 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
-
-use \Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest as ServiceRequestOptions;
+namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * ServiceRequest
+ * CommercialFamilyDetails
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Fare\MasterPricer
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ServiceRequest
+class CommercialFamilyDetails
 {
     /**
-     * @var Ssr
+     * @var string
      */
-    public $ssr;
+    public $commercialFamily;
 
     /**
-     * @var Ssrb[]
-     */
-    public $ssrb = [];
-
-    /**
-     * ServiceRequest constructor.
+     * CommercialFamilyDetails constructor.
      *
-     * @param ServiceRequestOptions|null $options
+     * @param string $commercialFamily
      */
-    public function __construct(ServiceRequestOptions $options = null)
+    public function __construct($commercialFamily)
     {
-        $this->ssr = new Ssr($options);
+        $this->commercialFamily = $commercialFamily;
     }
 }

@@ -20,34 +20,32 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
-
-use \Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest as ServiceRequestOptions;
+namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * ServiceRequest
+ * BooleanExpression
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Fare\MasterPricer
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ServiceRequest
+class BooleanExpression
 {
-    /**
-     * @var Ssr
-     */
-    public $ssr;
+    const CODE_OR_OPERATOR = "OR";
 
     /**
-     * @var Ssrb[]
-     */
-    public $ssrb = [];
-
-    /**
-     * ServiceRequest constructor.
+     * self::CODE_*
      *
-     * @param ServiceRequestOptions|null $options
+     * @var string
      */
-    public function __construct(ServiceRequestOptions $options = null)
+    public $codeOperator;
+
+    /**
+     * BooleanExpression constructor.
+     *
+     * @param string $codeOperator self::CODE_*
+     */
+    public function __construct($codeOperator)
     {
-        $this->ssr = new Ssr($options);
+        $this->codeOperator = $codeOperator;
     }
 }

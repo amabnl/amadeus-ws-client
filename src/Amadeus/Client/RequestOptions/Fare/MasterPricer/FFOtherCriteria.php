@@ -20,34 +20,29 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\RequestOptions\Fare\MasterPricer;
 
-use \Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest as ServiceRequestOptions;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * ServiceRequest
+ * FFOtherCriteria
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\RequestOptions\Fare\MasterPricer
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ServiceRequest
+class FFOtherCriteria extends LoadParamsFromArray
 {
-    /**
-     * @var Ssr
-     */
-    public $ssr;
+    const OPERATOR_OR = "OR";
 
     /**
-     * @var Ssrb[]
-     */
-    public $ssrb = [];
-
-    /**
-     * ServiceRequest constructor.
+     * self::OPERATOR_*
      *
-     * @param ServiceRequestOptions|null $options
+     * @var string
      */
-    public function __construct(ServiceRequestOptions $options = null)
-    {
-        $this->ssr = new Ssr($options);
-    }
+    public $logicalOperator = self::OPERATOR_OR;
+
+    /**
+     * @var FFCriteria
+     */
+    public $criteria;
 }

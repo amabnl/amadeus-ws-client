@@ -20,34 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
-
-use \Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest as ServiceRequestOptions;
+namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * ServiceRequest
+ * CorporateInfo
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Fare\MasterPricer
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ServiceRequest
+class CorporateInfo
 {
     /**
-     * @var Ssr
+     * @var string
      */
-    public $ssr;
+    public $corporateNumberIdentifier;
 
     /**
-     * @var Ssrb[]
+     * @var string
      */
-    public $ssrb = [];
+    public $corporateName;
 
     /**
-     * ServiceRequest constructor.
+     * CorporateInfo constructor.
      *
-     * @param ServiceRequestOptions|null $options
+     * @param string|null $corporateNumberIdentifier
+     * @param string|null $corporateName
      */
-    public function __construct(ServiceRequestOptions $options = null)
+    public function __construct($corporateNumberIdentifier = null, $corporateName = null)
     {
-        $this->ssr = new Ssr($options);
+        $this->corporateNumberIdentifier = $corporateNumberIdentifier;
+        $this->corporateName = $corporateName;
     }
 }

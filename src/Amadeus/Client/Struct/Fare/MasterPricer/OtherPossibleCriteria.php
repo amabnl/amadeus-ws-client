@@ -20,34 +20,41 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
-use \Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest as ServiceRequestOptions;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFOtherCriteria;
 
 /**
- * ServiceRequest
+ * OtherPossibleCriteria
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Fare\MasterPricer
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ServiceRequest
+class OtherPossibleCriteria
 {
     /**
-     * @var Ssr
+     * @var LogicalLink
      */
-    public $ssr;
+    public $logicalLink;
 
     /**
-     * @var Ssrb[]
+     * @var FamilyCriteria
      */
-    public $ssrb = [];
+    public $familyCriteria;
 
     /**
-     * ServiceRequest constructor.
+     * @var FareFamilySegment[]
+     */
+    public $fareFamilySegment = [];
+
+    /**
+     * OtherPossibleCriteria constructor.
      *
-     * @param ServiceRequestOptions|null $options
+     * @param FFOtherCriteria $otherCriteria
      */
-    public function __construct(ServiceRequestOptions $options = null)
+    public function __construct(FFOtherCriteria $otherCriteria)
     {
-        $this->ssr = new Ssr($options);
+        $this->logicalLink = new LogicalLink($otherCriteria->logicalOperator);
+        $this->familyCriteria = new FamilyCriteria($otherCriteria->criteria);
     }
 }

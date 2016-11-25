@@ -20,34 +20,39 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
-
-use \Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest as ServiceRequestOptions;
+namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * ServiceRequest
+ * ReferencingDetail
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Fare\MasterPricer
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ServiceRequest
+class ReferencingDetail
 {
-    /**
-     * @var Ssr
-     */
-    public $ssr;
+    const QUAL_SEGMENT_REFERENCE = "S";
 
     /**
-     * @var Ssrb[]
-     */
-    public $ssrb = [];
-
-    /**
-     * ServiceRequest constructor.
+     * self::QUAL_*
      *
-     * @param ServiceRequestOptions|null $options
+     * @var string
      */
-    public function __construct(ServiceRequestOptions $options = null)
+    public $refQualifier = self::QUAL_SEGMENT_REFERENCE;
+
+    /**
+     * @var int
+     */
+    public $refNumber;
+
+    /**
+     * ReferencingDetail constructor.
+     *
+     * @param int $refNumber self::QUAL_*
+     * @param string $refQualifier
+     */
+    public function __construct($refNumber, $refQualifier = self::QUAL_SEGMENT_REFERENCE)
     {
-        $this->ssr = new Ssr($options);
+        $this->refQualifier = $refQualifier;
+        $this->refNumber = $refNumber;
     }
 }

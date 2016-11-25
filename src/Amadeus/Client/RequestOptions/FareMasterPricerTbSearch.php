@@ -186,4 +186,9 @@ class FareMasterPricerTbSearch extends Base
      * @var string|null
      */
     public $priceToBeatCurrency;
+
+    /**
+     * @var Fare\MPFareFamily[]
+     */
+    public $fareFamilies = [];
 }

@@ -22,55 +22,45 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFCriteria;
-use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
-
 /**
- * FareFamilies
+ * FareProductDetail
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FareFamilies
+class FareProductDetail
 {
-    /**
-     * @var FamilyInformation
-     */
-    public $familyInformation;
+    const TYPE_ATPCO_NEGO_FARES_CAT35 = "RA";
+    const TYPE_DDF_BASED_ON_PUBLIC_FARES = "RD";
+    const TYPE_DDF_BASED_ON_PRIVATE_FARES = "RDV";
+    const TYPE_AMADEUS_NEGO_FARES = "RN";
+    const TYPE_PUBLISHED_FARES = "RP";
+    const TYPE_UNIFARES = "RU";
+    const TYPE_ATPCO_PRIVATE_FARES_CAT15 = "RV";
 
     /**
-     * @var FamilyCriteria
+     * @var string
      */
-    public $familyCriteria;
+    public $fareBasis;
 
     /**
-     * @var FareFamilySegment[]
-     */
-    public $fareFamilySegment = [];
-
-    /**
-     * @var OtherPossibleCriteria[]
-     */
-    public $otherPossibleCriteria = [];
-
-    /**
-     * FareFamilies constructor.
+     * self::TYPE_*
      *
-     * @param MPFareFamily $family
+     * @var string[]
      */
-    public function __construct(MPFareFamily $family)
+    public $fareType = [];
+
+    /**
+     * FareProductDetail constructor.
+     *
+     * @param string|null $fareBasis
+     * @param string|null $fareType
+     */
+    public function __construct($fareBasis = null, $fareType = null)
     {
-        $this->familyInformation = new FamilyInformation(
-            $family->name,
-            $family->ranking
-        );
-
-        if ($family->criteria instanceof FFCriteria) {
-            $this->familyCriteria = new FamilyCriteria($family->criteria);
-        }
-
-        foreach ($family->otherCriteria as $otherCriteria) {
-            $this->otherPossibleCriteria[] = new OtherPossibleCriteria($otherCriteria);
+        $this->fareBasis = $fareBasis;
+        if (!is_null($fareType)) {
+            $this->fareType[] = $fareType;
         }
     }
 }
