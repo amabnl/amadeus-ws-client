@@ -750,7 +750,10 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
                         'combinable' => false,
                         'carriers' => ['AF'],
                         'fareBasis' => ['NAP30'],
-                        'fareType' => ['RP', 'RA']
+                        'fareType' => [
+                            FFCriteria::FARETYPE_PUBLISHED_FARES,
+                            FFCriteria::FARETYPE_ATPCO_NEGO_FARES_CAT35
+                        ]
                     ])
                 ]),
                 new MPFareFamily([
@@ -989,7 +992,10 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
                     'ranking' => '10',
                     'criteria' => new FFCriteria([
                         'alternatePrice' => true,
-                        'fareType' => ['RV', 'RP']
+                        'fareType' => [
+                            FFCriteria::FARETYPE_ATPCO_PRIVATE_FARES_CAT15,
+                            FFCriteria::FARETYPE_PUBLISHED_FARES
+                        ]
                     ])
                 ])
             ]

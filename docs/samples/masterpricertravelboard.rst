@@ -494,7 +494,10 @@ This example illustrates a Lowest Fare request including 6 parametrized fare fam
                     'combinable' => false,
                     'carriers' => ['AF'],
                     'fareBasis' => ['NAP30'],
-                    'fareType' => ['RP', 'RA']
+                    'fareType' => [
+                        FFCriteria::FARETYPE_PUBLISHED_FARES,
+                        FFCriteria::FARETYPE_ATPCO_NEGO_FARES_CAT35
+                    ]
                 ])
             ]),
             new MPFareFamily([
@@ -646,7 +649,10 @@ Alternate Fare Family:
                 'ranking' => '10',
                 'criteria' => new FFCriteria([
                     'alternatePrice' => true,
-                    'fareType' => ['RV', 'RP']
+                    'fareType' => [
+                        FFCriteria::FARETYPE_ATPCO_PRIVATE_FARES_CAT15,
+                        FFCriteria::FARETYPE_PUBLISHED_FARES
+                    ]
                 ])
             ])
         ]
