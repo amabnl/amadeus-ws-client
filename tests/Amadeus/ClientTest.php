@@ -3283,7 +3283,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
         $mockedSendResult = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml = 'dummydocissuanceissueticketresponse';
+        $mockedSendResult->responseXml = 'dummydocissuanceissuemiscdocresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
 
@@ -3327,6 +3327,71 @@ class ClientTest extends BaseTestCase
         $response = $client->docIssuanceIssueMiscellaneousDocuments(
             new Client\RequestOptions\DocIssuanceIssueMiscDocOptions([
                 'options' => [Client\RequestOptions\DocIssuanceIssueMiscDocOptions::OPTION_EMD_ISSUANCE]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendDocIssuanceIssueCombined()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummydocissuanceissuecombinedresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\DocIssuance\IssueCombined(
+            new Client\RequestOptions\DocIssuanceIssueCombinedOptions([
+                'options' => [
+                    new Client\RequestOptions\DocIssuance\Option([
+                        'indicator' => Client\RequestOptions\DocIssuance\Option::INDICATOR_DOCUMENT_RECEIPT,
+                        'subCompoundType' => 'EMPRA'
+                    ])
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('DocIssuance_IssueCombined', $expectedMessageResult, ['endSession' => false])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['DocIssuance_IssueCombined' => "15.1"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'DocIssuance_IssueCombined')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->docIssuanceIssueCombined(
+            new Client\RequestOptions\DocIssuanceIssueCombinedOptions([
+                'options' => [
+                    new Client\RequestOptions\DocIssuance\Option([
+                        'indicator' => Client\RequestOptions\DocIssuance\Option::INDICATOR_DOCUMENT_RECEIPT,
+                        'subCompoundType' => 'EMPRA'
+                    ])
+                ]
             ])
         );
 

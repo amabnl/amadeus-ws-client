@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\RequestOptions;
 
+use Amadeus\Client\RequestOptions\DocIssuance\Option;
 use Amadeus\Client\RequestOptions\DocIssuance\CompoundOption;
 
 /**
@@ -48,7 +49,7 @@ class DocIssuanceIssueTicketOptions extends Base
     /**
      * The Ticket Issuance options to be triggered
      *
-     * self::OPTION::*
+     * self::OPTION::* or an array of Option objects
      *
      * CCC Concealed Credit Card
      * CCO Credit Card Override
@@ -92,7 +93,7 @@ class DocIssuanceIssueTicketOptions extends Base
      *
      * TTP/<OPTION>
      *
-     * @var string[]
+     * @var string[]|Option[]
      */
     public $options = [];
 

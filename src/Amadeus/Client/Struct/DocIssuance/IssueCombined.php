@@ -22,46 +22,23 @@
 
 namespace Amadeus\Client\Struct\DocIssuance;
 
-use Amadeus\Client\RequestOptions\DocIssuance\Option;
+use Amadeus\Client\RequestOptions\DocIssuanceIssueCombinedOptions;
 
 /**
- * OptionGroup
+ * DocIssuance_IssueCombined Request structure
  *
  * @package Amadeus\Client\Struct\DocIssuance
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class OptionGroup
+class IssueCombined extends IssueTicket
 {
     /**
-     * @var Switches
-     */
-    public $switches;
-
-    /**
-     * @var SubCompoundOptions[]
-     */
-    public $subCompoundOptions = [];
-
-    /**
-     * @var OverrideAlternativeDate
-     */
-    public $overrideAlternativeDate;
-
-    /**
-     * OptionGroup constructor.
+     * IssueCombined constructor.
      *
-     * @param string|Option $option
+     * @param DocIssuanceIssueCombinedOptions $options
      */
-    public function __construct($option)
+    public function __construct(DocIssuanceIssueCombinedOptions $options)
     {
-        if ($option instanceof Option) {
-            $this->switches = new Switches($option->indicator);
-            $this->subCompoundOptions[] = new SubCompoundOptions(
-                $option->subCompoundType,
-                $option->subCompoundDescription
-            );
-        } else {
-            $this->switches = new Switches($option);
-        }
+        parent::__construct($options);
     }
 }

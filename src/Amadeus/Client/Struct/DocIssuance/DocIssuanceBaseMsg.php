@@ -23,6 +23,7 @@
 namespace Amadeus\Client\Struct\DocIssuance;
 
 use Amadeus\Client\RequestOptions\DocIssuance\CompoundOption;
+use Amadeus\Client\RequestOptions\DocIssuance\Option;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
@@ -67,7 +68,7 @@ class DocIssuanceBaseMsg extends BaseWsMessage
 
 
     /**
-     * @param string[] $options
+     * @param string[]|Option[] $options
      * @param CompoundOption[] $compoundOptions
      */
     protected function loadOptions($options, $compoundOptions)

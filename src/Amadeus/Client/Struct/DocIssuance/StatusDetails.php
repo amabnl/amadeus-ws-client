@@ -46,6 +46,8 @@ class StatusDetails
     const OPTION_EXTENDED_INVOICE = "INE";
     const OPTION_EXTENDED_INVOICE_ALL_PAX = "INJ";
 
+    const OPTION_DOCUMENT_RECEIPT = "TRP";
+
     /**
      * CCC Concealed Credit Card
      * CCO Credit Card Override

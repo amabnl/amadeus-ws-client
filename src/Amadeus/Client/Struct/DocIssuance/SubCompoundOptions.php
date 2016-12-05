@@ -22,46 +22,27 @@
 
 namespace Amadeus\Client\Struct\DocIssuance;
 
-use Amadeus\Client\RequestOptions\DocIssuance\Option;
-
 /**
- * OptionGroup
+ * SubCompoundOptions
  *
  * @package Amadeus\Client\Struct\DocIssuance
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class OptionGroup
+class SubCompoundOptions
 {
     /**
-     * @var Switches
+     * @var CriteriaDetails
      */
-    public $switches;
+    public $criteriaDetails;
 
     /**
-     * @var SubCompoundOptions[]
-     */
-    public $subCompoundOptions = [];
-
-    /**
-     * @var OverrideAlternativeDate
-     */
-    public $overrideAlternativeDate;
-
-    /**
-     * OptionGroup constructor.
+     * SubCompoundOptions constructor.
      *
-     * @param string|Option $option
+     * @param string $attributeType
+     * @param string|null $attributeDescription
      */
-    public function __construct($option)
+    public function __construct($attributeType, $attributeDescription = null)
     {
-        if ($option instanceof Option) {
-            $this->switches = new Switches($option->indicator);
-            $this->subCompoundOptions[] = new SubCompoundOptions(
-                $option->subCompoundType,
-                $option->subCompoundDescription
-            );
-        } else {
-            $this->switches = new Switches($option);
-        }
+        $this->criteriaDetails = new CriteriaDetails($attributeType, $attributeDescription);
     }
 }

@@ -20,42 +20,26 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\ResponseHandler\DocIssuance;
+
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * DateTime
+ * HandlerIssueCombined
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\ResponseHandler\DocIssuance
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DateTime
+class HandlerIssueCombined extends StandardResponseHandler
 {
     /**
-     * @var string
+     * @param SendResult $response
+     * @return Result
      */
-    public $year;
-
-    /**
-     * @var string
-     */
-    public $month;
-
-    /**
-     * @var string
-     */
-    public $day;
-
-    /**
-     * PricePnr13 DateTime constructor.
-     *
-     * @param \DateTime|null $date
-     */
-    public function __construct($date)
+    public function analyze(SendResult $response)
     {
-        if ($date instanceof \DateTime) {
-            $this->year = $date->format('Y');
-            $this->month = $date->format('m');
-            $this->day = $date->format('d');
-        }
+        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
     }
 }

@@ -20,42 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * DateTime
+ * DocIssuance_IssueCombined Request options
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DateTime
+class DocIssuanceIssueCombinedOptions extends DocIssuanceIssueTicketOptions
 {
-    /**
-     * @var string
-     */
-    public $year;
-
-    /**
-     * @var string
-     */
-    public $month;
-
-    /**
-     * @var string
-     */
-    public $day;
-
-    /**
-     * PricePnr13 DateTime constructor.
-     *
-     * @param \DateTime|null $date
-     */
-    public function __construct($date)
-    {
-        if ($date instanceof \DateTime) {
-            $this->year = $date->format('Y');
-            $this->month = $date->format('m');
-            $this->day = $date->format('d');
-        }
-    }
 }

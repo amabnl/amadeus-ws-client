@@ -910,6 +910,22 @@ class Client
     }
 
     /**
+     * DocIssuance_IssueCombined
+     *
+     * @param RequestOptions\DocIssuanceIssueCombinedOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function docIssuanceIssueCombined(
+        RequestOptions\DocIssuanceIssueCombinedOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'DocIssuance_IssueCombined';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * PriceXplorer_ExtremeSearch
      *
      * @param RequestOptions\PriceXplorerExtremeSearchOptions $options

@@ -22,46 +22,26 @@
 
 namespace Amadeus\Client\Struct\DocIssuance;
 
-use Amadeus\Client\RequestOptions\DocIssuance\Option;
-
 /**
- * OptionGroup
+ * OverrideAlternativeDate
  *
  * @package Amadeus\Client\Struct\DocIssuance
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class OptionGroup
+class OverrideAlternativeDate
 {
-    /**
-     * @var Switches
-     */
-    public $switches;
+    const TYPE_ALTERNATE_DATE_VALIDATION = "ADV";
+    const TYPE_OVERRIDE_PAST_DATE_TST = "OPD";
 
     /**
-     * @var SubCompoundOptions[]
-     */
-    public $subCompoundOptions = [];
-
-    /**
-     * @var OverrideAlternativeDate
-     */
-    public $overrideAlternativeDate;
-
-    /**
-     * OptionGroup constructor.
+     * self::TYPE_*
      *
-     * @param string|Option $option
+     * @var string
      */
-    public function __construct($option)
-    {
-        if ($option instanceof Option) {
-            $this->switches = new Switches($option->indicator);
-            $this->subCompoundOptions[] = new SubCompoundOptions(
-                $option->subCompoundType,
-                $option->subCompoundDescription
-            );
-        } else {
-            $this->switches = new Switches($option);
-        }
-    }
+    public $businessSemantic;
+
+    /**
+     * @var DocIssuanceDateTime
+     */
+    public $dateTime;
 }

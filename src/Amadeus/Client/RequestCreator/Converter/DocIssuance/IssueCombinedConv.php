@@ -20,42 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\RequestCreator\Converter\DocIssuance;
+
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\DocIssuanceIssueCombinedOptions;
+use Amadeus\Client\Struct;
 
 /**
- * DateTime
+ * DocIssuance_IssueCombined Request converter
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\RequestCreator\Converter\DocIssuance
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DateTime
+class IssueCombinedConv extends BaseConverter
 {
     /**
-     * @var string
+     * @param DocIssuanceIssueCombinedOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\DocIssuance\IssueCombined
      */
-    public $year;
-
-    /**
-     * @var string
-     */
-    public $month;
-
-    /**
-     * @var string
-     */
-    public $day;
-
-    /**
-     * PricePnr13 DateTime constructor.
-     *
-     * @param \DateTime|null $date
-     */
-    public function __construct($date)
+    public function convert($requestOptions, $version)
     {
-        if ($date instanceof \DateTime) {
-            $this->year = $date->format('Y');
-            $this->month = $date->format('m');
-            $this->day = $date->format('d');
-        }
+        return new Struct\DocIssuance\IssueCombined($requestOptions);
     }
 }

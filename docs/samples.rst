@@ -1431,6 +1431,25 @@ Issue e-Ticket with Consolidator Method:
         ])
     );
 
+Template Override (cryptic equivalent TTP/*CO.....).:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
+    use Amadeus\Client\RequestOptions\DocIssuance\Option;
+
+    $issueDocResponse = $client->docIssuanceIssueTicket(
+        new DocIssuanceIssueTicketOptions([
+            'options' => [
+                new Option([
+                    'indicator' => Option::INDICATOR_TEMPLATE_OVERRIDE,
+                    'subCompoundType' => 'ITJTAF0FRLEBUSEXT01A'
+                ])
+            ]
+        ])
+    );
+
+
 ---------------------------------------
 DocIssuance_IssueMiscellaneousDocuments
 ---------------------------------------
@@ -1504,6 +1523,44 @@ Specify specific passengers for which to issue the EMD's:
     $issueDocResponse = $client->docIssuanceIssueMiscellaneousDocuments(
         new DocIssuanceIssueMiscDocOptions([
             'passengerTattoos' => [3, 4]
+        ])
+    );
+
+-------------------------
+DocIssuance_IssueCombined
+-------------------------
+
+**In general, the ``DocIssuance_IssueCombined`` message has the same options as the ``DocIssuance_IssueTicket`` message.**
+
+Issue ticket for an entire PNR as e-Ticket (TTP/TTM/ET):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueCombinedOptions;
+
+    $issueTicketResponse = $client->docIssuanceIssueCombined(
+        new DocIssuanceIssueCombinedOptions([
+            'options' => [
+                DocIssuanceIssueCombinedOptions::OPTION_ETICKET
+            ]
+        ])
+    );
+
+Document Receipts option (TTP/TTM/TRP):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueCombinedOptions;
+    use Amadeus\Client\RequestOptions\DocIssuance\Option;
+
+    $issueDocResponse = $client->docIssuanceIssueCombined(
+        new DocIssuanceIssueCombinedOptions([
+            'options' => [
+                new Option([
+                    'indicator' => Option::INDICATOR_DOCUMENT_RECEIPT,
+                    'subCompoundType' => 'EMPRA'
+                ])
+            ]
         ])
     );
 

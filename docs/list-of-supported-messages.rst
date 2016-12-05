@@ -37,9 +37,10 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_DisplayTSMP
 - Ticket_DeleteTST
 - Ticket_DeleteTSMP
-- Ticket_CreateTSMFareElement
+- Ticket_DisplayTSMFareElement
 - DocIssuance_IssueTicket
 - DocIssuance_IssueMiscellaneousDocuments
+- DocIssuance_IssueCombined
 - Service_IntegratedPricing
 - Offer_CreateOffer
 - Offer_VerifyOffer
@@ -79,7 +80,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Service_IntegratedCatalogue
 - Service_PriceServiceViaCatalogue
 - Service_PriceIntegratedMode
-- DocIssuance_IssueCombined
 - Hotel_MultiSingleAvailability
 - Hotel_DescriptiveInfo
 - Hotel_EnhancedPricing
