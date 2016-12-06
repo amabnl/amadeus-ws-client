@@ -153,7 +153,8 @@ sometimes a string containing the XML document of the SOAP-BODY is more useful.
 For example, when trying to extract specific information from a PNR, it can be useful to load the
 PNR_Reply as a ``\DOMDocument`` and query it using a ``\DOMXPath`` object: for this, you can use the ``Amadeus\Client\Result::responseXml`` from the result object.
 
-**Disabling XML as string in Result:**
+Disabling XML as string in Result
+=================================
 
 When working with large messages, it may be preferred to not return the XML as string in the ``responseXml`` property of the Result: This behaviour can be disabled or enabled with a parameter in the Client's parameterset (``Amadeus\Client\Params``):
 
