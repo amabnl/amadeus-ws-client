@@ -20,27 +20,37 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Queue;
+namespace Amadeus\Client\Struct\Queue;
 
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\QueueListOptions;
-use Amadeus\Client\Struct;
+use Amadeus\Client\Struct\Fare\PricePnr13\DateTime;
 
 /**
- * Queue_List Request converter
+ * Dates
  *
- * @package Amadeus\Client\RequestCreator\Converter\Queue
+ * @package Amadeus\Client\Struct\Queue
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ListConv extends BaseConverter
+class Dates
 {
     /**
-     * @param QueueListOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Queue\QueueList
+     * @var DateTime
      */
-    public function convert($requestOptions, $version)
+    public $beginDateTime;
+
+    /**
+     * @var DateTime
+     */
+    public $endDateTime;
+
+    /**
+     * Dates constructor.
+     *
+     * @param \DateTime $start
+     * @param \DateTime $end
+     */
+    public function __construct(\DateTime $start, \DateTime $end)
     {
-        return new Struct\Queue\QueueList($requestOptions);
+        $this->beginDateTime = new DateTime($start);
+        $this->endDateTime = new DateTime($end);
     }
 }

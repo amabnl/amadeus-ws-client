@@ -392,6 +392,90 @@ Get a list of all PNR's on a given queue:
         ])
     );
 
+Get a list of all PNR's on a given queue on a different office:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\QueueListOptions;
+    use Amadeus\Client\RequestOptions\Queue;
+
+    $queueContent = $client->queueList(
+        new QueueListOptions([
+            'queue' => new Queue([
+                'queue' => 50,
+                'category' => 0,
+                'officeId' => 'NCE1A0950'
+            ])
+        ])
+    );
+
+Get a list of PNR's on a queue, provide a filter on Ticketing & Departure date:
+
+This example will display a List of the queue 12C0 in the office NCE1A0950 and search with ticketing date between 20 APR and 21 APR and departure date between 3 May and 4 May.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\QueueListOptions;
+    use Amadeus\Client\RequestOptions\Queue;
+    use Amadeus\Client\RequestOptions\Queue\SearchCriteriaOpt;
+
+    $queueContent = $client->queueList(
+        new QueueListOptions([
+            'queue' => new Queue([
+                'queue' => 12,
+                'category' => 0,
+                'officeId' => 'NCE1A0950'
+            ]),
+            'searchCriteria' => [
+                new SearchCriteriaOpt([
+                    'type' => SearchCriteriaOpt::TYPE_TICKETING_DATE,
+                    'start' => \DateTime::createFromFormat('Ymd', '20090420', new \DateTimeZone('UTC')),
+                    'end' => \DateTime::createFromFormat('Ymd', '20090421', new \DateTimeZone('UTC'))
+                ]),
+                new SearchCriteriaOpt([
+                    'type' => SearchCriteriaOpt::TYPE_DEPARTURE_DATE,
+                    'start' => \DateTime::createFromFormat('Ymd', '20090503', new \DateTimeZone('UTC')),
+                    'end' => \DateTime::createFromFormat('Ymd', '20090504', new \DateTimeZone('UTC'))
+                ]),
+            ]
+        ])
+    );
+
+Get a list of PNR's on a queue, sorted by Ticketing date:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\QueueListOptions;
+    use Amadeus\Client\RequestOptions\Queue;
+
+    $queueContent = $client->queueList(
+        new QueueListOptions([
+            'sortType' => QueueListOptions::SORT_TICKETING_DATE,
+            'queue' => new Queue([
+                'queue' => 50,
+                'category' => 3
+            ])
+        ])
+    );
+
+Get the first 10 PNR's on a queue:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\QueueListOptions;
+    use Amadeus\Client\RequestOptions\Queue;
+
+    $queueContent = $client->queueList(
+        new QueueListOptions([
+            'queue' => new Queue([
+                'queue' => 50,
+                'category' => 3
+            ]),
+            'firstItemNr' => 0,
+            'lastItemNr' => 10
+        ])
+    );
+
 --------------
 Queue_PlacePNR
 --------------

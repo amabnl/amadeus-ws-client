@@ -20,27 +20,36 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Queue;
+namespace Amadeus\Client\RequestOptions\Queue;
 
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\QueueListOptions;
-use Amadeus\Client\Struct;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * Queue_List Request converter
+ * SearchCriteriaOpt
  *
- * @package Amadeus\Client\RequestCreator\Converter\Queue
+ * @package Amadeus\Client\RequestOptions\Queue
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ListConv extends BaseConverter
+class SearchCriteriaOpt extends LoadParamsFromArray
 {
+    const TYPE_CREATION_DATE = "CD";
+    const TYPE_TICKETING_DATE = "TD";
+    const TYPE_DEPARTURE_DATE = "DD";
+
     /**
-     * @param QueueListOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Queue\QueueList
+     * self::TYPE_*
+     *
+     * @var string
      */
-    public function convert($requestOptions, $version)
-    {
-        return new Struct\Queue\QueueList($requestOptions);
-    }
+    public $type;
+
+    /**
+     * @var \DateTime
+     */
+    public $start;
+
+    /**
+     * @var \DateTime
+     */
+    public $end;
 }

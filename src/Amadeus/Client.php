@@ -105,6 +105,13 @@ class Client
     protected $lastMessage;
 
     /**
+     * Whether to return the response of a message as XML as well as PHP object
+     *
+     * @var bool
+     */
+    protected $returnResultXml;
+
+    /**
      * Set the session as stateful (true) or stateless (false)
      *
      * @param bool $newStateful
@@ -201,6 +208,8 @@ class Client
         $this->responseHandler = $this->loadResponseHandler(
             $params->responseHandler
         );
+
+        $this->returnResultXml = $params->returnXml;
     }
 
     /**
@@ -1004,18 +1013,25 @@ class Client
             $messageOptions
         );
 
-        return $this->responseHandler->analyzeResponse(
+        $response = $this->responseHandler->analyzeResponse(
             $sendResult,
             $messageName
         );
+
+        if ($messageOptions['returnXml'] === false) {
+            $response->responseXml = null;
+        }
+
+        return $response;
     }
 
     /**
      * Make message options
      *
      * Message options are meta options when sending a message to the amadeus web services
-     * - (if stateful) should we end the current session after sending this call?
-     * - ... ?
+     * - 'endSession' (if stateful) : should we end the current session after sending this call?
+     * - 'returnXml' : Should we return the XML string in the Result::responseXml property?
+     *   (this overrides the default setting returnXml in the Amadeus\Client\Params for a single message)
      *
      * @param array $incoming The Message options chosen by the caller - if any.
      * @param bool $endSession Switch if you want to terminate the current session after making the call.
@@ -1024,11 +1040,16 @@ class Client
     protected function makeMessageOptions(array $incoming, $endSession = false)
     {
         $options = [
-            'endSession' => $endSession
+            'endSession' => $endSession,
+            'returnXml' => $this->returnResultXml
         ];
 
         if (array_key_exists('endSession', $incoming)) {
             $options['endSession'] = $incoming['endSession'];
+        }
+
+        if (array_key_exists('returnXml', $incoming)) {
+            $options['returnXml'] = $incoming['returnXml'];
         }
 
         return $options;

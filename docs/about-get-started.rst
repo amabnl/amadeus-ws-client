@@ -2,6 +2,8 @@
 About / Get Started
 ===================
 
+.. contents::
+
 ***********************
 Get access from Amadeus
 ***********************
@@ -144,47 +146,6 @@ Soap Header 2 example:
         );
     }
 
-
-****************************
-Logging request and response
-****************************
-
-As you can see in the example above, you can provide a PSR-3 compatible Logging object on client instantiation. When you do this, all requests and responses XML format will be logged to it.
-
-This can be useful for debugging purposes, or when working with Amadeus Support.
-
-Here's an example of how to use a `Monolog <https://github.com/Seldaek/monolog>`_ logging object, which logs to a simple ascii file:
-
-.. code-block:: php
-
-    <?php
-
-    use Monolog\Logger;
-    use Monolog\Handler\StreamHandler;
-    use Amadeus\Client;
-    use Amadeus\Client\Params;
-    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
-
-    $msgLog = new Logger('RequestResponseLogs');
-    $msgLog->pushHandler(new StreamHandler('/var/www/myapp/logs/requestresponse.log', Logger::INFO));
-
-
-    //Set up the client with logger:
-
-    $params = new Params([
-        'sessionHandlerParams' => [
-            'logger' => $msgLog
-            // Other parameters omitted in this example
-        ]
-    ]);
-
-    $client = new Client($params);
-
-    $pnrResult = $client->pnrRetrieve(
-        new PnrRetrieveOptions(['recordLocator' => 'ABC123'])
-    );
-
-If you now check the logfile's contents, it will contain the request and response for the PNR_Retrieve call you just made.
 
 ******************
 Messages supported

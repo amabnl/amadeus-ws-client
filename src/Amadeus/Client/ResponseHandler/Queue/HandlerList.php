@@ -22,7 +22,6 @@
 
 namespace Amadeus\Client\ResponseHandler\Queue;
 
-use Amadeus\Client\Exception;
 use Amadeus\Client\ResponseHandler\StandardResponseHandler;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
@@ -70,17 +69,41 @@ class HandlerList extends StandardResponseHandler
     protected function getErrorTextFromQueueErrorCode($errorCode)
     {
         $recognizedErrors = [
-            '723' => "Invalid category",
-            '911' => "Unable to process - system error",
-            '913' => "Item/data not found or data not existing in processing host",
-            '79D' => "Queue identifier has not been assigned for specified office identification",
-            '91C' => "invalid record locator",
-            '91F' => "Invalid queue number",
-            '921' => "target not specified",
-            '922' => "Targetted queue has wrong queue type",
-            '926' => "Queue category empty",
-            '928' => "Queue category not assigned",
-            '92A' => "Queue category full",
+            '1' => 'Invalid date',
+            '360' => 'Invalid PNR file address',
+            '723' => 'Invalid category',
+            '727' => 'Invalid amount',
+            '79A' => 'Invalid office identification',
+            '79B' => 'Already working another queue',
+            '79C' => 'Not allowed to access queues for specified office identification',
+            '79D' => 'Queue identifier has not been assigned for specified office identification',
+            '79E' => 'Attempting to perform a queue function when not associated with a queue',
+            '79F' => 'Queue placement or add new queue item is not allowed for the specified office and queue',
+            '911' => 'Unable to process - system error',
+            '912' => 'Incomplete message - data missing in query',
+            '913' => 'Item/data not found or data not existing in processing host',
+            '914' => 'Invalid format/data - data does not match EDIFACT rules',
+            '915' => 'No action - processing host cannot support function',
+            '916' => 'EDIFACT version not supported',
+            '917' => 'EDIFACT message size exceeded',
+            '918' => 'Enter message in remarks',
+            '919' => 'No PNR in AAA',
+            '91A' => 'Inactive queue bank',
+            '91B' => 'Nickname not found',
+            '91C' => 'Invalid record locator',
+            '91D' => 'Invalid format',
+            '91F' => 'Invalid queue number',
+            '920' => 'Queue/date range empty',
+            '921' => 'Target not specified',
+            '922' => 'Targetted queue has wrong queue type',
+            '923' => 'Invalid time',
+            '924' => 'Invalid date range',
+            '925' => 'Queue number not specified',
+            '926' => 'Queue category empty',
+            '927' => 'No items exist',
+            '928' => 'Queue category not assigned',
+            '929' => 'No more items',
+            '92A' => '>ueue category full'
         ];
 
         $errorMessage = (array_key_exists($errorCode, $recognizedErrors)) ? $recognizedErrors[$errorCode] : '';

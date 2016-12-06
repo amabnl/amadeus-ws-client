@@ -79,6 +79,19 @@ class Params
      */
     public $requestCreatorParams;
 
+    /**
+     * Whether to request the response XML string in the response by default or not.
+     *
+     * If true, the Amadeus\Client\Result object will
+     * contain the response XML message in the 'responseXml' property by default.
+     *
+     * This can be overridden for specific messages by adding a 'returnXml' key with a boolean in
+     * the second parameter of a message call.
+     *
+     * @var bool
+     */
+    public $returnXml = true;
+
 
     /**
      * @param array $params

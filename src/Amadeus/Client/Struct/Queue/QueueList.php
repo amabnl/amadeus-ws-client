@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\Struct\Queue;
 
+use Amadeus\Client\RequestOptions\QueueListOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
@@ -36,46 +37,66 @@ class QueueList extends BaseWsMessage
      * @var Scroll
      */
     public $scroll;
+
     /**
      * @var TargetOffice
      */
     public $targetOffice;
+
     /**
      * @var QueueNumber
      */
     public $queueNumber;
+
     /**
      * @var CategoryDetails
      */
     public $categoryDetails;
+
     /**
      * @var QueueDate
      */
     public $date;
+
     /**
      * @var ScanRange
      */
     public $scanRange;
+
     /**
-     * @todo expand searchCriteria structure
      * @var SearchCriteria[]
      */
     public $searchCriteria = [];
+
     /**
      * @var SortCriteria
      */
     public $sortCriteria;
 
     /**
-     * @param int $queueNumber
-     * @param int|null $categoryNumber
+     * @param QueueListOptions $options
      */
-    public function __construct($queueNumber, $categoryNumber = null)
+    public function __construct(QueueListOptions $options)
     {
-        $this->queueNumber = new QueueNumber($queueNumber);
+        $this->queueNumber = new QueueNumber($options->queue->queue);
 
-        $this->categoryDetails = new CategoryDetails($categoryNumber);
+        $this->categoryDetails = new CategoryDetails($options->queue->category);
 
-        $this->sortCriteria = new SortCriteria(SelectionDetails::LIST_OPTION_SORT_CREATION);
+        if (!empty($options->queue->officeId)) {
+            $this->targetOffice = new TargetOffice(
+                SourceType::SOURCETYPE_OFFICE_SPECIFIED,
+                $options->queue->officeId
+            );
+        }
+
+        $this->sortCriteria = new SortCriteria($options->sortType);
+
+        foreach ($options->searchCriteria as $opt) {
+            $this->searchCriteria[] = new SearchCriteria($opt);
+        }
+
+        if (is_int($options->firstItemNr) && is_int($options->lastItemNr)) {
+            $this->scanRange = new ScanRange($options->firstItemNr, $options->lastItemNr);
+        }
     }
 }

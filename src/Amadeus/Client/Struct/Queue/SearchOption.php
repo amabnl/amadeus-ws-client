@@ -20,27 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Queue;
-
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\QueueListOptions;
-use Amadeus\Client\Struct;
+namespace Amadeus\Client\Struct\Queue;
 
 /**
- * Queue_List Request converter
+ * SearchOption
  *
- * @package Amadeus\Client\RequestCreator\Converter\Queue
+ * @package Amadeus\Client\Struct\Queue
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ListConv extends BaseConverter
+class SearchOption
 {
     /**
-     * @param QueueListOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Queue\QueueList
+     * @var SelectionDetails
      */
-    public function convert($requestOptions, $version)
+    public $selectionDetails;
+
+    /**
+     * SearchOption constructor.
+     *
+     * @param string $searchOpt
+     */
+    public function __construct($searchOpt)
     {
-        return new Struct\Queue\QueueList($requestOptions);
+        $this->selectionDetails = new SelectionDetails($searchOpt);
     }
 }

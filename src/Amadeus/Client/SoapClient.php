@@ -106,6 +106,7 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
         $processor->importStylesheet($xslt);
         $transform = $processor->transformToXml($dom);
         if ($transform === false) {
+            //On transform error: usually when modifying the XSLT transformation incorrectly...
             $this->logger->log(
                 Log\LogLevel::ERROR,
                 __METHOD__."__doRequest(): XSLTProcessor::transformToXml "

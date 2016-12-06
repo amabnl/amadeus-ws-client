@@ -38,4 +38,16 @@ class RangeDetails
      * @var int
      */
     public $max;
+
+    /**
+     * RangeDetails constructor.
+     *
+     * @param int $min
+     * @param int $max
+     */
+    public function __construct($min, $max)
+    {
+        $this->min = $min;
+        $this->max = $max;
+    }
 }

@@ -29,8 +29,13 @@ namespace Amadeus\Client\Struct\Queue;
  */
 class ScanRange
 {
+    const RANGE_INDIVIDUAL_NUMBERS = 700;
+    const RANGE_OF_NUMBERS = 701;
+
     /**
-     * @var string
+     * self::RANGE_*
+     *
+     * @var string|int
      */
     public $rangeQualifier;
 
@@ -38,4 +43,17 @@ class ScanRange
      * @var RangeDetails[]
      */
     public $rangeDetails = [];
+
+    /**
+     * ScanRange constructor.
+     *
+     * @param int $start
+     * @param int $end
+     * @param int $qualifier
+     */
+    public function __construct($start, $end, $qualifier = self::RANGE_OF_NUMBERS)
+    {
+        $this->rangeQualifier = $qualifier;
+        $this->rangeDetails[] = new RangeDetails($start, $end);
+    }
 }

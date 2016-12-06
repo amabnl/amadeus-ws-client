@@ -1,6 +1,12 @@
 # Release 1.2.0 (Unreleased)
 * Added support for requesting rules for specific Fare Components after a pricing request in ``Fare_CheckRules`` (https://github.com/amabnl/amadeus-ws-client/issues/21)
 * Added support for requesting parametrized Fare Families in ``Fare_MasterPricerTravelBoardSearch`` and ``Fare_MasterPricerCalendar`` (https://github.com/amabnl/amadeus-ws-client/issues/31)
+* Added a Client parameter to disable the population of the XML string in the Result object (https://github.com/amabnl/amadeus-ws-client/issues/33) 
+* ``Queue_List``: added new request options:
+    - Search Criteria
+    - Sort by Creation, Ticketing or Departure date
+    - Filter the amount of results
+    - Provide different Office ID
 * Implemented ``Ticket_DeleteTSMP`` message
 * Implemented ``Ticket_DisplayTSMP`` message
 * Implemented ``Ticket_DisplayTSMFareElement`` message

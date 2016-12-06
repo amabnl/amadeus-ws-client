@@ -22,12 +22,37 @@
 
 namespace Amadeus\Client\Struct\Queue;
 
+use Amadeus\Client\RequestOptions\Queue\SearchCriteriaOpt;
+
 /**
  * Class SearchCriteria
  *
- * @todo expand searchCriteria structure
  * @package Amadeus\Client\Struct\Queue
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class SearchCriteria
 {
+    /**
+     * @var SearchOption
+     */
+    public $searchOption;
+
+    /**
+     * @var Dates[]
+     */
+    public $dates = [];
+
+    /**
+     * SearchCriteria constructor.
+     *
+     * @param SearchCriteriaOpt $opt
+     */
+    public function __construct(SearchCriteriaOpt $opt)
+    {
+        $this->searchOption = new SearchOption($opt->type);
+
+        if ($opt->start instanceof \DateTime && $opt->end instanceof \DateTime) {
+            $this->dates[] = new Dates($opt->start, $opt->end);
+        }
+    }
 }
