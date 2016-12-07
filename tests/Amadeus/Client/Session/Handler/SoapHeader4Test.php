@@ -271,13 +271,13 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
     {
         return [
             [
-                "BRU1A0980",
+                "BRU1AXXXX",
                 "PZgFvh5439plJpKpIyf5ucmXhNU=",
                 "ic3AOJElVpvkz9ZBKd105Siry28=",
                 "2013-01-11T09:41:03Z",
                 "<oas:Security xmlns:oas=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd\">
 	<oas:UsernameToken xmlns:oas1=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd\" oas1:Id=\"UsernameToken-1\">
-		<oas:Username>BRU1A0980</oas:Username>
+		<oas:Username>BRU1AXXXX</oas:Username>
 		<oas:Nonce EncodingType=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary\">PZgFvh5439plJpKpIyf5ucmXhNU=</oas:Nonce>
 		<oas:Password Type=\"http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest\">ic3AOJElVpvkz9ZBKd105Siry28=</oas:Password>
 		<oas1:Created>2013-01-11T09:41:03Z</oas1:Created>
@@ -895,7 +895,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
 
     /**
      * @param $xmlString
-     * @return \DOMDocument
+     * @return \DOMElement
      */
     protected function toDomElement($xmlString)
     {
