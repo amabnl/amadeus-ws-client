@@ -115,8 +115,8 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
             $newRequest = $request;
         } else {
             $newDom = new \DOMDocument('1.0', 'UTF-8');
-            $newDom->loadXML($transform);
             $newDom->preserveWhiteSpace = false;
+            $newDom->loadXML($transform);
 
             $newRequest = $newDom->saveXML();
         }
