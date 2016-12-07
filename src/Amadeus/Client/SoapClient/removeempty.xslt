@@ -33,4 +33,8 @@
 		<xsl:attribute name="{local-name()}"><xsl:value-of select="."/>
 		</xsl:attribute>
 	</xsl:template>
+	<xsl:template match="*/text()[normalize-space()]">
+		<xsl:value-of select="normalize-space()"/>
+	</xsl:template>
+	<xsl:template match="*/text()[not(normalize-space())]" />
 </xsl:stylesheet>
