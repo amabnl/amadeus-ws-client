@@ -6,6 +6,26 @@ Samples for specific PNR Creation / modification scenario's
 
 Below are some examples of how to do specific things with regards to creating & modifying PNR's:
 
+------------------------------------
+Multiple Action Codes (= optionCode)
+------------------------------------
+
+Usually, only one actionCode is needed. However, it iss also possible to provide multiple actionCodes in the request (= ``optionCode`` XML node):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+
+    $opt = new PnrCreatePnrOptions([
+        'actionCode' => [
+            PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE, //11
+            PnrCreatePnrOptions::ACTION_WARNING_AT_EOT,        //30
+            PnrCreatePnrOptions::ACTION_STOP_EOT_ON_SELL_ERROR //267
+        ],
+        //Other options omitted
+    ]);
+
+
 ------------------------------
 Creating specific PNR elements
 ------------------------------

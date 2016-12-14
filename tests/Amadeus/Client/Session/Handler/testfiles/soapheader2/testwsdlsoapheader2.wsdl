@@ -96,7 +96,7 @@
     </wsdl:binding>
     <wsdl:service name="AmadeusWebServices">
         <wsdl:port name="AmadeusWebServicesPort" binding="aws:AmadeusWebServicesBinding">
-            <soap:address location="https://test.webservices.amadeus.com"/>
+            <soap:address location="https://dummy.endpoint"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

@@ -14,26 +14,26 @@
 		<responsibilityInformation>
 			<typeOfPnrElement>RP</typeOfPnrElement>
 			<agentId>WSSU</agentId>
-			<officeId>BRU1A0980</officeId>
-			<iataCode>00081900</iataCode>
+			<officeId>BRUXX1111</officeId>
+			<iataCode>11111111</iataCode>
 		</responsibilityInformation>
 		<queueingInformation>
-			<queueingOfficeId>BRU1A0980</queueingOfficeId>
+			<queueingOfficeId>BRUXX1111</queueingOfficeId>
 		</queueingInformation>
 		<cityCode>EHD</cityCode>
 		<secondRpInformation>
-			<creationOfficeId>BRU1A0980</creationOfficeId>
+			<creationOfficeId>BRUXX1111</creationOfficeId>
 			<agentSignature>9991WS</agentSignature>
 			<creationDate>170516</creationDate>
-			<creatorIataCode>00081900</creatorIataCode>
+			<creatorIataCode>11111111</creatorIataCode>
 			<creationTime>1148</creationTime>
 		</secondRpInformation>
 	</securityInformation>
 	<sbrPOSDetails>
 		<sbrUserIdentificationOwn>
 			<originIdentification>
-				<originatorId>00081900</originatorId>
-				<inHouseIdentification1>BRU1A0980</inHouseIdentification1>
+				<originatorId>11111111</originatorId>
+				<inHouseIdentification1>BRUXX1111</inHouseIdentification1>
 			</originIdentification>
 			<originatorTypeCode>T</originatorTypeCode>
 		</sbrUserIdentificationOwn>
@@ -52,8 +52,8 @@
 	<sbrCreationPosDetails>
 		<sbrUserIdentificationOwn>
 			<originIdentification>
-				<originatorId>00081900</originatorId>
-				<inHouseIdentification1>BRU1A0980</inHouseIdentification1>
+				<originatorId>11111111</originatorId>
+				<inHouseIdentification1>BRUXX1111</inHouseIdentification1>
 			</originIdentification>
 			<originatorTypeCode>T</originatorTypeCode>
 		</sbrUserIdentificationOwn>
@@ -72,8 +72,8 @@
 	<sbrUpdatorPosDetails>
 		<sbrUserIdentificationOwn>
 			<originIdentification>
-				<originatorId>00081900</originatorId>
-				<inHouseIdentification1>BRU1A0980</inHouseIdentification1>
+				<originatorId>11111111</originatorId>
+				<inHouseIdentification1>BRUXX1111</inHouseIdentification1>
 			</originIdentification>
 			<originatorTypeCode>T</originatorTypeCode>
 		</sbrUserIdentificationOwn>
@@ -248,7 +248,7 @@
 					<subjectQualifier>3</subjectQualifier>
 					<type>7</type>
 				</freetextDetail>
-				<longFreetext>+32495438305</longFreetext>
+				<longFreetext>+32444444444</longFreetext>
 			</otherDataFreetext>
 		</dataElementsIndiv>
 		<dataElementsIndiv>
@@ -266,7 +266,7 @@
 					<indicator>XL</indicator>
 					<date>100816</date>
 					<time>1148</time>
-					<officeId>BRU1A0980</officeId>
+					<officeId>BRUXX1111</officeId>
 				</ticket>
 			</ticketElement>
 		</dataElementsIndiv>

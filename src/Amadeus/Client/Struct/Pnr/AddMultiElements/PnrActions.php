@@ -33,48 +33,51 @@ class PnrActions
     /**
      * PNR action option: no special processing
      *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [Option element codesets (Ref: 106P 1A 00.1.2)]
      * @var int
      */
     const ACTIONOPTION_NO_SPECIAL_PROCESSING = 0;
     /**
      * PNR action option: End Transact
      *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [Option element codesets (Ref: 106P 1A 00.1.2)]
      * @var int
      */
     const ACTIONOPTION_END_TRANSACT = 10;
     /**
      * PNR action option: End transact with retrieve
      *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [Option element codesets (Ref: 106P 1A 00.1.2)]
      * @var int
      */
     const ACTIONOPTION_END_TRANSACT_W_RETRIEVE = 11;
     /**
      * PNR Action Option: Ignore PNR
      *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [Option element codesets (Ref: 106P 1A 00.1.2)]
      * @var int
      */
     const ACTIONOPTION_IGNORE = 20;
     /**
      * PNR Action Option: Ignore PNR and retrieve
      *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [Option element codesets (Ref: 106P 1A 00.1.2)]
      * @var int
      */
     const ACTIONOPTION_IGNORE_W_RETRIEVE = 21;
+
+    const ACTIONOPTION_END_TRANSACT_CHANGE_ADV_CODES = 12;
+
+    const ACTIONOPTION_END_TRANSACT_RETRIEVE_CHANGE_ADV_CODES = 13;
+
+    const ACTIONOPTION_END_TRANSACT_SPLIT = 14;
+
+    const ACTIONOPTION_CANCEL_ITIN_END_TRANSACT = 15;
+
+    const ACTIONOPTION_CANCEL_ITIN_END_TRANSACT_RETRIEVE = 16;
+
+    const ACTIONOPTION_IGNORE_RETRIEVE = 21;
+
+    const ACTIONOPTION_STOP_EOT_ON_SELL_ERROR = 267;
+
+    const ACTIONOPTION_WARNING_AT_EOT = 30;
+
+    const ACTIONOPTION_REPLY_SHORT_MESSAGE = 50;
 
     /**
      * PNR_AddMultiElements/pnrActions/optionCode
@@ -94,15 +97,20 @@ class PnrActions
      * 50 Reply with short message
      *
      * @see https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=5313&serviceVersionId=4268
-     * @var int
+     *
+     * @var int[]
      */
-    public $optionCode;
+    public $optionCode = [];
 
     /**
-     * @param int $actionCode self::ACTIONOPTION_* or one of the defined option codes
+     * @param int|int[] $actionCode self::ACTIONOPTION_* or one of the defined option codes
      */
     public function __construct($actionCode = self::ACTIONOPTION_NO_SPECIAL_PROCESSING)
     {
-        $this->optionCode = $actionCode;
+        if (is_int($actionCode)) {
+            $this->optionCode[] = $actionCode;
+        } elseif (is_array($actionCode)) {
+            $this->optionCode = $actionCode;
+        }
     }
 }

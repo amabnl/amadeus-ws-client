@@ -22,6 +22,7 @@
 
 namespace Test\Amadeus\Client\Struct\Pnr;
 
+use Amadeus\Client\Struct\Pnr\AddMultiElements\PnrActions;
 use Test\Amadeus\BaseTestCase;
 use Amadeus\Client\Struct\Pnr\Cancel;
 use Amadeus\Client\RequestOptions\PnrCancelOptions;
@@ -33,17 +34,16 @@ use Amadeus\Client\RequestOptions\PnrCancelOptions;
  */
 class CancelTest extends BaseTestCase
 {
-
     public function testCanMakeCancelMessageForOffer()
     {
         $message = new Cancel(
             new PnrCancelOptions([
-                'actionCode' => 10,
+                'actionCode' => PnrCancelOptions::ACTION_END_TRANSACT,
                 'offers' => [2]
             ])
         );
-
-        $this->assertEquals(10, $message->pnrActions->optionCode);
+        $this->assertCount(1, $message->pnrActions->optionCode);
+        $this->assertEquals(PnrCancelOptions::ACTION_END_TRANSACT, $message->pnrActions->optionCode[0]);
         $this->assertNull($message->reservationInfo);
         $this->assertEquals(1, count($message->cancelElements));
         $this->assertEquals(Cancel\Elements::ENTRY_ELEMENT, $message->cancelElements[0]->entryType);
@@ -58,12 +58,13 @@ class CancelTest extends BaseTestCase
         $message = new Cancel(
             new PnrCancelOptions([
                 'recordLocator' => 'ABC123',
-                'actionCode' => 0,
+                'actionCode' => PnrCancelOptions::ACTION_NO_PROCESSING,
                 'elementsByTattoo' => [14, 16, 20]
             ])
         );
 
-        $this->assertEquals(0, $message->pnrActions->optionCode);
+        $this->assertCount(1, $message->pnrActions->optionCode);
+        $this->assertEquals(PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING, $message->pnrActions->optionCode[0]);
         $this->assertEquals('ABC123', $message->reservationInfo->reservation->controlNumber);
         $this->assertEquals(1, count($message->cancelElements));
         $this->assertEquals(Cancel\Elements::ENTRY_ELEMENT, $message->cancelElements[0]->entryType);
@@ -80,12 +81,13 @@ class CancelTest extends BaseTestCase
     {
         $message = new Cancel(
             new PnrCancelOptions([
-                'actionCode' => 11,
+                'actionCode' => PnrCancelOptions::ACTION_END_TRANSACT_RETRIEVE,
                 'cancelItinerary' => true
             ])
         );
 
-        $this->assertEquals(11, $message->pnrActions->optionCode);
+        $this->assertCount(1, $message->pnrActions->optionCode);
+        $this->assertEquals(PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE, $message->pnrActions->optionCode[0]);
         $this->assertEquals(1, count($message->cancelElements));
         $this->assertEquals(Cancel\Elements::ENTRY_ITINERARY, $message->cancelElements[0]->entryType);
         $this->assertEquals(0, count($message->cancelElements[0]->element));
@@ -95,12 +97,12 @@ class CancelTest extends BaseTestCase
     {
         $message = new Cancel(
             new PnrCancelOptions([
-                'actionCode' => 0,
+                'actionCode' => PnrCancelOptions::ACTION_NO_PROCESSING,
                 'passengers' => [3]
             ])
         );
-
-        $this->assertEquals(0, $message->pnrActions->optionCode);
+        $this->assertCount(1, $message->pnrActions->optionCode);
+        $this->assertEquals(PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING, $message->pnrActions->optionCode[0]);
         $this->assertNull($message->reservationInfo);
         $this->assertEquals(1, count($message->cancelElements));
         $this->assertEquals(Cancel\Elements::ENTRY_ELEMENT, $message->cancelElements[0]->entryType);
@@ -113,12 +115,12 @@ class CancelTest extends BaseTestCase
     {
         $message = new Cancel(
             new PnrCancelOptions([
-                'actionCode' => 0,
+                'actionCode' => PnrCancelOptions::ACTION_NO_PROCESSING,
                 'groupPassengers' => [5,6]
             ])
         );
-
-        $this->assertEquals(0, $message->pnrActions->optionCode);
+        $this->assertCount(1, $message->pnrActions->optionCode);
+        $this->assertEquals(PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING, $message->pnrActions->optionCode[0]);
         $this->assertNull($message->reservationInfo);
         $this->assertEquals(1, count($message->cancelElements));
         $this->assertEquals(Cancel\Elements::ENTRY_NAME_INTEGRATION, $message->cancelElements[0]->entryType);
@@ -133,10 +135,13 @@ class CancelTest extends BaseTestCase
     {
         $message = new Cancel(
             new PnrCancelOptions([
-                'actionCode' => 0,
+                'actionCode' => PnrCancelOptions::ACTION_NO_PROCESSING,
                 'segments' => [3,4]
             ])
         );
+
+        $this->assertCount(1, $message->pnrActions->optionCode);
+        $this->assertEquals(0, $message->pnrActions->optionCode[0]);
 
         $this->assertEquals(1, count($message->cancelElements));
         $this->assertEquals(Cancel\Elements::ENTRY_ELEMENT, $message->cancelElements[0]->entryType);

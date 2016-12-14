@@ -88,7 +88,8 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster', $requestStruct->dataElementsMaster);
 
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\PnrActions', $requestStruct->pnrActions);
-        $this->assertEquals(PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE, $requestStruct->pnrActions->optionCode);
+        $this->assertCount(1, $requestStruct->pnrActions->optionCode);
+        $this->assertEquals(PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE, $requestStruct->pnrActions->optionCode[0]);
 
         $this->assertInternalType('array', $requestStruct->travellerInfo);
         $this->assertEquals(1, count($requestStruct->travellerInfo));
@@ -137,6 +138,91 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals('unittest', $requestStruct->dataElementsMaster->dataElementsIndiv[2]->freetextData->longFreetext);
     }
 
+    public function testCanCreateMessageToCreateBasicPnrWithMultipleActionCodes()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions([
+            'actionCode' => [
+                PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE,
+                PnrCreatePnrOptions::ACTION_WARNING_AT_EOT,
+                PnrCreatePnrOptions::ACTION_STOP_EOT_ON_SELL_ERROR
+            ],
+            'receivedFrom' => "unittest",
+            'travellers' => [
+                new Traveller([
+                    'number' => 1,
+                    'lastName' => 'Bowie',
+                    'firstName' => 'David'
+                ])
+            ],
+            'itineraries' => [
+                new Itinerary([
+                    'segments' => [
+                        new Miscellaneous([
+                            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+                            'cityCode' => 'BRU',
+                            'freeText' => 'GENERIC TRAVEL REQUEST',
+                            'company' => '1A'
+                        ])
+                    ]
+                ])
+            ],
+            'elements' => [
+                new Ticketing([
+                    'ticketMode' => Ticketing::TICKETMODE_TIMELIMIT,
+                    'date' => \DateTime::createFromFormat(\DateTime::ISO8601, "2016-01-27T00:00:00+0000", new \DateTimeZone('UTC')),
+                    'ticketQueue' => new Queue(['queue' => 50, 'category' => 0])
+                ]),
+                new Contact([
+                    'type' => Contact::TYPE_PHONE_GENERAL,
+                    'value' => '+3223456789'
+                ])
+            ]
+        ]);
+
+        $message = new AddMultiElements($createPnrOptions);
+
+        $this->assertInternalType('array', $message->pnrActions->optionCode);
+        $this->assertCount(3, $message->pnrActions->optionCode);
+        $this->assertEquals(PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE, $message->pnrActions->optionCode[0]);
+        $this->assertEquals(PnrActions::ACTIONOPTION_WARNING_AT_EOT, $message->pnrActions->optionCode[1]);
+        $this->assertEquals(PnrActions::ACTIONOPTION_STOP_EOT_ON_SELL_ERROR, $message->pnrActions->optionCode[2]);
+
+        $this->assertCount(1, $message->travellerInfo);
+        $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $message->travellerInfo[0]->elementManagementPassenger->segmentName);
+        $this->assertEquals(1, $message->travellerInfo[0]->elementManagementPassenger->reference->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $message->travellerInfo[0]->elementManagementPassenger->reference->qualifier);
+        $this->assertCount(1, $message->travellerInfo[0]->passengerData);
+        $this->assertEquals('Bowie', $message->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->surname);
+        $this->assertCount(1, $message->travellerInfo[0]->passengerData[0]->travellerInformation->passenger);
+        $this->assertEquals('David', $message->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->firstName);
+        $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $message->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->type);
+
+        $this->assertCount(1, $message->originDestinationDetails);
+        $this->assertNull($message->originDestinationDetails[0]->originDestination);
+        $this->assertCount(1, $message->originDestinationDetails[0]->itineraryInfo);
+        $this->assertEquals(AddMultiElements\ElementManagementItinerary::SEGMENT_MISCELLANEOUS, $message->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->segmentName);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_OTHER, $message->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->reference->qualifier);
+        $this->assertEquals('GENERIC TRAVEL REQUEST', $message->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->freetextItinerary->longFreetext);
+        $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_CONFIRMED, $message->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
+
+        $this->assertInternalType('array', $message->dataElementsMaster->dataElementsIndiv);
+        $this->assertCount(3, $message->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals('TK', $message->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals(AddMultiElements\TicketElement::PASSTYPE_PAX, $message->dataElementsMaster->dataElementsIndiv[0]->ticketElement->passengerType);
+        $this->assertEquals('270116', $message->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->date);
+        $this->assertNull($message->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->time);
+        $this->assertEquals(50, $message->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->queueNumber);
+        $this->assertEquals(0, $message->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->queueCategory);
+        $this->assertEquals(AddMultiElements\Ticket::TICK_IND_TL, $message->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->indicator);
+
+        $this->assertEquals('AP', $message->dataElementsMaster->dataElementsIndiv[1]->elementManagementData->segmentName);
+        $this->assertEquals(AddMultiElements\FreetextDetail::TYPE_PHONE_GENERAL, $message->dataElementsMaster->dataElementsIndiv[1]->freetextData->freetextDetail->type);
+        $this->assertEquals('+3223456789', $message->dataElementsMaster->dataElementsIndiv[1]->freetextData->longFreetext);
+
+        $this->assertEquals('RF', $message->dataElementsMaster->dataElementsIndiv[2]->elementManagementData->segmentName);
+        $this->assertEquals('unittest', $message->dataElementsMaster->dataElementsIndiv[2]->freetextData->longFreetext);
+    }
+
     public function testCanCreateMessageToCreateBasicPnrWithSrDocs()
     {
         $createPnrOptions = new PnrCreatePnrOptions();
@@ -183,7 +269,8 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\DataElementsMaster', $requestStruct->dataElementsMaster);
 
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\PnrActions', $requestStruct->pnrActions);
-        $this->assertEquals(PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE, $requestStruct->pnrActions->optionCode);
+        $this->assertCount(1, $requestStruct->pnrActions->optionCode);
+        $this->assertEquals(PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE, $requestStruct->pnrActions->optionCode[0]);
 
         $this->assertInternalType('array', $requestStruct->travellerInfo);
         $this->assertEquals(1, count($requestStruct->travellerInfo));
@@ -661,8 +748,9 @@ class AddMultiElementsTest extends BaseTestCase
 
         $requestStruct = new AddMultiElements($createPnrOptions);
 
-        $this->assertEquals(4, count($requestStruct->travellerInfo));
-        $this->assertEquals(PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING, $requestStruct->pnrActions->optionCode);
+        $this->assertCount(4, $requestStruct->travellerInfo);
+        $this->assertCount(1, $requestStruct->pnrActions->optionCode);
+        $this->assertEquals(PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING, $requestStruct->pnrActions->optionCode[0]);
         $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_GROUPNAME, $requestStruct->travellerInfo[0]->elementManagementPassenger->segmentName);
         $this->assertEquals('Group Name', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->surname);
         $this->assertEquals(AddMultiElements\Traveller::QUAL_GROUP, $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->qualifier);
@@ -671,18 +759,18 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[1]->elementManagementPassenger->segmentName);
         $this->assertEquals(1, $requestStruct->travellerInfo[1]->elementManagementPassenger->reference->number);
         $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $requestStruct->travellerInfo[1]->elementManagementPassenger->reference->qualifier);
-        $this->assertEquals(1, count($requestStruct->travellerInfo[1]->passengerData));
+        $this->assertCount(1, $requestStruct->travellerInfo[1]->passengerData);
         $this->assertEquals('Bowie', $requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->traveller->surname);
-        $this->assertEquals(1, count($requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->passenger));
+        $this->assertCount(1, $requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->passenger);
         $this->assertEquals('David', $requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->passenger[0]->firstName);
         $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $requestStruct->travellerInfo[1]->passengerData[0]->travellerInformation->passenger[0]->type);
 
         $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[2]->elementManagementPassenger->segmentName);
         $this->assertEquals(2, $requestStruct->travellerInfo[2]->elementManagementPassenger->reference->number);
         $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $requestStruct->travellerInfo[2]->elementManagementPassenger->reference->qualifier);
-        $this->assertEquals(1, count($requestStruct->travellerInfo[2]->passengerData));
+        $this->assertCount(1, $requestStruct->travellerInfo[2]->passengerData);
         $this->assertEquals('Bowie', $requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->traveller->surname);
-        $this->assertEquals(1, count($requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->passenger));
+        $this->assertCount(1, $requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->passenger);
         $this->assertEquals('Ziggy', $requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->passenger[0]->firstName);
         $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $requestStruct->travellerInfo[2]->passengerData[0]->travellerInformation->passenger[0]->type);
 
@@ -734,7 +822,8 @@ class AddMultiElementsTest extends BaseTestCase
         $requestStruct = new AddMultiElements($addmultiOptions);
 
         $this->assertEquals(4, count($requestStruct->travellerInfo));
-        $this->assertEquals(PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING, $requestStruct->pnrActions->optionCode);
+        $this->assertCount(1, $requestStruct->pnrActions->optionCode);
+        $this->assertEquals(PnrActions::ACTIONOPTION_NO_SPECIAL_PROCESSING, $requestStruct->pnrActions->optionCode[0]);
         $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_GROUPNAME, $requestStruct->travellerInfo[0]->elementManagementPassenger->segmentName);
         $this->assertEquals('Group Name', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->surname);
         $this->assertEquals(AddMultiElements\Traveller::QUAL_GROUP, $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->qualifier);
@@ -883,7 +972,8 @@ class AddMultiElementsTest extends BaseTestCase
         $requestStruct = new AddMultiElements($ameOptions);
 
         $this->assertEquals('ABC123', $requestStruct->reservationInfo->reservation->controlNumber);
-        $this->assertEquals(PnrActions::ACTIONOPTION_END_TRANSACT, $requestStruct->pnrActions->optionCode);
+        $this->assertCount(1, $requestStruct->pnrActions->optionCode);
+        $this->assertEquals(PnrActions::ACTIONOPTION_END_TRANSACT, $requestStruct->pnrActions->optionCode[0]);
         $this->assertEquals(1, count($requestStruct->dataElementsMaster->dataElementsIndiv));
         $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_ADDRESS_BILLING_UNSTRUCTURED, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
         $this->assertEquals('Name,Street 20, Zipcode City', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->longFreetext);

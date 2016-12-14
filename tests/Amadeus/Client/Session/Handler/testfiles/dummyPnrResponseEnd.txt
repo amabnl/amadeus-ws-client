@@ -3,7 +3,7 @@
 	<SOAP-ENV:Header>
 		<wsa:To>http://www.w3.org/2005/08/addressing/anonymous</wsa:To>
 		<wsa:From>
-			<wsa:Address>https://nodeD1.test.webservices.amadeus.com/DUMMYWSAP</wsa:Address>
+			<wsa:Address>https://dummy.endpoint/DUMMYWSAP</wsa:Address>
 		</wsa:From>
 		<wsa:Action>http://webservices.amadeus.com/PNRADD_14_2_1A</wsa:Action>
 		<wsa:MessageID>urn:uuid:5d35dbe1-723f-1d94-5144-2fc21eade110</wsa:MessageID>
@@ -30,26 +30,26 @@
 				<responsibilityInformation>
 					<typeOfPnrElement>RP</typeOfPnrElement>
 					<agentId>WSSU</agentId>
-					<officeId>BRU1A0980</officeId>
-					<iataCode>00081900</iataCode>
+					<officeId>BRUXX1111</officeId>
+					<iataCode>11111111</iataCode>
 				</responsibilityInformation>
 				<queueingInformation>
-					<queueingOfficeId>BRU1A0980</queueingOfficeId>
+					<queueingOfficeId>BRUXX1111</queueingOfficeId>
 				</queueingInformation>
 				<cityCode>EHD</cityCode>
 				<secondRpInformation>
-					<creationOfficeId>BRU1A0980</creationOfficeId>
+					<creationOfficeId>BRUXX1111</creationOfficeId>
 					<agentSignature>9991WS</agentSignature>
 					<creationDate>290116</creationDate>
-					<creatorIataCode>00081900</creatorIataCode>
+					<creatorIataCode>11111111</creatorIataCode>
 					<creationTime>1616</creationTime>
 				</secondRpInformation>
 			</securityInformation>
 			<sbrPOSDetails>
 				<sbrUserIdentificationOwn>
 					<originIdentification>
-						<originatorId>00081900</originatorId>
-						<inHouseIdentification1>BRU1A0980</inHouseIdentification1>
+						<originatorId>11111111</originatorId>
+						<inHouseIdentification1>BRUXX1111</inHouseIdentification1>
 					</originIdentification>
 					<originatorTypeCode>T</originatorTypeCode>
 				</sbrUserIdentificationOwn>
@@ -68,8 +68,8 @@
 			<sbrCreationPosDetails>
 				<sbrUserIdentificationOwn>
 					<originIdentification>
-						<originatorId>00081900</originatorId>
-						<inHouseIdentification1>BRU1A0980</inHouseIdentification1>
+						<originatorId>11111111</originatorId>
+						<inHouseIdentification1>BRUXX1111</inHouseIdentification1>
 					</originIdentification>
 					<originatorTypeCode>T</originatorTypeCode>
 				</sbrUserIdentificationOwn>
@@ -88,8 +88,8 @@
 			<sbrUpdatorPosDetails>
 				<sbrUserIdentificationOwn>
 					<originIdentification>
-						<originatorId>00081900</originatorId>
-						<inHouseIdentification1>BRU1A0980</inHouseIdentification1>
+						<originatorId>11111111</originatorId>
+						<inHouseIdentification1>BRUXX1111</inHouseIdentification1>
 					</originIdentification>
 					<originatorTypeCode>T</originatorTypeCode>
 				</sbrUserIdentificationOwn>
@@ -215,7 +215,7 @@
 							<subjectQualifier>3</subjectQualifier>
 							<type>7</type>
 						</freetextDetail>
-						<longFreetext>+32495438305</longFreetext>
+						<longFreetext>+32444444444</longFreetext>
 					</otherDataFreetext>
 				</dataElementsIndiv>
 				<dataElementsIndiv>
@@ -232,7 +232,7 @@
 						<ticket>
 							<indicator>OK</indicator>
 							<date>290116</date>
-							<officeId>BRU1A0980</officeId>
+							<officeId>BRUXX1111</officeId>
 						</ticket>
 					</ticketElement>
 				</dataElementsIndiv>
