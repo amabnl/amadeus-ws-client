@@ -935,6 +935,20 @@ class Client
     }
 
     /**
+     * Hotel_Sell
+     *
+     * @param RequestOptions\HotelSellOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function hotelSell(RequestOptions\HotelSellOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Hotel_Sell';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * PriceXplorer_ExtremeSearch
      *
      * @param RequestOptions\PriceXplorerExtremeSearchOptions $options
