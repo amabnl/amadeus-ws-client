@@ -141,12 +141,13 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
         $this->loadNrOfPaxAndResults($options);
 
         if ($options->doTicketabilityPreCheck === true ||
-            $this->checkAnyNotEmpty($options->corporateCodesUnifares, $options->flightOptions)
+            $this->checkAnyNotEmpty($options->corporateCodesUnifares, $options->flightOptions, $options->currencyOverride)
         ) {
             $this->fareOptions = new MasterPricer\FareOptions(
                 $options->flightOptions,
                 $options->corporateCodesUnifares,
-                $options->doTicketabilityPreCheck
+                $options->doTicketabilityPreCheck,
+                $options->currencyOverride
             );
         }
 
