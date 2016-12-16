@@ -34,4 +34,16 @@ class ConversionRate
      * @var ConversionRateDetail[]
      */
     public $conversionRateDetail = [];
+
+    /**
+     * ConversionRate constructor.
+     *
+     * @param string|null $currency
+     */
+    public function __construct($currency = null)
+    {
+        if (!is_null($currency)) {
+            $this->conversionRateDetail[] = new ConversionRateDetail($currency);
+        }
+    }
 }

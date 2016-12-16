@@ -142,6 +142,19 @@ class FareMasterPricerTbSearch extends Base
     public $corporateCodesUnifares = [];
 
     /**
+     * The currency to convert to.
+     *
+     * All price amounts for recommendations will be converted in the requested Currency.
+     *
+     * (The provided currency must be a valid 3-character ISO 4217 Currency Code)
+     *
+     * for example: EUR, USD, JPY,...
+     *
+     * @var string
+     */
+    public $currencyOverride;
+
+    /**
      * Cabin class requested for the entire itinerary
      *
      * self::CABIN_*

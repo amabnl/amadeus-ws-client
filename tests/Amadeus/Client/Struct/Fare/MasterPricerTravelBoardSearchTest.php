@@ -282,6 +282,38 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertEquals(PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK, $message->fareOptions->pricingTickInfo->pricingTicketing->priceType[0]);
     }
 
+    public function testCanMakeMasterPricerMessageWithCurrencyOverride()
+    {
+        $opt = new FareMasterPricerTbSearch([
+            'nrOfRequestedResults' => 200,
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'BRU']),
+                    'arrivalLocation' => new MPLocation(['city' => 'LON']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'currencyOverride' => 'USD'
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertCount(1, $message->fareOptions->pricingTickInfo->pricingTicketing->priceType);
+        $this->assertEquals(PricingTicketing::PRICETYPE_OVERRIDE_CURRENCY_CONVERSION, $message->fareOptions->pricingTickInfo->pricingTicketing->priceType[0]);
+        $this->assertCount(1, $message->fareOptions->conversionRate->conversionRateDetail);
+        $this->assertEquals('USD', $message->fareOptions->conversionRate->conversionRateDetail[0]->currency);
+        $this->assertNull($message->fareOptions->conversionRate->conversionRateDetail[0]->conversionType);
+    }
+
     public function testCanMakeMasterPricerMessageWithCabinClassAndCod()
     {
         $opt = new FareMasterPricerTbSearch();
