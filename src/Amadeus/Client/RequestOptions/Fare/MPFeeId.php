@@ -20,33 +20,29 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\MasterPricer;
+namespace Amadeus\Client\RequestOptions\Fare;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * FeeId
+ * MasterPricer Fee Id request options.
  *
- * @package Amadeus\Client\Struct\Fare\MasterPricer
+ * @package Amadeus\Client\RequestOptions\Fare
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FeeId
+class MPFeeId extends LoadParamsFromArray
 {
-    public $feeType;
-
-    public $feeIdNumber;
+    /**
+     * Fee Type
+     *
+     * @var string
+     */
+    public $type;
 
     /**
-      * FeeId constructor.
-      *
-      * @param string|null $feeType
-      * @param int|null $feeIdNumber
-      */
-     public function __construct($feeType = null, $feeIdNumber = null)
-     {
-         if (!is_null($feeType)) {
-             $this->feeType = $feeType;
-         }
-         if (!is_null($feeIdNumber)) {
-             $this->feeIdNumber = $feeIdNumber;
-         }
-     }
+     * Fee Id
+     *
+     * @var int
+     */
+    public $number;
 }

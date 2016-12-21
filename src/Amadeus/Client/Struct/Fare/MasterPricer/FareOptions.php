@@ -62,8 +62,9 @@ class FareOptions
      * @param array $corpCodesUniFares list of Corporate codes for Corporate Unifares
      * @param bool $tickPreCheck Do Ticketability pre-check?
      * @param string|null $currency Override Currency conversion
+     * @param array|null $flightOptions List of FeeIds
      */
-    public function __construct(array $flightOptions, array $corpCodesUniFares, $tickPreCheck, $currency)
+    public function __construct(array $flightOptions, array $corpCodesUniFares, $tickPreCheck, $currency, $feeIds)
     {
         if ($tickPreCheck === true) {
             $this->addPriceType(PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK);
@@ -79,6 +80,24 @@ class FareOptions
         }
 
         $this->loadCurrencyOverride($currency);
+        if (!is_null($feeIds)) {
+            $this->loadFeeIds($feeIds);
+        }
+    }
+
+    /**
+     * Set fee ids if needed
+     *
+     * @param string|null $currency
+     */
+    protected function loadFeeIds($feeIds)
+    {
+        if (is_null($this->feeIdDescription)) {
+            $this->feeIdDescription = new FeeIdDescription();
+        }
+        foreach ($feeIds as $feeId) {
+            $this->feeIdDescription->feeId[] = new FeeId($feeId->type, $feeId->number);
+        }
     }
 
     /**
