@@ -1763,6 +1763,14 @@ Assign an account code to a passenger:
         ])
     );
 
+*****
+Hotel
+*****
+----------
+Hotel_Sell
+----------
+
+*coming soon*
 
 ****
 Info

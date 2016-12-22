@@ -20,39 +20,23 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
-
-use Amadeus\Client\RequestOptions\Hotel\Sell\BookingCompany;
+namespace Amadeus\Client\Struct\Hotel\Sell;
 
 /**
- * Hotel_Sell Request Options
+ * ArrivalFlightDetailsGrp
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Hotel
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class HotelSellOptions extends Base
+class ArrivalFlightDetailsGrp
 {
-    const DELIVER_ERETAIL = "AERE";
-    const DELIVER_ETRAVEL_MANAGEMENT = "AETM";
-    const DELIVER_COMMAND_PAGE = "COMM";
-    const DELIVER_SELL2_SELL_CONNECT = "SECO";
-    const DELIVER_SELLING_PLATFORM_CLASSIC = "SELL";
-    const DELIVER_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const DELIVER_WEBSERVICES = "WEBS";
+    /**
+     * @var ArrivalFlightDetailsTag
+     */
+    public $arrivalFlightDetailsTag;
 
     /**
-     * Booking system identifier
-     *
-     * self::DELIVER_*
-     *
-     * @var string
+     * @var ArrivalFlightDetailsData
      */
-    public $deliveringSystem;
-
-    /**
-     * @var BookingCompany[]
-     */
-    public $bookingCompany = [];
-
-
+    public $arrivalFlightDetailsData;
 }

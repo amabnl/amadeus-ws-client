@@ -24,6 +24,15 @@ namespace Amadeus\Client\Struct\Hotel;
 
 use Amadeus\Client\RequestOptions\HotelSellOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\Hotel\Sell\ArrivalFlightDetailsGrp;
+use Amadeus\Client\Struct\Hotel\Sell\BookingCompany;
+use Amadeus\Client\Struct\Hotel\Sell\BookingPayerDetails;
+use Amadeus\Client\Struct\Hotel\Sell\ExtraIndentification;
+use Amadeus\Client\Struct\Hotel\Sell\GroupIndicator;
+use Amadeus\Client\Struct\Hotel\Sell\RoomStayData;
+use Amadeus\Client\Struct\Hotel\Sell\SystemIdentifier;
+use Amadeus\Client\Struct\Hotel\Sell\TravelAgentRef;
+use Amadeus\Client\Struct\Pnr\ReservationInfo;
 
 /**
  * Hotel_Sell request structure
@@ -34,39 +43,47 @@ use Amadeus\Client\Struct\BaseWsMessage;
 class Sell extends BaseWsMessage
 {
     /**
-     * @var
+     * @var SystemIdentifier
      */
     public $systemIdentifier;
+
     /**
-     * @var
+     * @var BookingCompany[]
      */
-    public $bookingCompany;
+    public $bookingCompany = [];
+
     /**
-     * @var
+     * @var ReservationInfo
      */
     public $reservationInfo;
+
     /**
-     * @var
+     * @var ExtraIndentification
      */
     public $extraIndentification;
+
     /**
-     * @var
+     * @var GroupIndicator
      */
     public $groupIndicator;
+
     /**
-     * @var
+     * @var TravelAgentRef[]
      */
-    public $travelAgentRef;
+    public $travelAgentRef = [];
+
     /**
-     * @var
+     * @var BookingPayerDetails
      */
     public $bookingPayerDetails;
+
     /**
-     * @var
+     * @var RoomStayData[]
      */
-    public $roomStayData;
+    public $roomStayData = [];
+
     /**
-     * @var
+     * @var ArrivalFlightDetailsGrp
      */
     public $arrivalFlightDetailsGrp;
 

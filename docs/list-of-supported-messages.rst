@@ -42,6 +42,7 @@ This is the list of messages that are at least partially supported at this time:
 - DocIssuance_IssueMiscellaneousDocuments
 - DocIssuance_IssueCombined
 - Service_IntegratedPricing
+- Hotel_Sell
 - Offer_CreateOffer
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
@@ -83,7 +84,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Hotel_MultiSingleAvailability
 - Hotel_DescriptiveInfo
 - Hotel_EnhancedPricing
-- Hotel_Sell
 - Hotel_CompleteReservationDetails
 - Hotel_Terms
 - Car_Availability
