@@ -691,3 +691,43 @@ Alternate Fare Family:
         ]
     ]);
 
+
+
+Special parameters (FeeIds)
+===========================
+
+To turn on some functions in MasterPricer, you have to send special parameter (sometimes specific function has to be enabled for your office id).
+
+Here is example how to get information about airlines fare families and get additional recommendation for homogoneus upsell:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptionsFare\MPPassenger;
+    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPFeeId;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'BRU']),
+                'arrivalLocation' => new MPLocation(['city' => 'LON']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ])
+        ],
+        'feeIds' => [
+            new MPFeeId(['type' => 'FFI', 'number' => 3]),
+            new MPFeeId(['type' => 'UPH', 'number' => 6])
+        ]
+    ]);

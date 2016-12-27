@@ -32,9 +32,23 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class MPFeeId extends LoadParamsFromArray
 {
+    const FEETYPE_ARP_NUMBER = "ARP";
+    const FEETYPE_FREE_BAGGAGE_ALLOWANCE = "FBA";
+    const FEETYPE_FARE_FAMILY_INFORMATION = "FFI";
+    const FEETYPE_NO_PNR_SPLIT = "NPS";
+    const FEETYPE_PRICE_TO_REACH_AMOUNT_TYPE = "PTRAM";
+    const FEETYPE_HAL_ROUND_TRIP_COMBINATION = "RTC";
+    const FEETYPE_SEARCH_BY_FBA = "SBF";
+    const FEETYPE_SORTING_OPTION = "SORT";
+    const FEETYPE_TOKEN = "TOKEN";
+    const FEETYPE_UPSELL_PER_BOUND = "UPB";
+    const FEETYPE_HOMOGENOUS_UPSELL = "UPH";
+    
     /**
      * Fee Type
      *
+     * self::FEETYPE_*
+     * 
      * @var string
      */
     public $type;

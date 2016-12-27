@@ -62,7 +62,7 @@ class FareOptions
      * @param array $corpCodesUniFares list of Corporate codes for Corporate Unifares
      * @param bool $tickPreCheck Do Ticketability pre-check?
      * @param string|null $currency Override Currency conversion
-     * @param array|null $flightOptions List of FeeIds
+     * @param \Amadeus\Client\RequestOptions\Fare\MPFeeId[]|null $flightOptions List of FeeIds
      */
     public function __construct(array $flightOptions, array $corpCodesUniFares, $tickPreCheck, $currency, $feeIds)
     {
@@ -88,7 +88,7 @@ class FareOptions
     /**
      * Set fee ids if needed
      *
-     * @param string|null $currency
+     * @param \Amadeus\Client\RequestOptions\Fare\MPFeeId[] $feeIds
      */
     protected function loadFeeIds($feeIds)
     {
