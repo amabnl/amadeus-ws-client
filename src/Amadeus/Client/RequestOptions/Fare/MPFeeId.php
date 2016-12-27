@@ -48,7 +48,7 @@ class MPFeeId extends LoadParamsFromArray
      * Fee Type
      *
      * self::FEETYPE_*
-     * 
+     *
      * @var string
      */
     public $type;

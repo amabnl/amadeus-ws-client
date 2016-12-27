@@ -46,7 +46,7 @@ class FeeId
      * Fee Type
      *
      * self::FEETYPE_*
-     * 
+     *
      * @var string
      */
     public $feeType;
