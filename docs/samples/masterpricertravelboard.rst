@@ -727,7 +727,7 @@ Here is example how to get information about airlines fare families and get addi
             ])
         ],
         'feeIds' => [
-            new MPFeeId(['type' => 'FFI', 'number' => 3]),
-            new MPFeeId(['type' => 'UPH', 'number' => 6])
+            new MPFeeId(['type' => MPFeeId::FEETYPE_FARE_FAMILY_INFORMATION, 'number' => 3]),
+            new MPFeeId(['type' => MPFeeId::FEETYPE_HOMOGENOUS_UPSELL, 'number' => 6])
         ]
     ]);
