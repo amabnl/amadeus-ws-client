@@ -4,6 +4,7 @@
 * Added a Client parameter to disable the population of the XML string in the Result object (https://github.com/amabnl/amadeus-ws-client/issues/33)
 * Support for multiple ``optionCode`` in ``PNR_AddMultiElements`` and ``PNR_Cancel`` messages (https://github.com/amabnl/amadeus-ws-client/issues/34)
 * Support for Currency Conversion in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/issues/35)
+* Support for Fee ID fare options in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/36) - Michal Hernas
 * ``Queue_List``: added new request options:
     - Search Criteria
     - Sort by Creation, Ticketing or Departure date
