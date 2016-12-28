@@ -29,6 +29,7 @@ use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\Fare\MPLocation;
 use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+use Amadeus\Client\RequestOptions\Fare\MPFeeId;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\Struct\Fare\MasterPricer\BooleanExpression;
 use Amadeus\Client\Struct\Fare\MasterPricer\CabinId;
@@ -312,6 +313,41 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertCount(1, $message->fareOptions->conversionRate->conversionRateDetail);
         $this->assertEquals('USD', $message->fareOptions->conversionRate->conversionRateDetail[0]->currency);
         $this->assertNull($message->fareOptions->conversionRate->conversionRateDetail[0]->conversionType);
+    }
+
+    public function testCanMakeMasterPricerMessageWithFeeIds()
+    {
+        $opt = new FareMasterPricerTbSearch([
+            'nrOfRequestedResults' => 200,
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'BRU']),
+                    'arrivalLocation' => new MPLocation(['city' => 'LON']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'feeIds' => [
+                new MPFeeId(['type' => 'FFI', 'number' => 2]),
+                new MPFeeId(['type' => 'UPH', 'number' => 6])
+            ]
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertCount(2, $message->fareOptions->feeIdDescription->feeId);
+        $this->assertEquals('FFI', $message->fareOptions->feeIdDescription->feeId[0]->feeType);
+        $this->assertEquals(2, $message->fareOptions->feeIdDescription->feeId[0]->feeIdNumber);
+        $this->assertEquals('UPH', $message->fareOptions->feeIdDescription->feeId[1]->feeType);
+        $this->assertEquals(6, $message->fareOptions->feeIdDescription->feeId[1]->feeIdNumber);
     }
 
     public function testCanMakeMasterPricerMessageWithCabinClassAndCod()

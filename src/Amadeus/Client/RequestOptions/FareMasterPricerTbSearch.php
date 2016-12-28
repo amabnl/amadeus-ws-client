@@ -155,6 +155,13 @@ class FareMasterPricerTbSearch extends Base
     public $currencyOverride;
 
     /**
+     * FeeIds you want to pass on fare options level.
+     *
+     * @var Fare\MPFeeId[]
+     */
+    public $feeIds;
+
+    /**
      * Cabin class requested for the entire itinerary
      *
      * self::CABIN_*
