@@ -22,45 +22,47 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
-use Amadeus\Client\RequestOptions\FopCreateFopOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Fop\CreateFormOfPayment\BestEffort;
-
 /**
- * CreateFormOfPayment
+ * Reservation
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CreateFormOfPayment extends BaseWsMessage
+class Reservation
 {
-    /**
-     * @var TransactionContext
-     */
-    public $transactionContext;
+    const BFE_EXTENDED = "EXT";
+    const BFE_MIDDLE_BACK_OFFICE = "MBO";
+    const BFE_PNR = "PNR";
 
     /**
-     * @var BestEffort[]
+     * @var string
      */
-    public $bestEffort = [];
+    public $companyId;
 
     /**
-     * @var ReservationControlInformation
+     * @var string
      */
-    public $reservationControlInformation;
+    public $controlNumber;
 
     /**
-     * @var FopGroup[]
+     * @var string
      */
-    public $fopGroup = [];
+    public $controlType;
 
     /**
-     * CreateFormOfPayment constructor.
+     * @var string
+     */
+    public $date;
+
+    /**
+     * @var int
+     */
+    public $time;
+
+    /**
+     * self::BFE_*
      *
-     * @param FopCreateFopOptions $options
+     * @var string
      */
-    public function __construct(FopCreateFopOptions $options)
-    {
-        //TODO
-    }
+    public $bfeType;
 }

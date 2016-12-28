@@ -20,47 +20,33 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fop;
-
-use Amadeus\Client\RequestOptions\FopCreateFopOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Fop\CreateFormOfPayment\BestEffort;
+namespace Amadeus\Client\Struct\Fop\CreateFormOfPayment;
 
 /**
- * CreateFormOfPayment
+ * StatusInformation
  *
- * @package Amadeus\Client\Struct\Fop
+ * @package Amadeus\Client\Struct\Fop\CreateFormOfPayment
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CreateFormOfPayment extends BaseWsMessage
+class StatusInformation
 {
-    /**
-     * @var TransactionContext
-     */
-    public $transactionContext;
+    const IND_CREATE_FOP_EVEN_IF_AUTHORIZATION_FAILED = "CFP";
+    const IND_SPLIT_PRICING_RECORD = "SPT";
+
+    const ACTION_CONFIRMATION = "KK";
+    const ACTION_REFUSAL = "UU";
 
     /**
-     * @var BestEffort[]
-     */
-    public $bestEffort = [];
-
-    /**
-     * @var ReservationControlInformation
-     */
-    public $reservationControlInformation;
-
-    /**
-     * @var FopGroup[]
-     */
-    public $fopGroup = [];
-
-    /**
-     * CreateFormOfPayment constructor.
+     * self::IND_*
      *
-     * @param FopCreateFopOptions $options
+     * @var string
      */
-    public function __construct(FopCreateFopOptions $options)
-    {
-        //TODO
-    }
+    public $indicator;
+
+    /**
+     * self::ACTION_*
+     *
+     * @var string
+     */
+    public $action;
 }

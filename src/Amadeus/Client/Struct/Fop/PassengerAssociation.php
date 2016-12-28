@@ -22,45 +22,16 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
-use Amadeus\Client\RequestOptions\FopCreateFopOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Fop\CreateFormOfPayment\BestEffort;
-
 /**
- * CreateFormOfPayment
+ * PassengerAssociation
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CreateFormOfPayment extends BaseWsMessage
+class PassengerAssociation
 {
     /**
-     * @var TransactionContext
+     * @var PassengerReference
      */
-    public $transactionContext;
-
-    /**
-     * @var BestEffort[]
-     */
-    public $bestEffort = [];
-
-    /**
-     * @var ReservationControlInformation
-     */
-    public $reservationControlInformation;
-
-    /**
-     * @var FopGroup[]
-     */
-    public $fopGroup = [];
-
-    /**
-     * CreateFormOfPayment constructor.
-     *
-     * @param FopCreateFopOptions $options
-     */
-    public function __construct(FopCreateFopOptions $options)
-    {
-        //TODO
-    }
+    public $passengerReference;
 }

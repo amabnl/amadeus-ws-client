@@ -20,47 +20,18 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fop;
-
-use Amadeus\Client\RequestOptions\FopCreateFopOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Fop\CreateFormOfPayment\BestEffort;
+namespace Amadeus\Client\Struct\Fop\CreateFormOfPayment;
 
 /**
- * CreateFormOfPayment
+ * BestEffort
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CreateFormOfPayment extends BaseWsMessage
+class BestEffort
 {
     /**
-     * @var TransactionContext
+     * @var StatusInformation[]
      */
-    public $transactionContext;
-
-    /**
-     * @var BestEffort[]
-     */
-    public $bestEffort = [];
-
-    /**
-     * @var ReservationControlInformation
-     */
-    public $reservationControlInformation;
-
-    /**
-     * @var FopGroup[]
-     */
-    public $fopGroup = [];
-
-    /**
-     * CreateFormOfPayment constructor.
-     *
-     * @param FopCreateFopOptions $options
-     */
-    public function __construct(FopCreateFopOptions $options)
-    {
-        //TODO
-    }
+    public $statusInformation = [];
 }

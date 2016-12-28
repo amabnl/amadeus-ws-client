@@ -22,45 +22,30 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
-use Amadeus\Client\RequestOptions\FopCreateFopOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Fop\CreateFormOfPayment\BestEffort;
-
 /**
- * CreateFormOfPayment
+ * ReferenceDetails
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CreateFormOfPayment extends BaseWsMessage
+class ReferenceDetails
 {
-    /**
-     * @var TransactionContext
-     */
-    public $transactionContext;
+    const TYPE_INSURANCE_ELEMENT_TATTOO = "INS";
+    const TYPE_MISCELLEANOUS_DOCUMENT = "MCO";
+    const TYPE_QUOTATION_RECORD_TATTOO = "QT";
+    const TYPE_SPECIAL_SERVICE_REQUEST = "SEG";
+    const TYPE_SSR_REFERENCE_NUMBER = "SSR";
+    const TYPE_SERVICE_PRICING_RECORD_TATTOO = "TSM";
 
     /**
-     * @var BestEffort[]
-     */
-    public $bestEffort = [];
-
-    /**
-     * @var ReservationControlInformation
-     */
-    public $reservationControlInformation;
-
-    /**
-     * @var FopGroup[]
-     */
-    public $fopGroup = [];
-
-    /**
-     * CreateFormOfPayment constructor.
+     * self::TYPE_*
      *
-     * @param FopCreateFopOptions $options
+     * @var string
      */
-    public function __construct(FopCreateFopOptions $options)
-    {
-        //TODO
-    }
+    public $type;
+
+    /**
+     * @var string|int
+     */
+    public $value;
 }

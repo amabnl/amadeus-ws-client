@@ -22,45 +22,21 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
-use Amadeus\Client\RequestOptions\FopCreateFopOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Fop\CreateFormOfPayment\BestEffort;
-
 /**
- * CreateFormOfPayment
+ * PricingTicketingDetails
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CreateFormOfPayment extends BaseWsMessage
+class PricingTicketingDetails
 {
     /**
-     * @var TransactionContext
+     * @var ProductDateTimeDetails
      */
-    public $transactionContext;
+    public $productDateTimeDetails;
 
     /**
-     * @var BestEffort[]
+     * @var LocationDetails
      */
-    public $bestEffort = [];
-
-    /**
-     * @var ReservationControlInformation
-     */
-    public $reservationControlInformation;
-
-    /**
-     * @var FopGroup[]
-     */
-    public $fopGroup = [];
-
-    /**
-     * CreateFormOfPayment constructor.
-     *
-     * @param FopCreateFopOptions $options
-     */
-    public function __construct(FopCreateFopOptions $options)
-    {
-        //TODO
-    }
+    public $locationDetails;
 }

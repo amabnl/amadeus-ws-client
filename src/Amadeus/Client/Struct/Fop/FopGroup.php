@@ -22,45 +22,44 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
-use Amadeus\Client\RequestOptions\FopCreateFopOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\Fop\CreateFormOfPayment\BestEffort;
-
 /**
- * CreateFormOfPayment
+ * FopGroup
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CreateFormOfPayment extends BaseWsMessage
+class FopGroup
 {
     /**
-     * @var TransactionContext
+     * @var FopReference
      */
-    public $transactionContext;
-
+    public $fopReference;
     /**
-     * @var BestEffort[]
+     * @var PassengerAssociation[]
      */
-    public $bestEffort = [];
-
+    public $passengerAssociation = [];
     /**
-     * @var ReservationControlInformation
+     * @var PnrElementAssociation[]
      */
-    public $reservationControlInformation;
-
+    public $pnrElementAssociation = [];
     /**
-     * @var FopGroup[]
+     * @var PricingTicketingDetails
      */
-    public $fopGroup = [];
-
+    public $pricingTicketingDetails;
     /**
-     * CreateFormOfPayment constructor.
-     *
-     * @param FopCreateFopOptions $options
+     * @var FeeTypeInfo
      */
-    public function __construct(FopCreateFopOptions $options)
-    {
-        //TODO
-    }
+    public $feeTypeInfo;
+    /**
+     * @var FeeDetailsInfoGroup[]
+     */
+    public $feeDetailsInfoGroup = [];
+    /**
+     * @var FpProcessingOptions
+     */
+    public $fpProcessingOptions;
+    /**
+     * @var MopDescription[]
+     */
+    public $mopDescription = [];
 }
