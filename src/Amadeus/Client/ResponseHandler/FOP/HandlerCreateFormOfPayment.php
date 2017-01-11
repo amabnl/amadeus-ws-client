@@ -35,6 +35,23 @@ use Amadeus\Client\Session\Handler\SendResult;
  */
 class HandlerCreateFormOfPayment extends StandardResponseHandler
 {
+    //General error
+    const Q_G_ERR = "//m:transmissionError/m:errorOrWarningCodeDetails/m:errorDetails/m:errorCode";
+    const Q_G_CAT = "//m:transmissionError/m:errorOrWarningCodeDetails/m:errorDetails/m:errorCategory";
+    const Q_G_MSG = "//m:transmissionError/m:errorWarningDescription/m:freeText";
+    //FP level error
+    const Q_F_ERR = "//m:fopDescription//m:fpElementError/m:errorOrWarningCodeDetails/m:errorDetails/m:errorCode";
+    const Q_F_CAT = "//m:fopDescription//m:fpElementError/m:errorOrWarningCodeDetails/m:errorDetails/m:errorCategory";
+    const Q_F_MSG = "//m:fopDescription//m:fpElementError/m:errorWarningDescription/m:freeText";
+    //Deficient FOP level:
+    const Q_D_ERR = "//m:fopDescription/m:mopDescription/m:mopElementError/m:errorOrWarningCodeDetails//m:errorCode";
+    const Q_D_CAT = "//m:fopDescription/m:mopDescription/m:mopElementError/m:errorOrWarningCodeDetails//m:errorCategory";
+    const Q_D_MSG = "//m:fopDescription/m:mopDescription/m:mopElementError/m:errorWarningDescription/m:freeText";
+    //Authorization failure:
+    const Q_A_ERR = "//m:fopDescription/m:mopDescription/m:paymentModule//m:paymentStatusError/m:errorOrWarningCodeDetails//m:errorCode";
+    const Q_A_CAT = "//m:fopDescription/m:mopDescription/m:paymentModule//m:paymentStatusError/m:errorOrWarningCodeDetails//m:errorCategory";
+    const Q_A_MSG = "//m:fopDescription/m:mopDescription/m:paymentModule//m:paymentStatusError/m:errorWarningDescription/m:freeText";
+
     /**
      * FOP_CreateFormOfPayment Analyze the result from the message operation and check for any error messages
      *
@@ -45,15 +62,85 @@ class HandlerCreateFormOfPayment extends StandardResponseHandler
     public function analyze(SendResult $response)
     {
         //TODO
+        $analyzeResponse = new Result($response);
 
-        //General level in the transmissionError location:
-        //FOP_CreateFormOfPaymentReply/transmissionError/errorOrWarningCodeDetails/errorDetails/errorCode
-        //FP level via the fopDescription/fpElementError data
-        //FOP_CreateFormOfPaymentReply/fopDescription/fpElementError/errorOrWarningCodeDetails/errorDetails/errorCode
-        //Deficient FOP level:
-        //FOP_CreateFormOfPaymentReply/fopDescription/mopDescription/mopElementError/errorOrWarningCodeDetails/errorDetails/errorCode
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        //General error level in the transmissionError location:
+        $errorCodeNodeList = $domXpath->query(self::Q_G_ERR);
+
+        if ($errorCodeNodeList->length > 0) {
+            $errorCatNode = $domXpath->query(self::Q_G_CAT)->item(0);
+            $analyzeResponse->setStatus($this->makeStatusForPotentiallyNonExistent($errorCatNode));
+
+            $code = $errorCodeNodeList->item(0)->nodeValue;
+            $errorTextNodeList = $domXpath->query(self::Q_G_MSG);
+            $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
+
+            $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'general');
+        }
+
+        //FP level errors via the fopDescription/fpElementError data:
+        $errorCodeNodeList = $domXpath->query(self::Q_F_ERR);
+
+        if ($errorCodeNodeList->length > 0) {
+            $errorCatNode = $domXpath->query(self::Q_F_CAT)->item(0);
+            $analyzeResponse->setStatus($this->makeStatusForPotentiallyNonExistent($errorCatNode));
+
+            $code = $errorCodeNodeList->item(0)->nodeValue;
+            $errorTextNodeList = $domXpath->query(self::Q_F_MSG);
+            $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
+
+            $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'fp');
+        }
+
+        //Deficient FOP level errors:
+        $errorCodeNodeList = $domXpath->query(self::Q_D_ERR);
+
+        if ($errorCodeNodeList->length > 0) {
+            $errorCatNode = $domXpath->query(self::Q_D_CAT)->item(0);
+            $analyzeResponse->setStatus($this->makeStatusForPotentiallyNonExistent($errorCatNode));
+
+            $code = $errorCodeNodeList->item(0)->nodeValue;
+
+            $errorTextNodeList = $domXpath->query(self::Q_D_MSG);
+            $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
+
+            $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'deficient_fop');
+        }
+
         //authorization failure:
-        //FOP_CreateFormOfPaymentReply/fopDescription/mopDescription/paymentModule/paymentStatus/paymentStatusError/errorOrWarningCodeDetails/errorDetails/errorCode
+        $errorCodeNodeList = $domXpath->query(self::Q_A_ERR);
 
+        if ($errorCodeNodeList->length > 0) {
+            $errorCatNode = $domXpath->query(self::Q_A_CAT)->item(0);
+            $analyzeResponse->setStatus($this->makeStatusForPotentiallyNonExistent($errorCatNode));
+
+            $code = $errorCodeNodeList->item(0)->nodeValue;
+
+            $errorTextNodeList = $domXpath->query(self::Q_A_MSG);
+            $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
+
+            $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'authorization_failure');
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
+     * Make status from a category DOMNode or default status.
+     *
+     * @param \DOMNode|null $errorCatNode
+     * @return string
+     */
+    protected function makeStatusForPotentiallyNonExistent($errorCatNode)
+    {
+        if ($errorCatNode instanceof \DOMNode) {
+            $status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
+        } else {
+            $status = Result::STATUS_ERROR;
+        }
+
+        return $status;
     }
 }

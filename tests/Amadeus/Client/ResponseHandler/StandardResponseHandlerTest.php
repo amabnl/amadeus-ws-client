@@ -46,4 +46,17 @@ class StandardResponseHandlerTest extends BaseTestCase
 
         $this->assertEquals(Result::STATUS_UNKNOWN, $result);
     }
+
+    public function testCanGetUnknownStatusForNull()
+    {
+        //Sweet sweet 100% coverage
+
+        $respHandler = new HandlerCreateTSTFromPricing();
+
+        $meth = $this->getMethod('Amadeus\Client\ResponseHandler\StandardResponseHandler', 'makeStatusFromErrorQualifier');
+
+        $result = $meth->invoke($respHandler, null);
+
+        $this->assertEquals(Result::STATUS_ERROR, $result);
+    }
 }
