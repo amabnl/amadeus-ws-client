@@ -20,44 +20,36 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\RequestOptions\Hotel\Sell;
 
-use Amadeus\Client\RequestOptions\Hotel\Sell\BookingCompany;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * Hotel_Sell Request Options
+ * Booker
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\RequestOptions\Hotel\Sell
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class HotelSellOptions extends Base
+class Booker extends LoadParamsFromArray
 {
-    const DELIVER_ERETAIL = "AERE";
-    const DELIVER_ETRAVEL_MANAGEMENT = "AETM";
-    const DELIVER_COMMAND_PAGE = "COMM";
-    const DELIVER_SELL2_SELL_CONNECT = "SECO";
-    const DELIVER_SELLING_PLATFORM_CLASSIC = "SELL";
-    const DELIVER_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const DELIVER_WEBSERVICES = "WEBS";
+    /**
+     * Number of travellers
+     * @var int
+     */
+    public $travellerCount = 1;
+
+    public $firstName;
+
+    public $lastName;
+
+    public $title;
 
     /**
-     * Booking system identifier
-     *
-     * self::DELIVER_*
+     * Gender - 'M' or 'F'
      *
      * @var string
      */
-    public $deliveringSystem;
-
-    /**
-     * @var BookingCompany[]
-     */
-    public $bookingCompany = [];
-
-    /**
-     * @var Booker
-     */
-    public $booker;
+    public $gender;
 
 
 }
