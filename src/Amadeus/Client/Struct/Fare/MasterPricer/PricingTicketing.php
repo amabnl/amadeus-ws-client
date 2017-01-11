@@ -45,6 +45,7 @@ class PricingTicketing
     const PRICETYPE_FORCE_NEUTRAL_FARE_SEARCH = "NPF";
     const PRICETYPE_NO_SLICE_AND_DICE = "NSD";
     const PRICETYPE_DISPLAY_MIN_MAX_STAY = "MST";
+    const PRICETYPE_OVERRIDE_CURRENCY_CONVERSION = "CUC";
 
     /**
      * self::PRICETYPE_*

@@ -33,4 +33,14 @@ class ConversionRateDetail
     public $conversionType;
 
     public $currency;
+
+    /**
+     * ConversionRateDetail constructor.
+     *
+     * @param $currency
+     */
+    public function __construct($currency)
+    {
+        $this->currency = $currency;
+    }
 }

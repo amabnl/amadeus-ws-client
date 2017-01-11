@@ -54,7 +54,7 @@ class PnrCancelOptions extends PnrBase
      * 30 Show warnings at first EOT
      * 50 Reply with short message
      *
-     * @var int
+     * @var int|int[]
      */
     public $actionCode = 0;
 

@@ -61,23 +61,73 @@ class FareOptions
      * @param array $flightOptions List of flight / fare options
      * @param array $corpCodesUniFares list of Corporate codes for Corporate Unifares
      * @param bool $tickPreCheck Do Ticketability pre-check?
+     * @param string|null $currency Override Currency conversion
+     * @param \Amadeus\Client\RequestOptions\Fare\MPFeeId[]|null $flightOptions List of FeeIds
      */
-    public function __construct(array $flightOptions, array $corpCodesUniFares, $tickPreCheck)
+    public function __construct(array $flightOptions, array $corpCodesUniFares, $tickPreCheck, $currency, $feeIds)
     {
-        $this->pricingTickInfo = new PricingTickInfo();
-        $this->pricingTickInfo->pricingTicketing = new PricingTicketing();
-
         if ($tickPreCheck === true) {
-            $this->pricingTickInfo->pricingTicketing->priceType[] = PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK;
+            $this->addPriceType(PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK);
         }
 
         foreach ($flightOptions as $flightOption) {
-            $this->pricingTickInfo->pricingTicketing->priceType[] = $flightOption;
+            $this->addPriceType($flightOption);
 
             if ($flightOption === PricingTicketing::PRICETYPE_CORPORATE_UNIFARES) {
                 $this->corporate = new Corporate();
                 $this->corporate->corporateId[] = new CorporateId($corpCodesUniFares);
             }
         }
+
+        $this->loadCurrencyOverride($currency);
+        if (!is_null($feeIds)) {
+            $this->loadFeeIds($feeIds);
+        }
+    }
+
+    /**
+     * Set fee ids if needed
+     *
+     * @param \Amadeus\Client\RequestOptions\Fare\MPFeeId[] $feeIds
+     */
+    protected function loadFeeIds($feeIds)
+    {
+        if (is_null($this->feeIdDescription)) {
+            $this->feeIdDescription = new FeeIdDescription();
+        }
+        foreach ($feeIds as $feeId) {
+            $this->feeIdDescription->feeId[] = new FeeId($feeId->type, $feeId->number);
+        }
+    }
+
+    /**
+     * Set currency override code if needed
+     *
+     * @param string|null $currency
+     */
+    protected function loadCurrencyOverride($currency)
+    {
+        if (is_string($currency) && strlen($currency) === 3) {
+            $this->addPriceType(PricingTicketing::PRICETYPE_OVERRIDE_CURRENCY_CONVERSION);
+
+            $this->conversionRate = new ConversionRate($currency);
+        }
+    }
+
+    /**
+     * Add PriceType
+     *
+     * @param string $type
+     */
+    protected function addPriceType($type)
+    {
+        if (is_null($this->pricingTickInfo)) {
+            $this->pricingTickInfo = new PricingTickInfo();
+        }
+        if (is_null($this->pricingTickInfo->pricingTicketing)) {
+            $this->pricingTickInfo->pricingTicketing = new PricingTicketing();
+        }
+
+        $this->pricingTickInfo->pricingTicketing->priceType[] = $type;
     }
 }

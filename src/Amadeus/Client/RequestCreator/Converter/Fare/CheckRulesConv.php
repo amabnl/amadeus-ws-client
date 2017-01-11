@@ -24,7 +24,6 @@ namespace Amadeus\Client\RequestCreator\Converter\Fare;
 
 use Amadeus\Client\RequestCreator\Converter\BaseConverter;
 use Amadeus\Client\RequestOptions\FareCheckRulesOptions;
-use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
 use Amadeus\Client\Struct;
 
 /**

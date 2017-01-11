@@ -31,6 +31,8 @@ namespace Amadeus\Client\RequestOptions;
 class PnrAddMultiElementsBase extends PnrBase
 {
     /**
+     * One or more action codes to be performed on the PNR
+     *
      * self::ACTION_* How to handle the PNR after creating
      *
      * 0 No special processing
@@ -47,7 +49,7 @@ class PnrAddMultiElementsBase extends PnrBase
      * 30 Show warnings at first EOT
      * 50 Reply with short message
      *
-     * @var int
+     * @var int|int[]
      */
     public $actionCode = 0;
 

@@ -14,7 +14,7 @@
 			<typeOfPnrElement>RP</typeOfPnrElement>
 			<agentId>WSSU</agentId>
 			<officeId>BRUXXXXXX</officeId>
-			<iataCode>00081900</iataCode>
+			<iataCode>11111111</iataCode>
 		</responsibilityInformation>
 		<queueingInformation>
 			<queueingOfficeId>BRUXXXXXX</queueingOfficeId>
@@ -24,14 +24,14 @@
 			<creationOfficeId>BRUXXXXXX</creationOfficeId>
 			<agentSignature>9991WS</agentSignature>
 			<creationDate>300516</creationDate>
-			<creatorIataCode>00081900</creatorIataCode>
+			<creatorIataCode>11111111</creatorIataCode>
 			<creationTime>2133</creationTime>
 		</secondRpInformation>
 	</securityInformation>
 	<sbrPOSDetails>
 		<sbrUserIdentificationOwn>
 			<originIdentification>
-				<originatorId>00081900</originatorId>
+				<originatorId>11111111</originatorId>
 				<inHouseIdentification1>BRUXXXXXX</inHouseIdentification1>
 			</originIdentification>
 			<originatorTypeCode>T</originatorTypeCode>
@@ -51,7 +51,7 @@
 	<sbrCreationPosDetails>
 		<sbrUserIdentificationOwn>
 			<originIdentification>
-				<originatorId>00081900</originatorId>
+				<originatorId>11111111</originatorId>
 				<inHouseIdentification1>BRUXXXXXX</inHouseIdentification1>
 			</originIdentification>
 			<originatorTypeCode>T</originatorTypeCode>
@@ -71,7 +71,7 @@
 	<sbrUpdatorPosDetails>
 		<sbrUserIdentificationOwn>
 			<originIdentification>
-				<originatorId>00081900</originatorId>
+				<originatorId>11111111</originatorId>
 				<inHouseIdentification1>BRUXXXXXX</inHouseIdentification1>
 			</originIdentification>
 			<originatorTypeCode>T</originatorTypeCode>
