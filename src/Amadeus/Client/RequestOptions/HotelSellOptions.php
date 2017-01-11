@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\RequestOptions;
 
+use Amadeus\Client\RequestOptions\Hotel\Sell\Booker;
 use Amadeus\Client\RequestOptions\Hotel\Sell\BookingCompany;
 
 /**
