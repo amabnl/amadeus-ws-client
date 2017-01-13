@@ -23,27 +23,40 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * TransactionDateTime
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class TransactionDateTime
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    const OPT_LOCAL_DATE_AND_TIME = "L";
+    const OPT_LOCAL_TIME = "LT";
+    const OPT_TRANSACTION_DATE_AND_TIME = "T";
+    const OPT_UTC_TIME_MODE = "U";
+    const OPT_GMT_TIME = "ZT";
 
     /**
-     * self::TYPE_*
+     * self::OPT_*
      *
      * @var string
      */
-    public $type;
+    public $businessSemantic;
 
     /**
-     * @var string|int
+     * @var DateTime
      */
-    public $value;
+    public $dateTime;
+
+    /**
+     * TransactionDateTime constructor.
+     *
+     * @param string $businessSemantic self::OPT_*
+     * @param \DateTime $dateTime
+     */
+    public function __construct($businessSemantic, \DateTime $dateTime)
+    {
+        $this->businessSemantic = $businessSemantic;
+        $this->dateTime = new DateTime($dateTime);
+    }
 }

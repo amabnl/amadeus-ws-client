@@ -23,27 +23,25 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * SliderPosition
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class SliderPosition
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    const QUAL_SLIDER_NUMBER_OF_COUPLES = "CPL";
+    const QUAL_RANK_OF_SLIDER = "RNK";
 
     /**
-     * self::TYPE_*
+     * @var int
+     */
+    public $numberOfUnit;
+
+    /**
+     * self::QUAL_*
      *
      * @var string
      */
-    public $type;
-
-    /**
-     * @var string|int
-     */
-    public $value;
+    public $unitQualifier;
 }

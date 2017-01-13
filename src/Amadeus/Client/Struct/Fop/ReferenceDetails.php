@@ -37,6 +37,19 @@ class ReferenceDetails
     const TYPE_SSR_REFERENCE_NUMBER = "SSR";
     const TYPE_SERVICE_PRICING_RECORD_TATTOO = "TSM";
 
+    const TYPE_METHOD_OF_PAYMENT = "MEP";
+    const TYPE_PAYMENT_ITEM = "PAI";
+    const TYPE_SEQUENCE_NUMBER = "SEQ";
+
+    const TYPE_CPF_BRAZILIAN_SECURITY_NUMBER = "CP";
+    const TYPE_DRIVER_LICENSE = "DLN";
+    const TYPE_FREQUENT_FLYER_NUMBER = "FFN";
+    const TYPE_LOCALLY_DEFINED_NUMBER = "ID";
+    const TYPE_NATIONAL_IDENTITY_CARD_NUMBER = "NI";
+    const TYPE_PASSPORT_NUMBER = "PP";
+    const TYPE_SOCIAL_SECURITY_NUMBER = "SSN";
+
+
     /**
      * self::TYPE_*
      *

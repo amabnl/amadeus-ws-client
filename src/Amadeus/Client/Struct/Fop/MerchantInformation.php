@@ -23,27 +23,30 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * MerchantInformation
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class MerchantInformation
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
-
     /**
-     * self::TYPE_*
-     *
      * @var string
      */
-    public $type;
+    public $companyCode;
 
     /**
      * @var string|int
      */
-    public $value;
+    public $companyNumericCode;
+
+    /**
+     * MerchantInformation constructor.
+     *
+     * @param string $companyCode
+     */
+    public function __construct($companyCode)
+    {
+        $this->companyCode = $companyCode;
+    }
 }

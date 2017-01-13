@@ -23,27 +23,25 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * DataTypeInformation
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class DataTypeInformation
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
-
     /**
-     * self::TYPE_*
-     *
      * @var string
      */
     public $type;
 
     /**
-     * @var string|int
+     * DataTypeInformation constructor.
+     *
+     * @param string $type
      */
-    public $value;
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
 }

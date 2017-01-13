@@ -23,27 +23,20 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * SliderConversion
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class SliderConversion
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    /**
+     * @var SliderMode
+     */
+    public $sliderMode;
 
     /**
-     * self::TYPE_*
-     *
-     * @var string
+     * @var SliderPosition[]
      */
-    public $type;
-
-    /**
-     * @var string|int
-     */
-    public $value;
+    public $sliderPosition = [];
 }

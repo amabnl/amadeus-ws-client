@@ -22,28 +22,33 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\Struct\Offer\ConfirmCar\TelephoneNumberDetails;
+
 /**
- * PassengerReference
+ * PayerPhoneOrEmail
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class PayerPhoneOrEmail
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    const TYPE_PHONE = "P";
+    const TYPE_EMAIL = "E";
 
     /**
      * self::TYPE_*
      *
      * @var string
      */
-    public $type;
+    public $phoneOrEmailType;
 
     /**
-     * @var string|int
+     * @var TelephoneNumberDetails
      */
-    public $value;
+    public $telephoneNumberDetails;
+
+    /**
+     * @var string
+     */
+    public $emailAddress;
 }

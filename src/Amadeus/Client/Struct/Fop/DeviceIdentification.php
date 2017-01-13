@@ -23,27 +23,32 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * DeviceIdentification
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class DeviceIdentification
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    const QUAL_IP_ADDRESS = "IP";
 
     /**
-     * self::TYPE_*
-     *
      * @var string
      */
-    public $type;
+    public $address;
 
     /**
-     * @var string|int
+     * @var string
      */
-    public $value;
+    public $qualifier = self::QUAL_IP_ADDRESS;
+
+    /**
+     * DeviceIdentificationIP constructor.
+     *
+     * @param string $address
+     */
+    public function __construct($address)
+    {
+        $this->address = $address;
+    }
 }

@@ -21,29 +21,23 @@
  */
 
 namespace Amadeus\Client\Struct\Fop;
+use Amadeus\Client\Struct\Pnr\DisplayHistory\FreeTextDetails;
 
 /**
- * PassengerReference
+ * OldFopFreeflow
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class OldFopFreeflow
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    /**
+     * @var FreeTextDetails
+     */
+    public $freeTextDetails;
 
     /**
-     * self::TYPE_*
-     *
      * @var string
      */
-    public $type;
-
-    /**
-     * @var string|int
-     */
-    public $value;
+    public $freeText;
 }

@@ -30,4 +30,13 @@ namespace Amadeus\Client\Struct\Fop;
  */
 class FeeDetailsInfoGroup
 {
+    /**
+     * @var FeeInfo
+     */
+    public $feeInfo;
+
+    /**
+     * @var FeeProcessingInfo
+     */
+    public $feeProcessingInfo;
 }

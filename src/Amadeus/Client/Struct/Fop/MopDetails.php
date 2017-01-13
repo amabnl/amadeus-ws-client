@@ -23,27 +23,23 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * MopDetails
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class MopDetails
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
-
     /**
-     * self::TYPE_*
-     *
-     * @var string
+     * @var FopPNRDetails
      */
-    public $type;
-
+    public $fopPNRDetails;
     /**
-     * @var string|int
+     * @var OldFopFreeflow
      */
-    public $value;
+    public $oldFopFreeflow;
+    /**
+     * @var PnrSupplementaryData[]
+     */
+    public $pnrSupplementaryData = [];
 }

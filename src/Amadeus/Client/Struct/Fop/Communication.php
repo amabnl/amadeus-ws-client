@@ -23,27 +23,32 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * Communication
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class Communication
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    const QUAL_WWW = "AH";
 
     /**
-     * self::TYPE_*
-     *
      * @var string
      */
-    public $type;
+    public $internetAddress;
 
     /**
-     * @var string|int
+     * @var string
      */
-    public $value;
+    public $adressQualifier = self::QUAL_WWW;
+
+    /**
+     * Communication constructor.
+     *
+     * @param string $internetAddress
+     */
+    public function __construct($internetAddress)
+    {
+        $this->internetAddress = $internetAddress;
+    }
 }

@@ -23,27 +23,27 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * DateTime
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class DateTime extends \Amadeus\Client\Struct\Fare\PricePnr13\DateTime
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
-
     /**
-     * self::TYPE_*
-     *
-     * @var string
+     * @var int
      */
-    public $type;
-
+    public $hour;
     /**
-     * @var string|int
+     * @var int
      */
-    public $value;
+    public $minutes;
+    /**
+     * @var int
+     */
+    public $seconds;
+    /**
+     * @var int
+     */
+    public $milliseconds;
 }

@@ -23,27 +23,20 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * CurrenciesRatesGroup
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class CurrenciesRatesGroup
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    /**
+     * @var mixed
+     */
+    public $currenciesExchangeRate;
 
     /**
-     * self::TYPE_*
-     *
-     * @var string
+     * @var mixed
      */
-    public $type;
-
-    /**
-     * @var string|int
-     */
-    public $value;
+    public $rateType;
 }

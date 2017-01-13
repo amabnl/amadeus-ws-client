@@ -22,28 +22,28 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\Struct\Fare\PricePnr13\DateTime;
+
 /**
- * PassengerReference
+ * PayerDateOfBirth
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class PayerDateOfBirth
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    /**
+     * @var DateTime
+     */
+    public $dateTime;
 
     /**
-     * self::TYPE_*
+     * PayerDateOfBirth constructor.
      *
-     * @var string
+     * @param \DateTime $dateTime
      */
-    public $type;
-
-    /**
-     * @var string|int
-     */
-    public $value;
+    public function __construct(\DateTime $dateTime)
+    {
+        $this->dateTime = new DateTime($dateTime);
+    }
 }

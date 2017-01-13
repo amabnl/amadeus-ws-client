@@ -23,27 +23,45 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * PaymentId
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class PaymentId
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    const TYPE_APPLICATION_CORRELATOR_ID = "APP";
+    const TYPE_CAPTURE_REFERENCE_ID = "CRI";
+    const TYPE_DCC_CURRENCY_CHOSEN = "DCC";
+    const TYPE_THIRD_PARTY_RECORD_ID = "EXT";
+    const TYPE_FRAUD_RECORD_ID = "FRI";
+    const TYPE_MERCHANT_REFERENCE = "MRF";
+    const TYPE_PAYMENT_PAGE_TOKEN = "PPT";
+    const TYPE_PAYMENT_RECORD_ID = "PRI";
+    const TYPE_PSP_RECONCILATION_REFERENCE = "PRR";
+    const TYPE_REFUND_REFERENCE_ID = "RRI";
 
     /**
      * self::TYPE_*
      *
      * @var string
      */
-    public $type;
+    public $referenceType;
 
     /**
-     * @var string|int
+     * @var string
      */
-    public $value;
+    public $uniqueReference;
+
+    /**
+     * PaymentId constructor.
+     *
+     * @param string $uniqueReference
+     * @param string $referenceType
+     */
+    public function __construct($uniqueReference, $referenceType)
+    {
+        $this->referenceType = $referenceType;
+        $this->uniqueReference = $uniqueReference;
+    }
 }

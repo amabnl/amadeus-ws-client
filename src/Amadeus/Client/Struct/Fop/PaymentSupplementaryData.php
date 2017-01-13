@@ -23,27 +23,24 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * PaymentSupplementaryData
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class PaymentSupplementaryData
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    const FUNCTION_QUANTAS_DBI = "QF";
 
     /**
-     * self::TYPE_*
+     * self::FUNCTION_*
      *
      * @var string
      */
-    public $type;
+    public $attributeFunction;
 
     /**
-     * @var string|int
+     * @var AttributeDetails[]
      */
-    public $value;
+    public $attributeDetails = [];
 }

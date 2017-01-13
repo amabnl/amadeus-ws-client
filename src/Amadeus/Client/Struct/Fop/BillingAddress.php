@@ -23,27 +23,46 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * BillingAddress
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class BillingAddress
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    /**
+     * @var AddressDetails
+     */
+    public $addressDetails;
 
     /**
-     * self::TYPE_*
-     *
      * @var string
      */
-    public $type;
+    public $city;
 
     /**
-     * @var string|int
+     * @var string
      */
-    public $value;
+    public $zipCode;
+
+    /**
+     * @var string
+     */
+    public $countryCode;
+
+    /**
+     * BillingAddress constructor.
+     *
+     * @param string[] $addressLines
+     * @param string $city
+     * @param string $zipCode
+     * @param string $countryCode
+     */
+    public function __construct($addressLines, $city, $zipCode, $countryCode)
+    {
+        $this->addressDetails = new AddressDetails($addressLines);
+        $this->city = $city;
+        $this->zipCode = $zipCode;
+        $this->countryCode = $countryCode;
+    }
 }

@@ -23,27 +23,25 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * DeliveringSystem
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class DeliveringSystem
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
-
     /**
-     * self::TYPE_*
-     *
      * @var string
      */
-    public $type;
+    public $companyId;
 
     /**
-     * @var string|int
+     * DeliveringSystem constructor.
+     *
+     * @param string $companyId
      */
-    public $value;
+    public function __construct($companyId)
+    {
+        $this->companyId = $companyId;
+    }
 }

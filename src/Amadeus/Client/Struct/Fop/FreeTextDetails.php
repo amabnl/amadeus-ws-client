@@ -23,27 +23,37 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * FreeTextDetails
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class FreeTextDetails
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
+    const QUALIFIER_LITERAL_TEXT = 3;
+    const QUALIFIER_MUTUAL = "ZZZ";
 
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    const SOURCE_MANUAL = "M";
+
+    const ENCODING_DEFAULT = 1;
+    const ENCODING_MUTUAL = "ZZZ";
 
     /**
-     * self::TYPE_*
+     * self::QUALIFIER_*
+     *
+     * @var int|string
+     */
+    public $textSubjectQualifier = self::QUALIFIER_MUTUAL;
+
+    /**
+     * self::SOURCE_*
      *
      * @var string
      */
-    public $type;
+    public $source = self::SOURCE_MANUAL;
 
     /**
-     * @var string|int
+     * @var int
      */
-    public $value;
+    public $encoding = self::ENCODING_MUTUAL;
 }

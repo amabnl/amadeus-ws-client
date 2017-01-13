@@ -23,27 +23,25 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * DataAndSwitchMap
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class DataAndSwitchMap
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    const TYPE_DATA_INFORMATION = "D";
+    const TYPE_SWITCH_INFORMATION = "S";
 
     /**
      * self::TYPE_*
      *
      * @var string
      */
-    public $type;
+    public $criteriaSetType;
 
     /**
-     * @var string|int
+     * @var CriteriaDetails[]
      */
-    public $value;
+    public $criteriaDetails = [];
 }

@@ -30,4 +30,8 @@ namespace Amadeus\Client\Struct\Fop;
  */
 class FpProcessingOptions
 {
+    /**
+     * @var StatusInformation[]
+     */
+    public $statusInformation = [];
 }

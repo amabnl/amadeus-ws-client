@@ -23,27 +23,28 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * PaymentDataMap
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class PaymentDataMap
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    const TYPE_EXTENDED_PAYMENT = "EXT";
+    const TYPE_FRAUD_DATA = "FRA";
+    const TYPE_PAYMENT_TYPE = "PAY";
+    const TYPE_PROMO_CODE = "PRO";
+    const TYPE_SALE_INFORMATION = "SAL";
 
     /**
      * self::TYPE_*
      *
      * @var string
      */
-    public $type;
+    public $criteriaSetType;
 
     /**
-     * @var string|int
+     * @var CriteriaDetails[]
      */
-    public $value;
+    public $criteriaDetails = [];
 }

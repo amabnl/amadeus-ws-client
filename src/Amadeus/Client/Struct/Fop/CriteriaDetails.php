@@ -23,27 +23,11 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * CriteriaDetails
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class CriteriaDetails extends \Amadeus\Client\Struct\DocIssuance\CriteriaDetails
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
-
-    /**
-     * self::TYPE_*
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
-     * @var string|int
-     */
-    public $value;
 }

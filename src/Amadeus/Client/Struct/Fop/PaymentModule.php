@@ -23,27 +23,45 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * PaymentModule
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class PaymentModule
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    /**
+     * @var GroupUsage
+     */
+    public $groupUsage;
 
     /**
-     * self::TYPE_*
-     *
+     * @var PaymentData
+     */
+    public $paymentData;
+
+    /**
+     * @var PaymentStatus
+     */
+    public $paymentStatus;
+
+    /**
+     * @var PaymentSupplementaryData[]
+     */
+    public $paymentSupplementaryData = [];
+
+    /**
+     * @var MopInformation
+     */
+    public $mopInformation;
+
+    /**
      * @var string
      */
-    public $type;
+    public $dummy;
 
     /**
-     * @var string|int
+     * @var MopDetailedData
      */
-    public $value;
+    public $mopDetailedData;
 }

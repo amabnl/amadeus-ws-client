@@ -23,27 +23,25 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * OtherNameDetails
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class OtherNameDetails
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
-
     /**
-     * self::TYPE_*
-     *
      * @var string
      */
-    public $type;
+    public $givenName;
 
     /**
-     * @var string|int
+     * OtherNameDetails constructor.
+     *
+     * @param string $givenName
      */
-    public $value;
+    public function __construct($givenName)
+    {
+        $this->givenName = $givenName;
+    }
 }

@@ -23,27 +23,70 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * FraudScreeningData
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class FraudScreeningData
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    /**
+     * @var FraudScreening
+     */
+    public $fraudScreening;
 
     /**
-     * self::TYPE_*
-     *
-     * @var string
+     * @var IpAdress
      */
-    public $type;
+    public $ipAdress;
 
     /**
-     * @var string|int
+     * @var MerchantUrl
      */
-    public $value;
+    public $merchantURL;
+
+    /**
+     * @var PayerPhoneOrEmail[]
+     */
+    public $payerPhoneOrEmail = [];
+
+    /**
+     * @var ShopperSession
+     */
+    public $shopperSession;
+
+    /**
+     * @var PayerName
+     */
+    public $payerName;
+
+    /**
+     * @var PayerDateOfBirth
+     */
+    public $payerDateOfBirth;
+
+    /**
+     * @var BillingAddress
+     */
+    public $billingAddress;
+
+    /**
+     * @var FormOfIdDetails[]
+     */
+    public $formOfIdDetails = [];
+
+    /**
+     * @var TravelShopper
+     */
+    public $travelShopper;
+
+    /**
+     * @var ShopperDetails
+     */
+    public $shopperDetails;
+
+    /**
+     * @var SecurityCode[]
+     */
+    public $securityCode = [];
 }

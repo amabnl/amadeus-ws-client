@@ -21,29 +21,23 @@
  */
 
 namespace Amadeus\Client\Struct\Fop;
+use Amadeus\Client\Struct\Fare\ConvertCurrency\MonetaryDetails;
 
 /**
- * PassengerReference
+ * MonetaryInformation
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class MonetaryInformation
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    /**
+     * @var MonetaryDetails
+     */
+    public $monetaryDetails;
 
     /**
-     * self::TYPE_*
-     *
-     * @var string
+     * @var MonetaryDetails[]
      */
-    public $type;
-
-    /**
-     * @var string|int
-     */
-    public $value;
+    public $otherMonetaryDetails = [];
 }

@@ -23,27 +23,63 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * AddressDetails
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class AddressDetails
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    const FORMAT_UNSTRUCTURED = 5;
 
     /**
-     * self::TYPE_*
-     *
+     * @var int
+     */
+    public $format = self::FORMAT_UNSTRUCTURED;
+
+    /**
      * @var string
      */
-    public $type;
+    public $line1;
 
     /**
-     * @var string|int
+     * @var string
      */
-    public $value;
+    public $line2;
+
+    /**
+     * @var string
+     */
+    public $line3;
+
+    /**
+     * @var string
+     */
+    public $line4;
+
+    /**
+     * @var string
+     */
+    public $line5;
+
+    /**
+     * @var string
+     */
+    public $line6;
+
+
+    /**
+     * AddressDetails constructor.
+     *
+     * @param string[] $addressLines
+     */
+    public function __construct($addressLines)
+    {
+        foreach ($addressLines as $key=>$line) {
+            $lineNumProp = 'line'.($key+1);
+            if (property_exists($this, $lineNumProp)) {
+                $this->$lineNumProp = $line;
+            }
+        }
+    }
 }

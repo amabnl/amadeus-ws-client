@@ -23,27 +23,15 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * ExtendedPaymentInfo
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class ExtendedPaymentInfo
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
-
     /**
-     * self::TYPE_*
-     *
-     * @var string
+     * @var ExtendedPaymentDetails
      */
-    public $type;
-
-    /**
-     * @var string|int
-     */
-    public $value;
+    public $extendedPaymentDetails;
 }

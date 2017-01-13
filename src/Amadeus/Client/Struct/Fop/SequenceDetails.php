@@ -23,27 +23,32 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * SequenceDetails
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class SequenceDetails
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
-
-    /**
-     * self::TYPE_*
-     *
-     * @var string
-     */
-    public $type;
-
     /**
      * @var string|int
      */
-    public $value;
+    public $number;
+
+    /**
+     * @var string
+     */
+    public $identificationCode;
+
+    /**
+     * SequenceDetails constructor.
+     *
+     * @param int|string $number
+     * @param string|null $identificationCode
+     */
+    public function __construct($number, $identificationCode = null)
+    {
+        $this->number = $number;
+        $this->identificationCode = $identificationCode;
+    }
 }

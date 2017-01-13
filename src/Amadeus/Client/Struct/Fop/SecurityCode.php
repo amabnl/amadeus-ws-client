@@ -23,27 +23,20 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * SecurityCode
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class SecurityCode
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    /**
+     * @var SecurityType
+     */
+    public $securityType;
 
     /**
-     * self::TYPE_*
-     *
-     * @var string
+     * @var SecurityKey
      */
-    public $type;
-
-    /**
-     * @var string|int
-     */
-    public $value;
+    public $securityKey;
 }

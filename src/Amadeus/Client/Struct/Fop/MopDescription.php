@@ -30,4 +30,24 @@ namespace Amadeus\Client\Struct\Fop;
  */
 class MopDescription
 {
+    /**
+     * @var FopSequenceNumber
+     */
+    public $fopSequenceNumber;
+    /**
+     * @var FopMasterElementReference
+     */
+    public $fopMasterElementReference;
+    /**
+     * @var StakeholderPayerReference
+     */
+    public $stakeholderPayerReference;
+    /**
+     * @var MopDetails
+     */
+    public $mopDetails;
+    /**
+     * @var PaymentModule
+     */
+    public $paymentModule;
 }

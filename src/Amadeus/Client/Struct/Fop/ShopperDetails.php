@@ -23,27 +23,20 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * ShopperDetails
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class ShopperDetails
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    /**
+     * @var ShopperId
+     */
+    public $shopperID;
 
     /**
-     * self::TYPE_*
-     *
-     * @var string
+     * @var ShopperLogged
      */
-    public $type;
-
-    /**
-     * @var string|int
-     */
-    public $value;
+    public $shopperLogged;
 }

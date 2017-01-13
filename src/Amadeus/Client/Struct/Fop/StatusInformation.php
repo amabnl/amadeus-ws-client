@@ -23,27 +23,32 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * StatusInformation
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class StatusInformation
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
+    const INDICATOR_DISTRIBUTION_MODEL = "DM";
+    const INDICATOR_FRAUD_SCREENING = "FRA";
 
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    const ACTION_DIRECT_DISTRIBUTION_MODEL = "DDM";
+    const ACTION_NO = "N";
+    const ACTION_YES = "Y";
+
 
     /**
-     * self::TYPE_*
+     * self::INDICATOR_*
      *
      * @var string
      */
-    public $type;
+    public $indicator;
 
     /**
-     * @var string|int
+     * self::ACTION_*
+     *
+     * @var string
      */
-    public $value;
+    public $action;
 }

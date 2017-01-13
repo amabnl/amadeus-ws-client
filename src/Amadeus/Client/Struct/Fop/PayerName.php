@@ -23,27 +23,32 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * PassengerReference
+ * PayerName
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PassengerReference
+class PayerName
 {
-    const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
-
-    const TYPE_STAKEHOLDER_PAYER = "SHP";
+    /**
+     * @var CcHolderNameDetails
+     */
+    public $ccHolderNameDetails;
 
     /**
-     * self::TYPE_*
+     * @var OtherNameDetails
+     */
+    public $otherNameDetails;
+
+    /**
+     * PayerName constructor.
      *
-     * @var string
+     * @param string $lastName
+     * @param string $firstName
      */
-    public $type;
-
-    /**
-     * @var string|int
-     */
-    public $value;
+    public function __construct($lastName, $firstName)
+    {
+        $this->ccHolderNameDetails = new CcHolderNameDetails($lastName);
+        $this->otherNameDetails = new OtherNameDetails($firstName);
+    }
 }
