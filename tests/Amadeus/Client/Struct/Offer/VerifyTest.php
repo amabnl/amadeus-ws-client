@@ -44,8 +44,8 @@ class VerifyTest extends BaseTestCase
 
         $message = new Verify($opt->offerReference, $opt->segmentName);
 
-        $this->assertEquals(1, $message->offerTattoo->reference->value);
-        $this->assertEquals(Reference::TYPE_OFFER_TATTOO, $message->offerTattoo->reference->type);
-        $this->assertEquals('AIR', $message->offerTattoo->segmentName);
+        $this->assertEquals(1, $message->offerTatoo->reference->value);
+        $this->assertEquals(Reference::TYPE_OFFER_TATTOO, $message->offerTatoo->reference->type);
+        $this->assertEquals('AIR', $message->offerTatoo->segmentName);
     }
 }
