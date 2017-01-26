@@ -156,11 +156,11 @@ class BaseTest extends BaseTestCase
 
         $this->assertInstanceOf('Amadeus\Client\Struct\Offer\Verify', $message);
         /** @var Verify $message */
-        $this->assertInstanceOf('Amadeus\Client\Struct\Offer\OfferTattoo', $message->offerTattoo);
-        $this->assertEquals('AIR', $message->offerTattoo->segmentName);
-        $this->assertInstanceOf('Amadeus\Client\Struct\Offer\Reference', $message->offerTattoo->reference);
-        $this->assertEquals(Reference::TYPE_OFFER_TATTOO, $message->offerTattoo->reference->type);
-        $this->assertEquals(1, $message->offerTattoo->reference->value);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Offer\OfferTattoo', $message->offerTatoo);
+        $this->assertEquals('AIR', $message->offerTatoo->segmentName);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Offer\Reference', $message->offerTatoo->reference);
+        $this->assertEquals(Reference::TYPE_OFFER_TATTOO, $message->offerTatoo->reference->type);
+        $this->assertEquals(1, $message->offerTatoo->reference->value);
     }
 
     public function testCanCreateQueueListMessage()
