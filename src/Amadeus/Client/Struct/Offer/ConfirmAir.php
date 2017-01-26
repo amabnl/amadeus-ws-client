@@ -38,7 +38,7 @@ class ConfirmAir extends BaseWsMessage
      *
      * @var OfferTattoo
      */
-    public $offerTattoo;
+    public $offerTatoo;
 
     /**
      * Group for pax reconciliation between Pax PNR and passenger types prices at offer creation time
@@ -53,7 +53,7 @@ class ConfirmAir extends BaseWsMessage
     public function __construct($options = null)
     {
         if (!is_null($options)) {
-            $this->offerTattoo = new OfferTattoo($options->tattooNumber);
+            $this->offerTatoo = new OfferTattoo($options->tattooNumber);
 
             foreach ($options->passengerReassociation as $reAssoc) {
                 $this->passengerReassociation[] = new PassengerReassociation(
