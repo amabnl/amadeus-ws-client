@@ -76,6 +76,7 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Ticket_ProcessEDoc
 - Ticket_RetrieveListOfTSM
 - Ticket_AddDocNumber
+- TTR_DisplayTrip
 - Media_GetMedia
 - Service_IntegratedCatalogue
 - Service_PriceServiceViaCatalogue
