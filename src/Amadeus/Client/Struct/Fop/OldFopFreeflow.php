@@ -22,8 +22,6 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
-use Amadeus\Client\Struct\Pnr\DisplayHistory\FreeTextDetails;
-
 /**
  * OldFopFreeflow
  *

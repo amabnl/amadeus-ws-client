@@ -22,8 +22,6 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
-use Amadeus\Client\Struct\Fare\PricePnr13\DateTime;
-
 /**
  * PayerDateOfBirth
  *
