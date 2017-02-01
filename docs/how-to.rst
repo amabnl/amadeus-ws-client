@@ -293,6 +293,17 @@ Here's an example of how to use a `Monolog <https://github.com/Seldaek/monolog>`
 
 If you now check the logfile's contents, it will contain the request and response for the PNR_Retrieve call you just made.
 
+*****************************************
+Getting individual requests and responses
+*****************************************
+
+If you don't want to log all requests and responses to a logfile, but you need to inspect a single request or response for debugging or other purposes, you can use:
+
+.. code-block:: php
+
+    $lastMessageSent = $client->getLastRequest();
+
+    $lastResponseReceived = $client->getLastResponse();
 
 ================
 EXAMPLE MESSAGES
