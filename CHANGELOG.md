@@ -20,6 +20,9 @@
 * Request Creator split up in 1 dedicated class per message.
 * Response Handler split up in 1 dedicated class per message.
 
+# Release 1.1.1 (26 January 2017)
+* Fixed a bug in Offer_ConfirmAirOffer and Offer_VerifyOffer (https://github.com/amabnl/amadeus-ws-client/issues/38).
+
 # Release 1.1.0 (19 October 2016)
 
 * ``Fare_MasterPricerTravelBoardSearch``: added new request options (https://github.com/amabnl/amadeus-ws-client/issues/20):
