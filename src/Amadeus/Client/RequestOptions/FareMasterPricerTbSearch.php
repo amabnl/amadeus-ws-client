@@ -64,6 +64,9 @@ class FareMasterPricerTbSearch extends Base
     const FLIGHTOPT_NO_SLICE_AND_DICE = "NSD";
     const FLIGHTOPT_DISPLAY_MIN_MAX_STAY = "MST";
 
+    const CORPORATE_QUALIFIER_AMADEUS_NEGO = "RC";
+    const CORPORATE_QUALIFIER_UNIFARE = "RW";
+
     /**
      * Major cabin
      */
@@ -140,6 +143,17 @@ class FareMasterPricerTbSearch extends Base
      * @var string[]
      */
     public $corporateCodesUnifares = [];
+
+    /**
+     * Corporate qualifier for returning Corporate Unifares
+     *
+     * In combination with fareType self::FARETYPE::CORPORATE_UNIFARES
+     *
+     * self::CORPORATE_QUALIFIER_*
+     *
+     * @var string
+     */
+    public $corporateQualifier;
 
     /**
      * The currency to convert to.

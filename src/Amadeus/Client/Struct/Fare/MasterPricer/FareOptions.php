@@ -63,8 +63,9 @@ class FareOptions
      * @param bool $tickPreCheck Do Ticketability pre-check?
      * @param string|null $currency Override Currency conversion
      * @param \Amadeus\Client\RequestOptions\Fare\MPFeeId[]|null $flightOptions List of FeeIds
+     * @param string|null Corporate qualifier for Corporate Unifares
      */
-    public function __construct(array $flightOptions, array $corpCodesUniFares, $tickPreCheck, $currency, $feeIds)
+    public function __construct(array $flightOptions, array $corpCodesUniFares, $tickPreCheck, $currency, $feeIds, $corporateQualifier)
     {
         if ($tickPreCheck === true) {
             $this->addPriceType(PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK);
@@ -75,7 +76,7 @@ class FareOptions
 
             if ($flightOption === PricingTicketing::PRICETYPE_CORPORATE_UNIFARES) {
                 $this->corporate = new Corporate();
-                $this->corporate->corporateId[] = new CorporateId($corpCodesUniFares);
+                $this->corporate->corporateId[] = new CorporateId($corpCodesUniFares, $corporateQualifier);
             }
         }
 
