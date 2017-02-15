@@ -34,4 +34,16 @@ class FraudScreening
      * @var StatusInformation
      */
     public $statusInformation;
+
+    /**
+     * FraudScreening constructor.
+     *
+     * @param bool $doFraudScreening
+     */
+    public function __construct($doFraudScreening)
+    {
+        $action = ($doFraudScreening) ? StatusInformation::ACTION_YES : StatusInformation::ACTION_NO;
+
+        $this->statusInformation = new StatusInformation($action, StatusInformation::INDICATOR_FRAUD_SCREENING);
+    }
 }

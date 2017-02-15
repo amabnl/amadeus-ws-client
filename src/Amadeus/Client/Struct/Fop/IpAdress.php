@@ -34,4 +34,14 @@ class IpAdress
      * @var DeviceIdentification
      */
     public $deviceIdentification;
+
+    /**
+     * IpAdress constructor.
+     *
+     * @param string $ipAddress
+     */
+    public function __construct($ipAddress)
+    {
+        $this->deviceIdentification = new DeviceIdentification($ipAddress);
+    }
 }

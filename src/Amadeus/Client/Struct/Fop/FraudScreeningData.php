@@ -21,7 +21,9 @@
  */
 
 namespace Amadeus\Client\Struct\Fop;
+
 use Amadeus\Client\RequestOptions\Fop\FraudScreeningOptions;
+use Amadeus\Client\Struct\WsMessageUtility;
 
 /**
  * FraudScreeningData
@@ -29,7 +31,7 @@ use Amadeus\Client\RequestOptions\Fop\FraudScreeningOptions;
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FraudScreeningData
+class FraudScreeningData extends WsMessageUtility
 {
     /**
      * @var FraudScreening
@@ -98,6 +100,22 @@ class FraudScreeningData
      */
     public function __construct(FraudScreeningOptions $options)
     {
-        //TODO
+        $this->fraudScreening = new FraudScreening($options->doFraudScreening);
+
+        if (!empty($options->ipAddress)) {
+            $this->ipAdress = new IpAdress($options->ipAddress);
+        }
+
+        if ($this->checkAnyNotEmpty($options->firstName, $options->lastName)) {
+            $this->payerName = new PayerName($options->lastName, $options->firstName);
+        }
+
+        if ($options->dateOfBirth instanceof \DateTime) {
+            $this->payerDateOfBirth = new PayerDateOfBirth($options->dateOfBirth);
+        }
+
+        if ($this->checkAnyNotEmpty($options->idDocumentNr, $options->idDocumentType)) {
+            $this->formOfIdDetails = new FormOfIdDetails($options->idDocumentNr, $options->idDocumentType);
+        }
     }
 }

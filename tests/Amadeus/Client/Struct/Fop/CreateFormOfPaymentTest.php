@@ -331,7 +331,12 @@ class CreateFormOfPaymentTest extends BaseTestCase
                                 'name' => 'CLEMENT DUPONT'
                             ]),
                             'fraudScreening' => new FraudScreeningOptions([
-
+                                'ipAddress' => '111.222.333.444', // /r/itsaunixsystem
+                                'firstName' => 'CLEMENT',
+                                'lastName' => 'DUPONT',
+                                'dateOfBirth' => \DateTime::createFromFormat('dmY', '30101980'),
+                                'idDocumentNr' => '25208731592',
+                                'idDocumentType' => FraudScreeningOptions::ID_DOC_CPF__BRAZILIAN_SECURITY_NUMBER,
                             ])
                         ])
                     ]

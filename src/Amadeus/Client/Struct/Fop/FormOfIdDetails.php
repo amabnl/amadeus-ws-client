@@ -34,4 +34,15 @@ class FormOfIdDetails
      * @var ReferenceDetails
      */
     public $referenceDetails;
+
+    /**
+     * FormOfIdDetails constructor.
+     *
+     * @param string $documentNr
+     * @param string $type ReferenceDetails::TYPE_*
+     */
+    public function __construct($documentNr, $type)
+    {
+        $this->referenceDetails = new ReferenceDetails($type, $documentNr);
+    }
 }

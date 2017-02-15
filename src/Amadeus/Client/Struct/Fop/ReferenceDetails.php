@@ -67,7 +67,7 @@ class ReferenceDetails
      * ReferenceDetails constructor.
      *
      * @param string $type
-     * @param int|string $value
+     * @param int|string $value self::TYPE_*
      */
     public function __construct($type, $value)
     {

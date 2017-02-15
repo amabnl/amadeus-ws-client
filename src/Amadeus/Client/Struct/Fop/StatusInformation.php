@@ -51,4 +51,16 @@ class StatusInformation
      * @var string
      */
     public $action;
+
+    /**
+     * StatusInformation constructor.
+     *
+     * @param string|null $action
+     * @param string|null $indicator
+     */
+    public function __construct($action = null, $indicator = null)
+    {
+        $this->indicator = $indicator;
+        $this->action = $action;
+    }
 }

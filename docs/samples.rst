@@ -1763,6 +1763,14 @@ Assign an account code to a passenger:
         ])
     );
 
+***
+FOP
+***
+-----------------------
+FOP_CreateFormOfPayment
+-----------------------
+
+*Coming soon*
 
 ****
 Info

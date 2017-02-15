@@ -25,14 +25,24 @@ namespace Amadeus\Client\RequestOptions\Fop;
 use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * FraudScreeningOptions
+ * Fraud Screening Options for Credit Card payments
  *
  * @package Amadeus\Client\RequestOptions\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class FraudScreeningOptions extends LoadParamsFromArray
 {
+    const ID_DOC_CPF__BRAZILIAN_SECURITY_NUMBER = "CP";
+    const ID_DOC_DRIVER_LICENSE = "DLN";
+    const ID_DOC_FREQUENT_FLYER_NUMBER = "FFN";
+    const ID_DOC_LOCALLY_DEFINED_NUMBER = "ID";
+    const ID_DOC_NATIONAL_IDENTITY_CARD_NUMBER = "NI";
+    const ID_DOC_PASSEPORT_NUMBER = "PP";
+    const ID_DOC_SOCIAL_SECURITY_NUMBER = "SSN";
+
     /**
+     * Perform fraud screening?
+     *
      * @var bool
      */
     public $doFraudScreening = true;
@@ -47,4 +57,40 @@ class FraudScreeningOptions extends LoadParamsFromArray
      */
     public $merchantUrl;
 
+    /**
+     * CC holder first name
+     *
+     * @var string
+     */
+    public $firstName;
+
+    /**
+     * CC holder last name
+     *
+     * @var string
+     */
+    public $lastName;
+
+    /**
+     * Payer's Date of Birth
+     *
+     * @var \DateTime
+     */
+    public $dateOfBirth;
+
+    /**
+     * Identity document number
+     *
+     * @var string
+     */
+    public $idDocumentNr;
+
+    /**
+     * Type of Identity document
+     *
+     * self::ID_DOC_*
+     *
+     * @var string
+     */
+    public $idDocumentType;
 }
