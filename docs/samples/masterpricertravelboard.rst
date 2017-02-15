@@ -366,7 +366,8 @@ Simple flight, request published fares, unifares and corporate unifares (with a 
             FareMasterPricerTbSearch::FLIGHTOPT_UNIFARES,
             FareMasterPricerTbSearch::FLIGHTOPT_CORPORATE_UNIFARES,
         ],
-        'corporateCodesUnifares' => ['123456']
+        'corporateCodesUnifares' => ['123456'],
+        'corporateQualifier' => FareMasterPricerTbSearch::CORPORATE_QUALIFIER_UNIFARE
     ]);
 
 

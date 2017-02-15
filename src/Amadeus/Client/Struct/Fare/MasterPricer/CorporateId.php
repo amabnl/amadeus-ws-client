@@ -30,7 +30,12 @@ namespace Amadeus\Client\Struct\Fare\MasterPricer;
  */
 class CorporateId
 {
+    const CORPORATE_QUALIFIER_AMADEUS_NEGO = "RC";
+    const CORPORATE_QUALIFIER_UNIFARE = "RW";
+
     /**
+     * self::CORPORATE_QUALIFIER_*
+     *
      * @var string
      */
     public $corporateQualifier;
@@ -44,8 +49,9 @@ class CorporateId
      *
      * @param string[] $identity
      */
-    public function __construct($identity)
+    public function __construct($identity, $corporateQualifier)
     {
         $this->identity = $identity;
+        $this->corporateQualifier = $corporateQualifier;
     }
 }
