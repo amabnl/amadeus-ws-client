@@ -148,7 +148,8 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
                 $options->corporateCodesUnifares,
                 $options->doTicketabilityPreCheck,
                 $options->currencyOverride,
-                $options->feeIds
+                $options->feeIds,
+                $options->corporateQualifier
             );
         }
 
