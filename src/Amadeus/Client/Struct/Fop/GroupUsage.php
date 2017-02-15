@@ -34,4 +34,14 @@ class GroupUsage
      * @var AttributeDetails[]
      */
     public $attributeDetails = [];
+
+    /**
+     * GroupUsage constructor.
+     *
+     * @param string $fopType AttributeDetails::TYPE_*
+     */
+    public function __construct($fopType)
+    {
+        $this->attributeDetails[] = new AttributeDetails($fopType);
+    }
 }

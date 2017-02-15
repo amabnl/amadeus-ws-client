@@ -23,47 +23,44 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * FreeTextDetails
+ * FormOfPayment
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FreeTextDetails
+class FormOfPayment
 {
-    const QUALIFIER_LITERAL_TEXT = 3;
-    const QUALIFIER_MUTUAL = "ZZZ";
-
-    const SOURCE_MANUAL = "M";
-
-    const ENCODING_DEFAULT = 1;
-    const ENCODING_MUTUAL = "ZZZ";
+    const TYPE_ACCOUNT_PAYMENT = "ACC";
+    const TYPE_PREVIOUSLY_ISSUED_BY_SALES_AGENT = "AGT";
+    const TYPE_AMOP_PAYMENT = "AMP";
+    const TYPE_CASH = "CA";
+    const TYPE_CREDIT_CARD = "CC";
+    const TYPE_CHECK = "CK";
+    const TYPE_DIRECT_DEBIT_FOP_TYPE = "ELV";
+    const TYPE_GOVERNMENT_TRANSPORTATION_REQUEST = "GR";
+    const TYPE_INVOICE = "INV";
+    const TYPE_MISCELLANEOUS = "MS";
+    const TYPE_NONREFUNDABLE = "NR";
+    const TYPE_PREPAID_TICKET_ADVICE = "PT";
+    const TYPE_SINGLE_GOVERNMENT_TRANSPORTATION_REQUEST = "SGR";
+    const TYPE_UNITED_NATIONS_TRANSPORTATION_REQUEST = "UN";
+    const TYPE_WEB_REDIRECTION_ACCOUNT_PAYMENT = "WA";
+    const TYPE_WEB_REDIRECTION_FUND_TRANSFER_PAYMENT = "WF";
 
     /**
-     * self::QUALIFIER_*
-     *
-     * @var int|string
-     */
-    public $textSubjectQualifier = self::QUALIFIER_MUTUAL;
-
-    /**
-     * self::SOURCE_*
+     * self::TYPE_*
      *
      * @var string
      */
-    public $source = self::SOURCE_MANUAL;
+    public $type;
 
     /**
-     * @var int|string
-     */
-    public $encoding = self::ENCODING_MUTUAL;
-
-    /**
-     * FreeTextDetails constructor.
+     * FormOfPayment constructor.
      *
-     * @param int|string $encoding
+     * @param string $type self::TYPE_*
      */
-    public function __construct($encoding = self::ENCODING_MUTUAL)
+    public function __construct($type)
     {
-        $this->encoding = $encoding;
+        $this->type = $type;
     }
 }

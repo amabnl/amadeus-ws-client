@@ -62,39 +62,39 @@ class FopDetails
     public $fopStatus;
 
     /**
-     * AA	Qantas FOP A
-     * AC	Qantas FOP ACT
-     * BA	German Market sub-element Bank Account form of payment for Insurance Application
-     * CA	Cash
-     * CC	Credit Card (plus 2 digits vendor code)
-     * CK	Check
-     * FF	Qantas FOP FFR
-     * IN	Qantas FOP INV
-     * MC	Qantas FOP MCO
-     * MS	Miscellaneous
-     * NB	Qantas Non Bankable Credit Card (plus 2 digits vendor code)
-     * PP	Qantas P FOP
-     * PT	Prepaid Ticket Advice (PTA)
-     * QT	Qantas QTA FOP
-     * QU	Qantas QU FOP
-     * RE	Qantas REC FOP
-     * RN	Qantas RND FOP
-     * SA	Iberia/Savia SF fop for cash
-     * TD	Qantas TD FOP
+     * AA Qantas FOP A
+     * AC Qantas FOP ACT
+     * BA German Market sub-element Bank Account form of payment for Insurance Application
+     * CA Cash
+     * CC Credit Card (plus 2 digits vendor code)
+     * CK Check
+     * FF Qantas FOP FFR
+     * IN Qantas FOP INV
+     * MC Qantas FOP MCO
+     * MS Miscellaneous
+     * NB Qantas Non Bankable Credit Card (plus 2 digits vendor code)
+     * PP Qantas P FOP
+     * PT Prepaid Ticket Advice (PTA)
+     * QT Qantas QTA FOP
+     * QU Qantas QU FOP
+     * RE Qantas REC FOP
+     * RN Qantas RND FOP
+     * SA Iberia/Savia SF fop for cash
+     * TD Qantas TD FOP
      *
      * @var string
      */
     public $fopEdiCode;
 
     /**
-     * BR	Barter (AY ATO/CTO specific)
-     * CA	Cash
-     * CC	Credit
-     * GA	Global Accounting
-     * HO	Head Office credit (BA ATO/CTO specific)
-     * LC	Local credit (BA ATO/CTO specific)
-     * MS	Miscellaneous
-     * NR	Net remit
+     * BR Barter (AY ATO/CTO specific)
+     * CA Cash
+     * CC Credit
+     * GA Global Accounting
+     * HO Head Office credit (BA ATO/CTO specific)
+     * LC Local credit (BA ATO/CTO specific)
+     * MS Miscellaneous
+     * NR Net remit
      *
      * @var string
      */
@@ -106,19 +106,31 @@ class FopDetails
     public $fopPrintedCode;
 
     /**
-     * AGT	On behalf of/in exchange for a document previously issued by a Sales Agent
-     * CA	Cash
-     * CC	Credit Card
-     * CK	Check
-     * DP	Direct Deposit
-     * GR	Government transportation request
-     * MS	Miscellaneous
-     * NR	Non-refundable (refund restricted)
-     * PT	Prepaid Ticket Advice (PTA)
-     * SGR	Single government transportation request
-     * UN	United Nations Transportation Request
+     * AGT On behalf of/in exchange for a document previously issued by a Sales Agent
+     * CA  Cash
+     * CC  Credit Card
+     * CK  Check
+     * DP  Direct Deposit
+     * GR  Government transportation request
+     * MS  Miscellaneous
+     * NR  Non-refundable (refund restricted)
+     * PT  Prepaid Ticket Advice (PTA)
+     * SGR Single government transportation request
+     * UN  United Nations Transportation Request
      *
      * @var string
      */
     public $fopElecTicketingCode;
+
+    /**
+     * FopDetails constructor.
+     *
+     * @param string $fopCode
+     * @param string|null status
+     */
+    public function __construct($fopCode, $status)
+    {
+        $this->fopCode = $fopCode;
+        $this->fopStatus = $status;
+    }
 }

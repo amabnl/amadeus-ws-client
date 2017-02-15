@@ -20,45 +20,42 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fop\CreateFormOfPayment;
+namespace Amadeus\Client\RequestOptions\Fop;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * StatusInformation
+ * InstallmentsInfo
  *
- * @package Amadeus\Client\Struct\Fop\CreateFormOfPayment
+ * @package Amadeus\Client\RequestOptions\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class StatusInformation
+class InstallmentsInfo extends LoadParamsFromArray
 {
-    const IND_CREATE_FOP_EVEN_IF_AUTHORIZATION_FAILED = "CFP";
-    const IND_SPLIT_PRICING_RECORD = "SPT";
+    const FORMAT_YYMMDD = 101;
+    const FORMAT_YYDDD = 105;
+    const FORMAT_MMDD = 106;
 
-    const ACTION_CONFIRMATION = "KK";
-    const ACTION_REFUSAL = "UU";
+    const FREQUENCY_MONTHLY = "MTH";
+    const FREQUENCY_MONTHLY_SHORT = "M";
 
     /**
-     * self::IND_*
-     *
+     * @var int
+     */
+    public $nrOfInstallments;
+
+    /**
      * @var string
      */
-    public $indicator;
+    public $frequency = self::FREQUENCY_MONTHLY;
 
     /**
-     * self::ACTION_*
-     *
-     * @var string
+     * @var \DateTime
      */
-    public $action;
+    public $startDate;
 
     /**
-     * StatusInformation constructor.
-     *
-     * @param string $indicator
-     * @param string $action
+     * @var string|int
      */
-    public function __construct($indicator, $action)
-    {
-        $this->indicator = $indicator;
-        $this->action = $action;
-    }
+    public $format = self::FORMAT_YYMMDD;
 }

@@ -64,4 +64,14 @@ class PaymentModule
      * @var MopDetailedData
      */
     public $mopDetailedData;
+
+    /**
+     * PaymentModule constructor.
+     *
+     * @param string $fopType
+     */
+    public function __construct($fopType)
+    {
+        $this->groupUsage = new GroupUsage($fopType);
+    }
 }

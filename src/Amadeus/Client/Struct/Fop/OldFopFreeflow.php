@@ -39,4 +39,16 @@ class OldFopFreeflow
      * @var string
      */
     public $freeText;
+
+    /**
+     * OldFopFreeflow constructor.
+     *
+     * @param string $freeText
+     * @param string $encoding
+     */
+    public function __construct($freeText, $encoding)
+    {
+        $this->freeText = $freeText;
+        $this->freeTextDetails = new FreeTextDetails($encoding);
+    }
 }

@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\RequestOptions\Fop\InstallmentsInfo;
+
 /**
  * ExtendedPaymentInfo
  *
@@ -34,4 +36,15 @@ class ExtendedPaymentInfo
      * @var ExtendedPaymentDetails
      */
     public $extendedPaymentDetails;
+
+    /**
+     * ExtendedPaymentInfo constructor.
+     * @param InstallmentsInfo|null $installmentsInfo
+     */
+    public function __construct($installmentsInfo = null)
+    {
+        if ($installmentsInfo instanceof InstallmentsInfo) {
+            $this->extendedPaymentDetails = new ExtendedPaymentDetails($installmentsInfo);
+        }
+    }
 }

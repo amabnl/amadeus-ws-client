@@ -55,12 +55,25 @@ class CreateFormOfPayment extends BaseWsMessage
     public $fopGroup = [];
 
     /**
-     * CreateFormOfPayment constructor.
+     * FOP_CreateFormOfPayment constructor.
      *
      * @param FopCreateFopOptions $options
      */
     public function __construct(FopCreateFopOptions $options)
     {
-        //TODO
+        if ($this->checkAnyNotEmpty($options->transactionCode, $options->obFeeCalculation)) {
+            $this->transactionContext = new TransactionContext(
+                $options->transactionCode,
+                $options->obFeeCalculation
+            );
+        }
+
+        if ($this->checkAllNotEmpty($options->bestEffortAction, $options->bestEffortIndicator)) {
+            $this->bestEffort[] = new BestEffort($options->bestEffortIndicator, $options->bestEffortAction);
+        }
+
+        foreach ($options->fopGroup as $group) {
+            $this->fopGroup[] = new FopGroup($group);
+        }
     }
 }

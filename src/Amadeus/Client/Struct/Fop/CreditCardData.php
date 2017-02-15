@@ -20,45 +20,45 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fop\CreateFormOfPayment;
+namespace Amadeus\Client\Struct\Fop;
+
+use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
 
 /**
- * StatusInformation
+ * CreditCardData
  *
- * @package Amadeus\Client\Struct\Fop\CreateFormOfPayment
+ * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class StatusInformation
+class CreditCardData
 {
-    const IND_CREATE_FOP_EVEN_IF_AUTHORIZATION_FAILED = "CFP";
-    const IND_SPLIT_PRICING_RECORD = "SPT";
-
-    const ACTION_CONFIRMATION = "KK";
-    const ACTION_REFUSAL = "UU";
+    /**
+     * @var CreditCardDetails
+     */
+    public $creditCardDetails;
 
     /**
-     * self::IND_*
-     *
-     * @var string
+     * @var
      */
-    public $indicator;
+    public $fortknoxIds;
 
     /**
-     * self::ACTION_*
-     *
-     * @var string
+     * @var
      */
-    public $action;
+    public $cardHolderAddress;
 
     /**
-     * StatusInformation constructor.
-     *
-     * @param string $indicator
-     * @param string $action
+     * @var
      */
-    public function __construct($indicator, $action)
+    public $virtualCreditCardData;
+
+    /**
+     * CreditCardData constructor.
+     *
+     * @param CreditCardInfo $options
+     */
+    public function __construct(CreditCardInfo $options)
     {
-        $this->indicator = $indicator;
-        $this->action = $action;
+        $this->creditCardDetails = new CreditCardDetails($options);
     }
 }

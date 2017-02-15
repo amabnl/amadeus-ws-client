@@ -20,45 +20,25 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fop\CreateFormOfPayment;
+namespace Amadeus\Client\Struct\Fop;
+
+use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
 
 /**
- * StatusInformation
+ * CreditCardDetails
  *
- * @package Amadeus\Client\Struct\Fop\CreateFormOfPayment
+ * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class StatusInformation
+class CreditCardDetails
 {
-    const IND_CREATE_FOP_EVEN_IF_AUTHORIZATION_FAILED = "CFP";
-    const IND_SPLIT_PRICING_RECORD = "SPT";
-
-    const ACTION_CONFIRMATION = "KK";
-    const ACTION_REFUSAL = "UU";
-
     /**
-     * self::IND_*
-     *
-     * @var string
+     * @var CcInfo
      */
-    public $indicator;
+    public $ccInfo;
 
-    /**
-     * self::ACTION_*
-     *
-     * @var string
-     */
-    public $action;
-
-    /**
-     * StatusInformation constructor.
-     *
-     * @param string $indicator
-     * @param string $action
-     */
-    public function __construct($indicator, $action)
+    public function __construct(CreditCardInfo $options)
     {
-        $this->indicator = $indicator;
-        $this->action = $action;
+        $this->ccInfo = new CcInfo($options);
     }
 }

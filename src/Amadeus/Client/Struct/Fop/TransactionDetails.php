@@ -31,6 +31,31 @@ namespace Amadeus\Client\Struct\Fop;
 class TransactionDetails
 {
     /**
+     * Perform Authorization on Ticket & MCO/EMD
+     */
+    const TRANS_AUTH_ON_TICKET_MCO_EMD = "DEF";
+    /**
+     * Perform Authorization on MCO/EMD
+     */
+    const TRANS_AUTH_ON_MCO_EMD = "DEFM";
+    /**
+     * Perform Authorization on Ticket
+     */
+    const TRANS_AUTH_ON_TICKET = "DEFP";
+    /**
+     * DEFX Transaction
+     */
+    const TRANS_DEFX = "DEFX";
+    /**
+     * Create form of payment only
+     */
+    const TRANS_CREATE_FORM_OF_PAYMENT = "FP";
+
+    const INDICATOR_OB_FEES_CALCULATION = "O";
+
+    /**
+     * TRANS_*
+     *
      * @var string
      */
     public $code;
@@ -39,4 +64,14 @@ class TransactionDetails
      * @var string
      */
     public $issueIndicator;
+
+    /**
+     * TransactionDetails constructor.
+     *
+     * @param string $code self::TRANS_*
+     */
+    public function __construct($code)
+    {
+        $this->code = $code;
+    }
 }

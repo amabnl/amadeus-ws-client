@@ -34,4 +34,15 @@ class FopPNRDetails
      * @var FopDetails[]
      */
     public $fopDetails = [];
+
+    /**
+     * FopPNRDetails constructor.
+     *
+     * @param string $fopCode
+     * @param string|null $status
+     */
+    public function __construct($fopCode, $status = null)
+    {
+        $this->fopDetails[] = new FopDetails($fopCode, $status);
+    }
 }

@@ -34,4 +34,19 @@ class TransactionContext
      * @var TransactionDetails
      */
     public $transactionDetails;
+
+    /**
+     * TransactionContext constructor.
+     *
+     * @param string $transactionCode
+     * @param bool $doObFeeCalc
+     */
+    public function __construct($transactionCode, $doObFeeCalc = false)
+    {
+        $this->transactionDetails = new TransactionDetails($transactionCode);
+
+        if ($doObFeeCalc) {
+            $this->transactionDetails->issueIndicator = TransactionDetails::INDICATOR_OB_FEES_CALCULATION;
+        }
+    }
 }

@@ -64,9 +64,9 @@ class AttributeDetails
      * AttributeDetails constructor.
      *
      * @param string $attributeType self::TYPE_*
-     * @param string $attributeDescription
+     * @param string|null $attributeDescription
      */
-    public function __construct($attributeType, $attributeDescription)
+    public function __construct($attributeType, $attributeDescription = null)
     {
         $this->attributeType = $attributeType;
         $this->attributeDescription = $attributeDescription;

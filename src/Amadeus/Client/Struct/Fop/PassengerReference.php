@@ -46,4 +46,16 @@ class PassengerReference
      * @var string|int
      */
     public $value;
+
+    /**
+     * PassengerReference constructor.
+     *
+     * @param string $type
+     * @param int|string $value
+     */
+    public function __construct($type, $value)
+    {
+        $this->type = $type;
+        $this->value = $value;
+    }
 }

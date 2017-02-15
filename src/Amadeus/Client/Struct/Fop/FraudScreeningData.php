@@ -21,6 +21,7 @@
  */
 
 namespace Amadeus\Client\Struct\Fop;
+use Amadeus\Client\RequestOptions\Fop\FraudScreeningOptions;
 
 /**
  * FraudScreeningData
@@ -89,4 +90,14 @@ class FraudScreeningData
      * @var SecurityCode[]
      */
     public $securityCode = [];
+
+    /**
+     * FraudScreeningData constructor.
+     *
+     * @param FraudScreeningOptions $options
+     */
+    public function __construct(FraudScreeningOptions $options)
+    {
+        //TODO
+    }
 }

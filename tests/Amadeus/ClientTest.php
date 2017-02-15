@@ -3055,6 +3055,29 @@ class ClientTest extends BaseTestCase
 
         $expectedMessageResult = new Client\Struct\Fop\CreateFormOfPayment(
             new Client\RequestOptions\FopCreateFopOptions([
+                'transactionCode' => Client\RequestOptions\FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+                'fopGroup' => [
+                    new Client\RequestOptions\Fop\Group([
+                        'elementRef' => [
+                            new Client\RequestOptions\Fop\ElementRef([
+                                'type' => Client\RequestOptions\Fop\ElementRef::TYPE_TST_NUMBER,
+                                'value' => 1
+                            ])
+                        ],
+                        'mopInfo' => [
+                            new Client\RequestOptions\Fop\MopInfo([
+                                'sequenceNr' => 1,
+                                'fopCode' => 'VI',
+                                'freeFlowText' => 'VI4541099100010016/0919'
+                            ]),
+                            new Client\RequestOptions\Fop\MopInfo([
+                                'sequenceNr' => 2,
+                                'fopCode' => 'VI',
+                                'freeFlowText' => 'VI4541099100010024/0919/EUR20'
+                            ]),
+                        ]
+                    ])
+                ]
             ])
         );
 
@@ -3083,6 +3106,29 @@ class ClientTest extends BaseTestCase
 
         $response = $client->fopCreateFormOfPayment(
             new Client\RequestOptions\FopCreateFopOptions([
+                'transactionCode' => Client\RequestOptions\FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+                'fopGroup' => [
+                    new Client\RequestOptions\Fop\Group([
+                        'elementRef' => [
+                            new Client\RequestOptions\Fop\ElementRef([
+                                'type' => Client\RequestOptions\Fop\ElementRef::TYPE_TST_NUMBER,
+                                'value' => 1
+                            ])
+                        ],
+                        'mopInfo' => [
+                            new Client\RequestOptions\Fop\MopInfo([
+                                'sequenceNr' => 1,
+                                'fopCode' => 'VI',
+                                'freeFlowText' => 'VI4541099100010016/0919'
+                            ]),
+                            new Client\RequestOptions\Fop\MopInfo([
+                                'sequenceNr' => 2,
+                                'fopCode' => 'VI',
+                                'freeFlowText' => 'VI4541099100010024/0919/EUR20'
+                            ]),
+                        ]
+                    ])
+                ]
             ])
         );
 

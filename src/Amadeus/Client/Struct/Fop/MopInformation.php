@@ -30,4 +30,38 @@ namespace Amadeus\Client\Struct\Fop;
  */
 class MopInformation
 {
+    /**
+     * @var FopInformation
+     */
+    public $fopInformation;
+
+    /**
+     * @var FundTransferData
+     */
+    public $fundTransferData;
+
+    /**
+     * @var AsyncDataGroup
+     */
+    public $asyncDataGroup;
+
+    /**
+     * @var string
+     */
+    public $dummy;
+
+    /**
+     * @var InvoiceDataGroup
+     */
+    public $invoiceDataGroup;
+
+    /**
+     * @var CreditCardData
+     */
+    public $creditCardData;
+
+    /**
+     * @var WebAccountData
+     */
+    public $webAccountData;
 }

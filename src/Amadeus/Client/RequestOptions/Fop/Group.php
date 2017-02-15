@@ -24,7 +24,6 @@ namespace Amadeus\Client\RequestOptions\Fop;
 
 use Amadeus\Client\LoadParamsFromArray;
 
-
 /**
  * Form of Payment Group Request Options
  *

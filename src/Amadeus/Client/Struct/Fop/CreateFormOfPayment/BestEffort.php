@@ -22,16 +22,31 @@
 
 namespace Amadeus\Client\Struct\Fop\CreateFormOfPayment;
 
+use Amadeus\Client\Struct\WsMessageUtility;
+
 /**
  * BestEffort
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class BestEffort
+class BestEffort extends WsMessageUtility
 {
     /**
      * @var StatusInformation[]
      */
     public $statusInformation = [];
+
+    /**
+     * BestEffort constructor.
+     *
+     * @param string|null $indicator
+     * @param string|null $action
+     */
+    public function __construct($indicator = null, $action = null)
+    {
+        if ($this->checkAnyNotEmpty($indicator, $action)) {
+            $this->statusInformation[] = new StatusInformation($indicator, $action);
+        }
+    }
 }

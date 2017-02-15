@@ -22,6 +22,11 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\RequestOptions\Fop\ElementRef;
+use Amadeus\Client\RequestOptions\Fop\Group;
+use Amadeus\Client\RequestOptions\Fop\ObFeeComputation;
+use Amadeus\Client\RequestOptions\Fop\PaxRef;
+
 /**
  * FopGroup
  *
@@ -62,4 +67,59 @@ class FopGroup
      * @var MopDescription[]
      */
     public $mopDescription = [];
+
+    /**
+     * FopGroup constructor.
+     *
+     * @param Group $options
+     */
+    public function __construct(Group $options)
+    {
+        $this->loadObFeeComp($options);
+
+        $this->loadPaxElementRefs($options->paxRef, $options->elementRef);
+
+        foreach ($options->mopInfo as $mopInfo) {
+            $this->mopDescription[] = new MopDescription($mopInfo);
+        }
+    }
+
+    /**
+     * @param Group $options
+     */
+    protected function loadObFeeComp(Group $options)
+    {
+        if ($options->obFeeComputation instanceof ObFeeComputation) {
+            $this->feeTypeInfo = new FeeTypeInfo(
+                $options->obFeeComputation->option,
+                $options->obFeeComputation->optionInformation
+            );
+
+            $this->pricingTicketingDetails = new PricingTicketingDetails(
+                $options->obFeeComputation->departureDate,
+                $options->obFeeComputation->city
+            );
+        }
+    }
+
+    /**
+     * @param PaxRef[] $paxRef
+     * @param ElementRef[] $elementRef
+     */
+    protected function loadPaxElementRefs($paxRef, $elementRef)
+    {
+        foreach ($paxRef as $singlePaxRef) {
+            $this->passengerAssociation[] = new PassengerAssociation(
+                $singlePaxRef->type,
+                $singlePaxRef->value
+            );
+        }
+
+        foreach ($elementRef as $singleElRef) {
+            $this->pnrElementAssociation[] = new PnrElementAssociation(
+                $singleElRef->type,
+                $singleElRef->value
+            );
+        }
+    }
 }

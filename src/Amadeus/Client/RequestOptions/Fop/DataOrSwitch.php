@@ -20,45 +20,25 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fop\CreateFormOfPayment;
+namespace Amadeus\Client\RequestOptions\Fop;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * StatusInformation
+ * DataOrSwitch
  *
- * @package Amadeus\Client\Struct\Fop\CreateFormOfPayment
+ * @package Amadeus\Client\RequestOptions\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class StatusInformation
+class DataOrSwitch extends LoadParamsFromArray
 {
-    const IND_CREATE_FOP_EVEN_IF_AUTHORIZATION_FAILED = "CFP";
-    const IND_SPLIT_PRICING_RECORD = "SPT";
-
-    const ACTION_CONFIRMATION = "KK";
-    const ACTION_REFUSAL = "UU";
-
     /**
-     * self::IND_*
-     *
      * @var string
      */
-    public $indicator;
+    public $type;
 
     /**
-     * self::ACTION_*
-     *
      * @var string
      */
-    public $action;
-
-    /**
-     * StatusInformation constructor.
-     *
-     * @param string $indicator
-     * @param string $action
-     */
-    public function __construct($indicator, $action)
-    {
-        $this->indicator = $indicator;
-        $this->action = $action;
-    }
+    public $description;
 }

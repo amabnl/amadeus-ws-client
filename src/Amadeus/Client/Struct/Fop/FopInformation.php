@@ -20,45 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fop\CreateFormOfPayment;
+namespace Amadeus\Client\Struct\Fop;
 
 /**
- * StatusInformation
+ * FopInformation
  *
- * @package Amadeus\Client\Struct\Fop\CreateFormOfPayment
+ * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class StatusInformation
+class FopInformation
 {
-    const IND_CREATE_FOP_EVEN_IF_AUTHORIZATION_FAILED = "CFP";
-    const IND_SPLIT_PRICING_RECORD = "SPT";
-
-    const ACTION_CONFIRMATION = "KK";
-    const ACTION_REFUSAL = "UU";
+    /**
+     * @var FormOfPayment
+     */
+    public $formOfPayment;
 
     /**
-     * self::IND_*
+     * FopInformation constructor.
      *
-     * @var string
+     * @param string $fopType FormOfPayment::TYPE_*
      */
-    public $indicator;
-
-    /**
-     * self::ACTION_*
-     *
-     * @var string
-     */
-    public $action;
-
-    /**
-     * StatusInformation constructor.
-     *
-     * @param string $indicator
-     * @param string $action
-     */
-    public function __construct($indicator, $action)
+    public function __construct($fopType)
     {
-        $this->indicator = $indicator;
-        $this->action = $action;
+        $this->formOfPayment = new FormOfPayment($fopType);
     }
 }

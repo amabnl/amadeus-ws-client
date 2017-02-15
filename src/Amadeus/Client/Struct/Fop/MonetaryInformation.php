@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\RequestOptions\Fop\Payment;
+
 /**
  * MonetaryInformation
  *
@@ -39,4 +41,28 @@ class MonetaryInformation
      * @var MonetaryDetails[]
      */
     public $otherMonetaryDetails = [];
+
+    /**
+     * MonetaryInformation constructor.
+     *
+     * @param Payment[] $payments
+     */
+    public function __construct($payments)
+    {
+        foreach ($payments as $counter => $payment) {
+            if ($counter === 0) {
+                $this->monetaryDetails = new MonetaryDetails(
+                    $payment->amount,
+                    $payment->currency,
+                    $payment->type
+                );
+            } else {
+                $this->otherMonetaryDetails[] = new MonetaryDetails(
+                    $payment->amount,
+                    $payment->currency,
+                    $payment->type
+                );
+            }
+        }
+    }
 }

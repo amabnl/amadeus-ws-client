@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\RequestOptions\Fop\DataOrSwitch;
+
 /**
  * DataAndSwitchMap
  *
@@ -44,4 +46,22 @@ class DataAndSwitchMap
      * @var CriteriaDetails[]
      */
     public $criteriaDetails = [];
+
+    /**
+     * DataAndSwitchMap constructor.
+     *
+     * @param string $type self::TYPE_*
+     * @param DataOrSwitch[] $listOfData
+     */
+    public function __construct($type, $listOfData)
+    {
+        $this->criteriaSetType = $type;
+
+        foreach ($listOfData as $dataOrSwitch) {
+            $this->criteriaDetails[] = new CriteriaDetails(
+                $dataOrSwitch->type,
+                $dataOrSwitch->description
+            );
+        }
+    }
 }

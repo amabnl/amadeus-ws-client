@@ -34,4 +34,15 @@ class PassengerAssociation
      * @var PassengerReference
      */
     public $passengerReference;
+
+    /**
+     * PassengerAssociation constructor.
+     *
+     * @param string $type
+     * @param string|int $value
+     */
+    public function __construct($type, $value)
+    {
+        $this->passengerReference = new PassengerReference($type, $value);
+    }
 }

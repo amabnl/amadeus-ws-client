@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\RequestOptions\Fop\DataOrSwitch;
+
 /**
  * PnrSupplementaryData
  *
@@ -34,4 +36,15 @@ class PnrSupplementaryData
      * @var DataAndSwitchMap
      */
     public $dataAndSwitchMap;
+
+    /**
+     * PnrSupplementaryData constructor.
+     *
+     * @param string $type DataAndSwitchMap::TYPE_*
+     * @param DataOrSwitch[] $listOfData
+     */
+    public function __construct($type, $listOfData)
+    {
+        $this->dataAndSwitchMap = new DataAndSwitchMap($type, $listOfData);
+    }
 }

@@ -36,6 +36,7 @@ class ReferenceDetails
     const TYPE_SPECIAL_SERVICE_REQUEST = "SEG";
     const TYPE_SSR_REFERENCE_NUMBER = "SSR";
     const TYPE_SERVICE_PRICING_RECORD_TATTOO = "TSM";
+    const TYPE_TST = "TST";
 
     const TYPE_METHOD_OF_PAYMENT = "MEP";
     const TYPE_PAYMENT_ITEM = "PAI";
@@ -61,4 +62,16 @@ class ReferenceDetails
      * @var string|int
      */
     public $value;
+
+    /**
+     * ReferenceDetails constructor.
+     *
+     * @param string $type
+     * @param int|string $value
+     */
+    public function __construct($type, $value)
+    {
+        $this->type = $type;
+        $this->value = $value;
+    }
 }

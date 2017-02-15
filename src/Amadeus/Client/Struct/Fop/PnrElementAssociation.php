@@ -34,4 +34,15 @@ class PnrElementAssociation
      * @var ReferenceDetails
      */
     public $referenceDetails;
+
+    /**
+     * PnrElementAssociation constructor.
+     *
+     * @param string $type
+     * @param int|string $value
+     */
+    public function __construct($type, $value)
+    {
+        $this->referenceDetails = new ReferenceDetails($type, $value);
+    }
 }
