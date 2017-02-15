@@ -665,7 +665,8 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
                 FareMasterPricerTbSearch::FLIGHTOPT_UNIFARES,
                 FareMasterPricerTbSearch::FLIGHTOPT_CORPORATE_UNIFARES,
             ],
-            'corporateCodesUnifares' => ['123456']
+            'corporateCodesUnifares' => ['123456'],
+            'corporateQualifier' => FareMasterPricerTbSearch::CORPORATE_QUALIFIER_UNIFARE
         ]);
 
         $message = new MasterPricerTravelBoardSearch($opt);
@@ -680,6 +681,7 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
             $message->fareOptions->pricingTickInfo->pricingTicketing->priceType
         );
         $this->assertEquals('123456', $message->fareOptions->corporate->corporateId[0]->identity[0]);
+        $this->assertEquals(FareMasterPricerTbSearch::CORPORATE_QUALIFIER_UNIFARE, $message->fareOptions->corporate->corporateId[0]->corporateQualifier);
     }
 
     public function testCanMakeMessageWithPriceToBeat()
