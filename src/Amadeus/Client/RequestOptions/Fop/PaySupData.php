@@ -25,37 +25,24 @@ namespace Amadeus\Client\RequestOptions\Fop;
 use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * InstallmentsInfo
+ * PaySupData
  *
  * @package Amadeus\Client\RequestOptions\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class InstallmentsInfo extends LoadParamsFromArray
+class PaySupData extends LoadParamsFromArray
 {
-    const FORMAT_YYMMDD = 101;
-    const FORMAT_YYDDD = 105;
-    const FORMAT_MMDD = 106;
-
-    const FREQUENCY_MONTHLY = "MTH";
-    const FREQUENCY_MONTHLY_SHORT = "M";
-
     /**
-     * @var int
-     */
-    public $nrOfInstallments;
-
-    /**
+     * attributeFunction
+     *
      * @var string
      */
-    public $frequency;
+    public $function;
 
     /**
-     * @var \DateTime
+     * Keys are attributeType, values are attributeDescription
+     *
+     * @var array
      */
-    public $startDate;
-
-    /**
-     * @var string|int
-     */
-    public $format;
+    public $data = [];
 }

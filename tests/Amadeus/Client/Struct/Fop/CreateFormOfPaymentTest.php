@@ -30,13 +30,19 @@ use Amadeus\Client\RequestOptions\Fop\Group;
 use Amadeus\Client\RequestOptions\Fop\InstallmentsInfo;
 use Amadeus\Client\RequestOptions\Fop\MopInfo;
 use Amadeus\Client\RequestOptions\Fop\PaxRef;
+use Amadeus\Client\RequestOptions\Fop\PayId;
 use Amadeus\Client\RequestOptions\Fop\Payment;
+use Amadeus\Client\RequestOptions\Fop\PaySupData;
 use Amadeus\Client\RequestOptions\FopCreateFopOptions;
 use Amadeus\Client\Struct\Fop\AttributeDetails;
 use Amadeus\Client\Struct\Fop\CreateFormOfPayment;
+use Amadeus\Client\Struct\Fop\DeviceIdentification;
 use Amadeus\Client\Struct\Fop\FreeTextDetails;
 use Amadeus\Client\Struct\Fop\MonetaryDetails;
+use Amadeus\Client\Struct\Fop\PassengerReference;
+use Amadeus\Client\Struct\Fop\PaymentId;
 use Amadeus\Client\Struct\Fop\ReferenceDetails;
+use Amadeus\Client\Struct\Fop\StatusInformation;
 use Amadeus\Client\Struct\Fop\TransactionDetails;
 use Test\Amadeus\BaseTestCase;
 
@@ -349,5 +355,247 @@ class CreateFormOfPaymentTest extends BaseTestCase
         $this->assertNull($msg->transactionContext);
         $this->assertEmpty($msg->bestEffort);
         $this->assertNull($msg->reservationControlInformation);
+
+        $this->assertCount(1, $msg->fopGroup);
+
+        $this->assertEmpty($msg->fopGroup[0]->pnrElementAssociation);
+
+        $this->assertCount(1, $msg->fopGroup[0]->passengerAssociation);
+        $this->assertEquals(1, $msg->fopGroup[0]->passengerAssociation[0]->passengerReference->value);
+        $this->assertEquals(PassengerReference::TYPE_ADULT, $msg->fopGroup[0]->passengerAssociation[0]->passengerReference->type);
+
+        $this->assertCount(1, $msg->fopGroup[0]->mopDescription);
+        $this->assertEquals(1, $msg->fopGroup[0]->mopDescription[0]->fopSequenceNumber->sequenceDetails->number);
+
+        $this->assertCount(1, $msg->fopGroup[0]->mopDescription[0]->mopDetails->fopPNRDetails->fopDetails);
+        $this->assertEquals('VI', $msg->fopGroup[0]->mopDescription[0]->mopDetails->fopPNRDetails->fopDetails[0]->fopCode);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->mopDetails->fopPNRDetails->fopDetails[0]->fopBillingCode);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->mopDetails->fopPNRDetails->fopDetails[0]->fopEdiCode);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->mopDetails->fopPNRDetails->fopDetails[0]->fopElecTicketingCode);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->mopDetails->fopPNRDetails->fopDetails[0]->fopMapTable);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->mopDetails->fopPNRDetails->fopDetails[0]->fopPrintedCode);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->mopDetails->fopPNRDetails->fopDetails[0]->fopReportingCode);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->mopDetails->fopPNRDetails->fopDetails[0]->fopStatus);
+
+        $this->assertEquals(AttributeDetails::TYPE_FP_ELEMENT, $msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails[0]->attributeType);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails[0]->attributeDescription);
+
+        $this->assertEquals('AY', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->merchantInformation->companyCode);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->merchantInformation->companyNumericCode);
+
+        $this->assertEquals(1, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->extendedPaymentInfo->extendedPaymentDetails->instalmentsNumber);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->extendedPaymentInfo->extendedPaymentDetails->instalmentsDatrDateFormat);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->extendedPaymentInfo->extendedPaymentDetails->instalmentsFrequency);
+        $this->assertEmpty($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->extendedPaymentInfo->extendedPaymentDetails->instalmentsStartDate);
+
+        $this->assertEmpty($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->monetaryInformation);
+
+        $this->assertEquals(StatusInformation::ACTION_YES, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->fraudScreening->statusInformation->action);
+        $this->assertEquals(StatusInformation::INDICATOR_FRAUD_SCREENING, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->fraudScreening->statusInformation->indicator);
+
+        $this->assertEquals('111.222.333.444', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->ipAdress->deviceIdentification->address);
+        $this->assertEquals(DeviceIdentification::QUAL_IP_ADDRESS, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->ipAdress->deviceIdentification->qualifier);
+
+        $this->assertEquals('DUPONT', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->payerName->ccHolderNameDetails->surname);
+        $this->assertEquals('CLEMENT', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->payerName->otherNameDetails->givenName);
+
+        $this->assertEquals('1980', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->payerDateOfBirth->dateTime->year);
+        $this->assertEquals('10', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->payerDateOfBirth->dateTime->month);
+        $this->assertEquals('30', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->payerDateOfBirth->dateTime->day);
+
+        $this->assertEquals(ReferenceDetails::TYPE_CPF_BRAZILIAN_SECURITY_NUMBER, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->formOfIdDetails->referenceDetails->type);
+        $this->assertEquals('25208731592', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->formOfIdDetails->referenceDetails->value);
+
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->billingAddress);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->merchantURL);
+        $this->assertEmpty($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->payerPhoneOrEmail);
+        $this->assertEmpty($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->securityCode);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->shopperDetails);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->shopperSession);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->travelShopper);
+
+        $this->assertEquals('CC', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->fopInformation->formOfPayment->type);
+
+        $this->assertEquals('VI', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->creditCardData->creditCardDetails->ccInfo->vendorCode);
+        $this->assertEquals('4541099100010016', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->creditCardData->creditCardDetails->ccInfo->cardNumber);
+        $this->assertEquals('0915', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->creditCardData->creditCardDetails->ccInfo->expiryDate);
+        $this->assertEquals('CLEMENT DUPONT', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->creditCardData->creditCardDetails->ccInfo->ccHolderName);
+
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->asyncDataGroup);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->dummy);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->fundTransferData);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->invoiceDataGroup);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->webAccountData);
+    }
+
+    /**
+     * 5.6 Operation: FOP account (ELV)
+     *
+     * Query with ELV account data.
+     */
+    public function testCanMakeMessageWithFopAccountElv()
+    {
+        $opt = new FopCreateFopOptions([
+            'transactionCode' => FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+            'fopGroup' => [
+                new Group([
+                    'elementRef' => [
+                        new ElementRef([
+                            'type' => ElementRef::TYPE_TST_NUMBER,
+                            'value' => 1
+                        ])
+                    ],
+                    'mopInfo' => [
+                        new MopInfo([
+                            'sequenceNr' => 1,
+                            'fopCode' => 'VI',
+                            'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                            'payMerchant' => 'AY',
+                            'payments' => [
+                                new Payment([
+                                    'type' => Payment::TYPE_TOTAL_FARE_AMOUNT,
+                                    'amount' => 100,
+                                    'currency' => 'EUR'
+                                ])
+                            ],
+                            'payIds' => [
+                                new PayId([
+                                    'type' => PayId::TYPE_DCC_CURRENCY_CHOSEN,
+                                    'id' => 'EUR'
+                                ]),
+                                new PayId([
+                                    'type' => PayId::TYPE_PAYMENT_RECORD_ID,
+                                    'id' => 123456
+                                ]),
+                            ]
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new CreateFormOfPayment($opt);
+
+        $this->assertEquals('FP', $msg->transactionContext->transactionDetails->code);
+        $this->assertEmpty($msg->bestEffort);
+        $this->assertNull($msg->reservationControlInformation);
+
+        $this->assertCount(1, $msg->fopGroup);
+
+        $this->assertEquals(1, $msg->fopGroup[0]->pnrElementAssociation[0]->referenceDetails->value);
+        $this->assertEquals(ReferenceDetails::TYPE_TST, $msg->fopGroup[0]->pnrElementAssociation[0]->referenceDetails->type);
+
+        $this->assertCount(1, $msg->fopGroup[0]->mopDescription);
+
+        $this->assertEquals(1, $msg->fopGroup[0]->mopDescription[0]->fopSequenceNumber->sequenceDetails->number);
+        $this->assertEquals('VI', $msg->fopGroup[0]->mopDescription[0]->mopDetails->fopPNRDetails->fopDetails[0]->fopCode);
+        $this->assertEquals('AY', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->merchantInformation->companyCode);
+
+        $this->assertCount(1, $msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails);
+        $this->assertEquals(AttributeDetails::TYPE_FP_ELEMENT, $msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails[0]->attributeType);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails[0]->attributeDescription);
+
+        $this->assertCount(1, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->monetaryInformation);
+        $this->assertEquals(MonetaryDetails::TYPE_TOTAL_FARE_AMOUNT, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->monetaryInformation[0]->monetaryDetails->typeQualifier);
+        $this->assertEquals(100, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->monetaryInformation[0]->monetaryDetails->amount);
+        $this->assertEquals('EUR', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->monetaryInformation[0]->monetaryDetails->currency);
+
+        $this->assertCount(2, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->paymentId);
+        $this->assertEquals(PaymentId::TYPE_DCC_CURRENCY_CHOSEN, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->paymentId[0]->referenceType);
+        $this->assertEquals('EUR', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->paymentId[0]->uniqueReference);
+    }
+
+    /**
+     * 5.4 Operation: DBI - TP card
+     *
+     * According to the context and for TP cards,
+     * the agent may be requested to input DBI data (Descriptive Billing Information)
+     * within the authorization request.
+     */
+    public function testCanMakeMessageWithDescriptiveBillingInfo()
+    {
+        $opt = new FopCreateFopOptions([
+            'transactionCode' => FopCreateFopOptions::TRANS_AUTH_ON_TICKET_MCO_EMD,
+            'fopGroup' => [
+                new Group([
+                    'elementRef' => [
+                        new ElementRef([
+                            'type' => ElementRef::TYPE_TST_NUMBER,
+                            'value' => 1
+                        ])
+                    ],
+                    'mopInfo' => [
+                        new MopInfo([
+                            'sequenceNr' => 1,
+                            'fopCode' => 'VI',
+                            'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                            'paySupData' => [
+                                new PaySupData([
+                                    'function' => 'DBI',
+                                    'data' => [
+                                        ' KS' => '12345',
+                                        'RZ' => 'NCE',
+                                        ' AE' => '4',
+                                        'AU' => '526',
+                                        'PK' => '1234',
+                                    ]
+                                ])
+                            ],
+                            'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                            'creditCardInfo' => new CreditCardInfo([
+                                'vendorCode' => 'TP',
+                                'cardNumber' => '4541099999990013',
+                                'expiryDate' => '0916'
+                            ])
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new CreateFormOfPayment($opt);
+
+        $this->assertEquals('DEF', $msg->transactionContext->transactionDetails->code);
+        $this->assertEmpty($msg->bestEffort);
+        $this->assertNull($msg->reservationControlInformation);
+
+        $this->assertCount(1, $msg->fopGroup);
+
+        $this->assertEquals(1, $msg->fopGroup[0]->pnrElementAssociation[0]->referenceDetails->value);
+        $this->assertEquals(ReferenceDetails::TYPE_TST, $msg->fopGroup[0]->pnrElementAssociation[0]->referenceDetails->type);
+
+        $this->assertCount(1, $msg->fopGroup[0]->mopDescription);
+
+        $this->assertEquals(1, $msg->fopGroup[0]->mopDescription[0]->fopSequenceNumber->sequenceDetails->number);
+        $this->assertEquals('VI', $msg->fopGroup[0]->mopDescription[0]->mopDetails->fopPNRDetails->fopDetails[0]->fopCode);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData);
+
+        $this->assertCount(1, $msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails);
+        $this->assertEquals(AttributeDetails::TYPE_FP_ELEMENT, $msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails[0]->attributeType);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails[0]->attributeDescription);
+
+        $this->assertCount(1, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData);
+        $this->assertEquals('DBI', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData[0]->attributeFunction);
+
+        $this->assertCount(5, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData[0]->attributeDetails);
+        $this->assertEquals(' KS', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData[0]->attributeDetails[0]->attributeType);
+        $this->assertEquals('12345', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData[0]->attributeDetails[0]->attributeDescription);
+        $this->assertEquals('RZ', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData[0]->attributeDetails[1]->attributeType);
+        $this->assertEquals('NCE', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData[0]->attributeDetails[1]->attributeDescription);
+        $this->assertEquals(' AE', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData[0]->attributeDetails[2]->attributeType);
+        $this->assertEquals('4', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData[0]->attributeDetails[2]->attributeDescription);
+        $this->assertEquals('AU', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData[0]->attributeDetails[3]->attributeType);
+        $this->assertEquals('526', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData[0]->attributeDetails[3]->attributeDescription);
+        $this->assertEquals('PK', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData[0]->attributeDetails[4]->attributeType);
+        $this->assertEquals('1234', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentSupplementaryData[0]->attributeDetails[4]->attributeDescription);
+
+
+        $this->assertEquals('CC', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->fopInformation->formOfPayment->type);
+
+        $this->assertEquals('TP', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->creditCardData->creditCardDetails->ccInfo->vendorCode);
+        $this->assertEquals('4541099999990013', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->creditCardData->creditCardDetails->ccInfo->cardNumber);
+        $this->assertEquals('0916', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->creditCardData->creditCardDetails->ccInfo->expiryDate);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->creditCardData->creditCardDetails->ccInfo->ccHolderName);
+
     }
 }

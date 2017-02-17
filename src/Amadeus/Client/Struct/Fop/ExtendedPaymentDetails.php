@@ -161,18 +161,20 @@ class ExtendedPaymentDetails
     {
         $date = "";
 
-        switch ($format) {
-            case self::FORMAT_YYMMDD:
-                $date = $startDate->format('ymd');
-                break;
-            case self::FORMAT_MMDD:
-                $date = $startDate->format('md');
-                break;
-            case self::FORMAT_YYDDD:
-                $date = $startDate->format('yz');
-                break;
-            default:
-                throw new \RuntimeException("Installments Format '" . $format . "' is not implemented!");
+        if ($startDate instanceof \DateTime) {
+            switch ($format) {
+                case self::FORMAT_YYMMDD:
+                    $date = $startDate->format('ymd');
+                    break;
+                case self::FORMAT_MMDD:
+                    $date = $startDate->format('md');
+                    break;
+                case self::FORMAT_YYDDD:
+                    $date = $startDate->format('yz');
+                    break;
+                default:
+                    throw new \RuntimeException("Installments Format '" . $format . "' is not implemented!");
+            }
         }
 
         return $date;

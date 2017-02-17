@@ -114,7 +114,7 @@ class MopDescription extends WsMessageUtility
      */
     protected function loadPaymentModule(MopInfo $options)
     {
-        if ($this->checkAnyNotEmpty($options->fopType, $options->payMerchant, $options->payments, $options->installmentsInfo, $options->mopPaymentType, $options->creditCardInfo, $options->fraudScreening)) {
+        if ($this->checkAnyNotEmpty($options->fopType, $options->payMerchant, $options->payments, $options->installmentsInfo, $options->mopPaymentType, $options->creditCardInfo, $options->fraudScreening, $options->payIds, $options->paySupData)) {
             $this->paymentModule = new PaymentModule($options->fopType);
 
             if (!empty($options->payMerchant)) {
@@ -139,6 +139,16 @@ class MopDescription extends WsMessageUtility
                 $this->paymentModule->paymentData->fraudScreeningData = new FraudScreeningData($options->fraudScreening);
             }
 
+            if (!empty($options->payIds)) {
+                $this->checkAndCreatePaymentData();
+                foreach ($options->payIds as $payId) {
+                    $this->paymentModule->paymentData->paymentId[] = new PaymentId(
+                        $payId->id,
+                        $payId->type
+                    );
+                }
+            }
+
             if (!empty($options->mopPaymentType)) {
                 $this->checkAndCreateMopInformation();
                 $this->paymentModule->mopInformation->fopInformation = new FopInformation($options->mopPaymentType);
@@ -147,6 +157,13 @@ class MopDescription extends WsMessageUtility
             if (!empty($options->creditCardInfo)) {
                 $this->checkAndCreateMopInformation();
                 $this->paymentModule->mopInformation->creditCardData = new CreditCardData($options->creditCardInfo);
+            }
+
+            foreach ($options->paySupData as $paySupData) {
+                $this->paymentModule->paymentSupplementaryData[] = new PaymentSupplementaryData(
+                    $paySupData->function,
+                    $paySupData->data
+                );
             }
         }
     }

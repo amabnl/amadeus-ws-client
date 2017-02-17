@@ -43,4 +43,19 @@ class PaymentSupplementaryData
      * @var AttributeDetails[]
      */
     public $attributeDetails = [];
+
+    /**
+     * PaymentSupplementaryData constructor.
+     *
+     * @param string $attributeFunction
+     * @param array $attributeDetails
+     */
+    public function __construct($attributeFunction, array $attributeDetails)
+    {
+        $this->attributeFunction = $attributeFunction;
+
+        foreach ($attributeDetails as $type=>$description) {
+            $this->attributeDetails[] = new AttributeDetails($type, $description);
+        }
+    }
 }

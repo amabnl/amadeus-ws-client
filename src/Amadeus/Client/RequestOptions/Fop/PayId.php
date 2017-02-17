@@ -25,37 +25,33 @@ namespace Amadeus\Client\RequestOptions\Fop;
 use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * InstallmentsInfo
+ * PayId
  *
  * @package Amadeus\Client\RequestOptions\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class InstallmentsInfo extends LoadParamsFromArray
+class PayId extends LoadParamsFromArray
 {
-    const FORMAT_YYMMDD = 101;
-    const FORMAT_YYDDD = 105;
-    const FORMAT_MMDD = 106;
-
-    const FREQUENCY_MONTHLY = "MTH";
-    const FREQUENCY_MONTHLY_SHORT = "M";
+    const TYPE_APPLICATION_CORRELATOR_ID = "APP";
+    const TYPE_CAPTURE_REFERENCE_ID = "CRI";
+    const TYPE_DCC_CURRENCY_CHOSEN = "DCC";
+    const TYPE_THIRD_PARTY_RECORD_ID = "EXT";
+    const TYPE_FRAUD_RECORD_ID = "FRI";
+    const TYPE_MERCHANT_REFERENCE = "MRF";
+    const TYPE_PAYMENT_PAGE_TOKEN = "PPT";
+    const TYPE_PAYMENT_RECORD_ID = "PRI";
+    const TYPE_PSP_RECONCILATION_REFERENCE = "PRR";
+    const TYPE_REFUND_REFERENCE_ID = "RRI";
 
     /**
-     * @var int
-     */
-    public $nrOfInstallments;
-
-    /**
+     * self::TYPE_*
+     *
      * @var string
      */
-    public $frequency;
-
-    /**
-     * @var \DateTime
-     */
-    public $startDate;
+    public $type;
 
     /**
      * @var string|int
      */
-    public $format;
+    public $id;
 }

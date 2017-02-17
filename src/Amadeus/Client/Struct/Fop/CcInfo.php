@@ -134,5 +134,7 @@ class CcInfo
         $this->expiryDate = $options->expiryDate;
         $this->ccHolderName = $options->name;
         $this->securityId = $options->securityId;
+        $this->issueNumber = $options->issueNumber;
+        $this->startDate = $options->startDate;
     }
 }

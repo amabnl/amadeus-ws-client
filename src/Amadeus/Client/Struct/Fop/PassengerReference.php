@@ -31,7 +31,7 @@ namespace Amadeus\Client\Struct\Fop;
 class PassengerReference
 {
     const TYPE_INFANT = "INF";
-    const TYE_ADULT = "PAX";
+    const TYPE_ADULT = "PAX";
 
     const TYPE_STAKEHOLDER_PAYER = "SHP";
 
@@ -50,7 +50,7 @@ class PassengerReference
     /**
      * PassengerReference constructor.
      *
-     * @param string $type
+     * @param string $type self::TYPE_*
      * @param int|string $value
      */
     public function __construct($type, $value)

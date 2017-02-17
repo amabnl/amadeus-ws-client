@@ -154,4 +154,16 @@ class MopInfo extends LoadParamsFromArray
      * @var FraudScreeningOptions
      */
     public $fraudScreening;
+
+    /**
+     * @var PayId[]
+     */
+    public $payIds = [];
+
+    /**
+     * PaymentSupplementaryData
+     *
+     * @var PaySupData[]
+     */
+    public $paySupData = [];
 }

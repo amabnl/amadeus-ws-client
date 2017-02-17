@@ -66,4 +66,18 @@ class CreditCardInfo extends LoadParamsFromArray
      * @var string
      */
     public $name;
+
+    /**
+     * Issue number
+     *
+     * @var string
+     */
+    public $issueNumber;
+
+    /**
+     * Date when the credit card has been issued
+     *
+     * @var string
+     */
+    public $startDate;
 }
