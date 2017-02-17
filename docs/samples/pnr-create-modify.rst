@@ -319,7 +319,7 @@ Request a Gluten intolerant meal for passenger 2 on flight 3 (`See all meal requ
 Wheelchair
 ----------
 
-Request a wheelchair for passenger 1 on flights 1 and 2 (SSR code is ``WHCR``):
+Request a wheelchair for passenger 1 on flights 1 and 2 (SSR code is ``WCHR``):
 
 .. code-block:: php
 
@@ -330,7 +330,7 @@ Request a wheelchair for passenger 1 on flights 1 and 2 (SSR code is ``WHCR``):
     $opt = new PnrCreatePnrOptions([
         'elements' => [
             new ServiceRequest([
-                'type' => 'WHCR',
+                'type' => 'WCHR',
                 'references' => [
                     new Reference([
                         'type' => Reference::TYPE_PASSENGER_TATTOO,
