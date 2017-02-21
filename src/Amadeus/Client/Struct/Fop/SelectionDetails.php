@@ -39,4 +39,16 @@ class SelectionDetails
      * @var string
      */
     public $optionInformation;
+
+    /**
+     * SelectionDetails constructor.
+     *
+     * @param string $option
+     * @param string $optionInformation
+     */
+    public function __construct($option, $optionInformation)
+    {
+        $this->option = $option;
+        $this->optionInformation = $optionInformation;
+    }
 }

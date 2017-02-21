@@ -23,60 +23,70 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * MopDetailedData
+ * InvoiceFormOfPayment
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MopDetailedData
+class InvoiceFormOfPayment extends FormOfPayment
 {
-    /**
-     * @var FopInformation
-     */
-    public $fopInformation;
+    const INDICATOR_COLLECTIVE_INVOICE = "C";
 
     /**
-     * @var FundTransferDetailledData
+     * self::INDICATOR_*
+     *
+     * @var string
      */
-    public $fundTransferDetailledData;
-
-    /**
-     * @var AsyncDetailledDataGroup
-     */
-    public $asyncDetailledDataGroup;
+    public $indicator;
 
     /**
      * @var string
      */
-    public $dummy;
+    public $merchantCode;
 
     /**
-     * @var InvoiceDetailedDataGroup
+     * @var string
      */
-    public $invoiceDetailedDataGroup;
+    public $expiryDate;
 
     /**
-     * @var CreditCardDetailedData
+     * @var string
      */
-    public $creditCardDetailedData;
+    public $customerAccount;
 
     /**
-     * @var WebAccountDetailledData
+     * @var string
      */
-    public $webAccountDetailledData;
+    public $membershipStatus;
 
     /**
-     * @var VirtualCreditCardStatusGroup
+     * @var string
      */
-    public $virtualCreditCardStatusGroup;
+    public $transactionInfo;
 
     /**
-     * MopDetailedData constructor.
+     * @var string
+     */
+    public $pinCode;
+
+    /**
+     * @var string
+     */
+    public $pinCodeType;
+
+    /**
+     * InvoiceFormOfPayment constructor.
      *
-     * @param string $fopType
+     * @param string $type
+     * @param string $customerAccount
+     * @param string $membershipStatus
+     * @param string|null $merchantCode
      */
-    public function __construct($fopType)
+    public function __construct($type, $customerAccount, $membershipStatus, $merchantCode = null)
     {
-        $this->fopInformation = new FopInformation($fopType);
+        parent::__construct($type);
+        $this->customerAccount = $customerAccount;
+        $this->membershipStatus = $membershipStatus;
+        $this->merchantCode = $merchantCode;
     }
 }

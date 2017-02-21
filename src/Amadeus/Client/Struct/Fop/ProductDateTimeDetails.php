@@ -34,4 +34,16 @@ class ProductDateTimeDetails
      * @var string
      */
     public $departureDate;
+
+    /**
+     * ProductDateTimeDetails constructor.
+     *
+     * @param \DateTime $departureDate
+     */
+    public function __construct($departureDate)
+    {
+        if ($departureDate instanceof \DateTime) {
+            $this->departureDate = $departureDate->format('dmy');
+        }
+    }
 }

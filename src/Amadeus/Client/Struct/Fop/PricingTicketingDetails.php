@@ -39,4 +39,16 @@ class PricingTicketingDetails
      * @var LocationDetails
      */
     public $locationDetails;
+
+    /**
+     * PricingTicketingDetails constructor.
+     *
+     * @param \DateTime $departureDate
+     * @param string $city
+     */
+    public function __construct($departureDate, $city)
+    {
+        $this->productDateTimeDetails = new ProductDateTimeDetails($departureDate);
+        $this->locationDetails = new LocationDetails($city);
+    }
 }

@@ -129,6 +129,11 @@ class MopInfo extends LoadParamsFromArray
     public $payMerchant;
 
     /**
+     * @var \DateTime
+     */
+    public $transactionDate;
+
+    /**
      * @var Payment[]
      */
     public $payments = [];
@@ -149,6 +154,11 @@ class MopInfo extends LoadParamsFromArray
      * @var CreditCardInfo
      */
     public $creditCardInfo;
+
+    /**
+     * @var InvoiceInfo
+     */
+    public $invoiceInfo;
 
     /**
      * @var FraudScreeningOptions

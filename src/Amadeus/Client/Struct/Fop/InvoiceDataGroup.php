@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\RequestOptions\Fop\InvoiceInfo;
+
 /**
  * InvoiceDataGroup
  *
@@ -30,4 +32,60 @@ namespace Amadeus\Client\Struct\Fop;
  */
 class InvoiceDataGroup
 {
+    /**
+     * @var InvoiceInformation
+     */
+    public $invoiceInformation;
+
+    /**
+     * @var Routing
+     */
+    public $routing;
+
+    /**
+     * @var mixed[]
+     */
+    public $iruQualifier = [];
+
+    /**
+     * @var mixed[]
+     */
+    public $fopInformationGroup = [];
+
+    /**
+     * @var mixed[]
+     */
+    public $accountSupplementaryData = [];
+
+    /**
+     * @var mixed
+     */
+    public $bookingReference;
+
+    /**
+     * @var mixed[]
+     */
+    public $parentTicketGroup = [];
+
+    /**
+     * @var mixed[]
+     */
+    public $ruleList = [];
+
+    /**
+     * InvoiceDataGroup constructor.
+     *
+     * @param InvoiceInfo $invoiceInfo
+     */
+    public function __construct($invoiceInfo)
+    {
+        $this->invoiceInformation = new InvoiceInformation(
+            $invoiceInfo->formOfPayment,
+            $invoiceInfo->customerAccount,
+            $invoiceInfo->membershipStatus,
+            $invoiceInfo->merchantCode
+        );
+
+        $this->routing = new Routing($invoiceInfo->routingStation);
+    }
 }

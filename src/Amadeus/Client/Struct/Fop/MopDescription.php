@@ -94,13 +94,13 @@ class MopDescription extends WsMessageUtility
         }
 
         if (!empty($options->supplementaryData)) {
-            $this->mopDetails->pnrSupplementaryData = new PnrSupplementaryData(
+            $this->mopDetails->pnrSupplementaryData[] = new PnrSupplementaryData(
                 DataAndSwitchMap::TYPE_DATA_INFORMATION,
                 $options->supplementaryData
             );
         }
         if (!empty($options->supplementarySwitches)) {
-            $this->mopDetails->pnrSupplementaryData = new PnrSupplementaryData(
+            $this->mopDetails->pnrSupplementaryData[] = new PnrSupplementaryData(
                 DataAndSwitchMap::TYPE_SWITCH_INFORMATION,
                 $options->supplementarySwitches
             );
@@ -114,12 +114,30 @@ class MopDescription extends WsMessageUtility
      */
     protected function loadPaymentModule(MopInfo $options)
     {
-        if ($this->checkAnyNotEmpty($options->fopType, $options->payMerchant, $options->payments, $options->installmentsInfo, $options->mopPaymentType, $options->creditCardInfo, $options->fraudScreening, $options->payIds, $options->paySupData)) {
+        if ($this->checkAnyNotEmpty(
+            $options->fopType,
+            $options->payMerchant,
+            $options->payments,
+            $options->installmentsInfo,
+            $options->mopPaymentType,
+            $options->creditCardInfo,
+            $options->fraudScreening,
+            $options->payIds,
+            $options->paySupData
+        )) {
             $this->paymentModule = new PaymentModule($options->fopType);
 
             if (!empty($options->payMerchant)) {
                 $this->checkAndCreatePaymentData();
                 $this->paymentModule->paymentData->merchantInformation = new MerchantInformation($options->payMerchant);
+            }
+
+            if (!empty($options->transactionDate)) {
+                $this->checkAndCreatePaymentData();
+                $this->paymentModule->paymentData->transactionDateTime = new TransactionDateTime(
+                    null,
+                    $options->transactionDate
+                );
             }
 
             if (!empty($options->payments)) {
@@ -136,7 +154,9 @@ class MopDescription extends WsMessageUtility
 
             if (!empty($options->fraudScreening)) {
                 $this->checkAndCreatePaymentData();
-                $this->paymentModule->paymentData->fraudScreeningData = new FraudScreeningData($options->fraudScreening);
+                $this->paymentModule->paymentData->fraudScreeningData = new FraudScreeningData(
+                    $options->fraudScreening
+                );
             }
 
             if (!empty($options->payIds)) {
@@ -157,6 +177,18 @@ class MopDescription extends WsMessageUtility
             if (!empty($options->creditCardInfo)) {
                 $this->checkAndCreateMopInformation();
                 $this->paymentModule->mopInformation->creditCardData = new CreditCardData($options->creditCardInfo);
+                if (!empty($options->creditCardInfo->approvalCode)) {
+                    $this->paymentModule->mopDetailedData = new MopDetailedData($options->fopType);
+                    $this->paymentModule->mopDetailedData->creditCardDetailedData = new CreditCardDetailedData(
+                        $options->creditCardInfo->approvalCode,
+                        $options->creditCardInfo->sourceOfApproval
+                    );
+                }
+            }
+
+            if (!empty($options->invoiceInfo)) {
+                $this->checkAndCreateMopInformation();
+                $this->paymentModule->mopInformation->invoiceDataGroup = new InvoiceDataGroup($options->invoiceInfo);
             }
 
             foreach ($options->paySupData as $paySupData) {

@@ -23,60 +23,40 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * MopDetailedData
+ * ApprovalCodeData
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MopDetailedData
+class ApprovalCodeData
 {
-    /**
-     * @var FopInformation
-     */
-    public $fopInformation;
-
-    /**
-     * @var FundTransferDetailledData
-     */
-    public $fundTransferDetailledData;
-
-    /**
-     * @var AsyncDetailledDataGroup
-     */
-    public $asyncDetailledDataGroup;
+    const APPROVAL_SOURCE_AUTOMATIC = "A";
+    const APPROVAL_SOURCE_MANUAL_SETTLEMENT = "B";
+    const APPROVAL_SOURCE_AUTOMATIC_SETTLEMENT = "F";
+    const APPROVAL_SOURCE_AUTOMATIC_NON_AMADEUS_PAYMENT = "G";
+    const APPROVAL_SOURCE_MANUAL = "M";
 
     /**
      * @var string
      */
-    public $dummy;
+    public $approvalCode;
 
     /**
-     * @var InvoiceDetailedDataGroup
-     */
-    public $invoiceDetailedDataGroup;
-
-    /**
-     * @var CreditCardDetailedData
-     */
-    public $creditCardDetailedData;
-
-    /**
-     * @var WebAccountDetailledData
-     */
-    public $webAccountDetailledData;
-
-    /**
-     * @var VirtualCreditCardStatusGroup
-     */
-    public $virtualCreditCardStatusGroup;
-
-    /**
-     * MopDetailedData constructor.
+     * self::APPROVAL_SOURCE_*
      *
-     * @param string $fopType
+     * @var string
      */
-    public function __construct($fopType)
+    public $sourceOfApproval;
+
+    /**
+     * ApprovalCodeData constructor.
+     *
+     * @param string $approvalCode
+     * @param string $sourceOfApproval self::APPROVAL_SOURCE_*
+     */
+    public function __construct($approvalCode, $sourceOfApproval)
     {
-        $this->fopInformation = new FopInformation($fopType);
+        $this->approvalCode = $approvalCode;
+        $this->sourceOfApproval = $sourceOfApproval;
     }
 }

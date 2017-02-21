@@ -25,77 +25,51 @@ namespace Amadeus\Client\RequestOptions\Fop;
 use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * Fraud Screening Options for Credit Card payments
+ * InvoiceInfo
  *
  * @package Amadeus\Client\RequestOptions\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FraudScreeningOptions extends LoadParamsFromArray
+class InvoiceInfo extends LoadParamsFromArray
 {
-    const ID_DOC_CPF__BRAZILIAN_SECURITY_NUMBER = "CP";
-    const ID_DOC_DRIVER_LICENSE = "DLN";
-    const ID_DOC_FREQUENT_FLYER_NUMBER = "FFN";
-    const ID_DOC_LOCALLY_DEFINED_NUMBER = "ID";
-    const ID_DOC_NATIONAL_IDENTITY_CARD_NUMBER = "NI";
-    const ID_DOC_PASSEPORT_NUMBER = "PP";
-    const ID_DOC_SOCIAL_SECURITY_NUMBER = "SSN";
+    const FOP_INVOICE = "INV";
+    const FOP_INTERACTIVE_REDEMPTION_UPGRADE = "IRU";
+    const FOP_ACCOUNT_PAYMENT = "ACC";
 
     /**
-     * Perform fraud screening?
+     * Form of payment type
      *
-     * @var bool
-     */
-    public $doFraudScreening = true;
-
-    /**
-     * @var string
-     */
-    public $ipAddress;
-
-    /**
-     * @var string
-     */
-    public $merchantUrl;
-
-    /**
-     * CC holder first name
+     * self::FOP_*
      *
      * @var string
      */
-    public $firstName;
+    public $formOfPayment;
 
     /**
-     * CC holder last name
+     * Merchant id
      *
      * @var string
      */
-    public $lastName;
+    public $merchantCode;
 
     /**
-     * Payer's Date of Birth
-     *
-     * @var \DateTime
-     */
-    public $dateOfBirth;
-
-    /**
-     * Identity document number
+     * Account number
      *
      * @var string
      */
-    public $idDocumentNr;
+    public $customerAccount;
 
     /**
-     * Type of Identity document
-     *
-     * self::ID_DOC_*
+     * Membership status
      *
      * @var string
      */
-    public $idDocumentType;
+    public $membershipStatus;
 
     /**
-     * @var FraudScreeningAddress
+     * Provider code
+     *
+     * @var string
      */
-    public $billingAddress;
+    public $routingStation;
 }

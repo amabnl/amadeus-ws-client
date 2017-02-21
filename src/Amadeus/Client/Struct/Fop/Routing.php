@@ -23,60 +23,25 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * MopDetailedData
+ * Routing
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MopDetailedData
+class Routing
 {
     /**
-     * @var FopInformation
+     * @var RoutingDetails
      */
-    public $fopInformation;
+    public $routingDetails;
 
     /**
-     * @var FundTransferDetailledData
-     */
-    public $fundTransferDetailledData;
-
-    /**
-     * @var AsyncDetailledDataGroup
-     */
-    public $asyncDetailledDataGroup;
-
-    /**
-     * @var string
-     */
-    public $dummy;
-
-    /**
-     * @var InvoiceDetailedDataGroup
-     */
-    public $invoiceDetailedDataGroup;
-
-    /**
-     * @var CreditCardDetailedData
-     */
-    public $creditCardDetailedData;
-
-    /**
-     * @var WebAccountDetailledData
-     */
-    public $webAccountDetailledData;
-
-    /**
-     * @var VirtualCreditCardStatusGroup
-     */
-    public $virtualCreditCardStatusGroup;
-
-    /**
-     * MopDetailedData constructor.
+     * Routing constructor.
      *
-     * @param string $fopType
+     * @param string $otherStation
      */
-    public function __construct($fopType)
+    public function __construct($otherStation)
     {
-        $this->fopInformation = new FopInformation($fopType);
+        $this->routingDetails = new RoutingDetails($otherStation);
     }
 }

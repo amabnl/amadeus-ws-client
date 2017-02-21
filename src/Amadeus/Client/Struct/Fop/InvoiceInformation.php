@@ -23,60 +23,38 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * MopDetailedData
+ * InvoiceInformation
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MopDetailedData
+class InvoiceInformation
 {
     /**
-     * @var FopInformation
+     * @var InvoiceFormOfPayment
      */
-    public $fopInformation;
+    public $formOfPayment;
 
     /**
-     * @var FundTransferDetailledData
+     * @var InvoiceFormOfPayment[]
      */
-    public $fundTransferDetailledData;
+    public $otherFormOfPayment = [];
 
     /**
-     * @var AsyncDetailledDataGroup
-     */
-    public $asyncDetailledDataGroup;
-
-    /**
-     * @var string
-     */
-    public $dummy;
-
-    /**
-     * @var InvoiceDetailedDataGroup
-     */
-    public $invoiceDetailedDataGroup;
-
-    /**
-     * @var CreditCardDetailedData
-     */
-    public $creditCardDetailedData;
-
-    /**
-     * @var WebAccountDetailledData
-     */
-    public $webAccountDetailledData;
-
-    /**
-     * @var VirtualCreditCardStatusGroup
-     */
-    public $virtualCreditCardStatusGroup;
-
-    /**
-     * MopDetailedData constructor.
+     * InvoiceInformation constructor.
      *
-     * @param string $fopType
+     * @param string $type
+     * @param string $customerAccount
+     * @param string $membershipStatus
+     * @param string|null $merchantCode
      */
-    public function __construct($fopType)
+    public function __construct($type, $customerAccount, $membershipStatus, $merchantCode = null)
     {
-        $this->fopInformation = new FopInformation($fopType);
+        $this->formOfPayment = new InvoiceFormOfPayment(
+            $type,
+            $customerAccount,
+            $membershipStatus,
+            $merchantCode
+        );
     }
 }

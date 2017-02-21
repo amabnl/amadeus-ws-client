@@ -34,4 +34,15 @@ class FeeTypeInfo
      * @var SelectionDetails
      */
     public $selectionDetails;
+
+    /**
+     * FeeTypeInfo constructor.
+     *
+     * @param string $option
+     * @param string $optionInformation
+     */
+    public function __construct($option, $optionInformation)
+    {
+        $this->selectionDetails = new SelectionDetails($option, $optionInformation);
+    }
 }

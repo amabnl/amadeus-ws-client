@@ -23,60 +23,26 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * MopDetailedData
+ * ApprovalDetails
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MopDetailedData
+class ApprovalDetails
 {
     /**
-     * @var FopInformation
+     * @var ApprovalCodeData
      */
-    public $fopInformation;
+    public $approvalCodeData;
 
     /**
-     * @var FundTransferDetailledData
-     */
-    public $fundTransferDetailledData;
-
-    /**
-     * @var AsyncDetailledDataGroup
-     */
-    public $asyncDetailledDataGroup;
-
-    /**
-     * @var string
-     */
-    public $dummy;
-
-    /**
-     * @var InvoiceDetailedDataGroup
-     */
-    public $invoiceDetailedDataGroup;
-
-    /**
-     * @var CreditCardDetailedData
-     */
-    public $creditCardDetailedData;
-
-    /**
-     * @var WebAccountDetailledData
-     */
-    public $webAccountDetailledData;
-
-    /**
-     * @var VirtualCreditCardStatusGroup
-     */
-    public $virtualCreditCardStatusGroup;
-
-    /**
-     * MopDetailedData constructor.
+     * ApprovalDetails constructor.
      *
-     * @param string $fopType
+     * @param string $approvalCode
+     * @param string $approvalSource
      */
-    public function __construct($fopType)
+    public function __construct($approvalCode, $approvalSource)
     {
-        $this->fopInformation = new FopInformation($fopType);
+        $this->approvalCodeData = new ApprovalCodeData($approvalCode, $approvalSource);
     }
 }

@@ -23,25 +23,11 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * LocationDetails
+ * CardSupplementaryData
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class LocationDetails
+class CardSupplementaryData
 {
-    /**
-     * @var string
-     */
-    public $city;
-
-    /**
-     * LocationDetails constructor.
-     *
-     * @param string $city
-     */
-    public function __construct($city)
-    {
-        $this->city = $city;
-    }
 }

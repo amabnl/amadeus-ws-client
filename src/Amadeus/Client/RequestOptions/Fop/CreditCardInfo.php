@@ -32,6 +32,12 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class CreditCardInfo extends LoadParamsFromArray
 {
+    const APPROVAL_SOURCE_AUTOMATIC = "A";
+    const APPROVAL_SOURCE_MANUAL_SETTLEMENT = "B";
+    const APPROVAL_SOURCE_AUTOMATIC_SETTLEMENT = "F";
+    const APPROVAL_SOURCE_AUTOMATIC_NON_AMADEUS_PAYMENT = "G";
+    const APPROVAL_SOURCE_MANUAL = "M";
+
     /**
      * Card Vendor code
      *
@@ -80,4 +86,20 @@ class CreditCardInfo extends LoadParamsFromArray
      * @var string
      */
     public $startDate;
+
+    /**
+     * CC transaction authorization approval code
+     *
+     * @var string
+     */
+    public $approvalCode;
+
+    /**
+     * Authorization approval source
+     *
+     * self::APPROVAL_SOURCE_*
+     *
+     * @var string
+     */
+    public $sourceOfApproval;
 }

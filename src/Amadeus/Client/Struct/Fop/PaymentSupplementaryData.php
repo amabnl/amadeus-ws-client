@@ -54,7 +54,7 @@ class PaymentSupplementaryData
     {
         $this->attributeFunction = $attributeFunction;
 
-        foreach ($attributeDetails as $type=>$description) {
+        foreach ($attributeDetails as $type => $description) {
             $this->attributeDetails[] = new AttributeDetails($type, $description);
         }
     }

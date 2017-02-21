@@ -20,28 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fop;
+namespace Amadeus\Client\RequestOptions\Fop;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * LocationDetails
+ * FraudScreeningAddress
  *
- * @package Amadeus\Client\Struct\Fop
+ * @package Amadeus\Client\RequestOptions\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class LocationDetails
+class FraudScreeningAddress extends LoadParamsFromArray
 {
+    /**
+     * @var string[]
+     */
+    public $addressLines;
+
     /**
      * @var string
      */
     public $city;
 
     /**
-     * LocationDetails constructor.
-     *
-     * @param string $city
+     * @var string
      */
-    public function __construct($city)
-    {
-        $this->city = $city;
-    }
+    public $zipCode;
+
+    /**
+     * @var string
+     */
+    public $countryCode;
 }

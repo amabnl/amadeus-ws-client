@@ -20,28 +20,24 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fop;
+namespace Test\Amadeus\Client\Struct\Fop;
+
+use Amadeus\Client\Struct\Fop\Communication;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * LocationDetails
+ * CommunicationTest
  *
- * @package Amadeus\Client\Struct\Fop
+ * @package Test\Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class LocationDetails
+class CommunicationTest extends BaseTestCase
 {
-    /**
-     * @var string
-     */
-    public $city;
-
-    /**
-     * LocationDetails constructor.
-     *
-     * @param string $city
-     */
-    public function __construct($city)
+    public function testCanConstruct()
     {
-        $this->city = $city;
+        $obj = new Communication('http://dummy.com');
+
+        $this->assertEquals(Communication::QUAL_WWW, $obj->adressQualifier);
+        $this->assertEquals('http://dummy.com', $obj->internetAddress);
     }
 }
