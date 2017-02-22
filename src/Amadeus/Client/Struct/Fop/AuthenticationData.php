@@ -23,27 +23,31 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * MerchantUrl
+ * AuthenticationData
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MerchantUrl
+class AuthenticationData
 {
     /**
-     * @var Communication
+     * @var AuthenticationDataDetails
      */
-    public $communication;
+    public $authenticationDataDetails;
 
     /**
-     * MerchantUrl constructor.
+     * AuthenticationData constructor.
      *
-     * @param string|null $url
+     * @param string|null $veresStatus
+     * @param string|null $paresStatus
+     * @param string|null $company
      */
-    public function __construct($url = null)
+    public function __construct($veresStatus, $paresStatus, $company)
     {
-        if (!is_null($url)) {
-            $this->communication = new Communication($url);
-        }
+        $this->authenticationDataDetails = new AuthenticationDataDetails(
+            $veresStatus,
+            $paresStatus,
+            $company
+        );
     }
 }

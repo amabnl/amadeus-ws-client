@@ -23,27 +23,52 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * MerchantUrl
+ * TdsBlbData
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MerchantUrl
+class TdsBlbData
 {
-    /**
-     * @var Communication
-     */
-    public $communication;
+    const DATATYPE_BINARY = "B";
+    const DATATYPE_EDIFACT = "E";
 
     /**
-     * MerchantUrl constructor.
+     * Binary Data length
      *
-     * @param string|null $url
+     * @var int
      */
-    public function __construct($url = null)
+    public $dataLength;
+
+    /**
+     * self::DATATYPE_*
+     *
+     * @var string
+     */
+    public $dataType = self::DATATYPE_BINARY;
+
+    /**
+     * Base64 encoded data
+     *
+     * @var string
+     */
+    public $binaryData;
+
+    /**
+     * TdsBlbData constructor.
+     *
+     * @param string $binaryData
+     * @param string $dataType
+     * @param int|null $dataLength
+     */
+    public function __construct($binaryData, $dataType, $dataLength)
     {
-        if (!is_null($url)) {
-            $this->communication = new Communication($url);
+        if (!is_null($dataLength)) {
+            $this->dataLength = $dataLength;
+        } else {
+            $this->dataLength = mb_strlen(base64_decode($binaryData));
         }
+        $this->dataType = $dataType;
+        $this->binaryData = $binaryData;
     }
 }

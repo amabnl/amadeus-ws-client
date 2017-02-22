@@ -23,27 +23,30 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * MerchantUrl
+ * TdsReferenceDetails
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MerchantUrl
+class TdsReferenceDetails
 {
-    /**
-     * @var Communication
-     */
-    public $communication;
+    const REF_PARES = 'PARES';
+    const REF_VISA_CARD = 'CAVV';
+    const REF_MASTERCARD = 'AVVV';
+    const REF_THREEDS_TRANSACTION_IDENTIFIER = 'XID';
 
     /**
-     * MerchantUrl constructor.
-     *
-     * @param string|null $url
+     * @var string
      */
-    public function __construct($url = null)
+    public $value;
+
+    /**
+     * TdsReferenceDetails constructor.
+     *
+     * @param string $value self::REF_*
+     */
+    public function __construct($value)
     {
-        if (!is_null($url)) {
-            $this->communication = new Communication($url);
-        }
+        $this->value = $value;
     }
 }

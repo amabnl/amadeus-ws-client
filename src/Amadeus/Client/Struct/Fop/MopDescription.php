@@ -177,11 +177,15 @@ class MopDescription extends WsMessageUtility
             if (!empty($options->creditCardInfo)) {
                 $this->checkAndCreateMopInformation();
                 $this->paymentModule->mopInformation->creditCardData = new CreditCardData($options->creditCardInfo);
-                if (!empty($options->creditCardInfo->approvalCode)) {
-                    $this->paymentModule->mopDetailedData = new MopDetailedData($options->fopType);
+                if ($this->checkAnyNotEmpty(
+                    $options->creditCardInfo->approvalCode,
+                    $options->creditCardInfo->threeDSecure
+                )) {
+                    $this->checkAndCreateMopDetailedData($options->fopType);
                     $this->paymentModule->mopDetailedData->creditCardDetailedData = new CreditCardDetailedData(
                         $options->creditCardInfo->approvalCode,
-                        $options->creditCardInfo->sourceOfApproval
+                        $options->creditCardInfo->sourceOfApproval,
+                        $options->creditCardInfo->threeDSecure
                     );
                 }
             }
@@ -217,6 +221,16 @@ class MopDescription extends WsMessageUtility
     {
         if (is_null($this->paymentModule->mopInformation)) {
             $this->paymentModule->mopInformation = new MopInformation();
+        }
+    }
+
+    /**
+     * @param $fopType
+     */
+    private function checkAndCreateMopDetailedData($fopType)
+    {
+        if (is_null($this->paymentModule->mopDetailedData)) {
+            $this->paymentModule->mopDetailedData = new MopDetailedData($fopType);
         }
     }
 }

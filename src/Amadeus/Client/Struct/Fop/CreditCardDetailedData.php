@@ -22,13 +22,16 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\RequestOptions\Fop\ThreeDSecureInfo;
+use Amadeus\Client\Struct\WsMessageUtility;
+
 /**
  * CreditCardDetailedData
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CreditCardDetailedData
+class CreditCardDetailedData extends WsMessageUtility
 {
     /**
      * @var AuthorisationSupplementaryData
@@ -75,9 +78,16 @@ class CreditCardDetailedData
      *
      * @param string $approvalCode
      * @param string $approvalSource
+     * @param ThreeDSecureInfo|null $threeDSecure
      */
-    public function __construct($approvalCode, $approvalSource)
+    public function __construct($approvalCode, $approvalSource, $threeDSecure = null)
     {
-        $this->approvalDetails = new ApprovalDetails($approvalCode, $approvalSource);
+        if (!empty($approvalCode)) {
+            $this->approvalDetails = new ApprovalDetails($approvalCode, $approvalSource);
+        }
+
+        if ($threeDSecure instanceof ThreeDSecureInfo) {
+            $this->tdsInformation = new TdsInformation($threeDSecure);
+        }
     }
 }

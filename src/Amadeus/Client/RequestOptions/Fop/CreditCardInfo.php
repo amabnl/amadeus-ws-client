@@ -102,4 +102,9 @@ class CreditCardInfo extends LoadParamsFromArray
      * @var string
      */
     public $sourceOfApproval;
+
+    /**
+     * @var ThreeDSecureInfo
+     */
+    public $threeDSecure;
 }

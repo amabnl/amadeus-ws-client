@@ -22,12 +22,67 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\RequestOptions\Fop\ThreeDSecureInfo;
+use Amadeus\Client\Struct\WsMessageUtility;
+
 /**
  * TdsInformation
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TdsInformation
+class TdsInformation extends WsMessageUtility
 {
+    /**
+     * @var AuthenticationData
+     */
+    public $authenticationData;
+
+    /**
+     * @var AcsUrl
+     */
+    public $acsURL;
+
+    /**
+     * @var TdsBlobData[]
+     */
+    public $tdsBlobData = [];
+
+    /**
+     * TdsInformation constructor.
+     *
+     * @param ThreeDSecureInfo $options
+     */
+    public function __construct(ThreeDSecureInfo $options)
+    {
+        if (!empty($options->acsUrl)) {
+            $this->acsURL = new AcsUrl($options->acsUrl);
+        }
+
+        if ($this->checkAnyNotEmpty($options->veresStatus, $options->paresStatus, $options->creditCardCompany)) {
+            $this->authenticationData = new AuthenticationData(
+                $options->veresStatus,
+                $options->paresStatus,
+                $options->creditCardCompany
+            );
+        }
+
+        if (!empty($options->transactionIdentifier)) {
+            $this->tdsBlobData[] = new TdsBlobData(
+                TdsReferenceDetails::REF_THREEDS_TRANSACTION_IDENTIFIER,
+                $options->transactionIdentifier,
+                $options->transactionIdentifierDataType,
+                $options->transactionIdentifierLength
+            );
+        }
+
+        if (!empty($options->paresAuthResponse)) {
+            $this->tdsBlobData[] = new TdsBlobData(
+                TdsReferenceDetails::REF_PARES,
+                $options->paresAuthResponse,
+                $options->paresAuthResponseDataType,
+                $options->paresAuthResponseLength
+            );
+        }
+    }
 }

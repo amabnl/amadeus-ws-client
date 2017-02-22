@@ -23,27 +23,25 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * MerchantUrl
+ * TdsBlbIdentifier
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MerchantUrl
+class TdsBlbIdentifier
 {
     /**
-     * @var Communication
+     * @var TdsReferenceDetails
      */
-    public $communication;
+    public $referenceDetails;
 
     /**
-     * MerchantUrl constructor.
+     * TdsBlbIdentifier constructor.
      *
-     * @param string|null $url
+     * @param string $id
      */
-    public function __construct($url = null)
+    public function __construct($id)
     {
-        if (!is_null($url)) {
-            $this->communication = new Communication($url);
-        }
+        $this->referenceDetails = new TdsReferenceDetails($id);
     }
 }

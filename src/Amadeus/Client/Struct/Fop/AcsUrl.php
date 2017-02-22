@@ -23,27 +23,11 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * MerchantUrl
+ * AcsUrl
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MerchantUrl
+class AcsUrl extends MerchantUrl
 {
-    /**
-     * @var Communication
-     */
-    public $communication;
-
-    /**
-     * MerchantUrl constructor.
-     *
-     * @param string|null $url
-     */
-    public function __construct($url = null)
-    {
-        if (!is_null($url)) {
-            $this->communication = new Communication($url);
-        }
-    }
 }
