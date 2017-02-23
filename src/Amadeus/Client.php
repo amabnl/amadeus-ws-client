@@ -935,6 +935,20 @@ class Client
     }
 
     /**
+     * FOP_CreateFormOfPayment
+     *
+     * @param RequestOptions\FopCreateFopOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function fopCreateFormOfPayment(RequestOptions\FopCreateFopOptions $options, $messageOptions = [])
+    {
+        $msgName = 'FOP_CreateFormOfPayment';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * PriceXplorer_ExtremeSearch
      *
      * @param RequestOptions\PriceXplorerExtremeSearchOptions $options

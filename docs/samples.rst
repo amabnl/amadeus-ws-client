@@ -1764,6 +1764,16 @@ Assign an account code to a passenger:
     );
 
 
+***
+FOP
+***
+
+-----------------------
+FOP_CreateFormOfPayment
+-----------------------
+
+`See the examples for FOP_CreateFormOfPayment messages <samples/fop-createfop.rst>`_
+
 ****
 Info
 ****

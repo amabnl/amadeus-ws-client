@@ -1195,6 +1195,58 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("INVALID CURRENCY CODE", $result->messages[0]->text);
     }
 
+    public function testCanHandleFopCreateFormOfPaymentFopError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyCreateFormOfPaymentFopBackendErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'FOP_CreateFormOfPayment');
+
+        $this->assertEquals(Result::STATUS_WARN, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('4800', $result->messages[0]->code);
+        $this->assertEquals('deficient_fop', $result->messages[0]->level);
+        $this->assertEquals("FP NOT ALLOWED FOR NEGOTIATED FARE", $result->messages[0]->text);
+    }
+
+
+    public function testCanHandleFopCreateFormOfPaymentMultiError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyCreateFormOfPaymentMultiErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'FOP_CreateFormOfPayment');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(3, count($result->messages));
+        $this->assertEquals('22427', $result->messages[0]->code);
+        $this->assertEquals('general', $result->messages[0]->level);
+        $this->assertEquals("PAYMENT FAILED - PLEASE CONTACT AIRLINE", $result->messages[0]->text);
+        $this->assertEquals('25799', $result->messages[1]->code);
+        $this->assertEquals('fp', $result->messages[1]->level);
+        $this->assertEquals("ERROR AT FOP CREATION", $result->messages[1]->text);
+        $this->assertEquals('313', $result->messages[2]->code);
+        $this->assertEquals('authorization_failure', $result->messages[2]->level);
+        $this->assertEquals("INVALID ACCOUNT NUMBER", $result->messages[2]->text);
+    }
+
+    public function testCanHandleFopCreateFormOfPaymentOkResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyCreateFormOfPaymentOkResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'FOP_CreateFormOfPayment');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
     public function testCanHandleInvalidXmlDocument()
     {
         $this->setExpectedException('Amadeus\Client\Exception');

@@ -16,6 +16,7 @@
 * Implemented ``Ticket_DisplayTSMFareElement`` message
 * Implemented ``DocIssuance_IssueCombined`` message
 * Implemented ``PNR_NameChange`` message
+* Implemented ``FOP_CreateFormOfPayment`` message
 * Implemented ``PointOfRef_Search`` message
 * Request Creator split up in 1 dedicated class per message.
 * Response Handler split up in 1 dedicated class per message.
