@@ -73,6 +73,11 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Air_TLAGetAvailability
 - PNR_AddAuxiliarySegment
 - PointOfRef_CategoryList
+- Ticket_CheckEligibility
+- Ticket_ATCShopperMasterPricerTravelBoardSearch
+- Ticket_RepricePNRWithBookingClass
+- Ticket_ReissueConfirmedPricing
+- Ticket_CreateTSMFareElement
 - Ticket_ProcessEDoc
 - Ticket_RetrieveListOfTSM
 - Ticket_AddDocNumber
