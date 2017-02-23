@@ -108,4 +108,700 @@ Best effort process triggered.
     $fopResponse = $client->fopCreateFormOfPayment($options);
 
 
+Descriptive Billing Information (DBI) for TP cards
+==================================================
+
+DBI - TP card: According to the context and for TP cards, you may be requested to input DBI data (Descriptive Billing Information) within the authorization request.
+
+*(Operation 5.4 from the FOP_CreateFormOfPayment docs)*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\ElementRef;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+    use Amadeus\Client\RequestOptions\Fop\PaySupData;
+    use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
+
+    $options = new FopCreateFopOptions([
+        'transactionCode' => FopCreateFopOptions::TRANS_AUTH_ON_TICKET_MCO_EMD,
+        'fopGroup' => [
+            new Group([
+                'elementRef' => [
+                    new ElementRef([
+                        'type' => ElementRef::TYPE_TST_NUMBER,
+                        'value' => 1
+                    ])
+                ],
+                'mopInfo' => [
+                    new MopInfo([
+                        'sequenceNr' => 1,
+                        'fopCode' => 'VI',
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'paySupData' => [
+                            new PaySupData([
+                                'function' => 'DBI',
+                                'data' => [
+                                    ' KS' => '12345',
+                                    'RZ' => 'NCE',
+                                    ' AE' => '4',
+                                    'AU' => '526',
+                                    'PK' => '1234',
+                                ]
+                            ])
+                        ],
+                        'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                        'creditCardInfo' => new CreditCardInfo([
+                            'vendorCode' => 'TP',
+                            'cardNumber' => '4541000000000013',
+                            'expiryDate' => '0916'
+                        ])
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
+
+DCC Offer
+=========
+
+The TFOPCQ will retry the PRI and the DCC currency chosen in order to perform an authorization request to the PSP with the correct currency chosen by the customer.
+
+*(Operation 5.5 from the FOP_CreateFormOfPayment docs)*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\ElementRef;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+    use Amadeus\Client\RequestOptions\Fop\Payment;
+    use Amadeus\Client\RequestOptions\Fop\PayId;
+
+    $options = new FopCreateFopOptions([
+        'transactionCode' => FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+        'fopGroup' => [
+            new Group([
+                'elementRef' => [
+                    new ElementRef([
+                        'type' => ElementRef::TYPE_TST_NUMBER,
+                        'value' => 1
+                    ])
+                ],
+                'mopInfo' => [
+                    new MopInfo([
+                        'sequenceNr' => 1,
+                        'fopCode' => 'VI',
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'payMerchant' => 'AY',
+                        'payments' => [
+                            new Payment([
+                                'type' => Payment::TYPE_TOTAL_FARE_AMOUNT,
+                                'amount' => 100,
+                                'currency' => 'EUR'
+                            ])
+                        ],
+                        'payIds' => [
+                            new PayId([
+                                'type' => PayId::TYPE_DCC_CURRENCY_CHOSEN,
+                                'id' => 'EUR'
+                            ]),
+                            new PayId([
+                                'type' => PayId::TYPE_PAYMENT_RECORD_ID,
+                                'id' => 123456
+                            ]),
+                        ]
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
+
+FOP Account (ELV)
+=================
+
+Payment with account: Several types of account can be handled. The ELV form of payment allows direct debit (ELV) payments.
+
+*(Operation 5.6 from the FOP_CreateFormOfPayment docs)*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\ElementRef;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+    use Amadeus\Client\RequestOptions\Fop\DataOrSwitch;
+    use Amadeus\Client\RequestOptions\Fop\InvoiceInfo;
+
+    $options = new FopCreateFopOptions([
+        'transactionCode' => FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+        'fopGroup' => [
+            new Group([
+                'elementRef' => [
+                    new ElementRef([
+                        'type' => ElementRef::TYPE_TST_NUMBER,
+                        'value' => 1
+                    ])
+                ],
+                'mopInfo' => [
+                    new MopInfo([
+                        'sequenceNr' => 1,
+                        'fopCode' => 'ELV',
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'supplementaryData' => [
+                            new DataOrSwitch([
+                                'type' => '27',
+                                'description' => 'JOHN SMITH'
+                            ])
+                        ],
+                        'payMerchant' => 'AB',
+                        'mopPaymentType' => MopInfo::MOP_PAY_TYPE_ACCOUNT_PAYMENT,
+                        'transactionDate' => \DateTime::createFromFormat('dmY', '29112015'),
+                        'invoiceInfo' => new InvoiceInfo([
+                            'formOfPayment' => InvoiceInfo::FOP_ACCOUNT_PAYMENT,
+                            'customerAccount' => '12345678',
+                            'membershipStatus' => 'ELV',
+                            'routingStation' => 'AB'
+                        ])
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
+
+FOP with structured free flow
+=============================
+
+Query with the structured freeflow, in 2 different fields.
+
+*(Operation 5.7 from the FOP_CreateFormOfPayment docs)*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\ElementRef;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+    use Amadeus\Client\RequestOptions\Fop\DataOrSwitch;
+    use Amadeus\Client\RequestOptions\Fop\Payment;
+
+    $options = new FopCreateFopOptions([
+        'transactionCode' => FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+        'fopGroup' => [
+            new Group([
+                'elementRef' => [
+                    new ElementRef([
+                        'type' => ElementRef::TYPE_TST_NUMBER,
+                        'value' => 1
+                    ])
+                ],
+                'mopInfo' => [
+                    new MopInfo([
+                        'sequenceNr' => 1,
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'fopCode' => 'VI',
+                        'supplementaryData' => [
+                            new DataOrSwitch([
+                                'type' => 'FF1',
+                                'description' => '1234'
+                            ]),
+                            new DataOrSwitch([
+                                'type' => 'FF2',
+                                'description' => 'ABCD-*12'
+                            ]),
+                        ],
+                        'payMerchant' => 'AY',
+                        'payments' => [
+                            new Payment([
+                                'type' => Payment::TYPE_TOTAL_FARE_AMOUNT,
+                                'amount' => 100,
+                                'currency' => 'EUR'
+                            ])
+                        ]
+                    ]),
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
+
+FOP with unstructured free flow
+===============================
+
+Query with unstructured freeflow.
+
+*(Operation 5.8 from the FOP_CreateFormOfPayment docs)*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\ElementRef;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+
+    $options = new FopCreateFopOptions([
+        'transactionCode' => FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+        'fopGroup' => [
+            new Group([
+                'elementRef' => [
+                    new ElementRef([
+                        'type' => ElementRef::TYPE_TST_NUMBER,
+                        'value' => 1
+                    ])
+                ],
+                'mopInfo' => [
+                    new MopInfo([
+                        'sequenceNr' => 1,
+                        'fopCode' => 'VI',
+                        'freeFlowText' => 'VI4541000000010016/0919'
+                    ]),
+                    new MopInfo([
+                        'sequenceNr' => 2,
+                        'fopCode' => 'VI',
+                        'freeFlowText' => 'VI4541000000000024/0919/EUR20'
+                    ]),
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
+
+FOP with installments
+=====================
+
+Query containing Installments data.
+
+*(Operation 5.9 from the FOP_CreateFormOfPayment docs)*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\ElementRef;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+    use Amadeus\Client\RequestOptions\Fop\Payment;
+    use Amadeus\Client\RequestOptions\Fop\InstallmentsInfo;
+    use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
+
+    $options = new FopCreateFopOptions([
+        'fopGroup' => [
+            new Group([
+                'elementRef' => [
+                    new ElementRef([
+                        'type' => ElementRef::TYPE_TST_NUMBER,
+                        'value' => 1
+                    ])
+                ],
+                'mopInfo' => [
+                    new MopInfo([
+                        'sequenceNr' => 1,
+                        'fopCode' => 'CCVI',
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'payMerchant' => 'QF',
+                        'payments' => [
+                            new Payment([
+                                'type' => Payment::TYPE_FIRST_INSTALMENT_AMOUNT,
+                                'amount' => 100,
+                                'currency' => 'AUD'
+                            ]),
+                            new Payment([
+                                'type' => Payment::TYPE_FOLLOWING_INSTALMENT_AMOUNT,
+                                'amount' => 200,
+                                'currency' => 'AUD'
+                            ]),
+                            new Payment([
+                                'type' => Payment::TYPE_INSTALMENT_INTEREST,
+                                'amount' => 300,
+                                'currency' => 'AUD'
+                            ])
+                        ],
+                        'installmentsInfo' => new InstallmentsInfo([
+                            'nrOfInstallments' => 2,
+                            'frequency' => InstallmentsInfo::FREQUENCY_MONTHLY,
+                            'startDate' => \DateTime::createFromFormat('Ymd', '20130223'),
+                            'format' => InstallmentsInfo::FORMAT_YYMMDD
+                        ]),
+                        'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                        'creditCardInfo' => new CreditCardInfo([
+                            'vendorCode' => 'VI',
+                            'cardNumber' => '4541000000000016',
+                            'expiryDate' => '0913',
+                        ])
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
+
+Fraud screening
+===============
+
+Query with fraud screening data.
+
+*(Operation 5.10 from the FOP_CreateFormOfPayment docs)*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\PaxRef;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+    use Amadeus\Client\RequestOptions\Fop\InstallmentsInfo;
+    use Amadeus\Client\RequestOptions\Fop\FraudScreeningOptions;
+    use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
+
+    $options = new FopCreateFopOptions([
+        'fopGroup' => [
+            new Group([
+                'paxRef' => [
+                    new PaxRef([
+                        'type' => PaxRef::TYPE_ADULT,
+                        'value' => 1
+                    ])
+                ],
+                'mopInfo' => [
+                    new MopInfo([
+                        'sequenceNr' => 1,
+                        'fopCode' => 'VI',
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'payMerchant' => 'AY',
+                        'installmentsInfo' => new InstallmentsInfo([
+                            'nrOfInstallments' => 1
+                        ]),
+                        'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                        'creditCardInfo' => new CreditCardInfo([
+                            'vendorCode' => 'VI',
+                            'cardNumber' => '4541099100010016',
+                            'expiryDate' => '0915',
+                            'name' => 'CLEMENT DUPONT'
+                        ]),
+                        'fraudScreening' => new FraudScreeningOptions([
+                            'ipAddress' => '111.222.333.444', // /r/itsaunixsystem
+                            'firstName' => 'CLEMENT',
+                            'lastName' => 'DUPONT',
+                            'dateOfBirth' => \DateTime::createFromFormat('dmY', '30101980'),
+                            'idDocumentNr' => '25208731592',
+                            'idDocumentType' => FraudScreeningOptions::ID_DOC_CPF__BRAZILIAN_SECURITY_NUMBER,
+                        ])
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
+
+Generic FP - Single FOP
+=======================
+
+Query to create a generic FP.
+
+*(Operation 5.12 from the FOP_CreateFormOfPayment docs)*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+
+    $options = new FopCreateFopOptions([
+        'fopGroup' => [
+            new Group([
+                'mopInfo' => [
+                    new MopInfo([
+                        'sequenceNr' => 1,
+                        'fopCode' => 'CASH'
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
+
+Manual approval code
+====================
+
+Following example shows how to input a FOP with manual approval code "12346".
+
+*(Operation 5.14 from the FOP_CreateFormOfPayment docs)*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\PaxRef;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+    use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
+
+    $options = new FopCreateFopOptions([
+        'transactionCode' => FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+        'fopGroup' => [
+            new Group([
+                'paxRef' => [
+                    new PaxRef([
+                        'type' => PaxRef::TYPE_ADULT,
+                        'value' => 1
+                    ])
+                ],
+                'mopInfo' => [
+                    new MopInfo([
+                        'sequenceNr' => 1,
+                        'fopCode' => 'VI',
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                        'creditCardInfo' => new CreditCardInfo([
+                            'vendorCode' => 'VI',
+                            'cardNumber' => '4541099100010016',
+                            'expiryDate' => '0913',
+                            'approvalCode' => '12346',
+                            'sourceOfApproval' => CreditCardInfo::APPROVAL_SOURCE_MANUAL
+                        ])
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
+
+Multiple FOPs
+=============
+
+Scenario with multiple FOP's: It is possible to specify up to three FOPs per FP element.
+
+*(Operation 5.16 from the FOP_CreateFormOfPayment docs)*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\ElementRef;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+    use Amadeus\Client\RequestOptions\Fop\Payment;
+    use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
+
+    $options = new FopCreateFopOptions([
+        'transactionCode' => FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+        'fopGroup' => [
+            new Group([
+                'elementRef' => [
+                    new ElementRef([
+                        'type' => ElementRef::TYPE_TST_NUMBER,
+                        'value' => 1
+                    ])
+                ],
+                'mopInfo' => [
+                    new MopInfo([
+                        'sequenceNr' => 1,
+                        'fopCode' => 'CASH',
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CASH,
+                    ]),
+                    new MopInfo([
+                        'sequenceNr' => 2,
+                        'fopCode' => 'CCVI',
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'payMerchant' => 'AF',
+                        'payments' => [
+                            new Payment([
+                                'type' => Payment::TYPE_TOTAL_FARE_AMOUNT,
+                                'amount' => 40,
+                                'currency' => 'EUR'
+                            ])
+                        ],
+                        'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                        'creditCardInfo' => new CreditCardInfo([
+                            'vendorCode' => 'VI',
+                            'cardNumber' => '4541099100010016',
+                            'expiryDate' => '1016',
+                            'securityId' => '123'
+                        ])
+                    ]),
+                    new MopInfo([
+                        'sequenceNr' => 3,
+                        'fopCode' => 'CCVI',
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'payMerchant' => 'AF',
+                        'payments' => [
+                            new Payment([
+                                'type' => Payment::TYPE_TOTAL_FARE_AMOUNT,
+                                'amount' => 20,
+                                'currency' => 'EUR'
+                            ])
+                        ],
+                        'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                        'creditCardInfo' => new CreditCardInfo([
+                            'vendorCode' => 'VI',
+                            'cardNumber' => '4541099100010024',
+                            'expiryDate' => '1016',
+                            'securityId' => '123'
+                        ])
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
+
+Multiple TST - TSM
+==================
+
+Query to create an FP element on several TSM.
+
+*(Operation 5.17 from the FOP_CreateFormOfPayment docs)*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\ElementRef;
+    use Amadeus\Client\RequestOptions\Fop\PaxRef;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+    use Amadeus\Client\RequestOptions\Fop\Payment;
+    use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
+
+    $options = new FopCreateFopOptions([
+        'transactionCode' => FopCreateFopOptions::TRANS_AUTH_ON_TICKET_MCO_EMD,
+        'fopGroup' => [
+            new Group([
+                'paxRef' => [
+                    new PaxRef([
+                        'type' => PaxRef::TYPE_ADULT,
+                        'value' => 1
+                    ])
+                ],
+                'elementRef' => [
+                    new ElementRef([
+                        'type' => ElementRef::TYPE_SERVICE_PRICING_RECORD_TATTOO,
+                        'value' => 1
+                    ]),
+                    new ElementRef([
+                        'type' => ElementRef::TYPE_SERVICE_PRICING_RECORD_TATTOO,
+                        'value' => 2
+                    ]),
+                    new ElementRef([
+                        'type' => ElementRef::TYPE_SPECIAL_SERVICE_REQUEST,
+                        'value' => 1
+                    ])
+                ],
+                'mopInfo' => [
+                    new MopInfo([
+                        'sequenceNr' => 1,
+                        'fopCode' => 'CASH'
+                    ]),
+                    new MopInfo([
+                        'sequenceNr' => 2,
+                        'fopCode' => 'VI',
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'payMerchant' => 'AY',
+                        'payments' => [
+                            new Payment([
+                                'type' => Payment::TYPE_TOTAL_FARE_AMOUNT,
+                                'amount' => 40,
+                                'currency' => 'EUR'
+                            ])
+                        ],
+                        'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                        'creditCardInfo' => new CreditCardInfo([
+                            'vendorCode' => 'VI',
+                            'cardNumber' => '4541099100010016',
+                            'expiryDate' => '0916'
+                        ])
+                    ]),
+                    new MopInfo([
+                        'sequenceNr' => 3,
+                        'fopCode' => 'VI',
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'payMerchant' => 'AY',
+                        'payments' => [
+                            new Payment([
+                                'type' => Payment::TYPE_TOTAL_FARE_AMOUNT,
+                                'amount' => 20,
+                                'currency' => 'EUR'
+                            ])
+                        ],
+                        'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                        'creditCardInfo' => new CreditCardInfo([
+                            'vendorCode' => 'VI',
+                            'cardNumber' => '4541099100010024',
+                            'expiryDate' => '0916'
+                        ])
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
+
+OB Fees computation
+===================
+
+Query to trigger OB fee calculation with Pricing options.
+
+*(Operation 5.19 from the FOP_CreateFormOfPayment docs)*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\ObFeeComputation;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+    use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
+
+    $options = new FopCreateFopOptions([
+        'transactionCode' => FopCreateFopOptions::TRANS_AUTH_ON_TICKET_MCO_EMD,
+        'obFeeCalculation' => true,
+        'fopGroup' => [
+            new Group([
+                'obFeeComputation' => new ObFeeComputation([
+                    'option' => ObFeeComputation::OPTION_OB_FEES,
+                    'optionInformation' => ObFeeComputation::OPTIONINF_EXEMPT_ALL_OB_FEES,
+                    'city' => 'NCE',
+                    'departureDate' => \DateTime::createFromFormat('Ymd', '20140412')
+                ]),
+                'mopInfo' => [
+                    new MopInfo([
+                        'sequenceNr' => 1,
+                        'fopCode' => 'CCVI',
+                        'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                        'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                        'payMerchant' => 'AY',
+                        'creditCardInfo' => new CreditCardInfo([
+                            'vendorCode' => 'VI',
+                            'cardNumber' => '4541099100010016',
+                            'expiryDate' => '0915'
+                        ])
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
 
