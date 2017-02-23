@@ -126,93 +126,64 @@ class MopDescription extends WsMessageUtility
             $options->paySupData
         )) {
             $this->paymentModule = new PaymentModule($options->fopType);
+            $this->paymentModule->loadPaymentData($options);
 
-            if (!empty($options->payMerchant)) {
-                $this->checkAndCreatePaymentData();
-                $this->paymentModule->paymentData->merchantInformation = new MerchantInformation($options->payMerchant);
-            }
+            $this->loadMopInformation($options);
 
-            if (!empty($options->transactionDate)) {
-                $this->checkAndCreatePaymentData();
-                $this->paymentModule->paymentData->transactionDateTime = new TransactionDateTime(
-                    null,
-                    $options->transactionDate
-                );
-            }
-
-            if (!empty($options->payments)) {
-                $this->checkAndCreatePaymentData();
-                $this->paymentModule->paymentData->monetaryInformation[] = new MonetaryInformation($options->payments);
-            }
-
-            if (!empty($options->installmentsInfo)) {
-                $this->checkAndCreatePaymentData();
-                $this->paymentModule->paymentData->extendedPaymentInfo = new ExtendedPaymentInfo(
-                    $options->installmentsInfo
-                );
-            }
-
-            if (!empty($options->fraudScreening)) {
-                $this->checkAndCreatePaymentData();
-                $this->paymentModule->paymentData->fraudScreeningData = new FraudScreeningData(
-                    $options->fraudScreening
-                );
-            }
-
-            if (!empty($options->payIds)) {
-                $this->checkAndCreatePaymentData();
-                foreach ($options->payIds as $payId) {
-                    $this->paymentModule->paymentData->paymentId[] = new PaymentId(
-                        $payId->id,
-                        $payId->type
-                    );
-                }
-            }
-
-            if (!empty($options->mopPaymentType)) {
-                $this->checkAndCreateMopInformation();
-                $this->paymentModule->mopInformation->fopInformation = new FopInformation($options->mopPaymentType);
-            }
-
-            if (!empty($options->creditCardInfo)) {
-                $this->checkAndCreateMopInformation();
-                $this->paymentModule->mopInformation->creditCardData = new CreditCardData($options->creditCardInfo);
-                if ($this->checkAnyNotEmpty(
-                    $options->creditCardInfo->approvalCode,
-                    $options->creditCardInfo->threeDSecure
-                )) {
-                    $this->checkAndCreateMopDetailedData($options->fopType);
-                    $this->paymentModule->mopDetailedData->creditCardDetailedData = new CreditCardDetailedData(
-                        $options->creditCardInfo->approvalCode,
-                        $options->creditCardInfo->sourceOfApproval,
-                        $options->creditCardInfo->threeDSecure
-                    );
-                }
-            }
-
-            if (!empty($options->invoiceInfo)) {
-                $this->checkAndCreateMopInformation();
-                $this->paymentModule->mopInformation->invoiceDataGroup = new InvoiceDataGroup($options->invoiceInfo);
-            }
-
-            foreach ($options->paySupData as $paySupData) {
-                $this->paymentModule->paymentSupplementaryData[] = new PaymentSupplementaryData(
-                    $paySupData->function,
-                    $paySupData->data
-                );
-            }
+            $this->loadPaymentSupplementaryData($options);
         }
     }
 
     /**
-     * Create Payment Data node if needed
+     * Load Supplementary data
+     *
+     * @param MopInfo $options
      */
-    private function checkAndCreatePaymentData()
+    protected function loadPaymentSupplementaryData(MopInfo $options)
     {
-        if (is_null($this->paymentModule->paymentData)) {
-            $this->paymentModule->paymentData = new PaymentData();
+        foreach ($options->paySupData as $paySupData) {
+            $this->paymentModule->paymentSupplementaryData[] = new PaymentSupplementaryData(
+                $paySupData->function,
+                $paySupData->data
+            );
         }
     }
+
+    /**
+     * Load MopInformation
+     *
+     * @param MopInfo $options
+     */
+    protected function loadMopInformation(MopInfo $options)
+    {
+        if (!empty($options->mopPaymentType)) {
+            $this->checkAndCreateMopInformation();
+            $this->paymentModule->mopInformation->fopInformation = new FopInformation($options->mopPaymentType);
+        }
+
+        if (!empty($options->creditCardInfo)) {
+            $this->checkAndCreateMopInformation();
+            $this->paymentModule->mopInformation->creditCardData = new CreditCardData($options->creditCardInfo);
+            if ($this->checkAnyNotEmpty(
+                $options->creditCardInfo->approvalCode,
+                $options->creditCardInfo->threeDSecure
+            )
+            ) {
+                $this->checkAndCreateMopDetailedData($options->fopType);
+                $this->paymentModule->mopDetailedData->creditCardDetailedData = new CreditCardDetailedData(
+                    $options->creditCardInfo->approvalCode,
+                    $options->creditCardInfo->sourceOfApproval,
+                    $options->creditCardInfo->threeDSecure
+                );
+            }
+        }
+
+        if (!empty($options->invoiceInfo)) {
+            $this->checkAndCreateMopInformation();
+            $this->paymentModule->mopInformation->invoiceDataGroup = new InvoiceDataGroup($options->invoiceInfo);
+        }
+    }
+
 
     /**
      * Create MopInformation node if needed
@@ -225,7 +196,9 @@ class MopDescription extends WsMessageUtility
     }
 
     /**
-     * @param $fopType
+     * Create MopDetailedData node if needed
+     *
+     * @param string $fopType
      */
     private function checkAndCreateMopDetailedData($fopType)
     {

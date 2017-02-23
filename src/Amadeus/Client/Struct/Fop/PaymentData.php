@@ -22,6 +22,11 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\RequestOptions\Fop\FraudScreeningOptions;
+use Amadeus\Client\RequestOptions\Fop\InstallmentsInfo;
+use Amadeus\Client\RequestOptions\Fop\PayId;
+use Amadeus\Client\RequestOptions\Fop\Payment;
+
 /**
  * PaymentData
  *
@@ -94,4 +99,44 @@ class PaymentData
      * @var PaymentDataMap[]
      */
     public $paymentDataMap = [];
+
+    /**
+     * PaymentData constructor.
+     *
+     * @param string|null $payMerchant
+     * @param \DateTime|null $transactionDate
+     * @param Payment[] $payments
+     * @param InstallmentsInfo|null $installmentsInfo
+     * @param FraudScreeningOptions|null $fraudScreening
+     * @param PayId[] $payIds
+     */
+    public function __construct($payMerchant, $transactionDate, $payments, $installmentsInfo, $fraudScreening, $payIds)
+    {
+        if (!empty($payMerchant)) {
+            $this->merchantInformation = new MerchantInformation($payMerchant);
+        }
+
+        if (!empty($transactionDate)) {
+            $this->transactionDateTime = new TransactionDateTime(null, $transactionDate);
+        }
+
+        if (!empty($payments)) {
+            $this->monetaryInformation[] = new MonetaryInformation($payments);
+        }
+
+        if (!empty($installmentsInfo)) {
+            $this->extendedPaymentInfo = new ExtendedPaymentInfo($installmentsInfo);
+        }
+
+        if (!empty($fraudScreening)) {
+            $this->fraudScreeningData = new FraudScreeningData($fraudScreening);
+        }
+
+        foreach ($payIds as $payId) {
+            $this->paymentId[] = new PaymentId(
+                $payId->id,
+                $payId->type
+            );
+        }
+    }
 }

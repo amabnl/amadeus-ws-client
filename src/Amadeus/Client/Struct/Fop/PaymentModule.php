@@ -22,13 +22,16 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\RequestOptions\Fop\MopInfo;
+use Amadeus\Client\Struct\WsMessageUtility;
+
 /**
  * PaymentModule
  *
  * @package Amadeus\Client\Struct\Fop
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PaymentModule
+class PaymentModule extends WsMessageUtility
 {
     /**
      * @var GroupUsage
@@ -73,5 +76,31 @@ class PaymentModule
     public function __construct($fopType)
     {
         $this->groupUsage = new GroupUsage($fopType);
+    }
+
+    /**
+     * Load all paymentData
+     *
+     * @param MopInfo $options
+     */
+    public function loadPaymentData(MopInfo $options)
+    {
+        if ($this->checkAnyNotEmpty(
+            $options->payMerchant,
+            $options->transactionDate,
+            $options->payments,
+            $options->installmentsInfo,
+            $options->fraudScreening,
+            $options->payIds
+        )) {
+            $this->paymentData = new PaymentData(
+                $options->payMerchant,
+                $options->transactionDate,
+                $options->payments,
+                $options->installmentsInfo,
+                $options->fraudScreening,
+                $options->payIds
+            );
+        }
     }
 }
