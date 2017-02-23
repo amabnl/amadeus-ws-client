@@ -76,7 +76,7 @@ class CreditCardInfo extends LoadParamsFromArray
     /**
      * Issue number
      *
-     * @var string
+     * @var int|string
      */
     public $issueNumber;
 

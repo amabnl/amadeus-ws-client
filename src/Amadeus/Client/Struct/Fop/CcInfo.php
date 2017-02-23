@@ -83,7 +83,7 @@ class CcInfo
     public $cardCountryOfIssuance;
 
     /**
-     * @var int
+     * @var int|string
      */
     public $issueNumber;
 

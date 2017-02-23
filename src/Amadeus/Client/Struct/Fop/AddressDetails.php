@@ -76,7 +76,7 @@ class AddressDetails
     public function __construct($addressLines)
     {
         foreach ($addressLines as $key => $line) {
-            $lineNumProp = 'line'.($key+1);
+            $lineNumProp = 'line'.($key + 1);
             if (property_exists($this, $lineNumProp)) {
                 $this->$lineNumProp = $line;
             }

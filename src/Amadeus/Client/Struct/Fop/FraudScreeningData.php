@@ -115,7 +115,7 @@ class FraudScreeningData extends WsMessageUtility
         }
 
         if ($this->checkAnyNotEmpty($options->idDocumentNr, $options->idDocumentType)) {
-            $this->formOfIdDetails = new FormOfIdDetails($options->idDocumentNr, $options->idDocumentType);
+            $this->formOfIdDetails[] = new FormOfIdDetails($options->idDocumentNr, $options->idDocumentType);
         }
 
         if (!empty($options->billingAddress)) {

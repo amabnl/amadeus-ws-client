@@ -429,8 +429,9 @@ class CreateFormOfPaymentTest extends BaseTestCase
         $this->assertEquals('10', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->payerDateOfBirth->dateTime->month);
         $this->assertEquals('30', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->payerDateOfBirth->dateTime->day);
 
-        $this->assertEquals(ReferenceDetails::TYPE_CPF_BRAZILIAN_SECURITY_NUMBER, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->formOfIdDetails->referenceDetails->type);
-        $this->assertEquals('25208731592', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->formOfIdDetails->referenceDetails->value);
+        $this->assertCount(1, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->formOfIdDetails);
+        $this->assertEquals(ReferenceDetails::TYPE_CPF_BRAZILIAN_SECURITY_NUMBER, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->formOfIdDetails[0]->referenceDetails->type);
+        $this->assertEquals('25208731592', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->formOfIdDetails[0]->referenceDetails->value);
 
         $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->billingAddress);
         $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->merchantURL);

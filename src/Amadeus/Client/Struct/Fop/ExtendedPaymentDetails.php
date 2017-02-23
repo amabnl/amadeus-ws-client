@@ -134,7 +134,7 @@ class ExtendedPaymentDetails
      * 814 Working days
      * 9 CCYYMMDDPP
      *
-     * @var string
+     * @var int|string
      */
     public $instalmentsDatrDateFormat;
 
@@ -172,11 +172,11 @@ class ExtendedPaymentDetails
                 case self::FORMAT_YYDDD:
                     $date = $startDate->format('yz');
                     if (strlen($date) === 4) {
-                        $date = substr($date, 0, 2) . "0" . substr($date, 2);
+                        $date = substr($date, 0, 2)."0".substr($date, 2);
                     }
                     break;
                 default:
-                    throw new \RuntimeException("Installments Format '" . $format . "' is not implemented!");
+                    throw new \RuntimeException("Installments Format '".$format."' is not implemented!");
             }
         }
 
