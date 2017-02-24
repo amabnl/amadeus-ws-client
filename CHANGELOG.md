@@ -1,3 +1,6 @@
+# Release 1.3.0 (UNRELEASED)
+* Implemented ``Ticket_CreateTSMFareElement`` message (https://github.com/amabnl/amadeus-ws-client/issues/39)
+
 # Release 1.2.0 (23 February 2017)
 * Fixed bug with Corporate Unifare pricing in ``Fare_MasterPricerTravelBoardSearch`` and ``Fare_MasterPricerCalendar`` (https://github.com/amabnl/amadeus-ws-client/pull/41) - Michal Hernas
 * Added support for requesting rules for specific Fare Components after a pricing request in ``Fare_CheckRules`` (https://github.com/amabnl/amadeus-ws-client/issues/21)

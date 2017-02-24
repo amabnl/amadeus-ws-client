@@ -1309,7 +1309,7 @@ Create a TSM from a Pricing previously made by a ``Service_IntegratedPricing`` c
     use Amadeus\Client\RequestOptions\Ticket\Pricing;
     use Amadeus\Client\RequestOptions\Ticket\PassengerReference;
 
-    $createTstResponse = $client->ticketCreateTSMFromPricing(
+    $createTsmResponse = $client->ticketCreateTSMFromPricing(
         new TicketCreateTsmFromPricingOptions([
             'pricings' => [
                 new Pricing([
@@ -1322,6 +1322,41 @@ Create a TSM from a Pricing previously made by a ``Service_IntegratedPricing`` c
                     'type' => PassengerReference::TYPE_PASSENGER
                 ])
             ]
+        ])
+    );
+
+---------------------------
+Ticket_CreateTSMFareElement
+---------------------------
+
+Delete the form of payment from the TSM of tattoo 18:
+
+*In order to delete a fare element, enter '##### ' as info*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCreateTsmFareElOptions;
+
+    $createTsmResponse = $client->ticketCreateTSMFareElement(
+        new TicketCreateTsmFareElOptions([
+            'elementType' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+            'tattoo' => 18,
+            'info' => '#####'
+        ])
+    );
+
+
+Set the form of payment Check to the TSM of tattoo 18:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCreateTsmFareElOptions;
+
+    $createTsmResponse = $client->ticketCreateTSMFareElement(
+        new TicketCreateTsmFareElOptions([
+            'elementType' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+            'tattoo' => 18,
+            'info' => 'CHECK/EUR304.89'
         ])
     );
 

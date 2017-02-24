@@ -1554,6 +1554,65 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoTicketCreateTSMFareElement()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketCreateTSMFareElementmessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\CreateTSMFareElement(
+            new Client\RequestOptions\TicketCreateTsmFareElOptions([
+                'elementType' => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+                'tattoo' => '18',
+                'info' => '#####',
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_CreateTSMFareElement', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_CreateTSMFareElement' => "10.1"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_CreateTSMFareElement')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketCreateTSMFareElement(
+            new Client\RequestOptions\TicketCreateTsmFareElOptions([
+                'elementType' => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+                'tattoo' => '18',
+                'info' => '#####',
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoTicketDeleteTST()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

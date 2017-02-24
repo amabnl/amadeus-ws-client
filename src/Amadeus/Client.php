@@ -815,6 +815,22 @@ class Client
     }
 
     /**
+     * Ticket_CreateTSMFareElement
+     *
+     * @param RequestOptions\TicketCreateTsmFareElOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketCreateTSMFareElement(
+        RequestOptions\TicketCreateTsmFareElOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_CreateTSMFareElement';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Ticket_DeleteTST
      *
      * @param RequestOptions\TicketDeleteTstOptions $options
