@@ -59,18 +59,18 @@ class FeeId
     public $feeIdNumber;
 
     /**
-      * FeeId constructor.
-      *
-      * @param string|null $feeType
-      * @param int|null $feeIdNumber
-      */
-     public function __construct($feeType = null, $feeIdNumber = null)
-     {
-         if (!is_null($feeType)) {
-             $this->feeType = $feeType;
-         }
-         if (!is_null($feeIdNumber)) {
-             $this->feeIdNumber = $feeIdNumber;
-         }
-     }
+     * FeeId constructor.
+     *
+     * @param string|null $feeType
+     * @param int|null $feeIdNumber
+     */
+    public function __construct($feeType = null, $feeIdNumber = null)
+    {
+        if (!is_null($feeType)) {
+            $this->feeType = $feeType;
+        }
+        if (!is_null($feeIdNumber)) {
+            $this->feeIdNumber = $feeIdNumber;
+        }
+    }
 }

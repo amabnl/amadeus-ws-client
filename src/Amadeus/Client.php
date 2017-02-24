@@ -815,6 +815,22 @@ class Client
     }
 
     /**
+     * Ticket_CreateTSMFareElement
+     *
+     * @param RequestOptions\TicketCreateTsmFareElOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketCreateTSMFareElement(
+        RequestOptions\TicketCreateTsmFareElOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_CreateTSMFareElement';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Ticket_DeleteTST
      *
      * @param RequestOptions\TicketDeleteTstOptions $options
@@ -930,6 +946,20 @@ class Client
         $messageOptions = []
     ) {
         $msgName = 'DocIssuance_IssueCombined';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * FOP_CreateFormOfPayment
+     *
+     * @param RequestOptions\FopCreateFopOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function fopCreateFormOfPayment(RequestOptions\FopCreateFopOptions $options, $messageOptions = [])
+    {
+        $msgName = 'FOP_CreateFormOfPayment';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }

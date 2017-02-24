@@ -18,6 +18,7 @@ class FreeTextDetails
     const QUALIFIER_LITERAL_TEXT = 3;
 
     const SOURCE_AMADEUS = "A";
+    const SOURCE_MANUAL = "M";
 
     const ENCODING_ASCII_8BIT = 2;
 

@@ -50,9 +50,10 @@ abstract class StandardResponseHandler implements MessageResponseHandler
      * @param string $qErr XPATH query for fetching error code (first node is used)
      * @param string $qCat XPATH query for fetching error category (first node is used)
      * @param string $qMsg XPATH query for fetching error messages (all nodes are used)
+     * @param string|null $errLevel Optional custom error level string.
      * @return Result
      */
-    protected function analyzeWithErrCodeCategoryMsgQuery(SendResult $response, $qErr, $qCat, $qMsg)
+    protected function analyzeWithErrCodeCategoryMsgQuery(SendResult $response, $qErr, $qCat, $qMsg, $errLevel = null)
     {
         $analyzeResponse = new Result($response);
 
@@ -72,7 +73,8 @@ abstract class StandardResponseHandler implements MessageResponseHandler
                 $errorCodeNodeList->item(0)->nodeValue,
                 $this->makeMessageFromMessagesNodeList(
                     $domXpath->query($qMsg)
-                )
+                ),
+                $errLevel
             );
         }
 
@@ -115,6 +117,7 @@ abstract class StandardResponseHandler implements MessageResponseHandler
 
         return $analyzeResponse;
     }
+
 
     /**
      * @param SendResult $response WebService message Send Result
@@ -188,10 +191,13 @@ abstract class StandardResponseHandler implements MessageResponseHandler
     /**
      * Converts a status code found in an error message to the appropriate status level
      *
-     * @param string $qualifier
+     * if no node found (= $qualifier is a null), $defaultStatus will be used
+     *
+     * @param string|null $qualifier
+     * @param string $defaultStatus the default status to fall back to if no qualifier is present
      * @return string Result::STATUS_*
      */
-    protected function makeStatusFromErrorQualifier($qualifier)
+    protected function makeStatusFromErrorQualifier($qualifier, $defaultStatus = Result::STATUS_ERROR)
     {
         $statusQualMapping = [
             'INF' => Result::STATUS_INFO,
@@ -208,6 +214,8 @@ abstract class StandardResponseHandler implements MessageResponseHandler
 
         if (array_key_exists($qualifier, $statusQualMapping)) {
             $status = $statusQualMapping[$qualifier];
+        } elseif (is_null($qualifier)) {
+            $status = $defaultStatus;
         } else {
             $status = Result::STATUS_UNKNOWN;
         }
