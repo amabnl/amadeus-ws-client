@@ -684,6 +684,45 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertEquals(FareMasterPricerTbSearch::CORPORATE_QUALIFIER_UNIFARE, $message->fareOptions->corporate->corporateId[0]->corporateQualifier);
     }
 
+    public function testCanMakeMessageWithManyOfficeIDs()
+    {
+        $opt = new FareMasterPricerTbSearch([
+            'nrOfRequestedResults' => 30,
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'BER']),
+                    'arrivalLocation' => new MPLocation(['city' => 'MOW']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2017-05-01T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'flightOptions' => [
+                FareMasterPricerTbSearch::FLIGHTOPT_PUBLISHED,
+                FareMasterPricerTbSearch::FLIGHTOPT_UNIFARES,
+                FareMasterPricerTbSearch::FLIGHTOPT_CORPORATE_UNIFARES,
+            ],
+            'officeIds' => ['A', 'B']
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertCount(2, $message->officeIdDetails);
+        $this->assertEquals('A',
+            $message->officeIdDetails[0]->officeIdInformation->officeIdentification->agentSignin
+        );
+        $this->assertEquals('B',
+            $message->officeIdDetails[1]->officeIdInformation->officeIdentification->agentSignin
+        );
+    }
+
     public function testCanMakeMessageWithPriceToBeat()
     {
         $opt = new FareMasterPricerTbSearch([

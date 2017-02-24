@@ -225,4 +225,11 @@ class FareMasterPricerTbSearch extends Base
      * @var Fare\MPFareFamily[]
      */
     public $fareFamilies = [];
+
+    /**
+     * Office IDs
+     *
+     * @var string[]
+     */
+    public $officeIds = [];
 }
