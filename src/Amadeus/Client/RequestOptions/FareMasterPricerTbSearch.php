@@ -82,6 +82,10 @@ class FareMasterPricerTbSearch extends Base
 
 
     /**
+     * The total number of passengers.
+     *
+     * Must match the data present in $this->passengers
+     *
      * @var int
      */
     public $nrOfRequestedPassengers;
@@ -129,7 +133,7 @@ class FareMasterPricerTbSearch extends Base
     /**
      * Provide extra fare & flight options
      *
-     * self::FLIGHTOPT_*
+     * Choose from self::FLIGHTOPT_*
      *
      * @var string[]
      */
@@ -149,7 +153,7 @@ class FareMasterPricerTbSearch extends Base
      *
      * In combination with fareType self::FARETYPE::CORPORATE_UNIFARES
      *
-     * self::CORPORATE_QUALIFIER_*
+     * Choose from self::CORPORATE_QUALIFIER_*
      *
      * @var string
      */
@@ -222,6 +226,8 @@ class FareMasterPricerTbSearch extends Base
     public $priceToBeatCurrency;
 
     /**
+     * Fare Families
+     *
      * @var Fare\MPFareFamily[]
      */
     public $fareFamilies = [];
