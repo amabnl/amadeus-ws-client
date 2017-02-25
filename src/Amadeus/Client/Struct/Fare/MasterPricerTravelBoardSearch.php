@@ -117,7 +117,7 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
      */
     public $feeOption;
     /**
-     * @var mixed
+     * @var MasterPricer\OfficeIdDetails[]
      */
     public $officeIdDetails;
 
@@ -164,6 +164,10 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
             $this->loadItinerary($itinerary, $segmentCounter);
         }
 
+        foreach ($options->officeIds as $officeId) {
+            $this->loadOfficeId($officeId);
+        }
+
         if ($this->checkAnyNotEmpty(
             $options->cabinClass,
             $options->cabinOption,
@@ -186,6 +190,14 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
         }
 
         $this->loadFareFamilies($options->fareFamilies);
+    }
+
+    /**
+     * @param string $officeId
+     */
+    protected function loadOfficeId($officeId)
+    {
+        $this->officeIdDetails[] = new MasterPricer\OfficeIdDetails($officeId);
     }
 
     /**
