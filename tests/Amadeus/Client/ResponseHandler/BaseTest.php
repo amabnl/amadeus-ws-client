@@ -1076,6 +1076,22 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("CHECK FARE ELEMENTS", $result->messages[0]->text);
     }
 
+    public function testCanHandleTicketCheckEligibilityErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketCheckEligibilityErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_CheckEligibility');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('123', $result->messages[0]->code);
+        $this->assertEquals("E-ticket(s) not eligible to ATC - Fare Calculation not valid for ATC transaction - Document number not eligible for Amadeus Ticket Changer", $result->messages[0]->text);
+        $this->assertEquals("application", $result->messages[0]->level);
+    }
+
     public function testCanHandleMiniRuleGetFromPricingRecErrResponse()
     {
         $respHandler = new ResponseHandler\Base();

@@ -20,31 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler\Ticket;
+namespace Amadeus\Client\RequestCreator\Converter\Ticket;
 
-use Amadeus\Client\ResponseHandler\StandardResponseHandler;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\TicketCheckEligibilityOptions;
+use Amadeus\Client\Struct;
 
 /**
- * HandlerCreateTSTFromPricing
+ * CheckEligibilityConv
  *
- * @package Amadeus\Client\ResponseHandler\Ticket
+ * @package Amadeus\Client\RequestCreator\Converter\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class HandlerCreateTSTFromPricing extends StandardResponseHandler
+class CheckEligibilityConv extends BaseConverter
 {
     /**
-     * @param SendResult $response
-     * @return Result
+     * @param TicketCheckEligibilityOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\Ticket\CheckEligibility
      */
-    public function analyze(SendResult $response)
+    public function convert($requestOptions, $version)
     {
-        return $this->analyzeWithErrCodeCategoryMsgNodeName(
-            $response,
-            "applicationErrorCode",
-            "codeListQualifier",
-            "errorFreeText"
-        );
+        return new Struct\Ticket\CheckEligibility($requestOptions);
     }
 }

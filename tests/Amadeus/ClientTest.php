@@ -1890,6 +1890,86 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+
+    public function testCanDoTicketTicketCheckEligibility()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketCheckEligibilitymessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\CheckEligibility(
+            new Client\RequestOptions\TicketCheckEligibilityOptions([
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new Client\RequestOptions\Fare\MPPassenger([
+                        'type' => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'flightOptions' => [
+                    Client\RequestOptions\TicketCheckEligibilityOptions::FLIGHTOPT_PUBLISHED,
+                ],
+                'ticketNumbers' => [
+                    '1722300000004'
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_CheckEligibility', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_CheckEligibility' => "15.2"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_CheckEligibility')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketCheckEligibility(
+            new Client\RequestOptions\TicketCheckEligibilityOptions([
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new Client\RequestOptions\Fare\MPPassenger([
+                        'type' => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'flightOptions' => [
+                    Client\RequestOptions\TicketCheckEligibilityOptions::FLIGHTOPT_PUBLISHED,
+                ],
+                'ticketNumbers' => [
+                    '1722300000004'
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoOfferConfirmAirOffer()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

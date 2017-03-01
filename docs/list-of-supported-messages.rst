@@ -40,6 +40,7 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_DeleteTST
 - Ticket_DeleteTSMP
 - Ticket_DisplayTSMFareElement
+- Ticket_CheckEligibility
 - DocIssuance_IssueTicket
 - DocIssuance_IssueMiscellaneousDocuments
 - DocIssuance_IssueCombined
@@ -72,9 +73,7 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Fare_RebookAndCreateTST
 - Air_RebookAirSegment
 - Air_TLAGetAvailability
-- PNR_AddAuxiliarySegment
 - PointOfRef_CategoryList
-- Ticket_CheckEligibility
 - Ticket_ATCShopperMasterPricerTravelBoardSearch
 - Ticket_RepricePNRWithBookingClass
 - Ticket_ReissueConfirmedPricing

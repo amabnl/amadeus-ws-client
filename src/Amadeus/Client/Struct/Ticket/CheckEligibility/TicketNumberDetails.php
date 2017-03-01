@@ -20,31 +20,30 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler\Ticket;
-
-use Amadeus\Client\ResponseHandler\StandardResponseHandler;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+namespace Amadeus\Client\Struct\Ticket\CheckEligibility;
 
 /**
- * HandlerCreateTSTFromPricing
+ * TicketNumberDetails
  *
- * @package Amadeus\Client\ResponseHandler\Ticket
+ * @package Amadeus\Client\Struct\Ticket\CheckEligibility
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class HandlerCreateTSTFromPricing extends StandardResponseHandler
+class TicketNumberDetails
 {
     /**
-     * @param SendResult $response
-     * @return Result
+     * @var DocumentDetails[]
      */
-    public function analyze(SendResult $response)
+    public $documentDetails = [];
+
+    /**
+     * TicketNumberDetails constructor.
+     *
+     * @param string[] $ticketNumbers
+     */
+    public function __construct(array $ticketNumbers)
     {
-        return $this->analyzeWithErrCodeCategoryMsgNodeName(
-            $response,
-            "applicationErrorCode",
-            "codeListQualifier",
-            "errorFreeText"
-        );
+        foreach ($ticketNumbers as $ticketNumber) {
+            $this->documentDetails[] = new DocumentDetails($ticketNumber);
+        }
     }
 }

@@ -903,6 +903,22 @@ class Client
     }
 
     /**
+     * Ticket_CheckEligibility
+     *
+     * @param RequestOptions\TicketCheckEligibilityOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketCheckEligibility(
+        RequestOptions\TicketCheckEligibilityOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_CheckEligibility';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocIssuance_IssueTicket
      *
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options

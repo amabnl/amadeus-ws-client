@@ -24,10 +24,8 @@ namespace Amadeus\Client\Struct\Fare;
 
 use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
-use Amadeus\Client\RequestOptions\Fare\MPPassenger;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
-use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
@@ -36,24 +34,12 @@ use Amadeus\Client\Struct\Fare\MasterPricer;
  * @package Amadeus\Client\Struct\Fare
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MasterPricerTravelBoardSearch extends BaseWsMessage
+class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
 {
-    /**
-     * Number of seats, recommendations.
-     *
-     * @var MasterPricer\NumberOfUnit
-     */
-    public $numberOfUnit;
     /**
      * @var mixed
      */
     public $globalOptions;
-    /**
-     * Traveler Details
-     *
-     * @var MasterPricer\PaxReference[]
-     */
-    public $paxReference = [];
     /**
      * @var mixed
      */
@@ -74,10 +60,6 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
      * @var MasterPricer\FareFamilies[]
      */
     public $fareFamilies = [];
-    /**
-     * @var MasterPricer\FareOptions
-     */
-    public $fareOptions;
     /**
      * @var MasterPricer\PriceToBeat
      */
@@ -140,18 +122,7 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
     {
         $this->loadNrOfPaxAndResults($options);
 
-        if ($options->doTicketabilityPreCheck === true ||
-            $this->checkAnyNotEmpty($options->corporateCodesUnifares, $options->flightOptions, $options->currencyOverride, $options->feeIds)
-        ) {
-            $this->fareOptions = new MasterPricer\FareOptions(
-                $options->flightOptions,
-                $options->corporateCodesUnifares,
-                $options->doTicketabilityPreCheck,
-                $options->currencyOverride,
-                $options->feeIds,
-                $options->corporateQualifier
-            );
-        }
+        $this->loadFareOptions($options);
 
         $passengerCounter = 1;
         $infantCounter = 1;
@@ -201,43 +172,6 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
     }
 
     /**
-     * @param MPPassenger $passenger
-     * @param int $counter BYREF
-     * @param int $infantCounter BYREF
-     */
-    protected function loadPassenger($passenger, &$counter, &$infantCounter)
-    {
-        $isInfant = ($passenger->type === 'INF');
-
-        $paxRef = new MasterPricer\PaxReference(
-            $isInfant ? $infantCounter : $counter,
-            $isInfant,
-            $passenger->type
-        );
-
-        if ($isInfant) {
-            $infantCounter++;
-        } else {
-            $counter++;
-        }
-
-        if ($passenger->count > 1) {
-            for ($i = 2; $i <= $passenger->count; $i++) {
-                $tmpCount = ($isInfant) ? $infantCounter : $counter;
-                $paxRef->traveller[] = new MasterPricer\Traveller($tmpCount, $isInfant);
-
-                if ($isInfant) {
-                    $infantCounter++;
-                } else {
-                    $counter++;
-                }
-            }
-        }
-
-        $this->paxReference[] = $paxRef;
-    }
-
-    /**
      * @param MPItinerary $itineraryOptions
      * @param int $counter BYREF
      */
@@ -256,20 +190,6 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
         $this->itinerary[] = $tmpItinerary;
 
         $counter++;
-    }
-
-    /**
-     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions $options
-     * @return void
-     */
-    protected function loadNrOfPaxAndResults(FareMasterPricerTbSearch $options)
-    {
-        if (is_int($options->nrOfRequestedPassengers) || is_int($options->nrOfRequestedResults)) {
-            $this->numberOfUnit = new MasterPricer\NumberOfUnit(
-                $options->nrOfRequestedPassengers,
-                $options->nrOfRequestedResults
-            );
-        }
     }
 
     /**

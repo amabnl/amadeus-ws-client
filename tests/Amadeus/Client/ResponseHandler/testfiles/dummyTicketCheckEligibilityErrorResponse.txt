@@ -1,0 +1,53 @@
+<Ticket_CheckEligibilityReply xmlns="http://xml.amadeus.com/FATCER_15_2_1A">
+    <applicationErrorInfo>
+        <applicationErrorDetail>
+            <errorLevel>1</errorLevel>
+            <rejectNumber>123</rejectNumber>
+            <rejectMessage> E-ticket(s) not eligible to ATC</rejectMessage>
+        </applicationErrorDetail>
+    </applicationErrorInfo>
+    <eligibilityInfo>
+        <travellerInfo>
+            <passengerIndicators>
+                <referenceNumber> 1</referenceNumber>
+            </passengerIndicators>
+        </travellerInfo>
+        <applicationErrorInfo>
+            <applicationErrorDetail>
+                <errorLevel>1</errorLevel>
+                <rejectNumber>456</rejectNumber>
+                <rejectMessage> Fare Calculation not valid for ATC transaction</rejectMessage>
+            </applicationErrorDetail>
+        </applicationErrorInfo>
+        <eTicketInfo>
+            <ticketNumberDetails>
+                <documentDetails>
+                    <number>172-2300000004</number>
+                </documentDetails>
+            </ticketNumberDetails>
+        </eTicketInfo>
+        <dummyInfo></dummyInfo>
+    </eligibilityInfo>
+    <eligibilityInfo>
+        <travellerInfo>
+            <passengerIndicators>
+                <referenceNumber> 3</referenceNumber>
+            </passengerIndicators>
+        </travellerInfo>
+        <applicationErrorInfo>
+            <applicationErrorDetail>
+                <errorLevel>1</errorLevel>
+                <rejectNumber>789</rejectNumber>
+                <rejectMessage> Document number not eligible for Amadeus Ticket Changer</rejectMessage>
+            </applicationErrorDetail>
+        </applicationErrorInfo>
+        <eTicketInfo>
+            <ticketNumberDetails>
+                <documentDetails>
+                    <number>172-2300000006</number>
+                </documentDetails>
+            </ticketNumberDetails>
+        </eTicketInfo>
+        <dummyInfo></dummyInfo>
+    </eligibilityInfo>
+</Ticket_CheckEligibilityReply>

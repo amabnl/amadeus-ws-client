@@ -1491,6 +1491,37 @@ Get details of the form of payment associated to TSM of tattoo 18:
         ])
     );
 
+
+-----------------------
+Ticket_CheckEligibility
+-----------------------
+
+Ticket eligibility request for one Adult passenger with ticket number 172-23000000004. The ticket was originally priced with Public Fare.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCheckEligibilityOptions;
+    use Amadeus\Client\RequestOptions\MPPassenger;
+
+    $response = $client->ticketCheckEligibility(
+        new TicketCheckEligibilityOptions([
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'flightOptions' => [
+                TicketCheckEligibilityOptions::FLIGHTOPT_PUBLISHED,
+            ],
+            'ticketNumbers' => [
+                '1722300000004'
+            ]
+        ])
+    );
+
+
 ***********
 DocIssuance
 ***********

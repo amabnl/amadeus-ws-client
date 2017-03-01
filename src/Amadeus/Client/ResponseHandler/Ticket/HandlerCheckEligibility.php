@@ -27,12 +27,12 @@ use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * HandlerCreateTSTFromPricing
+ * HandlerCheckEligiblity
  *
  * @package Amadeus\Client\ResponseHandler\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class HandlerCreateTSTFromPricing extends StandardResponseHandler
+class HandlerCheckEligibility extends StandardResponseHandler
 {
     /**
      * @param SendResult $response
@@ -40,11 +40,15 @@ class HandlerCreateTSTFromPricing extends StandardResponseHandler
      */
     public function analyze(SendResult $response)
     {
-        return $this->analyzeWithErrCodeCategoryMsgNodeName(
+        return $this->analyzeWithErrorCodeMsgQueryLevel(
             $response,
-            "applicationErrorCode",
-            "codeListQualifier",
-            "errorFreeText"
+            "//m:applicationErrorInfo//m:rejectNumber",
+            "//m:applicationErrorInfo//m:rejectMessage",
+            "//m:applicationErrorInfo//m:errorLevel",
+            [
+                0 => 'system',
+                1 => 'application'
+            ]
         );
     }
 }
