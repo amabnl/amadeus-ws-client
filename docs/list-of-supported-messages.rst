@@ -41,6 +41,7 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_DeleteTSMP
 - Ticket_DisplayTSMFareElement
 - Ticket_CheckEligibility
+- Ticket_ATCShopperMasterPricerTravelBoardSearch
 - DocIssuance_IssueTicket
 - DocIssuance_IssueMiscellaneousDocuments
 - DocIssuance_IssueCombined
@@ -74,7 +75,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Air_RebookAirSegment
 - Air_TLAGetAvailability
 - PointOfRef_CategoryList
-- Ticket_ATCShopperMasterPricerTravelBoardSearch
 - Ticket_RepricePNRWithBookingClass
 - Ticket_ReissueConfirmedPricing
 - Ticket_ProcessEDoc

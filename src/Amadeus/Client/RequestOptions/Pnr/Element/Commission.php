@@ -20,20 +20,41 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\RequestOptions\Pnr\Element;
+
+use Amadeus\Client\RequestOptions\Pnr\Element;
 
 /**
- * TicketCreateTsmFareElOptions
+ * Commission - FM element
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\RequestOptions\Pnr\Element
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TicketCreateTsmFareElOptions extends TicketDisplayTsmFareElOptions
+class Commission extends Element
 {
+    const PAXTYPE_INFANT_WITHOUT_SEAT = 766;
+    const PAXTYPE_INFANT_WITH_SEAT = 767;
+    const PAXTYPE_CABIN_BAGGAGE = "C";
+    const PAXTYPE_EXTRA_SEAT = "E";
+    const PAXTYPE_GROUP = "G";
+    const PAXTYPE_INFANT_NOT_OCCUPYING_A_SEAT = "INF";
+    const PAXTYPE_MONTH = "MTH";
+    const PAXTYPE_PASSENGER = "PAX";
+    const PAXTYPE_YEAR = "YRS";
+
+    const INDICATOR_COMMISSION = "FM";
+
     /**
-     * Unstructured fare element information
+     * Passenger type
      *
+     * Choose from self::PAXTYPE_*
+     *
+     * @var string|int
+     */
+    public $passengerType;
+
+    /**
      * @var string
      */
-    public $info;
+    public $indicator;
 }

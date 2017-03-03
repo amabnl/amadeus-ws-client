@@ -54,7 +54,7 @@ class CreateTSMFareElement extends BaseWsMessage
     {
         $this->fareElementTattoo = new FareElementTattoo(
             $requestOptions->tattoo,
-            $requestOptions->elementType
+            $requestOptions->type
         );
 
         $this->fareElementInfo = new FareElementInfo($requestOptions->info);

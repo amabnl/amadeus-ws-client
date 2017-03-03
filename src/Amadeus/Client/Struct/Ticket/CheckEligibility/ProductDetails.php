@@ -20,20 +20,33 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Ticket\CheckEligibility;
 
 /**
- * TicketCreateTsmFareElOptions
+ * ProductDetails
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Ticket\CheckEligibility
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TicketCreateTsmFareElOptions extends TicketDisplayTsmFareElOptions
+class ProductDetails
 {
     /**
-     * Unstructured fare element information
-     *
-     * @var string
+     * @var mixed
      */
-    public $info;
+    public $flightNumber;
+
+    /**
+     * @var mixed
+     */
+    public $bookingClass;
+
+    /**
+     * @var mixed
+     */
+    public $operationalSuffix;
+
+    /**
+     * @var mixed
+     */
+    public $modifier;
 }

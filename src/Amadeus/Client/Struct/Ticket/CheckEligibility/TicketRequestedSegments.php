@@ -30,4 +30,25 @@ namespace Amadeus\Client\Struct\Ticket\CheckEligibility;
  */
 class TicketRequestedSegments
 {
+    /**
+     * @var ActionIdentification
+     */
+    public $actionIdentification;
+
+    /**
+     * @var ConnectPointDetails
+     */
+    public $connectPointDetails;
+
+    /**
+     * TicketRequestedSegments constructor.
+     *
+     * @param string $actionRequestCode ActionIdentification::REQ_*
+     * @param string[] $connectionLocations
+     */
+    public function __construct($actionRequestCode, $connectionLocations)
+    {
+        $this->actionIdentification = new ActionIdentification($actionRequestCode);
+        $this->connectPointDetails = new ConnectPointDetails($connectionLocations);
+    }
 }

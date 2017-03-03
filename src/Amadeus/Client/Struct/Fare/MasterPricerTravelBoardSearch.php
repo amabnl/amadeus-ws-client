@@ -26,10 +26,13 @@ use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+use Amadeus\Client\RequestOptions\TicketAtcShopperMpTbSearchOptions;
 use Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
  * Fare_MasterPricerTravelBoardSearch message structure
+ *
+ * Also used for Fare_MasterPricerCalendar and Ticket_ATCShopperMasterPricerTravelBoardSearch
  *
  * @package Amadeus\Client\Struct\Fare
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
@@ -106,17 +109,17 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
     /**
      * MasterPricerTravelBoardSearch constructor.
      *
-     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|null $options
+     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpTbSearchOptions|null $options
      */
     public function __construct($options = null)
     {
-        if ($options instanceof FareMasterPricerTbSearch || $options instanceof FareMasterPricerCalendarOptions) {
+        if ($options instanceof FareMasterPricerTbSearch) {
             $this->loadOptions($options);
         }
     }
 
     /**
-     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions $options
+     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpTbSearchOptions $options
      */
     protected function loadOptions($options)
     {
@@ -177,7 +180,13 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
      */
     protected function loadItinerary($itineraryOptions, &$counter)
     {
-        $tmpItinerary = new MasterPricer\Itinerary($counter);
+        $segmentRef = $counter;
+
+        if (!empty($itineraryOptions->segmentReference)) {
+            $segmentRef = $itineraryOptions->segmentReference;
+        }
+
+        $tmpItinerary = new MasterPricer\Itinerary($segmentRef);
 
         $tmpItinerary->departureLocalization = new MasterPricer\DepartureLocalization(
             $itineraryOptions->departureLocation

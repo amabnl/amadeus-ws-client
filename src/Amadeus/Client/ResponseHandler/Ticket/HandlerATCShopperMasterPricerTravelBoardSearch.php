@@ -20,20 +20,17 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\ResponseHandler\Ticket;
+
+use Amadeus\Client\ResponseHandler\Fare\HandlerMasterPricerTravelBoardSearch;
 
 /**
- * TicketCreateTsmFareElOptions
+ * HandlerATCShopperMasterPricerTravelBoardSearch
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\ResponseHandler\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TicketCreateTsmFareElOptions extends TicketDisplayTsmFareElOptions
+class HandlerATCShopperMasterPricerTravelBoardSearch extends HandlerMasterPricerTravelBoardSearch
 {
-    /**
-     * Unstructured fare element information
-     *
-     * @var string
-     */
-    public $info;
+
 }

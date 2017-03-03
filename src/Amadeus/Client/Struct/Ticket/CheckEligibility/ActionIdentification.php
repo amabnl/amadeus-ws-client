@@ -20,20 +20,43 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Ticket\CheckEligibility;
 
 /**
- * TicketCreateTsmFareElOptions
+ * ActionIdentification
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Ticket\CheckEligibility
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TicketCreateTsmFareElOptions extends TicketDisplayTsmFareElOptions
+class ActionIdentification
 {
+    const REQ_ADD = "A";
+    const REQ_CHANGE_REQUESTED_SEGMENT = "C";
+    const REQ_IGNORE_ONEWAYCOMBINEABLE = "I";
+    const REQ_KEEP_FLIGHTS = "K";
+    const REQ_KEEP_FLIGHTS_AND_FARES = "KF";
+    const REQ_IGNORE_OTHER = "O";
+    const REQ_REMOVE = "R";
+
     /**
-     * Unstructured fare element information
+     * self::REQ_*
      *
      * @var string
      */
-    public $info;
+    public $actionRequestCode;
+
+    /**
+     * @var ProductDetails
+     */
+    public $productDetails;
+
+    /**
+     * ActionIdentification constructor.
+     *
+     * @param string $actionRequestCode self::REQ_*
+     */
+    public function __construct($actionRequestCode)
+    {
+        $this->actionRequestCode = $actionRequestCode;
+    }
 }

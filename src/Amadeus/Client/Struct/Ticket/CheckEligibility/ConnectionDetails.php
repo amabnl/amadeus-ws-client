@@ -20,20 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Ticket\CheckEligibility;
 
 /**
- * TicketCreateTsmFareElOptions
+ * ConnectionDetails
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Ticket\CheckEligibility
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TicketCreateTsmFareElOptions extends TicketDisplayTsmFareElOptions
+class ConnectionDetails
 {
     /**
-     * Unstructured fare element information
-     *
      * @var string
      */
-    public $info;
+    public $location;
+
+    /**
+     * ConnectionDetails constructor.
+     *
+     * @param string $location
+     */
+    public function __construct($location)
+    {
+        $this->location = $location;
+    }
 }

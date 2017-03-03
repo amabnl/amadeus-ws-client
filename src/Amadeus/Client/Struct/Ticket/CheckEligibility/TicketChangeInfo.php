@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Ticket\CheckEligibility;
 
+use Amadeus\Client\RequestOptions\Ticket\ReqSegOptions;
+
 /**
  * TicketChangeInfo
  *
@@ -44,9 +46,19 @@ class TicketChangeInfo
      * TicketChangeInfo constructor.
      *
      * @param string[] $ticketNumbers
+     * @param ReqSegOptions[]|null $requestedSegments
      */
-    public function __construct(array $ticketNumbers)
+    public function __construct(array $ticketNumbers, $requestedSegments = null)
     {
         $this->ticketNumberDetails = new TicketNumberDetails($ticketNumbers);
+
+        if (!empty($requestedSegments)) {
+            foreach ($requestedSegments as $requestedSegment) {
+                $this->ticketRequestedSegments[] = new TicketRequestedSegments(
+                    $requestedSegment->requestCode,
+                    $requestedSegment->connectionLocations
+                );
+            }
+        }
     }
 }

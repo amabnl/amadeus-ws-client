@@ -1565,7 +1565,7 @@ class ClientTest extends BaseTestCase
 
         $expectedMessageResult = new Client\Struct\Ticket\CreateTSMFareElement(
             new Client\RequestOptions\TicketCreateTsmFareElOptions([
-                'elementType' => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+                'type' => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
                 'tattoo' => '18',
                 'info' => '#####',
             ])
@@ -1604,7 +1604,7 @@ class ClientTest extends BaseTestCase
 
         $response = $client->ticketCreateTSMFareElement(
             new Client\RequestOptions\TicketCreateTsmFareElOptions([
-                'elementType' => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+                'type' => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
                 'tattoo' => '18',
                 'info' => '#####',
             ])
@@ -1964,6 +1964,65 @@ class ClientTest extends BaseTestCase
                 'ticketNumbers' => [
                     '1722300000004'
                 ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoTicketAtcShopperMasterPricerTravelBoardSearch()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketAtcShopperMasterPricerTravelBoardSearchMessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\AtcShopperMasterPricerTravelBoardSearch(
+            new Client\RequestOptions\TicketAtcShopperMpTbSearchOptions([
+
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with(
+                'Ticket_ATCShopperMasterPricerTravelBoardSearch',
+                $expectedMessageResult,
+                ['endSession' => false, 'returnXml' => true]
+            )
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_ATCShopperMasterPricerTravelBoardSearch' => "13.1"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_ATCShopperMasterPricerTravelBoardSearch')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketAtcShopperMasterPricerTravelBoardSearch(
+            new Client\RequestOptions\TicketAtcShopperMpTbSearchOptions([
+
             ])
         );
 

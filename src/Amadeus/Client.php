@@ -919,6 +919,22 @@ class Client
     }
 
     /**
+     * Ticket_ATCShopperMasterPricerTravelBoardSearch
+     *
+     * @param RequestOptions\TicketAtcShopperMpTbSearchOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketAtcShopperMasterPricerTravelBoardSearch(
+        RequestOptions\TicketAtcShopperMpTbSearchOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_ATCShopperMasterPricerTravelBoardSearch';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocIssuance_IssueTicket
      *
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options

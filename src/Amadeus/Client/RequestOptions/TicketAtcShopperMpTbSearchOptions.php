@@ -22,18 +22,27 @@
 
 namespace Amadeus\Client\RequestOptions;
 
+use Amadeus\Client\RequestOptions\Ticket\ReqSegOptions;
+
 /**
- * TicketCreateTsmFareElOptions
+ * Ticket_ATCShopperMasterPricerTravelBoardSearch request options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TicketCreateTsmFareElOptions extends TicketDisplayTsmFareElOptions
+class TicketAtcShopperMpTbSearchOptions extends FareMasterPricerTbSearch
 {
     /**
-     * Unstructured fare element information
+     * List of ticket numbers to change
      *
-     * @var string
+     * @var string[]
      */
-    public $info;
+    public $ticketNumbers = [];
+
+    /**
+     * Changed ticket requested segments.
+     *
+     * @var ReqSegOptions[]
+     */
+    public $requestedSegments = [];
 }

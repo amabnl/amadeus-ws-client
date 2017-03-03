@@ -45,7 +45,7 @@ class CreateTSMFareElementTest extends BaseTestCase
     public function testCanMakeMessageDeleteFopFromTsm()
     {
         $opt = new TicketCreateTsmFareElOptions([
-            'elementType' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+            'type' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
             'tattoo' => 18,
             'info' => '#####',
         ]);
@@ -65,7 +65,7 @@ class CreateTSMFareElementTest extends BaseTestCase
     public function testCanMakeMessagePaymentCheck()
     {
         $opt = new TicketCreateTsmFareElOptions([
-            'elementType' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+            'type' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
             'tattoo' => 18,
             'info' => 'CHECK/EUR304.89',
         ]);

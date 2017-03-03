@@ -20,20 +20,38 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\RequestOptions\Ticket;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * TicketCreateTsmFareElOptions
+ * Changed ticket requested segments.
  *
- * @package Amadeus\Client\RequestOptions
+ *
+ * @package Amadeus\Client\RequestOptions\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TicketCreateTsmFareElOptions extends TicketDisplayTsmFareElOptions
+class ReqSegOptions extends LoadParamsFromArray
 {
+    const REQUEST_CODE_ADD = "A";
+    const REQUEST_CODE_CHANGE_REQUESTED_SEGMENT = "C";
+    const REQUEST_CODE_IGNORE_ONEWAYCOMBINEABLE = "I";
+    const REQUEST_CODE_KEEP_FLIGHTS = "K";
+    const REQUEST_CODE_KEEP_FLIGHTS_AND_FARES = "KF";
+    const REQUEST_CODE_IGNORE_OTHER = "O";
+    const REQUEST_CODE_REMOVE = "R";
+
     /**
-     * Unstructured fare element information
+     * What action to perform
+     *
+     * choose from self::REQUEST_CODE_*
      *
      * @var string
      */
-    public $info;
+    public $requestCode;
+
+    /**
+     * @var string[]
+     */
+    public $connectionLocations = [];
 }

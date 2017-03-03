@@ -1339,7 +1339,7 @@ Delete the form of payment from the TSM of tattoo 18:
 
     $createTsmResponse = $client->ticketCreateTSMFareElement(
         new TicketCreateTsmFareElOptions([
-            'elementType' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+            'type' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
             'tattoo' => 18,
             'info' => '#####'
         ])
@@ -1354,7 +1354,7 @@ Set the form of payment Check to the TSM of tattoo 18:
 
     $createTsmResponse = $client->ticketCreateTSMFareElement(
         new TicketCreateTsmFareElOptions([
-            'elementType' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+            'type' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
             'tattoo' => 18,
             'info' => 'CHECK/EUR304.89'
         ])
@@ -1517,6 +1517,80 @@ Ticket eligibility request for one Adult passenger with ticket number 172-230000
             ],
             'ticketNumbers' => [
                 '1722300000004'
+            ]
+        ])
+    );
+
+----------------------------------------------
+Ticket_ATCShopperMasterPricerTravelBoardSearch
+----------------------------------------------
+
+Basic Search With Mandatory Elements:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketAtcShopperMpTbSearchOptions;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Ticket\ReqSegOptions;
+
+    $response = $client->ticketAtcShopperMasterPricerTravelBoardSearch(
+        new TicketAtcShopperMpTbSearchOptions([
+            'nrOfRequestedPassengers' => 2,
+            'nrOfRequestedResults' => 2,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ]),
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_CHILD,
+                    'count' => 1
+                ])
+            ],
+            'flightOptions' => [
+                TicketAtcShopperMpTbSearchOptions::FLIGHTOPT_PUBLISHED,
+                TicketAtcShopperMpTbSearchOptions::FLIGHTOPT_UNIFARES
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'segmentReference' => 1,
+                    'departureLocation' => new MPLocation(['city' => 'MAD']),
+                    'arrivalLocation' => new MPLocation(['city' => 'LHR']),
+                    'date' => new MPDate([
+                        'date' => new \DateTime('2013-08-12T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ]),
+                new MPItinerary([
+                    'segmentReference' => 2,
+                    'departureLocation' => new MPLocation(['city' => 'LHR']),
+                    'arrivalLocation' => new MPLocation(['city' => 'MAD']),
+                    'date' => new MPDate([
+                        'date' => new \DateTime('2013-12-12T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'ticketNumbers' => [
+                '0572187777498',
+                '0572187777499'
+            ],
+            'requestedSegments' => [
+                new ReqSegOptions([
+                    'requestCode' => ReqSegOptions::REQUEST_CODE_KEEP_FLIGHTS_AND_FARES,
+                    'connectionLocations' => [
+                        'MAD',
+                        'LHR'
+                    ]
+                ]),
+                new ReqSegOptions([
+                    'requestCode' => ReqSegOptions::REQUEST_CODE_CHANGE_REQUESTED_SEGMENT,
+                    'connectionLocations' => [
+                        'LHR',
+                        'MAD'
+                    ]
+                ])
             ]
         ])
     );

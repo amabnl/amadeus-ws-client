@@ -33,10 +33,22 @@ use Amadeus\Client\LoadParamsFromArray;
 class MPItinerary extends LoadParamsFromArray
 {
     /**
+     * Segment Reference (optional)
+     *
+     * @var int
+     */
+    public $segmentReference;
+
+    /**
+     * Departure location
+     *
      * @var MPLocation
      */
     public $departureLocation;
+
     /**
+     * Arrival location
+     *
      * @var MPLocation
      */
     public $arrivalLocation;

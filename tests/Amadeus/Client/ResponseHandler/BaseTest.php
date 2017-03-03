@@ -1092,6 +1092,22 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("application", $result->messages[0]->level);
     }
 
+    public function testCanHandleTicketAtcShopperMasterPricerTravelBoardSearchErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketActShopperMasterPricerTravelBoardSearchErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_ATCShopperMasterPricerTravelBoardSearch');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('866', $result->messages[0]->code);
+        $this->assertEquals("NO FARE FOUND FOR REQUESTED ITINERARY", $result->messages[0]->text);
+        $this->assertNull($result->messages[0]->level);
+    }
+
     public function testCanHandleMiniRuleGetFromPricingRecErrResponse()
     {
         $respHandler = new ResponseHandler\Base();

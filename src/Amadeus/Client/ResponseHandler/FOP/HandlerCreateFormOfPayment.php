@@ -61,7 +61,6 @@ class HandlerCreateFormOfPayment extends StandardResponseHandler
      */
     public function analyze(SendResult $response)
     {
-        //TODO
         $analyzeResponse = new Result($response);
 
         $domXpath = $this->makeDomXpath($response->responseXml);
