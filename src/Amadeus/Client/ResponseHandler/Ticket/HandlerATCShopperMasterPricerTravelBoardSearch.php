@@ -32,5 +32,4 @@ use Amadeus\Client\ResponseHandler\Fare\HandlerMasterPricerTravelBoardSearch;
  */
 class HandlerATCShopperMasterPricerTravelBoardSearch extends HandlerMasterPricerTravelBoardSearch
 {
-
 }
