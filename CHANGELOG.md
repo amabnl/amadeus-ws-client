@@ -1,9 +1,11 @@
 # Release 1.3.0 (UNRELEASED)
-* Fixed bug with ``Security_Authenticate`` message sending empty message when the Authentication parameters were provided as per the documentation (https://github.com/amabnl/amadeus-ws-client/issues/40)
 * Added support for Multiple Office ID's in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/44) - Michal Hernas
 * Implemented ``Ticket_CheckEligibility`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
 * Implemented ``Ticket_ATCShopperMasterPricerTravelBoardSearch`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
 * Implemented ``Ticket_CreateTSMFareElement`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+
+# Release 1.2.1 (6 March 2017)
+* Fixed bug with ``Security_Authenticate`` message sending empty message when the Authentication parameters were provided as per the documentation (https://github.com/amabnl/amadeus-ws-client/issues/40)
 
 # Release 1.2.0 (23 February 2017)
 * Fixed bug with Corporate Unifare pricing in ``Fare_MasterPricerTravelBoardSearch`` and ``Fare_MasterPricerCalendar`` (https://github.com/amabnl/amadeus-ws-client/pull/41) - Michal Hernas
