@@ -3251,6 +3251,97 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    /**
+     * Github issue #40
+     * backwards compatibility for AuthParams at SessionHandlerParams level which must fall back to client authparams
+     *
+     * to be deprecated with version 2.0
+     *
+     * @deprecated To be removed with version 2.0
+     */
+    public function testCanDoAuthenticateCallWithAuthParamsOnSessionHandlerSoapHeader2()
+    {
+        $sessionHandlerParams = new Params\SessionHandlerParams([
+            'authParams' => [
+                'officeId' => 'BRUXXXXXX',
+                'originatorTypeCode' => 'U',
+                'userId' => 'WSXXXXXX',
+                'passwordData' => base64_encode('TEST'),
+                'passwordLength' => 4,
+                'dutyCode' => 'SU',
+                'organizationId' => 'DUMMY-ORG',
+            ]
+        ]);
+
+        $authParams = new Params\AuthParams([
+            'officeId' => 'BRUXXXXXX',
+            'originatorTypeCode' => 'U',
+            'userId' => 'WSXXXXXX',
+            'passwordData' => base64_encode('TEST'),
+            'passwordLength' => 4,
+            'dutyCode' => 'SU',
+            'organizationId' => 'DUMMY-ORG',
+        ]);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummy auth response xml';
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->processStatus = new \stdClass();
+        $mockedSendResult->responseObject->processStatus->statusCode = 'P';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Security\Authenticate(
+            new Client\RequestOptions\SecurityAuthenticateOptions(
+                $authParams
+            )
+        );
+
+        $mockSessionHandler = $this->getMock(
+            'Amadeus\Client\Session\Handler\SoapHeader2',
+            ['Security_Authenticate', 'getLastResponse', 'getMessagesAndVersions', 'sendMessage'],
+            [$sessionHandlerParams],
+            '',
+            true
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Security_Authenticate', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->atLeastOnce())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Security_Authenticate' => "6.1"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Security_Authenticate')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->sessionHandlerParams = $sessionHandlerParams;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->securityAuthenticate();
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanSetSessionData()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

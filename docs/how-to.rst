@@ -83,18 +83,18 @@ You can provide all the WSDL's in your WSAP by passing an array of wsdl's in the
     //Set up the client with necessary parameters:
 
     $params = new Params([
+        'authParams' => [
+            'officeId' => 'BRUXX1111',
+            'userId' => 'WSBENXXX',
+            'passwordData' => 'dGhlIHBhc3N3b3Jk'
+        ]
         'sessionHandlerParams' => [
             'soapHeaderVersion' => Client::HEADER_V4,
             'wsdl' => [
                 '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20160101_080000.wsdl',
                 '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_MediaServer_1.0_4.0.wsdl'
             ],
-            'logger' => new Psr\Log\NullLogger(),
-            'authParams' => [
-                'officeId' => 'BRUXX1111',
-                'userId' => 'WSBENXXX',
-                'passwordData' => 'dGhlIHBhc3N3b3Jk'
-            ]
+            'logger' => new Psr\Log\NullLogger()
         ]
     ]);
 

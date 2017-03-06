@@ -190,6 +190,12 @@ class Client
             ) {
                 $params->sessionHandlerParams->authParams = $this->authParams;
             }
+        } elseif (isset($params->sessionHandlerParams) &&
+            $params->sessionHandlerParams->authParams instanceof Params\AuthParams
+        ) {
+            //@deprecated - Provide backwards compatibility with old authparams structure.
+            //Github Issue 40 - retrieve AuthParams from sessionhandlerparams if not generally available
+            $this->authParams = $params->sessionHandlerParams->authParams;
         }
 
         $this->sessionHandler = $this->loadSessionHandler(
