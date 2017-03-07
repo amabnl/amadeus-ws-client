@@ -247,7 +247,7 @@ class DataElementsIndiv
                 $this->commission = new Commission($element);
                 break;
             default:
-                throw new InvalidArgumentException('Element type ' . $elementType . ' is not supported');
+                throw new InvalidArgumentException('Element type '.$elementType.' is not supported');
         }
     }
 

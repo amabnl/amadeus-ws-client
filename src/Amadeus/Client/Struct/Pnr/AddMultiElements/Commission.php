@@ -33,7 +33,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element\ManualCommission;
 class Commission
 {
     /**
-     * @var string
+     * @var int|string
      */
     public $passengerType;
 
