@@ -412,6 +412,26 @@ Add an ``FP CC`` element to the PNR to perform PNR payment by Credit Card throug
         ]
     ]);
 
+Manual Commission FM
+====================
+
+Create an ``FM`` element (Manual Commission):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\ManualCommission;
+
+    $opt = new PnrCreatePnrOptions([
+        'elements' => [
+            new ManualCommission([
+                'passengerType' => ManualCommission::PAXTYPE_PASSENGER,
+                'indicator' => 'FM',
+                'percentage' => 5
+            ])
+        ]
+    ]);
+
 Accounting Information AI
 =========================
 

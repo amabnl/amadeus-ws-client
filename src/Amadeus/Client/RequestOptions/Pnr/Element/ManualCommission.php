@@ -25,12 +25,12 @@ namespace Amadeus\Client\RequestOptions\Pnr\Element;
 use Amadeus\Client\RequestOptions\Pnr\Element;
 
 /**
- * Commission - FM element
+ * Manual Commission - FM element
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Element
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Commission extends Element
+class ManualCommission extends Element
 {
     const PAXTYPE_INFANT_WITHOUT_SEAT = 766;
     const PAXTYPE_INFANT_WITH_SEAT = 767;
@@ -54,7 +54,37 @@ class Commission extends Element
     public $passengerType;
 
     /**
+     * Indicator
+     *
      * @var string
      */
     public $indicator;
+
+    /**
+     * Commission percentage
+     *
+     * @var int
+     */
+    public $percentage;
+
+    /**
+     * Commission fixed amount
+     *
+     * @var int
+     */
+    public $amount;
+
+    /**
+     * VAT Indicator
+     *
+     * @var string
+     */
+    public $vatIndicator;
+
+    /**
+     * Net remit indicator
+     *
+     * @var string
+     */
+    public $remitIndicator;
 }

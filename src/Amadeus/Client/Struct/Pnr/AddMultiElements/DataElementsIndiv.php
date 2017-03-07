@@ -84,6 +84,9 @@ class DataElementsIndiv
     public $fareElement;
     public $fareDiscount;
     public $manualFareDocument;
+    /**
+     * @var Commission
+     */
     public $commission;
     public $originalIssue;
     /**
@@ -239,6 +242,10 @@ class DataElementsIndiv
                 $this->freetextData->freetextDetail->companyId = $element->airline;
                 $this->freetextData->freetextDetail->subjectQualifier = FreetextDetail::QUALIFIER_LITERALTEXT;
                 break;
+            case 'ManualCommission':
+                /** @var Element\ManualCommission $element */
+                $this->commission = new Commission($element);
+                break;
             default:
                 throw new InvalidArgumentException('Element type ' . $elementType . ' is not supported');
         }
@@ -265,7 +272,8 @@ class DataElementsIndiv
             'AccountingInfo' => ElementManagementData::SEGNAME_ACCOUNTING_INFORMATION,
             'Address' => null, // Special case - the type is a parameter.
             'FrequentFlyer' => ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST,
-            'OtherServiceInfo' => ElementManagementData::SEGNAME_OTHER_SERVICE_INFORMATION
+            'OtherServiceInfo' => ElementManagementData::SEGNAME_OTHER_SERVICE_INFORMATION,
+            'ManualCommission' => ElementManagementData::SEGNAME_COMMISSION
         ];
 
         if (array_key_exists($elementType, $sourceArray)) {

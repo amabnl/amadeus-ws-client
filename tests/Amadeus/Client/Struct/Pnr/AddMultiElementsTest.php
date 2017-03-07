@@ -24,6 +24,7 @@ namespace Test\Amadeus\Client\Struct\Pnr;
 
 use Amadeus\Client\RequestOptions\Pnr\Element\AccountingInfo;
 use Amadeus\Client\RequestOptions\Pnr\Element\Address;
+use Amadeus\Client\RequestOptions\Pnr\Element\ManualCommission;
 use Amadeus\Client\RequestOptions\Pnr\Element\ManualIssuedTicket;
 use Amadeus\Client\RequestOptions\Pnr\Element\Contact;
 use Amadeus\Client\RequestOptions\Pnr\Element\FormOfPayment;
@@ -710,6 +711,38 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\FreetextDetail::TYPE_OSI_ELEMENT, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->type);
         $this->assertEquals('6X', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->companyId);
         $this->assertEquals(AddMultiElements\FreetextDetail::QUALIFIER_LITERALTEXT, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->subjectQualifier);
+    }
+
+
+    public function testCanCreateCommission()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_NO_PROCESSING;
+        $createPnrOptions->elements[] = new ManualCommission([
+            'passengerType' => ManualCommission::PAXTYPE_PASSENGER,
+            'indicator' => 'FM',
+            'percentage' => 5
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_COMMISSION, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData);
+        $this->assertEquals('PAX', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->passengerType);
+        $this->assertEquals('FM', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->indicator);
+        $this->assertEquals(5, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->commissionInfo->percentage);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->commissionInfo->amount);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->commissionInfo->vatIndicator);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->commissionInfo->remitIndicator);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->oldCommission);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->manualCapping);
     }
 
     public function testCanCreateGroupPnr()
@@ -1423,7 +1456,5 @@ class AddMultiElementsTest extends BaseTestCase
 
         $this->assertEquals(1, $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->relatedProduct->quantity);
         $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_NEED_SEGMENT, $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
-
-
     }
 }
