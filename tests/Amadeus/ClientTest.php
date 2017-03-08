@@ -139,6 +139,19 @@ class ClientTest extends BaseTestCase
         $this->assertNull($last);
     }
 
+    public function testWillGetNullFromGetLastReqResHeadersWhenNoCallsWerMade()
+    {
+        $client = new Client($this->makeDummyParams());
+
+        $last = $client->getLastRequestHeaders();
+
+        $this->assertNull($last);
+
+        $last = $client->getLastResponseHeaders();
+
+        $this->assertNull($last);
+    }
+
     public function testCanDoDummyPnrRetrieveCall()
     {
         $mockedSendResult = new Client\Session\Handler\SendResult();

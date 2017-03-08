@@ -37,16 +37,16 @@ class Seat
 
     /**
      *
-     * NSST	No smoking seat
-     * NSSB	No smoking bulkhead seat
-     * NSSA	No smoking aisle seat
-     * NSSW	No smoking window seat
-     * SMSW	Smoking window seat
-     * SMST	Smoking seat
-     * SMSB	Smoking bulkhead seat
-     * SMSA	Smoking aisle seat
-     * SEAT	Pre-reserved seat with boarding pass issued or to be issued
-     * RQST	Seat request - include seat number preference
+     * NSST No smoking seat
+     * NSSB No smoking bulkhead seat
+     * NSSA No smoking aisle seat
+     * NSSW No smoking window seat
+     * SMSW Smoking window seat
+     * SMST Smoking seat
+     * SMSB Smoking bulkhead seat
+     * SMSA Smoking aisle seat
+     * SEAT Pre-reserved seat with boarding pass issued or to be issued
+     * RQST Seat request - include seat number preference
      *
      * @var string
      */

@@ -305,6 +305,16 @@ If you don't want to log all requests and responses to a logfile, but you need t
 
     $lastResponseReceived = $client->getLastResponse();
 
+
+If you also need the HTTP headers, that's possible too (exposes PHP's ``\SoapClient::__getLastRequestHeaders()`` and ``\SoapClient::__getLastResponseHeaders()``):
+
+.. code-block:: php
+
+    $lastRequestHeaders = $client->getLastRequestHeaders();
+
+    $lastResponseHeaders = $client->getLastResponseHeaders();
+
+
 ================
 EXAMPLE MESSAGES
 ================

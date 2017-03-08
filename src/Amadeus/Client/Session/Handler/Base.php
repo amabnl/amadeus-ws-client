@@ -339,6 +339,42 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     }
 
     /**
+     * Get the request headers for the last SOAP message that was sent out
+     *
+     * @param string $msgName
+     * @return string|null
+     */
+    public function getLastRequestHeaders($msgName)
+    {
+        $lastRequest = null;
+        $soapClient = $this->getSoapClient($msgName);
+
+        if ($soapClient instanceof \SoapClient) {
+            $lastRequest = $soapClient->__getLastRequestHeaders();
+        }
+
+        return $lastRequest;
+    }
+
+    /**
+     * Get the response headers for the last SOAP message that was received
+     *
+     * @param string $msgName
+     * @return string|null
+     */
+    public function getLastResponseHeaders($msgName)
+    {
+        $lastResponse = null;
+        $soapClient = $this->getSoapClient($msgName);
+
+        if ($soapClient instanceof \SoapClient) {
+            $lastResponse = $soapClient->__getLastResponseHeaders();
+        }
+
+        return $lastResponse;
+    }
+
+    /**
      * Get the office that we are using to sign in to.
      *
      * @return string

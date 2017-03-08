@@ -150,6 +150,26 @@ class Client
     }
 
     /**
+     * Get the request headers for the last SOAP message that was sent out
+     *
+     * @return string|null
+     */
+    public function getLastRequestHeaders()
+    {
+        return $this->sessionHandler->getLastRequestHeaders($this->lastMessage);
+    }
+
+    /**
+     * Get the response headers for the last SOAP message that was received
+     *
+     * @return string|null
+     */
+    public function getLastResponseHeaders()
+    {
+        return $this->sessionHandler->getLastResponseHeaders($this->lastMessage);
+    }
+
+    /**
      * Get session information for authenticated session
      *
      * - sessionId
