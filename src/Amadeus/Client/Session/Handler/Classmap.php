@@ -33,14 +33,16 @@ class Classmap
     /**
      * The PHP -> WSDL translation classmap for Soap Header 4 specific message parts
      *
+     * using the amasec: prefix to be sure to point to the correct namespace.
+     *
      * @var array
      */
     public static $soapheader4map = [
-        'AMA_SecurityHostedUser' => 'Amadeus\Client\Struct\HeaderV4\SecurityHostedUser',
-        'UserID' => 'Amadeus\Client\Struct\HeaderV4\UserId',
-        'Security' => 'Amadeus\Client\Struct\HeaderV4\Security',
-        'UsernameToken' => 'Amadeus\Client\Struct\HeaderV4\UsernameToken',
-        'Session' => 'Amadeus\Client\Struct\HeaderV4\Session',
+        'amasec:AMA_SecurityHostedUser' => 'Amadeus\Client\Struct\HeaderV4\SecurityHostedUser',
+        'amasec:UserID' => 'Amadeus\Client\Struct\HeaderV4\UserId',
+        'amasec:Security' => 'Amadeus\Client\Struct\HeaderV4\Security',
+        'amasec:UsernameToken' => 'Amadeus\Client\Struct\HeaderV4\UsernameToken',
+        'amasec:Session' => 'Amadeus\Client\Struct\HeaderV4\Session',
     ];
 
     /**
