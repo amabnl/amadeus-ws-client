@@ -58,7 +58,80 @@ class ServiceRequest extends Element
     const STATUS_NEED = "NN";
 
     /**
-     * OTHS / DOCS / ...
+     * Service Request code
+     * 
+     * FQTS Frequent flyer service request
+     * FQTR Frequent flyer mileage program redemption
+     * FPML Fruit platter
+     * EXST Extra seat
+     * DEPU Deportee, unaccompanied
+     * DEPA Deportee accompanied by an escort
+     * DEAF Deaf ( with or without guide dog)
+     * DBML Diabetic meal
+     * COUR Commercial courier
+     * CKIN Information for airport personnel
+     * CHML Child meal
+     * CBBG Cabin baggage
+     * BULK Bulky baggage
+     * BSCT Bassinet/Carry cot/Baby basket.
+     * FRAV First available
+     * FRAG Fragile baggage
+     * FQTV Frequent flyer mileage program accrual
+     * FQTU Frequent flyer upgrade and accrual
+     * HMFL High fiber meal
+     * GRPS Passengers travelling together using a common identity.
+     * GRPF Group fare
+     * LFML Low cholesterol
+     * LCML Low calorie meal
+     * LANG Languages spoken
+     * KSML Kosher meal
+     * HNML Hindu meal
+     * MOML Moslem meal
+     * MEDA Medical case
+     * MAAS Meet and assist
+     * LSML Low sodium, no salt added meal
+     * LPML Low protein meal
+     * NSST No smoking seat
+     * NSSB No smoking bulkhead seat
+     * NSSA No smoking aisle seat
+     * NLML Non lactose meal
+     * NAME Name - when airline holds reservations under a different name
+     * PETC Animal in cabin
+     * PCTC Emergency contact details
+     * OTHS Other service not specified by any other SSR code
+     * ORML Oriental meal
+     * NSSW No smoking window seat
+     * SMSW Smoking window seat
+     * SMST Smoking seat
+     * SMSB Smoking bulkhead seat
+     * SMSA Smoking aisle seat
+     * SLPR Bed/Berth in cabin
+     * SFML Sea food meal
+     * SEMN Seaman - ship's crew
+     * SEAT Pre-reserved seat with boarding pass issued or to be issued
+     * RVML Raw vegetarian meal
+     * RQST Seat request - include seat number preference
+     * PSPT Passport
+     * PRML Low Purim meal
+     * TWOV Transit or transfer without visa
+     * TKTL Ticket time limit
+     * TKNM Ticket number in FH element
+     * TKNC Ticket number in transmission
+     * TKNA Ticket number in FA element
+     * STCR Stretcher passenger
+     * SPML Special meal
+     * SPEQ Sports equipment
+     * XBAG Excess baggage
+     * WCOB Wheelchair - on board
+     * WCMP Wheelchair - manual power (US carriers only)
+     * WCHS Wheel chair up and down steps
+     * WCHR Wheelchair - for ramp
+     * WCHC Wheelchair - all the way to seat
+     * WCBW Wheelchair
+     * WCBD Wheelchair - dry cell battery
+     * VLML Vegetarian meal (lacto-ovo)
+     * VGML Vegetarian meal (non-diary)
+     * UMNR Unaccompanied minor
      *
      * @var string
      */

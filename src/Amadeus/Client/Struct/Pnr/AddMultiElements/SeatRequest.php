@@ -23,27 +23,20 @@
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * ServiceDetails
+ * SeatRequest
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ServiceDetails
+class SeatRequest
 {
     /**
-     * @var StatusDetails
+     * @var Seat
      */
-    public $statusDetails;
+    public $seat;
 
     /**
-     * ServiceDetails constructor.
-     *
-     * @param string|null $indicator
+     * @var Special[]
      */
-    public function __construct($indicator = null)
-    {
-        if (!is_null($indicator)) {
-            $this->statusDetails = new StatusDetails($indicator);
-        }
-    }
+    public $special = [];
 }

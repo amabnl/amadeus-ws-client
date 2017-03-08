@@ -76,6 +76,9 @@ class DataElementsIndiv
     public $structuredAddress;
     public $optionElement;
     public $printer;
+    /**
+     * @var SeatGroup
+     */
     public $seatGroup;
     public $entity;
     public $seatRequest;
@@ -184,6 +187,12 @@ class DataElementsIndiv
                     $this->fopExtension[] = new FopExtension(1);
                 } elseif ($element->type === Fop::IDENT_CHECK) {
                     throw new \RuntimeException("FOP CHECK NOT YET IMPLEMENTED");
+                }
+
+                if ($element->isServiceFee) {
+                    $this->serviceDetails[] = new ServiceDetails(
+                        StatusDetails::IND_SERVICEFEE
+                    );
                 }
                 break;
             case 'MiscellaneousRemark':

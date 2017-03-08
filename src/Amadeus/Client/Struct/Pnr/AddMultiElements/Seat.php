@@ -23,27 +23,42 @@
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * ServiceDetails
+ * Seat
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ServiceDetails
+class Seat
 {
     /**
-     * @var StatusDetails
+     * @var string
      */
-    public $statusDetails;
+    public $qualifier;
 
     /**
-     * ServiceDetails constructor.
      *
-     * @param string|null $indicator
+     * NSST	No smoking seat
+     * NSSB	No smoking bulkhead seat
+     * NSSA	No smoking aisle seat
+     * NSSW	No smoking window seat
+     * SMSW	Smoking window seat
+     * SMST	Smoking seat
+     * SMSB	Smoking bulkhead seat
+     * SMSA	Smoking aisle seat
+     * SEAT	Pre-reserved seat with boarding pass issued or to be issued
+     * RQST	Seat request - include seat number preference
+     *
+     * @var string
      */
-    public function __construct($indicator = null)
-    {
-        if (!is_null($indicator)) {
-            $this->statusDetails = new StatusDetails($indicator);
-        }
-    }
+    public $type;
+
+    /**
+     * @var string
+     */
+    public $boardpoint;
+
+    /**
+     * @var string
+     */
+    public $offpoint;
 }

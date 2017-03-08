@@ -38,38 +38,68 @@ class FormOfPayment extends Element
     const TYPE_MISC = "MS";
 
     /**
+     * Form of Payment type
+     *
      * self::TYPE_*
      *
      * @var string
      */
     public $type;
+
     /**
+     * Credit card type
+     *
+     * VI: Visa
+     * AX: American Express
+     * BC: BC Card
+     * CA: MasterCard
+     * DS: Discover
+     * DC: Diners Club
+     * E: Visa Electron
+     * TO: Maestro
+     *
      * for self::TYPE_CREDITCARD
      *
      * @var string
      */
     public $creditCardType;
+
     /**
      * for self::TYPE_CREDITCARD
      *
      * @var string
      */
     public $creditCardNumber;
+
     /**
+     * Credit Card expiry date
+     *
      * for self::TYPE_CREDITCARD
+     *
+     * Format: MMYY
      *
      * @var string
      */
     public $creditCardExpiry;
 
     /**
+     * CVC code
+     *
      * @var int
      */
     public $creditCardCvcCode;
 
     /**
      * Free text for self::TYPE_MISC
+     *
      * @var string
      */
     public $freeText;
+
+    /**
+     * Is this a Service Fee?
+     *
+     * @var bool
+     */
+    public $isServiceFee = false;
 }
