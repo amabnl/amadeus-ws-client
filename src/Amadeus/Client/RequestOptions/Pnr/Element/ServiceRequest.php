@@ -59,7 +59,7 @@ class ServiceRequest extends Element
 
     /**
      * Service Request code
-     * 
+     *
      * FQTS Frequent flyer service request
      * FQTR Frequent flyer mileage program redemption
      * FPML Fruit platter
