@@ -412,6 +412,26 @@ Add an ``FP CC`` element to the PNR to perform PNR payment by Credit Card throug
         ]
     ]);
 
+Add a service fee paid using Visa:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\FormOfPayment;
+
+    $opt = new PnrCreatePnrOptions([
+        'elements' => [
+            new FormOfPayment([
+                'type' => FormOfPayment::TYPE_CREDITCARD,
+                'creditCardType' => 'VI',
+                'creditCardNumber' => '4444333322221111',
+                'creditCardExpiry' => '1017',
+                'creditCardCvcCode' => 123,
+                'isServiceFee' => true
+            ])
+        ]
+    ]);
+
 Manual Commission FM
 ====================
 

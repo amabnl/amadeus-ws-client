@@ -464,6 +464,48 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(123, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->newFopsDetails->cvData);
     }
 
+    public function testMakePnrWithFormOfPaymentCreditCardServiceFee()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'company' => '1A'
+        ]);
+        $createPnrOptions->elements[] = new FormOfPayment([
+            'type' => FormOfPayment::TYPE_CREDITCARD,
+            'creditCardType' => 'VI',
+            'creditCardNumber' => '4444333322221111',
+            'creditCardExpiry' => '1017',
+            'creditCardCvcCode' => 123,
+            'isServiceFee' => true
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+
+        $this->assertEquals('FP', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals(AddMultiElements\Fop::IDENT_CREDITCARD, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->identification);
+        $this->assertEquals('4444333322221111', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->accountNumber);
+        $this->assertEquals('VI', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->creditCardCode);
+        $this->assertEquals('1017', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->expiryDate);
+        $this->assertEquals(1, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->fopSequenceNumber);
+        $this->assertEquals(123, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->newFopsDetails->cvData);
+
+        $this->assertCount(1, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->serviceDetails);
+        $this->assertEquals(AddMultiElements\StatusDetails::IND_SERVICEFEE, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->serviceDetails[0]->statusDetails->indicator);
+    }
+
     public function testMakePnrWithFormOfPaymentCheckWillThrowException()
     {
         $this->setExpectedException('\RuntimeException', 'FOP CHECK NOT YET IMPLEMENTED');
@@ -1458,3 +1500,4 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_NEED_SEGMENT, $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
     }
 }
+

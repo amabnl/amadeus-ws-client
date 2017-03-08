@@ -1,10 +1,10 @@
 # Release 1.3.0 (UNRELEASED)
 * Added support for Multiple Office ID's in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/44) - Michal Hernas
 * Added support for Manual Commission elements in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/45)
+* Added support Service Fee indicator in Form of Payment elements in ``PNR_AddMultiElements``
 * Implemented ``Ticket_CheckEligibility`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
 * Implemented ``Ticket_ATCShopperMasterPricerTravelBoardSearch`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
 * Implemented ``Ticket_CreateTSMFareElement`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
-
 
 # Release 1.2.2 (8 March 2017)
 * Fixed bug with Soap Header 4 WSDL's in combination with OTA XSD imports causing the AMA_SecurityHostedUser:UserID classmap to point to the wrong XSD element (https://github.com/amabnl/amadeus-ws-client/issues/48)
