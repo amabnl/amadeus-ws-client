@@ -137,21 +137,15 @@ class WsdlAnalyser
                 }
             }
 
-            foreach ($operations as $operation) {
-                if (!empty($operation->value)) {
-                    $fullVersion = self::$wsdlDomXpath[$wsdlIdentifier]->evaluate(
-                        sprintf(self::XPATH_VERSION_FOR_OPERATION, $operation->value)
-                    );
-
-                    if (!empty($fullVersion)) {
-                        $extractedVersion = self::extractMessageVersion($fullVersion);
-                        $msgAndVer[$operation->value] = [
-                            'version' => $extractedVersion,
-                            'wsdl' => $wsdlIdentifier
-                        ];
-                    }
-                }
-            }
+            $msgAndVer = array_merge(
+                $msgAndVer,
+                self::loopOperationsWithQuery(
+                    $operations,
+                    self::XPATH_VERSION_FOR_OPERATION,
+                    $wsdlIdentifier,
+                    self::$wsdlDomXpath[$wsdlIdentifier]
+                )
+            );
         }
 
         return $msgAndVer;
@@ -199,21 +193,15 @@ class WsdlAnalyser
         if ($domXpath instanceof \DOMXPath) {
             $nodeList = $domXpath->query(self::XPATH_ALL_OPERATIONS);
 
-            foreach ($nodeList as $operation) {
-                if (!empty($operation->value)) {
-                    $fullVersion = $domXpath->evaluate(
-                        sprintf(self::XPATH_ALT_VERSION_FOR_OPERATION, $operation->value)
-                    );
-
-                    if (!empty($fullVersion)) {
-                        $extractedVersion = self::extractMessageVersion($fullVersion);
-                        $msgAndVer[$operation->value] = [
-                            'version' => $extractedVersion,
-                            'wsdl' => $wsdlIdentifier
-                        ];
-                    }
-                }
-            }
+            $msgAndVer = array_merge(
+                $msgAndVer,
+                self::loopOperationsWithQuery(
+                    $nodeList,
+                    self::XPATH_ALT_VERSION_FOR_OPERATION,
+                    $wsdlIdentifier,
+                    $domXpath
+                )
+            );
         }
 
         return $msgAndVer;
@@ -294,5 +282,37 @@ class WsdlAnalyser
         WsdlAnalyser::loadWsdlXpath($wsdlFilePath, $wsdlId);
 
         return self::$wsdlDomXpath[$wsdlId]->evaluate($xpath);
+    }
+
+    /**
+     * Loop all extracted operations from a wsdl and find their message versions
+     *
+     * @param \DOMNodeList $operations
+     * @param string $query
+     * @param string $wsdlIdentifier
+     * @param \DOMXPath $domXpath
+     * @return array
+     */
+    protected static function loopOperationsWithQuery($operations, $query, $wsdlIdentifier, $domXpath)
+    {
+        $msgAndVer = [];
+
+        foreach ($operations as $operation) {
+            if (!empty($operation->value)) {
+                $fullVersion = $domXpath->evaluate(
+                    sprintf($query, $operation->value)
+                );
+
+                if (!empty($fullVersion)) {
+                    $extractedVersion = self::extractMessageVersion($fullVersion);
+                    $msgAndVer[$operation->value] = [
+                        'version' => $extractedVersion,
+                        'wsdl' => $wsdlIdentifier
+                    ];
+                }
+            }
+        }
+
+        return $msgAndVer;
     }
 }

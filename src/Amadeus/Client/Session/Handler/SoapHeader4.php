@@ -300,7 +300,7 @@ class SoapHeader4 extends Base
      *
      * @param string $wsdlFilePath
      * @param string $messageName
-     * @return string
+     * @return string|null
      */
     protected function getEndpointFromWsdl($wsdlFilePath, $messageName)
     {
@@ -318,7 +318,7 @@ class SoapHeader4 extends Base
      *
      * @param string $wsdlFilePath
      * @param string $messageName
-     * @return string
+     * @return string|null
      */
     protected function getActionFromWsdl($wsdlFilePath, $messageName)
     {
