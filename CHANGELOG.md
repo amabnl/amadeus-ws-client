@@ -6,6 +6,8 @@
 * Implemented ``Ticket_CheckEligibility`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
 * Implemented ``Ticket_ATCShopperMasterPricerTravelBoardSearch`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
 * Implemented ``Ticket_CreateTSMFareElement`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+* Refactored ``Amadeus\Client\Session\Handler\Base`` to make it more readable.
+* Refactored all parameter loading out of ``Amadeus\Client``.
 
 # Release 1.2.2 (8 March 2017)
 * Fixed bug with Soap Header 4 WSDL's in combination with OTA XSD imports causing the AMA_SecurityHostedUser:UserID classmap to point to the wrong XSD element (https://github.com/amabnl/amadeus-ws-client/issues/48)

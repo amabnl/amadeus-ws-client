@@ -308,7 +308,6 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
         return $this->params->authParams->officeId;
     }
 
-
     /**
      * Extract the Messages and versions from the loaded WSDL file.
      *
@@ -319,22 +318,10 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     public function getMessagesAndVersions()
     {
         if (empty($this->messagesAndVersions)) {
-            $this->messagesAndVersions = $this->loadMessagesAndVersions();
+            $this->messagesAndVersions = WsdlAnalyser::loadMessagesAndVersions($this->params->wsdl);
         }
 
         return $this->messagesAndVersions;
-    }
-
-    /**
-     * Loads messages & versions from WSDL.
-     *
-     * @return array
-     */
-    protected function loadMessagesAndVersions()
-    {
-        return WsdlAnalyser::loadMessagesAndVersions(
-            $this->params->wsdl
-        );
     }
 
     /**
@@ -375,6 +362,10 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
 
 
     /**
+     * Get the appropriate SoapClient for a given message
+     *
+     * (depends on which WSDL the message is defined in)
+     *
      * @param string $msgName
      * @return \SoapClient
      */
@@ -394,6 +385,8 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     }
 
     /**
+     * Initialize SoapClient for a given WSDL ID
+     *
      * @param string $wsdlId
      * @return \SoapClient
      */
@@ -418,6 +411,8 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     abstract protected function makeSoapClientOptions();
 
     /**
+     * Execute a method on the native SoapClient
+     *
      * @param string $msgName
      * @param string $method
      * @return null|string
