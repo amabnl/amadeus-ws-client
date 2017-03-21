@@ -22,7 +22,6 @@
 
 namespace Amadeus\Client\ResponseHandler\PNR;
 
-use Amadeus\Client\Exception;
 use Amadeus\Client\ResponseHandler\StandardResponseHandler;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
@@ -37,6 +36,8 @@ class HandlerRetrieve extends StandardResponseHandler
 {
     const Q_G_ERR = "//m:generalErrorInfo//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCode";
     const Q_G_MSG = "//m:generalErrorInfo/m:errorWarningDescription/m:freeText";
+    const Q_G_OLD_ERR = "//m:generalErrorInfo//m:messageErrorInformation/m:errorDetail/m:errorCode";
+    const Q_G_OLD_MSG = "//m:generalErrorInfo/m:messageErrorText/m:text";
     const Q_S_ERR = "//m:originDestinationDetails//m:errorInfo/m:errorOrWarningCodeDetails/m:errorDetails/m:errorCode";
     const Q_S_MSG = "//m:originDestinationDetails//m:errorInfo/m:errorWarningDescription/m:freeText";
     const Q_E_ERR = "//m:dataElementsIndiv/m:elementErrorInformation/m:errorOrWarningCodeDetails//m:errorCode";
@@ -62,6 +63,19 @@ class HandlerRetrieve extends StandardResponseHandler
 
             $code = $errorCodeNodeList->item(0)->nodeValue;
             $errorTextNodeList = $domXpath->query(self::Q_G_MSG);
+            $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
+
+            $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'general');
+        }
+
+        //General Errors - PNR_Reply v 14.1 and below:
+        $errorCodeNodeList = $domXpath->query(self::Q_G_OLD_ERR);
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $code = $errorCodeNodeList->item(0)->nodeValue;
+            $errorTextNodeList = $domXpath->query(self::Q_G_OLD_MSG);
             $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
 
             $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'general');

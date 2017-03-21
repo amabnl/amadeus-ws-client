@@ -1499,5 +1499,88 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(1, $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->relatedProduct->quantity);
         $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_NEED_SEGMENT, $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
     }
+
+    public function testCanMakePnrWithMultiPaxElementAssoc()
+    {
+        $createPnrOptions = new PnrAddMultiElementsOptions([
+            'receivedFrom' => 'unittest',
+            'travellers' => [
+                new Traveller([
+                    'number' => 1,
+                    'lastName' => 'Bowie',
+                    'firstName' => 'David'
+                ]),
+                new Traveller([
+                    'number' => 2,
+                    'lastName' => 'Bowie',
+                    'firstName' => 'David2'
+                ])
+            ],
+            'actionCode' => PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE,
+            'itineraries' => [
+                new Itinerary([
+                    'origin' => 'BRU',
+                    'destination' => 'LIS',
+                    'segments' => [
+                        new Air([
+                            'date' => \DateTime::createFromFormat('Y-m-d His', "2008-06-10 000000", new \DateTimeZone('UTC')),
+                            'origin' => 'BRU',
+                            'destination' => 'LIS',
+                            'flightNumber' => '349',
+                            'bookingClass' => 'Y',
+                            'company' => 'TP'
+                        ])
+                    ]
+                ])
+            ],
+            'elements' => [
+                new Ticketing([
+                    'ticketMode' => Ticketing::TICKETMODE_OK
+                ]),
+                new Contact([
+                    'type' => Contact::TYPE_PHONE_GENERAL,
+                    'value' => '+3223456789',
+                    'references' => [
+                        new Reference([
+                            'type' => Reference::TYPE_PASSENGER_REQUEST,
+                            'id' => 1
+                        ]),
+                        new Reference([
+                            'type' => Reference::TYPE_PASSENGER_REQUEST,
+                            'id' => 2
+                        ]),
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new AddMultiElements($createPnrOptions);
+
+        $this->assertCount(3, $msg->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_TICKETING_ELEMENT, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals('OT', $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->qualifier);
+        $this->assertEquals(2, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->number);
+        $this->assertEquals('OK', $msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->indicator);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->date);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->time);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->officeId);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->freetext);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->airlineCode);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->queueCategory);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->queueNumber);
+        $this->assertEmpty($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->sitaAddress);
+        $this->assertEquals(AddMultiElements\TicketElement::PASSTYPE_PAX, $msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->passengerType);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->printOptions);
+
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_CONTACT_ELEMENT, $msg->dataElementsMaster->dataElementsIndiv[1]->elementManagementData->segmentName);
+        $this->assertEquals('OT', $msg->dataElementsMaster->dataElementsIndiv[1]->elementManagementData->reference->qualifier);
+        $this->assertEquals(3, $msg->dataElementsMaster->dataElementsIndiv[1]->elementManagementData->reference->number);
+        $this->assertCount(2, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference);
+        $this->assertEquals(1, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference[0]->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference[0]->qualifier);
+        $this->assertEquals(2, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference[1]->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference[1]->qualifier);
+
+    }
 }
 

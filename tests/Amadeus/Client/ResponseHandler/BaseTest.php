@@ -51,6 +51,22 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('general', $result->messages[0]->level);
     }
 
+    public function testCanHandleIssue50ErrorMessageInPnrReply()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('pnrAddMultiElements14_1_need_received_from.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_AddMultiElements');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertCount(1, $result->messages);
+        $this->assertEquals('8111', $result->messages[0]->code);
+        $this->assertEquals("ERROR AT END OF TRANSACTION TIME - ERROR AT EOT TIME - NEED RECEIVED FROM", $result->messages[0]->text);
+        $this->assertEquals('general', $result->messages[0]->level);
+    }
+
     public function testCanFindTopLevelErrorMessageInPnrReply()
     {
         $respHandler = new ResponseHandler\Base();
