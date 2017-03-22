@@ -1,0 +1,12 @@
+<Ticket_ReissueConfirmedPricingReply xmlns="http://xml.amadeus.com/TARCPR_13_2_1A">
+    <applicationError>
+        <applicationErrorInfo>
+            <applicationErrorCode>CM00477</applicationErrorCode>
+            <codeListQualifier>EC</codeListQualifier>
+        </applicationErrorInfo>
+        <errorText>
+            <freeTextDetails/>
+            <freeText>INVALID FORMAT</freeText>
+        </errorText>
+    </applicationError>
+</Ticket_ReissueConfirmedPricingReply>

@@ -904,6 +904,22 @@ class Client extends Base
     }
 
     /**
+     * Ticket_ReissueConfirmedPricing
+     *
+     * @param RequestOptions\TicketReissueConfirmedPricingOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketReissueConfirmedPricing(
+        RequestOptions\TicketReissueConfirmedPricingOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_ReissueConfirmedPricing';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocIssuance_IssueTicket
      *
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options

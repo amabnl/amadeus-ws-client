@@ -1650,6 +1650,22 @@ Sample: Reprice ticket 999-8550225521
 
 Many repricing options are identical to the pricing options in the ``Fare_PricePNRWithBookingClass`` message.
 
+------------------------------
+Ticket_ReissueConfirmedPricing
+------------------------------
+
+Reissue pricing for e-Ticket 057-2146640300:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketReissueConfirmedPricingOptions;
+
+    $reissueResponse = $client->ticketReissueConfirmedPricing(
+        new TicketReissueConfirmedPricingOptions([
+            'eTickets' => ['0572146640300']
+        ])
+    );
+
 ***********
 DocIssuance
 ***********
