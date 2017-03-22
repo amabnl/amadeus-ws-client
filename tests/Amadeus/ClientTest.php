@@ -336,9 +336,15 @@ class ClientTest extends BaseTestCase
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $options = new Client\RequestOptions\PnrAddMultiElementsOptions();
-        $options->actionCode = 11; //11 End transact with retrieve (ER)
-        $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($options);
+        $options = new Client\RequestOptions\PnrAddMultiElementsOptions([
+            'actionCode' => Client\RequestOptions\PnrAddMultiElementsOptions::ACTION_END_TRANSACT_RETRIEVE,
+        ]);
+
+        /** @var Client\RequestOptions\PnrAddMultiElementsOptions $expectedResultOpt */
+        $expectedResultOpt = clone $options;
+        $expectedResultOpt->receivedFrom = 'some RF string '.Client::RECEIVED_FROM_IDENTIFIER.'-'.Client::VERSION;
+
+        $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($expectedResultOpt);
 
         $mockSessionHandler
             ->expects($this->once())
