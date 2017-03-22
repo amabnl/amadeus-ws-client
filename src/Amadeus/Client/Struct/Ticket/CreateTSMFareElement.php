@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Ticket;
 
 use Amadeus\Client\RequestOptions\TicketCreateTsmFareElOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\Ticket\CreateTSMFareElement\FareElementInfo;
 use Amadeus\Client\Struct\Ticket\DisplayTSMFareElement\FareElementTattoo;
 
 /**

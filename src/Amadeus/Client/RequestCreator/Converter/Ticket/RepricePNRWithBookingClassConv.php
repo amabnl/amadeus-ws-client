@@ -20,28 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\RequestCreator\Converter\Ticket;
+
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\TicketRepricePnrWithBookingClassOptions;
+use Amadeus\Client\Struct;
 
 /**
- * FareElementInfo
+ * Ticket_RepricePNRWithBookingClass Request converter
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\RequestCreator\Converter\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FareElementInfo
+class RepricePNRWithBookingClassConv extends BaseConverter
 {
     /**
-     * @var string
+     * @param TicketRepricePnrWithBookingClassOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\Ticket\RepricePnrWithBookingClass
      */
-    public $text;
-
-    /**
-     * FareElementInfo constructor.
-     *
-     * @param string $text
-     */
-    public function __construct($text)
+    public function convert($requestOptions, $version)
     {
-        $this->text = $text;
+        return new Struct\Ticket\RepricePnrWithBookingClass($requestOptions);
     }
 }

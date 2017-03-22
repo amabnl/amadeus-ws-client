@@ -2042,6 +2042,131 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoTicketRepricePNRWithBookingClass()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketRepricePNRWithBookingClassMessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\RepricePnrWithBookingClass(
+            new Client\RequestOptions\TicketRepricePnrWithBookingClassOptions([
+                'exchangeInfo' => [
+                    new Client\RequestOptions\Ticket\ExchangeInfoOptions([
+                        'number' => 1,
+                        'eTickets' => [
+                            '9998550225521'
+                        ]
+                    ])
+                ],
+                'multiReferences' => [
+                    new Client\RequestOptions\Ticket\MultiRefOpt([
+                        'references' => [
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 3,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT
+                            ]),
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 4,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT
+                            ])
+                        ]
+                    ]),
+                    new Client\RequestOptions\Ticket\MultiRefOpt([
+                        'references' => [
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 1,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_PASSENGER_ADULT
+                            ]),
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 1,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SERVICE
+                            ])
+                        ]
+                    ]),
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with(
+                'Ticket_RepricePNRWithBookingClass',
+                $expectedMessageResult,
+                ['endSession' => false, 'returnXml' => true]
+            )
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_RepricePNRWithBookingClass' => "14.3"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_RepricePNRWithBookingClass')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketRepricePnrWithBookingClass(
+            new Client\RequestOptions\TicketRepricePnrWithBookingClassOptions([
+                'exchangeInfo' => [
+                    new Client\RequestOptions\Ticket\ExchangeInfoOptions([
+                        'number' => 1,
+                        'eTickets' => [
+                            '9998550225521'
+                        ]
+                    ])
+                ],
+                'multiReferences' => [
+                    new Client\RequestOptions\Ticket\MultiRefOpt([
+                        'references' => [
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 3,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT
+                            ]),
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 4,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT
+                            ])
+                        ]
+                    ]),
+                    new Client\RequestOptions\Ticket\MultiRefOpt([
+                        'references' => [
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 1,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_PASSENGER_ADULT
+                            ]),
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 1,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SERVICE
+                            ])
+                        ]
+                    ]),
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoOfferConfirmAirOffer()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

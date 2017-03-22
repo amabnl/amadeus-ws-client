@@ -20,42 +20,36 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\RequestOptions\Ticket;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * PsaList
+ * ExchangeInfoOptions
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\RequestOptions\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PsaList
+class ExchangeInfoOptions extends LoadParamsFromArray
 {
     /**
-     * Reference of the fare selected.
+     * Item number or item numbers
      *
-     * A fare may have been calculated by Fare Quote for several passengers
-     * but there is still the possibility to create a TST only for a part of these passengers.
-     *
-     * @var ItemReference
+     * @var int|int[]
      */
-    public $itemReference;
+    public $number;
 
     /**
-     * Reference information on passengers.
+     * List of electronic tickets to reprice
      *
-     * @var PaxReference
+     * @var string[]
      */
-    public $paxReference;
+    public $eTickets = [];
 
     /**
-     * PsaList constructor.
+     * List of paper tickets to reprice
      *
-     * @param int $itemRef
-     * @param string $itemRefType
-     * @param int|null $sequenceNr
+     * @var string[]
      */
-    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST, $sequenceNr = null)
-    {
-        $this->itemReference = new ItemReference($itemRef, $itemRefType, $sequenceNr);
-    }
+    public $paperTickets = [];
 }

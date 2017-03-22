@@ -20,31 +20,26 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\ResponseHandler\Ticket;
+
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * PaxReference
+ * HandlerRepricePNRWithBookingClass
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\ResponseHandler\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PaxReference
+class HandlerRepricePNRWithBookingClass extends StandardResponseHandler
 {
     /**
-     * @var RefDetails[]
+     * @param SendResult $response
+     * @return Result
      */
-    public $refDetails = [];
-
-    /**
-     * PaxReference constructor.
-     *
-     * @param int|null $segNum
-     * @param string|null $segQual RefDetails::QUAL_*
-     */
-    public function __construct($segNum = null, $segQual = null)
+    public function analyze(SendResult $response)
     {
-        if (!is_null($segNum) && !is_null($segQual)) {
-            $this->refDetails[] = new RefDetails($segNum, $segQual);
-        }
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
     }
 }

@@ -24,6 +24,8 @@ namespace Amadeus\Client\Struct\Ticket;
 
 use Amadeus\Client\RequestOptions\TicketDeleteTsmpOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\Ticket\DeleteTSMP\CriteriaTattoo;
+use Amadeus\Client\Struct\Ticket\DeleteTSMP\ReferenceDetails;
 
 /**
  * DeleteTSMP

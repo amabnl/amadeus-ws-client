@@ -20,31 +20,22 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\RequestOptions\Fare\PricePnr;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * PaxReference
+ * TierLevel
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\RequestOptions\Fare\PricePnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PaxReference
+class TierLevel extends LoadParamsFromArray
 {
     /**
-     * @var RefDetails[]
-     */
-    public $refDetails = [];
-
-    /**
-     * PaxReference constructor.
+     * Tier Level
      *
-     * @param int|null $segNum
-     * @param string|null $segQual RefDetails::QUAL_*
+     * @var string
      */
-    public function __construct($segNum = null, $segQual = null)
-    {
-        if (!is_null($segNum) && !is_null($segQual)) {
-            $this->refDetails[] = new RefDetails($segNum, $segQual);
-        }
-    }
+    public $tierLevel;
 }

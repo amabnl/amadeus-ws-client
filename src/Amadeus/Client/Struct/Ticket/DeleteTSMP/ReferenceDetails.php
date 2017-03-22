@@ -20,42 +20,41 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\Struct\Ticket\DeleteTSMP;
 
 /**
- * PsaList
+ * ReferenceDetails
  *
  * @package Amadeus\Client\Struct\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PsaList
+class ReferenceDetails
 {
-    /**
-     * Reference of the fare selected.
-     *
-     * A fare may have been calculated by Fare Quote for several passengers
-     * but there is still the possibility to create a TST only for a part of these passengers.
-     *
-     * @var ItemReference
-     */
-    public $itemReference;
+    const TYPE_INFANT_PARENT_TATTOO = "INF";
+    const TYPE_PASSENGER_TATTOO = "PAX";
+    const TYPE_TSM_TATTOO = "TSM";
 
     /**
-     * Reference information on passengers.
+     * self::TYPE_*
      *
-     * @var PaxReference
+     * @var string
      */
-    public $paxReference;
+    public $type;
 
     /**
-     * PsaList constructor.
-     *
-     * @param int $itemRef
-     * @param string $itemRefType
-     * @param int|null $sequenceNr
+     * @var string|int
      */
-    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST, $sequenceNr = null)
+    public $value;
+
+    /**
+     * ReferenceDetails constructor.
+     *
+     * @param string $type
+     * @param int|string $value
+     */
+    public function __construct($type, $value)
     {
-        $this->itemReference = new ItemReference($itemRef, $itemRefType, $sequenceNr);
+        $this->type = $type;
+        $this->value = $value;
     }
 }

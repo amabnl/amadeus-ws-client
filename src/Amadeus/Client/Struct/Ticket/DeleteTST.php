@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Ticket;
 
 use Amadeus\Client\RequestOptions\TicketDeleteTstOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\Ticket\DeleteTST\DeleteMode;
 
 /**
  * Ticket_DeleteTST

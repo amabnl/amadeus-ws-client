@@ -1,0 +1,20 @@
+<Ticket_RepricePNRWithBookingClassReply xmlns="http://xml.amadeus.com/TARIPR_14_3_1A">
+    <errorMessage>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>4845</errorCode>
+                <errorCategory>EC</errorCategory>
+                <errorCodeOwner>1A</errorCodeOwner>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <source>M</source>
+                <encoding>ZZZ</encoding>
+            </freeTextDetails>
+            <freeText>INVALID PASSENGER SELECTION : ERROR FROM VALIDATION</freeText>
+        </errorWarningDescription>
+    </errorMessage>
+    <docSeparator></docSeparator>
+</Ticket_RepricePNRWithBookingClassReply>

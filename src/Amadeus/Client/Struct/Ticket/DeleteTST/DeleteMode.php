@@ -20,28 +20,30 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\Struct\Ticket\DeleteTST;
+
+use Amadeus\Client\Struct\Ticket\AttributeDetails;
 
 /**
- * TattooOfTSM
+ * DeleteMode
  *
  * @package Amadeus\Client\Struct\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TattooOfTSM
+class DeleteMode
 {
     /**
-     * @var string|int
+     * @var AttributeDetails
      */
-    public $uniqueReference;
+    public $attributeDetails;
 
     /**
-     * TattooOfTSM constructor.
+     * DeleteMode constructor.
      *
-     * @param int|string $uniqueReference
+     * @param string $deleteMode
      */
-    public function __construct($uniqueReference)
+    public function __construct($deleteMode)
     {
-        $this->uniqueReference = $uniqueReference;
+        $this->attributeDetails = new AttributeDetails($deleteMode);
     }
 }

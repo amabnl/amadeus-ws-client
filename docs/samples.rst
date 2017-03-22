@@ -1595,6 +1595,60 @@ Basic Search With Mandatory Elements:
         ])
     );
 
+---------------------------------
+Ticket_RepricePNRWithBookingClass
+---------------------------------
+
+Sample: Reprice ticket 999-8550225521
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketRepricePnrWithBookingClassOptions;
+    use Amadeus\Client\RequestOptions\Ticket\ExchangeInfoOptions;
+    use Amadeus\Client\RequestOptions\Ticket\MultiRefOpt;
+    use Amadeus\Client\RequestOptions\Ticket\PaxSegRef;
+
+
+    $repriceResp = $client->ticketRepricePnrWithBookingClass(
+        new TicketRepricePnrWithBookingClassOptions([
+            'exchangeInfo' => [
+                new ExchangeInfoOptions([
+                'number' => 1,
+                'eTickets' => [
+                    '9998550225521'
+                    ]
+                ])
+            ],
+            'multiReferences' => [
+                new MultiRefOpt([
+                    'references' => [
+                        new PaxSegRef([
+                            'reference' => 3,
+                            'type' => PaxSegRef::TYPE_SEGMENT
+                        ]),
+                        new PaxSegRef([
+                            'reference' => 4,
+                            'type' => PaxSegRef::TYPE_SEGMENT
+                        ])
+                    ]
+                ]),
+                new MultiRefOpt([
+                    'references' => [
+                        new PaxSegRef([
+                            'reference' => 1,
+                            'type' => PaxSegRef::TYPE_PASSENGER_ADULT
+                        ]),
+                        new PaxSegRef([
+                            'reference' => 1,
+                            'type' => PaxSegRef::TYPE_SERVICE
+                        ])
+                    ]
+                ]),
+            ]
+        ])
+    );
+
+Many repricing options are identical to the pricing options in the ``Fare_PricePNRWithBookingClass`` message.
 
 ***********
 DocIssuance

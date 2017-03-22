@@ -20,28 +20,23 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass;
 
 /**
- * DisplayMode
+ * PapercouponInfoLast
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DisplayMode
+class PapercouponInfoLast
 {
     /**
-     * @var AttributeDetails
+     * @var CouponDetails
      */
-    public $attributeDetails;
+    public $couponDetails;
 
     /**
-     * DisplayMode constructor.
-     *
-     * @param string $displayMode
+     * @var CouponDetails[]
      */
-    public function __construct($displayMode)
-    {
-        $this->attributeDetails = new AttributeDetails($displayMode);
-    }
+    public $otherCouponDetails = [];
 }

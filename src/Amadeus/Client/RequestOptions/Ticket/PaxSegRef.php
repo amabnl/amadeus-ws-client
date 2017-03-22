@@ -20,18 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\RequestOptions\Ticket;
 
 /**
- * PsaInformation
+ * PaxSegRef
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\RequestOptions\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PsaInformation
+class PaxSegRef extends \Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef
 {
-    /**
-     * @var RefDetails[]
-     */
-    public $refDetails = [];
 }

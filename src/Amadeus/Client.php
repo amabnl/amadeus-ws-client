@@ -888,6 +888,22 @@ class Client extends Base
     }
 
     /**
+     * Ticket_RepricePNRWithBookingClass
+     *
+     * @param RequestOptions\TicketRepricePnrWithBookingClassOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketRepricePnrWithBookingClass(
+        RequestOptions\TicketRepricePnrWithBookingClassOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_RepricePNRWithBookingClass';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocIssuance_IssueTicket
      *
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options

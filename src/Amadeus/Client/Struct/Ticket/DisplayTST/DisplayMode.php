@@ -20,42 +20,30 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\Struct\Ticket\DisplayTST;
+
+use Amadeus\Client\Struct\Ticket\AttributeDetails;
 
 /**
- * PsaList
+ * DisplayMode
  *
  * @package Amadeus\Client\Struct\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PsaList
+class DisplayMode
 {
     /**
-     * Reference of the fare selected.
-     *
-     * A fare may have been calculated by Fare Quote for several passengers
-     * but there is still the possibility to create a TST only for a part of these passengers.
-     *
-     * @var ItemReference
+     * @var AttributeDetails
      */
-    public $itemReference;
+    public $attributeDetails;
 
     /**
-     * Reference information on passengers.
+     * DisplayMode constructor.
      *
-     * @var PaxReference
+     * @param string $displayMode
      */
-    public $paxReference;
-
-    /**
-     * PsaList constructor.
-     *
-     * @param int $itemRef
-     * @param string $itemRefType
-     * @param int|null $sequenceNr
-     */
-    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST, $sequenceNr = null)
+    public function __construct($displayMode)
     {
-        $this->itemReference = new ItemReference($itemRef, $itemRefType, $sequenceNr);
+        $this->attributeDetails = new AttributeDetails($displayMode);
     }
 }

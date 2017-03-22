@@ -20,41 +20,39 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\Struct\Ticket\DisplayTST;
 
 /**
- * ReferenceDetails
+ * NextListInformation
  *
  * @package Amadeus\Client\Struct\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ReferenceDetails
+class NextListInformation
 {
-    const TYPE_INFANT_PARENT_TATTOO = "INF";
-    const TYPE_PASSENGER_TATTOO = "PAX";
-    const TYPE_TSM_TATTOO = "TSM";
-
     /**
-     * self::TYPE_*
+     * Number indicating the position in a sequence.
      *
-     * @var string
+     * @var int
      */
-    public $type;
+    public $remainingInformation;
 
     /**
-     * @var string|int
-     */
-    public $value;
-
-    /**
-     * ReferenceDetails constructor.
+     * Identification number.
      *
-     * @param string $type
-     * @param int|string $value
+     * @var int
      */
-    public function __construct($type, $value)
+    public $remainingReference;
+
+    /**
+     * NextListInformation constructor.
+     *
+     * @param int $amount
+     * @param int $start
+     */
+    public function __construct($amount, $start)
     {
-        $this->type = $type;
-        $this->value = $value;
+        $this->remainingInformation = $amount;
+        $this->remainingReference = $start;
     }
 }

@@ -20,29 +20,40 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass;
 
 /**
- * ScrollingInformation
+ * DocumentDetails
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ScrollingInformation
+class DocumentDetails
 {
-    /**
-     * @var NextListInformation
-     */
-    public $nextListInformation;
+    const TYPE_PAPER_TICKET = "PT";
+    const TYPE_ELECTRONIC_TICKET = "ET";
 
     /**
-     * ScrollingInformation constructor.
-     *
-     * @param int $amount
-     * @param int $start
+     * @var int|string
      */
-    public function __construct($amount, $start)
+    public $number;
+
+    /**
+     * self::TYPE_*
+     *
+     * @var string
+     */
+    public $type;
+
+    /**
+     * DocumentDetails constructor.
+     *
+     * @param int|string $number
+     * @param string $type
+     */
+    public function __construct($number, $type)
     {
-        $this->nextListInformation = new NextListInformation($amount, $start);
+        $this->number = $number;
+        $this->type = $type;
     }
 }

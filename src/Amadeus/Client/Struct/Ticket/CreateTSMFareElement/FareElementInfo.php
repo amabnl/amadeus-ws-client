@@ -20,28 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\Struct\Ticket\CreateTSMFareElement;
 
 /**
- * DeleteMode
+ * FareElementInfo
  *
  * @package Amadeus\Client\Struct\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DeleteMode
+class FareElementInfo
 {
     /**
-     * @var AttributeDetails
+     * @var string
      */
-    public $attributeDetails;
+    public $text;
 
     /**
-     * DeleteMode constructor.
+     * FareElementInfo constructor.
      *
-     * @param string $deleteMode
+     * @param string $text
      */
-    public function __construct($deleteMode)
+    public function __construct($text)
     {
-        $this->attributeDetails = new AttributeDetails($deleteMode);
+        $this->text = $text;
     }
 }

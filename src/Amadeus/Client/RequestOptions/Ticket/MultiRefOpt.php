@@ -20,31 +20,20 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\RequestOptions\Ticket;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * PaxReference
+ * Multiple pax/seg/tst/... references
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\RequestOptions\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PaxReference
+class MultiRefOpt extends LoadParamsFromArray
 {
     /**
-     * @var RefDetails[]
+     * @var PaxSegRef[]
      */
-    public $refDetails = [];
-
-    /**
-     * PaxReference constructor.
-     *
-     * @param int|null $segNum
-     * @param string|null $segQual RefDetails::QUAL_*
-     */
-    public function __construct($segNum = null, $segQual = null)
-    {
-        if (!is_null($segNum) && !is_null($segQual)) {
-            $this->refDetails[] = new RefDetails($segNum, $segQual);
-        }
-    }
+    public $references = [];
 }

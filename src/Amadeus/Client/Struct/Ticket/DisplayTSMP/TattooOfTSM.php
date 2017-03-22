@@ -20,29 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\Struct\Ticket\DisplayTSMP;
 
 /**
- * CriteriaTattoo
+ * TattooOfTSM
  *
  * @package Amadeus\Client\Struct\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CriteriaTattoo
+class TattooOfTSM
 {
     /**
-     * @var ReferenceDetails
+     * @var string|int
      */
-    public $referenceDetails;
+    public $uniqueReference;
 
     /**
-     * CriteriaTattoo constructor.
+     * TattooOfTSM constructor.
      *
-     * @param string $type ReferenceDetails::TYPE_*
-     * @param string|int $value the tattoo
+     * @param int|string $uniqueReference
      */
-    public function __construct($type, $value)
+    public function __construct($uniqueReference)
     {
-        $this->referenceDetails = new ReferenceDetails($type, $value);
+        $this->uniqueReference = $uniqueReference;
     }
 }

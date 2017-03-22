@@ -22,15 +22,13 @@
 
 namespace Amadeus\Client\RequestOptions\Fare\PricePnr;
 
-use Amadeus\Client\LoadParamsFromArray;
-
 /**
  * AwardPricing
  *
  * @package Amadeus\Client\RequestOptions\Fare\PricePnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class AwardPricing extends LoadParamsFromArray
+class AwardPricing extends TierLevel
 {
     /**
      * Airline code
@@ -38,11 +36,4 @@ class AwardPricing extends LoadParamsFromArray
      * @var string
      */
     public $carrier;
-
-    /**
-     * Tier Level
-     *
-     * @var string
-     */
-    public $tierLevel;
 }

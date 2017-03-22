@@ -20,39 +20,18 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass;
 
 /**
- * NextListInformation
+ * CouponDetails
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class NextListInformation
+class CouponDetails
 {
     /**
-     * Number indicating the position in a sequence.
-     *
-     * @var int
+     * @var string
      */
-    public $remainingInformation;
-
-    /**
-     * Identification number.
-     *
-     * @var int
-     */
-    public $remainingReference;
-
-    /**
-     * NextListInformation constructor.
-     *
-     * @param int $amount
-     * @param int $start
-     */
-    public function __construct($amount, $start)
-    {
-        $this->remainingInformation = $amount;
-        $this->remainingReference = $start;
-    }
+    public $cpnNumber;
 }

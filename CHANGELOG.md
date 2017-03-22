@@ -5,6 +5,7 @@
 * Added ``getLastRequestHeaders()`` and ``getLastResponseHeaders()`` methods (https://github.com/amabnl/amadeus-ws-client/issues/47)
 * Implemented ``Ticket_CheckEligibility`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
 * Implemented ``Ticket_ATCShopperMasterPricerTravelBoardSearch`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+* Implemented ``Ticket_RepricePNRWithBookingClass`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
 * Implemented ``Ticket_CreateTSMFareElement`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
 * Refactored ``Amadeus\Client\Session\Handler\Base`` to make it more readable.
 * Refactored all parameter loading out of ``Amadeus\Client``.

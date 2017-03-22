@@ -20,42 +20,29 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket;
+namespace Amadeus\Client\RequestOptions\Ticket;
+
+use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 
 /**
- * PsaList
+ * FrequentFlyer
  *
- * @package Amadeus\Client\Struct\Ticket
+ * @package Amadeus\Client\RequestOptions\Ticket
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class PsaList
+class FrequentFlyer extends AwardPricing
 {
     /**
-     * Reference of the fare selected.
+     * Frequent Flyer Number
      *
-     * A fare may have been calculated by Fare Quote for several passengers
-     * but there is still the possibility to create a TST only for a part of these passengers.
-     *
-     * @var ItemReference
+     * @var string
      */
-    public $itemReference;
+    public $number;
 
     /**
-     * Reference information on passengers.
+     * Priority Code
      *
-     * @var PaxReference
+     * @var string
      */
-    public $paxReference;
-
-    /**
-     * PsaList constructor.
-     *
-     * @param int $itemRef
-     * @param string $itemRefType
-     * @param int|null $sequenceNr
-     */
-    public function __construct($itemRef, $itemRefType = ItemReference::REFTYPE_TST, $sequenceNr = null)
-    {
-        $this->itemReference = new ItemReference($itemRef, $itemRefType, $sequenceNr);
-    }
+    public $priorityCode;
 }
