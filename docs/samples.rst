@@ -1309,7 +1309,7 @@ Create a TSM from a Pricing previously made by a ``Service_IntegratedPricing`` c
     use Amadeus\Client\RequestOptions\Ticket\Pricing;
     use Amadeus\Client\RequestOptions\Ticket\PassengerReference;
 
-    $createTstResponse = $client->ticketCreateTSMFromPricing(
+    $createTsmResponse = $client->ticketCreateTSMFromPricing(
         new TicketCreateTsmFromPricingOptions([
             'pricings' => [
                 new Pricing([
@@ -1322,6 +1322,41 @@ Create a TSM from a Pricing previously made by a ``Service_IntegratedPricing`` c
                     'type' => PassengerReference::TYPE_PASSENGER
                 ])
             ]
+        ])
+    );
+
+---------------------------
+Ticket_CreateTSMFareElement
+---------------------------
+
+Delete the form of payment from the TSM of tattoo 18:
+
+*In order to delete a fare element, enter '##### ' as info*
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCreateTsmFareElOptions;
+
+    $createTsmResponse = $client->ticketCreateTSMFareElement(
+        new TicketCreateTsmFareElOptions([
+            'type' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+            'tattoo' => 18,
+            'info' => '#####'
+        ])
+    );
+
+
+Set the form of payment Check to the TSM of tattoo 18:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCreateTsmFareElOptions;
+
+    $createTsmResponse = $client->ticketCreateTSMFareElement(
+        new TicketCreateTsmFareElOptions([
+            'type' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+            'tattoo' => 18,
+            'info' => 'CHECK/EUR304.89'
         ])
     );
 
@@ -1453,6 +1488,181 @@ Get details of the form of payment associated to TSM of tattoo 18:
         new TicketDisplayTsmFareElOptions([
             'tattoo' => 18,
             'type' => TicketDisplayTsmFareElOptions::TYPE_FORM_OF_PAYMENT
+        ])
+    );
+
+
+-----------------------
+Ticket_CheckEligibility
+-----------------------
+
+Ticket eligibility request for one Adult passenger with ticket number 172-23000000004. The ticket was originally priced with Public Fare.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCheckEligibilityOptions;
+    use Amadeus\Client\RequestOptions\MPPassenger;
+
+    $response = $client->ticketCheckEligibility(
+        new TicketCheckEligibilityOptions([
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'flightOptions' => [
+                TicketCheckEligibilityOptions::FLIGHTOPT_PUBLISHED,
+            ],
+            'ticketNumbers' => [
+                '1722300000004'
+            ]
+        ])
+    );
+
+----------------------------------------------
+Ticket_ATCShopperMasterPricerTravelBoardSearch
+----------------------------------------------
+
+Basic Search With Mandatory Elements:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketAtcShopperMpTbSearchOptions;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Ticket\ReqSegOptions;
+
+    $response = $client->ticketAtcShopperMasterPricerTravelBoardSearch(
+        new TicketAtcShopperMpTbSearchOptions([
+            'nrOfRequestedPassengers' => 2,
+            'nrOfRequestedResults' => 2,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ]),
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_CHILD,
+                    'count' => 1
+                ])
+            ],
+            'flightOptions' => [
+                TicketAtcShopperMpTbSearchOptions::FLIGHTOPT_PUBLISHED,
+                TicketAtcShopperMpTbSearchOptions::FLIGHTOPT_UNIFARES
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'segmentReference' => 1,
+                    'departureLocation' => new MPLocation(['city' => 'MAD']),
+                    'arrivalLocation' => new MPLocation(['city' => 'LHR']),
+                    'date' => new MPDate([
+                        'date' => new \DateTime('2013-08-12T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ]),
+                new MPItinerary([
+                    'segmentReference' => 2,
+                    'departureLocation' => new MPLocation(['city' => 'LHR']),
+                    'arrivalLocation' => new MPLocation(['city' => 'MAD']),
+                    'date' => new MPDate([
+                        'date' => new \DateTime('2013-12-12T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'ticketNumbers' => [
+                '0572187777498',
+                '0572187777499'
+            ],
+            'requestedSegments' => [
+                new ReqSegOptions([
+                    'requestCode' => ReqSegOptions::REQUEST_CODE_KEEP_FLIGHTS_AND_FARES,
+                    'connectionLocations' => [
+                        'MAD',
+                        'LHR'
+                    ]
+                ]),
+                new ReqSegOptions([
+                    'requestCode' => ReqSegOptions::REQUEST_CODE_CHANGE_REQUESTED_SEGMENT,
+                    'connectionLocations' => [
+                        'LHR',
+                        'MAD'
+                    ]
+                ])
+            ]
+        ])
+    );
+
+---------------------------------
+Ticket_RepricePNRWithBookingClass
+---------------------------------
+
+Sample: Reprice ticket 999-8550225521
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketRepricePnrWithBookingClassOptions;
+    use Amadeus\Client\RequestOptions\Ticket\ExchangeInfoOptions;
+    use Amadeus\Client\RequestOptions\Ticket\MultiRefOpt;
+    use Amadeus\Client\RequestOptions\Ticket\PaxSegRef;
+
+
+    $repriceResp = $client->ticketRepricePnrWithBookingClass(
+        new TicketRepricePnrWithBookingClassOptions([
+            'exchangeInfo' => [
+                new ExchangeInfoOptions([
+                'number' => 1,
+                'eTickets' => [
+                    '9998550225521'
+                    ]
+                ])
+            ],
+            'multiReferences' => [
+                new MultiRefOpt([
+                    'references' => [
+                        new PaxSegRef([
+                            'reference' => 3,
+                            'type' => PaxSegRef::TYPE_SEGMENT
+                        ]),
+                        new PaxSegRef([
+                            'reference' => 4,
+                            'type' => PaxSegRef::TYPE_SEGMENT
+                        ])
+                    ]
+                ]),
+                new MultiRefOpt([
+                    'references' => [
+                        new PaxSegRef([
+                            'reference' => 1,
+                            'type' => PaxSegRef::TYPE_PASSENGER_ADULT
+                        ]),
+                        new PaxSegRef([
+                            'reference' => 1,
+                            'type' => PaxSegRef::TYPE_SERVICE
+                        ])
+                    ]
+                ]),
+            ]
+        ])
+    );
+
+Many repricing options are identical to the pricing options in the ``Fare_PricePNRWithBookingClass`` message.
+
+------------------------------
+Ticket_ReissueConfirmedPricing
+------------------------------
+
+Reissue pricing for e-Ticket 057-2146640300:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketReissueConfirmedPricingOptions;
+
+    $reissueResponse = $client->ticketReissueConfirmedPricing(
+        new TicketReissueConfirmedPricingOptions([
+            'eTickets' => ['0572146640300']
         ])
     );
 
@@ -1771,6 +1981,16 @@ Hotel_Sell
 ----------
 
 *coming soon*
+
+***
+FOP
+***
+
+-----------------------
+FOP_CreateFormOfPayment
+-----------------------
+
+`See the examples for FOP_CreateFormOfPayment messages <samples/fop-createfop.rst>`_
 
 ****
 Info

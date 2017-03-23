@@ -48,7 +48,19 @@ class StatusDetails
     const IND_TIMESTAMPINHIB = "TX";
 
     /**
+     * self::IND_*
+     *
      * @var string
      */
     public $indicator;
+
+    /**
+     * StatusDetails constructor.
+     *
+     * @param string $indicator
+     */
+    public function __construct($indicator)
+    {
+        $this->indicator = $indicator;
+    }
 }

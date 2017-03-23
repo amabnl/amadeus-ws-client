@@ -1,0 +1,20 @@
+<Ticket_ATCShopperMasterPricerTravelBoardSearchReply xmlns="http://xml.amadeus.com/FMTCTR_13_1_1A">
+    <replyStatus>
+        <status>
+            <notification>CXR</notification>
+        </status>
+    </replyStatus>
+    <errorMessage>
+        <applicationError>
+            <applicationErrorDetail>
+                <error>866</error>
+            </applicationErrorDetail>
+        </applicationError>
+        <errorMessageText>
+            <freeTextQualification>
+                <textSubjectQualifier>1</textSubjectQualifier>
+            </freeTextQualification>
+            <description>NO FARE FOUND FOR REQUESTED ITINERARY</description>
+        </errorMessageText>
+    </errorMessage>
+</Ticket_ATCShopperMasterPricerTravelBoardSearchReply>

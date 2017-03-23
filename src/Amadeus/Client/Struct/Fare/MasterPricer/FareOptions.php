@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
+use Amadeus\Client\RequestOptions\Fare\MPFeeId;
+
 /**
  * FareOptions
  *
@@ -62,9 +64,17 @@ class FareOptions
      * @param array $corpCodesUniFares list of Corporate codes for Corporate Unifares
      * @param bool $tickPreCheck Do Ticketability pre-check?
      * @param string|null $currency Override Currency conversion
+     * @param MPFeeId[]|null $feeIds List of FeeIds
+     * @param string|null Corporate qualifier for Corporate Unifares
      */
-    public function __construct(array $flightOptions, array $corpCodesUniFares, $tickPreCheck, $currency)
-    {
+    public function __construct(
+        array $flightOptions,
+        array $corpCodesUniFares,
+        $tickPreCheck,
+        $currency,
+        $feeIds,
+        $corporateQualifier
+    ) {
         if ($tickPreCheck === true) {
             $this->addPriceType(PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK);
         }
@@ -74,11 +84,29 @@ class FareOptions
 
             if ($flightOption === PricingTicketing::PRICETYPE_CORPORATE_UNIFARES) {
                 $this->corporate = new Corporate();
-                $this->corporate->corporateId[] = new CorporateId($corpCodesUniFares);
+                $this->corporate->corporateId[] = new CorporateId($corpCodesUniFares, $corporateQualifier);
             }
         }
 
         $this->loadCurrencyOverride($currency);
+        if (!is_null($feeIds)) {
+            $this->loadFeeIds($feeIds);
+        }
+    }
+
+    /**
+     * Set fee ids if needed
+     *
+     * @param MPFeeId[] $feeIds
+     */
+    protected function loadFeeIds($feeIds)
+    {
+        if (is_null($this->feeIdDescription)) {
+            $this->feeIdDescription = new FeeIdDescription();
+        }
+        foreach ($feeIds as $feeId) {
+            $this->feeIdDescription->feeId[] = new FeeId($feeId->type, $feeId->number);
+        }
     }
 
     /**

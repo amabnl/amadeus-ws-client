@@ -57,6 +57,8 @@ class ParamsTest extends BaseTestCase
 
         $params = new Params($theParamArray);
 
+        $this->assertNull($params->authParams);
+
         $this->assertNull($params->requestCreator);
         $this->assertNull($params->sessionHandler);
 
@@ -78,6 +80,65 @@ class ParamsTest extends BaseTestCase
         //Defaults:
         $this->assertEquals('SU', $params->sessionHandlerParams->authParams->dutyCode);
         $this->assertNull($params->sessionHandlerParams->authParams->nonceBase);
+
+        $this->assertInstanceOf('Amadeus\Client\Params\RequestCreatorParams', $params->requestCreatorParams);
+        $this->assertEquals('BRUXXXXXX', $params->requestCreatorParams->originatorOfficeId);
+        $this->assertEquals('some RF string', $params->requestCreatorParams->receivedFrom);
+    }
+
+    /**
+     * Auth params New location
+     */
+    public function testCanMakeParamsFromArraySupportForAuthParamsSoapHeader2()
+    {
+        $theParamArray = [
+            'authParams' => [
+                'officeId' => 'BRUXXXXXX',
+                'originatorTypeCode' => 'U',
+                'userId' => 'WSXXXXXX',
+                'organizationId' => 'NMC-XXXXXX',
+                'passwordLength' => '4',
+                'passwordData' => base64_encode('TEST')
+            ],
+            'sessionHandlerParams' => [
+                'wsdl' => '/var/fake/file/path',
+                'stateful' => true,
+                'logger' => new NullLogger(),
+
+            ],
+            'requestCreatorParams' => [
+                'originatorOfficeId' => 'BRUXXXXXX',
+                'receivedFrom' => 'some RF string'
+            ]
+        ];
+
+        $params = new Params($theParamArray);
+
+        $this->assertNull($params->requestCreator);
+        $this->assertNull($params->sessionHandler);
+
+        $this->assertInstanceOf('Amadeus\Client\Params\SessionHandlerParams', $params->sessionHandlerParams);
+        $this->assertTrue($params->sessionHandlerParams->stateful);
+        $this->assertInstanceOf('Psr\Log\LoggerInterface', $params->sessionHandlerParams->logger);
+        $this->assertInternalType('array', $params->sessionHandlerParams->wsdl);
+        $this->assertCount(1, $params->sessionHandlerParams->wsdl);
+        $this->assertEquals('/var/fake/file/path', $params->sessionHandlerParams->wsdl[0]);
+
+        //No Auth params on sessionhandlerparams level:
+        $this->assertNull($params->sessionHandlerParams->authParams);
+
+        //Auth Params on highest level:
+        $this->assertInstanceOf('Amadeus\Client\Params\AuthParams', $params->authParams);
+        $this->assertEquals('BRUXXXXXX', $params->authParams->officeId);
+        $this->assertEquals('NMC-XXXXXX', $params->authParams->organizationId);
+        $this->assertEquals('WSXXXXXX', $params->authParams->userId);
+        $this->assertEquals('U', $params->authParams->originatorTypeCode);
+        $this->assertEquals(base64_encode('TEST'), $params->authParams->passwordData);
+        $this->assertEquals(4, $params->authParams->passwordLength);
+
+        //Defaults:
+        $this->assertEquals('SU', $params->authParams->dutyCode);
+        $this->assertNull($params->authParams->nonceBase);
 
         $this->assertInstanceOf('Amadeus\Client\Params\RequestCreatorParams', $params->requestCreatorParams);
         $this->assertEquals('BRUXXXXXX', $params->requestCreatorParams->originatorOfficeId);

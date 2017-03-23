@@ -51,6 +51,22 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('general', $result->messages[0]->level);
     }
 
+    public function testCanHandleIssue50ErrorMessageInPnrReply()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('pnrAddMultiElements14_1_need_received_from.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_AddMultiElements');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertCount(1, $result->messages);
+        $this->assertEquals('8111', $result->messages[0]->code);
+        $this->assertEquals("ERROR AT END OF TRANSACTION TIME - ERROR AT EOT TIME - NEED RECEIVED FROM", $result->messages[0]->text);
+        $this->assertEquals('general', $result->messages[0]->level);
+    }
+
     public function testCanFindTopLevelErrorMessageInPnrReply()
     {
         $respHandler = new ResponseHandler\Base();
@@ -1001,6 +1017,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("CHECK PASSENGER NUMBER", $result->messages[0]->text);
     }
 
+    public function testCanHandleTicketReissueConfirmedPricingErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketReissueConfirmedPricingErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_ReissueConfirmedPricing');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('CM00477', $result->messages[0]->code);
+        $this->assertEquals("INVALID FORMAT", $result->messages[0]->text);
+    }
+
     public function testCanHandleTicketDeleteTSTErrResponse()
     {
         $respHandler = new ResponseHandler\Base();
@@ -1074,6 +1105,87 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
         $this->assertEquals('02085', $result->messages[0]->code);
         $this->assertEquals("CHECK FARE ELEMENTS", $result->messages[0]->text);
+    }
+
+    public function testCanHandleTicketCheckEligibilityErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketCheckEligibilityErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_CheckEligibility');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('123', $result->messages[0]->code);
+        $this->assertEquals("E-ticket(s) not eligible to ATC - Fare Calculation not valid for ATC transaction - Document number not eligible for Amadeus Ticket Changer", $result->messages[0]->text);
+        $this->assertEquals("application", $result->messages[0]->level);
+    }
+
+    public function testCanHandleTicketAtcShopperMasterPricerTravelBoardSearchErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketActShopperMasterPricerTravelBoardSearchErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_ATCShopperMasterPricerTravelBoardSearch');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('866', $result->messages[0]->code);
+        $this->assertEquals("NO FARE FOUND FOR REQUESTED ITINERARY", $result->messages[0]->text);
+        $this->assertNull($result->messages[0]->level);
+    }
+
+    public function testCanHandleTicketRepricePnrWithBookingClassErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketRepricePnrWithBookingClassErrResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_RepricePNRWithBookingClass');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('4845', $result->messages[0]->code);
+        $this->assertEquals("INVALID PASSENGER SELECTION : ERROR FROM VALIDATION", $result->messages[0]->text);
+        $this->assertNull($result->messages[0]->level);
+    }
+
+    public function testCanHandleTicketRepricePnrWithBookingClassPricingWarningResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketRepricePnrWithBookingClassPricingWarningResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_RepricePNRWithBookingClass');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertCount(0, $result->messages);
+
+        /**
+        $this->assertEquals(Result::STATUS_WARN, $result->status);
+
+        $this->assertEquals(4, count($result->messages));
+        $this->assertEquals('0', $result->messages[0]->code);
+        $this->assertEquals(" - DATE OF ORIGIN", $result->messages[0]->text);
+        $this->assertEquals('pricing', $result->messages[0]->level);
+
+        $this->assertEquals('0', $result->messages[1]->code);
+        $this->assertEquals("BG CXR", $result->messages[1]->text);
+        $this->assertEquals('pricing', $result->messages[1]->level);
+
+        $this->assertEquals('0', $result->messages[2]->code);
+        $this->assertEquals("PRICED WITH VALIDATING CARRIER BA - REPRICE IF DIFFERENT VC", $result->messages[2]->text);
+        $this->assertEquals('pricing', $result->messages[2]->level);
+
+        $this->assertEquals('0', $result->messages[3]->code);
+        $this->assertEquals("14JUN12 PER GAF REQUIREMENTS FARE NOT VALID UNTIL TICKETED", $result->messages[3]->text);
+        $this->assertEquals('pricing', $result->messages[3]->level);*/
     }
 
     public function testCanHandleMiniRuleGetFromPricingRecErrResponse()
@@ -1193,6 +1305,58 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
         $this->assertEquals('432', $result->messages[0]->code);
         $this->assertEquals("INVALID CURRENCY CODE", $result->messages[0]->text);
+    }
+
+    public function testCanHandleFopCreateFormOfPaymentFopError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyCreateFormOfPaymentFopBackendErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'FOP_CreateFormOfPayment');
+
+        $this->assertEquals(Result::STATUS_WARN, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('4800', $result->messages[0]->code);
+        $this->assertEquals('deficient_fop', $result->messages[0]->level);
+        $this->assertEquals("FP NOT ALLOWED FOR NEGOTIATED FARE", $result->messages[0]->text);
+    }
+
+
+    public function testCanHandleFopCreateFormOfPaymentMultiError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyCreateFormOfPaymentMultiErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'FOP_CreateFormOfPayment');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(3, count($result->messages));
+        $this->assertEquals('22427', $result->messages[0]->code);
+        $this->assertEquals('general', $result->messages[0]->level);
+        $this->assertEquals("PAYMENT FAILED - PLEASE CONTACT AIRLINE", $result->messages[0]->text);
+        $this->assertEquals('25799', $result->messages[1]->code);
+        $this->assertEquals('fp', $result->messages[1]->level);
+        $this->assertEquals("ERROR AT FOP CREATION", $result->messages[1]->text);
+        $this->assertEquals('313', $result->messages[2]->code);
+        $this->assertEquals('authorization_failure', $result->messages[2]->level);
+        $this->assertEquals("INVALID ACCOUNT NUMBER", $result->messages[2]->text);
+    }
+
+    public function testCanHandleFopCreateFormOfPaymentOkResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyCreateFormOfPaymentOkResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'FOP_CreateFormOfPayment');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
     }
 
     public function testCanHandleInvalidXmlDocument()

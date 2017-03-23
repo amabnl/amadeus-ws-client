@@ -100,4 +100,39 @@ class Result
         $this->responseXml = $sendResult->responseXml;
         $this->status = $status;
     }
+
+    /**
+     * Sets error status.
+     *
+     * Will not override a more severe status.
+     *
+     * @param string $newStatus
+     */
+    public function setStatus($newStatus)
+    {
+        if ($this->isWorseStatus($newStatus, $this->status)) {
+            $this->status = $newStatus;
+        }
+    }
+
+    /**
+     * Checks if new status is worse than current status
+     *
+     * @param string $newStatus
+     * @param string $currentStatus
+     * @return bool true if newStatus is worse than old status.
+     */
+    protected function isWorseStatus($newStatus, $currentStatus)
+    {
+        $levels = [
+            self::STATUS_UNKNOWN => -1,
+            self::STATUS_OK => 0,
+            self::STATUS_INFO => 2,
+            self::STATUS_WARN => 5,
+            self::STATUS_ERROR => 10,
+            self::STATUS_FATAL => 20,
+        ];
+
+        return ($currentStatus === null || $levels[$newStatus] > $levels[$currentStatus]);
+    }
 }

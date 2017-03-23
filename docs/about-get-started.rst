@@ -23,7 +23,7 @@ You usually receive this information after the project kick-off has been done an
 Support for Amadeus Soap Header versions
 ****************************************
 
-Upon receiving access, Amadeus will give you a Web Service Access Point with a specific Soap Header version to use. This will define how you can handle session management *(e.g. support for stateless calls, requiring session pooling or not)*.
+Upon receiving access, Amadeus will give you a Web Service Access Point with a specific Soap Header version to use. This will determine how you can handle session management *(e.g. support for stateless calls, requiring session pooling or not)*.
 
 This library is built to support the current **Soap Header 4** and the legacy **Soap Header 2**.
 
@@ -32,27 +32,14 @@ This library is built to support the current **Soap Header 4** and the legacy **
 
 Legacy applications using already certified WSAP's can still be running on legacy Soap Header versions (Soap Header 1 & 2). This library doesn't support Soap Header 1 at the moment.
 
-******************************************
-Support for different versions of messages
-******************************************
-
-Amadeus periodically releases new versions of the messages (also called "verbs") available on their web services.
-
-On requesting access to the Amadeus web services, you'll receive a WSDL which contains messages in the lastest stable version Amadeus has released (unless you request for specific older versions of messages).
-
-**There could be differences** in various versions of messages: the request could be constructed differently (or have more options), you may get a slightly different response depending on the version you have received.
-
-The client library will read the messages and versions from the WSDL and will use that to try to construct the appropriate message for each version.
-However, we will introduce support for different message types as we encounter issues with different messages. When you run into problems, always check
-the message constructed by this library against the documentation *for your message version*.
-
-If you run into a situation where a specific message for your version is different from the message constructed by the library, you can either override the base message creator
-:code:`Amadeus\Client\RequestCreator\Base` or implement your own :code:`Amadeus\Client\RequestCreator\RequestCreatorInterface`. If you feel like contributing, you can also implement
-it yourself in a fork and provide a pull request. If you do that, please do it in a way analogous to what has been done for the :code:`Fare_PricePNRWithBookingClass` call.
-
 ******************************
 Install library in PHP project
 ******************************
+
+Before attempting to install the library, check your PHP configuration:
+
+- Minimum PHP version is 5.4.
+- The following PHP extensions must be activated: SOAP, DOM, XSL. [`PHP extension docs for Windows <http://php.net/manual/en/install.pecl.windows.php>`_]
 
 Install the client library in your PHP project by requiring the package with Composer:
 
@@ -76,16 +63,16 @@ Soap Header 4 example:
     //Set up the client with necessary parameters:
 
     $params = new Params([
+        'authParams' => [
+            'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
+            'userId' => 'WSBENXXX', //Also known as 'Originator' for Soap Header 1 & 2 WSDL's
+            'passwordData' => 'dGhlIHBhc3N3b3Jk' // **base 64 encoded** password
+        ],
         'sessionHandlerParams' => [
             'soapHeaderVersion' => Client::HEADER_V4, //This is the default value, can be omitted.
             'wsdl' => '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20160101_080000.wsdl', //Points to the location of the WSDL file for your WSAP. Make sure the associated XSD's are also available.
             'stateful' => false, //Enable stateful messages by default - can be changed at will to switch between stateless & stateful.
-            'logger' => new Psr\Log\NullLogger(),
-            'authParams' => [
-                'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
-                'userId' => 'WSBENXXX', //Also known as 'Originator' for Soap Header 1 & 2 WSDL's
-                'passwordData' => 'dGhlIHBhc3N3b3Jk' // **base 64 encoded** password
-            ]
+            'logger' => new Psr\Log\NullLogger()
         ],
         'requestCreatorParams' => [
             'receivedFrom' => 'my test project' // The "Received From" string that will be visible in PNR History
@@ -117,18 +104,18 @@ Soap Header 2 example:
     //Set up the client with necessary parameters:
 
     $params = new Params([
+        'authParams' => [
+            'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
+            'userId' => 'WSBENXXX', //Also known as 'Originator' for Soap Header 1 & 2 WSDL's
+            'passwordData' => 'dGhlIHBhc3N3b3Jk' // **base 64 encoded** password
+            'passwordLength' => 12,
+            'dutyCode' => 'SU',
+            'organizationId' => 'DUMMY-ORG',
+        ]
         'sessionHandlerParams' => [
             'soapHeaderVersion' => Client::HEADER_V2,
             'wsdl' => '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20110101_080000.wsdl', //Points to the location of the WSDL file for your WSAP. Make sure the associated XSD's are also available.
-            'logger' => new Psr\Log\NullLogger(),
-            'authParams' => [
-                'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
-                'userId' => 'WSBENXXX', //Also known as 'Originator' for Soap Header 1 & 2 WSDL's
-                'passwordData' => 'dGhlIHBhc3N3b3Jk' // **base 64 encoded** password
-                'passwordLength' => 12,
-                'dutyCode' => 'SU',
-                'organizationId' => 'DUMMY-ORG',
-            ]
+            'logger' => new Psr\Log\NullLogger()
         ],
         'requestCreatorParams' => [
             'receivedFrom' => 'my test project' // The "Received From" string that will be visible in PNR History
@@ -147,6 +134,24 @@ Soap Header 2 example:
     }
 
 
+******************************************
+Support for different versions of messages
+******************************************
+
+Amadeus periodically releases new versions of the messages (also called "verbs") available on their web services.
+
+On requesting access to the Amadeus web services, you'll receive a WSDL which contains messages in the lastest stable version Amadeus has released (unless you request for specific older versions of messages).
+
+**There could be differences** in various versions of messages: the request could be constructed differently (or have more options), you may get a slightly different response depending on the version you have received.
+
+The client library will read the messages and versions from the WSDL and will use that to try to construct the appropriate message for each version.
+However, we will introduce support for different message types as we encounter issues with different messages. When you run into problems, always check
+the message constructed by this library against the documentation *for your message version*.
+
+If you run into a situation where a specific message for your version is different from the message constructed by the library, you can either override the base message creator
+:code:`Amadeus\Client\RequestCreator\Base` or implement your own :code:`Amadeus\Client\RequestCreator\RequestCreatorInterface`. If you feel like contributing, you can also implement
+it yourself in a fork and provide a pull request. If you do that, please do it in a way analogous to what has been done for the :code:`Fare_PricePNRWithBookingClass` call.
+
 ******************
 Messages supported
 ******************
@@ -157,4 +162,4 @@ See the `list of supported messages <list-of-supported-messages.rst>`_.
 Message examples
 ****************
 
-See the `examples how to send various messages <samples.rst>`_.
+See the `list of examples how to send specific messages <samples.rst>`_.

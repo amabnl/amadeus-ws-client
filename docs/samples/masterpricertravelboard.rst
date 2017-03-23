@@ -366,7 +366,8 @@ Simple flight, request published fares, unifares and corporate unifares (with a 
             FareMasterPricerTbSearch::FLIGHTOPT_UNIFARES,
             FareMasterPricerTbSearch::FLIGHTOPT_CORPORATE_UNIFARES,
         ],
-        'corporateCodesUnifares' => ['123456']
+        'corporateCodesUnifares' => ['123456'],
+        'corporateQualifier' => FareMasterPricerTbSearch::CORPORATE_QUALIFIER_UNIFARE
     ]);
 
 
@@ -690,4 +691,87 @@ Alternate Fare Family:
             ])
         ]
     ]);
+
+
+
+Special parameters (FeeIds)
+===========================
+
+To turn on some functions in MasterPricer, you have to send special parameter (sometimes specific function has to be enabled for your office id).
+
+Here is example how to get information about airlines fare families and get additional recommendation for homogoneus upsell:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptionsFare\MPPassenger;
+    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPFeeId;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'BRU']),
+                'arrivalLocation' => new MPLocation(['city' => 'LON']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ])
+        ],
+        'feeIds' => [
+            new MPFeeId(['type' => MPFeeId::FEETYPE_FARE_FAMILY_INFORMATION, 'number' => 3]),
+            new MPFeeId(['type' => MPFeeId::FEETYPE_HOMOGENOUS_UPSELL, 'number' => 6])
+        ]
+    ]);
+
+Multiple Office ID's
+====================
+
+Request MasterPricer recommendations with Multiple Office ID's specified. The system will then find the cheapest travel solutions among all office ids requested in input (originator office id and additional office ids) without any preference.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptionsFare\MPPassenger;
+    use Amadeus\Client\RequestOptionsFare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+            'nrOfRequestedResults' => 30,
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'BER']),
+                    'arrivalLocation' => new MPLocation(['city' => 'MOW']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2017-05-01T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'flightOptions' => [
+                FareMasterPricerTbSearch::FLIGHTOPT_PUBLISHED,
+                FareMasterPricerTbSearch::FLIGHTOPT_UNIFARES,
+                FareMasterPricerTbSearch::FLIGHTOPT_CORPORATE_UNIFARES,
+            ],
+            'officeIds' => [
+                'AMSXX0000',
+                'EINXX0000'
+            ]
+        ]);
 

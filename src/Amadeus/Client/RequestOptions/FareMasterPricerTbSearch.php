@@ -23,12 +23,12 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * FareMasterPricerTbSearch
+ * Request Options for Fare_MasterPricerTravelboardSearch
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FareMasterPricerTbSearch extends Base
+class FareMasterPricerTbSearch extends MpBaseOptions
 {
     const FLIGHTTYPE_DIRECT = "D";
     const FLIGHTTYPE_NONSTOP = "N";
@@ -49,21 +49,6 @@ class FareMasterPricerTbSearch extends Base
     const AIRLINEOPT_EXCLUDED_VALIDATING_CARRIER = "W";
     const AIRLINEOPT_EXCLUDED = "X";
 
-    const FLIGHTOPT_PUBLISHED = "RP";
-    const FLIGHTOPT_UNIFARES = "RU";
-    const FLIGHTOPT_CORPORATE_UNIFARES = "RW";
-    const FLIGHTOPT_NO_RESTRICTION = "NR";
-    const FLIGHTOPT_REFUNDABLE = "RF";
-    const FLIGHTOPT_NO_ADVANCE_PURCHASE = "NAP";
-    const FLIGHTOPT_NO_PENALTIES = "NPE";
-    const FLIGHTOPT_NO_LOWCOST = "XLC";
-    const FLIGHTOPT_ELECTRONIC_TICKET = "ET";
-    const FLIGHTOPT_PAPER_TICKET = "PT";
-    const FLIGHTOPT_ELECTRONIC_PAPER_TICKET = "EP";
-    const FLIGHTOPT_FORCE_NEUTRAL_FARE_SEARCH = "NPF";
-    const FLIGHTOPT_NO_SLICE_AND_DICE = "NSD";
-    const FLIGHTOPT_DISPLAY_MIN_MAX_STAY = "MST";
-
     /**
      * Major cabin
      */
@@ -76,26 +61,6 @@ class FareMasterPricerTbSearch extends Base
      * Recommended cabin to be used at least one segment
      */
     const CABINOPT_RECOMMENDED = "RC";
-
-
-    /**
-     * @var int
-     */
-    public $nrOfRequestedPassengers;
-
-    /**
-     * Maximum number of recommendations requested
-     *
-     * @var int
-     */
-    public $nrOfRequestedResults;
-
-    /**
-     * Whether to perform a ticketability pre-check
-     *
-     * @var bool
-     */
-    public $doTicketabilityPreCheck = false;
 
     /**
      * List of airline options.
@@ -124,37 +89,6 @@ class FareMasterPricerTbSearch extends Base
     public $requestedFlightTypes = [];
 
     /**
-     * Provide extra fare & flight options
-     *
-     * self::FLIGHTOPT_*
-     *
-     * @var string[]
-     */
-    public $flightOptions = [];
-
-    /**
-     * Corporate numbers for returning Corporate Unifares
-     *
-     * In combination with fareType self::FARETYPE::CORPORATE_UNIFARES
-     *
-     * @var string[]
-     */
-    public $corporateCodesUnifares = [];
-
-    /**
-     * The currency to convert to.
-     *
-     * All price amounts for recommendations will be converted in the requested Currency.
-     *
-     * (The provided currency must be a valid 3-character ISO 4217 Currency Code)
-     *
-     * for example: EUR, USD, JPY,...
-     *
-     * @var string
-     */
-    public $currencyOverride;
-
-    /**
      * Cabin class requested for the entire itinerary
      *
      * self::CABIN_*
@@ -171,13 +105,6 @@ class FareMasterPricerTbSearch extends Base
      * @var string
      */
     public $cabinOption;
-
-    /**
-     * Passenger info
-     *
-     * @var Fare\MPPassenger[]
-     */
-    public $passengers = [];
 
     /**
      * Requested flight itinerary
@@ -201,7 +128,16 @@ class FareMasterPricerTbSearch extends Base
     public $priceToBeatCurrency;
 
     /**
+     * Fare Families
+     *
      * @var Fare\MPFareFamily[]
      */
     public $fareFamilies = [];
+
+    /**
+     * Office IDs
+     *
+     * @var string[]
+     */
+    public $officeIds = [];
 }

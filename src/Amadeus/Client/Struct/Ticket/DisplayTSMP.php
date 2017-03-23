@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Ticket;
 
 use Amadeus\Client\RequestOptions\TicketDisplayTsmpOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\Ticket\DisplayTSMP\TattooOfTSM;
 
 /**
  * Ticket_DisplayTSMP request structure

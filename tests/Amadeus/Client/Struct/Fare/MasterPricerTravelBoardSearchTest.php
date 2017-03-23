@@ -29,6 +29,7 @@ use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\Fare\MPLocation;
 use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+use Amadeus\Client\RequestOptions\Fare\MPFeeId;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\Struct\Fare\MasterPricer\BooleanExpression;
 use Amadeus\Client\Struct\Fare\MasterPricer\CabinId;
@@ -312,6 +313,41 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertCount(1, $message->fareOptions->conversionRate->conversionRateDetail);
         $this->assertEquals('USD', $message->fareOptions->conversionRate->conversionRateDetail[0]->currency);
         $this->assertNull($message->fareOptions->conversionRate->conversionRateDetail[0]->conversionType);
+    }
+
+    public function testCanMakeMasterPricerMessageWithFeeIds()
+    {
+        $opt = new FareMasterPricerTbSearch([
+            'nrOfRequestedResults' => 200,
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'BRU']),
+                    'arrivalLocation' => new MPLocation(['city' => 'LON']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'feeIds' => [
+                new MPFeeId(['type' => 'FFI', 'number' => 2]),
+                new MPFeeId(['type' => 'UPH', 'number' => 6])
+            ]
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertCount(2, $message->fareOptions->feeIdDescription->feeId);
+        $this->assertEquals('FFI', $message->fareOptions->feeIdDescription->feeId[0]->feeType);
+        $this->assertEquals(2, $message->fareOptions->feeIdDescription->feeId[0]->feeIdNumber);
+        $this->assertEquals('UPH', $message->fareOptions->feeIdDescription->feeId[1]->feeType);
+        $this->assertEquals(6, $message->fareOptions->feeIdDescription->feeId[1]->feeIdNumber);
     }
 
     public function testCanMakeMasterPricerMessageWithCabinClassAndCod()
@@ -629,7 +665,8 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
                 FareMasterPricerTbSearch::FLIGHTOPT_UNIFARES,
                 FareMasterPricerTbSearch::FLIGHTOPT_CORPORATE_UNIFARES,
             ],
-            'corporateCodesUnifares' => ['123456']
+            'corporateCodesUnifares' => ['123456'],
+            'corporateQualifier' => FareMasterPricerTbSearch::CORPORATE_QUALIFIER_UNIFARE
         ]);
 
         $message = new MasterPricerTravelBoardSearch($opt);
@@ -644,6 +681,46 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
             $message->fareOptions->pricingTickInfo->pricingTicketing->priceType
         );
         $this->assertEquals('123456', $message->fareOptions->corporate->corporateId[0]->identity[0]);
+        $this->assertEquals(FareMasterPricerTbSearch::CORPORATE_QUALIFIER_UNIFARE, $message->fareOptions->corporate->corporateId[0]->corporateQualifier);
+    }
+
+    public function testCanMakeMessageWithManyOfficeIDs()
+    {
+        $opt = new FareMasterPricerTbSearch([
+            'nrOfRequestedResults' => 30,
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'BER']),
+                    'arrivalLocation' => new MPLocation(['city' => 'MOW']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2017-05-01T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'flightOptions' => [
+                FareMasterPricerTbSearch::FLIGHTOPT_PUBLISHED,
+                FareMasterPricerTbSearch::FLIGHTOPT_UNIFARES,
+                FareMasterPricerTbSearch::FLIGHTOPT_CORPORATE_UNIFARES,
+            ],
+            'officeIds' => ['A', 'B']
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertCount(2, $message->officeIdDetails);
+        $this->assertEquals('A',
+            $message->officeIdDetails[0]->officeIdInformation->officeIdentification->agentSignin
+        );
+        $this->assertEquals('B',
+            $message->officeIdDetails[1]->officeIdInformation->officeIdentification->agentSignin
+        );
     }
 
     public function testCanMakeMessageWithPriceToBeat()

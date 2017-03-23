@@ -38,7 +38,8 @@ class PaxSegRef extends LoadParamsFromArray
     const TYPE_SEGMENT = 'S';
     const TYPE_CONNECTING = 'X';
     const TYPE_TST = 'T';
-    const TYPE_SERVICE = 'E'; //Service_IntegratedPricing
+    const TYPE_SERVICE = 'E'; //Service_IntegratedPricing & Ticket_RepricePNRWithBookingClass
+    const TYPE_ORIGINAL_PRICING = 'O'; //Ticket_RepricePNRWithBookingClass
 
     /**
      * Identifier of the reference (segment/passenger number)

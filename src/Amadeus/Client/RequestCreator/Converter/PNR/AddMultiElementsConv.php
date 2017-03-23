@@ -24,7 +24,6 @@ namespace Amadeus\Client\RequestCreator\Converter\PNR;
 
 use Amadeus\Client\RequestCreator\Converter\BaseConverter;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsBase;
-use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\Struct;
 
 /**
@@ -42,7 +41,7 @@ class AddMultiElementsConv extends BaseConverter
      */
     public function convert($requestOptions, $version)
     {
-        if ($requestOptions instanceof PnrCreatePnrOptions && empty($requestOptions->receivedFrom)) {
+        if (empty($requestOptions->receivedFrom)) {
             //Automagically add RF if not present:
             $requestOptions->receivedFrom = $this->params->receivedFrom;
         }

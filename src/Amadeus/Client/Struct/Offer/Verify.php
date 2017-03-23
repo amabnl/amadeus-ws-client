@@ -35,7 +35,7 @@ class Verify extends BaseWsMessage
     /**
      * @var OfferTattoo
      */
-    public $offerTattoo;
+    public $offerTatoo;
 
     /**
      * @param string $referenceNr
@@ -43,6 +43,6 @@ class Verify extends BaseWsMessage
      */
     public function __construct($referenceNr, $segmentName)
     {
-        $this->offerTattoo = new OfferTattoo($referenceNr, $segmentName);
+        $this->offerTatoo = new OfferTattoo($referenceNr, $segmentName);
     }
 }

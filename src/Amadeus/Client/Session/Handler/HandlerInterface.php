@@ -110,4 +110,20 @@ interface HandlerInterface
      * @return string|null
      */
     public function getLastResponse($msgName);
+
+    /**
+     * Get the request headers for the last SOAP message that was sent out
+     *
+     * @param string $msgName
+     * @return string|null
+     */
+    public function getLastRequestHeaders($msgName);
+
+    /**
+     * Get the response headers for the last SOAP message that was received
+     *
+     * @param string $msgName
+     * @return string|null
+     */
+    public function getLastResponseHeaders($msgName);
 }

@@ -83,18 +83,18 @@ You can provide all the WSDL's in your WSAP by passing an array of wsdl's in the
     //Set up the client with necessary parameters:
 
     $params = new Params([
+        'authParams' => [
+            'officeId' => 'BRUXX1111',
+            'userId' => 'WSBENXXX',
+            'passwordData' => 'dGhlIHBhc3N3b3Jk'
+        ]
         'sessionHandlerParams' => [
             'soapHeaderVersion' => Client::HEADER_V4,
             'wsdl' => [
                 '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20160101_080000.wsdl',
                 '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_MediaServer_1.0_4.0.wsdl'
             ],
-            'logger' => new Psr\Log\NullLogger(),
-            'authParams' => [
-                'officeId' => 'BRUXX1111',
-                'userId' => 'WSBENXXX',
-                'passwordData' => 'dGhlIHBhc3N3b3Jk'
-            ]
+            'logger' => new Psr\Log\NullLogger()
         ]
     ]);
 
@@ -292,6 +292,27 @@ Here's an example of how to use a `Monolog <https://github.com/Seldaek/monolog>`
     );
 
 If you now check the logfile's contents, it will contain the request and response for the PNR_Retrieve call you just made.
+
+*****************************************
+Getting individual requests and responses
+*****************************************
+
+If you don't want to log all requests and responses to a logfile, but you need to inspect a single request or response for debugging or other purposes, you can use:
+
+.. code-block:: php
+
+    $lastMessageSent = $client->getLastRequest();
+
+    $lastResponseReceived = $client->getLastResponse();
+
+
+If you also need the HTTP headers, that's possible too (exposes PHP's ``\SoapClient::__getLastRequestHeaders()`` and ``\SoapClient::__getLastResponseHeaders()``):
+
+.. code-block:: php
+
+    $lastRequestHeaders = $client->getLastRequestHeaders();
+
+    $lastResponseHeaders = $client->getLastResponseHeaders();
 
 
 ================

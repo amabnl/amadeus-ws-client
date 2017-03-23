@@ -34,31 +34,17 @@ use Amadeus\Client\Session\Handler\SendResult;
  */
 class HandlerCreateTSTFromPricing extends StandardResponseHandler
 {
+    /**
+     * @param SendResult $response
+     * @return Result
+     */
     public function analyze(SendResult $response)
     {
-        $analyzeResponse = new Result($response);
-
-        $domDoc = $this->loadDomDocument($response->responseXml);
-
-        $errorCodeNode = $domDoc->getElementsByTagName("applicationErrorCode")->item(0);
-
-        if (!is_null($errorCodeNode)) {
-            $analyzeResponse->status = Result::STATUS_ERROR;
-
-            $errorCatNode = $domDoc->getElementsByTagName("codeListQualifier")->item(0);
-            if ($errorCatNode instanceof \DOMNode) {
-                $analyzeResponse->status = $this->makeStatusFromErrorQualifier($errorCatNode->nodeValue);
-            }
-
-            $errorCode = $errorCodeNode->nodeValue;
-            $errorTextNodeList = $domDoc->getElementsByTagName("errorFreeText");
-
-            $analyzeResponse->messages[] = new Result\NotOk(
-                $errorCode,
-                $this->makeMessageFromMessagesNodeList($errorTextNodeList)
-            );
-        }
-
-        return $analyzeResponse;
+        return $this->analyzeWithErrCodeCategoryMsgNodeName(
+            $response,
+            "applicationErrorCode",
+            "codeListQualifier",
+            "errorFreeText"
+        );
     }
 }

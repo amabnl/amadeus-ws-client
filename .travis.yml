@@ -17,7 +17,7 @@ before_script:
 
 script:
 - php phpcs.phar -h
-- phpunit --coverage-clover build/logs/clover.xml
+- vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_success:
  - travis_retry php vendor/bin/coveralls

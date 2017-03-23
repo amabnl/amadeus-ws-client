@@ -24,6 +24,7 @@ namespace Test\Amadeus\Client\Struct\Pnr;
 
 use Amadeus\Client\RequestOptions\Pnr\Element\AccountingInfo;
 use Amadeus\Client\RequestOptions\Pnr\Element\Address;
+use Amadeus\Client\RequestOptions\Pnr\Element\ManualCommission;
 use Amadeus\Client\RequestOptions\Pnr\Element\ManualIssuedTicket;
 use Amadeus\Client\RequestOptions\Pnr\Element\Contact;
 use Amadeus\Client\RequestOptions\Pnr\Element\FormOfPayment;
@@ -463,6 +464,48 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(123, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->newFopsDetails->cvData);
     }
 
+    public function testMakePnrWithFormOfPaymentCreditCardServiceFee()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'company' => '1A'
+        ]);
+        $createPnrOptions->elements[] = new FormOfPayment([
+            'type' => FormOfPayment::TYPE_CREDITCARD,
+            'creditCardType' => 'VI',
+            'creditCardNumber' => '4444333322221111',
+            'creditCardExpiry' => '1017',
+            'creditCardCvcCode' => 123,
+            'isServiceFee' => true
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+
+        $this->assertEquals('FP', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals(AddMultiElements\Fop::IDENT_CREDITCARD, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->identification);
+        $this->assertEquals('4444333322221111', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->accountNumber);
+        $this->assertEquals('VI', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->creditCardCode);
+        $this->assertEquals('1017', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->expiryDate);
+        $this->assertEquals(1, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->fopSequenceNumber);
+        $this->assertEquals(123, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->newFopsDetails->cvData);
+
+        $this->assertCount(1, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->serviceDetails);
+        $this->assertEquals(AddMultiElements\StatusDetails::IND_SERVICEFEE, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->serviceDetails[0]->statusDetails->indicator);
+    }
+
     public function testMakePnrWithFormOfPaymentCheckWillThrowException()
     {
         $this->setExpectedException('\RuntimeException', 'FOP CHECK NOT YET IMPLEMENTED');
@@ -710,6 +753,38 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\FreetextDetail::TYPE_OSI_ELEMENT, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->type);
         $this->assertEquals('6X', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->companyId);
         $this->assertEquals(AddMultiElements\FreetextDetail::QUALIFIER_LITERALTEXT, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->subjectQualifier);
+    }
+
+
+    public function testCanCreateCommission()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_NO_PROCESSING;
+        $createPnrOptions->elements[] = new ManualCommission([
+            'passengerType' => ManualCommission::PAXTYPE_PASSENGER,
+            'indicator' => 'FM',
+            'percentage' => 5
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_COMMISSION, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData);
+        $this->assertEquals('PAX', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->passengerType);
+        $this->assertEquals('FM', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->indicator);
+        $this->assertEquals(5, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->commissionInfo->percentage);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->commissionInfo->amount);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->commissionInfo->vatIndicator);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->commissionInfo->remitIndicator);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->oldCommission);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->manualCapping);
     }
 
     public function testCanCreateGroupPnr()
@@ -1423,7 +1498,89 @@ class AddMultiElementsTest extends BaseTestCase
 
         $this->assertEquals(1, $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->relatedProduct->quantity);
         $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_NEED_SEGMENT, $msg->originDestinationDetails[2]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
+    }
 
+    public function testCanMakePnrWithMultiPaxElementAssoc()
+    {
+        $createPnrOptions = new PnrAddMultiElementsOptions([
+            'receivedFrom' => 'unittest',
+            'travellers' => [
+                new Traveller([
+                    'number' => 1,
+                    'lastName' => 'Bowie',
+                    'firstName' => 'David'
+                ]),
+                new Traveller([
+                    'number' => 2,
+                    'lastName' => 'Bowie',
+                    'firstName' => 'David2'
+                ])
+            ],
+            'actionCode' => PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE,
+            'itineraries' => [
+                new Itinerary([
+                    'origin' => 'BRU',
+                    'destination' => 'LIS',
+                    'segments' => [
+                        new Air([
+                            'date' => \DateTime::createFromFormat('Y-m-d His', "2008-06-10 000000", new \DateTimeZone('UTC')),
+                            'origin' => 'BRU',
+                            'destination' => 'LIS',
+                            'flightNumber' => '349',
+                            'bookingClass' => 'Y',
+                            'company' => 'TP'
+                        ])
+                    ]
+                ])
+            ],
+            'elements' => [
+                new Ticketing([
+                    'ticketMode' => Ticketing::TICKETMODE_OK
+                ]),
+                new Contact([
+                    'type' => Contact::TYPE_PHONE_GENERAL,
+                    'value' => '+3223456789',
+                    'references' => [
+                        new Reference([
+                            'type' => Reference::TYPE_PASSENGER_REQUEST,
+                            'id' => 1
+                        ]),
+                        new Reference([
+                            'type' => Reference::TYPE_PASSENGER_REQUEST,
+                            'id' => 2
+                        ]),
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new AddMultiElements($createPnrOptions);
+
+        $this->assertCount(3, $msg->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_TICKETING_ELEMENT, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals('OT', $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->qualifier);
+        $this->assertEquals(2, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->number);
+        $this->assertEquals('OK', $msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->indicator);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->date);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->time);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->officeId);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->freetext);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->airlineCode);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->queueCategory);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->queueNumber);
+        $this->assertEmpty($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->ticket->sitaAddress);
+        $this->assertEquals(AddMultiElements\TicketElement::PASSTYPE_PAX, $msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->passengerType);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->ticketElement->printOptions);
+
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_CONTACT_ELEMENT, $msg->dataElementsMaster->dataElementsIndiv[1]->elementManagementData->segmentName);
+        $this->assertEquals('OT', $msg->dataElementsMaster->dataElementsIndiv[1]->elementManagementData->reference->qualifier);
+        $this->assertEquals(3, $msg->dataElementsMaster->dataElementsIndiv[1]->elementManagementData->reference->number);
+        $this->assertCount(2, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference);
+        $this->assertEquals(1, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference[0]->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference[0]->qualifier);
+        $this->assertEquals(2, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference[1]->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference[1]->qualifier);
 
     }
 }
+

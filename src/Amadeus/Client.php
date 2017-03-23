@@ -22,16 +22,11 @@
 
 namespace Amadeus;
 
+use Amadeus\Client\Base;
 use Amadeus\Client\Exception;
 use Amadeus\Client\Params;
-use Amadeus\Client\RequestCreator\RequestCreatorInterface;
 use Amadeus\Client\RequestOptions;
-use Amadeus\Client\ResponseHandler\ResponseHandlerInterface;
 use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\HandlerFactory;
-use Amadeus\Client\RequestCreator\Factory as RequestCreatorFactory;
-use Amadeus\Client\Session\Handler\HandlerInterface;
-use Amadeus\Client\ResponseHandler\Base as ResponseHandlerBase;
 
 /**
  * Amadeus Web Service Client.
@@ -42,7 +37,7 @@ use Amadeus\Client\ResponseHandler\Base as ResponseHandlerBase;
  * @package Amadeus
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Client
+class Client extends Base
 {
     /**
      * Amadeus SOAP header version 1
@@ -62,7 +57,7 @@ class Client
      *
      * @var string
      */
-    const VERSION = "1.2.0-dev";
+    const VERSION = "1.3.0-dev";
 
     /**
      * An identifier string for the library (to be used in Received From entries)
@@ -72,44 +67,9 @@ class Client
     const RECEIVED_FROM_IDENTIFIER = "amabnl-amadeus-ws-client";
 
     /**
-     * Session Handler will be sending all the messages and handling all session-related things.
-     *
-     * @var HandlerInterface
-     */
-    protected $sessionHandler;
-
-    /**
-     * Request Creator is will create the correct message structure to send to the SOAP server.
-     *
-     * @var RequestCreatorInterface
-     */
-    protected $requestCreator;
-
-    /**
-     * Response Handler will check the received response for errors.
-     *
-     * @var ResponseHandlerInterface
-     */
-    protected $responseHandler;
-
-    /**
-     * Authentication parameters
-     *
-     * @var Params\AuthParams
-     */
-    protected $authParams;
-
-    /**
      * @var string
      */
     protected $lastMessage;
-
-    /**
-     * Whether to return the response of a message as XML as well as PHP object
-     *
-     * @var bool
-     */
-    protected $returnResultXml;
 
     /**
      * Set the session as stateful (true) or stateless (false)
@@ -150,6 +110,26 @@ class Client
     }
 
     /**
+     * Get the request headers for the last SOAP message that was sent out
+     *
+     * @return string|null
+     */
+    public function getLastRequestHeaders()
+    {
+        return $this->sessionHandler->getLastRequestHeaders($this->lastMessage);
+    }
+
+    /**
+     * Get the response headers for the last SOAP message that was received
+     *
+     * @return string|null
+     */
+    public function getLastResponseHeaders()
+    {
+        return $this->sessionHandler->getLastResponseHeaders($this->lastMessage);
+    }
+
+    /**
      * Get session information for authenticated session
      *
      * - sessionId
@@ -181,41 +161,19 @@ class Client
      *
      * @param Params $params
      */
-    public function __construct($params)
+    public function __construct(Params $params)
     {
-        if ($params->authParams instanceof Params\AuthParams) {
-            $this->authParams = $params->authParams;
-            if (isset($params->sessionHandlerParams) &&
-                $params->sessionHandlerParams instanceof Params\SessionHandlerParams
-            ) {
-                $params->sessionHandlerParams->authParams = $this->authParams;
-            }
-        }
-
-        $this->sessionHandler = $this->loadSessionHandler(
-            $params->sessionHandler,
-            $params->sessionHandlerParams
+        $this->loadClientParams(
+            $params,
+            self::RECEIVED_FROM_IDENTIFIER,
+            self::VERSION
         );
-
-        $this->requestCreator = $this->loadRequestCreator(
-            $params->requestCreator,
-            $params->requestCreatorParams,
-            self::RECEIVED_FROM_IDENTIFIER."-".self::VERSION,
-            $this->sessionHandler->getOriginatorOffice(),
-            $this->sessionHandler->getMessagesAndVersions()
-        );
-
-        $this->responseHandler = $this->loadResponseHandler(
-            $params->responseHandler
-        );
-
-        $this->returnResultXml = $params->returnXml;
     }
 
     /**
      * Authenticate.
      *
-     * Parameters were provided at construction time (sessionhandlerparams)
+     * Authentication Parameters were provided at construction time (authParams)
      *
      * @return Result
      * @throws Exception
@@ -301,11 +259,6 @@ class Client
      * PNR_RetrieveAndDisplay - Retrieve an Amadeus PNR by record locator including extra info
      *
      * This extra info is info you cannot see in the regular PNR, like Offers.
-     *
-     * By default, the result will be the PNR_RetrieveAndDisplayReply XML as string.
-     * That way you can easily parse the PNR's contents with XPath.
-     *
-     * Set $messageOptions['asString'] = FALSE to get the response as a PHP object.
      *
      * https://webservices.amadeus.com/extranet/viewService.do?id=1922&flavourId=1&menuId=functional
      *
@@ -815,6 +768,22 @@ class Client
     }
 
     /**
+     * Ticket_CreateTSMFareElement
+     *
+     * @param RequestOptions\TicketCreateTsmFareElOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketCreateTSMFareElement(
+        RequestOptions\TicketCreateTsmFareElOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_CreateTSMFareElement';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Ticket_DeleteTST
      *
      * @param RequestOptions\TicketDeleteTstOptions $options
@@ -887,6 +856,70 @@ class Client
     }
 
     /**
+     * Ticket_CheckEligibility
+     *
+     * @param RequestOptions\TicketCheckEligibilityOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketCheckEligibility(
+        RequestOptions\TicketCheckEligibilityOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_CheckEligibility';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Ticket_ATCShopperMasterPricerTravelBoardSearch
+     *
+     * @param RequestOptions\TicketAtcShopperMpTbSearchOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketAtcShopperMasterPricerTravelBoardSearch(
+        RequestOptions\TicketAtcShopperMpTbSearchOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_ATCShopperMasterPricerTravelBoardSearch';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Ticket_RepricePNRWithBookingClass
+     *
+     * @param RequestOptions\TicketRepricePnrWithBookingClassOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketRepricePnrWithBookingClass(
+        RequestOptions\TicketRepricePnrWithBookingClassOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_RepricePNRWithBookingClass';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Ticket_ReissueConfirmedPricing
+     *
+     * @param RequestOptions\TicketReissueConfirmedPricingOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketReissueConfirmedPricing(
+        RequestOptions\TicketReissueConfirmedPricingOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_ReissueConfirmedPricing';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocIssuance_IssueTicket
      *
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options
@@ -930,6 +963,20 @@ class Client
         $messageOptions = []
     ) {
         $msgName = 'DocIssuance_IssueCombined';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * FOP_CreateFormOfPayment
+     *
+     * @param RequestOptions\FopCreateFopOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function fopCreateFormOfPayment(RequestOptions\FopCreateFopOptions $options, $messageOptions = [])
+    {
+        $msgName = 'FOP_CreateFormOfPayment';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
@@ -1067,73 +1114,5 @@ class Client
         }
 
         return $options;
-    }
-
-    /**
-     * Load the session handler
-     *
-     * Either load the provided session handler or create one depending on incoming parameters.
-     *
-     * @param HandlerInterface|null $sessionHandler
-     * @param Params\SessionHandlerParams|null $params
-     * @return HandlerInterface
-     */
-    protected function loadSessionHandler($sessionHandler, $params)
-    {
-        if ($sessionHandler instanceof HandlerInterface) {
-            $newSessionHandler = $sessionHandler;
-        } else {
-            $newSessionHandler = HandlerFactory::createHandler($params);
-        }
-
-        return $newSessionHandler;
-    }
-
-    /**
-     * Load a request creator
-     *
-     * A request creator is responsible for generating the correct request to send.
-     *
-     * @param RequestCreatorInterface|null $requestCreator
-     * @param Params\RequestCreatorParams $params
-     * @param string $libIdentifier Library identifier & version string (for Received From)
-     * @param string $originatorOffice The Office we are signed in with.
-     * @param array $mesVer Messages & Versions array of active messages in the WSDL
-     * @return RequestCreatorInterface
-     * @throws \RuntimeException
-     */
-    protected function loadRequestCreator($requestCreator, $params, $libIdentifier, $originatorOffice, $mesVer)
-    {
-        if ($requestCreator instanceof RequestCreatorInterface) {
-            $newRequestCreator = $requestCreator;
-        } else {
-            $params->originatorOfficeId = $originatorOffice;
-            $params->messagesAndVersions = $mesVer;
-
-            $newRequestCreator = RequestCreatorFactory::createRequestCreator(
-                $params,
-                $libIdentifier
-            );
-        }
-
-        return $newRequestCreator;
-    }
-
-    /**
-     * Load a response handler
-     *
-     * @param ResponseHandlerInterface|null $responseHandler
-     * @return ResponseHandlerInterface
-     * @throws \RuntimeException
-     */
-    protected function loadResponseHandler($responseHandler)
-    {
-        if ($responseHandler instanceof ResponseHandlerInterface) {
-            $newResponseHandler = $responseHandler;
-        } else {
-            $newResponseHandler = new ResponseHandlerBase();
-        }
-
-        return $newResponseHandler;
     }
 }

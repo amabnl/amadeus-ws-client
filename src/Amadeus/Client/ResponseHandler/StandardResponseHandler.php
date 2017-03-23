@@ -50,9 +50,10 @@ abstract class StandardResponseHandler implements MessageResponseHandler
      * @param string $qErr XPATH query for fetching error code (first node is used)
      * @param string $qCat XPATH query for fetching error category (first node is used)
      * @param string $qMsg XPATH query for fetching error messages (all nodes are used)
+     * @param string|null $errLevel Optional custom error level string.
      * @return Result
      */
-    protected function analyzeWithErrCodeCategoryMsgQuery(SendResult $response, $qErr, $qCat, $qMsg)
+    protected function analyzeWithErrCodeCategoryMsgQuery(SendResult $response, $qErr, $qCat, $qMsg, $errLevel = null)
     {
         $analyzeResponse = new Result($response);
 
@@ -72,7 +73,54 @@ abstract class StandardResponseHandler implements MessageResponseHandler
                 $errorCodeNodeList->item(0)->nodeValue,
                 $this->makeMessageFromMessagesNodeList(
                     $domXpath->query($qMsg)
-                )
+                ),
+                $errLevel
+            );
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
+     * Analyze response by looking for error, message and level with the provided XPATH queries
+     *
+     * Result status defaults to Result::STATUS_ERROR if any error is found.
+     *
+     * xpath queries must be prefixed with the namespace self::XMLNS_PREFIX
+     *
+     * @param SendResult $response
+     * @param string $qErr XPATH query for fetching error code (first node is used)
+     * @param string $qMsg XPATH query for fetching error messages (all nodes are used)
+     * @param string $qLvl  XPATH query for fetching error level (first node is used)
+     * @param array $lvlToText Level-to-text translation
+     * @return Result
+     */
+    protected function analyzeWithErrorCodeMsgQueryLevel(SendResult $response, $qErr, $qMsg, $qLvl, $lvlToText)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $errorCodeNodeList = $domXpath->query($qErr);
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $lvlNodeList = $domXpath->query($qLvl);
+
+            $level = null;
+            if ($lvlNodeList->length > 0) {
+                if (array_key_exists($lvlNodeList->item(0)->nodeValue, $lvlToText)) {
+                    $level = $lvlToText[$lvlNodeList->item(0)->nodeValue];
+                }
+            }
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $errorCodeNodeList->item(0)->nodeValue,
+                $this->makeMessageFromMessagesNodeList(
+                    $domXpath->query($qMsg)
+                ),
+                $level
             );
         }
 
@@ -115,6 +163,7 @@ abstract class StandardResponseHandler implements MessageResponseHandler
 
         return $analyzeResponse;
     }
+
 
     /**
      * @param SendResult $response WebService message Send Result
@@ -188,10 +237,13 @@ abstract class StandardResponseHandler implements MessageResponseHandler
     /**
      * Converts a status code found in an error message to the appropriate status level
      *
-     * @param string $qualifier
+     * if no node found (= $qualifier is a null), $defaultStatus will be used
+     *
+     * @param string|null $qualifier
+     * @param string $defaultStatus the default status to fall back to if no qualifier is present
      * @return string Result::STATUS_*
      */
-    protected function makeStatusFromErrorQualifier($qualifier)
+    protected function makeStatusFromErrorQualifier($qualifier, $defaultStatus = Result::STATUS_ERROR)
     {
         $statusQualMapping = [
             'INF' => Result::STATUS_INFO,
@@ -208,6 +260,8 @@ abstract class StandardResponseHandler implements MessageResponseHandler
 
         if (array_key_exists($qualifier, $statusQualMapping)) {
             $status = $statusQualMapping[$qualifier];
+        } elseif (is_null($qualifier)) {
+            $status = $defaultStatus;
         } else {
             $status = Result::STATUS_UNKNOWN;
         }

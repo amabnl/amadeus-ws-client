@@ -1,8 +1,32 @@
-# Release 1.2.0 (Unreleased)
+# Release 1.3.0 (UNRELEASED)
+* Added support for Multiple Office ID's in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/44) - Michal Hernas
+* Added support for Manual Commission elements in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/45)
+* Added support for Service Fee indicator in Form of Payment elements in ``PNR_AddMultiElements``
+* Added ``getLastRequestHeaders()`` and ``getLastResponseHeaders()`` methods (https://github.com/amabnl/amadeus-ws-client/issues/47)
+* Automatically add a Received From element when not explicitly provided while calling the ``pnrAddMultiElements()`` method (https://github.com/amabnl/amadeus-ws-client/issues/50).
+* Added support for recognizing ``general`` errors in PNR_Reply versions 14.1 and lower (https://github.com/amabnl/amadeus-ws-client/issues/51).
+* Implemented ``Ticket_CheckEligibility`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+* Implemented ``Ticket_ATCShopperMasterPricerTravelBoardSearch`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+* Implemented ``Ticket_RepricePNRWithBookingClass`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+* Implemented ``Ticket_ReissueConfirmedPricing`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+* Implemented ``Ticket_CreateTSMFareElement`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+* Refactored ``Amadeus\Client\Session\Handler\Base`` to make it more readable.
+* Refactored all parameter loading out of ``Amadeus\Client``.
+
+# Release 1.2.2 (8 March 2017)
+* Fixed bug with Soap Header 4 WSDL's in combination with OTA XSD imports causing the AMA_SecurityHostedUser:UserID classmap to point to the wrong XSD element (https://github.com/amabnl/amadeus-ws-client/issues/48)
+
+# Release 1.2.1 (6 March 2017)
+* Fixed bug with ``Security_Authenticate`` message sending empty message when the Authentication parameters were provided as per the documentation (https://github.com/amabnl/amadeus-ws-client/issues/40)
+
+# Release 1.2.0 (23 February 2017)
+* Fixed bug with Corporate Unifare pricing in ``Fare_MasterPricerTravelBoardSearch`` and ``Fare_MasterPricerCalendar`` (https://github.com/amabnl/amadeus-ws-client/pull/41) - Michal Hernas
 * Added support for requesting rules for specific Fare Components after a pricing request in ``Fare_CheckRules`` (https://github.com/amabnl/amadeus-ws-client/issues/21)
 * Added support for requesting parametrized Fare Families in ``Fare_MasterPricerTravelBoardSearch`` and ``Fare_MasterPricerCalendar`` (https://github.com/amabnl/amadeus-ws-client/issues/31)
 * Added a Client parameter to disable the population of the XML string in the Result object (https://github.com/amabnl/amadeus-ws-client/issues/33)
 * Support for multiple ``optionCode`` in ``PNR_AddMultiElements`` and ``PNR_Cancel`` messages (https://github.com/amabnl/amadeus-ws-client/issues/34)
+* Support for Currency Conversion in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/issues/35)
+* Support for Fee ID fare options in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/36) - Michal Hernas
 * ``Queue_List``: added new request options:
     - Search Criteria
     - Sort by Creation, Ticketing or Departure date
@@ -13,10 +37,14 @@
 * Implemented ``Ticket_DisplayTSMFareElement`` message
 * Implemented ``DocIssuance_IssueCombined`` message
 * Implemented ``PNR_NameChange`` message
+* Implemented ``FOP_CreateFormOfPayment`` message
 * Implemented ``PointOfRef_Search`` message
 * Implemented ``Hotel_Sell`` message
 * Request Creator split up in 1 dedicated class per message.
 * Response Handler split up in 1 dedicated class per message.
+
+# Release 1.1.1 (26 January 2017)
+* Fixed a bug in Offer_ConfirmAirOffer and Offer_VerifyOffer (https://github.com/amabnl/amadeus-ws-client/issues/38).
 
 # Release 1.1.0 (19 October 2016)
 

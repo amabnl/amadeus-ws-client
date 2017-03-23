@@ -24,36 +24,25 @@ namespace Amadeus\Client\Struct\Fare;
 
 use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
-use Amadeus\Client\RequestOptions\Fare\MPPassenger;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
-use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\RequestOptions\TicketAtcShopperMpTbSearchOptions;
 use Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
  * Fare_MasterPricerTravelBoardSearch message structure
  *
+ * Also used for Fare_MasterPricerCalendar and Ticket_ATCShopperMasterPricerTravelBoardSearch
+ *
  * @package Amadeus\Client\Struct\Fare
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class MasterPricerTravelBoardSearch extends BaseWsMessage
+class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
 {
-    /**
-     * Number of seats, recommendations.
-     *
-     * @var MasterPricer\NumberOfUnit
-     */
-    public $numberOfUnit;
     /**
      * @var mixed
      */
     public $globalOptions;
-    /**
-     * Traveler Details
-     *
-     * @var MasterPricer\PaxReference[]
-     */
-    public $paxReference = [];
     /**
      * @var mixed
      */
@@ -74,10 +63,6 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
      * @var MasterPricer\FareFamilies[]
      */
     public $fareFamilies = [];
-    /**
-     * @var MasterPricer\FareOptions
-     */
-    public $fareOptions;
     /**
      * @var MasterPricer\PriceToBeat
      */
@@ -117,39 +102,30 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
      */
     public $feeOption;
     /**
-     * @var mixed
+     * @var MasterPricer\OfficeIdDetails[]
      */
     public $officeIdDetails;
 
     /**
      * MasterPricerTravelBoardSearch constructor.
      *
-     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|null $options
+     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpTbSearchOptions|null $options
      */
     public function __construct($options = null)
     {
-        if ($options instanceof FareMasterPricerTbSearch || $options instanceof FareMasterPricerCalendarOptions) {
+        if ($options instanceof FareMasterPricerTbSearch) {
             $this->loadOptions($options);
         }
     }
 
     /**
-     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions $options
+     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpTbSearchOptions $options
      */
     protected function loadOptions($options)
     {
         $this->loadNrOfPaxAndResults($options);
 
-        if ($options->doTicketabilityPreCheck === true ||
-            $this->checkAnyNotEmpty($options->corporateCodesUnifares, $options->flightOptions, $options->currencyOverride)
-        ) {
-            $this->fareOptions = new MasterPricer\FareOptions(
-                $options->flightOptions,
-                $options->corporateCodesUnifares,
-                $options->doTicketabilityPreCheck,
-                $options->currencyOverride
-            );
-        }
+        $this->loadFareOptions($options);
 
         $passengerCounter = 1;
         $infantCounter = 1;
@@ -160,6 +136,10 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
         $segmentCounter = 1;
         foreach ($options->itinerary as $itinerary) {
             $this->loadItinerary($itinerary, $segmentCounter);
+        }
+
+        foreach ($options->officeIds as $officeId) {
+            $this->loadOfficeId($officeId);
         }
 
         if ($this->checkAnyNotEmpty(
@@ -187,40 +167,11 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
     }
 
     /**
-     * @param MPPassenger $passenger
-     * @param int $counter BYREF
-     * @param int $infantCounter BYREF
+     * @param string $officeId
      */
-    protected function loadPassenger($passenger, &$counter, &$infantCounter)
+    protected function loadOfficeId($officeId)
     {
-        $isInfant = ($passenger->type === 'INF');
-
-        $paxRef = new MasterPricer\PaxReference(
-            $isInfant ? $infantCounter : $counter,
-            $isInfant,
-            $passenger->type
-        );
-
-        if ($isInfant) {
-            $infantCounter++;
-        } else {
-            $counter++;
-        }
-
-        if ($passenger->count > 1) {
-            for ($i = 2; $i <= $passenger->count; $i++) {
-                $tmpCount = ($isInfant) ? $infantCounter : $counter;
-                $paxRef->traveller[] = new MasterPricer\Traveller($tmpCount, $isInfant);
-
-                if ($isInfant) {
-                    $infantCounter++;
-                } else {
-                    $counter++;
-                }
-            }
-        }
-
-        $this->paxReference[] = $paxRef;
+        $this->officeIdDetails[] = new MasterPricer\OfficeIdDetails($officeId);
     }
 
     /**
@@ -229,7 +180,13 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
      */
     protected function loadItinerary($itineraryOptions, &$counter)
     {
-        $tmpItinerary = new MasterPricer\Itinerary($counter);
+        $segmentRef = $counter;
+
+        if (!empty($itineraryOptions->segmentReference)) {
+            $segmentRef = $itineraryOptions->segmentReference;
+        }
+
+        $tmpItinerary = new MasterPricer\Itinerary($segmentRef);
 
         $tmpItinerary->departureLocalization = new MasterPricer\DepartureLocalization(
             $itineraryOptions->departureLocation
@@ -242,20 +199,6 @@ class MasterPricerTravelBoardSearch extends BaseWsMessage
         $this->itinerary[] = $tmpItinerary;
 
         $counter++;
-    }
-
-    /**
-     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions $options
-     * @return void
-     */
-    protected function loadNrOfPaxAndResults(FareMasterPricerTbSearch $options)
-    {
-        if (is_int($options->nrOfRequestedPassengers) || is_int($options->nrOfRequestedResults)) {
-            $this->numberOfUnit = new MasterPricer\NumberOfUnit(
-                $options->nrOfRequestedPassengers,
-                $options->nrOfRequestedResults
-            );
-        }
     }
 
     /**
