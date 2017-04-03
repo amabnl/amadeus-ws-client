@@ -1,5 +1,6 @@
 # Release 1.3.0 (UNRELEASED)
 * Added support for Multiple Office ID's in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/44) - Michal Hernas
+* Added support for Progressive Legs in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/issues/55)
 * Added support for Manual Commission elements in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/45)
 * Added support for Service Fee indicator in Form of Payment elements in ``PNR_AddMultiElements``
 * Added ``getLastRequestHeaders()`` and ``getLastResponseHeaders()`` methods (https://github.com/amabnl/amadeus-ws-client/issues/47)

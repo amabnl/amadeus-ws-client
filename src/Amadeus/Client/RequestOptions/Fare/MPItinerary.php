@@ -52,6 +52,7 @@ class MPItinerary extends LoadParamsFromArray
      * @var MPLocation
      */
     public $arrivalLocation;
+
     /**
      * @var MPDate
      */

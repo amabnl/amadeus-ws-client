@@ -775,3 +775,47 @@ Request MasterPricer recommendations with Multiple Office ID's specified. The sy
             ]
         ]);
 
+Progressive legs
+================
+
+The example below illustrates a search with progressive legs range specified at itinerary level (Progressive legs range with a minimum of 0 connections and a maximum of 1 connection):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptionsFare\MPPassenger;
+    use Amadeus\Client\RequestOptionsFare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'flightOptions' => [
+            FareMasterPricerTbSearch::FLIGHTOPT_PUBLISHED
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'DEN']),
+                'arrivalLocation' => new MPLocation(['city' => 'LAX']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2015-12-11T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ]),
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'LAX']),
+                'arrivalLocation' => new MPLocation(['city' => 'BOS']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2015-12-18T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ])
+        ],
+        'progressiveLegsMin' => 0,
+        'progressiveLegsMax' => 1
+    ]);
+

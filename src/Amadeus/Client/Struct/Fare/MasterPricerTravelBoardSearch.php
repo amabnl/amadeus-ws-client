@@ -146,13 +146,17 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
             $options->cabinClass,
             $options->cabinOption,
             $options->requestedFlightTypes,
-            $options->airlineOptions
+            $options->airlineOptions,
+            $options->progressiveLegsMin,
+            $options->progressiveLegsMax
         )) {
             $this->travelFlightInfo = new MasterPricer\TravelFlightInfo(
                 $options->cabinClass,
                 $options->cabinOption,
                 $options->requestedFlightTypes,
-                $options->airlineOptions
+                $options->airlineOptions,
+                $options->progressiveLegsMin,
+                $options->progressiveLegsMax
             );
         }
 
