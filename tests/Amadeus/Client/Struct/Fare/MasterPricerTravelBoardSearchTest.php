@@ -34,6 +34,7 @@ use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\Struct\Fare\MasterPricer\BooleanExpression;
 use Amadeus\Client\Struct\Fare\MasterPricer\CabinId;
 use Amadeus\Client\Struct\Fare\MasterPricer\CompanyIdentity;
+use Amadeus\Client\Struct\Fare\MasterPricer\CustomerReferences;
 use Amadeus\Client\Struct\Fare\MasterPricer\FareFamilyInfo;
 use Amadeus\Client\Struct\Fare\MasterPricer\FirstDateTimeDetail;
 use Amadeus\Client\Struct\Fare\MasterPricer\FlightDetail;
@@ -1210,5 +1211,44 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertNull($message->itinerary[1]->timeDetails->rangeOfDate);
 
         $this->assertCount(2, $message->travelFlightInfo->unitNumberDetail);
+    }
+
+    /**
+     * 5.31 Operation: 02.31 Flight Option - DK number (customer identification)
+     */
+    public function testCanMakeMessageWithDkNumber()
+    {
+        $opt = new FareMasterPricerTbSearch([
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'PAR']),
+                    'arrivalLocation' => new MPLocation(['city' => 'PPT']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2012-08-10T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ]),
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'PPT']),
+                    'arrivalLocation' => new MPLocation(['city' => 'PAR']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2012-08-20T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'dkNumber' => 'AA1234567890123456789Z01234567890'
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertCount(1, $message->customerRef->customerReferences);
+        $this->assertEquals('AA1234567890123456789Z01234567890', $message->customerRef->customerReferences[0]->referenceNumber);
+        $this->assertEquals(CustomerReferences::QUAL_AGENCY_GROUPING_ID, $message->customerRef->customerReferences[0]->referenceQualifier);
     }
 }

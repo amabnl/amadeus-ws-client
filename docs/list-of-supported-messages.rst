@@ -8,8 +8,7 @@ This is the list of messages that are at least partially supported at this time:
 - Security_SignOut
 - PNR_Retrieve
 - PNR_RetrieveAndDisplay
-- PNR_AddMultiElements (pnrCreate to create a PNR from scratch)
-- PNR_AddMultiElements (possibility to do actionCode operations on a PNR in context without further actions)
+- PNR_AddMultiElements *(both a dedicated PNR creation message and a "pure" PNR_AddMultiElements)*
 - PNR_Cancel
 - PNR_DisplayHistory
 - PNR_TransferOwnership
@@ -81,6 +80,9 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Ticket_RetrieveListOfTSM
 - Ticket_AddDocNumber
 - TTR_DisplayTrip
+- DocRefund_InitRefund
+- DocRefund_UpdateRefund
+- DocRefund_ProcessRefund
 - Media_GetMedia
 - Service_IntegratedCatalogue
 - Service_PriceServiceViaCatalogue

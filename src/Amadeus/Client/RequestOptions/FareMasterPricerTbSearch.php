@@ -160,4 +160,11 @@ class FareMasterPricerTbSearch extends MpBaseOptions
      * @var int
      */
     public $progressiveLegsMax;
+
+    /**
+     * "DK" number / customer identification number
+     *
+     * @var string
+     */
+    public $dkNumber;
 }
