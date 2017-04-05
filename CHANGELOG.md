@@ -7,9 +7,9 @@
 * Added support for DK number (customer identification number) in ``Fare_MasterPricerTravelBoardSearch``
 * Added support for Manual Commission elements in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/45)
 * Added support for Service Fee indicator in Form of Payment elements in ``PNR_AddMultiElements``
-* Added ``getLastRequestHeaders()`` and ``getLastResponseHeaders()`` methods (https://github.com/amabnl/amadeus-ws-client/issues/47)
 * Automatically add a Received From element when not explicitly provided while calling the ``pnrAddMultiElements()`` method (https://github.com/amabnl/amadeus-ws-client/issues/50).
 * Added support for recognizing ``general`` errors in PNR_Reply versions 14.1 and lower (https://github.com/amabnl/amadeus-ws-client/issues/51)
+* Added ``getLastRequestHeaders()`` and ``getLastResponseHeaders()`` methods (https://github.com/amabnl/amadeus-ws-client/issues/47)
 * Implemented ``Ticket_CheckEligibility`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
 * Implemented ``Ticket_ATCShopperMasterPricerTravelBoardSearch`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
 * Implemented ``Ticket_RepricePNRWithBookingClass`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
