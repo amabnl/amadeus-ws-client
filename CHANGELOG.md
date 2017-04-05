@@ -1,4 +1,7 @@
-# Release 1.3.0 (UNRELEASED)
+# Release 1.4.0 (UNRELEASED)
+?
+
+# Release 1.3.0 (5 April 2017)
 * Added support for Multiple Office ID's in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/44) - Michal Hernas
 * Added support for Progressive Legs in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/issues/55)
 * Added support for DK number (customer identification number) in ``Fare_MasterPricerTravelBoardSearch``
