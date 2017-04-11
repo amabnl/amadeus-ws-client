@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
+use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest as SeatRequestOpt;
+
 /**
  * SeatGroup
  *
@@ -44,4 +46,14 @@ class SeatGroup
      * @var mixed
      */
     public $railSeatPreferences;
+
+    /**
+     * SeatGroup constructor.
+     *
+     * @param SeatRequestOpt $seatReq
+     */
+    public function __construct($seatReq)
+    {
+        $this->seatRequest = new SeatRequest($seatReq);
+    }
 }

@@ -20,35 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\RequestOptions\Pnr\Element;
 
-use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest as SeatRequestOpt;
+use Amadeus\Client\RequestOptions\Pnr\Element;
 
 /**
- * SeatRequest
+ * Seat Request
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\RequestOptions\Pnr\Element
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class SeatRequest
+class SeatRequest extends Element
 {
-    /**
-     * @var Seat
-     */
-    public $seat;
+    const TYPE_NO_SMOKING_SEAT = "NSST";
+    const TYPE_NO_SMOKING_BULKHEAD_SEAT = "NSSB";
+    const TYPE_NO_SMOKING_AISLE_SEAT = "NSSA";
+    const TYPE_NO_SMOKING_WINDOW_SEAT = "NSSW";
+    const TYPE_SMOKING_WINDOW_SEAT = "SMSW";
+    const TYPE_SMOKING_SEAT = "SMST";
+    const TYPE_SMOKING_BULKHEAD_SEAT = "SMSB";
+    const TYPE_SMOKING_AISLE_SEAT = "SMSA";
+    const TYPE_PRE_RESERVED_SEAT = "SEAT";
+    const TYPE_SEAT_REQUEST = "RQST";
 
     /**
-     * @var Special[]
-     */
-    public $special = [];
-
-    /**
-     * SeatRequest constructor.
+     * Seat type
      *
-     * @param SeatRequestOpt $seatReq
+     * self::TYPE_*
+     *
+     * @var string
      */
-    public function __construct($seatReq)
-    {
-        $this->seat = new Seat($seatReq->type);
-    }
+    public $type;
 }

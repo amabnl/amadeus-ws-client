@@ -61,4 +61,14 @@ class Seat
      * @var string
      */
     public $offpoint;
+
+    /**
+     * Seat constructor.
+     *
+     * @param string $type
+     */
+    public function __construct($type)
+    {
+        $this->type = $type;
+    }
 }

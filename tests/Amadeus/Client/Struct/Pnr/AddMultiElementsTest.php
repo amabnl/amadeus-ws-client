@@ -32,6 +32,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element\FrequentFlyer;
 use Amadeus\Client\RequestOptions\Pnr\Element\MiscellaneousRemark;
 use Amadeus\Client\RequestOptions\Pnr\Element\OtherServiceInfo;
 use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
+use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest;
 use Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest;
 use Amadeus\Client\RequestOptions\Pnr\Element\Ticketing;
 use Amadeus\Client\RequestOptions\Pnr\Itinerary;
@@ -785,6 +786,52 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->commissionInfo->remitIndicator);
         $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->oldCommission);
         $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->manualCapping);
+    }
+
+    /**
+     * 5.40 Operation: Seat Request
+     *
+     * This example shows a seat request for a non-smoking aisle seat (NSSA).
+     */
+    public function testCanCreateSeatRequest()
+    {
+        $opt = new PnrAddMultiElementsOptions([
+            'actionCode' => PnrAddMultiElementsOptions::ACTION_NO_PROCESSING,
+            'elements' => [
+                new SeatRequest([
+                    'type' => SeatRequest::TYPE_NO_SMOKING_AISLE_SEAT,
+                    'references' => [
+                        new Reference([
+                            'type' => Reference::TYPE_PASSENGER_TATTOO,
+                            'id' => 1
+                        ]),
+                        new Reference([
+                            'type' => Reference::TYPE_SEGMENT_TATTOO,
+                            'id' => 1
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new AddMultiElements($opt);
+
+        $this->assertCount(1, $msg->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_SEAT_REQUEST, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->freetextData);
+        $this->assertEquals('NSSA', $msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->seat->type);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->seat->boardpoint);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->seat->offpoint);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->seat->qualifier);
+        $this->assertEmpty($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->special);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->railSeatPreferences);
+        $this->assertEmpty($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->railSeatReferenceInformation);
+
+        $this->assertCount(2, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference);
+        $this->assertEquals(1, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference[0]->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSTAT, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference[0]->qualifier);
+        $this->assertEquals(1, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference[1]->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_SEGTAT, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference[1]->qualifier);
     }
 
     public function testCanCreateGroupPnr()
