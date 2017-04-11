@@ -49,6 +49,12 @@ class SeatRequest
      */
     public function __construct($seatReq)
     {
-        $this->seat = new Seat($seatReq->type);
+        if (!empty($seatReq->type)) {
+            $this->seat = new Seat($seatReq->type);
+        }
+
+        if (!empty($seatReq->seatNumber)) {
+            $this->special[] = new Special($seatReq->seatNumber);
+        }
     }
 }

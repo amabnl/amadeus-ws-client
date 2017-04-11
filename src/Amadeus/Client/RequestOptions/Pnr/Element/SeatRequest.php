@@ -51,4 +51,11 @@ class SeatRequest extends Element
      * @var string
      */
     public $type;
+
+    /**
+     * Seat Number
+     *
+     * @var string
+     */
+    public $seatNumber;
 }
