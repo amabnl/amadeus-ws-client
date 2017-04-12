@@ -20,28 +20,43 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass;
+namespace Amadeus\Client\Struct\DocRefund;
 
 /**
- * CouponDetails
+ * ActionDetails
  *
- * @package Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass
+ * @package Amadeus\Client\Struct\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CouponDetails
+class ActionDetails
 {
     /**
-     * @var string|int
+     * @var StatusDetails
      */
-    public $cpnNumber;
+    public $statusDetails;
 
     /**
-     * CouponDetails constructor.
-     *
-     * @param string|int $cpnNumber
+     * @var StatusDetails[]
      */
-    public function __construct($cpnNumber = null)
+    public $otherDetails = [];
+
+    /**
+     * ActionDetails constructor.
+     *
+     * @param string|string[] $indicators
+     */
+    public function __construct($indicators)
     {
-        $this->cpnNumber = $cpnNumber;
+        if (is_string($indicators)) {
+            $this->statusDetails = new StatusDetails($indicators);
+        } elseif (is_array($indicators) && !empty($indicators)) {
+            foreach ($indicators as $key => $indicator) {
+                if ($key === 0) {
+                    $this->statusDetails = new StatusDetails($indicator);
+                } else {
+                    $this->otherDetails[] = new StatusDetails($indicator);
+                }
+            }
+        }
     }
 }

@@ -20,28 +20,18 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass;
+namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * CouponDetails
+ * CustomerRef
  *
- * @package Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass
+ * @package Amadeus\Client\Struct\Fare\MasterPricer
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CouponDetails
+class CustomerRef
 {
     /**
-     * @var string|int
+     * @var CustomerReferences[]
      */
-    public $cpnNumber;
-
-    /**
-     * CouponDetails constructor.
-     *
-     * @param string|int $cpnNumber
-     */
-    public function __construct($cpnNumber = null)
-    {
-        $this->cpnNumber = $cpnNumber;
-    }
+    public $customerReferences = [];
 }

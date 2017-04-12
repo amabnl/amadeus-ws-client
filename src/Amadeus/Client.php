@@ -57,7 +57,7 @@ class Client extends Base
      *
      * @var string
      */
-    const VERSION = "1.3.0-dev";
+    const VERSION = "1.4.0-dev";
 
     /**
      * An identifier string for the library (to be used in Received From entries)
@@ -963,6 +963,22 @@ class Client extends Base
         $messageOptions = []
     ) {
         $msgName = 'DocIssuance_IssueCombined';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * DocRefund_InitRefund
+     *
+     * @param RequestOptions\DocRefundInitRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function docRefundInitRefund(
+        RequestOptions\DocRefundInitRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'DocRefund_InitRefund';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }

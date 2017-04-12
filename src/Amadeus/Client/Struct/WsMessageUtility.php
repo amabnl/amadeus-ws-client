@@ -75,6 +75,28 @@ class WsMessageUtility
     }
 
     /**
+     * Check if all parameters to the current function are integers
+     *
+     * @param mixed
+     * @return boolean true if all parameters are integers
+     */
+    protected function checkAllIntegers()
+    {
+        $foundNonInt = false;
+
+        $args = func_get_args();
+
+        foreach ($args as $arg) {
+            if (!is_int($arg)) {
+                $foundNonInt = true;
+                break;
+            }
+        }
+
+        return !$foundNonInt;
+    }
+
+    /**
      * Check if any parameter to the current function is true
      *
      * @param mixed

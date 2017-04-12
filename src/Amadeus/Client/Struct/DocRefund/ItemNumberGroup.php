@@ -20,41 +20,43 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\Struct\DocRefund;
 
-use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest as SeatRequestOpt;
+use Amadeus\Client\Struct\WsMessageUtility;
 
 /**
- * SeatRequest
+ * ItemNumberGroup
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class SeatRequest
+class ItemNumberGroup extends WsMessageUtility
 {
     /**
-     * @var Seat
+     * @var SequenceNumber
      */
-    public $seat;
+    public $sequenceNumber;
 
     /**
-     * @var Special[]
+     * @var PaperCouponOfDocNumber
      */
-    public $special = [];
+    public $paperCouponOfItemNumber;
 
     /**
-     * SeatRequest constructor.
+     * ItemNumberGroup constructor.
      *
-     * @param SeatRequestOpt $seatReq
+     * @param string|int|null $itemNumber
+     * @param string|null $itemNumberType ItemNumberDetails::TYPE_*
+     * @param int|string|null $couponNumber
      */
-    public function __construct($seatReq)
+    public function __construct($itemNumber, $itemNumberType, $couponNumber)
     {
-        if (!empty($seatReq->type)) {
-            $this->seat = new Seat($seatReq->type);
+        if ($this->checkAnyNotEmpty($itemNumber, $itemNumberType)) {
+            $this->sequenceNumber = new SequenceNumber($itemNumber, $itemNumberType);
         }
 
-        if (!empty($seatReq->seatNumber)) {
-            $this->special[] = new Special($seatReq->seatNumber);
+        if (!empty($couponNumber)) {
+            $this->paperCouponOfItemNumber = new PaperCouponOfDocNumber($couponNumber);
         }
     }
 }

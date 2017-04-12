@@ -20,28 +20,29 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass;
+namespace Amadeus\Client\Struct\DocRefund;
 
 /**
- * CouponDetails
+ * SequenceNumber
  *
- * @package Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass
+ * @package Amadeus\Client\Struct\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CouponDetails
+class SequenceNumber
 {
     /**
-     * @var string|int
+     * @var ItemNumberDetails
      */
-    public $cpnNumber;
+    public $itemNumberDetails;
 
     /**
-     * CouponDetails constructor.
+     * SequenceNumber constructor.
      *
-     * @param string|int $cpnNumber
+     * @param string|int $itemNumber
+     * @param string $itemNumberType ItemNumberDetails::TYPE_*
      */
-    public function __construct($cpnNumber = null)
+    public function __construct($itemNumber, $itemNumberType = null)
     {
-        $this->cpnNumber = $cpnNumber;
+        $this->itemNumberDetails = new ItemNumberDetails($itemNumber, $itemNumberType);
     }
 }

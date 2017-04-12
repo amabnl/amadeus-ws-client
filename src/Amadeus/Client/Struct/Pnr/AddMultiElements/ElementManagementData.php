@@ -126,6 +126,13 @@ class ElementManagementData
     const SEGNAME_COMMISSION = "FM";
 
     /**
+     * STR - Seat Request
+     *
+     * @var string
+     */
+    const SEGNAME_SEAT_REQUEST = "STR";
+
+    /**
      * @var Reference
      */
     public $reference;

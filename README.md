@@ -10,7 +10,7 @@ The Amadeus documentation portal can be found at https://webservices.amadeus.com
  
 ![](http://i.imgur.com/7ZcCgnj.jpg)
 
-We currently support a full AIR booking flow based on MasterPricer, including seat selection, as well as a number of additional messages useful for automation. See the full list of supported messages [here](docs/list-of-supported-messages.rst).
+We currently support a full AIR booking flow with MasterPricer, including seat selection and ATC ticket changer flow, as well as a number of additional messages useful for automation. See the full list of supported messages [here](docs/list-of-supported-messages.rst).
 
 # Purpose
 
@@ -53,7 +53,7 @@ Once the client is installed, read the [About &amp; Get Started](docs/about-get-
 
 # Release history
 
-The current release is version 1.2.2. 
+The current release is version 1.3.0. 
 
 See the [Changelog](CHANGELOG.md).
 

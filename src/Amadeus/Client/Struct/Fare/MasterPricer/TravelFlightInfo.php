@@ -22,12 +22,14 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
+use Amadeus\Client\Struct\WsMessageUtility;
+
 /**
  * TravelFlightInfo
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
  */
-class TravelFlightInfo
+class TravelFlightInfo extends WsMessageUtility
 {
     /**
      * @var CabinId
@@ -48,6 +50,9 @@ class TravelFlightInfo
 
     public $exclusionDetail = [];
 
+    /**
+     * @var UnitNumberDetail[]
+     */
     public $unitNumberDetail = [];
 
     /**
@@ -57,9 +62,17 @@ class TravelFlightInfo
      * @param string|null $cabinOption CabinId::CABINOPT_*
      * @param string[]|null $flightTypes
      * @param array|null $airlineOptions
+     * @param int|null $progressiveLegsMin
+     * @param int|null $progressiveLegsMax
      */
-    public function __construct($cabinCode = null, $cabinOption = null, $flightTypes = null, $airlineOptions = null)
-    {
+    public function __construct(
+        $cabinCode = null,
+        $cabinOption = null,
+        $flightTypes = null,
+        $airlineOptions = null,
+        $progressiveLegsMin = null,
+        $progressiveLegsMax = null
+    ) {
         if (!is_null($cabinCode) || !is_null($cabinOption)) {
             $this->cabinId = new CabinId($cabinCode, $cabinOption);
         }
@@ -75,6 +88,17 @@ class TravelFlightInfo
                     $airlines
                 );
             }
+        }
+
+        if ($this->checkAllIntegers($progressiveLegsMin, $progressiveLegsMax)) {
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $progressiveLegsMin,
+                UnitNumberDetail::TYPE_MINIMUM_PROGRESSIVE_CONNECTIONS
+            );
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $progressiveLegsMax,
+                UnitNumberDetail::TYPE_MAXIMUM_PROGRESSIVE_CONNECTIONS
+            );
         }
     }
 }

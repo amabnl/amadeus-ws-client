@@ -20,28 +20,42 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass;
+namespace Amadeus\Client\RequestOptions\Pnr\Element;
+
+use Amadeus\Client\RequestOptions\Pnr\Element;
 
 /**
- * CouponDetails
+ * Seat Request
  *
- * @package Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass
+ * @package Amadeus\Client\RequestOptions\Pnr\Element
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CouponDetails
+class SeatRequest extends Element
 {
-    /**
-     * @var string|int
-     */
-    public $cpnNumber;
+    const TYPE_NO_SMOKING_SEAT = "NSST";
+    const TYPE_NO_SMOKING_BULKHEAD_SEAT = "NSSB";
+    const TYPE_NO_SMOKING_AISLE_SEAT = "NSSA";
+    const TYPE_NO_SMOKING_WINDOW_SEAT = "NSSW";
+    const TYPE_SMOKING_WINDOW_SEAT = "SMSW";
+    const TYPE_SMOKING_SEAT = "SMST";
+    const TYPE_SMOKING_BULKHEAD_SEAT = "SMSB";
+    const TYPE_SMOKING_AISLE_SEAT = "SMSA";
+    const TYPE_PRE_RESERVED_SEAT = "SEAT";
+    const TYPE_SEAT_REQUEST = "RQST";
 
     /**
-     * CouponDetails constructor.
+     * Seat type
      *
-     * @param string|int $cpnNumber
+     * self::TYPE_*
+     *
+     * @var string
      */
-    public function __construct($cpnNumber = null)
-    {
-        $this->cpnNumber = $cpnNumber;
-    }
+    public $type;
+
+    /**
+     * Seat Number
+     *
+     * @var string
+     */
+    public $seatNumber;
 }

@@ -44,7 +44,7 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
      */
     public $globalOptions;
     /**
-     * @var mixed
+     * @var MasterPricer\CustomerRef
      */
     public $customerRef;
     /**
@@ -146,13 +146,17 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
             $options->cabinClass,
             $options->cabinOption,
             $options->requestedFlightTypes,
-            $options->airlineOptions
+            $options->airlineOptions,
+            $options->progressiveLegsMin,
+            $options->progressiveLegsMax
         )) {
             $this->travelFlightInfo = new MasterPricer\TravelFlightInfo(
                 $options->cabinClass,
                 $options->cabinOption,
                 $options->requestedFlightTypes,
-                $options->airlineOptions
+                $options->airlineOptions,
+                $options->progressiveLegsMin,
+                $options->progressiveLegsMax
             );
         }
 
@@ -164,6 +168,8 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
         }
 
         $this->loadFareFamilies($options->fareFamilies);
+
+        $this->loadCustomerRefs($options->dkNumber);
     }
 
     /**
@@ -208,6 +214,22 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
     {
         foreach ($fareFamilies as $fareFamily) {
             $this->fareFamilies[] = new MasterPricer\FareFamilies($fareFamily);
+        }
+    }
+
+    /**
+     * Load Customer references
+     *
+     * @param string $dkNumber
+     */
+    protected function loadCustomerRefs($dkNumber)
+    {
+        if (!is_null($dkNumber)) {
+            $this->customerRef = new MasterPricer\CustomerRef();
+            $this->customerRef->customerReferences[] = new MasterPricer\CustomerReferences(
+                $dkNumber,
+                MasterPricer\CustomerReferences::QUAL_AGENCY_GROUPING_ID
+            );
         }
     }
 }

@@ -41,7 +41,7 @@ class PricePNRWithLowerFaresConv extends BaseConverter
      */
     public function convert($requestOptions, $version)
     {
-        if ($version < 13) {
+        if (floatval($version) < floatval(13)) {
             return new Struct\Fare\PricePNRWithLowerFares12($requestOptions);
         } else {
             return new Struct\Fare\PricePNRWithLowerFares13($requestOptions);

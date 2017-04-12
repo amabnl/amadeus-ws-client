@@ -20,55 +20,42 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\Struct\DocRefund;
 
 /**
- * Seat
+ * StatusDetails
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Seat
+class StatusDetails
 {
-    /**
-     * @var string
-     */
-    public $qualifier;
+    const INDICATOR_ATC_REFUND = "ATC";
+    const INDICATOR_ATC_REFUND_INVOLUNTARY = "ATI";
+    const INDICATOR_COVER_ADDITIONAL_EXPENDITURE = "COV";
+    const INDICATOR_EMD_TICKET_NUMBER = "EMD";
+    const INDICATOR_INVOLUNTARY_NO_REASON = "I";
+    const INDICATOR_NON_REFUNDABLE_INDICATORS_BYPASS = "NRF";
+    const INDICATOR_NOT_REPORTED_REFUND = "NRP";
+    const INDICATOR_NO_SHOW = "NS";
+    const INDICATOR_ZERO_REFUND = "NUL";
+    const INDICATOR_HOLD_FOR_FUTURE_USE= "RTF";
+    const INDICATOR_TAXES = "TAX";
 
     /**
-     *
-     * NSST No smoking seat
-     * NSSB No smoking bulkhead seat
-     * NSSA No smoking aisle seat
-     * NSSW No smoking window seat
-     * SMSW Smoking window seat
-     * SMST Smoking seat
-     * SMSB Smoking bulkhead seat
-     * SMSA Smoking aisle seat
-     * SEAT Pre-reserved seat with boarding pass issued or to be issued
-     * RQST Seat request - include seat number preference
+     * self::INDICATOR_*
      *
      * @var string
      */
-    public $type;
+    public $indicator;
 
     /**
-     * @var string
-     */
-    public $boardpoint;
-
-    /**
-     * @var string
-     */
-    public $offpoint;
-
-    /**
-     * Seat constructor.
+     * StatusDetails constructor.
      *
-     * @param string $type
+     * @param string $option self::INDICATOR_*
      */
-    public function __construct($type)
+    public function __construct($option)
     {
-        $this->type = $type;
+        $this->indicator = $option;
     }
 }

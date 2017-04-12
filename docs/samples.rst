@@ -1858,6 +1858,73 @@ Document Receipts option (TTP/TTM/TRP):
         ])
     );
 
+*********
+DocRefund
+*********
+
+--------------------
+DocRefund_InitRefund
+--------------------
+
+ATC refund on a ticket:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundInitRefundOptions;
+
+    $refundResponse = $client->docRefundInitRefund(
+        new DocRefundInitRefundOptions([
+            'ticketNumber' => '5272404450587',
+            'actionCodes' => [
+                DocRefundInitRefundOptions::ACTION_ATC_REFUND
+            ]
+        ])
+    );
+
+
+ATC refund with hold-for-future-use option:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundInitRefundOptions;
+
+    $refundResponse = $client->docRefundInitRefund(
+        new DocRefundInitRefundOptions([
+            'ticketNumber' => '5272404450587',
+            'actionCodes' => [
+                DocRefundInitRefundOptions::ACTION_ATC_REFUND,
+                DocRefundInitRefundOptions::ACTION_HOLD_FOR_FUTURE_USE
+            ]
+        ])
+    );
+
+
+Redisplay an already processed refund:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundInitRefundOptions;
+
+    $refundResponse = $client->docRefundInitRefund(
+        new DocRefundInitRefundOptions([
+            'itemNumber' => 2
+        ])
+    );
+
+
+Refund with item number and coupon number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundInitRefundOptions;
+
+    $refundResponse = $client->docRefundInitRefund(
+        new DocRefundInitRefundOptions([
+            'itemNumber' => '022431',
+            'itemNumberType' => DocRefundInitRefundOptions::TYPE_FROM_NUMBER,
+            'couponNumber' => 1
+        ])
+    );
 
 
 *******
@@ -1876,6 +1943,7 @@ Price all services in PNR without any option:
 
     $pricingResponse = $client->serviceIntegratedPricing(new ServiceIntegratedPricingOptions());
 
+
 Override the validating carrier while pricing ancillary services:
 
 .. code-block:: php
@@ -1887,6 +1955,7 @@ Override the validating carrier while pricing ancillary services:
             'validatingCarrier' => 'BA'
         ])
     );
+
 
 Price a single Service, for a single flight and a single passenger:
 
@@ -1914,6 +1983,7 @@ Price a single Service, for a single flight and a single passenger:
         ])
     );
 
+
 Override the pricing date:
 
 .. code-block:: php
@@ -1930,6 +2000,7 @@ Override the pricing date:
         ])
     );
 
+
 Override the point of Sale:
 
 .. code-block:: php
@@ -1942,6 +2013,7 @@ Override the point of Sale:
         ])
     );
 
+
 Award Pricing option:
 
 .. code-block:: php
@@ -1953,6 +2025,7 @@ Award Pricing option:
             'awardPricing' => ServiceIntegratedPricingOptions::AWARDPRICING_MILES
         ])
     );
+
 
 Assign an account code to a passenger:
 

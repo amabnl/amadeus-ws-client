@@ -77,13 +77,12 @@ class DataElementsIndiv
     public $optionElement;
     public $printer;
     /**
+     * This group handles Seat Request with possibly rail preferences
+     *
      * @var SeatGroup
      */
     public $seatGroup;
     public $entity;
-    public $seatRequest;
-    public $railSeatReferenceInformation;
-    public $railSeatPreferences;
     public $fareElement;
     public $fareDiscount;
     public $manualFareDocument;
@@ -255,6 +254,10 @@ class DataElementsIndiv
                 /** @var Element\ManualCommission $element */
                 $this->commission = new Commission($element);
                 break;
+            case 'SeatRequest':
+                /** @var Element\SeatRequest $element */
+                $this->seatGroup = new SeatGroup($element);
+                break;
             default:
                 throw new InvalidArgumentException('Element type '.$elementType.' is not supported');
         }
@@ -282,7 +285,8 @@ class DataElementsIndiv
             'Address' => null, // Special case - the type is a parameter.
             'FrequentFlyer' => ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST,
             'OtherServiceInfo' => ElementManagementData::SEGNAME_OTHER_SERVICE_INFORMATION,
-            'ManualCommission' => ElementManagementData::SEGNAME_COMMISSION
+            'ManualCommission' => ElementManagementData::SEGNAME_COMMISSION,
+            'SeatRequest' => ElementManagementData::SEGNAME_SEAT_REQUEST
         ];
 
         if (array_key_exists($elementType, $sourceArray)) {

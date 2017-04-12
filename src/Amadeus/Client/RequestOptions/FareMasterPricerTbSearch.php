@@ -140,4 +140,31 @@ class FareMasterPricerTbSearch extends MpBaseOptions
      * @var string[]
      */
     public $officeIds = [];
+
+    /**
+     * Progressive legs enables to request a range of number of connections
+     * relative to the minimum connections that exist on Journey Server.
+     *
+     * Enter the minimum amount of allowed progressive legs here.
+     *
+     * @var int
+     */
+    public $progressiveLegsMin;
+
+    /**
+     * Progressive legs enables to request a range of number of connections
+     * relative to the minimum connections that exist on Journey Server.
+     *
+     * Enter the maximum amount of allowed progressive legs here.
+     *
+     * @var int
+     */
+    public $progressiveLegsMax;
+
+    /**
+     * "DK" number / customer identification number
+     *
+     * @var string
+     */
+    public $dkNumber;
 }
