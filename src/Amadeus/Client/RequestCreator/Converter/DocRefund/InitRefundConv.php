@@ -20,28 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass;
+namespace Amadeus\Client\RequestCreator\Converter\DocRefund;
+
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\DocRefundInitRefundOptions;
+use Amadeus\Client\Struct;
 
 /**
- * CouponDetails
+ * DocRefund_InitRefund request converter
  *
- * @package Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass
+ * @package Amadeus\Client\RequestCreator\Converter\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CouponDetails
+class InitRefundConv extends BaseConverter
 {
     /**
-     * @var string|int
+     * @param DocRefundInitRefundOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\DocRefund\InitRefund
      */
-    public $cpnNumber;
-
-    /**
-     * CouponDetails constructor.
-     *
-     * @param string|int $cpnNumber
-     */
-    public function __construct($cpnNumber = null)
+    public function convert($requestOptions, $version)
     {
-        $this->cpnNumber = $cpnNumber;
+        return new Struct\DocRefund\InitRefund($requestOptions);
     }
 }

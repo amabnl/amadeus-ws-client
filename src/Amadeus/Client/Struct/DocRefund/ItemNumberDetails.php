@@ -20,28 +20,41 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass;
+namespace Amadeus\Client\Struct\DocRefund;
 
 /**
- * CouponDetails
+ * ItemNumberDetails
  *
- * @package Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass
+ * @package Amadeus\Client\Struct\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CouponDetails
+class ItemNumberDetails
 {
+    const TYPE_FROM_NUMBER = "FRM";
+    const TYPE_TRANSMISSION_CONTROL_NUMBER = "TCN";
+    const TYPE_TO_NUMBER = "TO";
+
     /**
      * @var string|int
      */
-    public $cpnNumber;
+    public $number;
 
     /**
-     * CouponDetails constructor.
+     * self::TYPE_*
      *
-     * @param string|int $cpnNumber
+     * @var string
      */
-    public function __construct($cpnNumber = null)
+    public $type;
+
+    /**
+     * ItemNumberDetails constructor.
+     *
+     * @param int|string $number
+     * @param string|null $type self::TYPE_*
+     */
+    public function __construct($number, $type = null)
     {
-        $this->cpnNumber = $cpnNumber;
+        $this->number = $number;
+        $this->type = $type;
     }
 }

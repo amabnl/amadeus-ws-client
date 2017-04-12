@@ -987,6 +987,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("UNABLE TO PROCESS - EDIFACT EROR", $result->messages[0]->text);
     }
 
+    public function testCanHandleDocRefundInitRefundErrorResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyDocRefundInitRefundErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'DocRefund_InitRefund');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('25677', $result->messages[0]->code);
+        $this->assertEquals("ATC REFUND NOT AUTHORIZED", $result->messages[0]->text);
+    }
+
     public function testCanHandleTicketCreateTSTFromPricingErrResponse()
     {
         $respHandler = new ResponseHandler\Base();

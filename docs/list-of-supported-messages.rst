@@ -46,6 +46,7 @@ This is the list of messages that are at least partially supported at this time:
 - DocIssuance_IssueTicket
 - DocIssuance_IssueMiscellaneousDocuments
 - DocIssuance_IssueCombined
+- DocRefund_InitRefund
 - Service_IntegratedPricing
 - Offer_CreateOffer
 - Offer_VerifyOffer
@@ -80,7 +81,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Ticket_RetrieveListOfTSM
 - Ticket_AddDocNumber
 - TTR_DisplayTrip
-- DocRefund_InitRefund
 - DocRefund_UpdateRefund
 - DocRefund_ProcessRefund
 - Media_GetMedia

@@ -1,5 +1,6 @@
 # Release 1.4.0 (UNRELEASED)
 * Added support for Seat Request elements in in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/64/)
+* Implemented ``DocRefund_InitRefund`` (https://github.com/amabnl/amadeus-ws-client/issues/56)
 
 # Release 1.3.0 (5 April 2017)
 * Added support for Multiple Office ID's in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/44) - Michal Hernas

@@ -20,28 +20,33 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass;
+namespace Amadeus\Client\Struct\DocRefund;
 
 /**
- * CouponDetails
+ * TicketNumberGroup
  *
- * @package Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass
+ * @package Amadeus\Client\Struct\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CouponDetails
+class TicketNumberGroup
 {
     /**
-     * @var string|int
+     * @var DocumentNumberDetails
      */
-    public $cpnNumber;
+    public $documentNumberDetails;
 
     /**
-     * CouponDetails constructor.
-     *
-     * @param string|int $cpnNumber
+     * @var PaperCouponOfDocNumber[]
      */
-    public function __construct($cpnNumber = null)
+    public $paperCouponOfDocNumber = [];
+
+    /**
+     * TicketNumberGroup constructor.
+     *
+     * @param string $ticketNumber
+     */
+    public function __construct($ticketNumber)
     {
-        $this->cpnNumber = $cpnNumber;
+        $this->documentNumberDetails = new DocumentNumberDetails($ticketNumber);
     }
 }

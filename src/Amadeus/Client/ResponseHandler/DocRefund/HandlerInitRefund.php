@@ -20,28 +20,26 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass;
+namespace Amadeus\Client\ResponseHandler\DocRefund;
+
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * CouponDetails
+ * HandlerInitRefund
  *
- * @package Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass
+ * @package Amadeus\Client\ResponseHandler\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class CouponDetails
+class HandlerInitRefund extends StandardResponseHandler
 {
     /**
-     * @var string|int
+     * @param SendResult $response
+     * @return Result
      */
-    public $cpnNumber;
-
-    /**
-     * CouponDetails constructor.
-     *
-     * @param string|int $cpnNumber
-     */
-    public function __construct($cpnNumber = null)
+    public function analyze(SendResult $response)
     {
-        $this->cpnNumber = $cpnNumber;
+        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
     }
 }

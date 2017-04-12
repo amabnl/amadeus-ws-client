@@ -3991,6 +3991,67 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendDocRefundInitRefund()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummydocrefundinitrefundresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\DocRefund\InitRefund(
+            new Client\RequestOptions\DocRefundInitRefundOptions([
+                'ticketNumber' => '5272404450587',
+                'actionCodes' => [
+                    Client\RequestOptions\DocRefundInitRefundOptions::ACTION_ATC_REFUND
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('DocRefund_InitRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['DocRefund_InitRefund' => "14.1"]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'DocRefund_InitRefund')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->docRefundInitRefund(
+            new Client\RequestOptions\DocRefundInitRefundOptions([
+                'ticketNumber' => '5272404450587',
+                'actionCodes' => [
+                    Client\RequestOptions\DocRefundInitRefundOptions::ACTION_ATC_REFUND
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     /**
      * Testing the scenario where a user requests no responseXML string in the Result object.
      */
