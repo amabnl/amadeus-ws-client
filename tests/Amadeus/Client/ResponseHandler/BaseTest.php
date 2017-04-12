@@ -1002,6 +1002,22 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("ATC REFUND NOT AUTHORIZED", $result->messages[0]->text);
     }
 
+
+    public function testCanHandleDocRefundUpdateRefundErrorResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyDocRefundUpdateRefundErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'DocRefund_UpdateRefund');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('2213', $result->messages[0]->code);
+        $this->assertEquals("INVALID FORM OF PAYMENT", $result->messages[0]->text);
+    }
+
     public function testCanHandleTicketCreateTSTFromPricingErrResponse()
     {
         $respHandler = new ResponseHandler\Base();
