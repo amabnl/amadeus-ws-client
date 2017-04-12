@@ -1,0 +1,14 @@
+<Fare_PricePNRWithBookingClassReply xmlns="http://xml.amadeus.com/TPCBRR_07_3_1A">
+    <applicationError>
+        <applicationErrorInfo>
+            <applicationErrorDetail>
+                <applicationErrorCode>00911</applicationErrorCode>
+                <codeListQualifier>EC</codeListQualifier>
+                <codeListResponsibleAgency>1A</codeListResponsibleAgency>
+            </applicationErrorDetail>
+        </applicationErrorInfo>
+        <errorText>
+            <errorFreeText>NO TICKETABLE VALIDATING CARRIER</errorFreeText>
+        </errorText>
+    </applicationError>
+</Fare_PricePNRWithBookingClassReply>

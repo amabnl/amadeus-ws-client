@@ -38,17 +38,33 @@ class HandlerPricePNRWithBookingClass extends StandardResponseHandler
     const Q_ERR_CAT = "//m:applicationError//m:errorOrWarningCodeDetails/m:errorDetails/m:errorCategory";
     const Q_ERR_MSG = "//m:applicationError/m:errorWarningDescription/m:freeText";
 
+
+    const Q_OLD_ERR_CODE = "//m:applicationError//m:applicationErrorDetail/m:applicationErrorCode";
+    const Q_OLD_ERR_CAT = "//m:applicationError//m:applicationErrorDetail/m:codeListQualifier";
+    const Q_OLD_ERR_MSG = "//m:applicationError/m:errorText/m:errorFreeText";
+
     /**
      * @param SendResult $response
      * @return Result
      */
     public function analyze(SendResult $response)
     {
-        return $this->analyzeWithErrCodeCategoryMsgQuery(
+        $result = $this->analyzeWithErrCodeCategoryMsgQuery(
             $response,
             self::Q_ERR_CODE,
             self::Q_ERR_CAT,
             self::Q_ERR_MSG
         );
+
+        if ($result->status === Result::STATUS_OK) {
+            $result = $this->analyzeWithErrCodeCategoryMsgQuery(
+                $response,
+                self::Q_OLD_ERR_CODE,
+                self::Q_OLD_ERR_CAT,
+                self::Q_OLD_ERR_MSG
+            );
+        }
+
+        return $result;
     }
 }
