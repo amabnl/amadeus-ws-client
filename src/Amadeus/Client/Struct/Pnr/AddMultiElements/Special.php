@@ -53,4 +53,16 @@ class Special
      * @var string
      */
     public $seatType;
+
+    /**
+     * Special constructor.
+     *
+     * @param string $data
+     * @param string|null $seatType
+     */
+    public function __construct($data, $seatType = null)
+    {
+        $this->data = $data;
+        $this->seatType = $seatType;
+    }
 }

@@ -546,6 +546,32 @@ Seat request for a non-smoking aisle seat (NSSA) for passenger with tattoo 1 and
         ]
     ]);
 
+Request seat 13f for passenger with tattoo 1 and segment with tattoo 1.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $opt = new PnrAddMultiElementsOptions([
+        'elements' => [
+            new SeatRequest([
+                'seatNumber' => '13f',
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
+                        'id' => 1
+                    ]),
+                    new Reference([
+                        'type' => Reference::TYPE_SEGMENT_TATTOO,
+                        'id' => 1
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
 Group PNR
 =========
 
