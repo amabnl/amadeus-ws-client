@@ -20,38 +20,40 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Hotel\Sell;
+namespace Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * DeliveringSystem
+ * HotelReference
  *
- * @package Amadeus\Client\Struct\Hotel\Sell
+ * @package Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DeliveringSystem
+class HotelReference extends LoadParamsFromArray
 {
-    const COMPANY_ERETAIL = "AERE";
-    const COMPANY_ETRAVEL_MANAGEMENT = "AETM";
-    const COMPANY_COMMAND_PAGE = "COMM";
-    const COMPANY_SELL2_SELL_CONNECT = "SECO";
-    const COMPANY_SELLING_PLATFORM_CLASSIC = "SELL";
-    const COMPANY_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const COMPANY_WEBSERVICES = "WEBS";
-
     /**
-     * self::COMPANY_*
-     *
      * @var string
      */
-    public $companyId;
+    public $chainCode;
 
     /**
-     * DeliveringSystem constructor.
-     *
-     * @param string $companyId
+     * @var string
      */
-    public function __construct($companyId = self::COMPANY_WEBSERVICES)
-    {
-        $this->companyId = $companyId;
-    }
+    public $cityCode;
+
+    /**
+     * @var string
+     */
+    public $name;
+
+    /**
+     * @var string
+     */
+    public $hotelCode;
+
+    /**
+     * @var string
+     */
+    public $codeContext;
 }

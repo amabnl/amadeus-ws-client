@@ -20,38 +20,43 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Hotel\Sell;
+namespace Amadeus\Client\Struct\Hotel\MultiSingleAvailability;
+
+use Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail\Room;
 
 /**
- * DeliveringSystem
+ * RoomStayCandidate
  *
- * @package Amadeus\Client\Struct\Hotel\Sell
+ * @package Amadeus\Client\Struct\Hotel\MultiSingleAvailability
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DeliveringSystem
+class RoomStayCandidate
 {
-    const COMPANY_ERETAIL = "AERE";
-    const COMPANY_ETRAVEL_MANAGEMENT = "AETM";
-    const COMPANY_COMMAND_PAGE = "COMM";
-    const COMPANY_SELL2_SELL_CONNECT = "SECO";
-    const COMPANY_SELLING_PLATFORM_CLASSIC = "SELL";
-    const COMPANY_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const COMPANY_WEBSERVICES = "WEBS";
+    /**
+     * @var int
+     */
+    public $RoomID;
 
     /**
-     * self::COMPANY_*
-     *
-     * @var string
+     * @var int
      */
-    public $companyId;
+    public $Quantity;
 
     /**
-     * DeliveringSystem constructor.
-     *
-     * @param string $companyId
+     * @var GuestCounts
      */
-    public function __construct($companyId = self::COMPANY_WEBSERVICES)
+    public $GuestCounts;
+
+    /**
+     * RoomStayCandidate constructor.
+     *
+     * @param Room $room
+     */
+    public function __construct(Room $room)
     {
-        $this->companyId = $companyId;
+        $this->RoomID = $room->id;
+        $this->Quantity = $room->amount;
+
+        $this->GuestCounts = new GuestCounts($room->guestsIsPerRoom, $room->guests);
     }
 }

@@ -20,38 +20,21 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Hotel\Sell;
+namespace Amadeus\Client\Session\MsgClassmap;
 
 /**
- * DeliveringSystem
+ * LoadInterface
  *
- * @package Amadeus\Client\Struct\Hotel\Sell
+ * @package Amadeus\Client\Session\MsgClassmap
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DeliveringSystem
+interface LoadInterface
 {
-    const COMPANY_ERETAIL = "AERE";
-    const COMPANY_ETRAVEL_MANAGEMENT = "AETM";
-    const COMPANY_COMMAND_PAGE = "COMM";
-    const COMPANY_SELL2_SELL_CONNECT = "SECO";
-    const COMPANY_SELLING_PLATFORM_CLASSIC = "SELL";
-    const COMPANY_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const COMPANY_WEBSERVICES = "WEBS";
-
     /**
-     * self::COMPANY_*
+     * Loads extra class map entries for a given message and version
      *
-     * @var string
+     * @param string|float $version
+     * @return array
      */
-    public $companyId;
-
-    /**
-     * DeliveringSystem constructor.
-     *
-     * @param string $companyId
-     */
-    public function __construct($companyId = self::COMPANY_WEBSERVICES)
-    {
-        $this->companyId = $companyId;
-    }
+    public static function loadClassMapForMessage($version);
 }

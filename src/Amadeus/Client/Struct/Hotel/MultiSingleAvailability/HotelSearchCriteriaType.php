@@ -20,57 +20,49 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Result;
+namespace Amadeus\Client\Struct\Hotel\MultiSingleAvailability;
+
+use Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail\Criteria;
 
 /**
- * NotOk
+ * HotelSearchCriteriaType
  *
- * @package Amadeus\Client\Result
+ * @package Amadeus\Client\Struct\Hotel\MultiSingleAvailability
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class NotOk
+class HotelSearchCriteriaType
 {
     /**
-     * Error/warning code
-     *
-     * @var mixed
+     * @var Criterion[]
      */
-    public $code;
+    public $Criterion = [];
 
     /**
-     * Message
-     *
-     * @var string
+     * @var bool
      */
-    public $text;
+    public $BestOnlyIndicator;
 
     /**
-     * Error/warning level
-     *
-     * @var string
+     * @var bool
      */
-    public $level;
+    public $AvailableOnlyIndicator;
+
+    public $TotalAfterTaxOnlyInd;
 
     /**
-     * Source of error/warning
+     * HotelSearchCriteriaType constructor.
      *
-     * @var string
+     * @param Criteria[] $criteria
+     * @param bool $bestOnly
+     * @param bool $availableOnly
      */
-    public $source;
-
-    /**
-     * NotOk constructor.
-     *
-     * @param string|int|null $code
-     * @param string|null $text
-     * @param string|null $level
-     * @param string|null $source
-     */
-    public function __construct($code = null, $text = null, $level = null, $source = null)
+    public function __construct($criteria, $bestOnly, $availableOnly)
     {
-        $this->code = $code;
-        $this->text = $text;
-        $this->level = $level;
-        $this->source = $source;
+        $this->BestOnlyIndicator = $bestOnly;
+        $this->AvailableOnlyIndicator = $availableOnly;
+
+        foreach ($criteria as $criterion) {
+            $this->Criterion[] = new Criterion($criterion);
+        }
     }
 }

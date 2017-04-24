@@ -20,38 +20,36 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Hotel\Sell;
+namespace Amadeus\Client\Struct\Hotel\MultiSingleAvailability;
+
+use Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail\Guest;
 
 /**
- * DeliveringSystem
+ * GuestCount
  *
- * @package Amadeus\Client\Struct\Hotel\Sell
+ * @package Amadeus\Client\Struct\Hotel\MultiSingleAvailability
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DeliveringSystem
+class GuestCount
 {
-    const COMPANY_ERETAIL = "AERE";
-    const COMPANY_ETRAVEL_MANAGEMENT = "AETM";
-    const COMPANY_COMMAND_PAGE = "COMM";
-    const COMPANY_SELL2_SELL_CONNECT = "SECO";
-    const COMPANY_SELLING_PLATFORM_CLASSIC = "SELL";
-    const COMPANY_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const COMPANY_WEBSERVICES = "WEBS";
+    public $AgeQualifyingCode;
+
+    public $Age;
+
+    public $Count;
+
+    public $AgeBucket;
+
+    public $ResGuestRPH;
 
     /**
-     * self::COMPANY_*
+     * GuestCount constructor.
      *
-     * @var string
+     * @param Guest $guest
      */
-    public $companyId;
-
-    /**
-     * DeliveringSystem constructor.
-     *
-     * @param string $companyId
-     */
-    public function __construct($companyId = self::COMPANY_WEBSERVICES)
+    public function __construct(Guest $guest)
     {
-        $this->companyId = $companyId;
+        $this->AgeQualifyingCode = $guest->occupantCode;
+        $this->Count = $guest->amount;
     }
 }

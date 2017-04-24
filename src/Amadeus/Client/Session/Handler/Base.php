@@ -76,6 +76,13 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     ];
 
     /**
+     * Specific classmap additions to be loaded when certain messages are active.
+     *
+     * @var array
+     */
+    protected $messageClassmap = [];
+
+    /**
      * Status variable to know if the session is currently logged in
      *
      * @var bool

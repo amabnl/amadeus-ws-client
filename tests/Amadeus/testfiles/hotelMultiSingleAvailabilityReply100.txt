@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OTA_HotelAvailRS EchoToken="MultiSingle" PrimaryLangID="EN" Version="6.001" xmlns="http://www.opentravel.org/OTA/2003/05" schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelAvailRS.xsd">
+	<Success/>
+	<Warnings>
+		<Warning Status="1AC.1" Tag="OK" Type="3"/>
+	</Warnings>
+	<HotelStays>
+		<HotelStay RoomStayRPH="0 1 2">
+			<BasicPropertyInfo AreaID="4" ChainCode="SB" ChainName="SOFITEL" HotelCityCode="VIE" HotelCode="SBVIESOF" HotelCodeContext="1A" HotelName="SOFITEL VIENNA STEPHANSDOM" HotelSegmentCategoryCode="8" SupplierIntegrationLevel="3">
+				<Address>
+					<AddressLine>PRATERSTRASSE 1</AddressLine>
+					<CityName>VIENNA</CityName>
+					<PostalCode>1020</PostalCode>
+					<CountryName Code="AT"/>
+				</Address>
+				<RelativePosition>
+					<Transportations>
+						<Transportation TransportationCode="20"/>
+					</Transportations>
+				</RelativePosition>
+			</BasicPropertyInfo>
+		</HotelStay>
+	</HotelStays>
+	<RoomStays>
+		<RoomStay AvailabilityStatus="AvailableForSale" InfoSource="1A" RPH="0" SourceOfBusiness="Two Step.PricingOptional.PriceNotGuaranted.InvNotGuaranted">
+			<RatePlans>
+				<RatePlan AvailabilityStatus="AvailableForSale" RateIndicator="AvailableForSale" RatePlanCode="15A">
+					<Guarantee GuaranteeCode="8" GuaranteeType="Deposit">
+						<GuaranteesAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="AX"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="CA"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="DC"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="EC"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="IK"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="VI"/>
+							</GuaranteeAccepted>
+						</GuaranteesAccepted>
+					</Guarantee>
+					<CancelPenalties CancelPolicyIndicator="1">
+						<CancelPenalty PolicyCode="Cancellation"/>
+					</CancelPenalties>
+					<Commission Percent="10.00" StatusType="Commissionable"/>
+					<MealsIncluded Breakfast="0"/>
+				</RatePlan>
+			</RatePlans>
+			<RoomRates>
+				<RoomRate AvailabilityStatus="AvailableForSale" BookingCode="B1K15A" NumberOfUnits="1" RatePlanCode="15A" RoomTypeCode="B1K">
+					<Rates>
+						<Rate EffectiveDate="2013-12-28" ExpireDate="2013-12-29" RateTimeUnit="Day">
+							<Base AmountAfterTax="368.00" CurrencyCode="EUR"/>
+							<PaymentPolicies>
+								<GuaranteePayment GuaranteeType="Deposit" PaymentCode="8"/>
+							</PaymentPolicies>
+						</Rate>
+					</Rates>
+					<RoomRateDescription Name="Room B1K">
+						<Text Formatted="1">Advance Purchase Rate</Text>
+						<Text Formatted="1">SUPERIOR ROOM, queen-size bed, view of the Ferr</Text>
+						<Text Formatted="1">is wheel</Text>
+					</RoomRateDescription>
+					<Total AmountAfterTax="368.00" CurrencyCode="EUR"/>
+					<ServiceRPHs>
+						<ServiceRPH RPH="0"/>
+					</ServiceRPHs>
+				</RoomRate>
+			</RoomRates>
+			<GuestCounts>
+				<GuestCount AgeQualifyingCode="10" Count="1"/>
+			</GuestCounts>
+			<TimeSpan End="2013-12-29" Start="2013-12-28">
+				<StartDateWindow DOW="Sat"/>
+				<EndDateWindow DOW="Sun"/>
+			</TimeSpan>
+		</RoomStay>
+		<RoomStay AvailabilityStatus="AvailableForSale" InfoSource="1A" RPH="1" SourceOfBusiness="Two Step.PricingOptional.PriceNotGuaranted.InvNotGuaranted">
+			<RatePlans>
+				<RatePlan AvailabilityStatus="AvailableForSale" RateIndicator="AvailableForSale" RatePlanCode="15S">
+					<Guarantee GuaranteeCode="31" GuaranteeType="GuaranteeRequired">
+						<GuaranteesAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="AX"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="CA"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="DC"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="EC"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="IK"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="VI"/>
+							</GuaranteeAccepted>
+						</GuaranteesAccepted>
+					</Guarantee>
+					<CancelPenalties CancelPolicyIndicator="1">
+						<CancelPenalty PolicyCode="Cancellation">
+							<Deadline AbsoluteDeadline="2013-12-25T18:00:00"/>
+						</CancelPenalty>
+					</CancelPenalties>
+					<Commission Percent="10.00" StatusType="Commissionable"/>
+					<MealsIncluded Breakfast="0"/>
+				</RatePlan>
+			</RatePlans>
+			<RoomRates>
+				<RoomRate AvailabilityStatus="AvailableForSale" BookingCode="B1K15S" NumberOfUnits="1" RatePlanCode="15S" RoomTypeCode="B1K">
+					<Rates>
+						<Rate EffectiveDate="2013-12-28" ExpireDate="2013-12-29" RateTimeUnit="Day">
+							<Base AmountAfterTax="414.00" CurrencyCode="EUR"/>
+							<PaymentPolicies>
+								<GuaranteePayment GuaranteeType="GuaranteeRequired" PaymentCode="31"/>
+							</PaymentPolicies>
+						</Rate>
+					</Rates>
+					<RoomRateDescription Name="Room B1K">
+						<Text Formatted="1">Smart Rate</Text>
+						<Text Formatted="1">SUPERIOR ROOM, queen-size bed, view of the Ferr</Text>
+						<Text Formatted="1">is wheel</Text>
+					</RoomRateDescription>
+					<Total AmountAfterTax="414.00" CurrencyCode="EUR"/>
+					<ServiceRPHs>
+						<ServiceRPH RPH="0"/>
+					</ServiceRPHs>
+				</RoomRate>
+			</RoomRates>
+			<GuestCounts>
+				<GuestCount AgeQualifyingCode="10" Count="1"/>
+			</GuestCounts>
+			<TimeSpan End="2013-12-29" Start="2013-12-28">
+				<StartDateWindow DOW="Sat"/>
+				<EndDateWindow DOW="Sun"/>
+			</TimeSpan>
+		</RoomStay>
+		<RoomStay AvailabilityStatus="AvailableForSale" InfoSource="1A" RPH="2" SourceOfBusiness="Two Step.PricingOptional.PriceNotGuaranted.InvNotGuaranted">
+			<RatePlans>
+				<RatePlan AvailabilityStatus="AvailableForSale" RateIndicator="AvailableForSale" RatePlanCode="15A">
+					<Guarantee GuaranteeCode="8" GuaranteeType="Deposit">
+						<GuaranteesAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="AX"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="CA"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="DC"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="EC"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="IK"/>
+							</GuaranteeAccepted>
+							<GuaranteeAccepted>
+								<PaymentCard CardCode="VI"/>
+							</GuaranteeAccepted>
+						</GuaranteesAccepted>
+					</Guarantee>
+					<CancelPenalties CancelPolicyIndicator="1">
+						<CancelPenalty PolicyCode="Cancellation"/>
+					</CancelPenalties>
+					<Commission Percent="10.00" StatusType="Commissionable"/>
+					<MealsIncluded Breakfast="0"/>
+				</RatePlan>
+			</RatePlans>
+			<RoomRates>
+				<RoomRate AvailabilityStatus="AvailableForSale" BookingCode="A1K15A" NumberOfUnits="1" RatePlanCode="15A" RoomTypeCode="A1K">
+					<Rates>
+						<Rate EffectiveDate="2013-12-28" ExpireDate="2013-12-29" RateTimeUnit="Day">
+							<Base AmountAfterTax="400.00" CurrencyCode="EUR"/>
+							<PaymentPolicies>
+								<GuaranteePayment GuaranteeType="Deposit" PaymentCode="8"/>
+							</PaymentPolicies>
+						</Rate>
+					</Rates>
+					<RoomRateDescription Name="Room A1K">
+						<Text Formatted="1">Advance Purchase Rate</Text>
+						<Text Formatted="1">LUXURY ROOM, one king-size bed, overlooking St.</Text>
+						<Text Formatted="1">Stephen's Cathedral</Text>
+					</RoomRateDescription>
+					<Total AmountAfterTax="400.00" CurrencyCode="EUR"/>
+					<ServiceRPHs>
+						<ServiceRPH RPH="0"/>
+					</ServiceRPHs>
+				</RoomRate>
+			</RoomRates>
+			<GuestCounts>
+				<GuestCount AgeQualifyingCode="10" Count="1"/>
+			</GuestCounts>
+			<TimeSpan End="2013-12-29" Start="2013-12-28">
+				<StartDateWindow DOW="Sat"/>
+				<EndDateWindow DOW="Sun"/>
+			</TimeSpan>
+		</RoomStay>
+	</RoomStays>
+	<Services>
+		<Service ID="-" Inclusive="0" ServiceInventoryCode="3.MPT" ServiceRPH="0" Type="10"/>
+	</Services>
+</OTA_HotelAvailRS>

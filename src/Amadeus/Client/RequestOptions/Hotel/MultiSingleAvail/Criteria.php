@@ -20,38 +20,45 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Hotel\Sell;
+namespace Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * DeliveringSystem
+ * Criteria
  *
- * @package Amadeus\Client\Struct\Hotel\Sell
+ * @package Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DeliveringSystem
+class Criteria extends LoadParamsFromArray
 {
-    const COMPANY_ERETAIL = "AERE";
-    const COMPANY_ETRAVEL_MANAGEMENT = "AETM";
-    const COMPANY_COMMAND_PAGE = "COMM";
-    const COMPANY_SELL2_SELL_CONNECT = "SECO";
-    const COMPANY_SELLING_PLATFORM_CLASSIC = "SELL";
-    const COMPANY_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const COMPANY_WEBSERVICES = "WEBS";
+    /**
+     * @var bool
+     */
+    public $exactMatch;
 
     /**
-     * self::COMPANY_*
-     *
-     * @var string
+     * @var HotelReference[]
      */
-    public $companyId;
+    public $hotelReferences = [];
 
     /**
-     * DeliveringSystem constructor.
-     *
-     * @param string $companyId
+     * @var \DateTime
      */
-    public function __construct($companyId = self::COMPANY_WEBSERVICES)
-    {
-        $this->companyId = $companyId;
-    }
+    public $stayStart;
+
+    /**
+     * @var \DateTime
+     */
+    public $stayEnd;
+
+    /**
+     * @var Rates[]
+     */
+    public $rates = [];
+
+    /**
+     * @var Room[]
+     */
+    public $rooms = [];
 }

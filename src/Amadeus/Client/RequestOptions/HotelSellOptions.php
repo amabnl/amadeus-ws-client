@@ -59,6 +59,4 @@ class HotelSellOptions extends Base
      * @var Booker
      */
     public $booker;
-
-
 }

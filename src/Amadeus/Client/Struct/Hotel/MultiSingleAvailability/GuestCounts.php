@@ -20,38 +20,40 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Hotel\Sell;
+namespace Amadeus\Client\Struct\Hotel\MultiSingleAvailability;
+
+use Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail\Guest;
 
 /**
- * DeliveringSystem
+ * GuestCounts
  *
- * @package Amadeus\Client\Struct\Hotel\Sell
+ * @package Amadeus\Client\Struct\Hotel\MultiSingleAvailability
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DeliveringSystem
+class GuestCounts
 {
-    const COMPANY_ERETAIL = "AERE";
-    const COMPANY_ETRAVEL_MANAGEMENT = "AETM";
-    const COMPANY_COMMAND_PAGE = "COMM";
-    const COMPANY_SELL2_SELL_CONNECT = "SECO";
-    const COMPANY_SELLING_PLATFORM_CLASSIC = "SELL";
-    const COMPANY_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const COMPANY_WEBSERVICES = "WEBS";
+    /**
+     * @var bool
+     */
+    public $IsPerRoom;
 
     /**
-     * self::COMPANY_*
-     *
-     * @var string
+     * @var GuestCount[]
      */
-    public $companyId;
+    public $GuestCount = [];
 
     /**
-     * DeliveringSystem constructor.
+     * GuestCounts constructor.
      *
-     * @param string $companyId
+     * @param bool $isPerRoom
+     * @param Guest[] $guests
      */
-    public function __construct($companyId = self::COMPANY_WEBSERVICES)
+    public function __construct($isPerRoom, $guests)
     {
-        $this->companyId = $companyId;
+        $this->IsPerRoom = $isPerRoom;
+
+        foreach ($guests as $guest) {
+            $this->GuestCount[] = new GuestCount($guest);
+        }
     }
 }

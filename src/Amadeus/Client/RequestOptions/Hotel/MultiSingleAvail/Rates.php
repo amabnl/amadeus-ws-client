@@ -20,38 +20,48 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Hotel\Sell;
+namespace Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * DeliveringSystem
+ * Rates
  *
- * @package Amadeus\Client\Struct\Hotel\Sell
+ * @package Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DeliveringSystem
+class Rates extends LoadParamsFromArray
 {
-    const COMPANY_ERETAIL = "AERE";
-    const COMPANY_ETRAVEL_MANAGEMENT = "AETM";
-    const COMPANY_COMMAND_PAGE = "COMM";
-    const COMPANY_SELL2_SELL_CONNECT = "SECO";
-    const COMPANY_SELLING_PLATFORM_CLASSIC = "SELL";
-    const COMPANY_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const COMPANY_WEBSERVICES = "WEBS";
+    const TIMEUNIT_YEAR = "Year";
+    const TIMEUNIT_MONTH = "Month";
+    const TIMEUNIT_WEEK = "Week";
+    const TIMEUNIT_DAY = "Day";
+    const TIMEUNIT_HOUR = "Hour";
+    const TIMEUNIT_SECOND = "Second";
+    const TIMEUNIT_FULL_DURATION = "FullDuration";
+    const TIMEUNIT_MINUTE = "Minute";
 
     /**
-     * self::COMPANY_*
+     * @var double
+     */
+    public $min;
+
+    /**
+     * @var double
+     */
+    public $max;
+
+    /**
+     * self::TIMEUNIT_*
      *
      * @var string
      */
-    public $companyId;
+    public $timeUnit;
 
     /**
-     * DeliveringSystem constructor.
+     * 3-character ISO currency code
      *
-     * @param string $companyId
+     * @var string
      */
-    public function __construct($companyId = self::COMPANY_WEBSERVICES)
-    {
-        $this->companyId = $companyId;
-    }
+    public $currency;
 }

@@ -20,38 +20,44 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Hotel\Sell;
+namespace Amadeus\Client\Struct\Hotel\MultiSingleAvailability;
+
+use Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail\Segment;
 
 /**
- * DeliveringSystem
+ * AvailRequestSegment
  *
- * @package Amadeus\Client\Struct\Hotel\Sell
+ * @package Amadeus\Client\Struct\Hotel\MultiSingleAvailability
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DeliveringSystem
+class AvailRequestSegment
 {
-    const COMPANY_ERETAIL = "AERE";
-    const COMPANY_ETRAVEL_MANAGEMENT = "AETM";
-    const COMPANY_COMMAND_PAGE = "COMM";
-    const COMPANY_SELL2_SELL_CONNECT = "SECO";
-    const COMPANY_SELLING_PLATFORM_CLASSIC = "SELL";
-    const COMPANY_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const COMPANY_WEBSERVICES = "WEBS";
+    /**
+     * @var HotelSearchCriteria
+     */
+    public $HotelSearchCriteria;
 
     /**
-     * self::COMPANY_*
-     *
      * @var string
      */
-    public $companyId;
+    public $InfoSource;
+
+    public $MoreDataEchoToken;
 
     /**
-     * DeliveringSystem constructor.
+     * AvailRequestSegment constructor.
      *
-     * @param string $companyId
+     * @param Segment|null $segment
      */
-    public function __construct($companyId = self::COMPANY_WEBSERVICES)
+    public function __construct($segment = null)
     {
-        $this->companyId = $companyId;
+        if ($segment instanceof Segment) {
+            $this->InfoSource = $segment->infoSource;
+            $this->HotelSearchCriteria = new HotelSearchCriteria(
+                $segment->criteria,
+                $segment->bestOnly,
+                $segment->availableOnly
+            );
+        }
     }
 }

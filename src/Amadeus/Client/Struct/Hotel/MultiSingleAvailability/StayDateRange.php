@@ -20,57 +20,63 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Result;
+namespace Amadeus\Client\Struct\Hotel\MultiSingleAvailability;
+
+use Amadeus\Client\Struct\WsMessageUtility;
 
 /**
- * NotOk
+ * StayDateRange
  *
- * @package Amadeus\Client\Result
+ * @package Amadeus\Client\Struct\Hotel\MultiSingleAvailability
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class NotOk
+class StayDateRange extends WsMessageUtility
 {
     /**
-     * Error/warning code
-     *
-     * @var mixed
-     */
-    public $code;
-
-    /**
-     * Message
+     * yyyy-mm-dd
      *
      * @var string
      */
-    public $text;
+    public $Start;
 
     /**
-     * Error/warning level
+     * @var string
+     */
+    public $Duration;
+
+    /**
+     * yyyy-mm-dd
      *
      * @var string
      */
-    public $level;
+    public $End;
 
     /**
-     * Source of error/warning
+     * StayDateRange constructor.
      *
-     * @var string
+     * @param \DateTime $start
+     * @param \DateTime $end
      */
-    public $source;
-
-    /**
-     * NotOk constructor.
-     *
-     * @param string|int|null $code
-     * @param string|null $text
-     * @param string|null $level
-     * @param string|null $source
-     */
-    public function __construct($code = null, $text = null, $level = null, $source = null)
+    public function __construct($start, $end)
     {
-        $this->code = $code;
-        $this->text = $text;
-        $this->level = $level;
-        $this->source = $source;
+        $this->Start = $this->makeDateString($start);
+        $this->End = $this->makeDateString($end);
+    }
+
+    /**
+     * yyyy-mm-dd
+     *
+     * @param \DateTime|null $date
+     * @return string
+     */
+    protected function makeDateString($date)
+    {
+        $dateStr = '0000-00-00';
+
+        if ($date instanceof \DateTime) {
+            $dateStr = $date->format('Y-m-d');
+        }
+
+        return $dateStr;
     }
 }

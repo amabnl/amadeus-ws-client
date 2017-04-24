@@ -20,38 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Hotel\Sell;
+namespace Amadeus\Client\RequestCreator\Converter\Hotel;
+
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\HotelMultiSingleAvailOptions;
+use Amadeus\Client\Struct;
 
 /**
- * DeliveringSystem
+ * Hotel_MultiSingleAvailability request converter
  *
- * @package Amadeus\Client\Struct\Hotel\Sell
+ * @package Amadeus\Client\RequestCreator\Converter\Hotel
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DeliveringSystem
+class MultiSingleAvailabilityConv extends BaseConverter
 {
-    const COMPANY_ERETAIL = "AERE";
-    const COMPANY_ETRAVEL_MANAGEMENT = "AETM";
-    const COMPANY_COMMAND_PAGE = "COMM";
-    const COMPANY_SELL2_SELL_CONNECT = "SECO";
-    const COMPANY_SELLING_PLATFORM_CLASSIC = "SELL";
-    const COMPANY_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const COMPANY_WEBSERVICES = "WEBS";
-
     /**
-     * self::COMPANY_*
-     *
-     * @var string
+     * @param HotelMultiSingleAvailOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\Hotel\MultiSingleAvailability
      */
-    public $companyId;
-
-    /**
-     * DeliveringSystem constructor.
-     *
-     * @param string $companyId
-     */
-    public function __construct($companyId = self::COMPANY_WEBSERVICES)
+    public function convert($requestOptions, $version)
     {
-        $this->companyId = $companyId;
+        return new Struct\Hotel\MultiSingleAvailability($requestOptions);
     }
 }

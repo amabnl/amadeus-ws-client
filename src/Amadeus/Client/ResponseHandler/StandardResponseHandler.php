@@ -37,7 +37,9 @@ abstract class StandardResponseHandler implements MessageResponseHandler
     /**
      * Default namespace prefix we'll be using for xpath queries
      *
-     * Why not "m"? It's as good as any other letter.
+     * Why not "m"? It's as good as any other letter. And it's short.
+     *
+     * If you disagree, 1v1 me at the sun. In highsec, limited engagement. I don't want you blobbing me.
      */
     const XMLNS_PREFIX = "m";
 
@@ -121,6 +123,50 @@ abstract class StandardResponseHandler implements MessageResponseHandler
                     $domXpath->query($qMsg)
                 ),
                 $level
+            );
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
+     * Analyze response by looking for error, message and source with the provided XPATH queries
+     *
+     * Result status defaults to Result::STATUS_ERROR if any error is found.
+     *
+     * xpath queries must be prefixed with the namespace self::XMLNS_PREFIX
+     *
+     * @param SendResult $response
+     * @param string $qErr XPATH query for fetching error code (first node is used)
+     * @param string $qMsg XPATH query for fetching error messages (all nodes are used)
+     * @param string $qSrc XPATH query for fetching error source (first node is used)
+     * @return Result
+     */
+    protected function analyzeWithErrorCodeMsgQuerySource(SendResult $response, $qErr, $qMsg, $qSrc)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $errorCodeNodeList = $domXpath->query($qErr);
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $srcNodeList = $domXpath->query($qSrc);
+            $source = null;
+
+            if ($srcNodeList->length > 0) {
+                $source = $srcNodeList->item(0);
+            }
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $errorCodeNodeList->item(0)->nodeValue,
+                $this->makeMessageFromMessagesNodeList(
+                    $domXpath->query($qMsg)
+                ),
+                null,
+                $source
             );
         }
 

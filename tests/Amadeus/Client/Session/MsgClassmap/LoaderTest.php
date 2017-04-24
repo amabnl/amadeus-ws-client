@@ -20,38 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Hotel\Sell;
+namespace Test\Amadeus\Client\Session\MsgClassmap;
+
+use Amadeus\Client\Session\MsgClassmap\Hotel\LoaderMultiSingleAvailability;
+use Amadeus\Client\Session\MsgClassmap\Loader;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * DeliveringSystem
+ * LoaderTest
  *
- * @package Amadeus\Client\Struct\Hotel\Sell
+ * @package Test\Amadeus\Client\Session\MsgClassmap
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DeliveringSystem
+class LoaderTest extends BaseTestCase
 {
-    const COMPANY_ERETAIL = "AERE";
-    const COMPANY_ETRAVEL_MANAGEMENT = "AETM";
-    const COMPANY_COMMAND_PAGE = "COMM";
-    const COMPANY_SELL2_SELL_CONNECT = "SECO";
-    const COMPANY_SELLING_PLATFORM_CLASSIC = "SELL";
-    const COMPANY_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const COMPANY_WEBSERVICES = "WEBS";
-
-    /**
-     * self::COMPANY_*
-     *
-     * @var string
-     */
-    public $companyId;
-
-    /**
-     * DeliveringSystem constructor.
-     *
-     * @param string $companyId
-     */
-    public function __construct($companyId = self::COMPANY_WEBSERVICES)
+    public function testCanLoadHotelMultiSingleClassmap()
     {
-        $this->companyId = $companyId;
+        $msgAndVer = [
+            'PNR_Retrieve' => '14.2',
+            'Hotel_MultiSingleAvailability' => '10.0'
+        ];
+
+        $classmap = Loader::loadMessagesSpecificClasses($msgAndVer);
+
+        $expected = LoaderMultiSingleAvailability::loadClassMapForMessage('10.0');
+
+        $this->assertEquals($expected, $classmap);
     }
 }

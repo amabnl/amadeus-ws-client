@@ -20,38 +20,41 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Hotel\Sell;
+namespace Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * DeliveringSystem
+ * Segment
  *
- * @package Amadeus\Client\Struct\Hotel\Sell
+ * @package Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DeliveringSystem
+class Segment extends LoadParamsFromArray
 {
-    const COMPANY_ERETAIL = "AERE";
-    const COMPANY_ETRAVEL_MANAGEMENT = "AETM";
-    const COMPANY_COMMAND_PAGE = "COMM";
-    const COMPANY_SELL2_SELL_CONNECT = "SECO";
-    const COMPANY_SELLING_PLATFORM_CLASSIC = "SELL";
-    const COMPANY_NON_SPECIFIC_PRODUCT_FROM_SEL = "SEP";
-    const COMPANY_WEBSERVICES = "WEBS";
+    const SOURCE_LEISURE = "Leisure";
+    const SOURCE_DISTRIBUTION = "Distribution";
+    const SOURCE_MULTI_SOURCE = "MultiSource";
 
     /**
-     * self::COMPANY_*
+     * self::SOURCE_*
      *
      * @var string
      */
-    public $companyId;
+    public $infoSource;
 
     /**
-     * DeliveringSystem constructor.
-     *
-     * @param string $companyId
+     * @var bool
      */
-    public function __construct($companyId = self::COMPANY_WEBSERVICES)
-    {
-        $this->companyId = $companyId;
-    }
+    public $bestOnly;
+
+    /**
+     * @var bool
+     */
+    public $availableOnly;
+
+    /**
+     * @var Criteria[]
+     */
+    public $criteria = [];
 }

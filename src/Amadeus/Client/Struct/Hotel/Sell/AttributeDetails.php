@@ -30,10 +30,10 @@ namespace Amadeus\Client\Struct\Hotel\Sell;
  */
 class AttributeDetails
 {
-	const TYPE_BRAND = "BRA";
-	const TYPE_CORPORATION_NAME = "CORP";
-	const TYPE_SUB_BRAND = "SBR";
-	const TYPE_SUB_SUB_BRAND = "SSB";
+    const TYPE_BRAND = "BRA";
+    const TYPE_CORPORATION_NAME = "CORP";
+    const TYPE_SUB_BRAND = "SBR";
+    const TYPE_SUB_SUB_BRAND = "SSB";
 
     /**
      * self::TYPE_*

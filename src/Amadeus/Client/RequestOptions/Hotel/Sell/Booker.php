@@ -50,6 +50,4 @@ class Booker extends LoadParamsFromArray
      * @var string
      */
     public $gender;
-
-
 }
