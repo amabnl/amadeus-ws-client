@@ -47,17 +47,28 @@ class Loader
     /**
      * Load extra ClassMaps needed for the messages and versions in the WSAP
      *
-     * @param array $messagesAndVersions e.g. ['PNR_Retrieve' => '14.2', 'Security_Authenticate' => '6.1']
+     * messagesAndVersions array:
+     * [
+     *   'PNR_Retrieve' => [
+     *      'version' => '14.2',
+     *      'wsdl' => 'a88a2bde'
+     *   ],
+     *   'Security_Authenticate' => [
+     *      'version' => '6.1',
+     *      'wsdl' => 'a88a2bde'
+     *   ]
+     *
+     * @param array $messagesAndVersions
      * @return array
      */
     public static function loadMessagesSpecificClasses($messagesAndVersions)
     {
         $msgSpecificClassMap = [];
 
-        foreach ($messagesAndVersions as $message => $version) {
+        foreach ($messagesAndVersions as $message => $messageInfo) {
             $msgSpecificClassMap = array_merge(
                 $msgSpecificClassMap,
-                self::loadClassMapForMessage($message, $version)
+                self::loadClassMapForMessage($message, $messageInfo["version"])
             );
         }
 
