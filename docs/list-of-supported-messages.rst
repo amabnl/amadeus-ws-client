@@ -48,6 +48,7 @@ This is the list of messages that are at least partially supported at this time:
 - DocIssuance_IssueCombined
 - DocRefund_InitRefund
 - Service_IntegratedPricing
+- Hotel_MultiSingleAvailability
 - Hotel_Sell
 - Offer_CreateOffer
 - Offer_VerifyOffer
@@ -88,7 +89,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Service_IntegratedCatalogue
 - Service_PriceServiceViaCatalogue
 - Service_PriceIntegratedMode
-- Hotel_MultiSingleAvailability
 - Hotel_DescriptiveInfo
 - Hotel_EnhancedPricing
 - Hotel_CompleteReservationDetails

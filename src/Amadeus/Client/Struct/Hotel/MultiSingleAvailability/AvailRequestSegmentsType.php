@@ -20,44 +20,23 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Hotel\Sell;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Hotel\MultiSingleAvailability;
 
 /**
- * Booker
+ * AvailRequestSegmentsType
  *
- * @package Amadeus\Client\RequestOptions\Hotel\Sell
+ * @package Amadeus\Client\Struct\Hotel\MultiSingleAvailability
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Booker extends LoadParamsFromArray
+class AvailRequestSegmentsType
 {
     /**
-     * Number of travellers
-     *
+     * @var AvailRequestSegment[]
+     */
+    public $AvailRequestSegment = [];
+
+    /**
      * @var int
      */
-    public $travellerCount = 1;
-
-    /**
-     * @var string
-     */
-    public $firstName;
-
-    /**
-     * @var string
-     */
-    public $lastName;
-
-    /**
-     * @var string
-     */
-    public $title;
-
-    /**
-     * Gender - 'M' or 'F'
-     *
-     * @var string
-     */
-    public $gender;
+    public $MaximumWaitTime;
 }

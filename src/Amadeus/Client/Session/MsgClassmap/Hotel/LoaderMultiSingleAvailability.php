@@ -40,8 +40,9 @@ class LoaderMultiSingleAvailability implements LoadInterface
     {
         return [
             'ota_2003_05:OTA_HotelAvailRQ' => 'Amadeus\Client\Struct\Hotel\MultiSingleAvailability',
-            'ota_2003_05:AvailRequestSegment' => 'Amadeus\Client\Struct\Hotel\MultiSingleAvailability\AvailRequestSegment',
             'ota_2003_05:AvailRequestSegments' => 'Amadeus\Client\Struct\Hotel\MultiSingleAvailability\AvailRequestSegments',
+            'ota_2003_05:AvailRequestSegmentsType' => 'Amadeus\Client\Struct\Hotel\MultiSingleAvailability\AvailRequestSegmentsType',
+            'ota_2003_05:AvailRequestSegment' => 'Amadeus\Client\Struct\Hotel\MultiSingleAvailability\AvailRequestSegment',
             'ota_2003_05:Criterion' => 'Amadeus\Client\Struct\Hotel\MultiSingleAvailability\Criterion',
             'ota_2003_05:GuestCount' => 'Amadeus\Client\Struct\Hotel\MultiSingleAvailability\GuestCount',
             'ota_2003_05:GuestCounts' => 'Amadeus\Client\Struct\Hotel\MultiSingleAvailability\GuestCounts',
