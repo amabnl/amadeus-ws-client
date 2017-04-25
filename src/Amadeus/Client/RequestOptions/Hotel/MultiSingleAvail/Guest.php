@@ -22,13 +22,15 @@
 
 namespace Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail;
 
+use Amadeus\Client\LoadParamsFromArray;
+
 /**
  * Guest
  *
  * @package Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Guest
+class Guest extends LoadParamsFromArray
 {
     const OCCUPANT_OVER_21 = 1;
     const OCCUPANT_OVER_65 = 2;
