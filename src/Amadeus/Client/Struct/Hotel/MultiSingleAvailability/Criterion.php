@@ -37,10 +37,6 @@ class Criterion extends HotelSearchCriterionType
      */
     public $AlternateAvailability;
 
-    /**
-     * @var RateRange[]
-     */
-    public $RateRange = [];
 
     /**
      * Criterion constructor.

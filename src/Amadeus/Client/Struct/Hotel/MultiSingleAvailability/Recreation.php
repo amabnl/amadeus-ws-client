@@ -23,40 +23,11 @@
 namespace Amadeus\Client\Struct\Hotel\MultiSingleAvailability;
 
 /**
- * ItemSearchCriterionType
+ * Recreation
  *
  * @package Amadeus\Client\Struct\Hotel\MultiSingleAvailability
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ItemSearchCriterionType
+class Recreation
 {
-    /**
-     * @var bool
-     */
-    public $ExactMatch;
-
-    public $ImportanceType;
-
-    public $Ranking;
-
-    public $Position;
-
-    public $Address;
-
-    public $Telephone;
-
-    public $RefPoint = [];
-
-    public $CodeRef;
-
-    /**
-     * @var HotelRef[]
-     */
-    public $HotelRef = [];
-
-    public $Radius;
-
-    public $MapArea;
-
-    public $AdditionalContents;
 }

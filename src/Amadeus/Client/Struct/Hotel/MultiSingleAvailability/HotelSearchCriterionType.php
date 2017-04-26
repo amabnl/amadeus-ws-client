@@ -77,6 +77,11 @@ class HotelSearchCriterionType extends ItemSearchCriterionType
     public $RatePlanCandidates;
 
     /**
+     * @var RateRange[]
+     */
+    public $RateRange = [];
+
+    /**
      * @var Profiles
      */
     public $Profiles;
