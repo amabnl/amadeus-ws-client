@@ -749,6 +749,8 @@ class BaseTest extends BaseTestCase
         $sendResult->responseXml = $this->getTestFile('dummyHotelMultiSingleAvailabilityErrorResponse.txt');
         $sendResult->messageVersion = '10.0';
 
+        $this->markTestIncomplete('Still need a proper example of an error response');
+
         $result = $respHandler->analyzeResponse($sendResult, 'Hotel_MultiSingleAvailability');
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);

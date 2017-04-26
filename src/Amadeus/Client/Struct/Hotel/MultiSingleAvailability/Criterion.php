@@ -38,6 +38,11 @@ class Criterion extends HotelSearchCriterionType
     public $AlternateAvailability;
 
     /**
+     * @var RateRange[]
+     */
+    public $RateRange = [];
+
+    /**
      * Criterion constructor.
      *
      * @param Criteria $criterion
@@ -63,5 +68,7 @@ class Criterion extends HotelSearchCriterionType
                 $this->RoomStayCandidates->RoomStayCandidate[] = new RoomStayCandidate($room);
             }
         }
+
+        $this->AlternateAvailability = $criterion->alternateAvailability;
     }
 }

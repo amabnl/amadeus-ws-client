@@ -32,6 +32,8 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class Criteria extends LoadParamsFromArray
 {
+    const ALT_AVAIL_NEVER = "Never";
+
     /**
      * @var bool
      */
@@ -61,4 +63,11 @@ class Criteria extends LoadParamsFromArray
      * @var Room[]
      */
     public $rooms = [];
+
+    /**
+     * self::ALT_AVAIL_*
+     *
+     * @var string
+     */
+    public $alternateAvailability;
 }
