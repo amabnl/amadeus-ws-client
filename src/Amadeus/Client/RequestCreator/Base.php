@@ -123,11 +123,20 @@ class Base implements RequestCreatorInterface
      * Get the version number active in the WSDL for the given message
      *
      * @param string $messageName
-     * @return float|string
+     * @return float|string|null
      */
     protected function getActiveVersionFor($messageName)
     {
-        return $this->messagesAndVersions[$messageName];
+        $found = null;
+
+        if (
+            isset($this->messagesAndVersions[$messageName]) &&
+            isset($this->messagesAndVersions[$messageName]['version'])
+        ) {
+            $found = $this->messagesAndVersions[$messageName]['version'];
+        }
+
+        return $found;
     }
 
     /**

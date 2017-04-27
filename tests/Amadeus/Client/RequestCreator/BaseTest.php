@@ -300,7 +300,12 @@ class BaseTest extends BaseTestCase
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
             'receivedFrom' => 'some RF string',
-            'messagesAndVersions' => ['Fare_InformativeBestPricingWithoutPNR' => '14.1']
+            'messagesAndVersions' => [
+                'Fare_InformativeBestPricingWithoutPNR' => [
+                    'version' => '14.1',
+                    'wsdl' => 'dc22e4ee'
+                ]
+            ]
         ]);
 
         $rq = new Base($par);
