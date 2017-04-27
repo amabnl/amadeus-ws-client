@@ -1,5 +1,6 @@
 # Release 1.4.0 (UNRELEASED)
 * Added support for Seat Request elements in in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/64/)
+* Added support for Credit Card Holder name when adding FP elements with ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/69)
 * Implemented ``DocRefund_InitRefund`` (https://github.com/amabnl/amadeus-ws-client/issues/56)
 
 # Release 1.3.0 (5 April 2017)

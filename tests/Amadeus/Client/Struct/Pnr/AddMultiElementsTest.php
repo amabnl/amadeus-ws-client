@@ -448,7 +448,8 @@ class AddMultiElementsTest extends BaseTestCase
             'creditCardType' => 'VI',
             'creditCardNumber' => '4444333322221111',
             'creditCardExpiry' => '1017',
-            'creditCardCvcCode' => 123
+            'creditCardCvcCode' => 123,
+            'creditCardHolder' => 'BERNDMUELLER',
         ]);
 
         $requestStruct = new AddMultiElements($createPnrOptions);
@@ -463,6 +464,7 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals('1017', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->expiryDate);
         $this->assertEquals(1, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->fopSequenceNumber);
         $this->assertEquals(123, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->newFopsDetails->cvData);
+        $this->assertEquals('BERNDMUELLER', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->newFopsDetails->chdData);
     }
 
     public function testMakePnrWithFormOfPaymentCreditCardServiceFee()

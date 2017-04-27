@@ -407,7 +407,8 @@ Add an ``FP CC`` element to the PNR to perform PNR payment by Credit Card throug
                 'creditCardType' => 'VI',
                 'creditCardNumber' => '4444333322221111',
                 'creditCardExpiry' => '1017',
-                'creditCardCvcCode' => 123
+                'creditCardCvcCode' => 123,
+                'creditCardHolder' => 'BOWIE'
             ])
         ]
     ]);

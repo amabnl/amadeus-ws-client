@@ -22,13 +22,15 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
+use Amadeus\Client\Struct\WsMessageUtility;
+
 /**
  * FopExtension
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FopExtension
+class FopExtension extends WsMessageUtility
 {
     /**
      * @var int
@@ -50,10 +52,24 @@ class FopExtension
     /**
      * @param int $fopSequenceNumber
      */
-    public function __construct($fopSequenceNumber)
+
+    /**
+     * FopExtension constructor.
+     *
+     * @param int $fopSequenceNumber
+     * @param string|null $cvcCode
+     * @param string|null $holderName
+     */
+    public function __construct($fopSequenceNumber, $cvcCode = null, $holderName = null)
     {
         if (is_numeric($fopSequenceNumber)) {
             $this->fopSequenceNumber = (int) $fopSequenceNumber;
+        }
+
+        if ($this->checkAnyNotEmpty($cvcCode, $holderName)) {
+            $this->newFopsDetails = new NewFopsDetails();
+            $this->newFopsDetails->cvData = $cvcCode;
+            $this->newFopsDetails->chdData = $holderName;
         }
     }
 }
