@@ -129,8 +129,7 @@ class Base implements RequestCreatorInterface
     {
         $found = null;
 
-        if (
-            isset($this->messagesAndVersions[$messageName]) &&
+        if (isset($this->messagesAndVersions[$messageName]) &&
             isset($this->messagesAndVersions[$messageName]['version'])
         ) {
             $found = $this->messagesAndVersions[$messageName]['version'];

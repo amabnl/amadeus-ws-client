@@ -1619,7 +1619,7 @@ class AddMultiElementsTest extends BaseTestCase
 
     public function testCanMakePnrWithMultiPaxElementAssoc()
     {
-        $createPnrOptions = new PnrAddMultiElementsOptions([
+        $addMultiElementsOptions = new PnrAddMultiElementsOptions([
             'receivedFrom' => 'unittest',
             'travellers' => [
                 new Traveller([
@@ -1671,7 +1671,7 @@ class AddMultiElementsTest extends BaseTestCase
             ]
         ]);
 
-        $msg = new AddMultiElements($createPnrOptions);
+        $msg = new AddMultiElements($addMultiElementsOptions);
 
         $this->assertCount(3, $msg->dataElementsMaster->dataElementsIndiv);
         $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_TICKETING_ELEMENT, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
@@ -1697,7 +1697,69 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference[0]->qualifier);
         $this->assertEquals(2, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference[1]->number);
         $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $msg->dataElementsMaster->dataElementsIndiv[1]->referenceForDataElement->reference[1]->qualifier);
+    }
 
+    /**
+     *
+     */
+    public function testWillNotAddReceivedFromIfToldToDoSo()
+    {
+        $addMultiElementsOptions = new PnrAddMultiElementsOptions([
+            'autoAddReceivedFrom' => false,
+            'defaultReceivedFrom' => 'unittest',
+            'travellers' => [
+                new Traveller([
+                    'number' => 1,
+                    'lastName' => 'Bowie',
+                    'firstName' => 'David'
+                ]),
+                new Traveller([
+                    'number' => 2,
+                    'lastName' => 'Bowie',
+                    'firstName' => 'David2'
+                ])
+            ],
+            'actionCode' => PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE,
+            'itineraries' => [
+                new Itinerary([
+                    'origin' => 'BRU',
+                    'destination' => 'LIS',
+                    'segments' => [
+                        new Air([
+                            'date' => \DateTime::createFromFormat('Y-m-d His', "2008-06-10 000000", new \DateTimeZone('UTC')),
+                            'origin' => 'BRU',
+                            'destination' => 'LIS',
+                            'flightNumber' => '349',
+                            'bookingClass' => 'Y',
+                            'company' => 'TP'
+                        ])
+                    ]
+                ])
+            ],
+            'elements' => [
+                new Ticketing([
+                    'ticketMode' => Ticketing::TICKETMODE_OK
+                ]),
+                new Contact([
+                    'type' => Contact::TYPE_PHONE_GENERAL,
+                    'value' => '+3223456789',
+                    'references' => [
+                        new Reference([
+                            'type' => Reference::TYPE_PASSENGER_REQUEST,
+                            'id' => 1
+                        ]),
+                        new Reference([
+                            'type' => Reference::TYPE_PASSENGER_REQUEST,
+                            'id' => 2
+                        ]),
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new AddMultiElements($addMultiElementsOptions);
+
+        $this->assertCount(2, $msg->dataElementsMaster->dataElementsIndiv);
     }
 }
 
