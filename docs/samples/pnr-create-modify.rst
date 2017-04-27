@@ -769,6 +769,7 @@ Here's an example how to stop the library from automatically adding an RF elemen
 
 
 .. code-block:: php
+
     use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
     use Amadeus\Client\RequestOptions\Pnr\Traveller;
     use Amadeus\Client\RequestOptions\Pnr\Itinerary;
@@ -799,3 +800,4 @@ Here's an example how to stop the library from automatically adding an RF elemen
             ])
         ]
     ]);
+
