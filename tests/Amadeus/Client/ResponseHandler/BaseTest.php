@@ -837,6 +837,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("INVALID FORMAT", $result->messages[0]->text);
     }
 
+    public function testCanFindFarePricePnrWithBookingClass7Error()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFarePricePnrWithBookingClass7ErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PricePNRWithBookingClass');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('00911', $result->messages[0]->code);
+        $this->assertEquals("NO TICKETABLE VALIDATING CARRIER", $result->messages[0]->text);
+    }
+
     public function testCanFindFarePricePnrWithLowerFares14Error()
     {
         $respHandler = new ResponseHandler\Base();

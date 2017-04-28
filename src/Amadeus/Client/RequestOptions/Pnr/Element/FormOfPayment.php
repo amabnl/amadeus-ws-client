@@ -90,6 +90,13 @@ class FormOfPayment extends Element
     public $creditCardCvcCode;
 
     /**
+     * Credit card holder's name
+     *
+     * @var string
+     */
+    public $creditCardHolder;
+
+    /**
      * Free text for self::TYPE_MISC
      *
      * @var string

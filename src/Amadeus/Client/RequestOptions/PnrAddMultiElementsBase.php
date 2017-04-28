@@ -54,7 +54,30 @@ class PnrAddMultiElementsBase extends PnrBase
     public $actionCode = 0;
 
     /**
+     * Received From (RF) string to be added to the transaction.
+     *
      * @var string
      */
     public $receivedFrom;
+
+    /**
+     * Whether to automatically add the default Received From string if none is provided.
+     *
+     * Defaults to true for backwards compatibility.
+     *
+     * See https://github.com/amabnl/amadeus-ws-client/issues/68
+     *
+     * @var bool
+     */
+    public $autoAddReceivedFrom = true;
+
+    /**
+     * Holds the default Received From string if no explicit RF was provided.
+     *
+     * ** !! Do not use !! **
+     *
+     * @deprecated This is a workaround until we can decide on what happens with RF elements for the next major version.
+     * @var string
+     */
+    public $defaultReceivedFrom;
 }

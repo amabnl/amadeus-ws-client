@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 use Amadeus\Client\RequestOptions\Pnr\Element;
 use Amadeus\Client\Struct\InvalidArgumentException;
+use Amadeus\Client\Struct\WsMessageUtility;
 
 /**
  * DataElementsIndiv
@@ -33,7 +34,7 @@ use Amadeus\Client\Struct\InvalidArgumentException;
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DataElementsIndiv
+class DataElementsIndiv extends WsMessageUtility
 {
     /**
      * To specify the PNR segments/elements references and action to apply
@@ -174,11 +175,12 @@ class DataElementsIndiv
                     $this->formOfPayment->fop->creditCardCode = $element->creditCardType;
                     $this->formOfPayment->fop->accountNumber = $element->creditCardNumber;
                     $this->formOfPayment->fop->expiryDate = $element->creditCardExpiry;
-                    if (!is_null($element->creditCardCvcCode)) {
-                        $ext = new FopExtension(1);
-                        $ext->newFopsDetails = new NewFopsDetails();
-                        $ext->newFopsDetails->cvData = $element->creditCardCvcCode;
-                        $this->fopExtension[] = $ext;
+                    if ($this->checkAnyNotEmpty($element->creditCardCvcCode, $element->creditCardHolder)) {
+                        $this->fopExtension[] = new FopExtension(
+                            1,
+                            $element->creditCardCvcCode,
+                            $element->creditCardHolder
+                        );
                     }
                 } elseif ($element->type === Fop::IDENT_MISC && $element->freeText != "NONREF") {
                     $this->formOfPayment->fop->freetext = $element->freeText;

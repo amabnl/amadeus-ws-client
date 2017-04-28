@@ -41,10 +41,7 @@ class AddMultiElementsConv extends BaseConverter
      */
     public function convert($requestOptions, $version)
     {
-        if (empty($requestOptions->receivedFrom)) {
-            //Automagically add RF if not present:
-            $requestOptions->receivedFrom = $this->params->receivedFrom;
-        }
+        $requestOptions->defaultReceivedFrom = $this->params->receivedFrom;
 
         $req = new Struct\Pnr\AddMultiElements($requestOptions);
 
