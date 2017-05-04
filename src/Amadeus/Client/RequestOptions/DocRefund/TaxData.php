@@ -32,5 +32,56 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class TaxData extends LoadParamsFromArray
 {
-    //TODO
+    const CATEGORY_ADDITIONAL_COLLECTION = "700";
+    const CATEGORY_PAID = "701";
+    const CATEGORY_CURRENT = "702";
+    const CATEGORY_TOTAL_AMOUNT_OF_ALL_PASSENGER_FACILITY_CHARGES = "703";
+    const CATEGORY_TOTAL_TAXES = "704";
+    const CATEGORY_INCLUDE_DEPARTURE_TAXES_ONLY = "D";
+    const CATEGORY_TAX_EXEMPT = "E";
+    const CATEGORY_TAXES_INCLUDED = "I";
+    const CATEGORY_TAXES_NOT_APPLICABLE = "N";
+    const CATEGORY_EXEMPT_SECURITY_SURCHARGE = "Q";
+    const CATEGORY_DOMESTIC_TAX_NOT_APPLICABLE = "T";
+
+    const TYPE_EXTENDED_TAXES = "XT";
+
+    /**
+     * Tax Category
+     *
+     * self::CATEGORY_*
+     *
+     * @var string
+     */
+    public $category;
+
+    /**
+     * Tax rate
+     *
+     * @var float
+     */
+    public $rate;
+
+    /**
+     * 2-character ISO country code
+     *
+     * @var string
+     */
+    public $countryCode;
+
+    /**
+     * 3-character ISO currency string
+     *
+     * @var string
+     */
+    public $currencyCode;
+
+    /**
+     * Tax Type
+     *
+     * self::TYPE_*
+     *
+     * @var string
+     */
+    public $type;
 }

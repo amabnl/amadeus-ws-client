@@ -34,4 +34,14 @@ class RoutingDetails
      * @var string
      */
     public $station;
+
+    /**
+     * RoutingDetails constructor.
+     *
+     * @param string $station
+     */
+    public function __construct($station)
+    {
+        $this->station = $station;
+    }
 }

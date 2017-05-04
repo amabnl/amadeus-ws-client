@@ -30,6 +30,9 @@ namespace Amadeus\Client\RequestOptions;
  */
 class DocRefundUpdateRefundOptions extends Base
 {
+    const PRICING_IND_DOMESTIC_ITINERARY = "D";
+    const PRICING_IND_INTERNATIONAL_ITINERARY = "I";
+
     /**
      * @var string
      */
@@ -107,4 +110,62 @@ class DocRefundUpdateRefundOptions extends Base
      * @var DocRefund\TaxData[]
      */
     public $taxData;
+
+    /**
+     * Pricing Ticket Indicator
+     *
+     * self::PRICING_IND_*
+     *
+     * @var string
+     */
+    public $pricingTicketIndicator;
+
+    /**
+     * Commissions
+     *
+     * @var DocRefund\CommissionOpt[]
+     */
+    public $commission = [];
+
+    /**
+     * Tour Code
+     *
+     * @var string
+     */
+    public $tourCode;
+
+    /**
+     * Interactive Free Text
+     *
+     * @var DocRefund\FreeTextOpt[]
+     */
+    public $freeText = [];
+
+    /**
+     * Form of payment information
+     *
+     * @var DocRefund\FopOpt[]
+     */
+    public $formOfPayment = [];
+
+    /**
+     * Refunded itinerary information
+     *
+     * @var DocRefund\RefundItinOpt[]
+     */
+    public $refundedItinerary = [];
+
+    /**
+     * Refunded route stations
+     *
+     * @var string[]
+     */
+    public $refundedRouteStations = [];
+
+    /**
+     * Billing Address
+     *
+     * @var DocRefund\AddressOpt
+     */
+    public $address;
 }

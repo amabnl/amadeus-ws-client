@@ -34,4 +34,15 @@ class AirlineCodeRfndItinerary
      * @var CompanyIdentification
      */
     public $companyIdentification;
+
+
+    /**
+     * AirlineCodeRfndItinerary constructor.
+     *
+     * @param string $operatingCompany
+     */
+    public function __construct($operatingCompany)
+    {
+        $this->companyIdentification = new CompanyIdentification($operatingCompany);
+    }
 }

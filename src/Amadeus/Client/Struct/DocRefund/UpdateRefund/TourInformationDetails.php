@@ -34,4 +34,14 @@ class TourInformationDetails
      * @var string
      */
     public $tourCode;
+
+    /**
+     * TourInformationDetails constructor.
+     *
+     * @param string $tourCode
+     */
+    public function __construct($tourCode)
+    {
+        $this->tourCode = $tourCode;
+    }
 }

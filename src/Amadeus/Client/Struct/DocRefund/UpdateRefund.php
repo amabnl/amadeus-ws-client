@@ -22,14 +22,31 @@
 
 namespace Amadeus\Client\Struct\DocRefund;
 
+use Amadeus\Client\RequestOptions\DocRefund\AddressOpt;
+use Amadeus\Client\RequestOptions\DocRefund\CommissionOpt;
+use Amadeus\Client\RequestOptions\DocRefund\FopOpt;
+use Amadeus\Client\RequestOptions\DocRefund\FreeTextOpt;
+use Amadeus\Client\RequestOptions\DocRefund\MonetaryData;
 use Amadeus\Client\RequestOptions\DocRefund\Reference;
+use Amadeus\Client\RequestOptions\DocRefund\RefundItinOpt;
+use Amadeus\Client\RequestOptions\DocRefund\TaxData;
 use Amadeus\Client\RequestOptions\DocRefund\Ticket as TicketOpt;
 use Amadeus\Client\RequestOptions\DocRefundUpdateRefundOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\Commission;
 use Amadeus\Client\Struct\DocRefund\UpdateRefund\DateTimeInformation;
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\FopGroup;
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\InteractiveFreeText;
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\MonetaryInformation;
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\PricingDetails;
 use Amadeus\Client\Struct\DocRefund\UpdateRefund\ReferenceInformation;
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\RefundedItinerary;
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\RefundedRoute;
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\StructuredAddress;
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\TaxDetailsInformation;
 use Amadeus\Client\Struct\DocRefund\UpdateRefund\Ticket;
 use Amadeus\Client\Struct\DocRefund\UpdateRefund\TicketNumber;
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\TourInformation;
 use Amadeus\Client\Struct\DocRefund\UpdateRefund\TravellerInformation;
 use Amadeus\Client\Struct\DocRefund\UpdateRefund\TravellerPriorityInfo;
 use Amadeus\Client\Struct\DocRefund\UpdateRefund\UserIdentification;
@@ -176,6 +193,28 @@ class UpdateRefund extends BaseWsMessage
         $this->loadTickets($options->tickets);
 
         $this->loadPassengerPriority($options);
+
+        $this->loadMonetaryInfo($options->monetaryData, $options->taxData);
+
+        if (!empty($options->pricingTicketIndicator)) {
+            $this->pricingDetails = new PricingDetails($options->pricingTicketIndicator);
+        }
+
+        $this->loadCommissions($options->commission);
+
+        if (!empty($options->tourCode)) {
+            $this->tourInformation = new TourInformation($options->tourCode);
+        }
+
+        $this->loadFreeText($options->freeText);
+
+        $this->loadFop($options->formOfPayment);
+
+        $this->loadRefundedItinerary($options->refundedItinerary);
+
+        $this->loadRefundedRoute($options->refundedRouteStations);
+
+        $this->loadAddress($options->address);
     }
 
     /**
@@ -227,13 +266,89 @@ class UpdateRefund extends BaseWsMessage
         if ($this->checkAnyNotEmpty(
             $options->travellerPrioCompany,
             $options->travellerPrioDateOfJoining,
-            $options->travellerPrioReference)
+            $options->travellerPrioReference
+        )
         ) {
             $this->travellerPriorityInfo = new TravellerPriorityInfo(
                 $options->travellerPrioCompany,
                 $options->travellerPrioDateOfJoining,
                 $options->travellerPrioReference
             );
+        }
+    }
+
+    /**
+     * @param MonetaryData[] $monetaryData
+     * @param TaxData[] $taxData
+     */
+    protected function loadMonetaryInfo($monetaryData, $taxData)
+    {
+        if (!empty($monetaryData)) {
+            $this->monetaryInformation = new MonetaryInformation($monetaryData);
+        }
+
+        foreach ($taxData as $tax) {
+            $this->taxDetailsInformation[] = new TaxDetailsInformation($tax);
+        }
+    }
+
+    /**
+     * @param CommissionOpt[] $commission
+     */
+    protected function loadCommissions($commission)
+    {
+        if (!empty($commission)) {
+            $this->commission = new Commission($commission);
+        }
+    }
+
+    /**
+     * @param FreeTextOpt[] $freeText
+     */
+    protected function loadFreeText($freeText)
+    {
+        foreach ($freeText as $opt) {
+            $this->interactiveFreeText[] = new InteractiveFreeText($opt);
+        }
+    }
+
+    /**
+     * @param FopOpt[] $formOfPayment
+     */
+    protected function loadFop($formOfPayment)
+    {
+        foreach ($formOfPayment as $fop) {
+            $this->fopGroup[] = new FopGroup($fop);
+        }
+    }
+
+    /**
+     * @param RefundItinOpt[] $refundedItinerary
+     */
+    protected function loadRefundedItinerary($refundedItinerary)
+    {
+        foreach ($refundedItinerary as $itin) {
+            $this->refundedItinerary[] = new RefundedItinerary($itin);
+        }
+    }
+
+    /**
+     * @param string[] $refundedRouteStations
+     */
+    protected function loadRefundedRoute($refundedRouteStations)
+    {
+        if (!empty($refundedRouteStations)) {
+            $this->refundedRoute = new RefundedRoute($refundedRouteStations);
+        }
+    }
+
+    /**
+     * @param AddressOpt|null $address
+     */
+    protected function loadAddress($address)
+    {
+        if ($address instanceof AddressOpt) {
+            $this->structuredAddress = new StructuredAddress($address);
         }
     }
 }

@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
+use Amadeus\Client\RequestOptions\DocRefund\FreeTextOpt;
+
 /**
  * InteractiveFreeText
  *
@@ -39,4 +41,19 @@ class InteractiveFreeText
      * @var string
      */
     public $freeText;
+
+    /**
+     * InteractiveFreeText constructor.
+     *
+     * @param FreeTextOpt $opt
+     */
+    public function __construct(FreeTextOpt $opt)
+    {
+        $this->freeTextQualification = new FreeTextQualification(
+            $opt->type,
+            FreeTextQualification::QUAL_CODED_AND_LITERAL_TEXT
+        );
+
+        $this->freeText = $opt->freeText;
+    }
 }

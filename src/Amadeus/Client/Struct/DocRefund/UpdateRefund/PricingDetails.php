@@ -39,4 +39,14 @@ class PricingDetails
      * @var string
      */
     public $priceTariffType;
+
+    /**
+     * PricingDetails constructor.
+     *
+     * @param string $indicator
+     */
+    public function __construct($indicator)
+    {
+        $this->priceTicketDetails = new PriceTicketDetails($indicator);
+    }
 }

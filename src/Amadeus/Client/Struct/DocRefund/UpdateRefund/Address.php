@@ -51,4 +51,16 @@ class Address
      * @var string
      */
     public $optionText;
+
+    /**
+     * Address constructor.
+     *
+     * @param string $option self::OPTION_*
+     * @param string $optionText
+     */
+    public function __construct($option, $optionText)
+    {
+        $this->option = $option;
+        $this->optionText = $optionText;
+    }
 }

@@ -20,15 +20,17 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+namespace Amadeus\Client\RequestOptions\DocRefund;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * FormOfPayment
+ * Form of Payment options
  *
- * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
+ * @package Amadeus\Client\RequestOptions\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FormOfPayment
+class FopOpt extends LoadParamsFromArray
 {
     const TYPE_ON_BEHALF_OF_AGENT = "AGT";
     const TYPE_CASH = "CA";
@@ -44,42 +46,41 @@ class FormOfPayment
     const SOURCE_IRU = "MIL";
 
     /**
+     * Form of Payment Type
+     *
      * self::TYPE_*
      *
      * @var string
      */
-    public $type;
+    public $fopType;
 
     /**
+     * Amount
+     *
      * @var int|float
      */
-    public $amount;
+    public $fopAmount;
 
     /**
+     * Source of Approval
+     *
      * self::SOURCE_*
      *
      * @var string
      */
-    public $sourceOfApproval;
+    public $fopSourceOfApproval;
 
     /**
+     * Authorized amount
+     *
      * @var int|float
      */
-    public $authorisedAmount;
+    public $fopAuthorizedAmount;
 
     /**
-     * FormOfPayment constructor.
+     * Interactive Free Text
      *
-     * @param string $type
-     * @param int|float $amount
-     * @param string $sourceOfApproval
-     * @param int|float $authorisedAmount
+     * @var FreeTextOpt[]
      */
-    public function __construct($type, $amount, $sourceOfApproval, $authorisedAmount)
-    {
-        $this->type = $type;
-        $this->amount = $amount;
-        $this->sourceOfApproval = $sourceOfApproval;
-        $this->authorisedAmount = $authorisedAmount;
-    }
+    public $freeText = [];
 }

@@ -20,44 +20,69 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+namespace Amadeus\Client\RequestOptions\DocRefund;
 
-use Amadeus\Client\RequestOptions\DocRefund\FopOpt;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * FopGroup
+ * Address Options
  *
- * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
+ * @package Amadeus\Client\RequestOptions\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FopGroup
+class AddressOpt extends LoadParamsFromArray
 {
-    /**
-     * @var FormOfPaymentInformation
-     */
-    public $formOfPaymentInformation;
+    const TYPE_BILLING_ADDRESS = "AB";
 
     /**
-     * @var InteractiveFreeText[]
-     */
-    public $interactiveFreeText = [];
-
-    /**
-     * FopGroup constructor.
+     * self::TYPE_*
      *
-     * @param FopOpt $opt
+     * @var string
      */
-    public function __construct(FopOpt $opt)
-    {
-        $this->formOfPaymentInformation = new FormOfPaymentInformation(
-            $opt->fopType,
-            $opt->fopAmount,
-            $opt->fopSourceOfApproval,
-            $opt->fopAuthorizedAmount
-        );
+    public $type = self::TYPE_BILLING_ADDRESS;
 
-        foreach ($opt->freeText as $freeTextOpt) {
-            $this->interactiveFreeText[] = new InteractiveFreeText($freeTextOpt);
-        }
-    }
+    /**
+     * @var string
+     */
+    public $name;
+
+    /**
+     * @var string
+     */
+    public $company;
+
+    /**
+     * @var string
+     */
+    public $addressLine1;
+
+    /**
+     * @var string
+     */
+    public $addressLine2;
+
+    /**
+     * @var string
+     */
+    public $city;
+
+    /**
+     * @var string
+     */
+    public $postalCode;
+
+    /**
+     * @var string
+     */
+    public $poBox;
+
+    /**
+     * @var string
+     */
+    public $state;
+
+    /**
+     * @var string
+     */
+    public $country;
 }

@@ -49,4 +49,16 @@ class FreeTextQualification
      * @var string
      */
     public $informationType;
+
+    /**
+     * FreeTextQualification constructor.
+     *
+     * @param string $informationType
+     * @param int|string $textSubjectQualifier
+     */
+    public function __construct($informationType, $textSubjectQualifier)
+    {
+        $this->textSubjectQualifier = $textSubjectQualifier;
+        $this->informationType = $informationType;
+    }
 }

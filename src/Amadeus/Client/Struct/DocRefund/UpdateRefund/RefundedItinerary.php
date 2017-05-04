@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
+use Amadeus\Client\RequestOptions\DocRefund\RefundItinOpt;
+
 /**
  * RefundedItinerary
  *
@@ -39,4 +41,19 @@ class RefundedItinerary
      * @var OriginDestinationRfndItinerary
      */
     public $originDestinationRfndItinerary;
+
+    /**
+     * RefundedItinerary constructor.
+     *
+     * @param RefundItinOpt $opt
+     */
+    public function __construct(RefundItinOpt $opt)
+    {
+        $this->airlineCodeRfndItinerary = new AirlineCodeRfndItinerary($opt->company);
+
+        $this->originDestinationRfndItinerary = new OriginDestinationRfndItinerary(
+            $opt->origin,
+            $opt->destination
+        );
+    }
 }

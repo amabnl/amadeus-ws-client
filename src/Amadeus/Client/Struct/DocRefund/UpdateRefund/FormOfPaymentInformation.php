@@ -34,4 +34,17 @@ class FormOfPaymentInformation
      * @var FormOfPayment
      */
     public $formOfPayment;
+
+    /**
+     * FormOfPaymentInformation constructor.
+     *
+     * @param $type
+     * @param $amount
+     * @param $source
+     * @param $authorizedAmount
+     */
+    public function __construct($type, $amount, $source, $authorizedAmount)
+    {
+        $this->formOfPayment = new FormOfPayment($type, $amount, $source, $authorizedAmount);
+    }
 }

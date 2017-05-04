@@ -34,4 +34,16 @@ class RefundedRoute
      * @var RoutingDetails[]
      */
     public $routingDetails = [];
+
+    /**
+     * RefundedRoute constructor.
+     *
+     * @param string[] $stations
+     */
+    public function __construct($stations)
+    {
+        foreach ($stations as $station) {
+            $this->routingDetails[] = new RoutingDetails($station);
+        }
+    }
 }

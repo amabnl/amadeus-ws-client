@@ -20,44 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+namespace Amadeus\Client\RequestOptions\DocRefund;
 
-use Amadeus\Client\RequestOptions\DocRefund\FopOpt;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * FopGroup
+ * Interactive Free Text Options
  *
- * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
+ * @package Amadeus\Client\RequestOptions\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FopGroup
+class FreeTextOpt extends LoadParamsFromArray
 {
-    /**
-     * @var FormOfPaymentInformation
-     */
-    public $formOfPaymentInformation;
+    const TYPE_ORIGINAL_ISSUE_INFORMATION = "45";
+    const TYPE_REMARK = "REM";
+    const TYPE_WAIVER_CODE = "WAV";
 
     /**
-     * @var InteractiveFreeText[]
-     */
-    public $interactiveFreeText = [];
-
-    /**
-     * FopGroup constructor.
+     * self::TYPE_*
      *
-     * @param FopOpt $opt
+     * @var string
      */
-    public function __construct(FopOpt $opt)
-    {
-        $this->formOfPaymentInformation = new FormOfPaymentInformation(
-            $opt->fopType,
-            $opt->fopAmount,
-            $opt->fopSourceOfApproval,
-            $opt->fopAuthorizedAmount
-        );
+    public $type;
 
-        foreach ($opt->freeText as $freeTextOpt) {
-            $this->interactiveFreeText[] = new InteractiveFreeText($freeTextOpt);
-        }
-    }
+    /**
+     * @var string
+     */
+    public $freeText;
 }

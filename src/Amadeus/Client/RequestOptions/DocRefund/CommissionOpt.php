@@ -20,44 +20,53 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+namespace Amadeus\Client\RequestOptions\DocRefund;
 
-use Amadeus\Client\RequestOptions\DocRefund\FopOpt;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * FopGroup
+ * CommissionOpt
  *
- * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
+ * @package Amadeus\Client\RequestOptions\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FopGroup
+class CommissionOpt extends LoadParamsFromArray
 {
-    /**
-     * @var FormOfPaymentInformation
-     */
-    public $formOfPaymentInformation;
+    const TYPE_CANCELLATION_PENALTY = "CP";
+    const TYPE_CANCELLATION_PENALTY_IN_MILES = "CPM";
+    const TYPE_AIRLINE_COMMISSION_A = "FMA";
+    const TYPE_AIRLINE_COMMISSION_B = "FMB";
+    const TYPE_NEW_COMMISSION = "NEW";
+    const TYPE_OLD_COMMISSION = "OLD";
+    const TYPE_COMMISSION_ON_CANCELLATION_PENALTY = "XLP";
 
     /**
-     * @var InteractiveFreeText[]
-     */
-    public $interactiveFreeText = [];
-
-    /**
-     * FopGroup constructor.
+     * Commission Type
      *
-     * @param FopOpt $opt
+     * self::TYPE_*
+     *
+     * @var string
      */
-    public function __construct(FopOpt $opt)
-    {
-        $this->formOfPaymentInformation = new FormOfPaymentInformation(
-            $opt->fopType,
-            $opt->fopAmount,
-            $opt->fopSourceOfApproval,
-            $opt->fopAuthorizedAmount
-        );
+    public $type;
 
-        foreach ($opt->freeText as $freeTextOpt) {
-            $this->interactiveFreeText[] = new InteractiveFreeText($freeTextOpt);
-        }
-    }
+    /**
+     * Commission Amount
+     *
+     * @var float|int
+     */
+    public $amount;
+
+    /**
+     * Free text
+     *
+     * @var string
+     */
+    public $freeText;
+
+    /**
+     * Commission Rate
+     *
+     * @var float|int
+     */
+    public $rate;
 }

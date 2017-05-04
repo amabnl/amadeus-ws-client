@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
+use Amadeus\Client\RequestOptions\DocRefund\CommissionOpt;
+
 /**
  * CommissionDetails
  *
@@ -46,7 +48,7 @@ class CommissionDetails
     public $type;
 
     /**
-     * @var int
+     * @var int|float
      */
     public $amount;
 
@@ -56,7 +58,20 @@ class CommissionDetails
     public $freeText;
 
     /**
-     * @var int
+     * @var int|float
      */
     public $rate;
+
+    /**
+     * CommissionDetails constructor.
+     *
+     * @param CommissionOpt $opt
+     */
+    public function __construct(CommissionOpt $opt)
+    {
+        $this->type = $opt->type;
+        $this->amount = $opt->amount;
+        $this->rate = $opt->rate;
+        $this->freeText = $opt->freeText;
+    }
 }

@@ -22,7 +22,7 @@
 
 namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
-use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestination;
 
 /**
  * OriginDestinationRfndItinerary
@@ -30,6 +30,6 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails;
  * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class OriginDestinationRfndItinerary extends OriginDestinationDetails
+class OriginDestinationRfndItinerary extends OriginDestination
 {
 }

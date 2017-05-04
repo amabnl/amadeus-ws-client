@@ -39,4 +39,14 @@ class PriceTicketDetails
      * @var string
      */
     public $indicators;
+
+    /**
+     * PriceTicketDetails constructor.
+     *
+     * @param string $indicators
+     */
+    public function __construct($indicators)
+    {
+        $this->indicators = $indicators;
+    }
 }

@@ -34,4 +34,14 @@ class CompanyIdentification
      * @var string
      */
     public $operatingCompany;
+
+    /**
+     * CompanyIdentification constructor.
+     *
+     * @param string $operatingCompany
+     */
+    public function __construct($operatingCompany)
+    {
+        $this->operatingCompany = $operatingCompany;
+    }
 }

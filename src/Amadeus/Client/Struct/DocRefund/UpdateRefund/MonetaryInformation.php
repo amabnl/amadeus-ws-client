@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
+use Amadeus\Client\RequestOptions\DocRefund\MonetaryData;
+
 /**
  * MonetaryInformation
  *
@@ -39,4 +41,20 @@ class MonetaryInformation
      * @var MonetaryDetails[]
      */
     public $otherMonetaryDetails = [];
+
+    /**
+     * MonetaryInformation constructor.
+     *
+     * @param MonetaryData[] $data
+     */
+    public function __construct($data)
+    {
+        foreach ($data as $key => $single) {
+            if ($key === 0) {
+                $this->monetaryDetails = new MonetaryDetails($single);
+            } else {
+                $this->otherMonetaryDetails[] = new MonetaryDetails($single);
+            }
+        }
+    }
 }

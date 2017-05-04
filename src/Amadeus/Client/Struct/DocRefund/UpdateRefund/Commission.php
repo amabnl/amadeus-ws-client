@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
+use Amadeus\Client\RequestOptions\DocRefund\CommissionOpt;
+
 /**
  * Commission
  *
@@ -39,4 +41,20 @@ class Commission
      * @var CommissionDetails[]
      */
     public $otherCommissionDetails = [];
+
+    /**
+     * Commission constructor.
+     *
+     * @param CommissionOpt[] $commissions
+     */
+    public function __construct($commissions)
+    {
+        foreach ($commissions as $key => $commission) {
+            if ($key === 0) {
+                $this->commissionDetails = new CommissionDetails($commission);
+            } else {
+                $this->otherCommissionDetails[] = new CommissionDetails($commission);
+            }
+        }
+    }
 }

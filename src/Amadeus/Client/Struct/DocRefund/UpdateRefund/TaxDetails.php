@@ -53,4 +53,20 @@ class TaxDetails
      * @var string
      */
     public $type;
+
+    /**
+     * TaxDetails constructor.
+     *
+     * @param string $rate
+     * @param string $countryCode
+     * @param string $currencyCode
+     * @param string $type
+     */
+    public function __construct($rate, $countryCode, $currencyCode, $type)
+    {
+        $this->rate = $rate;
+        $this->countryCode = $countryCode;
+        $this->currencyCode = $currencyCode;
+        $this->type = $type;
+    }
 }

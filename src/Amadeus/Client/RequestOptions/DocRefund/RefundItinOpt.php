@@ -20,44 +20,32 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+namespace Amadeus\Client\RequestOptions\DocRefund;
 
-use Amadeus\Client\RequestOptions\DocRefund\FopOpt;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * FopGroup
+ * RefundItinOpt
  *
- * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
+ * @package Amadeus\Client\RequestOptions\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FopGroup
+class RefundItinOpt extends LoadParamsFromArray
 {
     /**
-     * @var FormOfPaymentInformation
-     */
-    public $formOfPaymentInformation;
-
-    /**
-     * @var InteractiveFreeText[]
-     */
-    public $interactiveFreeText = [];
-
-    /**
-     * FopGroup constructor.
+     * Airline code
      *
-     * @param FopOpt $opt
+     * @var string
      */
-    public function __construct(FopOpt $opt)
-    {
-        $this->formOfPaymentInformation = new FormOfPaymentInformation(
-            $opt->fopType,
-            $opt->fopAmount,
-            $opt->fopSourceOfApproval,
-            $opt->fopAuthorizedAmount
-        );
+    public $company;
 
-        foreach ($opt->freeText as $freeTextOpt) {
-            $this->interactiveFreeText[] = new InteractiveFreeText($freeTextOpt);
-        }
-    }
+    /**
+     * @var string
+     */
+    public $origin;
+
+    /**
+     * @var string
+     */
+    public $destination;
 }

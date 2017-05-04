@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
+use Amadeus\Client\RequestOptions\DocRefund\MonetaryData;
 use Amadeus\Client\Struct\Fop\MonetaryDetails as FopMonetaryDetails;
 
 /**
@@ -59,4 +60,14 @@ class MonetaryDetails extends FopMonetaryDetails
     const TYPE_SELLING_FARE_REFUND = "SFR";
     const TYPE_SELLING_FARE_USED = "SFU";
     const TYPE_TOTAL_TAXES = "TXT";
+
+    /**
+     * MonetaryDetails constructor.
+     *
+     * @param MonetaryData $data
+     */
+    public function __construct(MonetaryData $data)
+    {
+        parent::__construct($data->amount, $data->currency, $data->type);
+    }
 }

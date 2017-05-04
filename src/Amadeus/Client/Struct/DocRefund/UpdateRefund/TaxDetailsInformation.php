@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
+use Amadeus\Client\RequestOptions\DocRefund\TaxData;
+
 /**
  * TaxDetailsInformation
  *
@@ -53,4 +55,21 @@ class TaxDetailsInformation
      * @var TaxDetails[]
      */
     public $taxDetails = [];
+
+    /**
+     * TaxDetailsInformation constructor.
+     *
+     * @param TaxData $taxData
+     */
+    public function __construct(TaxData $taxData)
+    {
+        $this->taxCategory = $taxData->category;
+
+        $this->taxDetails[] = new TaxDetails(
+            $taxData->rate,
+            $taxData->countryCode,
+            $taxData->currencyCode,
+            $taxData->type
+        );
+    }
 }
