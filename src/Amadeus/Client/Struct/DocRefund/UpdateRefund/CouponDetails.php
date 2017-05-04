@@ -20,42 +20,49 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+
+use Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass\CouponDetails as RepriceCouponDetails;
 
 /**
- * DocumentDetails
+ * CouponDetails
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class CouponDetails extends RepriceCouponDetails
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
+    const COUPON_1 = 1;
+    const COUPON_2 = 2;
+    const COUPON_3 = 3;
+    const COUPON_4 = 4;
+
+    const STATUS_CONFIRMED = "OK";
+    const STATUS_OPEN = "OPE";
+    const STATUS_REFUNDED = "RF";
+    const STATUS_TICKETED = "T";
+    const STATUS_VOID = "V";
 
     /**
-     * @var string
-     */
-    public $number;
-
-    /**
-     * @var string
-     */
-    public $type;
-
-    /**
-     * DocumentDetails constructor.
+     * self::STATUS_*
      *
-     * @param string $number
-     * @param string|null $type
+     * @var string
      */
-    public function __construct($number, $type = null)
+    public $cpnStatus;
+
+    /**
+     * @var string
+     */
+    public $settlementAuthorization;
+
+    /**
+     * CouponDetails constructor.
+     *
+     * @param int|string|null $cpnNumber self::COUPON_*
+     * @param string|null $cpnStatus self::STATUS_*
+     */
+    public function __construct($cpnNumber = null, $cpnStatus = null)
     {
-        $this->number = $number;
-        $this->type = $type;
+        parent::__construct($cpnNumber);
     }
 }

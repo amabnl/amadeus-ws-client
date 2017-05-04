@@ -20,42 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
 /**
- * DocumentDetails
+ * StructuredAddress
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class StructuredAddress
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
+    const TYPE_BILLING_ADDRESS = "AB";
 
     /**
-     * @var string
-     */
-    public $number;
-
-    /**
-     * @var string
-     */
-    public $type;
-
-    /**
-     * DocumentDetails constructor.
+     * self::TYPE_*
      *
-     * @param string $number
-     * @param string|null $type
+     * @var string
      */
-    public function __construct($number, $type = null)
-    {
-        $this->number = $number;
-        $this->type = $type;
-    }
+    public $informationType;
+
+    /**
+     * @var Address
+     */
+    public $address = [];
 }

@@ -20,42 +20,37 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
 /**
- * DocumentDetails
+ * TaxDetailsInformation
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class TaxDetailsInformation
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
+    const CATEGORY_ADDITIONAL_COLLECTION = "700";
+    const CATEGORY_PAID = "701";
+    const CATEGORY_CURRENT = "702";
+    const CATEGORY_TOTAL_AMOUNT_OF_ALL_PASSENGER_FACILITY_CHARGES = "703";
+    const CATEGORY_TOTAL_TAXES = "704";
+    const CATEGORY_INCLUDE_DEPARTURE_TAXES_ONLY = "D";
+    const CATEGORY_TAX_EXEMPT = "E";
+    const CATEGORY_TAXES_INCLUDED = "I";
+    const CATEGORY_TAXES_NOT_APPLICABLE = "N";
+    const CATEGORY_EXEMPT_SECURITY_SURCHARGE = "Q";
+    const CATEGORY_DOMESTIC_TAX_NOT_APPLICABLE = "T";
 
     /**
-     * @var string
-     */
-    public $number;
-
-    /**
-     * @var string
-     */
-    public $type;
-
-    /**
-     * DocumentDetails constructor.
+     * self::CATEGORY_*
      *
-     * @param string $number
-     * @param string|null $type
+     * @var string
      */
-    public function __construct($number, $type = null)
-    {
-        $this->number = $number;
-        $this->type = $type;
-    }
+    public $taxCategory;
+
+    /**
+     * @var TaxDetails[]
+     */
+    public $taxDetails = [];
 }

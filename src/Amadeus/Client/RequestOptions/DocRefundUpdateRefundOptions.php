@@ -30,4 +30,81 @@ namespace Amadeus\Client\RequestOptions;
  */
 class DocRefundUpdateRefundOptions extends Base
 {
+    /**
+     * @var string
+     */
+    public $originator;
+
+    /**
+     * @var string
+     */
+    public $originatorId;
+
+    /**
+     * @var string
+     */
+    public $ticketNumber;
+
+    /**
+     * @var string
+     */
+    public $ticketType;
+
+    /**
+     * @var \DateTime
+     */
+    public $ticketedDate;
+
+    /**
+     * @var \DateTime
+     */
+    public $refundDate;
+
+    /**
+     * @var DocRefund\Reference[]
+     */
+    public $references = [];
+
+    /**
+     * @var string
+     */
+    public $passengerSurName;
+
+    /**
+     * @var DocRefund\Ticket[]
+     */
+    public $tickets = [];
+
+    /**
+     * Traveller Priority Company
+     *
+     * @var string
+     */
+    public $travellerPrioCompany;
+
+    /**
+     * Traveller Priority Date of Joining
+     *
+     * @var \DateTime
+     */
+    public $travellerPrioDateOfJoining;
+
+    /**
+     * Traveller Priority: Traveller Reference
+     *
+     * @var string
+     */
+    public $travellerPrioReference;
+
+    /**
+     * Monetary information
+     *
+     * @var DocRefund\MonetaryData[]
+     */
+    public $monetaryData;
+
+    /**
+     * @var DocRefund\TaxData[]
+     */
+    public $taxData;
 }

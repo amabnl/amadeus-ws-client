@@ -1927,9 +1927,9 @@ Refund with item number and coupon number:
     );
 
 
---------------------
-DocRefund_InitRefund
---------------------
+----------------------
+DocRefund_UpdateRefund
+----------------------
 
 *Coming soon*
 

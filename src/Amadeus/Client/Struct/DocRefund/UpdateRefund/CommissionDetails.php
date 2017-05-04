@@ -20,42 +20,43 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
 /**
- * DocumentDetails
+ * CommissionDetails
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class CommissionDetails
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
+    const TYPE_CANCELLATION_PENALTY = "CP";
+    const TYPE_CANCELLATION_PENALTY_IN_MILES = "CPM";
+    const TYPE_AIRLINE_COMMISSION_A = "FMA";
+    const TYPE_AIRLINE_COMMISSION_B = "FMB";
+    const TYPE_NEW_COMMISSION = "NEW";
+    const TYPE_OLD_COMMISSION = "OLD";
+    const TYPE_COMMISSION_ON_CANCELLATION_PENALTY = "XLP";
 
     /**
-     * @var string
-     */
-    public $number;
-
-    /**
+     * self::TYPE_*
+     *
      * @var string
      */
     public $type;
 
     /**
-     * DocumentDetails constructor.
-     *
-     * @param string $number
-     * @param string|null $type
+     * @var int
      */
-    public function __construct($number, $type = null)
-    {
-        $this->number = $number;
-        $this->type = $type;
-    }
+    public $amount;
+
+    /**
+     * @var string
+     */
+    public $freeText;
+
+    /**
+     * @var int
+     */
+    public $rate;
 }

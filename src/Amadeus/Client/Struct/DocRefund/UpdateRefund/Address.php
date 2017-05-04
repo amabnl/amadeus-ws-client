@@ -20,42 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
 /**
- * DocumentDetails
+ * Address
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class Address
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
+    const OPTION_CITY = "CI";
+    const OPTION_COUNTRY = "CO";
+    const OPTION_COMPANY = "CY";
+    const OPTION_ADDRESS_LINE_1 = "L1";
+    const OPTION_ADDRESS_LINE_2 = "L2";
+    const OPTION_NAME = "NA";
+    const OPTION_PO_BOX = "PO";
+    const OPTION_STATE = "ST";
+    const OPTION_POSTAL_CODE = "ZP";
 
     /**
-     * @var string
-     */
-    public $number;
-
-    /**
-     * @var string
-     */
-    public $type;
-
-    /**
-     * DocumentDetails constructor.
+     * self::OPTION_*
      *
-     * @param string $number
-     * @param string|null $type
+     * @var string
      */
-    public function __construct($number, $type = null)
-    {
-        $this->number = $number;
-        $this->type = $type;
-    }
+    public $option;
+
+    /**
+     * @var string
+     */
+    public $optionText;
 }

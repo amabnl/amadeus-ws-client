@@ -20,42 +20,42 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+
+use Amadeus\Client\RequestOptions\DocRefund\Ticket as TicketOpt;
 
 /**
- * DocumentDetails
+ * Ticket
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class Ticket
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
-
     /**
-     * @var string
+     * @var TicketInformation
      */
-    public $number;
+    public $ticketInformation;
 
     /**
-     * @var string
+     * @var TicketGroup[]
      */
-    public $type;
+    public $ticketGroup = [];
 
     /**
-     * DocumentDetails constructor.
+     * Ticket constructor.
      *
-     * @param string $number
-     * @param string|null $type
+     * @param TicketOpt $opt
      */
-    public function __construct($number, $type = null)
+    public function __construct(TicketOpt $opt)
     {
-        $this->number = $number;
-        $this->type = $type;
+        $this->ticketInformation = new TicketInformation(
+            $opt->type,
+            $opt->number
+        );
+
+        foreach ($opt->ticketGroup as $ticketGroup) {
+            $this->ticketGroup[] = new TicketGroup($ticketGroup);
+        }
     }
 }
