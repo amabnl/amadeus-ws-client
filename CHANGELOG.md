@@ -6,6 +6,9 @@
 * Implemented ``DocRefund_InitRefund`` (https://github.com/amabnl/amadeus-ws-client/issues/56)
 * Fixed a bug with building the correct version of a message (https://github.com/amabnl/amadeus-ws-client/issues/71)
 
+# Release 1.3.1 (5 May 2017)
+* Loosened psr/log dependency to allow installation with Yii2 (https://github.com/amabnl/amadeus-ws-client/issues/73)
+
 # Release 1.3.0 (5 April 2017)
 * Added support for Multiple Office ID's in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/44) - Michal Hernas
 * Added support for Progressive Legs in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/issues/55)
