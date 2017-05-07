@@ -20,42 +20,37 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+
+use Amadeus\Client\RequestOptions\DocRefund\Reference;
 
 /**
- * DocumentDetails
+ * ReferenceInformation
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class ReferenceInformation
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
-
     /**
-     * @var string
+     * @var ReferenceDetails[]
      */
-    public $number;
+    public $referenceDetails = [];
 
     /**
-     * @var string
-     */
-    public $type;
-
-    /**
-     * DocumentDetails constructor.
+     * ReferenceInformation constructor.
      *
-     * @param string $number
-     * @param string|null $type
+     * @param Reference[]|string[] $references
+     * @param string|null $type Optional reference type if providing array of strings
      */
-    public function __construct($number, $type = null)
+    public function __construct($references, $type = null)
     {
-        $this->number = $number;
-        $this->type = $type;
+        foreach ($references as $reference) {
+            if ($reference instanceof Reference) {
+                $this->referenceDetails[] = new ReferenceDetails($reference->value, $reference->type);
+            } else {
+                $this->referenceDetails[] = new ReferenceDetails($reference, $type);
+            }
+        }
     }
 }

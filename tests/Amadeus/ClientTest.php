@@ -4047,6 +4047,417 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendDocRefundUpdateRefund()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummydocrefundupdaterefundresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\DocRefund\UpdateRefund(
+            new Client\RequestOptions\DocRefundUpdateRefundOptions([
+                'originator' => '0001AA',
+                'originatorId' => '23491193',
+                'refundDate' => \DateTime::createFromFormat('Ymd', '20031125'),
+                'ticketedDate' => \DateTime::createFromFormat('Ymd', '20030522'),
+                'references' => [
+                    new Client\RequestOptions\DocRefund\Reference([
+                        'type' => Client\RequestOptions\DocRefund\Reference::TYPE_TKT_INDICATOR,
+                        'value' => 'Y'
+                    ]),
+                    new Client\RequestOptions\DocRefund\Reference([
+                        'type' => Client\RequestOptions\DocRefund\Reference::TYPE_DATA_SOURCE,
+                        'value' => 'F'
+                    ])
+                ],
+                'tickets' => [
+                    new Client\RequestOptions\DocRefund\Ticket([
+                        'number' => '22021541124593',
+                        'ticketGroup' => [
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_3,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_4,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ])
+                        ]
+                    ]),
+                    new Client\RequestOptions\DocRefund\Ticket([
+                        'number' => '22021541124604',
+                        'ticketGroup' => [
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ])
+                        ]
+                    ])
+                ],
+                'travellerPrioDateOfJoining' => \DateTime::createFromFormat('Ymd', '20070101'),
+                'travellerPrioReference' => '0077701F',
+                'monetaryData' => [
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_BASE_FARE,
+                        'amount' => 401.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_USED,
+                        'amount' => 0.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_REFUND,
+                        'amount' => 401.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_REFUND_TOTAL,
+                        'amount' => 457.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_TOTAL_TAXES,
+                        'amount' => 56.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'TP',
+                        'amount' => 56.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'OBP',
+                        'amount' => 0.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'TGV',
+                        'amount' => 374.93,
+                        'currency' => 'EUR'
+                    ])
+                ],
+                'taxData' => [
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 16.14,
+                        'currencyCode' => 'EUR',
+                        'type' => 'DE'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 3.45,
+                        'currencyCode' => 'EUR',
+                        'type' => 'YC'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 9.67,
+                        'currencyCode' => 'EUR',
+                        'type' => 'US'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 9.67,
+                        'currencyCode' => 'EUR',
+                        'type' => 'US'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 3.14,
+                        'currencyCode' => 'EUR',
+                        'type' => 'XA'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 4.39,
+                        'currencyCode' => 'EUR',
+                        'type' => 'XY'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 6.28,
+                        'currencyCode' => 'EUR',
+                        'type' => 'AY'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 4.00,
+                        'currencyCode' => 'EUR',
+                        'type' => 'DU'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => '701',
+                        'rate' => 56.74,
+                        'currencyCode' => 'EUR',
+                        'type' => Client\RequestOptions\DocRefund\TaxData::TYPE_EXTENDED_TAXES
+                    ])
+                ],
+                'formOfPayment' => [
+                    new Client\RequestOptions\DocRefund\FopOpt([
+                        'fopType' => Client\RequestOptions\DocRefund\FopOpt::TYPE_MISCELLANEOUS,
+                        'fopAmount' => 457.74,
+                        'freeText' => [
+                            new Client\RequestOptions\DocRefund\FreeTextOpt([
+                                'type' => 'CFP',
+                                'freeText' => '##0##'
+                            ]),
+                            new Client\RequestOptions\DocRefund\FreeTextOpt([
+                                'type' => 'CFP',
+                                'freeText' => 'IDBANK'
+                            ])
+                        ]
+                    ])
+                ],
+                'refundedRouteStations' => [
+                    'FRA',
+                    'MUC',
+                    'JFK',
+                    'BKK',
+                    'FRA'
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('DocRefund_UpdateRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['DocRefund_UpdateRefund' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'DocRefund_UpdateRefund')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->docRefundUpdateRefund(
+            new Client\RequestOptions\DocRefundUpdateRefundOptions([
+                'originator' => '0001AA',
+                'originatorId' => '23491193',
+                'refundDate' => \DateTime::createFromFormat('Ymd', '20031125'),
+                'ticketedDate' => \DateTime::createFromFormat('Ymd', '20030522'),
+                'references' => [
+                    new Client\RequestOptions\DocRefund\Reference([
+                        'type' => Client\RequestOptions\DocRefund\Reference::TYPE_TKT_INDICATOR,
+                        'value' => 'Y'
+                    ]),
+                    new Client\RequestOptions\DocRefund\Reference([
+                        'type' => Client\RequestOptions\DocRefund\Reference::TYPE_DATA_SOURCE,
+                        'value' => 'F'
+                    ])
+                ],
+                'tickets' => [
+                    new Client\RequestOptions\DocRefund\Ticket([
+                        'number' => '22021541124593',
+                        'ticketGroup' => [
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_3,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_4,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ])
+                        ]
+                    ]),
+                    new Client\RequestOptions\DocRefund\Ticket([
+                        'number' => '22021541124604',
+                        'ticketGroup' => [
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ])
+                        ]
+                    ])
+                ],
+                'travellerPrioDateOfJoining' => \DateTime::createFromFormat('Ymd', '20070101'),
+                'travellerPrioReference' => '0077701F',
+                'monetaryData' => [
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_BASE_FARE,
+                        'amount' => 401.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_USED,
+                        'amount' => 0.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_REFUND,
+                        'amount' => 401.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_REFUND_TOTAL,
+                        'amount' => 457.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_TOTAL_TAXES,
+                        'amount' => 56.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'TP',
+                        'amount' => 56.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'OBP',
+                        'amount' => 0.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'TGV',
+                        'amount' => 374.93,
+                        'currency' => 'EUR'
+                    ])
+                ],
+                'taxData' => [
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 16.14,
+                        'currencyCode' => 'EUR',
+                        'type' => 'DE'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 3.45,
+                        'currencyCode' => 'EUR',
+                        'type' => 'YC'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 9.67,
+                        'currencyCode' => 'EUR',
+                        'type' => 'US'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 9.67,
+                        'currencyCode' => 'EUR',
+                        'type' => 'US'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 3.14,
+                        'currencyCode' => 'EUR',
+                        'type' => 'XA'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 4.39,
+                        'currencyCode' => 'EUR',
+                        'type' => 'XY'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 6.28,
+                        'currencyCode' => 'EUR',
+                        'type' => 'AY'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 4.00,
+                        'currencyCode' => 'EUR',
+                        'type' => 'DU'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => '701',
+                        'rate' => 56.74,
+                        'currencyCode' => 'EUR',
+                        'type' => Client\RequestOptions\DocRefund\TaxData::TYPE_EXTENDED_TAXES
+                    ])
+                ],
+                'formOfPayment' => [
+                    new Client\RequestOptions\DocRefund\FopOpt([
+                        'fopType' => Client\RequestOptions\DocRefund\FopOpt::TYPE_MISCELLANEOUS,
+                        'fopAmount' => 457.74,
+                        'freeText' => [
+                            new Client\RequestOptions\DocRefund\FreeTextOpt([
+                                'type' => 'CFP',
+                                'freeText' => '##0##'
+                            ]),
+                            new Client\RequestOptions\DocRefund\FreeTextOpt([
+                                'type' => 'CFP',
+                                'freeText' => 'IDBANK'
+                            ])
+                        ]
+                    ])
+                ],
+                'refundedRouteStations' => [
+                    'FRA',
+                    'MUC',
+                    'JFK',
+                    'BKK',
+                    'FRA'
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     /**
      * Testing the scenario where a user requests no responseXML string in the Result object.
      */

@@ -20,42 +20,44 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+
+use Amadeus\Client\RequestOptions\DocRefund\FopOpt;
 
 /**
- * DocumentDetails
+ * FopGroup
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class FopGroup
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
-
     /**
-     * @var string
+     * @var FormOfPaymentInformation
      */
-    public $number;
+    public $formOfPaymentInformation;
 
     /**
-     * @var string
+     * @var InteractiveFreeText[]
      */
-    public $type;
+    public $interactiveFreeText = [];
 
     /**
-     * DocumentDetails constructor.
+     * FopGroup constructor.
      *
-     * @param string $number
-     * @param string|null $type
+     * @param FopOpt $opt
      */
-    public function __construct($number, $type = null)
+    public function __construct(FopOpt $opt)
     {
-        $this->number = $number;
-        $this->type = $type;
+        $this->formOfPaymentInformation = new FormOfPaymentInformation(
+            $opt->fopType,
+            $opt->fopAmount,
+            $opt->fopSourceOfApproval,
+            $opt->fopAuthorizedAmount
+        );
+
+        foreach ($opt->freeText as $freeTextOpt) {
+            $this->interactiveFreeText[] = new InteractiveFreeText($freeTextOpt);
+        }
     }
 }

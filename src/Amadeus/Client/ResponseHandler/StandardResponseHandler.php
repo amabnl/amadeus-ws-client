@@ -252,9 +252,11 @@ abstract class StandardResponseHandler implements MessageResponseHandler
             'WA' => Result::STATUS_WARN, //Info line Warning - PNR_AddMultiElements
             'W' => Result::STATUS_WARN,
             'EC' => Result::STATUS_ERROR,
+            'ERR' => Result::STATUS_ERROR, //DocRefund_UpdateRefund
             'X' => Result::STATUS_ERROR,
             '001' => Result::STATUS_ERROR, //Air_MultiAvailability
             'O' => Result::STATUS_OK,
+            'STA' => Result::STATUS_OK,
             'ZZZ' => Result::STATUS_UNKNOWN
         ];
 

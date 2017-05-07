@@ -4,6 +4,7 @@
 * Added support for Credit Card Holder name when adding FP elements with ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/69)
 * Added the possibility to disable the automatic addition of an RF element on each ``PNR_AddMultiElements`` call (https://github.com/amabnl/amadeus-ws-client/issues/68)
 * Implemented ``DocRefund_InitRefund`` (https://github.com/amabnl/amadeus-ws-client/issues/56)
+* Implemented ``DocRefund_UpdateRefund`` (https://github.com/amabnl/amadeus-ws-client/issues/56)
 * Fixed a bug with building the correct version of a message (https://github.com/amabnl/amadeus-ws-client/issues/71)
 
 # Release 1.3.1 (5 May 2017)

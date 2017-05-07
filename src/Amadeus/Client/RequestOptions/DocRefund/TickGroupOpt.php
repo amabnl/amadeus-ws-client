@@ -20,42 +20,55 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\RequestOptions\DocRefund;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * DocumentDetails
+ * TickGroupOpt
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\RequestOptions\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class TickGroupOpt extends LoadParamsFromArray
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
+    const COUPON_1 = 1;
+    const COUPON_2 = 2;
+    const COUPON_3 = 3;
+    const COUPON_4 = 4;
+
+    const STATUS_CONFIRMED = "OK";
+    const STATUS_OPEN = "OPE";
+    const STATUS_REFUNDED = "RF";
+    const STATUS_TICKETED = "T";
+    const STATUS_VOID = "V";
 
     /**
-     * @var string
-     */
-    public $number;
-
-    /**
-     * @var string
-     */
-    public $type;
-
-    /**
-     * DocumentDetails constructor.
+     * self::COUPON_*
      *
-     * @param string $number
-     * @param string|null $type
+     * @var string|int
      */
-    public function __construct($number, $type = null)
-    {
-        $this->number = $number;
-        $this->type = $type;
-    }
+    public $couponNumber;
+
+    /**
+     * self::STATUS_*
+     *
+     * @var string
+     */
+    public $couponStatus;
+
+    /**
+     * @var string
+     */
+    public $boardingPriority;
+
+    /**
+     * @var string
+     */
+    public $actionRequestCode;
+
+    /**
+     * @var string[]
+     */
+    public $references = [];
 }

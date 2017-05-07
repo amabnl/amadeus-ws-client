@@ -20,42 +20,41 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+
+use Amadeus\Client\RequestOptions\DocRefund\MonetaryData;
 
 /**
- * DocumentDetails
+ * MonetaryInformation
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class MonetaryInformation
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
-
     /**
-     * @var string
+     * @var MonetaryDetails
      */
-    public $number;
+    public $monetaryDetails;
 
     /**
-     * @var string
+     * @var MonetaryDetails[]
      */
-    public $type;
+    public $otherMonetaryDetails = [];
 
     /**
-     * DocumentDetails constructor.
+     * MonetaryInformation constructor.
      *
-     * @param string $number
-     * @param string|null $type
+     * @param MonetaryData[] $data
      */
-    public function __construct($number, $type = null)
+    public function __construct($data)
     {
-        $this->number = $number;
-        $this->type = $type;
+        foreach ($data as $key => $single) {
+            if ($key === 0) {
+                $this->monetaryDetails = new MonetaryDetails($single);
+            } else {
+                $this->otherMonetaryDetails[] = new MonetaryDetails($single);
+            }
+        }
     }
 }

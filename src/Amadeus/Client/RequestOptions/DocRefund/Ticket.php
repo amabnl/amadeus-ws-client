@@ -20,15 +20,17 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\RequestOptions\DocRefund;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * DocumentDetails
+ * Ticket
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\RequestOptions\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class Ticket extends LoadParamsFromArray
 {
     const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
     const TYPE_EXCESS_BAGGAGE = "E";
@@ -38,24 +40,23 @@ class DocumentDetails
     const TYPE_TICKET = "T";
 
     /**
+     * Ticket number
+     *
      * @var string
      */
     public $number;
 
     /**
+     * Ticket type
+     *
+     * self::TYPE_*
+     *
      * @var string
      */
     public $type;
 
     /**
-     * DocumentDetails constructor.
-     *
-     * @param string $number
-     * @param string|null $type
+     * @var TickGroupOpt
      */
-    public function __construct($number, $type = null)
-    {
-        $this->number = $number;
-        $this->type = $type;
-    }
+    public $ticketGroup = [];
 }

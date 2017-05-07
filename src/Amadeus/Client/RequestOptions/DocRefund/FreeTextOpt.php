@@ -20,42 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\RequestOptions\DocRefund;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * DocumentDetails
+ * Interactive Free Text Options
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\RequestOptions\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class FreeTextOpt extends LoadParamsFromArray
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
+    const TYPE_ORIGINAL_ISSUE_INFORMATION = "45";
+    const TYPE_REMARK = "REM";
+    const TYPE_WAIVER_CODE = "WAV";
 
     /**
-     * @var string
-     */
-    public $number;
-
-    /**
+     * self::TYPE_*
+     *
      * @var string
      */
     public $type;
 
     /**
-     * DocumentDetails constructor.
-     *
-     * @param string $number
-     * @param string|null $type
+     * @var string
      */
-    public function __construct($number, $type = null)
-    {
-        $this->number = $number;
-        $this->type = $type;
-    }
+    public $freeText;
 }

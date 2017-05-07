@@ -38,6 +38,9 @@ class ActionIdentification
     const REQ_IGNORE_OTHER = "O";
     const REQ_REMOVE = "R";
 
+    /** DocRefund_UpdateRefund */
+    const REQ_UPDATE_STAFF_PROFILE_FLAG = "STF";
+
     /**
      * self::REQ_*
      *

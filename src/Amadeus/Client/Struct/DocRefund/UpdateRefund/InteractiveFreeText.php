@@ -20,42 +20,40 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+
+use Amadeus\Client\RequestOptions\DocRefund\FreeTextOpt;
 
 /**
- * DocumentDetails
+ * InteractiveFreeText
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class InteractiveFreeText
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
+    /**
+     * @var FreeTextQualification
+     */
+    public $freeTextQualification;
 
     /**
      * @var string
      */
-    public $number;
+    public $freeText;
 
     /**
-     * @var string
-     */
-    public $type;
-
-    /**
-     * DocumentDetails constructor.
+     * InteractiveFreeText constructor.
      *
-     * @param string $number
-     * @param string|null $type
+     * @param FreeTextOpt $opt
      */
-    public function __construct($number, $type = null)
+    public function __construct(FreeTextOpt $opt)
     {
-        $this->number = $number;
-        $this->type = $type;
+        $this->freeTextQualification = new FreeTextQualification(
+            $opt->type,
+            FreeTextQualification::QUAL_CODED_AND_LITERAL_TEXT
+        );
+
+        $this->freeText = $opt->freeText;
     }
 }

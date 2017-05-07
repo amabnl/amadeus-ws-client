@@ -20,42 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Amadeus\Client\ResponseHandler\DocRefund;
+
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * DocumentDetails
+ * HandlerUpdateRefund
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Amadeus\Client\ResponseHandler\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class HandlerUpdateRefund extends StandardResponseHandler
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
-
     /**
-     * @var string
+     * @param SendResult $response
+     * @return Result
      */
-    public $number;
-
-    /**
-     * @var string
-     */
-    public $type;
-
-    /**
-     * DocumentDetails constructor.
-     *
-     * @param string $number
-     * @param string|null $type
-     */
-    public function __construct($number, $type = null)
+    public function analyze(SendResult $response)
     {
-        $this->number = $number;
-        $this->type = $type;
+        return $this->analyzeWithErrCodeCategoryMsgQuery(
+            $response,
+            '//m:applicationErrorValue/m:dataValue',
+            '//m:applicationErrorGroup//m:freeTextDetails/m:informationType',
+            '//m:applicationErrorGroup/m:errorText/m:freeText'
+        );
     }
 }

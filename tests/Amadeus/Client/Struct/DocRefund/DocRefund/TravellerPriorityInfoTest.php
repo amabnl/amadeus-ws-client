@@ -20,42 +20,25 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund;
+namespace Test\Amadeus\Client\Struct\DocRefund\DocRefund;
+
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\TravellerPriorityInfo;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * DocumentDetails
+ * TravellerPriorityInfoTest
  *
- * @package Amadeus\Client\Struct\DocRefund
+ * @package Test\Amadeus\Client\Struct\DocRefund\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DocumentDetails
+class TravellerPriorityInfoTest extends BaseTestCase
 {
-    const TYPE_ALL_OTHER_DOCUMENT_TYPES = "700";
-    const TYPE_EXCESS_BAGGAGE = "E";
-    const TYPE_MISCELLANEOUS_CHARGE_ORDER = "M";
-    const TYPE_TOUR_ORDER = "O";
-    const TYPE_SPECIAL_SERVICE_TICKET = "S";
-    const TYPE_TICKET = "T";
-
-    /**
-     * @var string
-     */
-    public $number;
-
-    /**
-     * @var string
-     */
-    public $type;
-
-    /**
-     * DocumentDetails constructor.
-     *
-     * @param string $number
-     * @param string|null $type
-     */
-    public function __construct($number, $type = null)
+    public function testCanMakeWithStringAsDate()
     {
-        $this->number = $number;
-        $this->type = $type;
+        $tpi = new TravellerPriorityInfo('DL', '10MAY17', 'ABC123321321');
+
+        $this->assertEquals('DL', $tpi->company);
+        $this->assertEquals('10MAY17', $tpi->dateOfJoining);
+        $this->assertEquals('ABC123321321', $tpi->travellerReference);
     }
 }
