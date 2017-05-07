@@ -42,7 +42,7 @@ class StructuredAddress
     public $informationType;
 
     /**
-     * @var Address
+     * @var Address[]
      */
     public $address = [];
 

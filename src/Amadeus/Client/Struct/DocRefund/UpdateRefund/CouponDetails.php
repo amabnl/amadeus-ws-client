@@ -63,6 +63,7 @@ class CouponDetails extends RepriceCouponDetails
      */
     public function __construct($cpnNumber = null, $cpnStatus = null)
     {
+        $this->cpnStatus = $cpnStatus;
         parent::__construct($cpnNumber);
     }
 }

@@ -104,12 +104,12 @@ class DocRefundUpdateRefundOptions extends Base
      *
      * @var DocRefund\MonetaryData[]
      */
-    public $monetaryData;
+    public $monetaryData = [];
 
     /**
      * @var DocRefund\TaxData[]
      */
-    public $taxData;
+    public $taxData = [];
 
     /**
      * Pricing Ticket Indicator
