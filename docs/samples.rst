@@ -1931,8 +1931,202 @@ Refund with item number and coupon number:
 DocRefund_UpdateRefund
 ----------------------
 
-*Coming soon*
+Example how to perform a ticket conjunction:
 
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundUpdateRefundOptions;
+    use Amadeus\Client\RequestOptions\DocRefund\Reference;
+    use Amadeus\Client\RequestOptions\DocRefund\Ticket;
+    use Amadeus\Client\RequestOptions\DocRefund\TickGroupOpt;
+    use Amadeus\Client\RequestOptions\DocRefund\MonetaryData;
+    use Amadeus\Client\RequestOptions\DocRefund\TaxData;
+    use Amadeus\Client\RequestOptions\DocRefund\FopOpt;
+    use Amadeus\Client\RequestOptions\DocRefund\FreeTextOpt;
+
+    $refundResponse = $client->docRefundUpdateRefund(
+        new DocRefundUpdateRefundOptions([
+            'originator' => '0001AA',
+            'originatorId' => '23491193',
+            'refundDate' => \DateTime::createFromFormat('Ymd', '20031125'),
+            'ticketedDate' => \DateTime::createFromFormat('Ymd', '20030522'),
+            'references' => [
+                new Reference([
+                    'type' => Reference::TYPE_TKT_INDICATOR,
+                    'value' => 'Y'
+                ]),
+                new Reference([
+                    'type' => Reference::TYPE_DATA_SOURCE,
+                    'value' => 'F'
+                ])
+            ],
+            'tickets' => [
+                new Ticket([
+                    'number' => '22021541124593',
+                    'ticketGroup' => [
+                        new TickGroupOpt([
+                            'couponNumber' => TickGroupOpt::COUPON_1,
+                            'couponStatus' => TickGroupOpt::STATUS_REFUNDED,
+                            'boardingPriority' => 'LH07A'
+                        ]),
+                        new TickGroupOpt([
+                            'couponNumber' => TickGroupOpt::COUPON_2,
+                            'couponStatus' => TickGroupOpt::STATUS_REFUNDED,
+                            'boardingPriority' => 'LH07A'
+                        ]),
+                        new TickGroupOpt([
+                            'couponNumber' => TickGroupOpt::COUPON_3,
+                            'couponStatus' => TickGroupOpt::STATUS_REFUNDED,
+                            'boardingPriority' => 'LH07A'
+                        ]),
+                        new TickGroupOpt([
+                            'couponNumber' => TickGroupOpt::COUPON_4,
+                            'couponStatus' => TickGroupOpt::STATUS_REFUNDED,
+                            'boardingPriority' => 'LH07A'
+                        ])
+                    ]
+                ]),
+                new Ticket([
+                    'number' => '22021541124604',
+                    'ticketGroup' => [
+                        new TickGroupOpt([
+                            'couponNumber' => TickGroupOpt::COUPON_1,
+                            'couponStatus' => TickGroupOpt::STATUS_REFUNDED,
+                            'boardingPriority' => 'LH07A'
+                        ]),
+                        new TickGroupOpt([
+                            'couponNumber' => TickGroupOpt::COUPON_2,
+                            'couponStatus' => TickGroupOpt::STATUS_REFUNDED,
+                            'boardingPriority' => 'LH07A'
+                        ])
+                    ]
+                ])
+            ],
+            'travellerPrioDateOfJoining' => \DateTime::createFromFormat('Ymd', '20070101'),
+            'travellerPrioReference' => '0077701F',
+            'monetaryData' => [
+                new MonetaryData([
+                    'type' => MonetaryData::TYPE_BASE_FARE,
+                    'amount' => 401.00,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => MonetaryData::TYPE_FARE_USED,
+                    'amount' => 0.00,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => MonetaryData::TYPE_FARE_REFUND,
+                    'amount' => 401.00,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => MonetaryData::TYPE_REFUND_TOTAL,
+                    'amount' => 457.74,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => MonetaryData::TYPE_TOTAL_TAXES,
+                    'amount' => 56.74,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => 'TP',
+                    'amount' => 56.74,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => 'OBP',
+                    'amount' => 0.00,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => 'TGV',
+                    'amount' => 374.93,
+                    'currency' => 'EUR'
+                ])
+            ],
+            'taxData' => [
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 16.14,
+                    'currencyCode' => 'EUR',
+                    'type' => 'DE'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 3.45,
+                    'currencyCode' => 'EUR',
+                    'type' => 'YC'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 9.67,
+                    'currencyCode' => 'EUR',
+                    'type' => 'US'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 9.67,
+                    'currencyCode' => 'EUR',
+                    'type' => 'US'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 3.14,
+                    'currencyCode' => 'EUR',
+                    'type' => 'XA'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 4.39,
+                    'currencyCode' => 'EUR',
+                    'type' => 'XY'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 6.28,
+                    'currencyCode' => 'EUR',
+                    'type' => 'AY'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 4.00,
+                    'currencyCode' => 'EUR',
+                    'type' => 'DU'
+                ]),
+                new TaxData([
+                    'category' => '701',
+                    'rate' => 56.74,
+                    'currencyCode' => 'EUR',
+                    'type' => TaxData::TYPE_EXTENDED_TAXES
+                ])
+            ],
+            'formOfPayment' => [
+                new FopOpt([
+                    'fopType' => FopOpt::TYPE_MISCELLANEOUS,
+                    'fopAmount' => 457.74,
+                    'freeText' => [
+                        new FreeTextOpt([
+                            'type' => 'CFP',
+                            'freeText' => '##0##'
+                        ]),
+                        new FreeTextOpt([
+                            'type' => 'CFP',
+                            'freeText' => 'IDBANK'
+                        ])
+                    ]
+                ])
+            ],
+            'refundedRouteStations' => [
+                'FRA',
+                'MUC',
+                'JFK',
+                'BKK',
+                'FRA'
+            ]
+        ])
+    );
 
 *******
 Service
@@ -2476,4 +2670,5 @@ Request a sales report from a certain date to another date, issued in all office
     ]);
 
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
+
 

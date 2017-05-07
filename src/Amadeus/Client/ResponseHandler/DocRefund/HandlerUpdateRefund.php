@@ -40,6 +40,11 @@ class HandlerUpdateRefund extends StandardResponseHandler
      */
     public function analyze(SendResult $response)
     {
-        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
+        return $this->analyzeWithErrCodeCategoryMsgQuery(
+            $response,
+            '//m:applicationErrorValue/m:dataValue',
+            '//m:applicationErrorGroup//m:freeTextDetails/m:informationType',
+            '//m:applicationErrorGroup/m:errorText/m:freeText'
+        );
     }
 }
