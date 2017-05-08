@@ -587,6 +587,20 @@ class Client extends Base
     }
 
     /**
+     * Fare_GetFareRules
+     *
+     * @param RequestOptions\FareGetFareRulesOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function fareGetFareRules(RequestOptions\FareGetFareRulesOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Fare_GetFareRules';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Fare_ConvertCurrency
      *
      * @param RequestOptions\FareConvertCurrencyOptions $options

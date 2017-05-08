@@ -128,6 +128,38 @@ abstract class StandardResponseHandler implements MessageResponseHandler
     }
 
     /**
+     * Analyse with XPATH queries for error code and message, provide fixed category
+     *
+     * @param SendResult $response
+     * @param string $qErr XPATH query for fetching error code (first node is used)
+     * @param string $qMsg XPATH query for fetching error messages (all nodes are used)
+     * @param string $category Result::STATUS_* The fixed error category (status)
+     * @return Result
+     */
+    public function analyzeWithErrCodeAndMsgQueryFixedCat(SendResult $response, $qErr, $qMsg, $category)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $errorCodeNodeList = $domXpath->query($qErr);
+        $errorMsgNodeList = $domXpath->query($qMsg);
+
+        if ($errorCodeNodeList->length > 0 || $errorMsgNodeList->length > 0) {
+            $analyzeResponse->status = $category;
+
+            $errorCode = ($errorCodeNodeList->length > 0) ? $errorCodeNodeList->item(0)->nodeValue : null;
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $errorCode,
+                $this->makeMessageFromMessagesNodeList($errorMsgNodeList)
+            );
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
      * Analyze response by looking for error, category and message in nodes specified by name
      *
      * @param SendResult $response

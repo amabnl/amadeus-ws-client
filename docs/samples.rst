@@ -968,6 +968,11 @@ Get the fare rules for specific categories for a given pricing in context:
         ])
     );
 
+-----------------
+Fare_GetFareRules
+-----------------
+
+*coming soon*
 
 --------------------
 Fare_ConvertCurrency

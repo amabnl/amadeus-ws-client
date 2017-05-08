@@ -82,14 +82,23 @@ class MessageFunctionDetails
     const FARE_CALCULATE_MILEAGE = 717;
 
     /**
+     * Message function code for 'Fare Get Fare Rules'
+     *
+     * See functional documentation of Fare_GetFareRules
+     *
      * @var string
+     */
+    const FARE_GET_FARE_RULES = "FRN";
+
+    /**
+     * @var string|int
      */
     public $messageFunction;
 
     /**
      * MessageFunctionDetails constructor.
      *
-     * @param string|null $messageFunction
+     * @param string|int|null $messageFunction
      */
     public function __construct($messageFunction = null)
     {

@@ -912,6 +912,37 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("ENTRY REQUIRES PREVIOUS PRICING/FARE DISPLAY REQUEST", $result->messages[0]->text);
     }
 
+
+    public function testCanHandleFareGetFareRulesError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareGetFareRulesErrorReply.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_GetFareRules');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('0', $result->messages[0]->code);
+        $this->assertEquals("UNKNOWN CITY/AIRPORT", $result->messages[0]->text);
+    }
+
+    public function testCanHandleFareGetFareRulesWarning()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareGetFareRulesWarningReply.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_GetFareRules');
+
+        $this->assertEquals(Result::STATUS_WARN, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEmpty($result->messages[0]->code);
+        $this->assertEquals("MORE THAN ONE FARE MATCHING AGAINST INPUT", $result->messages[0]->text);
+    }
+
     public function testCanHandleFareInformativePricingWithoutPNRError()
     {
         $respHandler = new ResponseHandler\Base();

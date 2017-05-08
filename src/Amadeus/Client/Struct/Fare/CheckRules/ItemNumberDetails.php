@@ -31,6 +31,19 @@ namespace Amadeus\Client\Struct\Fare\CheckRules;
 class ItemNumberDetails
 {
     const TYPE_FARE_COMPONENT = "FC";
+    const TYPE_FREQUENT_TRAVELER_ACCOUNT_TO_BE_DECREMENTED = "700";
+    const TYPE_TELETYPE_ADDRESS = "701";
+    const TYPE_QUEUE_IDENTIFIER = "702";
+    const TYPE_SUB_QUEUE_CATEGORY = "703";
+    const TYPE_FIRST_BOOKED_SEGMENT = "704";
+    const TYPE_LAST_BOOKED_SEGMENT = "705";
+    const TYPE_ACCOUNT_NUMBER = "A";
+    const TYPE_ALL_REQUEST_TYPE = "ART";
+    const TYPE_CUSTOMER_NUMBER = "C";
+    const TYPE_DOCUMENT_NUMBER = "D";
+    const TYPE_PRODUCT_NUMBER = "P";
+    const TYPE_TOTAL_OF_FARE_REQUIRED = "T";
+    const TYPE_VERSION_REFERENCE_NUMBER = "V";
 
     /**
      * @var string
@@ -38,20 +51,7 @@ class ItemNumberDetails
     public $number;
 
     /**
-     * Possible values:
-     *
-     * 700 Frequent Traveler account to be decremented
-     * 701 Teletype address
-     * 702 Queue Identifier
-     * 703 Sub-queue category
-     * 704 First booked segment
-     * 705 Last booked segment
-     * A Account number
-     * C Customer number
-     * D Document number
-     * FC Fare Component
-     * P Product number
-     * T Total of Fare Required
+     * self::TYPE_*
      *
      * @var string
      */
@@ -61,7 +61,7 @@ class ItemNumberDetails
      * ItemNumberDetails constructor.
      *
      * @param string $itemNumber
-     * @param string|null $type
+     * @param string|null $type self::TYPE_*
      */
     public function __construct($itemNumber, $type = null)
     {
