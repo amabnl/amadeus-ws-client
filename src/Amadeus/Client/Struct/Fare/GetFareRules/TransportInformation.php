@@ -30,4 +30,33 @@ namespace Amadeus\Client\Struct\Fare\GetFareRules;
  */
 class TransportInformation
 {
+    /**
+     * @var TransportService
+     */
+    public $transportService;
+    
+    /**
+     * @var mixed
+     */
+    public $availCabinConf;
+    
+    /**
+     * @var mixed
+     */
+    public $routingInfo;
+    
+    /**
+     * @var mixed
+     */
+    public $selectionDetail;
+
+    /**
+     * TransportInformation constructor.
+     *
+     * @param string $airline
+     */
+    public function __construct($airline)
+    {
+        $this->transportService = new TransportService($airline);
+    }
 }

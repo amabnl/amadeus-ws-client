@@ -30,4 +30,39 @@ namespace Amadeus\Client\Struct\Fare\GetFareRules;
  */
 class FareOptionDetails
 {
+    const QUAL_ORIGIN_TO_DESTINATION = "OD";
+    const QUAL_DESTINATION_TO_ORIGIN = "DO";
+    const QUAL_BOTH = "BD";
+
+    /**
+     * self::QUAL_*
+     *
+     * @var string
+     */
+    public $fareQualifier;
+
+    /**
+     * @var string
+     */
+    public $rateCategory;
+
+    /**
+     * @var string
+     */
+    public $amount;
+
+    /**
+     * @var string
+     */
+    public $percentage;
+
+    /**
+     * FareOptionDetails constructor.
+     *
+     * @param string $fareQualifier
+     */
+    public function __construct($fareQualifier)
+    {
+        $this->fareQualifier = $fareQualifier;
+    }
 }

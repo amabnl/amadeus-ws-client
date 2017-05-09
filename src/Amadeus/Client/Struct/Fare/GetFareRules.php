@@ -26,7 +26,11 @@ use Amadeus\Client\RequestOptions\FareGetFareRulesOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\CheckRules\ItemNumber;
 use Amadeus\Client\Struct\Fare\ConvertCurrency\ConversionRate;
+use Amadeus\Client\Struct\Fare\GetFareRules\FlightQualification;
+use Amadeus\Client\Struct\Fare\GetFareRules\MultiCorporate;
 use Amadeus\Client\Struct\Fare\GetFareRules\PricingTickInfo;
+use Amadeus\Client\Struct\Fare\GetFareRules\TransportInformation;
+use Amadeus\Client\Struct\Fare\GetFareRules\TripDescription;
 
 /**
  * Fare_GetFareRules request structure
@@ -121,12 +125,68 @@ class GetFareRules extends BaseWsMessage
         $this->msgType = new MsgType(MessageFunctionDetails::FARE_GET_FARE_RULES);
 
         $this->loadTicketingDate($options->ticketingDate);
+        $this->loadFlightQualification($options->fareBasis, $options->ticketDesignator, $options->directionality);
+        $this->loadMultiCorporate($options->uniFares, $options->negoFares);
+        $this->loadTransportInformation($options->airline);
+        $this->loadTripDescription($options->origin, $options->destination, $options->travelDate);
     }
 
+    /**
+     * @param \DateTime|null $ticketingDate
+     */
     protected function loadTicketingDate($ticketingDate)
     {
         if ($ticketingDate instanceof \DateTime) {
             $this->pricingTickInfo = new PricingTickInfo($ticketingDate);
+        }
+    }
+
+    /**
+     * @param string|null $fareBasis
+     * @param string|null $ticketDesignator
+     * @param string|null $directionality
+     */
+    protected function loadFlightQualification($fareBasis, $ticketDesignator, $directionality)
+    {
+        if ($this->checkAnyNotEmpty($fareBasis, $ticketDesignator, $directionality)) {
+            $this->flightQualification[] = new FlightQualification(
+                $fareBasis,
+                $ticketDesignator,
+                $directionality
+            );
+        }
+    }
+
+    /**
+     * @param string[] $uniFares
+     * @param string[] $negoFares
+     */
+    protected function loadMultiCorporate($uniFares, $negoFares)
+    {
+        if ($this->checkAnyNotEmpty($uniFares, $negoFares)) {
+            $this->multiCorporate = new MultiCorporate($uniFares, $negoFares);
+        }
+    }
+
+    /**
+     * @param string|null $airline
+     */
+    protected function loadTransportInformation($airline)
+    {
+        if (!empty($airline)) {
+            $this->transportInformation[] = new TransportInformation($airline);
+        }
+    }
+
+    /**
+     * @param string|null $origin
+     * @param string|null $destination
+     * @param \DateTime|null $travelDate
+     */
+    protected function loadTripDescription($origin, $destination, $travelDate)
+    {
+        if ($this->checkAnyNotEmpty($origin, $destination, $travelDate)) {
+            $this->tripDescription[] = new TripDescription($origin, $destination, $travelDate);
         }
     }
 }

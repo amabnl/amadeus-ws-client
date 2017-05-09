@@ -39,4 +39,16 @@ class ProductDateTimeDetails
      * @var string
      */
     public $arrivalDate;
+
+    /**
+     * ProductDateTimeDetails constructor.
+     *
+     * @param \DateTime $ticketingDate
+     */
+    public function __construct($ticketingDate)
+    {
+        if ($ticketingDate instanceof \DateTime) {
+            $this->ticketingDate = $ticketingDate->format('dmy');
+        }
+    }
 }

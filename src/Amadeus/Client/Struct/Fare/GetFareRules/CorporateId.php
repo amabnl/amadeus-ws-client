@@ -20,45 +20,40 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\CheckRules;
+namespace Amadeus\Client\Struct\Fare\GetFareRules;
 
 /**
- * AdditionalFareDetails
+ * CorporateId
  *
- * @package Amadeus\Client\Struct\Fare\CheckRules
+ * @package Amadeus\Client\Struct\Fare\GetFareRules
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class AdditionalFareDetails
+class CorporateId
 {
-    /**
-     * @var string
-     */
-    public $rateClass;
+    const QUAL_AMADEUS_NEGO_FARES = "RN";
+    const QUAL_UNIFARES = "RU";
 
     /**
-     * @var string
-     */
-    public $commodityCategory;
-
-    /**
-     * @var string
-     */
-    public $pricingGroup;
-
-    /**
-     * @var string[]
-     */
-    public $secondRateClass;
-
-    /**
-     * AdditionalFareDetails constructor.
+     * self::QUAL_*
      *
-     * @param string|null $rateClass
-     * @param string|null $commodityCategory
+     * @var string
      */
-    public function __construct($rateClass = null, $commodityCategory = null)
+    public $corporateQualifier;
+
+    /**
+     * @var string
+     */
+    public $identity;
+
+    /**
+     * CorporateId constructor.
+     *
+     * @param string $identity
+     * @param string $corporateQualifier self::QUAL_*
+     */
+    public function __construct($identity, $corporateQualifier)
     {
-        $this->rateClass = $rateClass;
-        $this->commodityCategory = $commodityCategory;
+        $this->identity = $identity;
+        $this->corporateQualifier = $corporateQualifier;
     }
 }

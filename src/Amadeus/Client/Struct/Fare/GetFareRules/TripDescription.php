@@ -22,12 +22,46 @@
 
 namespace Amadeus\Client\Struct\Fare\GetFareRules;
 
+use Amadeus\Client\Struct\WsMessageUtility;
+
 /**
  * TripDescription
  *
  * @package Amadeus\Client\Struct\Fare\GetFareRules
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TripDescription
+class TripDescription extends WsMessageUtility
 {
+    /**
+     * @var OrigDest
+     */
+    public $origDest;
+
+    /**
+     * @var DateFlightMovement
+     */
+    public $dateFlightMovement;
+
+    /**
+     * @var Routing[]
+     */
+    public $routing = [];
+
+    /**
+     * TripDescription constructor.
+     *
+     * @param string|null $origin
+     * @param string|null $destination
+     * @param \DateTime|null $travelDate
+     */
+    public function __construct($origin, $destination, $travelDate)
+    {
+        if ($this->checkAnyNotEmpty($origin, $destination)) {
+            $this->origDest = new OrigDest($origin, $destination);
+        }
+
+        if ($travelDate instanceof \DateTime) {
+            $this->dateFlightMovement = new DateFlightMovement($travelDate);
+        }
+    }
 }

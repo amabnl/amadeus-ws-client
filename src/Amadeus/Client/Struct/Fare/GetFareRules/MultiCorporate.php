@@ -30,4 +30,25 @@ namespace Amadeus\Client\Struct\Fare\GetFareRules;
  */
 class MultiCorporate
 {
+    /**
+     * @var CorporateId[]
+     */
+    public $corporateId = [];
+
+    /**
+     * MultiCorporate constructor.
+     *
+     * @param string[] $uniFares
+     * @param string[] $negoFares
+     */
+    public function __construct($uniFares, $negoFares)
+    {
+        foreach ($uniFares as $uniFare) {
+            $this->corporateId[] = new CorporateId($uniFare, CorporateId::QUAL_UNIFARES);
+        }
+
+        foreach ($negoFares as $negoFare) {
+            $this->corporateId[] = new CorporateId($negoFare, CorporateId::QUAL_AMADEUS_NEGO_FARES);
+        }
+    }
 }

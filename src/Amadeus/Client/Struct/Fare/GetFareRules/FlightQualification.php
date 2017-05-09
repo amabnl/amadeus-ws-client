@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\GetFareRules;
 
+use Amadeus\Client\Struct\Fare\CheckRules\AdditionalFareDetails;
+
 /**
  * FlightQualification
  *
@@ -34,4 +36,24 @@ class FlightQualification extends \Amadeus\Client\Struct\Fare\CheckRules\FlightQ
      * @var FareOptionDetails[]
      */
     public $fareOptionDetails = [];
+
+    /**
+     * FlightQualification constructor.
+     *
+     * @param null|string $fareBasis
+     * @param $ticketDesignator
+     * @param $directionality
+     */
+    public function __construct($fareBasis, $ticketDesignator, $directionality)
+    {
+        if ($this->checkAnyNotEmpty($fareBasis, $ticketDesignator)) {
+            $this->additionalFareDetails = new AdditionalFareDetails($fareBasis, $ticketDesignator);
+        }
+
+        if (!empty($directionality)) {
+            $this->fareOptionDetails[] = new FareOptionDetails($directionality);
+        }
+
+        parent::__construct(null);
+    }
 }

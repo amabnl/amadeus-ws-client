@@ -20,45 +20,30 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\CheckRules;
+namespace Amadeus\Client\Struct\Fare\GetFareRules;
+
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\CompanyIdentification;
 
 /**
- * AdditionalFareDetails
+ * TransportService
  *
- * @package Amadeus\Client\Struct\Fare\CheckRules
+ * @package Amadeus\Client\Struct\Fare\GetFareRules
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class AdditionalFareDetails
+class TransportService
 {
     /**
-     * @var string
+     * @var CompanyIdentification
      */
-    public $rateClass;
+    public $companyIdentification;
 
     /**
-     * @var string
-     */
-    public $commodityCategory;
-
-    /**
-     * @var string
-     */
-    public $pricingGroup;
-
-    /**
-     * @var string[]
-     */
-    public $secondRateClass;
-
-    /**
-     * AdditionalFareDetails constructor.
+     * TransportService constructor.
      *
-     * @param string|null $rateClass
-     * @param string|null $commodityCategory
+     * @param string $airline
      */
-    public function __construct($rateClass = null, $commodityCategory = null)
+    public function __construct($airline)
     {
-        $this->rateClass = $rateClass;
-        $this->commodityCategory = $commodityCategory;
+        $this->companyIdentification = new CompanyIdentification($airline);
     }
 }

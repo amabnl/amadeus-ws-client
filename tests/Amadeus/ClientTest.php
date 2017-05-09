@@ -2885,6 +2885,71 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanFareGetFareRules()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyfaregetfarerulesmessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Fare\GetFareRules(
+            new Client\RequestOptions\FareGetFareRulesOptions([
+                'ticketingDate' => \DateTime::createFromFormat('dmY', '23032011'),
+                'fareBasis' => 'OA21ERD1',
+                'ticketDesignator' => 'DISC',
+                'airline' => 'AA',
+                'origin' => 'DFW',
+                'destination' => 'MKC'
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Fare_GetFareRules', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Fare_GetFareRules' => ['version' => "10.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Fare_GetFareRules')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->fareGetFareRules(
+            new Client\RequestOptions\FareGetFareRulesOptions([
+                'ticketingDate' => \DateTime::createFromFormat('dmY', '23032011'),
+                'fareBasis' => 'OA21ERD1',
+                'ticketDesignator' => 'DISC',
+                'airline' => 'AA',
+                'origin' => 'DFW',
+                'destination' => 'MKC'
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanFareCheckRules()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

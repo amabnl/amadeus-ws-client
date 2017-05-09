@@ -20,45 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\CheckRules;
+namespace Amadeus\Client\Struct\Fare\GetFareRules;
 
 /**
- * AdditionalFareDetails
+ * DateFlightMovement
  *
- * @package Amadeus\Client\Struct\Fare\CheckRules
+ * @package Amadeus\Client\Struct\Fare\GetFareRules
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class AdditionalFareDetails
+class DateFlightMovement
 {
     /**
-     * @var string
+     * @var DateAndTimeDetails[]
      */
-    public $rateClass;
+    public $dateAndTimeDetails = [];
 
     /**
-     * @var string
-     */
-    public $commodityCategory;
-
-    /**
-     * @var string
-     */
-    public $pricingGroup;
-
-    /**
-     * @var string[]
-     */
-    public $secondRateClass;
-
-    /**
-     * AdditionalFareDetails constructor.
+     * DateFlightMovement constructor.
      *
-     * @param string|null $rateClass
-     * @param string|null $commodityCategory
+     * @param \DateTime $travelDate
      */
-    public function __construct($rateClass = null, $commodityCategory = null)
+    public function __construct(\DateTime $travelDate)
     {
-        $this->rateClass = $rateClass;
-        $this->commodityCategory = $commodityCategory;
+        $this->dateAndTimeDetails[] = new DateAndTimeDetails($travelDate);
     }
 }

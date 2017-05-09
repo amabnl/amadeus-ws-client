@@ -972,7 +972,43 @@ Get the fare rules for specific categories for a given pricing in context:
 Fare_GetFareRules
 -----------------
 
-*coming soon*
+Basic request to get Fare Rules:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareGetFareRulesOptions;
+
+    $rulesResponse = $client->fareGetFareRules(
+        new FareGetFareRulesOptions([
+            'ticketingDate' => \DateTime::createFromFormat('dmY', '23032011'),
+            'fareBasis' => 'OA21ERD1',
+            'ticketDesignator' => 'DISC',
+            'airline' => 'AA',
+            'origin' => 'DFW',
+            'destination' => 'MKC'
+        ])
+    );
+
+
+Get fare rules providing corporate number and departure date:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareGetFareRulesOptions;
+
+    $rulesResponse = $client->fareGetFareRules(
+        new FareGetFareRulesOptions([
+            'ticketingDate' => \DateTime::createFromFormat('dmY', '23032011'),
+            'uniFares' => ['0012345'],
+            'fareBasis' => 'OA21ERD1',
+            'ticketDesignator' => 'DISC',
+            'directionality' => FareGetFareRulesOptions::DIRECTION_ORIGIN_TO_DESTINATION,
+            'airline' => 'AA',
+            'origin' => 'DFW',
+            'destination' => 'MKC',
+            'travelDate' => \DateTime::createFromFormat('dmY', '25032011')
+        ])
+    );
 
 --------------------
 Fare_ConvertCurrency

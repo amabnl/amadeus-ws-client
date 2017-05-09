@@ -20,45 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\CheckRules;
+namespace Amadeus\Client\Struct\Fare\GetFareRules;
 
 /**
- * AdditionalFareDetails
+ * OrigDest
  *
- * @package Amadeus\Client\Struct\Fare\CheckRules
+ * @package Amadeus\Client\Struct\Fare\GetFareRules
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class AdditionalFareDetails
+class OrigDest
 {
     /**
      * @var string
      */
-    public $rateClass;
+    public $origin;
 
     /**
      * @var string
      */
-    public $commodityCategory;
+    public $destination;
 
     /**
-     * @var string
-     */
-    public $pricingGroup;
-
-    /**
-     * @var string[]
-     */
-    public $secondRateClass;
-
-    /**
-     * AdditionalFareDetails constructor.
+     * OrigDest constructor.
      *
-     * @param string|null $rateClass
-     * @param string|null $commodityCategory
+     * @param string $origin
+     * @param string $destination
      */
-    public function __construct($rateClass = null, $commodityCategory = null)
+    public function __construct($origin, $destination)
     {
-        $this->rateClass = $rateClass;
-        $this->commodityCategory = $commodityCategory;
+        $this->origin = $origin;
+        $this->destination = $destination;
     }
 }
