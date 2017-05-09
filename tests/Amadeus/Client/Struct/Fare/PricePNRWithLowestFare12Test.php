@@ -77,7 +77,7 @@ class PricePNRWithLowestFare12Test extends BaseTestCase
         $this->assertCount(1, $message->discountInformation);
         $this->assertCount(1, $message->discountInformation[0]->referenceQualifier->refDetails);
         $this->assertEquals(2, $message->discountInformation[0]->referenceQualifier->refDetails[0]->refNumber);
-        $this->assertEquals(RefDetails::QUALIFIER_PAX_REFERENCE, $message->discountInformation[0]->referenceQualifier->refDetails[0]->refQualifier);
+        $this->assertEquals(RefDetails::QUAL_PASSENGER, $message->discountInformation[0]->referenceQualifier->refDetails[0]->refQualifier);
         $this->assertEquals(PenDisInformation::QUAL_DISCOUNT, $message->discountInformation[0]->penDisInformation->infoQualifier);
         $this->assertCount(1, $message->discountInformation[0]->penDisInformation->penDisData);
         $this->assertEquals('CH', $message->discountInformation[0]->penDisInformation->penDisData[0]->discountCode);

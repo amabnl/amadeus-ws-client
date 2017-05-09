@@ -45,6 +45,6 @@ class TicketNumber
      */
     public function __construct($number, $type)
     {
-        $this->documentDetails = new DocumentDetails($number, $type = null);
+        $this->documentDetails = new DocumentDetails($number, $type);
     }
 }

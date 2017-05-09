@@ -28,34 +28,6 @@ namespace Amadeus\Client\Struct\Fare\PricePnr12;
  * @package Amadeus\Client\Struct\Fare\PricePnr12
  * @author dieter <dieter.devlieghere@benelux.amadeus.com>
  */
-class RefDetails
+class RefDetails extends \Amadeus\Client\Struct\Ticket\RefDetails
 {
-    const QUALIFIER_PAX_REFERENCE = "P";
-    const QUALIFIER_PAX_ADULT = "PA";
-    const QUALIFIER_PAX_INFANT = "PI";
-    const QUALIFIER_SEGMENT_REFERENCE = "S";
-
-    /**
-     * self::QUALIFIER_*
-     *
-     * @var string
-     */
-    public $refQualifier;
-
-    /**
-     * @var int
-     */
-    public $refNumber;
-
-    /**
-     * RefDetails constructor.
-     *
-     * @param int $segNum
-     * @param string $segQual self::QUALIFIER_*
-     */
-    public function __construct($segNum, $segQual)
-    {
-        $this->refNumber = $segNum;
-        $this->refQualifier = $segQual;
-    }
 }

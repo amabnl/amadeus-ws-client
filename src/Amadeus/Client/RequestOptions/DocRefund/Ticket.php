@@ -56,7 +56,7 @@ class Ticket extends LoadParamsFromArray
     public $type;
 
     /**
-     * @var TickGroupOpt
+     * @var TickGroupOpt[]
      */
     public $ticketGroup = [];
 }
