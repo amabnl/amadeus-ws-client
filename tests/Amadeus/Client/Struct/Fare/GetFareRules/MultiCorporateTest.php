@@ -47,7 +47,7 @@ class MultiCorporateTest extends BaseTestCase
         $this->assertCount(2, $obj->corporateId);
         $this->assertEquals('ABC132324', $obj->corporateId[0]->identity);
         $this->assertEquals(CorporateId::QUAL_AMADEUS_NEGO_FARES, $obj->corporateId[0]->corporateQualifier);
-        $this->assertEquals('ABC132324', $obj->corporateId[1]->identity);
+        $this->assertEquals('ERKLZRJ', $obj->corporateId[1]->identity);
         $this->assertEquals(CorporateId::QUAL_AMADEUS_NEGO_FARES, $obj->corporateId[1]->corporateQualifier);
     }
 }
