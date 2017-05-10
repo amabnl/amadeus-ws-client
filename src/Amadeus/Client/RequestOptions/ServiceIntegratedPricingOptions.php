@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\RequestOptions;
 
+use Amadeus\Client\RequestOptions\Service\FormOfPayment;
+use Amadeus\Client\RequestOptions\Service\FrequentFlyer;
 use Amadeus\Client\RequestOptions\Service\PaxSegRef;
 
 /**
@@ -54,6 +56,8 @@ class ServiceIntegratedPricingOptions extends Base
     const OVERRIDE_SHOW_PRICING_DESCRIPTION = "SPD";
     const OVERRIDE_TICKET_DESIGNATOR = "TKD";
     const OVERRIDE_VALIDATING_CARRIER = "VC ";
+    const OVERRIDE_FORM_OF_PAYMENT = "FOP";
+    const OVERRIDE_FREQUENT_FLYER_INFORMATION = "FTI";
 
     const AWARDPRICING_MILES = "MIL";
     const AWARDPRICING_POINTS = "PTS";
@@ -146,6 +150,16 @@ class ServiceIntegratedPricingOptions extends Base
      * @var \DateTime
      */
     public $overrideDate;
+
+    /**
+     * @var FormOfPayment[]
+     */
+    public $formOfPayment = [];
+
+    /**
+     * @var FrequentFlyer[]
+     */
+    public $frequentFlyers = [];
 
     /**
      * Passenger, Segment or TST references to partially price the PNR

@@ -43,22 +43,22 @@ class FlightInfoTest extends BaseTestCase
             'arrivalLocation' => 'LIS'
         ]);
 
-        $message = new FlightInfo($options);
+        $msg = new FlightInfo($options);
 
-        $this->assertEquals('BRU', $message->generalFlightInfo->boardPointDetails->trueLocationId);
-        $this->assertEquals('LIS', $message->generalFlightInfo->offPointDetails->trueLocationId);
-        $this->assertEquals('180516', $message->generalFlightInfo->flightDate->departureDate);
-        $this->assertNull($message->generalFlightInfo->flightDate->departureTime);
-        $this->assertNull($message->generalFlightInfo->flightDate->arrivalDate);
-        $this->assertNull($message->generalFlightInfo->flightDate->arrivalTime);
-        $this->assertNull($message->generalFlightInfo->flightDate->dateVariation);
-        $this->assertEquals('SN', $message->generalFlightInfo->companyDetails->marketingCompany);
-        $this->assertNull($message->generalFlightInfo->companyDetails->operatingCompany);
-        $this->assertEquals('652', $message->generalFlightInfo->flightIdentification->flightNumber);
-        $this->assertNull( $message->generalFlightInfo->flightIdentification->bookingClass);
-        $this->assertNull($message->generalFlightInfo->flightIdentification->operationalSuffix);
-        $this->assertNull($message->generalFlightInfo->flightTypeDetails);
-        $this->assertEmpty($message->generalFlightInfo->marriageDetails);
+        $this->assertEquals('BRU', $msg->generalFlightInfo->boardPointDetails->trueLocationId);
+        $this->assertEquals('LIS', $msg->generalFlightInfo->offPointDetails->trueLocationId);
+        $this->assertEquals('180516', $msg->generalFlightInfo->flightDate->departureDate);
+        $this->assertNull($msg->generalFlightInfo->flightDate->departureTime);
+        $this->assertNull($msg->generalFlightInfo->flightDate->arrivalDate);
+        $this->assertNull($msg->generalFlightInfo->flightDate->arrivalTime);
+        $this->assertNull($msg->generalFlightInfo->flightDate->dateVariation);
+        $this->assertEquals('SN', $msg->generalFlightInfo->companyDetails->marketingCompany);
+        $this->assertNull($msg->generalFlightInfo->companyDetails->operatingCompany);
+        $this->assertEquals('652', $msg->generalFlightInfo->flightIdentification->flightNumber);
+        $this->assertNull( $msg->generalFlightInfo->flightIdentification->bookingClass);
+        $this->assertNull($msg->generalFlightInfo->flightIdentification->operationalSuffix);
+        $this->assertNull($msg->generalFlightInfo->flightTypeDetails);
+        $this->assertEmpty($msg->generalFlightInfo->marriageDetails);
     }
 
     public function testCanMakeFlightInfoWithOperationalSuffixMessage()
@@ -72,21 +72,21 @@ class FlightInfoTest extends BaseTestCase
             'arrivalLocation' => 'LIS'
         ]);
 
-        $message = new FlightInfo($options);
+        $msg = new FlightInfo($options);
 
-        $this->assertEquals('BRU', $message->generalFlightInfo->boardPointDetails->trueLocationId);
-        $this->assertEquals('LIS', $message->generalFlightInfo->offPointDetails->trueLocationId);
-        $this->assertEquals('180516', $message->generalFlightInfo->flightDate->departureDate);
-        $this->assertNull($message->generalFlightInfo->flightDate->departureTime);
-        $this->assertNull($message->generalFlightInfo->flightDate->arrivalDate);
-        $this->assertNull($message->generalFlightInfo->flightDate->arrivalTime);
-        $this->assertNull($message->generalFlightInfo->flightDate->dateVariation);
-        $this->assertEquals('SN', $message->generalFlightInfo->companyDetails->marketingCompany);
-        $this->assertNull($message->generalFlightInfo->companyDetails->operatingCompany);
-        $this->assertEquals('652', $message->generalFlightInfo->flightIdentification->flightNumber);
-        $this->assertEquals('A', $message->generalFlightInfo->flightIdentification->operationalSuffix);
-        $this->assertNull( $message->generalFlightInfo->flightIdentification->bookingClass);
-        $this->assertNull($message->generalFlightInfo->flightTypeDetails);
-        $this->assertEmpty($message->generalFlightInfo->marriageDetails);
+        $this->assertEquals('BRU', $msg->generalFlightInfo->boardPointDetails->trueLocationId);
+        $this->assertEquals('LIS', $msg->generalFlightInfo->offPointDetails->trueLocationId);
+        $this->assertEquals('180516', $msg->generalFlightInfo->flightDate->departureDate);
+        $this->assertNull($msg->generalFlightInfo->flightDate->departureTime);
+        $this->assertNull($msg->generalFlightInfo->flightDate->arrivalDate);
+        $this->assertNull($msg->generalFlightInfo->flightDate->arrivalTime);
+        $this->assertNull($msg->generalFlightInfo->flightDate->dateVariation);
+        $this->assertEquals('SN', $msg->generalFlightInfo->companyDetails->marketingCompany);
+        $this->assertNull($msg->generalFlightInfo->companyDetails->operatingCompany);
+        $this->assertEquals('652', $msg->generalFlightInfo->flightIdentification->flightNumber);
+        $this->assertEquals('A', $msg->generalFlightInfo->flightIdentification->operationalSuffix);
+        $this->assertNull( $msg->generalFlightInfo->flightIdentification->bookingClass);
+        $this->assertNull($msg->generalFlightInfo->flightTypeDetails);
+        $this->assertEmpty($msg->generalFlightInfo->marriageDetails);
     }
 }

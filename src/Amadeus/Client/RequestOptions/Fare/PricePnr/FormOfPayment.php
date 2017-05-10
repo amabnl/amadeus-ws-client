@@ -20,43 +20,43 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Service;
+namespace Amadeus\Client\RequestOptions\Fare\PricePnr;
 
 use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * FrequentFlyer
+ * Form of Payment pricing override options
  *
- * @package Amadeus\Client\RequestOptions\Service
+ * @package Amadeus\Client\RequestOptions\Fare\PricePnr
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FrequentFlyer extends LoadParamsFromArray
+class FormOfPayment extends LoadParamsFromArray
 {
-    /**
-     * 2-character airline code
-     *
-     * @var string
-     */
-    public $company;
+    const TYPE_ON_BEHALF_OF_AGENT = "AGT";
+    const TYPE_CASH = "CA";
+    const TYPE_CREDIT_CARD = "CC";
+    const TYPE_CHECK = "CK";
+    const TYPE_GOVERNMENT_TRANSPORTATION_REQUEST = "GR";
+    const TYPE_MISCELLANEOUS = "MS";
+    const TYPE_NON_REFUNDABLE = "NR";
+    const TYPE_PREPAID_TICKET_ADVICE = "PT";
+    const TYPE_SINGLE_GOVERNMENT_TRANSPORTATION_REQUEST = "SGR";
+    const TYPE_UNITED_NATIONS_TRANSPORTATION_REQUEST = "UN";
 
     /**
-     * A code to uniquely identify a frequent traveller.
+     * self::TYPE_*
      *
      * @var string
      */
-    public $number;
+    public $type;
 
     /**
-     * Description of a membership level.
-     *
-     * @var string
+     * @var int|float
      */
-    public $tierLevel;
+    public $amount;
 
     /**
-     * A unique number assigned by the sender to identify a level within a hierarchical structure.
-     *
      * @var string
      */
-    public $priorityCode;
+    public $creditCardNumber;
 }

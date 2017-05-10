@@ -2288,6 +2288,47 @@ Assign an account code to a passenger:
         ])
     );
 
+Form of Payment:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+    use Amadeus\Client\RequestOptions\Service\FormOfPayment;
+
+    $pricingResponse = $client->serviceIntegratedPricing(
+        new ServiceIntegratedPricingOptions([
+            'formOfPayment' => [
+                new FormOfPayment([
+                    'type' => FormOfPayment::TYPE_CREDIT_CARD,
+                    'amount' => 10,
+                    'creditCardNumber' => '400000'
+                ]),
+                new FormOfPayment([
+                    'type' => FormOfPayment::TYPE_CASH
+                ]),
+            ]
+        ])
+    );
+
+Frequent Flyer:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+    use Amadeus\Client\RequestOptions\Service\FrequentFlyer;
+
+    $pricingResponse = $client->serviceIntegratedPricing(
+        new ServiceIntegratedPricingOptions([
+            'frequentFlyers' => [
+                new FrequentFlyer([
+                    'company' => '6X',
+                    'number' => '1234567891011',
+                    'tierLevel' => 'SILVER',
+                    'priorityCode' => '1'
+                ])
+            ]
+        ])
+    );
 
 ***
 FOP

@@ -40,7 +40,7 @@ class CreateTSTFromPricingTest extends BaseTestCase
 {
     public function testCanMakeTstFromPricingWithPassengerReference()
     {
-        $message = new CreateTSTFromPricing(
+        $msg = new CreateTSTFromPricing(
             new TicketCreateTstFromPricingOptions([
                 'pricings' => [
                     new Pricing([
@@ -56,20 +56,20 @@ class CreateTSTFromPricingTest extends BaseTestCase
             ])
         );
 
-        $this->assertEquals(1, count($message->psaList));
-        $this->assertEquals(3, $message->psaList[0]->itemReference->uniqueReference);
-        $this->assertEquals(ItemReference::REFTYPE_TST, $message->psaList[0]->itemReference->referenceType);
+        $this->assertEquals(1, count($msg->psaList));
+        $this->assertEquals(3, $msg->psaList[0]->itemReference->uniqueReference);
+        $this->assertEquals(ItemReference::REFTYPE_TST, $msg->psaList[0]->itemReference->referenceType);
 
-        $this->assertEquals(1, count($message->psaList[0]->paxReference->refDetails));
-        $this->assertEquals(1, $message->psaList[0]->paxReference->refDetails[0]->refNumber);
-        $this->assertEquals(RefDetails::QUAL_ADULT, $message->psaList[0]->paxReference->refDetails[0]->refQualifier);
+        $this->assertEquals(1, count($msg->psaList[0]->paxReference->refDetails));
+        $this->assertEquals(1, $msg->psaList[0]->paxReference->refDetails[0]->refNumber);
+        $this->assertEquals(RefDetails::QUAL_ADULT, $msg->psaList[0]->paxReference->refDetails[0]->refQualifier);
     }
 
     public function testCanMakeTstFromPricingWithPnrInfo()
     {
         // !!! This PNR record locator is used for tracing purpose, no internal retrieve. !!!
 
-        $message = new CreateTSTFromPricing(
+        $msg = new CreateTSTFromPricing(
             new TicketCreateTstFromPricingOptions([
                 'informationalRecordLocator' => 'ABC123',
                 'pricings' => [
@@ -80,6 +80,6 @@ class CreateTSTFromPricingTest extends BaseTestCase
             ])
         );
 
-        $this->assertEquals('ABC123', $message->pnrLocatorData->reservationInformation->controlNumber);
+        $this->assertEquals('ABC123', $msg->pnrLocatorData->reservationInformation->controlNumber);
     }
 }

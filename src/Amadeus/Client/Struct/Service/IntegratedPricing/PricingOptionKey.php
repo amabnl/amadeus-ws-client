@@ -52,32 +52,94 @@ class PricingOptionKey
     const OVERRIDE_SHOW_PRICING_DESCRIPTION = "SPD";
     const OVERRIDE_TICKET_DESIGNATOR = "TKD";
     const OVERRIDE_VALIDATING_CARRIER = "VC ";
+    const OVERRIDE_FORM_OF_PAYMENT = "FOP";
+    const OVERRIDE_FREQUENT_FLYER_INFORMATION = "FTI";
 
     /**
      * self::OVERRIDE_*
      *
+     * AC    Add Country taxes
      * ACC   Account Code
-     * ALL   Pricing all services
-     * AWD   Award
+     * ALL   Pricing All services
+     * AT    Add Tax
+     * AWD   AWarD
+     * BGA   Baggage Allowance
+     * BK    Booking class override
+     * BKT   Booking or PNR Type
+     * CAB   CABin option
+     * CMP   Companions
      * COD   Code selection
-     * CRP   Corporation number
-     * DAT   Pricing Date
-     * FCO   Fare currency override
+     * CRP   CoRPoration number
+     * DAT   past DATe pricing
+     * DO    booking Date Override
+     * ET    Exempt Taxes
+     * EXC   Exclude
+     * FBA   Fare BAsis simple override
+     * FBL   Fare Basis force override
+     * FBP   Fare Break Point
+     * FCO   Fare Currency Override
+     * FCS   Fare Currency Selection
+     * FFB   Force Fee Break point
+     * FLI   FLight Indicator
+     * FNB   Force No fee Break point
+     * FOP   Form Of Payment
+     * FTI   Frequent Flyer Information
+     * GRI   Global Route Indicator
+     * GRP   Service Group filtering
+     * INC   Include only
      * INF   Infant processing
-     * JTP   Journey turnaround point
-     * NBP   No break point
-     * NJT   No journey turnaround point
-     * NOP   No option
-     * NTR   Non trusted request
-     * OD    Origin and destination option
+     * IP    Instant Pricing
+     * JTP   Journey Turnaround Point
+     * LBC   List Booking Code
+     * LVL   Tier Level
+     * MA    Mileage Accrual
+     * MBT   Fare amount override with M/BT
+     * MC    Miles and Cash (Pricing by Points)
+     * MIT   Fare amount override with M/IT
+     * NBP   No BreakPoint
+     * NF    No ticketing Fee
+     * NJT   No Journey Turnaround Point
+     * NOP   No Option
+     * NS    No Split
+     * NSD   No Slice and Dice
+     * NTR   Non Trusted Request
+     * NVO   No Validation on Original class
+     * OBF   OB Fees (include and/or exclude)
+     * OCO   Occurrence override
+     * OD    Origin and Destination option
+     * OIS   Show Only Issuable recommendation
      * PAX   Passenger discount/PTC
-     * POS   Point of sale
+     * PFF   Pricing by Fare Family
+     * PL    Pricing Logic
+     * POS   Point Of Sale
+     * POT   Point Of Ticketing override
+     * PRM   expanded PaRaMeters
+     * PRO   Promo Certificate
+     * PSR   PSR
      * PTC   PTC only
-     * SCD   Show commercial description
-     * SEL   Passenger/Segment/Element selection
-     * SPD   Show pricing description
-     * TKD   Ticket designator
-     * VC    Validating carrier
+     * RC    Corporate negotiated fares
+     * RLA   Return Lowest Available fare
+     * RLI   Return LIst of fare
+     * RLO   Return LOwest possible fare
+     * RN    Negotiated fare
+     * RP    Published Fares
+     * RU    Unifares
+     * RW    Corporate Unifares
+     * SCD   Show Commercial Description
+     * SEL   Passenger/Segment/Line/TST selection
+     * SPD   Show Pricing Description
+     * STP   Service Type override
+     * SUB   Service Sub-Group filtering
+     * TKD   Ticket Designator
+     * TKN   Ticket Number
+     * TKT   TicKet Type
+     * TRS   Transitional Certificate
+     * UU    corporate Unifares only
+     * VC    Validating Carrier
+     * WC    Withhold Country taxes
+     * WQ    Withhold Q surcharges
+     * WT    Withhold Tax
+     * ZAP   ZAP-off
      *
      * @var string
      */

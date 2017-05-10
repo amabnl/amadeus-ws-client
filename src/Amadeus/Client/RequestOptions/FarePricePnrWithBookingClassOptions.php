@@ -24,6 +24,9 @@ namespace Amadeus\Client\RequestOptions;
 
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
 
@@ -46,6 +49,7 @@ class FarePricePnrWithBookingClassOptions extends Base
     const OVERRIDE_RETURN_LOWEST_AVAILABLE = 'RLA';
     const OVERRIDE_RETURN_ALL = 'RLI';
     const OVERRIDE_PTC_ONLY = 'PTC';
+    const OVERRIDE_FORM_OF_PAYMENT = 'FOP';
 
     const PRICING_LOGIC_IATA = "IATA";
     const PRICING_LOGIC_ATAF = "ATAF";
@@ -161,14 +165,14 @@ class FarePricePnrWithBookingClassOptions extends Base
     /**
      * Provide a fare basis to price with
      *
-     * @var Fare\PricePnr\FareBasis[]
+     * @var FareBasis[]
      */
     public $pricingsFareBasis = [];
 
     /**
      * Add up to 3 OBFees and/or to exempt up to 3 OBFees
      *
-     * @var Fare\PricePnr\ObFee[]
+     * @var ObFee[]
      */
     public $obFees = [];
 
@@ -247,6 +251,13 @@ class FarePricePnrWithBookingClassOptions extends Base
      * @var \DateTime
      */
     public $pastDatePricing;
+
+    /**
+     * Form of Payment override (max. 3)
+     *
+     * @var FormOfPayment[]
+     */
+    public $formOfPayment = [];
 
     /**
      * Passenger, Segment or TST references to partially price the PNR

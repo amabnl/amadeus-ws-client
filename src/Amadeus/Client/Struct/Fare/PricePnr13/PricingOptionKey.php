@@ -51,10 +51,11 @@ class PricingOptionKey
     const OPTION_PAX_SEGMENT_TST_SELECTION = "SEL";
     const OPTION_PAST_DATE_PRICING = "DAT";
     const OPTION_AWARD_PRICING = "AWD";
-    const OPTION_RETURN_LOWEST = 'RLO';
-    const OPTION_RETURN_LOWEST_AVAILABLE = 'RLA';
-    const OPTION_RETURN_ALL = 'RLI';
-    const OPTION_PTC_ONLY = 'PTC';
+    const OPTION_RETURN_LOWEST = "RLO";
+    const OPTION_RETURN_LOWEST_AVAILABLE = "RLA";
+    const OPTION_RETURN_ALL = "RLI";
+    const OPTION_PTC_ONLY = "PTC";
+    const OPTION_FORM_OF_PAYMENT = "FOP";
 
     /**
      * AC Add Country taxes
@@ -94,10 +95,10 @@ class PricingOptionKey
      * PRO Promo Certificate
      * PTA Point of Turnaround
      * PTC PTC only
-     * RC Corporate negociated fares
+     * RC Corporate negotiated fares
      * RLI Return LIst of fare
      * RLO Return LOwest possible fare
-     * RN Negociated fare
+     * RN Negotiated fare
      * RP Published Fares
      * RU Unifares
      * RW Corporate Unifares
@@ -106,9 +107,9 @@ class PricingOptionKey
      * TKT TicKet Type
      * TRS Transitional Certificate
      * VC Validating Carrier
-     * WC Withold Country taxes
-     * WQ Withold Q surcharges
-     * WT Withold Tax
+     * WC Withhold Country taxes
+     * WQ Withhold Q surcharges
+     * WT Withhold Tax
      * ZAP ZAP-off
      *
      * @var string

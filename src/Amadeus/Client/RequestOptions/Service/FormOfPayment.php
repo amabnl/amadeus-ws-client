@@ -22,41 +22,12 @@
 
 namespace Amadeus\Client\RequestOptions\Service;
 
-use Amadeus\Client\LoadParamsFromArray;
-
 /**
- * FrequentFlyer
+ * FormOfPayment
  *
  * @package Amadeus\Client\RequestOptions\Service
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FrequentFlyer extends LoadParamsFromArray
+class FormOfPayment extends \Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment
 {
-    /**
-     * 2-character airline code
-     *
-     * @var string
-     */
-    public $company;
-
-    /**
-     * A code to uniquely identify a frequent traveller.
-     *
-     * @var string
-     */
-    public $number;
-
-    /**
-     * Description of a membership level.
-     *
-     * @var string
-     */
-    public $tierLevel;
-
-    /**
-     * A unique number assigned by the sender to identify a level within a hierarchical structure.
-     *
-     * @var string
-     */
-    public $priorityCode;
 }

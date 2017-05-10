@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
+use Amadeus\Client\RequestOptions\Service\FrequentFlyer;
+
 /**
  * FrequentFlyerInformation
  *
@@ -34,4 +36,23 @@ class FrequentFlyerInformation
      * @var FrequentTravellerDetails[]
      */
     public $frequentTravellerDetails = [];
+
+    /**
+     * FrequentFlyerInformation constructor.
+     *
+     * @param FrequentFlyer[] $freqFlyers
+     */
+    public function __construct($freqFlyers = null)
+    {
+        if (!empty($freqFlyers)) {
+            foreach ($freqFlyers as $freqFlyer) {
+                $this->frequentTravellerDetails[] = new FrequentTravellerDetails(
+                    $freqFlyer->tierLevel,
+                    $freqFlyer->number,
+                    $freqFlyer->company,
+                    $freqFlyer->priorityCode
+                );
+            }
+        }
+    }
 }

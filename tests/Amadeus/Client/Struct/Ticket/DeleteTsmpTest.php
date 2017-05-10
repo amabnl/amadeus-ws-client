@@ -40,13 +40,13 @@ class DeleteTsmpTest extends BaseTestCase
             'paxTattoos' => [1, 2]
         ]);
 
-        $message = new DeleteTSMP($opt);
+        $msg = new DeleteTSMP($opt);
 
-        $this->assertCount(2, $message->criteriaTattoo);
-        $this->assertEquals(1, $message->criteriaTattoo[0]->referenceDetails->value);
-        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_PASSENGER_TATTOO, $message->criteriaTattoo[0]->referenceDetails->type);
-        $this->assertEquals(2, $message->criteriaTattoo[1]->referenceDetails->value);
-        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_PASSENGER_TATTOO, $message->criteriaTattoo[1]->referenceDetails->type);
+        $this->assertCount(2, $msg->criteriaTattoo);
+        $this->assertEquals(1, $msg->criteriaTattoo[0]->referenceDetails->value);
+        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_PASSENGER_TATTOO, $msg->criteriaTattoo[0]->referenceDetails->type);
+        $this->assertEquals(2, $msg->criteriaTattoo[1]->referenceDetails->value);
+        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_PASSENGER_TATTOO, $msg->criteriaTattoo[1]->referenceDetails->type);
     }
 
     public function testCanBuildMessageWithInfantTattoo()
@@ -55,11 +55,11 @@ class DeleteTsmpTest extends BaseTestCase
             'infantTattoos' => [1]
         ]);
 
-        $message = new DeleteTSMP($opt);
+        $msg = new DeleteTSMP($opt);
 
-        $this->assertCount(1, $message->criteriaTattoo);
-        $this->assertEquals(1, $message->criteriaTattoo[0]->referenceDetails->value);
-        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_INFANT_PARENT_TATTOO, $message->criteriaTattoo[0]->referenceDetails->type);
+        $this->assertCount(1, $msg->criteriaTattoo);
+        $this->assertEquals(1, $msg->criteriaTattoo[0]->referenceDetails->value);
+        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_INFANT_PARENT_TATTOO, $msg->criteriaTattoo[0]->referenceDetails->type);
     }
 
     public function testCanBuildMessageWithTsmTattoos()
@@ -68,15 +68,15 @@ class DeleteTsmpTest extends BaseTestCase
             'tsmTattoos' => [14, 16, 17]
         ]);
 
-        $message = new DeleteTSMP($opt);
+        $msg = new DeleteTSMP($opt);
 
-        $this->assertCount(3, $message->criteriaTattoo);
-        $this->assertEquals(14, $message->criteriaTattoo[0]->referenceDetails->value);
-        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_TSM_TATTOO, $message->criteriaTattoo[0]->referenceDetails->type);
-        $this->assertEquals(16, $message->criteriaTattoo[1]->referenceDetails->value);
-        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_TSM_TATTOO, $message->criteriaTattoo[1]->referenceDetails->type);
-        $this->assertEquals(17, $message->criteriaTattoo[2]->referenceDetails->value);
-        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_TSM_TATTOO, $message->criteriaTattoo[2]->referenceDetails->type);
+        $this->assertCount(3, $msg->criteriaTattoo);
+        $this->assertEquals(14, $msg->criteriaTattoo[0]->referenceDetails->value);
+        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_TSM_TATTOO, $msg->criteriaTattoo[0]->referenceDetails->type);
+        $this->assertEquals(16, $msg->criteriaTattoo[1]->referenceDetails->value);
+        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_TSM_TATTOO, $msg->criteriaTattoo[1]->referenceDetails->type);
+        $this->assertEquals(17, $msg->criteriaTattoo[2]->referenceDetails->value);
+        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_TSM_TATTOO, $msg->criteriaTattoo[2]->referenceDetails->type);
     }
 
     /**
@@ -90,14 +90,14 @@ class DeleteTsmpTest extends BaseTestCase
             'paxTattoos' => [3]
         ]);
 
-        $message = new DeleteTSMP($opt);
+        $msg = new DeleteTSMP($opt);
 
-        $this->assertCount(3, $message->criteriaTattoo);
-        $this->assertEquals(1, $message->criteriaTattoo[0]->referenceDetails->value);
-        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_INFANT_PARENT_TATTOO, $message->criteriaTattoo[0]->referenceDetails->type);
-        $this->assertEquals(3, $message->criteriaTattoo[1]->referenceDetails->value);
-        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_PASSENGER_TATTOO, $message->criteriaTattoo[1]->referenceDetails->type);
-        $this->assertEquals(14, $message->criteriaTattoo[2]->referenceDetails->value);
-        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_TSM_TATTOO, $message->criteriaTattoo[2]->referenceDetails->type);
+        $this->assertCount(3, $msg->criteriaTattoo);
+        $this->assertEquals(1, $msg->criteriaTattoo[0]->referenceDetails->value);
+        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_INFANT_PARENT_TATTOO, $msg->criteriaTattoo[0]->referenceDetails->type);
+        $this->assertEquals(3, $msg->criteriaTattoo[1]->referenceDetails->value);
+        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_PASSENGER_TATTOO, $msg->criteriaTattoo[1]->referenceDetails->type);
+        $this->assertEquals(14, $msg->criteriaTattoo[2]->referenceDetails->value);
+        $this->assertEquals(DeleteTSMP\ReferenceDetails::TYPE_TSM_TATTOO, $msg->criteriaTattoo[2]->referenceDetails->type);
     }
 }
