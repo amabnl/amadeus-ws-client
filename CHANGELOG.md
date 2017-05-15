@@ -1,4 +1,4 @@
-# Release 1.4.0 (UNRELEASED)
+# Release 1.4.0 (15 May 2017)
 * Added support for ``Fare_PricePNRWithBookingClass`` errors in message version 7.3 format (https://github.com/amabnl/amadeus-ws-client/issues/57)
 * Added support for Seat Request elements in in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/64/)
 * Added support for Credit Card Holder name when adding FP elements with ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/69)

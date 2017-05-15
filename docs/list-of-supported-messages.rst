@@ -79,7 +79,11 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Fare_RebookAndCreateTST
 - Air_RebookAirSegment
 - Air_TLAGetAvailability
+- PNR_CreateAuxiliarySegment
 - PointOfRef_CategoryList
+- Ticket_CreateManualTSMP
+- TSM_CreateTSMFromPricing
+- Ticket_UpdateTSMP
 - Ticket_ProcessEDoc
 - Ticket_RetrieveListOfTSM
 - Ticket_AddDocNumber
@@ -88,6 +92,8 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Service_IntegratedCatalogue
 - Service_PriceServiceViaCatalogue
 - Service_PriceIntegratedMode
+- Service_StandaloneCatalogue
+- Service_StandalonePricing
 - Hotel_MultiSingleAvailability
 - Hotel_DescriptiveInfo
 - Hotel_EnhancedPricing
