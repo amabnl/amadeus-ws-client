@@ -20,46 +20,32 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+namespace Amadeus\Client\Struct\DocRefund\ProcessRefund;
+
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\ReferenceDetails;
+use Amadeus\Client\Struct\WsMessageUtility;
 
 /**
- * ReferenceDetails
+ * PrinterReference
  *
- * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
+ * @package Amadeus\Client\Struct\DocRefund\ProcessRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ReferenceDetails
+class PrinterReference extends WsMessageUtility
 {
-    const TYPE_DATA_SOURCE = "DIS";
-    const TYPE_FZ_REVENUE_ATTRIBUTION_NUMBER = "FZR";
-    const TYPE_INVOICE_NUMBER = "INV";
-    const TYPE_TKT_INDICATOR = "TKT";
-
-    const TYPE_VALIDATION_CERTIFICATE_USED_FOR_STAFF = "VAC";
-
-    const TYPE_PRINTER_MNEMONIC = "MNE";
+    /**
+     * @var ReferenceDetails[]
+     */
+    public $referenceDetails = [];
 
     /**
-     * self::TYPE_*
+     * PrinterReference constructor.
      *
-     * @var string
+     * @param string|null $printer
+     * @param string|null $printerType
      */
-    public $type;
-
-    /**
-     * @var string
-     */
-    public $value;
-
-    /**
-     * ReferenceDetails constructor.
-     *
-     * @param string $value
-     * @param string $type self::TYPE_*
-     */
-    public function __construct($value, $type)
+    public function __construct($printer = null, $printerType = null)
     {
-        $this->type = $type;
-        $this->value = $value;
+        $this->referenceDetails[] = new ReferenceDetails($printer, $printerType);
     }
 }

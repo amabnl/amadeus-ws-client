@@ -2169,6 +2169,80 @@ Example how to perform a ticket conjunction:
         ])
     );
 
+-----------------------
+DocRefund_ProcessRefund
+-----------------------
+
+Process an ATC refund on a ticket involuntarily exchanged:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundProcessRefundOptions;
+
+    $refundResponse = $client->docRefundProcessRefund(
+        new Client\RequestOptions\DocRefundProcessRefundOptions([])
+    );
+
+
+Inhibit the refund notice print:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundProcessRefundOptions;
+
+    $refundResponse = $client->docRefundProcessRefund(
+        new Client\RequestOptions\DocRefundProcessRefundOptions([
+            'statusIndicators' => [DocRefundProcessRefundOptions::STATUS_INHIBIT_REFUND_NOTICE]
+        ])
+    );
+
+
+Print refund notice on specific printer:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundProcessRefundOptions;
+
+    $refundResponse = $client->docRefundProcessRefund(
+        new Client\RequestOptions\DocRefundProcessRefundOptions([
+            'printerType' => DocRefundProcessRefundOptions::PRINTERTYPE_PRINTER_MNEMONIC,
+            'printer' => 'D00030'
+        ])
+    );
+
+Process refund adding refunded itinerary:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundProcessRefundOptions;
+    use Amadeus\Client\RequestOptions\DocRefund\RefundItinOpt;
+
+    $refundResponse = $client->docRefundProcessRefund(
+        new Client\RequestOptions\DocRefundProcessRefundOptions([
+            'refundedItinerary' => [
+                new RefundItinOpt([
+                    'company' => 'AF',
+                    'origin' => 'NCE',
+                    'destination' => 'PAR',
+                ])
+            ]
+        ])
+    );
+
+Send refund notice to email address stored in the PNR:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundProcessRefundOptions;
+    use Amadeus\Client\RequestOptions\DocRefund\RefundItinOpt;
+
+    $refundResponse = $client->docRefundProcessRefund(
+        new Client\RequestOptions\DocRefundProcessRefundOptions([
+            'sendNotificationToEmailInAPE' => true
+        ])
+    );
+
+
 *******
 Service
 *******

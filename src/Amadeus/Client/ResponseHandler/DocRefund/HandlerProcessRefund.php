@@ -20,46 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+namespace Amadeus\Client\ResponseHandler\DocRefund;
+
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * ReferenceDetails
+ * HandlerProcessRefund
  *
- * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
+ * @package Amadeus\Client\ResponseHandler\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ReferenceDetails
+class HandlerProcessRefund extends StandardResponseHandler
 {
-    const TYPE_DATA_SOURCE = "DIS";
-    const TYPE_FZ_REVENUE_ATTRIBUTION_NUMBER = "FZR";
-    const TYPE_INVOICE_NUMBER = "INV";
-    const TYPE_TKT_INDICATOR = "TKT";
-
-    const TYPE_VALIDATION_CERTIFICATE_USED_FOR_STAFF = "VAC";
-
-    const TYPE_PRINTER_MNEMONIC = "MNE";
-
     /**
-     * self::TYPE_*
-     *
-     * @var string
+     * @param SendResult $response
+     * @return Result
      */
-    public $type;
-
-    /**
-     * @var string
-     */
-    public $value;
-
-    /**
-     * ReferenceDetails constructor.
-     *
-     * @param string $value
-     * @param string $type self::TYPE_*
-     */
-    public function __construct($value, $type)
+    public function analyze(SendResult $response)
     {
-        $this->type = $type;
-        $this->value = $value;
+        return $this->analyzeWithErrCodeCategoryMsgQuery(
+            $response,
+            '//m:applicationErrorValue//m:errorDetails/m:errorCode',
+            '//m:applicationErrorGroup//m:errorDetails/m:errorCategory',
+            '//m:applicationErrorGroup/m:errorText/m:freeText'
+        );
     }
 }

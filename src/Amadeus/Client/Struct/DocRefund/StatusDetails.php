@@ -42,6 +42,10 @@ class StatusDetails
     const INDICATOR_HOLD_FOR_FUTURE_USE= "RTF";
     const INDICATOR_TAXES = "TAX";
 
+
+    const INDICATOR_INHIBIT_REFUND_NOTICE = "IRN"; //DocRefund_ProcessRefund
+    const INDICATOR_REFUND_REVIEW_OPTION = "REV"; //DocRefund_ProcessRefund
+
     /**
      * self::INDICATOR_*
      *

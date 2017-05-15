@@ -1014,6 +1014,23 @@ class Client extends Base
     }
 
     /**
+     * DocRefund_ProcessRefund
+     *
+     * @param RequestOptions\DocRefundProcessRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function docRefundProcessRefund(
+        RequestOptions\DocRefundProcessRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'DocRefund_ProcessRefund';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+
+    /**
      * FOP_CreateFormOfPayment
      *
      * @param RequestOptions\FopCreateFopOptions $options

@@ -7,6 +7,7 @@
 * Added support for Frequent Flyer override in ``Service_IntegratedPricing``
 * Implemented ``DocRefund_InitRefund`` (https://github.com/amabnl/amadeus-ws-client/issues/56)
 * Implemented ``DocRefund_UpdateRefund`` (https://github.com/amabnl/amadeus-ws-client/issues/56)
+* Implemented ``DocRefund_ProcessRefund`` (https://github.com/amabnl/amadeus-ws-client/issues/56)
 * Implemented ``Fare_GetFareRules`` (https://github.com/amabnl/amadeus-ws-client/issues/63)
 * Fixed a bug with building the correct version of a message (https://github.com/amabnl/amadeus-ws-client/issues/71)
 

@@ -20,46 +20,40 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+namespace Amadeus\Client\Struct\DocRefund\ProcessRefund;
 
 /**
- * ReferenceDetails
+ * TelephoneNumberDetails
  *
- * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
+ * @package Amadeus\Client\Struct\DocRefund\ProcessRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ReferenceDetails
+class TelephoneNumberDetails extends \Amadeus\Client\Struct\Offer\ConfirmCar\TelephoneNumberDetails
 {
-    const TYPE_DATA_SOURCE = "DIS";
-    const TYPE_FZ_REVENUE_ATTRIBUTION_NUMBER = "FZR";
-    const TYPE_INVOICE_NUMBER = "INV";
-    const TYPE_TKT_INDICATOR = "TKT";
-
-    const TYPE_VALIDATION_CERTIFICATE_USED_FOR_STAFF = "VAC";
-
-    const TYPE_PRINTER_MNEMONIC = "MNE";
-
     /**
-     * self::TYPE_*
-     *
      * @var string
      */
-    public $type;
+    public $internationalDialCode;
 
     /**
      * @var string
      */
-    public $value;
+    public $localPrefixCode;
 
     /**
-     * ReferenceDetails constructor.
-     *
-     * @param string $value
-     * @param string $type self::TYPE_*
+     * @var string
      */
-    public function __construct($value, $type)
+    public $areaCode;
+
+    /**
+     * TelephoneNumberDetails constructor.
+     *
+     * @param string $telephoneNumber
+     * @param string $areaCode
+     */
+    public function __construct($telephoneNumber, $areaCode)
     {
-        $this->type = $type;
-        $this->value = $value;
+        $this->areaCode = $areaCode;
+        parent::__construct($telephoneNumber);
     }
 }

@@ -20,7 +20,7 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Test\Amadeus\Client\Struct\DocRefund\DocRefund;
+namespace Test\Amadeus\Client\Struct\DocRefund\UpdateRefund;
 
 use Amadeus\Client\RequestOptions\DocRefund\AddressOpt;
 use Amadeus\Client\Struct\DocRefund\UpdateRefund\Address;

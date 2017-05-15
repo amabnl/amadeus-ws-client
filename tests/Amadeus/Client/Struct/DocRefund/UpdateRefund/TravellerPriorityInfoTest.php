@@ -20,46 +20,25 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\DocRefund\UpdateRefund;
+namespace Test\Amadeus\Client\Struct\DocRefund\UpdateRefund;
+
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\TravellerPriorityInfo;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * ReferenceDetails
+ * TravellerPriorityInfoTest
  *
- * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
+ * @package Test\Amadeus\Client\Struct\DocRefund\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ReferenceDetails
+class TravellerPriorityInfoTest extends BaseTestCase
 {
-    const TYPE_DATA_SOURCE = "DIS";
-    const TYPE_FZ_REVENUE_ATTRIBUTION_NUMBER = "FZR";
-    const TYPE_INVOICE_NUMBER = "INV";
-    const TYPE_TKT_INDICATOR = "TKT";
-
-    const TYPE_VALIDATION_CERTIFICATE_USED_FOR_STAFF = "VAC";
-
-    const TYPE_PRINTER_MNEMONIC = "MNE";
-
-    /**
-     * self::TYPE_*
-     *
-     * @var string
-     */
-    public $type;
-
-    /**
-     * @var string
-     */
-    public $value;
-
-    /**
-     * ReferenceDetails constructor.
-     *
-     * @param string $value
-     * @param string $type self::TYPE_*
-     */
-    public function __construct($value, $type)
+    public function testCanMakeWithStringAsDate()
     {
-        $this->type = $type;
-        $this->value = $value;
+        $tpi = new TravellerPriorityInfo('DL', '10MAY17', 'ABC123321321');
+
+        $this->assertEquals('DL', $tpi->company);
+        $this->assertEquals('10MAY17', $tpi->dateOfJoining);
+        $this->assertEquals('ABC123321321', $tpi->travellerReference);
     }
 }

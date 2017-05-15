@@ -20,25 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Test\Amadeus\Client\Struct\DocRefund\DocRefund;
+namespace Amadeus\Client\RequestCreator\Converter\DocRefund;
 
-use Amadeus\Client\Struct\DocRefund\UpdateRefund\TravellerPriorityInfo;
-use Test\Amadeus\BaseTestCase;
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\DocRefundProcessRefundOptions;
+use Amadeus\Client\Struct;
 
 /**
- * TravellerPriorityInfoTest
+ * DocRefund_ProcessRefund request converter
  *
- * @package Test\Amadeus\Client\Struct\DocRefund\DocRefund
+ * @package Amadeus\Client\RequestCreator\Converter\DocRefund
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TravellerPriorityInfoTest extends BaseTestCase
+class ProcessRefundConv extends BaseConverter
 {
-    public function testCanMakeWithStringAsDate()
+    /**
+     * @param DocRefundProcessRefundOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\DocRefund\ProcessRefund
+     */
+    public function convert($requestOptions, $version)
     {
-        $tpi = new TravellerPriorityInfo('DL', '10MAY17', 'ABC123321321');
-
-        $this->assertEquals('DL', $tpi->company);
-        $this->assertEquals('10MAY17', $tpi->dateOfJoining);
-        $this->assertEquals('ABC123321321', $tpi->travellerReference);
+        return new Struct\DocRefund\ProcessRefund($requestOptions);
     }
 }

@@ -285,6 +285,7 @@ abstract class StandardResponseHandler implements MessageResponseHandler
             'W' => Result::STATUS_WARN,
             'EC' => Result::STATUS_ERROR,
             'ERR' => Result::STATUS_ERROR, //DocRefund_UpdateRefund
+            'ERC' => Result::STATUS_ERROR, //DocRefund_UpdateRefund
             'X' => Result::STATUS_ERROR,
             '001' => Result::STATUS_ERROR, //Air_MultiAvailability
             'O' => Result::STATUS_OK,

@@ -1,0 +1,19 @@
+<DocRefund_ProcessRefundReply xmlns="http://xml.amadeus.com/TRFPCR_13_1_1A">
+    <applicationErrorGroup>
+        <applicationErrorValue>
+            <errorDetails>
+                <errorCode>11062</errorCode>
+                <errorCategory>ERC</errorCategory>
+            </errorDetails>
+        </applicationErrorValue>
+        <errorText>
+            <freeTextDetails>
+                <textSubjectQualifier>4</textSubjectQualifier>
+                <informationType>ERR</informationType>
+                <source>M</source>
+                <encoding>ZZZ</encoding>
+            </freeTextDetails>
+            <freeText>NEED FARE USED FOR PARTIAL REFUND</freeText>
+        </errorText>
+    </applicationErrorGroup>
+</DocRefund_ProcessRefundReply>

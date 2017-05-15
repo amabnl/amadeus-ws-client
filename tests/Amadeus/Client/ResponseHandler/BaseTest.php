@@ -1079,6 +1079,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("NEED PNR", $result->messages[0]->text);
     }
 
+    public function testCanHandleDocRefundProcessRefundErrorResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyDocRefundProcessRefundErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'DocRefund_ProcessRefund');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('11062', $result->messages[0]->code);
+        $this->assertEquals("NEED FARE USED FOR PARTIAL REFUND", $result->messages[0]->text);
+    }
+
     public function testCanHandleTicketCreateTSMFromPricingErrResponse()
     {
         $respHandler = new ResponseHandler\Base();
