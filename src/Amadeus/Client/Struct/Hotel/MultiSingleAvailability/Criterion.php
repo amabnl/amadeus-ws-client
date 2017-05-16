@@ -30,7 +30,7 @@ use Amadeus\Client\RequestOptions\Hotel\MultiSingleAvail\Criteria;
  * @package Amadeus\Client\Struct\Hotel\MultiSingleAvailability
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class Criterion
+class Criterion extends HotelSearchCriterionType
 {
     /***
      * @var string
@@ -42,126 +42,6 @@ class Criterion
     public $InfoSource;
 
     public $MoreDataEchoToken;
-
-    /**
-     * @var HotelAmenity[]
-     */
-    public $HotelAmenity = [];
-
-    /**
-     * @var RoomAmenity[]
-     */
-    public $RoomAmenity = [];
-
-    /**
-     * @var HotelFeature[]
-     */
-    public $HotelFeature = [];
-
-    /**
-     * @var Award[]
-     */
-    public $Award = [];
-
-    /**
-     * @var Recreation[]
-     */
-    public $Recreation = [];
-
-    /**
-     * @var Service[]
-     */
-    public $Service = [];
-
-    /**
-     * @var Transportation[]
-     */
-    public $Transportation = [];
-
-    /**
-     * @var StayDateRange
-     */
-    public $StayDateRange;
-
-    /**
-     * @var RateRange[]
-     */
-    public $RateRange = [];
-
-    /**
-     * @var RatePlanCandidates
-     */
-    public $RatePlanCandidates;
-
-    /**
-     * @var Profiles
-     */
-    public $Profiles;
-
-    /**
-     * @var RoomStayCandidates
-     */
-    public $RoomStayCandidates;
-
-    /**
-     * @var AcceptedPayments
-     */
-    public $AcceptedPayments;
-
-    /**
-     * @var Media[]
-     */
-    public $Media = [];
-
-    /**
-     * @var HotelMeetingFacility[]
-     */
-    public $HotelMeetingFacility = [];
-
-    /**
-     * @var MealPlan
-     */
-    public $MealPlan;
-
-    /**
-     * @var RebatePrograms
-     */
-    public $RebatePrograms;
-
-    /**
-     * @var UserGeneratedContent
-     */
-    public $UserGeneratedContent;
-
-    /**
-     * @var bool
-     */
-    public $ExactMatch;
-
-    public $ImportanceType;
-
-    public $Ranking;
-
-    public $Position;
-
-    public $Address;
-
-    public $Telephone;
-
-    public $RefPoint = [];
-
-    public $CodeRef;
-
-    /**
-     * @var HotelRef[]
-     */
-    public $HotelRef = [];
-
-    public $Radius;
-
-    public $MapArea;
-
-    public $AdditionalContents;
 
     /**
      * Criterion constructor.

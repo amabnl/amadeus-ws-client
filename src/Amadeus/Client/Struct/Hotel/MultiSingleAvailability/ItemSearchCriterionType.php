@@ -59,4 +59,6 @@ class ItemSearchCriterionType
     public $MapArea;
 
     public $AdditionalContents;
+
+
 }

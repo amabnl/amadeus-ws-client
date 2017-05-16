@@ -28,7 +28,7 @@ namespace Amadeus\Client\Struct\Hotel\MultiSingleAvailability;
  * @package Amadeus\Client\Struct\Hotel\MultiSingleAvailability
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class HotelSearchCriterionType extends ItemSearchCriterionType
+class HotelSearchCriterionType
 {
     /**
      * @var HotelAmenity[]
@@ -119,4 +119,34 @@ class HotelSearchCriterionType extends ItemSearchCriterionType
      * @var UserGeneratedContent
      */
     public $UserGeneratedContent;
+
+    /**
+     * @var bool
+     */
+    public $ExactMatch;
+
+    public $ImportanceType;
+
+    public $Ranking;
+
+    public $Position;
+
+    public $Address;
+
+    public $Telephone;
+
+    public $RefPoint = [];
+
+    public $CodeRef;
+
+    /**
+     * @var HotelRef[]
+     */
+    public $HotelRef = [];
+
+    public $Radius;
+
+    public $MapArea;
+
+    public $AdditionalContents;
 }
