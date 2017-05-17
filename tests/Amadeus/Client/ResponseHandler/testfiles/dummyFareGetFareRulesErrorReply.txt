@@ -1,0 +1,17 @@
+<Fare_GetFareRulesReply xmlns="http://xml.amadeus.com/FARRNR_10_1_1A">
+    <transactionType>
+        <messageFunctionDetails>
+            <messageFunction>FRN</messageFunction>
+        </messageFunctionDetails>
+    </transactionType>
+    <errorInfo>
+        <rejectErrorCode>
+            <errorDetails>
+                <errorCode>0</errorCode>
+            </errorDetails>
+        </rejectErrorCode>
+        <errorFreeText>
+            <freeText>UNKNOWN CITY/AIRPORT</freeText>
+        </errorFreeText>
+    </errorInfo>
+</Fare_GetFareRulesReply>

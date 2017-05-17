@@ -180,7 +180,7 @@ class SoapHeader4 extends Base
         $headersToSet = [];
 
         $wsdlId = $this->getWsdlIdFor($messageName);
-        $wsdl = $this->wsdlIds[$wsdlId];
+        $wsdl = WsdlAnalyser::$wsdlIds[$wsdlId];
 
         //CHECK STATEFUL
         $stateful = $this->isStateful();
@@ -300,18 +300,17 @@ class SoapHeader4 extends Base
      *
      * @param string $wsdlFilePath
      * @param string $messageName
-     * @return string
+     * @return string|null
      */
     protected function getEndpointFromWsdl($wsdlFilePath, $messageName)
     {
         $wsdlId = $this->getWsdlIdFor($messageName);
 
-        $this->loadWsdlXpath(
+        return WsdlAnalyser::exaluateXpathQueryOnWsdl(
+            $wsdlId,
             $wsdlFilePath,
-            $wsdlId
+            self::XPATH_ENDPOINT
         );
-
-        return $this->wsdlDomXpath[$wsdlId]->evaluate(self::XPATH_ENDPOINT);
     }
 
     /**
@@ -319,20 +318,17 @@ class SoapHeader4 extends Base
      *
      * @param string $wsdlFilePath
      * @param string $messageName
-     * @return string
+     * @return string|null
      */
     protected function getActionFromWsdl($wsdlFilePath, $messageName)
     {
         $wsdlId = $this->getWsdlIdFor($messageName);
 
-        $this->loadWsdlXpath(
+        return WsdlAnalyser::exaluateXpathQueryOnWsdl(
+            $wsdlId,
             $wsdlFilePath,
-            $wsdlId
+            sprintf(self::XPATH_OPERATION_ACTION, $messageName)
         );
-
-        $action = $this->wsdlDomXpath[$wsdlId]->evaluate(sprintf(self::XPATH_OPERATION_ACTION, $messageName));
-
-        return $action;
     }
 
     /**

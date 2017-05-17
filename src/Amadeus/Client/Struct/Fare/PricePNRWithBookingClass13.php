@@ -26,6 +26,7 @@ use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
@@ -36,6 +37,7 @@ use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions as Info
 use Amadeus\Client\Struct\Fare\PricePnr13\CarrierInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\Currency;
 use Amadeus\Client\Struct\Fare\PricePnr13\DateInformation;
+use Amadeus\Client\Struct\Fare\PricePnr13\FormOfPaymentInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\FrequentFlyerInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\FrequentTravellerDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\LocationInformation;
@@ -151,6 +153,12 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::loadPastDate($options->pastDatePricing)
+        );
+
+
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadFormOfPayment($options->formOfPayment)
         );
 
         $priceOptions = self::mergeOptions(
@@ -513,6 +521,26 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
                 DateInformation::OPT_DATE_OVERRIDE,
                 $pastDate
             );
+
+            $opt[] = $po;
+        }
+
+        return $opt;
+    }
+
+
+    /**
+     * @param FormOfPayment[] $formOfPayment
+     * @return PricingOptionGroup[]
+     */
+    protected static function loadFormOfPayment($formOfPayment)
+    {
+        $opt = [];
+
+        if (!empty($formOfPayment)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_FORM_OF_PAYMENT);
+
+            $po->formOfPaymentInformation = new FormOfPaymentInformation($formOfPayment);
 
             $opt[] = $po;
         }

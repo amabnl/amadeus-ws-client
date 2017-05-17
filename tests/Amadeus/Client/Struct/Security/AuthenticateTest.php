@@ -51,19 +51,19 @@ class AuthenticateTest extends BaseTestCase
 
         $reqOpt = new SecurityAuthenticateOptions($authParams);
 
-        $message = new Authenticate($reqOpt);
+        $msg = new Authenticate($reqOpt);
 
-        $this->assertEquals('BRUXXXXXX' , $message->userIdentifier->originIdentification->sourceOffice);
-        $this->assertEquals('U' , $message->userIdentifier->originatorTypeCode);
-        $this->assertEquals('WSXXXXXX' , $message->userIdentifier->originator);
+        $this->assertEquals('BRUXXXXXX' , $msg->userIdentifier->originIdentification->sourceOffice);
+        $this->assertEquals('U' , $msg->userIdentifier->originatorTypeCode);
+        $this->assertEquals('WSXXXXXX' , $msg->userIdentifier->originator);
 
-        $this->assertEquals('DUT' , $message->dutyCode->dutyCodeDetails->referenceQualifier);
-        $this->assertEquals('SU' , $message->dutyCode->dutyCodeDetails->referenceIdentifier);
+        $this->assertEquals('DUT' , $msg->dutyCode->dutyCodeDetails->referenceQualifier);
+        $this->assertEquals('SU' , $msg->dutyCode->dutyCodeDetails->referenceIdentifier);
 
-        $this->assertEquals('DUMMY-ORG' , $message->systemDetails->organizationDetails->organizationId);
+        $this->assertEquals('DUMMY-ORG' , $msg->systemDetails->organizationDetails->organizationId);
 
-        $this->assertEquals(PasswordInfo::DATA_TYPE_EDIFACT , $message->passwordInfo->dataType);
-        $this->assertEquals(4 , $message->passwordInfo->dataLength);
-        $this->assertEquals(base64_encode('TEST') , $message->passwordInfo->binaryData);
+        $this->assertEquals(PasswordInfo::DATA_TYPE_EDIFACT , $msg->passwordInfo->dataType);
+        $this->assertEquals(4 , $msg->passwordInfo->dataLength);
+        $this->assertEquals(base64_encode('TEST') , $msg->passwordInfo->binaryData);
     }
 }

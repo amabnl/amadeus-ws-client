@@ -968,6 +968,47 @@ Get the fare rules for specific categories for a given pricing in context:
         ])
     );
 
+-----------------
+Fare_GetFareRules
+-----------------
+
+Basic request to get Fare Rules:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareGetFareRulesOptions;
+
+    $rulesResponse = $client->fareGetFareRules(
+        new FareGetFareRulesOptions([
+            'ticketingDate' => \DateTime::createFromFormat('dmY', '23032011'),
+            'fareBasis' => 'OA21ERD1',
+            'ticketDesignator' => 'DISC',
+            'airline' => 'AA',
+            'origin' => 'DFW',
+            'destination' => 'MKC'
+        ])
+    );
+
+
+Get fare rules providing corporate number and departure date:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareGetFareRulesOptions;
+
+    $rulesResponse = $client->fareGetFareRules(
+        new FareGetFareRulesOptions([
+            'ticketingDate' => \DateTime::createFromFormat('dmY', '23032011'),
+            'uniFares' => ['0012345'],
+            'fareBasis' => 'OA21ERD1',
+            'ticketDesignator' => 'DISC',
+            'directionality' => FareGetFareRulesOptions::DIRECTION_ORIGIN_TO_DESTINATION,
+            'airline' => 'AA',
+            'origin' => 'DFW',
+            'destination' => 'MKC',
+            'travelDate' => \DateTime::createFromFormat('dmY', '25032011')
+        ])
+    );
 
 --------------------
 Fare_ConvertCurrency
@@ -1339,7 +1380,7 @@ Delete the form of payment from the TSM of tattoo 18:
 
     $createTsmResponse = $client->ticketCreateTSMFareElement(
         new TicketCreateTsmFareElOptions([
-            'elementType' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+            'type' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
             'tattoo' => 18,
             'info' => '#####'
         ])
@@ -1354,7 +1395,7 @@ Set the form of payment Check to the TSM of tattoo 18:
 
     $createTsmResponse = $client->ticketCreateTSMFareElement(
         new TicketCreateTsmFareElOptions([
-            'elementType' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+            'type' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
             'tattoo' => 18,
             'info' => 'CHECK/EUR304.89'
         ])
@@ -1488,6 +1529,181 @@ Get details of the form of payment associated to TSM of tattoo 18:
         new TicketDisplayTsmFareElOptions([
             'tattoo' => 18,
             'type' => TicketDisplayTsmFareElOptions::TYPE_FORM_OF_PAYMENT
+        ])
+    );
+
+
+-----------------------
+Ticket_CheckEligibility
+-----------------------
+
+Ticket eligibility request for one Adult passenger with ticket number 172-23000000004. The ticket was originally priced with Public Fare.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCheckEligibilityOptions;
+    use Amadeus\Client\RequestOptions\MPPassenger;
+
+    $response = $client->ticketCheckEligibility(
+        new TicketCheckEligibilityOptions([
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'flightOptions' => [
+                TicketCheckEligibilityOptions::FLIGHTOPT_PUBLISHED,
+            ],
+            'ticketNumbers' => [
+                '1722300000004'
+            ]
+        ])
+    );
+
+----------------------------------------------
+Ticket_ATCShopperMasterPricerTravelBoardSearch
+----------------------------------------------
+
+Basic Search With Mandatory Elements:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketAtcShopperMpTbSearchOptions;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Ticket\ReqSegOptions;
+
+    $response = $client->ticketAtcShopperMasterPricerTravelBoardSearch(
+        new TicketAtcShopperMpTbSearchOptions([
+            'nrOfRequestedPassengers' => 2,
+            'nrOfRequestedResults' => 2,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ]),
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_CHILD,
+                    'count' => 1
+                ])
+            ],
+            'flightOptions' => [
+                TicketAtcShopperMpTbSearchOptions::FLIGHTOPT_PUBLISHED,
+                TicketAtcShopperMpTbSearchOptions::FLIGHTOPT_UNIFARES
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'segmentReference' => 1,
+                    'departureLocation' => new MPLocation(['city' => 'MAD']),
+                    'arrivalLocation' => new MPLocation(['city' => 'LHR']),
+                    'date' => new MPDate([
+                        'date' => new \DateTime('2013-08-12T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ]),
+                new MPItinerary([
+                    'segmentReference' => 2,
+                    'departureLocation' => new MPLocation(['city' => 'LHR']),
+                    'arrivalLocation' => new MPLocation(['city' => 'MAD']),
+                    'date' => new MPDate([
+                        'date' => new \DateTime('2013-12-12T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'ticketNumbers' => [
+                '0572187777498',
+                '0572187777499'
+            ],
+            'requestedSegments' => [
+                new ReqSegOptions([
+                    'requestCode' => ReqSegOptions::REQUEST_CODE_KEEP_FLIGHTS_AND_FARES,
+                    'connectionLocations' => [
+                        'MAD',
+                        'LHR'
+                    ]
+                ]),
+                new ReqSegOptions([
+                    'requestCode' => ReqSegOptions::REQUEST_CODE_CHANGE_REQUESTED_SEGMENT,
+                    'connectionLocations' => [
+                        'LHR',
+                        'MAD'
+                    ]
+                ])
+            ]
+        ])
+    );
+
+---------------------------------
+Ticket_RepricePNRWithBookingClass
+---------------------------------
+
+Sample: Reprice ticket 999-8550225521
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketRepricePnrWithBookingClassOptions;
+    use Amadeus\Client\RequestOptions\Ticket\ExchangeInfoOptions;
+    use Amadeus\Client\RequestOptions\Ticket\MultiRefOpt;
+    use Amadeus\Client\RequestOptions\Ticket\PaxSegRef;
+
+
+    $repriceResp = $client->ticketRepricePnrWithBookingClass(
+        new TicketRepricePnrWithBookingClassOptions([
+            'exchangeInfo' => [
+                new ExchangeInfoOptions([
+                'number' => 1,
+                'eTickets' => [
+                    '9998550225521'
+                    ]
+                ])
+            ],
+            'multiReferences' => [
+                new MultiRefOpt([
+                    'references' => [
+                        new PaxSegRef([
+                            'reference' => 3,
+                            'type' => PaxSegRef::TYPE_SEGMENT
+                        ]),
+                        new PaxSegRef([
+                            'reference' => 4,
+                            'type' => PaxSegRef::TYPE_SEGMENT
+                        ])
+                    ]
+                ]),
+                new MultiRefOpt([
+                    'references' => [
+                        new PaxSegRef([
+                            'reference' => 1,
+                            'type' => PaxSegRef::TYPE_PASSENGER_ADULT
+                        ]),
+                        new PaxSegRef([
+                            'reference' => 1,
+                            'type' => PaxSegRef::TYPE_SERVICE
+                        ])
+                    ]
+                ]),
+            ]
+        ])
+    );
+
+Many repricing options are identical to the pricing options in the ``Fare_PricePNRWithBookingClass`` message.
+
+------------------------------
+Ticket_ReissueConfirmedPricing
+------------------------------
+
+Reissue pricing for e-Ticket 057-2146640300:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketReissueConfirmedPricingOptions;
+
+    $reissueResponse = $client->ticketReissueConfirmedPricing(
+        new TicketReissueConfirmedPricingOptions([
+            'eTickets' => ['0572146640300']
         ])
     );
 
@@ -1683,6 +1899,348 @@ Document Receipts option (TTP/TTM/TRP):
         ])
     );
 
+*********
+DocRefund
+*********
+
+--------------------
+DocRefund_InitRefund
+--------------------
+
+ATC refund on a ticket:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundInitRefundOptions;
+
+    $refundResponse = $client->docRefundInitRefund(
+        new DocRefundInitRefundOptions([
+            'ticketNumber' => '5272404450587',
+            'actionCodes' => [
+                DocRefundInitRefundOptions::ACTION_ATC_REFUND
+            ]
+        ])
+    );
+
+
+ATC refund with hold-for-future-use option:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundInitRefundOptions;
+
+    $refundResponse = $client->docRefundInitRefund(
+        new DocRefundInitRefundOptions([
+            'ticketNumber' => '5272404450587',
+            'actionCodes' => [
+                DocRefundInitRefundOptions::ACTION_ATC_REFUND,
+                DocRefundInitRefundOptions::ACTION_HOLD_FOR_FUTURE_USE
+            ]
+        ])
+    );
+
+
+Redisplay an already processed refund:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundInitRefundOptions;
+
+    $refundResponse = $client->docRefundInitRefund(
+        new DocRefundInitRefundOptions([
+            'itemNumber' => 2
+        ])
+    );
+
+
+Refund with item number and coupon number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundInitRefundOptions;
+
+    $refundResponse = $client->docRefundInitRefund(
+        new DocRefundInitRefundOptions([
+            'itemNumber' => '022431',
+            'itemNumberType' => DocRefundInitRefundOptions::TYPE_FROM_NUMBER,
+            'couponNumber' => 1
+        ])
+    );
+
+
+----------------------
+DocRefund_UpdateRefund
+----------------------
+
+Example how to perform a ticket conjunction:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundUpdateRefundOptions;
+    use Amadeus\Client\RequestOptions\DocRefund\Reference;
+    use Amadeus\Client\RequestOptions\DocRefund\Ticket;
+    use Amadeus\Client\RequestOptions\DocRefund\TickGroupOpt;
+    use Amadeus\Client\RequestOptions\DocRefund\MonetaryData;
+    use Amadeus\Client\RequestOptions\DocRefund\TaxData;
+    use Amadeus\Client\RequestOptions\DocRefund\FopOpt;
+    use Amadeus\Client\RequestOptions\DocRefund\FreeTextOpt;
+
+    $refundResponse = $client->docRefundUpdateRefund(
+        new DocRefundUpdateRefundOptions([
+            'originator' => '0001AA',
+            'originatorId' => '23491193',
+            'refundDate' => \DateTime::createFromFormat('Ymd', '20031125'),
+            'ticketedDate' => \DateTime::createFromFormat('Ymd', '20030522'),
+            'references' => [
+                new Reference([
+                    'type' => Reference::TYPE_TKT_INDICATOR,
+                    'value' => 'Y'
+                ]),
+                new Reference([
+                    'type' => Reference::TYPE_DATA_SOURCE,
+                    'value' => 'F'
+                ])
+            ],
+            'tickets' => [
+                new Ticket([
+                    'number' => '22021541124593',
+                    'ticketGroup' => [
+                        new TickGroupOpt([
+                            'couponNumber' => TickGroupOpt::COUPON_1,
+                            'couponStatus' => TickGroupOpt::STATUS_REFUNDED,
+                            'boardingPriority' => 'LH07A'
+                        ]),
+                        new TickGroupOpt([
+                            'couponNumber' => TickGroupOpt::COUPON_2,
+                            'couponStatus' => TickGroupOpt::STATUS_REFUNDED,
+                            'boardingPriority' => 'LH07A'
+                        ]),
+                        new TickGroupOpt([
+                            'couponNumber' => TickGroupOpt::COUPON_3,
+                            'couponStatus' => TickGroupOpt::STATUS_REFUNDED,
+                            'boardingPriority' => 'LH07A'
+                        ]),
+                        new TickGroupOpt([
+                            'couponNumber' => TickGroupOpt::COUPON_4,
+                            'couponStatus' => TickGroupOpt::STATUS_REFUNDED,
+                            'boardingPriority' => 'LH07A'
+                        ])
+                    ]
+                ]),
+                new Ticket([
+                    'number' => '22021541124604',
+                    'ticketGroup' => [
+                        new TickGroupOpt([
+                            'couponNumber' => TickGroupOpt::COUPON_1,
+                            'couponStatus' => TickGroupOpt::STATUS_REFUNDED,
+                            'boardingPriority' => 'LH07A'
+                        ]),
+                        new TickGroupOpt([
+                            'couponNumber' => TickGroupOpt::COUPON_2,
+                            'couponStatus' => TickGroupOpt::STATUS_REFUNDED,
+                            'boardingPriority' => 'LH07A'
+                        ])
+                    ]
+                ])
+            ],
+            'travellerPrioDateOfJoining' => \DateTime::createFromFormat('Ymd', '20070101'),
+            'travellerPrioReference' => '0077701F',
+            'monetaryData' => [
+                new MonetaryData([
+                    'type' => MonetaryData::TYPE_BASE_FARE,
+                    'amount' => 401.00,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => MonetaryData::TYPE_FARE_USED,
+                    'amount' => 0.00,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => MonetaryData::TYPE_FARE_REFUND,
+                    'amount' => 401.00,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => MonetaryData::TYPE_REFUND_TOTAL,
+                    'amount' => 457.74,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => MonetaryData::TYPE_TOTAL_TAXES,
+                    'amount' => 56.74,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => 'TP',
+                    'amount' => 56.74,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => 'OBP',
+                    'amount' => 0.00,
+                    'currency' => 'EUR'
+                ]),
+                new MonetaryData([
+                    'type' => 'TGV',
+                    'amount' => 374.93,
+                    'currency' => 'EUR'
+                ])
+            ],
+            'taxData' => [
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 16.14,
+                    'currencyCode' => 'EUR',
+                    'type' => 'DE'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 3.45,
+                    'currencyCode' => 'EUR',
+                    'type' => 'YC'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 9.67,
+                    'currencyCode' => 'EUR',
+                    'type' => 'US'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 9.67,
+                    'currencyCode' => 'EUR',
+                    'type' => 'US'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 3.14,
+                    'currencyCode' => 'EUR',
+                    'type' => 'XA'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 4.39,
+                    'currencyCode' => 'EUR',
+                    'type' => 'XY'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 6.28,
+                    'currencyCode' => 'EUR',
+                    'type' => 'AY'
+                ]),
+                new TaxData([
+                    'category' => 'H',
+                    'rate' => 4.00,
+                    'currencyCode' => 'EUR',
+                    'type' => 'DU'
+                ]),
+                new TaxData([
+                    'category' => '701',
+                    'rate' => 56.74,
+                    'currencyCode' => 'EUR',
+                    'type' => TaxData::TYPE_EXTENDED_TAXES
+                ])
+            ],
+            'formOfPayment' => [
+                new FopOpt([
+                    'fopType' => FopOpt::TYPE_MISCELLANEOUS,
+                    'fopAmount' => 457.74,
+                    'freeText' => [
+                        new FreeTextOpt([
+                            'type' => 'CFP',
+                            'freeText' => '##0##'
+                        ]),
+                        new FreeTextOpt([
+                            'type' => 'CFP',
+                            'freeText' => 'IDBANK'
+                        ])
+                    ]
+                ])
+            ],
+            'refundedRouteStations' => [
+                'FRA',
+                'MUC',
+                'JFK',
+                'BKK',
+                'FRA'
+            ]
+        ])
+    );
+
+-----------------------
+DocRefund_ProcessRefund
+-----------------------
+
+Process an ATC refund on a ticket involuntarily exchanged:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundProcessRefundOptions;
+
+    $refundResponse = $client->docRefundProcessRefund(
+        new Client\RequestOptions\DocRefundProcessRefundOptions([])
+    );
+
+
+Inhibit the refund notice print:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundProcessRefundOptions;
+
+    $refundResponse = $client->docRefundProcessRefund(
+        new Client\RequestOptions\DocRefundProcessRefundOptions([
+            'statusIndicators' => [DocRefundProcessRefundOptions::STATUS_INHIBIT_REFUND_NOTICE]
+        ])
+    );
+
+
+Print refund notice on specific printer:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundProcessRefundOptions;
+
+    $refundResponse = $client->docRefundProcessRefund(
+        new Client\RequestOptions\DocRefundProcessRefundOptions([
+            'printerType' => DocRefundProcessRefundOptions::PRINTERTYPE_PRINTER_MNEMONIC,
+            'printer' => 'D00030'
+        ])
+    );
+
+Process refund adding refunded itinerary:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundProcessRefundOptions;
+    use Amadeus\Client\RequestOptions\DocRefund\RefundItinOpt;
+
+    $refundResponse = $client->docRefundProcessRefund(
+        new Client\RequestOptions\DocRefundProcessRefundOptions([
+            'refundedItinerary' => [
+                new RefundItinOpt([
+                    'company' => 'AF',
+                    'origin' => 'NCE',
+                    'destination' => 'PAR',
+                ])
+            ]
+        ])
+    );
+
+Send refund notice to email address stored in the PNR:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundProcessRefundOptions;
+    use Amadeus\Client\RequestOptions\DocRefund\RefundItinOpt;
+
+    $refundResponse = $client->docRefundProcessRefund(
+        new Client\RequestOptions\DocRefundProcessRefundOptions([
+            'sendNotificationToEmailInAPE' => true
+        ])
+    );
 
 
 *******
@@ -1701,6 +2259,7 @@ Price all services in PNR without any option:
 
     $pricingResponse = $client->serviceIntegratedPricing(new ServiceIntegratedPricingOptions());
 
+
 Override the validating carrier while pricing ancillary services:
 
 .. code-block:: php
@@ -1712,6 +2271,7 @@ Override the validating carrier while pricing ancillary services:
             'validatingCarrier' => 'BA'
         ])
     );
+
 
 Price a single Service, for a single flight and a single passenger:
 
@@ -1739,6 +2299,7 @@ Price a single Service, for a single flight and a single passenger:
         ])
     );
 
+
 Override the pricing date:
 
 .. code-block:: php
@@ -1755,6 +2316,7 @@ Override the pricing date:
         ])
     );
 
+
 Override the point of Sale:
 
 .. code-block:: php
@@ -1767,6 +2329,7 @@ Override the point of Sale:
         ])
     );
 
+
 Award Pricing option:
 
 .. code-block:: php
@@ -1778,6 +2341,7 @@ Award Pricing option:
             'awardPricing' => ServiceIntegratedPricingOptions::AWARDPRICING_MILES
         ])
     );
+
 
 Assign an account code to a passenger:
 
@@ -1798,6 +2362,47 @@ Assign an account code to a passenger:
         ])
     );
 
+Form of Payment:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+    use Amadeus\Client\RequestOptions\Service\FormOfPayment;
+
+    $pricingResponse = $client->serviceIntegratedPricing(
+        new ServiceIntegratedPricingOptions([
+            'formOfPayment' => [
+                new FormOfPayment([
+                    'type' => FormOfPayment::TYPE_CREDIT_CARD,
+                    'amount' => 10,
+                    'creditCardNumber' => '400000'
+                ]),
+                new FormOfPayment([
+                    'type' => FormOfPayment::TYPE_CASH
+                ]),
+            ]
+        ])
+    );
+
+Frequent Flyer:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+    use Amadeus\Client\RequestOptions\Service\FrequentFlyer;
+
+    $pricingResponse = $client->serviceIntegratedPricing(
+        new ServiceIntegratedPricingOptions([
+            'frequentFlyers' => [
+                new FrequentFlyer([
+                    'company' => '6X',
+                    'number' => '1234567891011',
+                    'tierLevel' => 'SILVER',
+                    'priorityCode' => '1'
+                ])
+            ]
+        ])
+    );
 
 ***
 FOP
@@ -2221,4 +2826,5 @@ Request a sales report from a certain date to another date, issued in all office
     ]);
 
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
+
 

@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment as FormOfPaymentOptions;
+
 /**
  * FormOfPayment
  *
@@ -131,10 +133,16 @@ class FormOfPayment
     /**
      * FormOfPayment constructor.
      *
-     * @param string $type self::TYPE_*
+     * @param string|FormOfPaymentOptions $options self::TYPE_* or object with FOP options
      */
-    public function __construct($type)
+    public function __construct($options)
     {
-        $this->type = $type;
+        if ($options instanceof FormOfPaymentOptions) {
+            $this->type = $options->type;
+            $this->amount = $options->amount;
+            $this->creditCardNumber = $options->creditCardNumber;
+        } else {
+            $this->type = $options;
+        }
     }
 }

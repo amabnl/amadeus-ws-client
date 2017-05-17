@@ -23,11 +23,15 @@
 namespace Amadeus\Client\Struct\Service;
 
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+use Amadeus\Client\RequestOptions\Service\FormOfPayment;
+use Amadeus\Client\RequestOptions\Service\FrequentFlyer;
 use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
 use Amadeus\Client\Struct\Fare\BasePricingMessage;
 use Amadeus\Client\Struct\Fare\PricePnr13\CarrierInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\Currency;
 use Amadeus\Client\Struct\Fare\PricePnr13\DateInformation;
+use Amadeus\Client\Struct\Fare\PricePnr13\FormOfPaymentInformation;
+use Amadeus\Client\Struct\Fare\PricePnr13\FrequentFlyerInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\LocationInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\OptionDetail;
 use Amadeus\Client\Struct\Fare\PricePnr13\PaxSegTstReference;
@@ -121,6 +125,16 @@ class IntegratedPricing extends BasePricingMessage
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::loadPointOverrides($options->pointOfSaleOverride)
+        );
+
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadFormOfPaymentOverride($options->formOfPayment)
+        );
+
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadFrequentFlyerOverride($options->frequentFlyers)
         );
 
         $priceOptions = self::mergeOptions(
@@ -241,6 +255,44 @@ class IntegratedPricing extends BasePricingMessage
                 LocationInformation::TYPE_POINT_OF_SALE,
                 $posOverride
             );
+
+            $opt[] = $po;
+        }
+
+        return $opt;
+    }
+
+    /**
+     * @param FormOfPayment[] $formOfPayment
+     * @return PricingOption[]
+     */
+    protected static function loadFormOfPaymentOverride($formOfPayment)
+    {
+        $opt = [];
+
+        if (!empty($formOfPayment)) {
+            $po = new PricingOption(PricingOptionKey::OVERRIDE_FORM_OF_PAYMENT);
+
+            $po->formOfPaymentInformation = new FormOfPaymentInformation($formOfPayment);
+
+            $opt[] = $po;
+        }
+
+        return $opt;
+    }
+
+    /**
+     * @param FrequentFlyer[] $frequentFlyers
+     * @return PricingOption[]
+     */
+    protected static function loadFrequentFlyerOverride($frequentFlyers)
+    {
+        $opt = [];
+
+        if (!empty($frequentFlyers)) {
+            $po = new PricingOption(PricingOptionKey::OVERRIDE_FREQUENT_FLYER_INFORMATION);
+
+            $po->frequentFlyerInformation = new FrequentFlyerInformation($frequentFlyers);
 
             $opt[] = $po;
         }

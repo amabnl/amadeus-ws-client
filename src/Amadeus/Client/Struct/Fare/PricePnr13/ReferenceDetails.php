@@ -35,7 +35,8 @@ class ReferenceDetails
     const QUALIFIER_PAX_INFANT = "PI";
     const QUALIFIER_SEGMENT_REFERENCE = "S";
     const QUALIFIER_TST = "T";
-    const QUALIFIER_ELEMENT = "E"; //Service_IntegratedPricing
+    const QUALIFIER_ELEMENT = "E"; //Service_IntegratedPricing and Ticket_RepricePNRWithBookingClass
+    const QUALIFIER_ORIGINAL_PRICING = "O"; //Ticket_RepricePNRWithBookingClass
 
     /**
      * self::QUALIFIER_*

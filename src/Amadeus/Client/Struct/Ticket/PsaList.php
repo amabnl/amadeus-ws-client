@@ -26,6 +26,7 @@ namespace Amadeus\Client\Struct\Ticket;
  * PsaList
  *
  * @package Amadeus\Client\Struct\Ticket
+ * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
 class PsaList
 {

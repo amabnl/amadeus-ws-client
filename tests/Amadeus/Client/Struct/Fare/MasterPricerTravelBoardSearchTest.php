@@ -34,6 +34,7 @@ use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\Struct\Fare\MasterPricer\BooleanExpression;
 use Amadeus\Client\Struct\Fare\MasterPricer\CabinId;
 use Amadeus\Client\Struct\Fare\MasterPricer\CompanyIdentity;
+use Amadeus\Client\Struct\Fare\MasterPricer\CustomerReferences;
 use Amadeus\Client\Struct\Fare\MasterPricer\FareFamilyInfo;
 use Amadeus\Client\Struct\Fare\MasterPricer\FirstDateTimeDetail;
 use Amadeus\Client\Struct\Fare\MasterPricer\FlightDetail;
@@ -1140,5 +1141,114 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertNull($message->fareFamilies[1]->familyCriteria->fareProductDetail[1]->fareBasis);
         $this->assertEmpty($message->fareFamilies[1]->otherPossibleCriteria);
         $this->assertEmpty($message->fareFamilies[1]->fareFamilySegment);
+    }
+
+    /**
+     * 5.32 Operation: 02.32 Flight Option - Progressive legs
+     */
+    public function testCanMakeMessageWithProgressiveLegs()
+    {
+        $opt = new FareMasterPricerTbSearch([
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'flightOptions' => [
+                FareMasterPricerTbSearch::FLIGHTOPT_PUBLISHED
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'DEN']),
+                    'arrivalLocation' => new MPLocation(['city' => 'LAX']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2015-12-11T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ]),
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'LAX']),
+                    'arrivalLocation' => new MPLocation(['city' => 'BOS']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2015-12-18T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'progressiveLegsMin' => 0,
+            'progressiveLegsMax' => 1
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertCount(1, $message->numberOfUnit->unitNumberDetail);
+        $this->assertEquals(1, $message->numberOfUnit->unitNumberDetail[0]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_PASS, $message->numberOfUnit->unitNumberDetail[0]->typeOfUnit);
+
+        $this->assertCount(1, $message->fareOptions->pricingTickInfo->pricingTicketing->priceType);
+        $this->assertEquals(
+            [
+                PricingTicketing::PRICETYPE_PUBLISHEDFARES
+            ],
+            $message->fareOptions->pricingTickInfo->pricingTicketing->priceType
+        );
+
+        $this->assertCount(2, $message->itinerary);
+        $this->assertEquals('DEN', $message->itinerary[0]->departureLocalization->departurePoint->locationId);
+        $this->assertEquals('LAX', $message->itinerary[0]->arrivalLocalization ->arrivalPointDetails->locationId);
+        $this->assertEquals('111215', $message->itinerary[0]->timeDetails->firstDateTimeDetail->date);
+        $this->assertNull($message->itinerary[0]->timeDetails->firstDateTimeDetail->time);
+        $this->assertNull($message->itinerary[0]->timeDetails->firstDateTimeDetail->timeWindow);
+        $this->assertNull($message->itinerary[0]->timeDetails->firstDateTimeDetail->timeQualifier);
+        $this->assertNull($message->itinerary[0]->timeDetails->rangeOfDate);
+
+        $this->assertEquals('LAX', $message->itinerary[1]->departureLocalization->departurePoint->locationId);
+        $this->assertEquals('BOS', $message->itinerary[1]->arrivalLocalization ->arrivalPointDetails->locationId);
+        $this->assertEquals('181215', $message->itinerary[1]->timeDetails->firstDateTimeDetail->date);
+        $this->assertNull($message->itinerary[1]->timeDetails->firstDateTimeDetail->time);
+        $this->assertNull($message->itinerary[1]->timeDetails->firstDateTimeDetail->timeWindow);
+        $this->assertNull($message->itinerary[1]->timeDetails->firstDateTimeDetail->timeQualifier);
+        $this->assertNull($message->itinerary[1]->timeDetails->rangeOfDate);
+
+        $this->assertCount(2, $message->travelFlightInfo->unitNumberDetail);
+    }
+
+    /**
+     * 5.31 Operation: 02.31 Flight Option - DK number (customer identification)
+     */
+    public function testCanMakeMessageWithDkNumber()
+    {
+        $opt = new FareMasterPricerTbSearch([
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'PAR']),
+                    'arrivalLocation' => new MPLocation(['city' => 'PPT']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2012-08-10T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ]),
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'PPT']),
+                    'arrivalLocation' => new MPLocation(['city' => 'PAR']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2012-08-20T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'dkNumber' => 'AA1234567890123456789Z01234567890'
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertCount(1, $message->customerRef->customerReferences);
+        $this->assertEquals('AA1234567890123456789Z01234567890', $message->customerRef->customerReferences[0]->referenceNumber);
+        $this->assertEquals(CustomerReferences::QUAL_AGENCY_GROUPING_ID, $message->customerRef->customerReferences[0]->referenceQualifier);
     }
 }

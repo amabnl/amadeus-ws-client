@@ -123,17 +123,15 @@ class AddMultiElements extends BaseWsMessage
             $this->addElements(
                 $params->elements,
                 $tattooCounter,
+                $params->autoAddReceivedFrom,
+                $params->defaultReceivedFrom,
                 $params->receivedFrom
             );
-        } elseif (!is_null($params->receivedFrom)) {
-            if ($this->dataElementsMaster === null) {
-                $this->dataElementsMaster = new DataElementsMaster();
-            }
-
-            $tattooCounter++;
-
-            $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(
-                new ReceivedFrom(['receivedFrom' => $params->receivedFrom]),
+        } else {
+            $this->addReceivedFrom(
+                $params->receivedFrom,
+                $params->autoAddReceivedFrom,
+                $params->defaultReceivedFrom,
                 $tattooCounter
             );
         }
@@ -164,6 +162,8 @@ class AddMultiElements extends BaseWsMessage
         $this->addElements(
             $params->elements,
             $tattooCounter,
+            $params->autoAddReceivedFrom,
+            $params->defaultReceivedFrom,
             $params->receivedFrom
         );
     }
@@ -294,16 +294,18 @@ class AddMultiElements extends BaseWsMessage
     /**
      * @param Element[] $elements
      * @param int $tattooCounter (BYREF)
-     * @param string|null $receivedFromString
+     * @param bool $autoAddRf
+     * @param string|null $defaultRf
+     * @param string|null $explicitRf
      */
-    protected function addElements($elements, &$tattooCounter, $receivedFromString = null)
+    protected function addElements($elements, &$tattooCounter, $autoAddRf, $defaultRf, $explicitRf = null)
     {
         if ($this->dataElementsMaster === null) {
             $this->dataElementsMaster = new DataElementsMaster();
         }
 
         //Only add a default RF element if there is no explicitly provided RF element!
-        $explicitRf = false;
+        $hasReceivedFromElement = false;
 
         foreach ($elements as $element) {
             if ($element instanceof Element) {
@@ -314,13 +316,15 @@ class AddMultiElements extends BaseWsMessage
             }
 
             if ($element instanceof ReceivedFrom) {
-                $explicitRf = true;
+                $hasReceivedFromElement = true;
             }
         }
 
-        if ($receivedFromString !== null && !$explicitRf) {
-            $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(
-                new ReceivedFrom(['receivedFrom' => $receivedFromString]),
+        if (!$hasReceivedFromElement) {
+            $this->addReceivedFrom(
+                $explicitRf,
+                $autoAddRf,
+                $defaultRf,
                 $tattooCounter
             );
         }
@@ -345,5 +349,33 @@ class AddMultiElements extends BaseWsMessage
         }
 
         return $createdElement;
+    }
+
+    /**
+     * Add Received From field - if needed.
+     *
+     * @param string|null $explicitRf Explicitly provided RF string on request.
+     * @param bool $doAutoAdd Wether to automatically add an RF field.
+     * @param string|null $defaultRf The default RF string set in the client.
+     * @param int $tattooCounter (BYREF)
+     */
+    protected function addReceivedFrom($explicitRf, $doAutoAdd, $defaultRf, &$tattooCounter)
+    {
+        if ($this->dataElementsMaster === null) {
+            $this->dataElementsMaster = new DataElementsMaster();
+        }
+
+        if (!empty($explicitRf) || ($doAutoAdd && !empty($defaultRf))) {
+            //Set a received from if explicitly provided or if auto received from is enabled
+
+            $tattooCounter++;
+
+            $rfToAdd = (!empty($explicitRf)) ? $explicitRf : $defaultRf;
+
+            $this->dataElementsMaster->dataElementsIndiv[] = $this->createElement(
+                new ReceivedFrom(['receivedFrom' => $rfToAdd]),
+                $tattooCounter
+            );
+        }
     }
 }

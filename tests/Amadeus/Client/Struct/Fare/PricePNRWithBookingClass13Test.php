@@ -25,6 +25,7 @@ namespace Test\Amadeus\Client\Struct\Fare;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
@@ -67,28 +68,28 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             ]
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
         $validatingCarrierPo = new PricingOptionGroup(PricingOptionKey::OPTION_VALIDATING_CARRIER);
         $validatingCarrierPo->carrierInformation = new CarrierInformation('BA');
 
-        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $validatingCarrierPo));
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $validatingCarrierPo));
 
         $currencyOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE);
         $currencyOverridePo->currency = new Currency('EUR');
 
-        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $currencyOverridePo));
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $currencyOverridePo));
 
         $fareBasisOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
         $fareBasisOverridePo->optionDetail = new OptionDetail();
         $fareBasisOverridePo->optionDetail->criteriaDetails[] = new CriteriaDetails('QNC469W2');
         $fareBasisOverridePo->paxSegTstReference = new PaxSegTstReference(null, [2 => FareBasis::SEGREFTYPE_SEGMENT]);
 
-        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $fareBasisOverridePo));
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $fareBasisOverridePo));
 
         $negofarePo = new PricingOptionGroup(PricingOptionKey::OPTION_NEGOTIATED_FARES);
 
-        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $negofarePo));
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $negofarePo));
     }
 
     public function testCanDoPricePnrCallWithNewFareBasisParams()
@@ -110,49 +111,49 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             ]
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
         $validatingCarrierPo = new PricingOptionGroup(PricingOptionKey::OPTION_VALIDATING_CARRIER);
         $validatingCarrierPo->carrierInformation = new CarrierInformation('BA');
 
-        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $validatingCarrierPo));
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $validatingCarrierPo));
 
         $currencyOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE);
         $currencyOverridePo->currency = new Currency('EUR');
 
-        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $currencyOverridePo));
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $currencyOverridePo));
 
         $fareBasisOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
         $fareBasisOverridePo->optionDetail = new OptionDetail();
         $fareBasisOverridePo->optionDetail->criteriaDetails[] = new CriteriaDetails('QNC469W2');
         $fareBasisOverridePo->paxSegTstReference = new PaxSegTstReference([new PaxSegRef(['type'=> PaxSegRef::TYPE_SEGMENT, 'reference' => 2])]);
 
-        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $fareBasisOverridePo));
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $fareBasisOverridePo));
 
         $negofarePo = new PricingOptionGroup(PricingOptionKey::OPTION_NEGOTIATED_FARES);
 
-        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $negofarePo));
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $negofarePo));
     }
 
     public function testCanDoPricePnrCallWithNoOptions()
     {
         $opt = new FarePricePnrWithBookingClassOptions();
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(1, $message->pricingOptionGroup);
-        $this->assertEquals('NOP', $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertNull($message->pricingOptionGroup[0]->currency);
-        $this->assertNull($message->pricingOptionGroup[0]->carrierInformation);
-        $this->assertNull($message->pricingOptionGroup[0]->dateInformation);
-        $this->assertNull($message->pricingOptionGroup[0]->formOfPaymentInformation);
-        $this->assertNull($message->pricingOptionGroup[0]->frequentFlyerInformation);
-        $this->assertNull($message->pricingOptionGroup[0]->locationInformation);
-        $this->assertNull($message->pricingOptionGroup[0]->monetaryInformation);
-        $this->assertNull($message->pricingOptionGroup[0]->optionDetail);
-        $this->assertNull($message->pricingOptionGroup[0]->paxSegTstReference);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation);
-        $this->assertEmpty($message->pricingOptionGroup[0]->taxInformation);
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals('NOP', $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertNull($msg->pricingOptionGroup[0]->currency);
+        $this->assertNull($msg->pricingOptionGroup[0]->carrierInformation);
+        $this->assertNull($msg->pricingOptionGroup[0]->dateInformation);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation);
+        $this->assertNull($msg->pricingOptionGroup[0]->frequentFlyerInformation);
+        $this->assertNull($msg->pricingOptionGroup[0]->locationInformation);
+        $this->assertNull($msg->pricingOptionGroup[0]->monetaryInformation);
+        $this->assertNull($msg->pricingOptionGroup[0]->optionDetail);
+        $this->assertNull($msg->pricingOptionGroup[0]->paxSegTstReference);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation);
+        $this->assertEmpty($msg->pricingOptionGroup[0]->taxInformation);
     }
 
     /**
@@ -178,19 +179,19 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             ]
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(4, $message->pricingOptionGroup);
+        $this->assertCount(4, $msg->pricingOptionGroup);
 
         $validatingCarrierPo = new PricingOptionGroup(PricingOptionKey::OPTION_VALIDATING_CARRIER);
         $validatingCarrierPo->carrierInformation = new CarrierInformation('BA');
 
-        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $validatingCarrierPo));
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $validatingCarrierPo));
 
         $currencyOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE);
         $currencyOverridePo->currency = new Currency('EUR');
 
-        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $currencyOverridePo));
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $currencyOverridePo));
 
         $fareBasisOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
         $fareBasisOverridePo->optionDetail = new OptionDetail();
@@ -199,11 +200,11 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             [new PaxSegRef(['type'=> PaxSegRef::TYPE_SEGMENT, 'reference' => 2])]
         );
 
-        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $fareBasisOverridePo));
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $fareBasisOverridePo));
 
         $negofarePo = new PricingOptionGroup(PricingOptionKey::OPTION_NEGOTIATED_FARES);
 
-        $this->assertTrue($this->assertArrayContainsSameObject($message->pricingOptionGroup, $negofarePo));
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $negofarePo));
     }
 
     public function testCanDoPricePnrCallWithObFees()
@@ -225,18 +226,18 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             ]
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(1, $message->pricingOptionGroup);
+        $this->assertCount(1, $msg->pricingOptionGroup);
 
-        $this->assertEquals(PricingOptionKey::OPTION_OB_FEES, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertEquals(PenDisInformation::QUAL_OB_FEES, $message->pricingOptionGroup[0]->penDisInformation->discountPenaltyQualifier);
-        $this->assertCount(1, $message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails);
-        $this->assertEquals(DiscountPenaltyDetails::FUNCTION_INCLUDE_FEE, $message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->function);
-        $this->assertEquals(10, $message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->amount);
-        $this->assertEquals('USD', $message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->currency);
-        $this->assertEquals(DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT, $message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->amountType);
-        $this->assertEquals('FC1', $message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->rate);
+        $this->assertEquals(PricingOptionKey::OPTION_OB_FEES, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(PenDisInformation::QUAL_OB_FEES, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyQualifier);
+        $this->assertCount(1, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails);
+        $this->assertEquals(DiscountPenaltyDetails::FUNCTION_INCLUDE_FEE, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->function);
+        $this->assertEquals(10, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->amount);
+        $this->assertEquals('USD', $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->currency);
+        $this->assertEquals(DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->amountType);
+        $this->assertEquals('FC1', $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->rate);
     }
 
     public function testCanDoPricePnrCallWithPricingLogic()
@@ -245,13 +246,13 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             'pricingLogic' => FarePricePnrWithBookingClassOptions::PRICING_LOGIC_IATA
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(1, $message->pricingOptionGroup);
+        $this->assertCount(1, $msg->pricingOptionGroup);
 
-        $this->assertEquals(PricingOptionKey::OPTION_PRICING_LOGIC, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertCount(1, $message->pricingOptionGroup[0]->optionDetail->criteriaDetails);
-        $this->assertEquals('IATA', $message->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals(PricingOptionKey::OPTION_PRICING_LOGIC, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertCount(1, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails);
+        $this->assertEquals('IATA', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
     }
 
     public function testCanDoPricePnrCallWithCorpNegoFare()
@@ -260,12 +261,12 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             'corporateNegoFare' => '012345'
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(1, $message->pricingOptionGroup);
-        $this->assertEquals(PricingOptionKey::OPTION_CORPORATE_NEGOTIATED_FARES, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertCount(1, $message->pricingOptionGroup[0]->optionDetail->criteriaDetails);
-        $this->assertEquals('012345', $message->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_CORPORATE_NEGOTIATED_FARES, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertCount(1, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails);
+        $this->assertEquals('012345', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
     }
 
 
@@ -275,13 +276,13 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             'corporateUniFares' => ['012345', 'AMADEUS']
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(1, $message->pricingOptionGroup);
-        $this->assertEquals(PricingOptionKey::OPTION_CORPORATE_UNIFARES, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertCount(2, $message->pricingOptionGroup[0]->optionDetail->criteriaDetails);
-        $this->assertEquals('012345', $message->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
-        $this->assertEquals('AMADEUS', $message->pricingOptionGroup[0]->optionDetail->criteriaDetails[1]->attributeType);
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_CORPORATE_UNIFARES, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertCount(2, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails);
+        $this->assertEquals('012345', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals('AMADEUS', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[1]->attributeType);
 
     }
 
@@ -301,35 +302,35 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             ]
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(1, $message->pricingOptionGroup);
-        $this->assertEquals(PricingOptionKey::OPTION_PASSENGER_DISCOUNT_PTC, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertEquals(PenDisInformation::QUAL_DISCOUNT, $message->pricingOptionGroup[0]->penDisInformation->discountPenaltyQualifier);
-        $this->assertCount(3, $message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails);
-        $this->assertEquals('YTH', $message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->rate);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->amount);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->amountType);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->currency);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->function);
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_PASSENGER_DISCOUNT_PTC, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(PenDisInformation::QUAL_DISCOUNT, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyQualifier);
+        $this->assertCount(3, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails);
+        $this->assertEquals('YTH', $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->rate);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->amount);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->amountType);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->currency);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->function);
 
-        $this->assertEquals('AD20', $message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[1]->rate);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[1]->amount);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[1]->amountType);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[1]->currency);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[1]->function);
+        $this->assertEquals('AD20', $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[1]->rate);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[1]->amount);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[1]->amountType);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[1]->currency);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[1]->function);
 
-        $this->assertEquals('MIL', $message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[2]->rate);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[2]->amount);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[2]->amountType);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[2]->currency);
-        $this->assertNull($message->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[2]->function);
+        $this->assertEquals('MIL', $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[2]->rate);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[2]->amount);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[2]->amountType);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[2]->currency);
+        $this->assertNull($msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[2]->function);
 
-        $this->assertCount(2, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails);
-        $this->assertEquals(1, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[0]->value);
-        $this->assertEquals(ReferenceDetails::QUALIFIER_PAX_REFERENCE, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[0]->type);
-        $this->assertEquals(4, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[1]->value);
-        $this->assertEquals(ReferenceDetails::QUALIFIER_SEGMENT_REFERENCE, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[1]->type);
+        $this->assertCount(2, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails);
+        $this->assertEquals(1, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[0]->value);
+        $this->assertEquals(ReferenceDetails::QUALIFIER_PAX_REFERENCE, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[0]->type);
+        $this->assertEquals(4, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[1]->value);
+        $this->assertEquals(ReferenceDetails::QUALIFIER_SEGMENT_REFERENCE, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[1]->type);
     }
 
     /**
@@ -342,15 +343,15 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             'pointOfTicketingOverride' => 'MAN'
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(2, $message->pricingOptionGroup);
-        $this->assertEquals(PricingOptionKey::OPTION_POINT_OF_SALE_OVERRIDE, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertEquals(LocationInformation::TYPE_POINT_OF_SALE, $message->pricingOptionGroup[0]->locationInformation->locationType);
-        $this->assertEquals('LON', $message->pricingOptionGroup[0]->locationInformation->firstLocationDetails->code);
-        $this->assertEquals(PricingOptionKey::OPTION_POINT_OF_TICKETING_OVERRIDE, $message->pricingOptionGroup[1]->pricingOptionKey->pricingOptionKey);
-        $this->assertEquals(LocationInformation::TYPE_POINT_OF_TICKETING, $message->pricingOptionGroup[1]->locationInformation->locationType);
-        $this->assertEquals('MAN', $message->pricingOptionGroup[1]->locationInformation->firstLocationDetails->code);
+        $this->assertCount(2, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_POINT_OF_SALE_OVERRIDE, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(LocationInformation::TYPE_POINT_OF_SALE, $msg->pricingOptionGroup[0]->locationInformation->locationType);
+        $this->assertEquals('LON', $msg->pricingOptionGroup[0]->locationInformation->firstLocationDetails->code);
+        $this->assertEquals(PricingOptionKey::OPTION_POINT_OF_TICKETING_OVERRIDE, $msg->pricingOptionGroup[1]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(LocationInformation::TYPE_POINT_OF_TICKETING, $msg->pricingOptionGroup[1]->locationInformation->locationType);
+        $this->assertEquals('MAN', $msg->pricingOptionGroup[1]->locationInformation->firstLocationDetails->code);
     }
 
     public function testCanDoPricePnrCallWithTicketType()
@@ -359,12 +360,12 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             'ticketType' => FarePricePnrWithBookingClassOptions::TICKET_TYPE_ELECTRONIC
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(1, $message->pricingOptionGroup);
-        $this->assertEquals(PricingOptionKey::OPTION_TICKET_TYPE, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertCount(1, $message->pricingOptionGroup[0]->optionDetail->criteriaDetails);
-        $this->assertEquals(FarePricePnrWithBookingClassOptions::TICKET_TYPE_ELECTRONIC, $message->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_TICKET_TYPE, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertCount(1, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails);
+        $this->assertEquals(FarePricePnrWithBookingClassOptions::TICKET_TYPE_ELECTRONIC, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
     }
 
     public function testCanDoPricePnrCallWithAddTaxes()
@@ -384,22 +385,22 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             ]
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(1, $message->pricingOptionGroup);
-        $this->assertEquals(PricingOptionKey::OPTION_ADD_TAX, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertCount(2, $message->pricingOptionGroup[0]->taxInformation);
-        $this->assertEquals(TaxInformation::QUALIFIER_TAX, $message->pricingOptionGroup[0]->taxInformation[0]->taxQualifier);
-        $this->assertEquals('GO', $message->pricingOptionGroup[0]->taxInformation[0]->taxNature);
-        $this->assertEquals(50, $message->pricingOptionGroup[0]->taxInformation[0]->taxData->taxRate);
-        $this->assertEquals(TaxData::QUALIFIER_AMOUNT, $message->pricingOptionGroup[0]->taxInformation[0]->taxData->taxValueQualifier);
-        $this->assertEquals('ZV', $message->pricingOptionGroup[0]->taxInformation[0]->taxType->isoCountry);
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_ADD_TAX, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertCount(2, $msg->pricingOptionGroup[0]->taxInformation);
+        $this->assertEquals(TaxInformation::QUALIFIER_TAX, $msg->pricingOptionGroup[0]->taxInformation[0]->taxQualifier);
+        $this->assertEquals('GO', $msg->pricingOptionGroup[0]->taxInformation[0]->taxNature);
+        $this->assertEquals(50, $msg->pricingOptionGroup[0]->taxInformation[0]->taxData->taxRate);
+        $this->assertEquals(TaxData::QUALIFIER_AMOUNT, $msg->pricingOptionGroup[0]->taxInformation[0]->taxData->taxValueQualifier);
+        $this->assertEquals('ZV', $msg->pricingOptionGroup[0]->taxInformation[0]->taxType->isoCountry);
 
-        $this->assertEquals(TaxInformation::QUALIFIER_TAX, $message->pricingOptionGroup[0]->taxInformation[1]->taxQualifier);
-        $this->assertNull($message->pricingOptionGroup[0]->taxInformation[1]->taxNature);
-        $this->assertEquals(10, $message->pricingOptionGroup[0]->taxInformation[1]->taxData->taxRate);
-        $this->assertEquals(TaxData::QUALIFIER_PERCENTAGE, $message->pricingOptionGroup[0]->taxInformation[1]->taxData->taxValueQualifier);
-        $this->assertEquals('FR', $message->pricingOptionGroup[0]->taxInformation[1]->taxType->isoCountry);
+        $this->assertEquals(TaxInformation::QUALIFIER_TAX, $msg->pricingOptionGroup[0]->taxInformation[1]->taxQualifier);
+        $this->assertNull($msg->pricingOptionGroup[0]->taxInformation[1]->taxNature);
+        $this->assertEquals(10, $msg->pricingOptionGroup[0]->taxInformation[1]->taxData->taxRate);
+        $this->assertEquals(TaxData::QUALIFIER_PERCENTAGE, $msg->pricingOptionGroup[0]->taxInformation[1]->taxData->taxValueQualifier);
+        $this->assertEquals('FR', $msg->pricingOptionGroup[0]->taxInformation[1]->taxType->isoCountry);
     }
 
     public function testCanDoPricePnrCallWithExemptTaxes()
@@ -413,15 +414,15 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             ]
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(1, $message->pricingOptionGroup);
-        $this->assertEquals(PricingOptionKey::OPTION_EXEMPT_FROM_TAX, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertCount(1, $message->pricingOptionGroup[0]->taxInformation);
-        $this->assertEquals(TaxInformation::QUALIFIER_TAX, $message->pricingOptionGroup[0]->taxInformation[0]->taxQualifier);
-        $this->assertEquals('GO', $message->pricingOptionGroup[0]->taxInformation[0]->taxNature);
-        $this->assertNull($message->pricingOptionGroup[0]->taxInformation[0]->taxData);
-        $this->assertEquals('ZV', $message->pricingOptionGroup[0]->taxInformation[0]->taxType->isoCountry);
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_EXEMPT_FROM_TAX, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertCount(1, $msg->pricingOptionGroup[0]->taxInformation);
+        $this->assertEquals(TaxInformation::QUALIFIER_TAX, $msg->pricingOptionGroup[0]->taxInformation[0]->taxQualifier);
+        $this->assertEquals('GO', $msg->pricingOptionGroup[0]->taxInformation[0]->taxNature);
+        $this->assertNull($msg->pricingOptionGroup[0]->taxInformation[0]->taxData);
+        $this->assertEquals('ZV', $msg->pricingOptionGroup[0]->taxInformation[0]->taxType->isoCountry);
     }
 
     /**
@@ -450,20 +451,20 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             ]
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(1, $message->pricingOptionGroup);
-        $this->assertEquals(PricingOptionKey::OPTION_PAX_SEGMENT_TST_SELECTION, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertCount(4, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails);
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_PAX_SEGMENT_TST_SELECTION, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertCount(4, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails);
 
-        $this->assertEquals(ReferenceDetails::QUALIFIER_PAX_INFANT, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[0]->type);
-        $this->assertEquals(1, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[0]->value);
-        $this->assertEquals(ReferenceDetails::QUALIFIER_PAX_ADULT, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[1]->type);
-        $this->assertEquals(2, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[1]->value);
-        $this->assertEquals(ReferenceDetails::QUALIFIER_PAX_REFERENCE, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[2]->type);
-        $this->assertEquals(3, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[2]->value);
-        $this->assertEquals(ReferenceDetails::QUALIFIER_SEGMENT_REFERENCE, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[3]->type);
-        $this->assertEquals(1, $message->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[3]->value);
+        $this->assertEquals(ReferenceDetails::QUALIFIER_PAX_INFANT, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[0]->type);
+        $this->assertEquals(1, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[0]->value);
+        $this->assertEquals(ReferenceDetails::QUALIFIER_PAX_ADULT, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[1]->type);
+        $this->assertEquals(2, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[1]->value);
+        $this->assertEquals(ReferenceDetails::QUALIFIER_PAX_REFERENCE, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[2]->type);
+        $this->assertEquals(3, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[2]->value);
+        $this->assertEquals(ReferenceDetails::QUALIFIER_SEGMENT_REFERENCE, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[3]->type);
+        $this->assertEquals(1, $msg->pricingOptionGroup[0]->paxSegTstReference->referenceDetails[3]->value);
 
     }
 
@@ -484,14 +485,14 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             )
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(1, $message->pricingOptionGroup);
-        $this->assertEquals(PricingOptionKey::OPTION_PAST_DATE_PRICING, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertEquals(DateInformation::OPT_DATE_OVERRIDE, $message->pricingOptionGroup[0]->dateInformation->businessSemantic);
-        $this->assertEquals("2012", $message->pricingOptionGroup[0]->dateInformation->dateTime->year);
-        $this->assertEquals("06", $message->pricingOptionGroup[0]->dateInformation->dateTime->month);
-        $this->assertEquals("27", $message->pricingOptionGroup[0]->dateInformation->dateTime->day);
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_PAST_DATE_PRICING, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(DateInformation::OPT_DATE_OVERRIDE, $msg->pricingOptionGroup[0]->dateInformation->businessSemantic);
+        $this->assertEquals("2012", $msg->pricingOptionGroup[0]->dateInformation->dateTime->year);
+        $this->assertEquals("06", $msg->pricingOptionGroup[0]->dateInformation->dateTime->month);
+        $this->assertEquals("27", $msg->pricingOptionGroup[0]->dateInformation->dateTime->day);
     }
 
     public function testCanDoPricePnrCallWithAwardPricing()
@@ -504,20 +505,62 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
             ])
         ]);
 
-        $message = new PricePNRWithBookingClass13($opt);
+        $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(2, $message->pricingOptionGroup);
-        $this->assertEquals(PricingOptionKey::OPTION_CORPORATE_UNIFARES, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
-        $this->assertCount(2, $message->pricingOptionGroup[0]->optionDetail->criteriaDetails);
-        $this->assertEquals('012345', $message->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
-        $this->assertEquals('456789', $message->pricingOptionGroup[0]->optionDetail->criteriaDetails[1]->attributeType);
+        $this->assertCount(2, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_CORPORATE_UNIFARES, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertCount(2, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails);
+        $this->assertEquals('012345', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals('456789', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[1]->attributeType);
 
-        $this->assertEquals(PricingOptionKey::OPTION_AWARD_PRICING, $message->pricingOptionGroup[1]->pricingOptionKey->pricingOptionKey);
-        $this->assertEquals('6X', $message->pricingOptionGroup[1]->carrierInformation->companyIdentification->otherCompany);
-        $this->assertCount(1, $message->pricingOptionGroup[1]->frequentFlyerInformation->frequentTravellerDetails);
-        $this->assertEquals('GOLD', $message->pricingOptionGroup[1]->frequentFlyerInformation->frequentTravellerDetails[0]->tierLevel);
-        $this->assertNull($message->pricingOptionGroup[1]->frequentFlyerInformation->frequentTravellerDetails[0]->carrier);
-        $this->assertNull($message->pricingOptionGroup[1]->frequentFlyerInformation->frequentTravellerDetails[0]->number);
-        $this->assertNull($message->pricingOptionGroup[1]->frequentFlyerInformation->frequentTravellerDetails[0]->priorityCode);
+        $this->assertEquals(PricingOptionKey::OPTION_AWARD_PRICING, $msg->pricingOptionGroup[1]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals('6X', $msg->pricingOptionGroup[1]->carrierInformation->companyIdentification->otherCompany);
+        $this->assertCount(1, $msg->pricingOptionGroup[1]->frequentFlyerInformation->frequentTravellerDetails);
+        $this->assertEquals('GOLD', $msg->pricingOptionGroup[1]->frequentFlyerInformation->frequentTravellerDetails[0]->tierLevel);
+        $this->assertNull($msg->pricingOptionGroup[1]->frequentFlyerInformation->frequentTravellerDetails[0]->carrier);
+        $this->assertNull($msg->pricingOptionGroup[1]->frequentFlyerInformation->frequentTravellerDetails[0]->number);
+        $this->assertNull($msg->pricingOptionGroup[1]->frequentFlyerInformation->frequentTravellerDetails[0]->priorityCode);
+    }
+
+    public function testCanDoPricePnrCallWithFormOfPaymentOverride()
+    {
+        $opt = new FarePricePnrWithBookingClassOptions([
+            'formOfPayment' => [
+                new FormOfPayment([
+                    'type' => FormOfPayment::TYPE_CREDIT_CARD,
+                    'amount' => 10,
+                    'creditCardNumber' => '400000'
+                ]),
+                new FormOfPayment([
+                    'type' => FormOfPayment::TYPE_CASH
+                ]),
+            ]
+        ]);
+
+        $msg = new PricePNRWithBookingClass13($opt);
+
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_FORM_OF_PAYMENT, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(\Amadeus\Client\Struct\Fare\PricePnr13\FormOfPayment::TYPE_CREDIT_CARD, $msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->type);
+        $this->assertEquals(10, $msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->amount);
+        $this->assertEquals('400000', $msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->creditCardNumber);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->sourceOfApproval);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->authorisedAmount);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->indicator);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->addressVerification);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->approvalCode);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->customerAccount);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->expiryDate);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->extendedPayment);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->fopFreeText);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->membershipStatus);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->pinCode);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->pinCodeType);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->transactionInfo);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->formOfPayment->vendorCode);
+        $this->assertCount(1, $msg->pricingOptionGroup[0]->formOfPaymentInformation->otherFormOfPayment);
+        $this->assertEquals(\Amadeus\Client\Struct\Fare\PricePnr13\FormOfPayment::TYPE_CASH, $msg->pricingOptionGroup[0]->formOfPaymentInformation->otherFormOfPayment[0]->type);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->otherFormOfPayment[0]->amount);
+        $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->otherFormOfPayment[0]->creditCardNumber);
     }
 }

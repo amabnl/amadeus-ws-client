@@ -41,14 +41,14 @@ class TicketDisplayTsmFareElOptions extends Base
     const TYPE_ALL_FARE_ELEMENTS = "ALL";
 
     /**
-     * Tattoo number of the TSM-P to get fare elements for.
+     * The tattoo of the associated TSM.
      *
      * @var int
      */
     public $tattoo;
 
     /**
-     * What kind of fare elements to display.
+     * Type of the Fare element of the associated TSM.
      *
      * self::TYPE_*
      *

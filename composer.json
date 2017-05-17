@@ -19,7 +19,7 @@
     "ext-soap": "*",
     "ext-dom": "*",
     "ext-xsl": "*",
-    "psr/log": "1.0.0"
+    "psr/log": "^1.0"
   },
   "require-dev": {
     "symfony/yaml": "2.8",

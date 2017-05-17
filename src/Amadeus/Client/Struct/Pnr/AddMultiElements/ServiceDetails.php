@@ -34,4 +34,16 @@ class ServiceDetails
      * @var StatusDetails
      */
     public $statusDetails;
+
+    /**
+     * ServiceDetails constructor.
+     *
+     * @param string|null $indicator
+     */
+    public function __construct($indicator = null)
+    {
+        if (!is_null($indicator)) {
+            $this->statusDetails = new StatusDetails($indicator);
+        }
+    }
 }

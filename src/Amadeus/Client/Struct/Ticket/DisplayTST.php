@@ -24,6 +24,9 @@ namespace Amadeus\Client\Struct\Ticket;
 
 use Amadeus\Client\RequestOptions\TicketDisplayTstOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\Ticket\DisplayTST\DisplayMode;
+use Amadeus\Client\Struct\Ticket\DisplayTST\PsaInformation;
+use Amadeus\Client\Struct\Ticket\DisplayTST\ScrollingInformation;
 
 /**
  * DisplayTST

@@ -49,4 +49,16 @@ class AdditionalFareDetails
      * @var string[]
      */
     public $secondRateClass;
+
+    /**
+     * AdditionalFareDetails constructor.
+     *
+     * @param string|null $rateClass
+     * @param string|null $commodityCategory
+     */
+    public function __construct($rateClass = null, $commodityCategory = null)
+    {
+        $this->rateClass = $rateClass;
+        $this->commodityCategory = $commodityCategory;
+    }
 }

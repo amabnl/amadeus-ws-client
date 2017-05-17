@@ -28,31 +28,8 @@ namespace Amadeus\Client\RequestOptions;
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class TicketCreateTsmFareElOptions extends Base
+class TicketCreateTsmFareElOptions extends TicketDisplayTsmFareElOptions
 {
-    const TYPE_FARE_DISCOUNT = "FD";
-    const TYPE_ENDORSEMENT = "FE";
-    const TYPE_COMMISSION = "FM";
-    const TYPE_ORIGINAL_EXCHANGE_DOCUMENT = "FO";
-    const TYPE_FORM_OF_PAYMENT = "FP";
-    const TYPE_TOUR_CODE = "FT";
-    const TYPE_MISCELLANEOUS_INFORMATION_1 = "FZ1";
-    const TYPE_MISCELLANEOUS_INFORMATION_2 = "FZ2";
-
-    /**
-     * Type of the Fare element of the associated TSM.
-     *
-     * @var string
-     */
-    public $elementType;
-
-    /**
-     * The tattoo of the associated TSM.
-     *
-     * @var int
-     */
-    public $tattoo;
-
     /**
      * Unstructured fare element information
      *

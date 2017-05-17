@@ -841,6 +841,140 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertNull($result);
     }
 
+    public function testCanGetLastRequestHeaders()
+    {
+        $overrideSoapClient = $this->getMock(
+            'Amadeus\Client\SoapClient',
+            ['__getLastRequest', '__getLastResponse', '__getLastRequestHeaders', '__getLastResponseHeaders', 'PNR_Retrieve'],
+            [],
+            '',
+            false
+        );
+
+        $dummyPnrRequest = $this->getTestFile('dummyPnrRequest.txt');
+        $dummyPnrReply = $this->getTestFile('sessionheadertestresponse.txt');
+
+        $dummyRequestHeaders = <<<EOT
+POST https://dummy.endpoint/ HTTP/1.1
+Accept-Encoding: gzip,deflate
+Content-Type: text/xml;charset=UTF-8
+SOAPAction: "http://webservices.amadeus.com/PNRADD_11_3_1A"
+Content-Length: 2166
+Host: dummy.endpoint
+Connection: Keep-Alive
+User-Agent: DummyUserAgent
+EOT;
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastRequest')
+            ->will($this->returnValue($dummyPnrRequest));
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastRequestHeaders')
+            ->will($this->returnValue($dummyRequestHeaders));
+
+
+        $overrideSoapClient
+            ->expects($this->never())
+            ->method('__getLastResponseHeaders');
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastResponse')
+            ->will($this->returnValue($dummyPnrReply));
+
+        $overrideSoapClient
+            ->expects($this->any())
+            ->method('PNR_Retrieve')
+            ->will($this->returnValue(new \stdClass()));
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
+        $sessionHandlerParams->logger = null;
+
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
+            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
+            'ABC123'
+        );
+
+        $messageResponse = $sessionHandler->sendMessage(
+            'PNR_Retrieve',
+            $pnrRetrieveMessage,
+            ['endSession'=>false]
+        );
+
+        $reqHeaders = $sessionHandler->getLastRequestHeaders('PNR_Retrieve');
+
+        $this->assertEquals($dummyRequestHeaders, $reqHeaders);
+    }
+
+    public function testCanGetLastResponseHeaders()
+    {
+        $overrideSoapClient = $this->getMock(
+            'Amadeus\Client\SoapClient',
+            ['__getLastRequest', '__getLastResponse', '__getLastResponseHeaders', '__getLastRequestHeaders', 'PNR_Retrieve'],
+            [],
+            '',
+            false
+        );
+
+        $dummyPnrRequest = $this->getTestFile('dummyPnrRequest.txt');
+        $dummyPnrReply = $this->getTestFile('sessionheadertestresponse.txt');
+
+        $dummyResponseHeaders = <<<EOT
+dummy
+response
+headers
+EOT;
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastRequest')
+            ->will($this->returnValue($dummyPnrRequest));
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastResponseHeaders')
+            ->will($this->returnValue($dummyResponseHeaders));
+
+        $overrideSoapClient
+            ->expects($this->never())
+            ->method('__getLastRequestHeaders');
+
+        $overrideSoapClient
+            ->expects($this->atLeastOnce())
+            ->method('__getLastResponse')
+            ->will($this->returnValue($dummyPnrReply));
+
+        $overrideSoapClient
+            ->expects($this->any())
+            ->method('PNR_Retrieve')
+            ->will($this->returnValue(new \stdClass()));
+
+        $sessionHandlerParams = $this->makeSessionHandlerParams($overrideSoapClient);
+        $sessionHandlerParams->logger = null;
+
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
+            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
+            'ABC123'
+        );
+
+        $messageResponse = $sessionHandler->sendMessage(
+            'PNR_Retrieve',
+            $pnrRetrieveMessage,
+            ['endSession'=>false]
+        );
+
+        $resHeaders = $sessionHandler->getLastResponseHeaders('PNR_Retrieve');
+
+        $this->assertEquals($dummyResponseHeaders, $resHeaders);
+    }
+
 
     /**
      * @return SessionHandlerParams

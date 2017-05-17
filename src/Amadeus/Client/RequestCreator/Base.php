@@ -25,17 +25,7 @@ namespace Amadeus\Client\RequestCreator;
 use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestCreator\Converter\ConvertInterface;
-use Amadeus\Client\RequestOptions\CommandCrypticOptions;
-use Amadeus\Client\RequestOptions\DocIssuanceIssueMiscDocOptions;
-use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
-use Amadeus\Client\RequestOptions\InfoEncodeDecodeCityOptions;
-use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingOptions;
-use Amadeus\Client\RequestOptions\MiniRuleGetFromPricingRecOptions;
-use Amadeus\Client\RequestOptions\PriceXplorerExtremeSearchOptions;
 use Amadeus\Client\RequestOptions\RequestOptionsInterface;
-use Amadeus\Client\RequestOptions\SalesReportsDisplayQueryReportOptions;
-use Amadeus\Client\RequestOptions\SecurityAuthenticateOptions;
-use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
 use Amadeus\Client\Struct;
 
 /**
@@ -123,11 +113,19 @@ class Base implements RequestCreatorInterface
      * Get the version number active in the WSDL for the given message
      *
      * @param string $messageName
-     * @return float|string
+     * @return float|string|null
      */
     protected function getActiveVersionFor($messageName)
     {
-        return $this->messagesAndVersions[$messageName];
+        $found = null;
+
+        if (isset($this->messagesAndVersions[$messageName]) &&
+            isset($this->messagesAndVersions[$messageName]['version'])
+        ) {
+            $found = $this->messagesAndVersions[$messageName]['version'];
+        }
+
+        return $found;
     }
 
     /**

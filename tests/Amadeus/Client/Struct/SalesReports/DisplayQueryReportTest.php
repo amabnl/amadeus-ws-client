@@ -84,6 +84,36 @@ class DisplayQueryReportTest extends BaseTestCase
         $this->assertEmpty($msg->agencyDetails->originatorDetails->inHouseIdentification1);
     }
 
+    /**
+     * https://github.com/amabnl/amadeus-ws-client/issues/59
+     */
+    public function testCanMakeMessageOfficesSharingSameIataCodeWithZeroStart()
+    {
+        $msg = new DisplayQueryReport(new SalesReportsDisplayQueryReportOptions([
+            'requestOptions' => [
+                SalesReportsDisplayQueryReportOptions::SELECT_ALL_OFFICES_SHARING_IATA_NR
+            ],
+            'agencySourceType' => SalesReportsDisplayQueryReportOptions::AGENCY_SRC_REPORTING_OFFICE,
+            'agencyIataNumber' => '03430953'
+        ]));
+
+        $this->assertEquals(
+            SalesReportsDisplayQueryReportOptions::SELECT_ALL_OFFICES_SHARING_IATA_NR,
+            $msg->requestOption->selectionDetails->option
+        );
+        $this->assertEmpty($msg->requestOption->otherSelectionDetails);
+
+        $this->assertEquals(
+            SalesReportsDisplayQueryReportOptions::AGENCY_SRC_REPORTING_OFFICE,
+            $msg->agencyDetails->sourceType->sourceQualifier1
+        );
+        $this->assertEquals(
+            '03430953',
+            $msg->agencyDetails->originatorDetails->originatorId
+        );
+        $this->assertEmpty($msg->agencyDetails->originatorDetails->inHouseIdentification1);
+    }
+
     public function testCanMakeMessageIssuedForSpecificAgent()
     {
         $msg = new DisplayQueryReport(new SalesReportsDisplayQueryReportOptions([

@@ -46,6 +46,9 @@ class NewFopsDetails
 
     public $gwtData;
 
+    /**
+     * @var string
+     */
     public $chdData;
 
     public $delegationCode;

@@ -119,6 +119,20 @@ class ElementManagementData
     const SEGNAME_TOUR_CODE = "FT";
 
     /**
+     * FM - Manual Commission element
+     *
+     * @var string
+     */
+    const SEGNAME_COMMISSION = "FM";
+
+    /**
+     * STR - Seat Request
+     *
+     * @var string
+     */
+    const SEGNAME_SEAT_REQUEST = "STR";
+
+    /**
      * @var Reference
      */
     public $reference;

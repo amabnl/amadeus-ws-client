@@ -22,13 +22,15 @@
 
 namespace Amadeus\Client\Struct\Fare\CheckRules;
 
+use Amadeus\Client\Struct\WsMessageUtility;
+
 /**
  * FlightQualificationForRules
  *
  * @package Amadeus\Client\Struct\Fare\CheckRules
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FlightQualification
+class FlightQualification extends WsMessageUtility
 {
     /**
      * 7AP AP - Between Eastern Hemisphere (TC2) and Eastern Hemisphere (TC3) via Atlantic and Pacific
@@ -83,6 +85,8 @@ class FlightQualification
      */
     public function __construct($discountQualifier = null)
     {
-        $this->discountDetails[] = new DiscountDetails($discountQualifier);
+        if (!is_null($discountQualifier)) {
+            $this->discountDetails[] = new DiscountDetails($discountQualifier);
+        }
     }
 }

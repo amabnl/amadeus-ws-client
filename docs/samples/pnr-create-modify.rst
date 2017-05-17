@@ -407,7 +407,48 @@ Add an ``FP CC`` element to the PNR to perform PNR payment by Credit Card throug
                 'creditCardType' => 'VI',
                 'creditCardNumber' => '4444333322221111',
                 'creditCardExpiry' => '1017',
-                'creditCardCvcCode' => 123
+                'creditCardCvcCode' => 123,
+                'creditCardHolder' => 'BOWIE'
+            ])
+        ]
+    ]);
+
+Add a service fee paid using Visa:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\FormOfPayment;
+
+    $opt = new PnrCreatePnrOptions([
+        'elements' => [
+            new FormOfPayment([
+                'type' => FormOfPayment::TYPE_CREDITCARD,
+                'creditCardType' => 'VI',
+                'creditCardNumber' => '4444333322221111',
+                'creditCardExpiry' => '1017',
+                'creditCardCvcCode' => 123,
+                'isServiceFee' => true
+            ])
+        ]
+    ]);
+
+Manual Commission FM
+====================
+
+Create an ``FM`` element (Manual Commission):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\ManualCommission;
+
+    $opt = new PnrAddMultiElementsOptions([
+        'elements' => [
+            new ManualCommission([
+                'passengerType' => ManualCommission::PAXTYPE_PASSENGER,
+                'indicator' => 'FM',
+                'percentage' => 5
             ])
         ]
     ]);
@@ -419,10 +460,10 @@ Provide an Account Number in an AI element (e.g. ``AI AN THEACCOUNT``)
 
 .. code-block:: php
 
-    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
     use Amadeus\Client\RequestOptions\Pnr\Element\AccountingInfo;
 
-    $opt = new PnrCreatePnrOptions([
+    $opt = new PnrAddMultiElementsOptions([
         'elements' => [
             new AccountingInfo([
                 'accountNumber' => 'THEACCOUNT'
@@ -437,10 +478,10 @@ Add a free-flow mailing address element (e.g. ``AM NAME,ADDRESS,CITY``)
 
 .. code-block:: php
 
-    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
     use Amadeus\Client\RequestOptions\Pnr\Element\Address;
 
-    $opt = new PnrCreatePnrOptions([
+    $opt = new PnrAddMultiElementsOptions([
         'elements' => [
             new Address([
                 'type' => Address::TYPE_MAILING_UNSTRUCTURED,
@@ -453,11 +494,11 @@ Add a structured billing address element (e.g. ``AB //CY-COMPANY/NA-NAME/A1-LINE
 
 .. code-block:: php
 
-    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
     use Amadeus\Client\RequestOptions\Pnr\Element\Address;
     use Amadeus\Client\RequestOptions\Pnr\Reference;
 
-    $opt = new PnrCreatePnrOptions([
+    $opt = new PnrAddMultiElementsOptions([
         'elements' => [
             new Address([
                 'type' => Address::TYPE_BILLING_STRUCTURED,
@@ -477,6 +518,61 @@ Add a structured billing address element (e.g. ``AB //CY-COMPANY/NA-NAME/A1-LINE
         ]
     ]);
 
+Seat Request
+============
+
+Seat request for a non-smoking aisle seat (NSSA) for passenger with tattoo 1 and segment with tattoo 1.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $opt = new PnrAddMultiElementsOptions([
+        'elements' => [
+            new SeatRequest([
+                'type' => SeatRequest::TYPE_NO_SMOKING_AISLE_SEAT,
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
+                        'id' => 1
+                    ]),
+                    new Reference([
+                        'type' => Reference::TYPE_SEGMENT_TATTOO,
+                        'id' => 1
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+Request seat 13f for passenger with tattoo 1 and segment with tattoo 1.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $opt = new PnrAddMultiElementsOptions([
+        'elements' => [
+            new SeatRequest([
+                'seatNumber' => '13f',
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
+                        'id' => 1
+                    ]),
+                    new Reference([
+                        'type' => Reference::TYPE_SEGMENT_TATTOO,
+                        'id' => 1
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
 Group PNR
 =========
 
@@ -484,11 +580,11 @@ Create a PNR for a group of 25 people and already provide 3 of the travellers:
 
 .. code-block:: php
 
-    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
     use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
     use Amadeus\Client\RequestOptions\Pnr\Traveller;
 
-    $opt = new PnrCreatePnrOptions([
+    $opt = new PnrAddMultiElementsOptions([
         'travellerGroup' => [
             new TravellerGroup([
                 'name' => 'Group Name',
@@ -613,7 +709,7 @@ Outbound trip BRU-LIS, inbound trip FAO-BRU with an ARNK (Arrival Unknown) segme
 
 .. code-block:: php
 
-    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
     use Amadeus\Client\RequestOptions\Pnr\Traveller;
     use Amadeus\Client\RequestOptions\Pnr\Itinerary;
     use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
@@ -660,6 +756,48 @@ Outbound trip BRU-LIS, inbound trip FAO-BRU with an ARNK (Arrival Unknown) segme
                     ])
                 ]
             ]),
+        ]
+    ]);
+
+Disable automatically adding a Received From (RF) element
+=========================================================
+
+This library will add a default Received From element when using pnrAddMultiElements() or pnrCreatePnr().
+Sometimes it's necessary to disable this behaviour, for example when doing multiple operations on a PNR in context without performing a Save operation on each call (using ``PnrAddMultiElementsOptions::ACTION_NO_PROCESSING``).
+
+Here's an example how to stop the library from automatically adding an RF element:
+
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+    use Amadeus\Client\RequestOptions\Pnr\Itinerary;
+    use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
+
+    $createPnrOptions = new PnrAddMultiElementsOptions([
+        'autoAddReceivedFrom' => false //Defaults to true
+        'travellers' => [
+            new Traveller([
+                'number' => 1,
+                'lastName' => 'Bowie'
+            ])
+        ],
+        'actionCode' => PnrCreatePnrOptions::ACTION_NO_PROCESSING,
+        'elements' => [
+            new SeatRequest([
+                'seatNumber' => '13f',
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
+                        'id' => 1
+                    ]),
+                    new Reference([
+                        'type' => Reference::TYPE_SEGMENT_TATTOO,
+                        'id' => 1
+                    ])
+                ]
+            ])
         ]
     ]);
 

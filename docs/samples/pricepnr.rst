@@ -2,6 +2,11 @@
 Fare_PricePNRWithBookingClass examples
 ======================================
 
+.. contents::
+
+No options
+==========
+
 Price a PNR with no specific options: This option is used when no specific pricing option is requested.
 
 .. code-block:: php
@@ -11,6 +16,10 @@ Price a PNR with no specific options: This option is used when no specific prici
     $pricingResponse = $client->farePricePnrWithBookingClass(
         new FarePricePnrWithBookingClassOptions()
     );
+
+
+List of all available fares (example of using override options)
+===============================================================
 
 List of Fares: This option is used to request a list of available fares.
 
@@ -26,6 +35,9 @@ List of Fares: This option is used to request a list of available fares.
         ])
     );
 
+Lowest fare
+===========
+
 Lowest fare: Return only the lowest fare:
 
 .. code-block:: php
@@ -39,6 +51,9 @@ Lowest fare: Return only the lowest fare:
             ]
         ])
     );
+
+Fare type overrides
+===================
 
 Fare types: Take into account Published Fares, Unifares, Negotiated fares:
 
@@ -55,6 +70,10 @@ Fare types: Take into account Published Fares, Unifares, Negotiated fares:
             ]
         ])
     );
+
+
+OB Fees
+=======
 
 Price a PNR with OB fees:
 
@@ -87,6 +106,10 @@ Price a PNR with OB fees:
         ])
     );
 
+
+Corporate negotiated fares
+==========================
+
 Price with corporate negotiated fare '012345':
 
 .. code-block:: php
@@ -111,6 +134,10 @@ Price with corporate unifares '012345' and 'AMADEUS':
         ])
     );
 
+
+
+Passenger PTC / Discount code
+=============================
 
 Price with Passenger PTC / Discount codes
 
@@ -137,6 +164,10 @@ Price with Passenger PTC / Discount codes
         ])
     );
 
+
+Point of Sale override
+======================
+
 Override Point of Sale to LON:
 
 .. code-block:: php
@@ -148,6 +179,10 @@ Override Point of Sale to LON:
             'pointOfSaleOverride' => 'LON'
         ])
     );
+
+
+Point of Ticketing override
+===========================
 
 Override Point of Ticketing to PAR:
 
@@ -161,6 +196,9 @@ Override Point of Ticketing to PAR:
         ])
     );
 
+
+Ticket type (electronic / paper ticket)
+=======================================
 
 Specify ticket type "Electronic Ticket":
 
@@ -179,6 +217,9 @@ Specify ticket type "Electronic Ticket":
         ])
     );
 
+
+Add taxes
+=========
 
 Add specific taxes:
 
@@ -209,6 +250,10 @@ Add specific taxes:
         ])
     );
 
+
+Exempt taxes
+============
+
 Exempt from specific taxes. This option is used to exempt the passenger from one, several or all taxes.
 
 **Example:** exemption of tax ZVGO
@@ -229,6 +274,9 @@ Exempt from specific taxes. This option is used to exempt the passenger from one
         ])
     );
 
+
+Passenger, Segment or TST selection
+===================================
 
 Passenger/Segment/TST selection: This option is used to price only part of a PNR.
 
@@ -262,7 +310,11 @@ Passenger/Segment/TST selection: This option is used to price only part of a PNR
         ])
     );
 
-Past Date Pricing: This option is used to target fares that were applicable on a given date.
+
+Past date pricing
+=================
+
+This option is used to target fares that were applicable on a given date.
 
 **Example:** pricing using fare that was applicable on 27JUN2012.
 
@@ -280,7 +332,11 @@ Past Date Pricing: This option is used to target fares that were applicable on a
         ])
     );
 
-Award Pricing: This option is used to price an itinerary applying an award program for a given carrier.
+
+Award pricing
+=============
+
+This option is used to price an itinerary applying an award program for a given carrier.
 
 *Note: The award option must be combined with the corporate option.*
 
@@ -298,6 +354,34 @@ Award Pricing: This option is used to price an itinerary applying an award progr
                 'carrier' => '6X',
                 'tierLevel' => 'GOLD'
             ])
+        ])
+    );
+
+
+Form of Payment override
+========================
+
+This option is used to specify the form of payment information to use.
+
+**Example:** Use a form of payment Credit Card with bin range 400000 for an amount of 10 and the remaining on a FOP Cash.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+    user Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'formOfPayment' => [
+                new FormOfPayment([
+                    'type' => FormOfPayment::TYPE_CREDIT_CARD,
+                    'amount' => 10,
+                    'creditCardNumber' => '400000'
+                ]),
+                new FormOfPayment([
+                    'type' => FormOfPayment::TYPE_CASH
+                ]),
+            ]
         ])
     );
 

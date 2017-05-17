@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 use Amadeus\Client\RequestOptions\Pnr\Element;
 use Amadeus\Client\Struct\InvalidArgumentException;
+use Amadeus\Client\Struct\WsMessageUtility;
 
 /**
  * DataElementsIndiv
@@ -33,7 +34,7 @@ use Amadeus\Client\Struct\InvalidArgumentException;
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class DataElementsIndiv
+class DataElementsIndiv extends WsMessageUtility
 {
     /**
      * To specify the PNR segments/elements references and action to apply
@@ -76,14 +77,19 @@ class DataElementsIndiv
     public $structuredAddress;
     public $optionElement;
     public $printer;
+    /**
+     * This group handles Seat Request with possibly rail preferences
+     *
+     * @var SeatGroup
+     */
     public $seatGroup;
     public $entity;
-    public $seatRequest;
-    public $railSeatReferenceInformation;
-    public $railSeatPreferences;
     public $fareElement;
     public $fareDiscount;
     public $manualFareDocument;
+    /**
+     * @var Commission
+     */
     public $commission;
     public $originalIssue;
     /**
@@ -169,11 +175,12 @@ class DataElementsIndiv
                     $this->formOfPayment->fop->creditCardCode = $element->creditCardType;
                     $this->formOfPayment->fop->accountNumber = $element->creditCardNumber;
                     $this->formOfPayment->fop->expiryDate = $element->creditCardExpiry;
-                    if (!is_null($element->creditCardCvcCode)) {
-                        $ext = new FopExtension(1);
-                        $ext->newFopsDetails = new NewFopsDetails();
-                        $ext->newFopsDetails->cvData = $element->creditCardCvcCode;
-                        $this->fopExtension[] = $ext;
+                    if ($this->checkAnyNotEmpty($element->creditCardCvcCode, $element->creditCardHolder)) {
+                        $this->fopExtension[] = new FopExtension(
+                            1,
+                            $element->creditCardCvcCode,
+                            $element->creditCardHolder
+                        );
                     }
                 } elseif ($element->type === Fop::IDENT_MISC && $element->freeText != "NONREF") {
                     $this->formOfPayment->fop->freetext = $element->freeText;
@@ -181,6 +188,12 @@ class DataElementsIndiv
                     $this->fopExtension[] = new FopExtension(1);
                 } elseif ($element->type === Fop::IDENT_CHECK) {
                     throw new \RuntimeException("FOP CHECK NOT YET IMPLEMENTED");
+                }
+
+                if ($element->isServiceFee) {
+                    $this->serviceDetails[] = new ServiceDetails(
+                        StatusDetails::IND_SERVICEFEE
+                    );
                 }
                 break;
             case 'MiscellaneousRemark':
@@ -239,8 +252,16 @@ class DataElementsIndiv
                 $this->freetextData->freetextDetail->companyId = $element->airline;
                 $this->freetextData->freetextDetail->subjectQualifier = FreetextDetail::QUALIFIER_LITERALTEXT;
                 break;
+            case 'ManualCommission':
+                /** @var Element\ManualCommission $element */
+                $this->commission = new Commission($element);
+                break;
+            case 'SeatRequest':
+                /** @var Element\SeatRequest $element */
+                $this->seatGroup = new SeatGroup($element);
+                break;
             default:
-                throw new InvalidArgumentException('Element type ' . $elementType . ' is not supported');
+                throw new InvalidArgumentException('Element type '.$elementType.' is not supported');
         }
     }
 
@@ -265,7 +286,9 @@ class DataElementsIndiv
             'AccountingInfo' => ElementManagementData::SEGNAME_ACCOUNTING_INFORMATION,
             'Address' => null, // Special case - the type is a parameter.
             'FrequentFlyer' => ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST,
-            'OtherServiceInfo' => ElementManagementData::SEGNAME_OTHER_SERVICE_INFORMATION
+            'OtherServiceInfo' => ElementManagementData::SEGNAME_OTHER_SERVICE_INFORMATION,
+            'ManualCommission' => ElementManagementData::SEGNAME_COMMISSION,
+            'SeatRequest' => ElementManagementData::SEGNAME_SEAT_REQUEST
         ];
 
         if (array_key_exists($elementType, $sourceArray)) {

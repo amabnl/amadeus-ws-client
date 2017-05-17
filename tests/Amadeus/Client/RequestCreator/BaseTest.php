@@ -25,8 +25,11 @@ namespace Test\Amadeus\Client\RequestCreator;
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestCreator\Base;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
+use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
@@ -58,7 +61,7 @@ class BaseTest extends BaseTestCase
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
             'receivedFrom' => 'some RF string',
-            'messagesAndVersions' => ['Fare_DisplayCurrencyIATARates' => '12.1']
+            'messagesAndVersions' => ['Fare_DisplayCurrencyIATARates' => ['version' => '12.1', 'wsdl' => 'aabbccdd']]
         ]);
 
         $rq = new Base($par);
@@ -79,7 +82,7 @@ class BaseTest extends BaseTestCase
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
             'receivedFrom' => 'some RF string',
-            'messagesAndVersions' => ['Fare_DisplayCurrencyIATARates' => '12.1']
+            'messagesAndVersions' => ['Fare_DisplayCurrencyIATARates' => ['version' => '12.1', 'wsdl' => 'aabbccdd']]
         ]);
 
         $rq = new Base($par);
@@ -95,7 +98,7 @@ class BaseTest extends BaseTestCase
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
             'receivedFrom' => 'some RF string',
-            'messagesAndVersions' => ['PNR_Retrieve' => '14.2']
+            'messagesAndVersions' => ['PNR_Retrieve' => ['version' => '14.2', 'wsdl' => 'aabbccdd']]
         ]);
 
         $rq = new Base($par);
@@ -122,7 +125,7 @@ class BaseTest extends BaseTestCase
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
             'receivedFrom' => 'some RF string',
-            'messagesAndVersions' => ['PNR_RetrieveAndDisplay' => '12.1']
+            'messagesAndVersions' => ['PNR_RetrieveAndDisplay' => ['version' => '12.1', 'wsdl' => 'aabbccdd']]
         ]);
 
         $rq = new Base($par);
@@ -145,7 +148,7 @@ class BaseTest extends BaseTestCase
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
             'receivedFrom' => 'some RF string',
-            'messagesAndVersions' => ['Offer_VerifyOffer' => '10.1']
+            'messagesAndVersions' => ['Offer_VerifyOffer' => ['version' => '10.1', 'wsdl' => 'aabbccdd']]
         ]);
 
         $rq = new Base($par);
@@ -169,7 +172,7 @@ class BaseTest extends BaseTestCase
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
             'receivedFrom' => 'some RF string',
-            'messagesAndVersions' => ['Queue_List' => '11.1']
+            'messagesAndVersions' => ['Queue_List' => ['version' => '11.1', 'wsdl' => 'aabbccdd']]
         ]);
 
         $rq = new Base($par);
@@ -214,7 +217,7 @@ class BaseTest extends BaseTestCase
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
             'receivedFrom' => 'some RF string',
-            'messagesAndVersions' => ['Fare_InformativePricingWithoutPNR' => '12.3']
+            'messagesAndVersions' => ['Fare_InformativePricingWithoutPNR' => ['version' => '12.3', 'wsdl' => 'aabbccdd']]
         ]);
 
         $rq = new Base($par);
@@ -234,17 +237,62 @@ class BaseTest extends BaseTestCase
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
             'receivedFrom' => 'some RF string',
-            'messagesAndVersions' => ['Fare_InformativeBestPricingWithoutPNR' => '12.3']
+            'messagesAndVersions' => ['Fare_InformativeBestPricingWithoutPNR' => ['version' => '12.3', 'wsdl' => 'aabbccdd']]
         ]);
 
         $rq = new Base($par);
 
-        $rq->createRequest(
+        $message = $rq->createRequest(
             'Fare_InformativeBestPricingWithoutPNR',
             new FareInformativeBestPricingWithoutPnrOptions([
 
             ])
         );
+
+        //$this->assertInstanceOf('\Amadeus\Client\Struct\Fare\InformativePricingWithoutPNR12', $message);
+    }
+
+    /**
+     * Attempting to reproduce https://github.com/amabnl/amadeus-ws-client/issues/57
+     */
+    public function testCanCreateFarePricePnrWithBookingClass73()
+    {
+
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['Fare_PricePNRWithBookingClass' => ['version' => '07.3', 'wsdl' => 'aabbccdd']]
+        ]);
+
+        $rq = new Base($par);
+
+        $message = $rq->createRequest(
+            'Fare_PricePNRWithBookingClass',
+            new FarePricePnrWithBookingClassOptions([
+                'overrideOptions' => [
+                    FarePricePnrWithBookingClassOptions::OVERRIDE_FARETYPE_PUB,
+                    FarePricePnrWithBookingClassOptions::OVERRIDE_FARETYPE_CORPUNI,
+                    'DO',
+                ],
+                'pricingsFareBasis' => [
+                    new FareBasis([
+                        'fareBasisCode' => 'CTRIPN2',
+                        'references' => [
+                            new PaxSegRef([
+                                'reference' => 1,
+                                'type' => PaxSegRef::TYPE_SEGMENT
+                            ]),
+                            new PaxSegRef([
+                                'reference' => 1,
+                                'type' => PaxSegRef::TYPE_PASSENGER
+                            ])
+                        ]
+                    ])
+                ]
+            ])
+        );
+
+        $this->assertInstanceOf('\Amadeus\Client\Struct\Fare\PricePNRWithBookingClass12', $message);
     }
 
     public function testCanTryBuildingSameMessageTwiceWillReuseBuilder()
@@ -252,7 +300,12 @@ class BaseTest extends BaseTestCase
         $par = new RequestCreatorParams([
             'originatorOfficeId' => 'BRUXXXXXX',
             'receivedFrom' => 'some RF string',
-            'messagesAndVersions' => ['Fare_InformativeBestPricingWithoutPNR' => '14.1']
+            'messagesAndVersions' => [
+                'Fare_InformativeBestPricingWithoutPNR' => [
+                    'version' => '14.1',
+                    'wsdl' => 'dc22e4ee'
+                ]
+            ]
         ]);
 
         $rq = new Base($par);

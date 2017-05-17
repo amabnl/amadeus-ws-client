@@ -16,8 +16,11 @@ namespace Amadeus\Client\Struct\Air\MultiAvailability;
 class CustomerReferences
 {
     const QUAL_701 = 701;
+
     /**
-     * @var int
+     * self::QUAL_*
+     *
+     * @var int|string
      */
     public $referenceQualifier = self::QUAL_701;
 

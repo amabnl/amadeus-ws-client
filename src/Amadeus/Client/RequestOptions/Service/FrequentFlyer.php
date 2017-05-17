@@ -27,8 +27,6 @@ use Amadeus\Client\LoadParamsFromArray;
 /**
  * FrequentFlyer
  *
- * CURRENTLY NOT IN USE
- *
  * @package Amadeus\Client\RequestOptions\Service
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */

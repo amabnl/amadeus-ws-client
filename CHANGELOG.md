@@ -1,5 +1,41 @@
-# Release 1.3.0 (UNRELEASED)
-* Implemented ``Ticket_CreateTSMFareElement`` message (https://github.com/amabnl/amadeus-ws-client/issues/39)
+# Release 1.4.0 (15 May 2017)
+* Added support for ``Fare_PricePNRWithBookingClass`` errors in message version 7.3 format (https://github.com/amabnl/amadeus-ws-client/issues/57)
+* Added support for Seat Request elements in in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/64/)
+* Added support for Credit Card Holder name when adding FP elements with ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/69)
+* Added the possibility to disable the automatic addition of an RF element on each ``PNR_AddMultiElements`` call (https://github.com/amabnl/amadeus-ws-client/issues/68)
+* Added support for Form Of Payment overrides in all ``Fare_`` Pricing messages and in ``Service_IntegratedPricing`` (https://github.com/amabnl/amadeus-ws-client/issues/72)
+* Added support for Frequent Flyer override in ``Service_IntegratedPricing``
+* Implemented ``DocRefund_InitRefund`` (https://github.com/amabnl/amadeus-ws-client/issues/56)
+* Implemented ``DocRefund_UpdateRefund`` (https://github.com/amabnl/amadeus-ws-client/issues/56)
+* Implemented ``DocRefund_ProcessRefund`` (https://github.com/amabnl/amadeus-ws-client/issues/56)
+* Implemented ``Fare_GetFareRules`` (https://github.com/amabnl/amadeus-ws-client/issues/63)
+* Fixed a bug with building the correct version of a message (https://github.com/amabnl/amadeus-ws-client/issues/71)
+
+# Release 1.3.1 (5 May 2017)
+* Loosened psr/log dependency to allow installation with Yii2 (https://github.com/amabnl/amadeus-ws-client/issues/73)
+
+# Release 1.3.0 (5 April 2017)
+* Added support for Multiple Office ID's in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/44) - Michal Hernas
+* Added support for Progressive Legs in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/issues/55)
+* Added support for DK number (customer identification number) in ``Fare_MasterPricerTravelBoardSearch``
+* Added support for Manual Commission elements in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/45)
+* Added support for Service Fee indicator in Form of Payment elements in ``PNR_AddMultiElements``
+* Automatically add a Received From element when not explicitly provided while calling the ``pnrAddMultiElements()`` method (https://github.com/amabnl/amadeus-ws-client/issues/50).
+* Added support for recognizing ``general`` errors in PNR_Reply versions 14.1 and lower (https://github.com/amabnl/amadeus-ws-client/issues/51)
+* Added ``getLastRequestHeaders()`` and ``getLastResponseHeaders()`` methods (https://github.com/amabnl/amadeus-ws-client/issues/47)
+* Implemented ``Ticket_CheckEligibility`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+* Implemented ``Ticket_ATCShopperMasterPricerTravelBoardSearch`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+* Implemented ``Ticket_RepricePNRWithBookingClass`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+* Implemented ``Ticket_ReissueConfirmedPricing`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+* Implemented ``Ticket_CreateTSMFareElement`` message for ATC Shopper flow (https://github.com/amabnl/amadeus-ws-client/issues/39)
+* Refactored ``Amadeus\Client\Session\Handler\Base`` to make it more readable
+* Refactored all parameter loading out of ``Amadeus\Client``
+
+# Release 1.2.2 (8 March 2017)
+* Fixed bug with Soap Header 4 WSDL's in combination with OTA XSD imports causing the AMA_SecurityHostedUser:UserID classmap to point to the wrong XSD element (https://github.com/amabnl/amadeus-ws-client/issues/48)
+
+# Release 1.2.1 (6 March 2017)
+* Fixed bug with ``Security_Authenticate`` message sending empty message when the Authentication parameters were provided as per the documentation (https://github.com/amabnl/amadeus-ws-client/issues/40)
 
 # Release 1.2.0 (23 February 2017)
 * Fixed bug with Corporate Unifare pricing in ``Fare_MasterPricerTravelBoardSearch`` and ``Fare_MasterPricerCalendar`` (https://github.com/amabnl/amadeus-ws-client/pull/41) - Michal Hernas

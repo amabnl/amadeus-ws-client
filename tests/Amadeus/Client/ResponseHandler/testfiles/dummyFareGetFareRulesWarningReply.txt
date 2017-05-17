@@ -1,0 +1,13 @@
+<Fare_GetFareRulesReply xmlns="http://xml.amadeus.com/FARRNR_10_1_1A">
+    <transactionType>
+        <messageFunctionDetails>
+            <messageFunction>FRN</messageFunction>
+        </messageFunctionDetails>
+    </transactionType>
+    <infoText>
+        <freeTextQualification>
+            <textSubjectQualifier>HED</textSubjectQualifier>
+        </freeTextQualification>
+        <freeText>MORE THAN ONE FARE MATCHING AGAINST INPUT</freeText>
+    </infoText>
+</Fare_GetFareRulesReply>

@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment as FormOfPaymentOptions;
+
 /**
  * FormOfPaymentInformation
  *
@@ -39,4 +41,20 @@ class FormOfPaymentInformation
      * @var FormOfPayment[]
      */
     public $otherFormOfPayment = [];
+
+    /**
+     * FormOfPaymentInformation constructor.
+     *
+     * @param FormOfPaymentOptions[] $fop
+     */
+    public function __construct(array $fop)
+    {
+        foreach ($fop as $key => $fopOpt) {
+            if ($key === 0) {
+                $this->formOfPayment = new FormOfPayment($fopOpt);
+            } else {
+                $this->otherFormOfPayment[] = new FormOfPayment($fopOpt);
+            }
+        }
+    }
 }

@@ -82,6 +82,84 @@ abstract class StandardResponseHandler implements MessageResponseHandler
     }
 
     /**
+     * Analyze response by looking for error, message and level with the provided XPATH queries
+     *
+     * Result status defaults to Result::STATUS_ERROR if any error is found.
+     *
+     * xpath queries must be prefixed with the namespace self::XMLNS_PREFIX
+     *
+     * @param SendResult $response
+     * @param string $qErr XPATH query for fetching error code (first node is used)
+     * @param string $qMsg XPATH query for fetching error messages (all nodes are used)
+     * @param string $qLvl  XPATH query for fetching error level (first node is used)
+     * @param array $lvlToText Level-to-text translation
+     * @return Result
+     */
+    protected function analyzeWithErrorCodeMsgQueryLevel(SendResult $response, $qErr, $qMsg, $qLvl, $lvlToText)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $errorCodeNodeList = $domXpath->query($qErr);
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $lvlNodeList = $domXpath->query($qLvl);
+
+            $level = null;
+            if ($lvlNodeList->length > 0) {
+                if (array_key_exists($lvlNodeList->item(0)->nodeValue, $lvlToText)) {
+                    $level = $lvlToText[$lvlNodeList->item(0)->nodeValue];
+                }
+            }
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $errorCodeNodeList->item(0)->nodeValue,
+                $this->makeMessageFromMessagesNodeList(
+                    $domXpath->query($qMsg)
+                ),
+                $level
+            );
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
+     * Analyse with XPATH queries for error code and message, provide fixed category
+     *
+     * @param SendResult $response
+     * @param string $qErr XPATH query for fetching error code (first node is used)
+     * @param string $qMsg XPATH query for fetching error messages (all nodes are used)
+     * @param string $category Result::STATUS_* The fixed error category (status)
+     * @return Result
+     */
+    public function analyzeWithErrCodeAndMsgQueryFixedCat(SendResult $response, $qErr, $qMsg, $category)
+    {
+        $analyzeResponse = new Result($response);
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $errorCodeNodeList = $domXpath->query($qErr);
+        $errorMsgNodeList = $domXpath->query($qMsg);
+
+        if ($errorCodeNodeList->length > 0 || $errorMsgNodeList->length > 0) {
+            $analyzeResponse->status = $category;
+
+            $errorCode = ($errorCodeNodeList->length > 0) ? $errorCodeNodeList->item(0)->nodeValue : null;
+
+            $analyzeResponse->messages[] = new Result\NotOk(
+                $errorCode,
+                $this->makeMessageFromMessagesNodeList($errorMsgNodeList)
+            );
+        }
+
+        return $analyzeResponse;
+    }
+
+    /**
      * Analyze response by looking for error, category and message in nodes specified by name
      *
      * @param SendResult $response
@@ -206,9 +284,12 @@ abstract class StandardResponseHandler implements MessageResponseHandler
             'WA' => Result::STATUS_WARN, //Info line Warning - PNR_AddMultiElements
             'W' => Result::STATUS_WARN,
             'EC' => Result::STATUS_ERROR,
+            'ERR' => Result::STATUS_ERROR, //DocRefund_UpdateRefund
+            'ERC' => Result::STATUS_ERROR, //DocRefund_UpdateRefund
             'X' => Result::STATUS_ERROR,
             '001' => Result::STATUS_ERROR, //Air_MultiAvailability
             'O' => Result::STATUS_OK,
+            'STA' => Result::STATUS_OK,
             'ZZZ' => Result::STATUS_UNKNOWN
         ];
 

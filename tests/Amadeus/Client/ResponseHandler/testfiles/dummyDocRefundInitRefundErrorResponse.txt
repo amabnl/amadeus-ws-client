@@ -1,0 +1,19 @@
+<DocRefund_InitRefundReply xmlns="http://xml.amadeus.com/TRFSRR_14_1_1A">
+    <applicationErrorGroup>
+        <applicationErrorValue>
+            <errorDetails>
+                <errorCode>25677</errorCode>
+                <errorCategory>ERC</errorCategory>
+            </errorDetails>
+        </applicationErrorValue>
+        <freeTextInfo>
+            <freeTextDetails>
+                <textSubjectQualifier>4</textSubjectQualifier>
+                <informationType>ERR</informationType>
+                <source>M</source>
+                <encoding>ZZZ</encoding>
+            </freeTextDetails>
+            <freeText>ATC REFUND NOT AUTHORIZED</freeText>
+        </freeTextInfo>
+    </applicationErrorGroup>
+</DocRefund_InitRefundReply>

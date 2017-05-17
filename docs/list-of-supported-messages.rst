@@ -8,8 +8,7 @@ This is the list of messages that are at least partially supported at this time:
 - Security_SignOut
 - PNR_Retrieve
 - PNR_RetrieveAndDisplay
-- PNR_AddMultiElements (pnrCreate to create a PNR from scratch)
-- PNR_AddMultiElements (possibility to do actionCode operations on a PNR in context without further actions)
+- PNR_AddMultiElements *(both a dedicated PNR creation message and a "pure" PNR_AddMultiElements)*
 - PNR_Cancel
 - PNR_DisplayHistory
 - PNR_TransferOwnership
@@ -27,6 +26,7 @@ This is the list of messages that are at least partially supported at this time:
 - Fare_InformativeBestPricingWithoutPNR
 - Fare_ConvertCurrency
 - Fare_CheckRules
+- Fare_GetFareRules
 - Air_MultiAvailability
 - Air_SellFromRecommendation
 - Air_FlightInfo
@@ -40,9 +40,16 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_DeleteTST
 - Ticket_DeleteTSMP
 - Ticket_DisplayTSMFareElement
+- Ticket_CheckEligibility
+- Ticket_ATCShopperMasterPricerTravelBoardSearch
+- Ticket_RepricePNRWithBookingClass
+- Ticket_ReissueConfirmedPricing
 - DocIssuance_IssueTicket
 - DocIssuance_IssueMiscellaneousDocuments
 - DocIssuance_IssueCombined
+- DocRefund_InitRefund
+- DocRefund_UpdateRefund
+- DocRefund_ProcessRefund
 - Service_IntegratedPricing
 - Offer_CreateOffer
 - Offer_VerifyOffer
@@ -72,12 +79,11 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Fare_RebookAndCreateTST
 - Air_RebookAirSegment
 - Air_TLAGetAvailability
-- PNR_AddAuxiliarySegment
+- PNR_CreateAuxiliarySegment
 - PointOfRef_CategoryList
-- Ticket_CheckEligibility
-- Ticket_ATCShopperMasterPricerTravelBoardSearch
-- Ticket_RepricePNRWithBookingClass
-- Ticket_ReissueConfirmedPricing
+- Ticket_CreateManualTSMP
+- TSM_CreateTSMFromPricing
+- Ticket_UpdateTSMP
 - Ticket_ProcessEDoc
 - Ticket_RetrieveListOfTSM
 - Ticket_AddDocNumber
@@ -86,6 +92,8 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Service_IntegratedCatalogue
 - Service_PriceServiceViaCatalogue
 - Service_PriceIntegratedMode
+- Service_StandaloneCatalogue
+- Service_StandalonePricing
 - Hotel_MultiSingleAvailability
 - Hotel_DescriptiveInfo
 - Hotel_EnhancedPricing

@@ -68,7 +68,7 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
         $this->assertEquals('QNC', $message->pricingFareBase[0]->fareBasisOptions->fareBasisDetails->primaryCode);
         $this->assertEquals('469W2', $message->pricingFareBase[0]->fareBasisOptions->fareBasisDetails->fareBasisCode);
         $this->assertEquals(2, $message->pricingFareBase[0]->fareBasisSegReference[0]->refDetails->refNumber);
-        $this->assertEquals(RefDetails::QUALIFIER_SEGMENT_REFERENCE, $message->pricingFareBase[0]->fareBasisSegReference[0]->refDetails->refQualifier);
+        $this->assertEquals(RefDetails::QUAL_SEGMENT_REFERENCE, $message->pricingFareBase[0]->fareBasisSegReference[0]->refDetails->refQualifier);
         $this->assertEquals('BA', $message->validatingCarrier->carrierInformation->carrierCode);
         $this->assertEquals('EUR', $message->currencyOverride->firstRateDetail->currencyCode);
     }
@@ -98,7 +98,7 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
         $this->assertEquals('QNC', $message->pricingFareBase[0]->fareBasisOptions->fareBasisDetails->primaryCode);
         $this->assertEquals('469W2', $message->pricingFareBase[0]->fareBasisOptions->fareBasisDetails->fareBasisCode);
         $this->assertEquals(2, $message->pricingFareBase[0]->fareBasisSegReference[0]->refDetails->refNumber);
-        $this->assertEquals(RefDetails::QUALIFIER_SEGMENT_REFERENCE, $message->pricingFareBase[0]->fareBasisSegReference[0]->refDetails->refQualifier);
+        $this->assertEquals(RefDetails::QUAL_SEGMENT_REFERENCE, $message->pricingFareBase[0]->fareBasisSegReference[0]->refDetails->refQualifier);
         $this->assertEquals('BA', $message->validatingCarrier->carrierInformation->carrierCode);
         $this->assertEquals('EUR', $message->currencyOverride->firstRateDetail->currencyCode);
     }
@@ -209,7 +209,7 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
 
         $this->assertCount(1, $message->discountInformation[0]->referenceQualifier->refDetails);
         $this->assertEquals(1, $message->discountInformation[0]->referenceQualifier->refDetails[0]->refNumber);
-        $this->assertEquals(RefDetails::QUALIFIER_PAX_REFERENCE, $message->discountInformation[0]->referenceQualifier->refDetails[0]->refQualifier);
+        $this->assertEquals(RefDetails::QUAL_PASSENGER, $message->discountInformation[0]->referenceQualifier->refDetails[0]->refQualifier);
     }
 
     /**
@@ -371,11 +371,11 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
 
         $this->assertCount(3, $message->paxSegReference->refDetails);
         $this->assertEquals(3, $message->paxSegReference->refDetails[0]->refNumber);
-        $this->assertEquals(RefDetails::QUALIFIER_SEGMENT_REFERENCE, $message->paxSegReference->refDetails[0]->refQualifier);
+        $this->assertEquals(RefDetails::QUAL_SEGMENT_REFERENCE, $message->paxSegReference->refDetails[0]->refQualifier);
         $this->assertEquals(4, $message->paxSegReference->refDetails[1]->refNumber);
-        $this->assertEquals(RefDetails::QUALIFIER_SEGMENT_REFERENCE, $message->paxSegReference->refDetails[1]->refQualifier);
+        $this->assertEquals(RefDetails::QUAL_SEGMENT_REFERENCE, $message->paxSegReference->refDetails[1]->refQualifier);
         $this->assertEquals(1, $message->paxSegReference->refDetails[2]->refNumber);
-        $this->assertEquals(RefDetails::QUALIFIER_PAX_REFERENCE, $message->paxSegReference->refDetails[2]->refQualifier);
+        $this->assertEquals(RefDetails::QUAL_PASSENGER, $message->paxSegReference->refDetails[2]->refQualifier);
     }
 
     /**

@@ -139,6 +139,19 @@ class ClientTest extends BaseTestCase
         $this->assertNull($last);
     }
 
+    public function testWillGetNullFromGetLastReqResHeadersWhenNoCallsWerMade()
+    {
+        $client = new Client($this->makeDummyParams());
+
+        $last = $client->getLastRequestHeaders();
+
+        $this->assertNull($last);
+
+        $last = $client->getLastResponseHeaders();
+
+        $this->assertNull($last);
+    }
+
     public function testCanDoDummyPnrRetrieveCall()
     {
         $mockedSendResult = new Client\Session\Handler\SendResult();
@@ -158,7 +171,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['PNR_Retrieve' => '14.2']));
+            ->will($this->returnValue(['PNR_Retrieve' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -205,7 +218,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['PNR_RetrieveAndDisplay' => '14.2']));
+            ->will($this->returnValue(['PNR_RetrieveAndDisplay' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -267,15 +280,10 @@ class ClientTest extends BaseTestCase
             'type' => Client\RequestOptions\Pnr\Element\Contact::TYPE_PHONE_MOBILE,
             'value' => '+3222222222'
         ]);
+        $options->defaultReceivedFrom = 'some RF string amabnl-amadeus-ws-client-'.Client::VERSION;
+        $options->autoAddReceivedFrom = true;
 
         $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($options);
-
-        $receivedFromElement = new Client\Struct\Pnr\AddMultiElements\DataElementsIndiv(Client\Struct\Pnr\AddMultiElements\ElementManagementData::SEGNAME_RECEIVE_FROM, 4);
-        $receivedFromElement->freetextData = new Client\Struct\Pnr\AddMultiElements\FreetextData(
-            'some RF string amabnl-amadeus-ws-client-'.Client::VERSION,
-            Client\Struct\Pnr\AddMultiElements\FreetextDetail::TYPE_RECEIVE_FROM
-        );
-        $expectedPnrResult->dataElementsMaster->dataElementsIndiv[] = $receivedFromElement;
 
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
@@ -287,7 +295,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['PNR_AddMultiElements' => '14.2']));
+            ->will($this->returnValue(['PNR_AddMultiElements' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -323,9 +331,15 @@ class ClientTest extends BaseTestCase
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $options = new Client\RequestOptions\PnrAddMultiElementsOptions();
-        $options->actionCode = 11; //11 End transact with retrieve (ER)
-        $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($options);
+        $options = new Client\RequestOptions\PnrAddMultiElementsOptions([
+            'actionCode' => Client\RequestOptions\PnrAddMultiElementsOptions::ACTION_END_TRANSACT_RETRIEVE,
+        ]);
+
+        /** @var Client\RequestOptions\PnrAddMultiElementsOptions $expectedResultOpt */
+        $expectedResultOpt = clone $options;
+        $expectedResultOpt->receivedFrom = 'some RF string '.Client::RECEIVED_FROM_IDENTIFIER.'-'.Client::VERSION;
+
+        $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($expectedResultOpt);
 
         $mockSessionHandler
             ->expects($this->once())
@@ -336,7 +350,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['PNR_AddMultiElements' => '14.2']));
+            ->will($this->returnValue(['PNR_AddMultiElements' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -397,7 +411,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['PNR_AddMultiElements' => '14.2']));
+            ->will($this->returnValue(['PNR_AddMultiElements' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -448,7 +462,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['PNR_Cancel' => '14.2']));
+            ->will($this->returnValue(['PNR_Cancel' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -503,7 +517,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['PNR_DisplayHistory' => '14.2']));
+            ->will($this->returnValue(['PNR_DisplayHistory' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -558,7 +572,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['PNR_TransferOwnership' => '14.1']));
+            ->will($this->returnValue(['PNR_TransferOwnership' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -621,7 +635,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['PNR_NameChange' => '14.1']));
+            ->will($this->returnValue(['PNR_NameChange' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -692,7 +706,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Queue_List' => "11.1"]));
+            ->will($this->returnValue(['Queue_List' => ['version' => "11.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -754,7 +768,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Queue_PlacePNR' => "11.1"]));
+            ->will($this->returnValue(['Queue_PlacePNR' => ['version' => "11.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -807,7 +821,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Queue_RemoveItem' => "11.1"]));
+            ->will($this->returnValue(['Queue_RemoveItem' => ['version' => "11.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -860,7 +874,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Queue_MoveItem' => "11.1"]));
+            ->will($this->returnValue(['Queue_MoveItem' => ['version' => "11.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -916,7 +930,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Command_Cryptic' => "5.1"]));
+            ->will($this->returnValue(['Command_Cryptic' => ['version' => "5.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -979,7 +993,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['MiniRule_GetFromPricingRec' => "5.1"]));
+            ->will($this->returnValue(['MiniRule_GetFromPricingRec' => ['version' => "11.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1041,7 +1055,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['MiniRule_GetFromPricing' => "11.1"]));
+            ->will($this->returnValue(['MiniRule_GetFromPricing' => ['version' => "11.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1107,7 +1121,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Offer_CreateOffer' => "13.2"]));
+            ->will($this->returnValue(['Offer_CreateOffer' => ['version' => "13.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1171,7 +1185,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Offer_VerifyOffer' => "11.1"]));
+            ->will($this->returnValue(['Offer_VerifyOffer' => ['version' => "11.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1226,7 +1240,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Offer_ConfirmHotelOffer' => "11.1"]));
+            ->will($this->returnValue(['Offer_ConfirmHotelOffer' => ['version' => "11.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1281,7 +1295,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Offer_ConfirmCarOffer' => "11.1"]));
+            ->will($this->returnValue(['Offer_ConfirmCarOffer' => ['version' => "11.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1337,7 +1351,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Info_EncodeDecodeCity' => "05.1"]));
+            ->will($this->returnValue(['Info_EncodeDecodeCity' => ['version' => "05.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1395,7 +1409,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['PointOfRef_Search' => "02.1"]));
+            ->will($this->returnValue(['PointOfRef_Search' => ['version' => "02.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1458,7 +1472,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Ticket_CreateTSTFromPricing' => "04.1"]));
+            ->will($this->returnValue(['Ticket_CreateTSTFromPricing' => ['version' => "04.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1521,7 +1535,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Ticket_CreateTSMFromPricing' => "09.1"]));
+            ->will($this->returnValue(['Ticket_CreateTSMFromPricing' => ['version' => "09.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1565,7 +1579,7 @@ class ClientTest extends BaseTestCase
 
         $expectedMessageResult = new Client\Struct\Ticket\CreateTSMFareElement(
             new Client\RequestOptions\TicketCreateTsmFareElOptions([
-                'elementType' => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+                'type' => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
                 'tattoo' => '18',
                 'info' => '#####',
             ])
@@ -1582,7 +1596,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Ticket_CreateTSMFareElement' => "10.1"]));
+            ->will($this->returnValue(['Ticket_CreateTSMFareElement' => ['version' => "10.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1604,7 +1618,7 @@ class ClientTest extends BaseTestCase
 
         $response = $client->ticketCreateTSMFareElement(
             new Client\RequestOptions\TicketCreateTsmFareElOptions([
-                'elementType' => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+                'type' => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
                 'tattoo' => '18',
                 'info' => '#####',
             ])
@@ -1640,7 +1654,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Ticket_DeleteTST' => "04.1"]));
+            ->will($this->returnValue(['Ticket_DeleteTST' => ['version' => "04.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1696,7 +1710,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Ticket_DeleteTSMP' => "08.1"]));
+            ->will($this->returnValue(['Ticket_DeleteTSMP' => ['version' => "08.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1751,7 +1765,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Ticket_DisplayTST' => "04.1"]));
+            ->will($this->returnValue(['Ticket_DisplayTST' => ['version' => "04.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1806,7 +1820,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Ticket_DisplayTSMP' => "13.2"]));
+            ->will($this->returnValue(['Ticket_DisplayTSMP' => ['version' => "13.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1861,7 +1875,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Ticket_DisplayTSMFareElement' => "13.1"]));
+            ->will($this->returnValue(['Ticket_DisplayTSMFareElement' => ['version' => "13.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1884,6 +1898,329 @@ class ClientTest extends BaseTestCase
         $response = $client->ticketDisplayTSMFareElement(
             new Client\RequestOptions\TicketDisplayTsmFareElOptions([
                 'tattoo' => 18
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+
+    public function testCanDoTicketTicketCheckEligibility()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketCheckEligibilitymessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\CheckEligibility(
+            new Client\RequestOptions\TicketCheckEligibilityOptions([
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new Client\RequestOptions\Fare\MPPassenger([
+                        'type' => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'flightOptions' => [
+                    Client\RequestOptions\TicketCheckEligibilityOptions::FLIGHTOPT_PUBLISHED,
+                ],
+                'ticketNumbers' => [
+                    '1722300000004'
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_CheckEligibility', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_CheckEligibility' => ['version' => "15.2", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_CheckEligibility')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketCheckEligibility(
+            new Client\RequestOptions\TicketCheckEligibilityOptions([
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new Client\RequestOptions\Fare\MPPassenger([
+                        'type' => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'flightOptions' => [
+                    Client\RequestOptions\TicketCheckEligibilityOptions::FLIGHTOPT_PUBLISHED,
+                ],
+                'ticketNumbers' => [
+                    '1722300000004'
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoTicketAtcShopperMasterPricerTravelBoardSearch()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketAtcShopperMasterPricerTravelBoardSearchMessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\AtcShopperMasterPricerTravelBoardSearch(
+            new Client\RequestOptions\TicketAtcShopperMpTbSearchOptions([
+
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with(
+                'Ticket_ATCShopperMasterPricerTravelBoardSearch',
+                $expectedMessageResult,
+                ['endSession' => false, 'returnXml' => true]
+            )
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_ATCShopperMasterPricerTravelBoardSearch' => ['version' => "13.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_ATCShopperMasterPricerTravelBoardSearch')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketAtcShopperMasterPricerTravelBoardSearch(
+            new Client\RequestOptions\TicketAtcShopperMpTbSearchOptions([
+
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoTicketRepricePNRWithBookingClass()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketRepricePNRWithBookingClassMessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\RepricePnrWithBookingClass(
+            new Client\RequestOptions\TicketRepricePnrWithBookingClassOptions([
+                'exchangeInfo' => [
+                    new Client\RequestOptions\Ticket\ExchangeInfoOptions([
+                        'number' => 1,
+                        'eTickets' => [
+                            '9998550225521'
+                        ]
+                    ])
+                ],
+                'multiReferences' => [
+                    new Client\RequestOptions\Ticket\MultiRefOpt([
+                        'references' => [
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 3,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT
+                            ]),
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 4,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT
+                            ])
+                        ]
+                    ]),
+                    new Client\RequestOptions\Ticket\MultiRefOpt([
+                        'references' => [
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 1,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_PASSENGER_ADULT
+                            ]),
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 1,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SERVICE
+                            ])
+                        ]
+                    ]),
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with(
+                'Ticket_RepricePNRWithBookingClass',
+                $expectedMessageResult,
+                ['endSession' => false, 'returnXml' => true]
+            )
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_RepricePNRWithBookingClass' => ['version' => "14.3", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_RepricePNRWithBookingClass')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketRepricePnrWithBookingClass(
+            new Client\RequestOptions\TicketRepricePnrWithBookingClassOptions([
+                'exchangeInfo' => [
+                    new Client\RequestOptions\Ticket\ExchangeInfoOptions([
+                        'number' => 1,
+                        'eTickets' => [
+                            '9998550225521'
+                        ]
+                    ])
+                ],
+                'multiReferences' => [
+                    new Client\RequestOptions\Ticket\MultiRefOpt([
+                        'references' => [
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 3,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT
+                            ]),
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 4,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT
+                            ])
+                        ]
+                    ]),
+                    new Client\RequestOptions\Ticket\MultiRefOpt([
+                        'references' => [
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 1,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_PASSENGER_ADULT
+                            ]),
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 1,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SERVICE
+                            ])
+                        ]
+                    ]),
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoTicketReissueConfirmedPricing()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketReissueConfirmedPricingMessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\ReissueConfirmedPricing(
+            new Client\RequestOptions\TicketReissueConfirmedPricingOptions([
+                'eTickets' => ['0572146640300']
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with(
+                'Ticket_ReissueConfirmedPricing',
+                $expectedMessageResult,
+                ['endSession' => false, 'returnXml' => true]
+            )
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_ReissueConfirmedPricing' => ['version' => "13.2", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_ReissueConfirmedPricing')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketReissueConfirmedPricing(
+            new Client\RequestOptions\TicketReissueConfirmedPricingOptions([
+                'eTickets' => ['0572146640300']
             ])
         );
 
@@ -1915,7 +2252,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Offer_ConfirmAirOffer' => "11.1"]));
+            ->will($this->returnValue(['Offer_ConfirmAirOffer' => ['version' => "11.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -1987,7 +2324,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Air_SellFromRecommendation' => "5.2"]));
+            ->will($this->returnValue(['Air_SellFromRecommendation' => ['version' => "5.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2063,7 +2400,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Air_FlightInfo' => "7.1"]));
+            ->will($this->returnValue(['Air_FlightInfo' => ['version' => "7.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2128,7 +2465,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Air_RetrieveSeatMap' => "14.2"]));
+            ->will($this->returnValue(['Air_RetrieveSeatMap' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2197,7 +2534,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Air_MultiAvailability' => "14.1"]));
+            ->will($this->returnValue(['Air_MultiAvailability' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2279,7 +2616,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Fare_MasterPricerTravelBoardSearch' => "12.3"]));
+            ->will($this->returnValue(['Fare_MasterPricerTravelBoardSearch' => ['version' => "12.3", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2374,7 +2711,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Fare_MasterPricerCalendar' => "14.3"]));
+            ->will($this->returnValue(['Fare_MasterPricerCalendar' => ['version' => "14.3", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2455,7 +2792,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['PriceXplorer_ExtremeSearch' => "10.3"]));
+            ->will($this->returnValue(['PriceXplorer_ExtremeSearch' => ['version' => "10.3", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2517,7 +2854,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['SalesReports_DisplayQueryReport' => "12.1"]));
+            ->will($this->returnValue(['SalesReports_DisplayQueryReport' => ['version' => "12.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2542,6 +2879,71 @@ class ClientTest extends BaseTestCase
                 'requestOptions' => [
                     Client\RequestOptions\SalesReportsDisplayQueryReportOptions::SELECT_OFFICE_ALL_AGENTS
                 ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanFareGetFareRules()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyfaregetfarerulesmessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Fare\GetFareRules(
+            new Client\RequestOptions\FareGetFareRulesOptions([
+                'ticketingDate' => \DateTime::createFromFormat('dmY', '23032011'),
+                'fareBasis' => 'OA21ERD1',
+                'ticketDesignator' => 'DISC',
+                'airline' => 'AA',
+                'origin' => 'DFW',
+                'destination' => 'MKC'
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Fare_GetFareRules', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Fare_GetFareRules' => ['version' => "10.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Fare_GetFareRules')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->fareGetFareRules(
+            new Client\RequestOptions\FareGetFareRulesOptions([
+                'ticketingDate' => \DateTime::createFromFormat('dmY', '23032011'),
+                'fareBasis' => 'OA21ERD1',
+                'ticketDesignator' => 'DISC',
+                'airline' => 'AA',
+                'origin' => 'DFW',
+                'destination' => 'MKC'
             ])
         );
 
@@ -2574,7 +2976,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Fare_CheckRules' => "7.1"]));
+            ->will($this->returnValue(['Fare_CheckRules' => ['version' => "7.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2632,7 +3034,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Fare_ConvertCurrency' => "8.1"]));
+            ->will($this->returnValue(['Fare_ConvertCurrency' => ['version' => "8.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2690,7 +3092,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Fare_PricePNRWithBookingClass' => "12.3"]));
+            ->will($this->returnValue(['Fare_PricePNRWithBookingClass' => ['version' => "12.3", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2745,7 +3147,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Fare_PricePNRWithBookingClass' => "14.3"]));
+            ->will($this->returnValue(['Fare_PricePNRWithBookingClass' => ['version' => "14.3", 'wsdl' => 'dc22e4ee']]));
 
         $par = new Params();
         $par->sessionHandler = $mockSessionHandler;
@@ -2792,7 +3194,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Fare_PricePNRWithLowerFares' => "14.1"]));
+            ->will($this->returnValue(['Fare_PricePNRWithLowerFares' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
 
         $par = new Params();
         $par->sessionHandler = $mockSessionHandler;
@@ -2838,7 +3240,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Fare_PricePNRWithLowerFares' => "12.4"]));
+            ->will($this->returnValue(['Fare_PricePNRWithLowerFares' => ['version' => "12.4", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2893,7 +3295,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Fare_PricePNRWithLowestFare' => "14.1"]));
+            ->will($this->returnValue(['Fare_PricePNRWithLowestFare' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
 
         $par = new Params();
         $par->sessionHandler = $mockSessionHandler;
@@ -2939,7 +3341,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Fare_PricePNRWithLowestFare' => "12.4"]));
+            ->will($this->returnValue(['Fare_PricePNRWithLowestFare' => ['version' => "12.4", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -2993,7 +3395,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Fare_InformativePricingWithoutPNR' => "15.1"]));
+            ->will($this->returnValue(['Fare_InformativePricingWithoutPNR' => ['version' => "15.1", 'wsdl' => 'dc22e4ee']]));
 
         $par = new Params();
         $par->sessionHandler = $mockSessionHandler;
@@ -3038,7 +3440,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Fare_InformativeBestPricingWithoutPNR' => "14.1"]));
+            ->will($this->returnValue(['Fare_InformativeBestPricingWithoutPNR' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
 
         $par = new Params();
         $par->sessionHandler = $mockSessionHandler;
@@ -3083,7 +3485,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Service_IntegratedPricing' => "15.1"]));
+            ->will($this->returnValue(['Service_IntegratedPricing' => ['version' => "15.1", 'wsdl' => 'dc22e4ee']]));
 
         $par = new Params();
         $par->sessionHandler = $mockSessionHandler;
@@ -3151,7 +3553,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['FOP_CreateFormOfPayment' => "15.4"]));
+            ->will($this->returnValue(['FOP_CreateFormOfPayment' => ['version' => "15.4", 'wsdl' => 'dc22e4ee']]));
 
         $par = new Params();
         $par->sessionHandler = $mockSessionHandler;
@@ -3219,7 +3621,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Security_SignOut' => "4.1"]));
+            ->will($this->returnValue(['Security_SignOut' => ['version' => "4.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -3284,7 +3686,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Security_Authenticate' => "6.1"]));
+            ->will($this->returnValue(['Security_Authenticate' => ['version' => "6.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -3297,6 +3699,97 @@ class ClientTest extends BaseTestCase
         $par = new Params();
         $par->authParams = $authParams;
         $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->securityAuthenticate();
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    /**
+     * Github issue #40
+     * backwards compatibility for AuthParams at SessionHandlerParams level which must fall back to client authparams
+     *
+     * to be deprecated with version 2.0
+     *
+     * @deprecated To be removed with version 2.0
+     */
+    public function testCanDoAuthenticateCallWithAuthParamsOnSessionHandlerSoapHeader2()
+    {
+        $sessionHandlerParams = new Params\SessionHandlerParams([
+            'authParams' => [
+                'officeId' => 'BRUXXXXXX',
+                'originatorTypeCode' => 'U',
+                'userId' => 'WSXXXXXX',
+                'passwordData' => base64_encode('TEST'),
+                'passwordLength' => 4,
+                'dutyCode' => 'SU',
+                'organizationId' => 'DUMMY-ORG',
+            ]
+        ]);
+
+        $authParams = new Params\AuthParams([
+            'officeId' => 'BRUXXXXXX',
+            'originatorTypeCode' => 'U',
+            'userId' => 'WSXXXXXX',
+            'passwordData' => base64_encode('TEST'),
+            'passwordLength' => 4,
+            'dutyCode' => 'SU',
+            'organizationId' => 'DUMMY-ORG',
+        ]);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummy auth response xml';
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->processStatus = new \stdClass();
+        $mockedSendResult->responseObject->processStatus->statusCode = 'P';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Security\Authenticate(
+            new Client\RequestOptions\SecurityAuthenticateOptions(
+                $authParams
+            )
+        );
+
+        $mockSessionHandler = $this->getMock(
+            'Amadeus\Client\Session\Handler\SoapHeader2',
+            ['Security_Authenticate', 'getLastResponse', 'getMessagesAndVersions', 'sendMessage'],
+            [$sessionHandlerParams],
+            '',
+            true
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Security_Authenticate', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->atLeastOnce())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Security_Authenticate' => ['version' => "6.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Security_Authenticate')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->sessionHandlerParams = $sessionHandlerParams;
         $par->requestCreatorParams = new Params\RequestCreatorParams([
             'receivedFrom' => 'some RF string',
             'originatorOfficeId' => 'BRUXXXXXX'
@@ -3409,7 +3902,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['DocIssuance_IssueTicket' => "9.1"]));
+            ->will($this->returnValue(['DocIssuance_IssueTicket' => ['version' => "9.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -3464,7 +3957,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['DocIssuance_IssueMiscellaneousDocuments' => "15.1"]));
+            ->will($this->returnValue(['DocIssuance_IssueMiscellaneousDocuments' => ['version' => "15.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -3524,7 +4017,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['DocIssuance_IssueCombined' => "15.1"]));
+            ->will($this->returnValue(['DocIssuance_IssueCombined' => ['version' => "15.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
@@ -3552,6 +4045,533 @@ class ClientTest extends BaseTestCase
                         'subCompoundType' => 'EMPRA'
                     ])
                 ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendDocRefundInitRefund()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummydocrefundinitrefundresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\DocRefund\InitRefund(
+            new Client\RequestOptions\DocRefundInitRefundOptions([
+                'ticketNumber' => '5272404450587',
+                'actionCodes' => [
+                    Client\RequestOptions\DocRefundInitRefundOptions::ACTION_ATC_REFUND
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('DocRefund_InitRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['DocRefund_InitRefund' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'DocRefund_InitRefund')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->docRefundInitRefund(
+            new Client\RequestOptions\DocRefundInitRefundOptions([
+                'ticketNumber' => '5272404450587',
+                'actionCodes' => [
+                    Client\RequestOptions\DocRefundInitRefundOptions::ACTION_ATC_REFUND
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendDocRefundUpdateRefund()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummydocrefundupdaterefundresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\DocRefund\UpdateRefund(
+            new Client\RequestOptions\DocRefundUpdateRefundOptions([
+                'originator' => '0001AA',
+                'originatorId' => '23491193',
+                'refundDate' => \DateTime::createFromFormat('Ymd', '20031125'),
+                'ticketedDate' => \DateTime::createFromFormat('Ymd', '20030522'),
+                'references' => [
+                    new Client\RequestOptions\DocRefund\Reference([
+                        'type' => Client\RequestOptions\DocRefund\Reference::TYPE_TKT_INDICATOR,
+                        'value' => 'Y'
+                    ]),
+                    new Client\RequestOptions\DocRefund\Reference([
+                        'type' => Client\RequestOptions\DocRefund\Reference::TYPE_DATA_SOURCE,
+                        'value' => 'F'
+                    ])
+                ],
+                'tickets' => [
+                    new Client\RequestOptions\DocRefund\Ticket([
+                        'number' => '22021541124593',
+                        'ticketGroup' => [
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_3,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_4,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ])
+                        ]
+                    ]),
+                    new Client\RequestOptions\DocRefund\Ticket([
+                        'number' => '22021541124604',
+                        'ticketGroup' => [
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ])
+                        ]
+                    ])
+                ],
+                'travellerPrioDateOfJoining' => \DateTime::createFromFormat('Ymd', '20070101'),
+                'travellerPrioReference' => '0077701F',
+                'monetaryData' => [
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_BASE_FARE,
+                        'amount' => 401.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_USED,
+                        'amount' => 0.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_REFUND,
+                        'amount' => 401.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_REFUND_TOTAL,
+                        'amount' => 457.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_TOTAL_TAXES,
+                        'amount' => 56.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'TP',
+                        'amount' => 56.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'OBP',
+                        'amount' => 0.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'TGV',
+                        'amount' => 374.93,
+                        'currency' => 'EUR'
+                    ])
+                ],
+                'taxData' => [
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 16.14,
+                        'currencyCode' => 'EUR',
+                        'type' => 'DE'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 3.45,
+                        'currencyCode' => 'EUR',
+                        'type' => 'YC'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 9.67,
+                        'currencyCode' => 'EUR',
+                        'type' => 'US'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 9.67,
+                        'currencyCode' => 'EUR',
+                        'type' => 'US'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 3.14,
+                        'currencyCode' => 'EUR',
+                        'type' => 'XA'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 4.39,
+                        'currencyCode' => 'EUR',
+                        'type' => 'XY'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 6.28,
+                        'currencyCode' => 'EUR',
+                        'type' => 'AY'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 4.00,
+                        'currencyCode' => 'EUR',
+                        'type' => 'DU'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => '701',
+                        'rate' => 56.74,
+                        'currencyCode' => 'EUR',
+                        'type' => Client\RequestOptions\DocRefund\TaxData::TYPE_EXTENDED_TAXES
+                    ])
+                ],
+                'formOfPayment' => [
+                    new Client\RequestOptions\DocRefund\FopOpt([
+                        'fopType' => Client\RequestOptions\DocRefund\FopOpt::TYPE_MISCELLANEOUS,
+                        'fopAmount' => 457.74,
+                        'freeText' => [
+                            new Client\RequestOptions\DocRefund\FreeTextOpt([
+                                'type' => 'CFP',
+                                'freeText' => '##0##'
+                            ]),
+                            new Client\RequestOptions\DocRefund\FreeTextOpt([
+                                'type' => 'CFP',
+                                'freeText' => 'IDBANK'
+                            ])
+                        ]
+                    ])
+                ],
+                'refundedRouteStations' => [
+                    'FRA',
+                    'MUC',
+                    'JFK',
+                    'BKK',
+                    'FRA'
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('DocRefund_UpdateRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['DocRefund_UpdateRefund' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'DocRefund_UpdateRefund')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->docRefundUpdateRefund(
+            new Client\RequestOptions\DocRefundUpdateRefundOptions([
+                'originator' => '0001AA',
+                'originatorId' => '23491193',
+                'refundDate' => \DateTime::createFromFormat('Ymd', '20031125'),
+                'ticketedDate' => \DateTime::createFromFormat('Ymd', '20030522'),
+                'references' => [
+                    new Client\RequestOptions\DocRefund\Reference([
+                        'type' => Client\RequestOptions\DocRefund\Reference::TYPE_TKT_INDICATOR,
+                        'value' => 'Y'
+                    ]),
+                    new Client\RequestOptions\DocRefund\Reference([
+                        'type' => Client\RequestOptions\DocRefund\Reference::TYPE_DATA_SOURCE,
+                        'value' => 'F'
+                    ])
+                ],
+                'tickets' => [
+                    new Client\RequestOptions\DocRefund\Ticket([
+                        'number' => '22021541124593',
+                        'ticketGroup' => [
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_3,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_4,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ])
+                        ]
+                    ]),
+                    new Client\RequestOptions\DocRefund\Ticket([
+                        'number' => '22021541124604',
+                        'ticketGroup' => [
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ])
+                        ]
+                    ])
+                ],
+                'travellerPrioDateOfJoining' => \DateTime::createFromFormat('Ymd', '20070101'),
+                'travellerPrioReference' => '0077701F',
+                'monetaryData' => [
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_BASE_FARE,
+                        'amount' => 401.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_USED,
+                        'amount' => 0.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_REFUND,
+                        'amount' => 401.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_REFUND_TOTAL,
+                        'amount' => 457.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_TOTAL_TAXES,
+                        'amount' => 56.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'TP',
+                        'amount' => 56.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'OBP',
+                        'amount' => 0.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'TGV',
+                        'amount' => 374.93,
+                        'currency' => 'EUR'
+                    ])
+                ],
+                'taxData' => [
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 16.14,
+                        'currencyCode' => 'EUR',
+                        'type' => 'DE'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 3.45,
+                        'currencyCode' => 'EUR',
+                        'type' => 'YC'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 9.67,
+                        'currencyCode' => 'EUR',
+                        'type' => 'US'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 9.67,
+                        'currencyCode' => 'EUR',
+                        'type' => 'US'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 3.14,
+                        'currencyCode' => 'EUR',
+                        'type' => 'XA'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 4.39,
+                        'currencyCode' => 'EUR',
+                        'type' => 'XY'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 6.28,
+                        'currencyCode' => 'EUR',
+                        'type' => 'AY'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 4.00,
+                        'currencyCode' => 'EUR',
+                        'type' => 'DU'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => '701',
+                        'rate' => 56.74,
+                        'currencyCode' => 'EUR',
+                        'type' => Client\RequestOptions\DocRefund\TaxData::TYPE_EXTENDED_TAXES
+                    ])
+                ],
+                'formOfPayment' => [
+                    new Client\RequestOptions\DocRefund\FopOpt([
+                        'fopType' => Client\RequestOptions\DocRefund\FopOpt::TYPE_MISCELLANEOUS,
+                        'fopAmount' => 457.74,
+                        'freeText' => [
+                            new Client\RequestOptions\DocRefund\FreeTextOpt([
+                                'type' => 'CFP',
+                                'freeText' => '##0##'
+                            ]),
+                            new Client\RequestOptions\DocRefund\FreeTextOpt([
+                                'type' => 'CFP',
+                                'freeText' => 'IDBANK'
+                            ])
+                        ]
+                    ])
+                ],
+                'refundedRouteStations' => [
+                    'FRA',
+                    'MUC',
+                    'JFK',
+                    'BKK',
+                    'FRA'
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendDocRefundProcessRefund()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummydocrefundprocessrefundresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\DocRefund\ProcessRefund(
+            new Client\RequestOptions\DocRefundProcessRefundOptions([
+                'statusIndicators' => [Client\RequestOptions\DocRefundProcessRefundOptions::STATUS_INHIBIT_REFUND_NOTICE]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('DocRefund_ProcessRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['DocRefund_ProcessRefund' => ['version' => "13.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'DocRefund_ProcessRefund')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->docRefundProcessRefund(
+            new Client\RequestOptions\DocRefundProcessRefundOptions([
+                'statusIndicators' => [Client\RequestOptions\DocRefundProcessRefundOptions::STATUS_INHIBIT_REFUND_NOTICE]
             ])
         );
 
@@ -3595,7 +4615,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['DocIssuance_IssueCombined' => "15.1"]));
+            ->will($this->returnValue(['DocIssuance_IssueCombined' => ['version' => "15.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
