@@ -59,4 +59,9 @@ class FormOfPayment extends LoadParamsFromArray
      * @var string
      */
     public $creditCardNumber;
+
+    /**
+     * @var string
+     */
+    public $vendorCode;
 }
