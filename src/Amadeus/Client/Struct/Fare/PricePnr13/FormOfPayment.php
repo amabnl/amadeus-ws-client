@@ -141,6 +141,7 @@ class FormOfPayment
             $this->type = $options->type;
             $this->amount = $options->amount;
             $this->creditCardNumber = $options->creditCardNumber;
+            $this->vendorCode = $options->vendorCode;
         } else {
             $this->type = $options;
         }
