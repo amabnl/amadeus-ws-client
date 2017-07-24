@@ -1044,6 +1044,21 @@ class Client extends Base
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 
+
+    /**
+     * FOP_CreateFormOfPayment
+     *
+     * @param RequestOptions\FopValidateFopOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function fopValidateFOP(RequestOptions\FopValidateFopOptions $options, $messageOptions = [])
+    {
+        $msgName = 'FOP_ValidateFOP';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
     /**
      * PriceXplorer_ExtremeSearch
      *

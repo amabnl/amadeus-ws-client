@@ -20,30 +20,33 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fop;
+namespace Amadeus\Client\RequestOptions\Fop;
 
-use Amadeus\Client\RequestOptions\Fop\FopRef;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * FopReference
+ * FopRef
  *
- * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions\Fop
+ * @author Mike Hernas <mike@ahoy.io>
  */
-class FopReference
+class FopRef extends LoadParamsFromArray
 {
-    /**
-     * @var Reference
-     */
-    public $reference;
+    const QUAL_FORM_OF_PAYMENT_LINE = "FPL";
+    const QUAL_FORM_OF_PAYMENT_TATTOO = "FPT";
+    const QUAL_SALES_FORM_OF_PAYMENT_TATTOO = "SFPT";
+    const QUAL_FP_ASSOCIATED_TO_TSM_TATTOO = "TSM";
+    const QUAL_TRANSITIONAL_STORED_TICKET = "TST";
 
     /**
-     * FopReference constructor.
+     * self::QUAL_*
      *
-     * @param FopRef $options
+     * @var string
      */
-    public function __construct(FopRef $options)
-    {
-        $this->reference = new Reference($options->qualifier, $options->number);
-    }
+    public $qualifier;
+
+    /**
+     * @var string|int
+     */
+    public $number;
 }

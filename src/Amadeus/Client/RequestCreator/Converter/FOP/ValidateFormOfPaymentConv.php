@@ -20,30 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fop;
+namespace Amadeus\Client\RequestCreator\Converter\FOP;
 
-use Amadeus\Client\RequestOptions\Fop\FopRef;
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\FopValidateFopOptions;
+use Amadeus\Client\Struct;
 
 /**
- * FopReference
+ * Fop_ValidateFormOfPayment Request converter
  *
- * @package Amadeus\Client\Struct\Fop
+ * @package Amadeus\Client\RequestCreator\Converter\FOP
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class FopReference
+class ValidateFormOfPaymentConv extends BaseConverter
 {
     /**
-     * @var Reference
+     * @param FopValidateFopOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\Fop\ValidateFormOfPayment
      */
-    public $reference;
-
-    /**
-     * FopReference constructor.
-     *
-     * @param FopRef $options
-     */
-    public function __construct(FopRef $options)
+    public function convert($requestOptions, $version)
     {
-        $this->reference = new Reference($options->qualifier, $options->number);
+        return new Struct\Fop\ValidateFormOfPayment($requestOptions);
     }
 }

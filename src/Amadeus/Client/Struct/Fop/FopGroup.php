@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Fop;
 
 use Amadeus\Client\RequestOptions\Fop\ElementRef;
 use Amadeus\Client\RequestOptions\Fop\Group;
+use Amadeus\Client\RequestOptions\Fop\FopRef;
 use Amadeus\Client\RequestOptions\Fop\ObFeeComputation;
 use Amadeus\Client\RequestOptions\Fop\PaxRef;
 
@@ -81,6 +82,10 @@ class FopGroup
 
         foreach ($options->mopInfo as $mopInfo) {
             $this->mopDescription[] = new MopDescription($mopInfo);
+        }
+
+        if($options->fopRef instanceof FopRef) {
+            $this->fopReference = new FopReference($options->fopRef);
         }
     }
 

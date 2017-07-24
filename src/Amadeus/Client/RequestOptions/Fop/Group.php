@@ -43,6 +43,11 @@ class Group extends LoadParamsFromArray
     public $elementRef = [];
 
     /**
+     * @var FopRef[]
+     */
+    public $fopRef = [];
+
+    /**
      * @var ObFeeComputation
      */
     public $obFeeComputation;
