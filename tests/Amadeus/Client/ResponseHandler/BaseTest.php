@@ -1415,6 +1415,23 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("FP NOT ALLOWED FOR NEGOTIATED FARE", $result->messages[0]->text);
     }
 
+    public function testCanHandleFopValidateFopErrorResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFopValidateFopErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fop_ValidateFOP');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(2, count($result->messages));
+        $this->assertEquals('22389', $result->messages[0]->code);
+        $this->assertEquals("INVALID CVV NUMBER - CHECK THE NUMBER AND TRY AGAIN", $result->messages[0]->text);
+
+        $this->assertEquals('N', $result->messages[1]->code);
+        $this->assertEquals("CCAVS NO MATCH - AQ ELEMENT NOT UPDATED", $result->messages[1]->text);
+    }
 
     public function testCanHandleFopCreateFormOfPaymentMultiError()
     {

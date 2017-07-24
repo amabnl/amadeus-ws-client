@@ -84,7 +84,7 @@ class FopGroup
             $this->mopDescription[] = new MopDescription($mopInfo);
         }
 
-        if($options->fopRef instanceof FopRef) {
+        if ($options->fopRef instanceof FopRef) {
             $this->fopReference = new FopReference($options->fopRef);
         }
     }
