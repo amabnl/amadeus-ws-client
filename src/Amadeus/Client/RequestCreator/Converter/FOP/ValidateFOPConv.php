@@ -32,7 +32,7 @@ use Amadeus\Client\Struct;
  * @package Amadeus\Client\RequestCreator\Converter\FOP
  * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
  */
-class ValidateFormOfPaymentConv extends BaseConverter
+class ValidateFOPConv extends BaseConverter
 {
     /**
      * @param FopValidateFopOptions $requestOptions
