@@ -31,7 +31,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerValidateFOP
  *
  * @package Amadeus\Client\ResponseHandler\FOP
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Mike Hernas <mike@ahoy.io>
  */
 class HandlerValidateFOP extends StandardResponseHandler
 {

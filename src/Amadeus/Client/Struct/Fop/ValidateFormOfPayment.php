@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * ValidateFormOfPayment
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Mike Hernas <mike@ahoy.io>
  */
 class ValidateFormOfPayment extends BaseWsMessage
 {

@@ -34,7 +34,7 @@ use Amadeus\Client\Struct\Fop\ValidateFormOfPayment;
  * ValidateFOPTest
  *
  * @package Test\Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Mike Hernas <mike@ahoy.io>
  */
 class ValidateFOPTest extends BaseTestCase
 {
