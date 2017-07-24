@@ -32,6 +32,7 @@ This is the list of messages that are at least partially supported at this time:
 - Air_FlightInfo
 - Air_RetrieveSeatMap
 - FOP_CreateFormOfPayment
+- FOP_ValidateFOP
 - Ticket_CreateTSTFromPricing
 - Ticket_CreateTSMFromPricing
 - Ticket_CreateTSMFareElement
