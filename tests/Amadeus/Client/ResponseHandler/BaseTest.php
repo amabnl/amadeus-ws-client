@@ -1422,7 +1422,7 @@ class BaseTest extends BaseTestCase
         $sendResult = new SendResult();
         $sendResult->responseXml = $this->getTestFile('dummyFopValidateFopErrorResponse.txt');
 
-        $result = $respHandler->analyzeResponse($sendResult, 'Fop_ValidateFOP');
+        $result = $respHandler->analyzeResponse($sendResult, 'FOP_ValidateFOP');
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
         $this->assertEquals(2, count($result->messages));

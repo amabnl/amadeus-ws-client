@@ -210,7 +210,7 @@
 								<vendorCode>VI</vendorCode>
 								<cardNumber>XXXXXXXXXXXX1111</cardNumber>
 								<expiryDate>0818</expiryDate>
-								<ccHolderName>BARTOSZ HERNAS</ccHolderName>
+								<ccHolderName>JOE HERNAS</ccHolderName>
 							</ccInfo>
 						</creditCardDetails>
 					</creditCardData>
