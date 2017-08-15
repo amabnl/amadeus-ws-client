@@ -41,6 +41,7 @@ class Retrieve extends BaseWsMessage
      * @var int
      */
     const RETR_TYPE_BY_RECLOC = 2;
+    const RETR_ACTIVE_PNR = 1;
     
     /**
      * @var Retrieve\Settings

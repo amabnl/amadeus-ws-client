@@ -119,6 +119,31 @@ class BaseTest extends BaseTestCase
 
         $this->assertNull($message->settings);
     }
+    
+    public function testCanCreatePnrRetrieveMessageInContext()
+    {
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['PNR_Retrieve' => ['version' => '14.2', 'wsdl' => 'aabbccdd']]
+        ]);
+
+        $rq = new Base($par);
+
+        $message = $rq->createRequest(
+            'PNR_Retrieve',
+            new PnrRetrieveOptions()
+        );
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\Retrieve', $message);
+        /** @var Retrieve $message */
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\Retrieve\RetrievalFacts', $message->retrievalFacts);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\Retrieve\Retrieve', $message->retrievalFacts->retrieve);
+        $this->assertEquals(Retrieve::RETR_ACTIVE_PNR, $message->retrievalFacts->retrieve->type);
+        $this->assertNull($message->retrievalFacts->reservationOrProfileIdentifier);
+
+        $this->assertNull($message->settings);
+    }
 
     public function testCanCreatePnrRetrieveAndDisplayMessage()
     {
