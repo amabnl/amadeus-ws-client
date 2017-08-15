@@ -22,28 +22,31 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
-use Amadeus\Client\RequestOptions\Fop\FopRef;
+use Amadeus\Client\RequestOptions\FopValidateFopOptions;
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * FopReference
+ * ValidateFormOfPayment
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Mike Hernas <mike@ahoy.io>
  */
-class FopReference
+class ValidateFormOfPayment extends BaseWsMessage
 {
     /**
-     * @var Reference
+     * @var FopGroup[]
      */
-    public $reference;
+    public $fopGroup = [];
 
     /**
-     * FopReference constructor.
+     * FOP_ValidateFormOfPayment constructor.
      *
-     * @param FopRef $options
+     * @param FopValidateFopOptions $options
      */
-    public function __construct(FopRef $options)
+    public function __construct(FopValidateFopOptions $options)
     {
-        $this->reference = new Reference($options->qualifier, $options->number);
+        foreach ($options->fopGroup as $group) {
+            $this->fopGroup[] = new FopGroup($group);
+        }
     }
 }

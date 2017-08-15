@@ -47,4 +47,16 @@ class Reference
      * @var string|int
      */
     public $number;
+
+    /**
+     * Reference constructor.
+     *
+     * @param string $qualifier
+     * @param string|int $number
+     */
+    public function __construct($qualifier = null, $number = null)
+    {
+        $this->qualifier = $qualifier;
+        $this->number = $number;
+    }
 }

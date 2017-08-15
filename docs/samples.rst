@@ -2414,6 +2414,32 @@ FOP_CreateFormOfPayment
 
 `See the examples for FOP_CreateFormOfPayment messages <samples/fop-createfop.rst>`_
 
+---------------
+FOP_ValidateFOP
+---------------
+
+Validate FOP based on FOP line number in PNR:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FopValidateFopOptions;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\FopRef;
+
+    $infoResponse = $client->fopValidateFOP(
+        new FopValidateFopOptions([
+            'fopGroup' => [
+                new Group([
+                    'fopRef' => new FopRef([
+                        'qualifier' => FopRef::QUAL_FORM_OF_PAYMENT_LINE,
+                        'number' => 12
+                    ])
+                ])
+            ]
+        ])
+    );
+
+
 ****
 Info
 ****

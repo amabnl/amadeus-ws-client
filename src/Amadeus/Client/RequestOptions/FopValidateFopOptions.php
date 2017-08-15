@@ -20,30 +20,23 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fop;
+namespace Amadeus\Client\RequestOptions;
 
-use Amadeus\Client\RequestOptions\Fop\FopRef;
+use Amadeus\Client\RequestOptions\Fop\Group;
 
 /**
- * FopReference
+ * Fop_CreateFormOfPayment Request options.
  *
- * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @package Amadeus\Client\RequestOptions
+ * @author Mike Hernas <mike@ahoy.io>
  */
-class FopReference
+class FopValidateFopOptions extends Base
 {
+  
     /**
-     * @var Reference
-     */
-    public $reference;
-
-    /**
-     * FopReference constructor.
+     * Group of up to 127 different FOPs
      *
-     * @param FopRef $options
+     * @var Group[]
      */
-    public function __construct(FopRef $options)
-    {
-        $this->reference = new Reference($options->qualifier, $options->number);
-    }
+    public $fopGroup = [];
 }
