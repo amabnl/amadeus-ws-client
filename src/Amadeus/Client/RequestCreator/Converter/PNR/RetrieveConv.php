@@ -43,7 +43,7 @@ class RetrieveConv extends BaseConverter
     {
         if(!$requestOptions->recordLocator) {
             $retrieveRequest = new Struct\Pnr\Retrieve(
-                Struct\Pnr\Retrieve::RETR_ACTIVE_PNR,
+                Struct\Pnr\Retrieve::RETR_TYPE_ACTIVE_PNR,
                 null
             );
     

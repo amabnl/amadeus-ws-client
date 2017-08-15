@@ -139,7 +139,7 @@ class BaseTest extends BaseTestCase
         /** @var Retrieve $message */
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\Retrieve\RetrievalFacts', $message->retrievalFacts);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\Retrieve\Retrieve', $message->retrievalFacts->retrieve);
-        $this->assertEquals(Retrieve::RETR_ACTIVE_PNR, $message->retrievalFacts->retrieve->type);
+        $this->assertEquals(Retrieve::RETR_TYPE_ACTIVE_PNR, $message->retrievalFacts->retrieve->type);
         $this->assertNull($message->retrievalFacts->reservationOrProfileIdentifier);
 
         $this->assertNull($message->settings);
