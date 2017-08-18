@@ -49,4 +49,21 @@ class RetrieveTest extends BaseTestCase
 
         $this->assertNull($message->settings);
     }
+    
+    public function testCanCreatePnrRetrieveMessageInContext()
+    {
+        $message = new Pnr\Retrieve(
+            Pnr\Retrieve::RETR_TYPE_ACTIVE_PNR,
+            null
+        );
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\Retrieve', $message);
+        /** @var Retrieve $message */
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\Retrieve\RetrievalFacts', $message->retrievalFacts);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\Retrieve\Retrieve', $message->retrievalFacts->retrieve);
+        $this->assertEquals(Pnr\Retrieve::RETR_TYPE_ACTIVE_PNR, $message->retrievalFacts->retrieve->type);
+        $this->assertNull($message->retrievalFacts->reservationOrProfileIdentifier);
+
+        $this->assertNull($message->settings);
+    }
 }
