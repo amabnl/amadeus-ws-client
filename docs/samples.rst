@@ -92,6 +92,17 @@ Retrieving a PNR:
 **Note:** Retrieving a PNR this way is identical to performing a ``RT<recordlocator>`` cryptic entry in Amadeus Selling Platform:
 This will implicitly place the PNR in the session's context *(if this action is performed in a stateful session)*.
 
+Retrieve the PNR that is active in the current session context:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    $pnrContent = $client->pnrRetrieve();
+
+**Note:** Retrieving a PNR this way is identical to performing a ``RT`` cryptic entry in Amadeus Selling Platform:
+This will re-retrieve the PNR that is currently active in the session's context *(if this action is performed in a stateful session)*.
+
 ----------------------
 PNR_RetrieveAndDisplay
 ----------------------
