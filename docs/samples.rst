@@ -98,7 +98,7 @@ Retrieve the PNR that is active in the current session context:
 
     use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
 
-    $pnrContent = $client->pnrRetrieve();
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions());
 
 **Note:** Retrieving a PNR this way is identical to performing a ``RT`` cryptic entry in Amadeus Selling Platform:
 This will re-retrieve the PNR that is currently active in the session's context *(if this action is performed in a stateful session)*.
