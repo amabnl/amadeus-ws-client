@@ -453,6 +453,25 @@ Create an ``FM`` element (Manual Commission):
         ]
     ]);
 
+Tour Code FT (free flow format)
+===============================
+
+Create an ``FT`` element (Tour Code):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\TourCode;
+
+    $opt = new PnrAddMultiElementsOptions([
+        'elements' => [
+            new TourCode([
+                'passengerType' => TourCode::PAXTYPE_PASSENGER,
+                'freeText' => 'TOUR CODE'
+            ])
+        ]
+    ]);
+
 Accounting Information AI
 =========================
 

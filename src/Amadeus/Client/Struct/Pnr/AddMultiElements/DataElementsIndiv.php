@@ -58,6 +58,9 @@ class DataElementsIndiv extends WsMessageUtility
      */
     public $serviceRequest;
     public $dateAndTimeInformation;
+    /**
+     * @var TourCode
+     */
     public $tourCode;
     /**
      * To specify an Amadeus PNR Ticket element
@@ -260,6 +263,10 @@ class DataElementsIndiv extends WsMessageUtility
                 /** @var Element\SeatRequest $element */
                 $this->seatGroup = new SeatGroup($element);
                 break;
+            case 'TourCode':
+                /** @var Element\TourCode $element */
+                $this->tourCode = new TourCode($element);
+                break;
             default:
                 throw new InvalidArgumentException('Element type '.$elementType.' is not supported');
         }
@@ -288,7 +295,8 @@ class DataElementsIndiv extends WsMessageUtility
             'FrequentFlyer' => ElementManagementData::SEGNAME_SPECIAL_SERVICE_REQUEST,
             'OtherServiceInfo' => ElementManagementData::SEGNAME_OTHER_SERVICE_INFORMATION,
             'ManualCommission' => ElementManagementData::SEGNAME_COMMISSION,
-            'SeatRequest' => ElementManagementData::SEGNAME_SEAT_REQUEST
+            'SeatRequest' => ElementManagementData::SEGNAME_SEAT_REQUEST,
+            'TourCode' => ElementManagementData::SEGNAME_TOUR_CODE
         ];
 
         if (array_key_exists($elementType, $sourceArray)) {

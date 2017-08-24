@@ -35,6 +35,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element\ReceivedFrom;
 use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest;
 use Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest;
 use Amadeus\Client\RequestOptions\Pnr\Element\Ticketing;
+use Amadeus\Client\RequestOptions\Pnr\Element\TourCode;
 use Amadeus\Client\RequestOptions\Pnr\Itinerary;
 use Amadeus\Client\RequestOptions\Pnr\Reference;
 use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
@@ -788,6 +789,38 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->commissionInfo->remitIndicator);
         $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->oldCommission);
         $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->commission->manualCapping);
+    }
+
+    /**
+     * 5.54 Operation: Tour Code in Free Flow Format
+     *
+     * The example below illustrates the request to create a tour code in free flow format.
+     */
+    public function testCanCreateFreeFlowTourCode()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_NO_PROCESSING;
+        $createPnrOptions->elements[] = new TourCode([
+            'passengerType' => TourCode::PAX_PASSENGER,
+            'freeText' => 'TOUR CODE'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_TOUR_CODE, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->freetextData);
+        $this->assertEquals('PAX', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->tourCode->passengerType);
+        $this->assertEquals(AddMultiElements\FreeFormatTour::INDICATOR_FREE_FORMAT, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->tourCode->freeFormatTour->indicator);
+        $this->assertEquals('TOUR CODE', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->tourCode->freeFormatTour->freetext);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->tourCode->formatedTour);
+        $this->assertNull($requestStruct->dataElementsMaster->dataElementsIndiv[0]->tourCode->netRemit);
     }
 
     /**
