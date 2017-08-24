@@ -24,7 +24,6 @@ namespace Amadeus\Client\RequestOptions\Pnr\Element;
 
 use Amadeus\Client\RequestOptions\Pnr\Element;
 
-
 /**
  * Tour Code element (FT)
  *
