@@ -224,7 +224,7 @@ We try to ease your pain a little by analyzing the messages we support and look 
 
 If the Amadeus server responds with a ``\SoapFault``, the library will convert this to a ``Result`` object with status 'FATAL'.
 
-To override this behaviour, look at the ``Amadeus\Client\ResponseHandler\ResponseHandlerInterface``.
+To override this behaviour, look at the ``Amadeus\Client\ResponseHandler\ResponseHandlerInterface``. You can inject your custom implementation of the ``ResponseHandlerInterface`` on Client instantiation in the ``Amadeus\Client\Params::$responseHandler`` property.
 
 **************************
 Custom \SoapClient options
