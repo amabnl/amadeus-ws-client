@@ -254,7 +254,7 @@ Special Service Requests SR
 ===========================
 
 In general for Special Service Request (SSR) elements, you need to provide the correct "type" of SSR element.
-You can find a list of all SSR elements on the `Amadeus e-Support centre on this page <https://servicehub.amadeus.com/web/guest/view-solution/-/asset_publisher/3IVTTXXSS5oD/content/ssr-codes-and-airline-specific-codes/20195>`_.
+You can find a list of all SSR elements on the `Amadeus Service Hub on this page <https://servicehub.amadeus.com/web/guest/view-solution/-/asset_publisher/3IVTTXXSS5oD/content/ssr-codes-and-airline-specific-codes/20195>`_.
 
 APIS passport or identity card
 ------------------------------
