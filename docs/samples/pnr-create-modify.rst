@@ -254,7 +254,7 @@ Special Service Requests SR
 ===========================
 
 In general for Special Service Request (SSR) elements, you need to provide the correct "type" of SSR element.
-You can find a list of all SSR elements on the `Amadeus e-Support centre on this page <https://mye-supportcentre.amadeus.com/c/portal/viewsolution/cas13fe9015f8100/kb-en-GB>`_.
+You can find a list of all SSR elements on the `Amadeus e-Support centre on this page <https://servicehub.amadeus.com/web/guest/view-solution/-/asset_publisher/3IVTTXXSS5oD/content/ssr-codes-and-airline-specific-codes/20195>`_.
 
 APIS passport or identity card
 ------------------------------
@@ -290,7 +290,7 @@ Provide mandatory SR DOCS with APIS information for flights to the US *(must be 
 Meal request
 ------------
 
-Request a Gluten intolerant meal for passenger 2 on flight 3 (`See all meal request codes here <https://mye-supportcentre.amadeus.com/eTass/viewsolution/kb-en-GB/cas13a512f4f0800>`_):
+Request a Gluten intolerant meal for passenger 2 on flight 3 (`See all meal request codes here <https://servicehub.amadeus.com/web/guest/view-solution/-/asset_publisher/3IVTTXXSS5oD/content/ssr-codes-and-airline-specific-codes/20195>`_):
 
 .. code-block:: php
 
