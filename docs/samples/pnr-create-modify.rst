@@ -433,6 +433,23 @@ Add a service fee paid using Visa:
         ]
     ]);
 
+Free flow text Form of Payment:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\FormOfPayment;
+
+    $opt = new PnrCreatePnrOptions([
+        'elements' => [
+            new FormOfPayment([
+                'type' => FormOfPayment::TYPE_MISC,
+                'freeText' => 'the FOP free text content',
+            ])
+        ]
+    ]);
+
+
 Manual Commission FM
 ====================
 
