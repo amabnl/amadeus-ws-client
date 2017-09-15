@@ -123,7 +123,7 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
      */
     protected function loadOptions($options)
     {
-        $this->loadNrOfPaxAndResultsAndMultiTicketWeights($options);
+        $this->loadNumberOfUnits($options);
 
         $this->loadFareOptions($options);
 

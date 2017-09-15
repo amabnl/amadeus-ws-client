@@ -26,6 +26,7 @@ use Amadeus\Client\RequestOptions\Fare\MPPassenger;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\RequestOptions\TicketCheckEligibilityOptions;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
@@ -96,9 +97,9 @@ class BaseMasterPricerMessage extends BaseWsMessage
      * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|TicketCheckEligibilityOptions $options
      * @return void
      */
-    protected function loadNrOfPaxAndResultsAndMultiTicketWeights($options)
+    protected function loadNumberOfUnits($options)
     {
-        if (is_int($options->nrOfRequestedPassengers) || is_int($options->nrOfRequestedResults)) {
+        if (is_int($options->nrOfRequestedPassengers) || is_int($options->nrOfRequestedResults) || $options->multiTicketWeights instanceof MultiTicketWeights) {
             $this->numberOfUnit = new MasterPricer\NumberOfUnit(
                 $options->nrOfRequestedPassengers,
                 $options->nrOfRequestedResults,

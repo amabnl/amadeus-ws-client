@@ -3,6 +3,7 @@
 * Added support in PNR_Retrieve for retrieving the PNR active in context (https://github.com/amabnl/amadeus-ws-client/pull/88) - Michal Hernas
 * Added support for Tour Code elements in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/90)
 * Implemented ``FOP_ValidateFOP`` (https://github.com/amabnl/amadeus-ws-client/pull/86) - Michal Hernas
+* Added support for Multi-Ticket operation for MasterPricer messages (https://github.com/amabnl/amadeus-ws-client/pull/94) - Michal Hernas
 
 # Release 1.4.0 (15 May 2017)
 * Added support for ``Fare_PricePNRWithBookingClass`` errors in message version 7.3 format (https://github.com/amabnl/amadeus-ws-client/issues/57)
