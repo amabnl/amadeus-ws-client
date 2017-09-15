@@ -314,6 +314,14 @@ If you also need the HTTP headers, that's possible too (exposes PHP's ``\SoapCli
 
     $lastResponseHeaders = $client->getLastResponseHeaders();
 
+********************************************************
+Dealing with multiple versions of a message in your WSDL
+********************************************************
+
+Often, when your WSDL gets upgraded to new message versions by Amadeus, they will leave the older versions of the message in the WSDL. When using such a WSDL, the library will use the message in the WSDL it finds first (=the oldest version).
+
+If you want the library to use the newest version of a message, you have to **manually remove the old versions from the WSDL file**.
+
 
 ================
 EXAMPLE MESSAGES
