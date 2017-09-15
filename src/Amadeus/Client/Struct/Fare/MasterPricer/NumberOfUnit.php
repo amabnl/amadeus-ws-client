@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
+
 /**
  * NumberOfUnit
  *
@@ -38,8 +40,9 @@ class NumberOfUnit
     /**
      * @param int|null $requestedPax
      * @param int|null $requestedResults
+     * @param Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights|null $multiTicketWeights
      */
-    public function __construct($requestedPax, $requestedResults)
+    public function __construct($requestedPax, $requestedResults, $multiTicketWeights)
     {
         if (is_int($requestedPax)) {
             $this->unitNumberDetail[] = new UnitNumberDetail(
@@ -51,6 +54,21 @@ class NumberOfUnit
             $this->unitNumberDetail[] = new UnitNumberDetail(
                 $requestedResults,
                 UnitNumberDetail::TYPE_RESULTS
+            );
+        }
+
+        if ($multiTicketWeights && $multiTicketWeights instanceof MultiTicketWeights) {
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $multiTicketWeights->oneWayOutbound,
+                UnitNumberDetail::TYPE_OUTBOUND_RECOMMENDATION
+            );
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $multiTicketWeights->oneWayInbound,
+                UnitNumberDetail::TYPE_INBBOUND_RECOMMENDATION
+            );
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $multiTicketWeights->returnTrip,
+                UnitNumberDetail::TYPE_COMPLETE_RECOMMENDATION
             );
         }
     }

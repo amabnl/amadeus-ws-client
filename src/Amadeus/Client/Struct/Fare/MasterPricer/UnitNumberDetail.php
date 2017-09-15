@@ -44,6 +44,9 @@ class UnitNumberDetail
     const TYPE_PERCENTAGE_OF_SHORTEST_ELAPSED_FLYING_TIME = "P";
     const TYPE_SHOW_SOLD_OUT = "SOF";
     const TYPE_WAITLIST = "WL";
+    const TYPE_OUTBOUND_RECOMMENDATION = "OWO";
+    const TYPE_INBBOUND_RECOMMENDATION = "OWI";
+    const TYPE_COMPLETE_RECOMMENDATION = "RT";
 
     /**
      * @var int

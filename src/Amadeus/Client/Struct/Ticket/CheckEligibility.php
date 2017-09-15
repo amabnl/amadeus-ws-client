@@ -124,7 +124,7 @@ class CheckEligibility extends BaseMasterPricerMessage
      */
     public function __construct(TicketCheckEligibilityOptions $options)
     {
-        $this->loadNrOfPaxAndResults($options);
+        $this->loadNumberOfUnits($options);
 
         $this->loadFareOptions($options);
 
