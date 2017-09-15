@@ -96,12 +96,13 @@ class BaseMasterPricerMessage extends BaseWsMessage
      * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|TicketCheckEligibilityOptions $options
      * @return void
      */
-    protected function loadNrOfPaxAndResults($options)
+    protected function loadNrOfPaxAndResultsAndMultiTicketWeights($options)
     {
         if (is_int($options->nrOfRequestedPassengers) || is_int($options->nrOfRequestedResults)) {
             $this->numberOfUnit = new MasterPricer\NumberOfUnit(
                 $options->nrOfRequestedPassengers,
-                $options->nrOfRequestedResults
+                $options->nrOfRequestedResults,
+                $options->multiTicketWeights
             );
         }
     }
@@ -116,7 +117,8 @@ class BaseMasterPricerMessage extends BaseWsMessage
                 $options->corporateCodesUnifares,
                 $options->flightOptions,
                 $options->currencyOverride,
-                $options->feeIds
+                $options->feeIds,
+                $options->multiTicket
             )
         ) {
             $this->fareOptions = new MasterPricer\FareOptions(
@@ -125,7 +127,8 @@ class BaseMasterPricerMessage extends BaseWsMessage
                 $options->doTicketabilityPreCheck,
                 $options->currencyOverride,
                 $options->feeIds,
-                $options->corporateQualifier
+                $options->corporateQualifier,
+                $options->multiTicket
             );
         }
     }

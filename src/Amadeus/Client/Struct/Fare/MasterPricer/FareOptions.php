@@ -57,6 +57,8 @@ class FareOptions
 
     public $monetaryCabinInfo;
 
+    public $multiTicket;
+
     /**
      * FareOptions constructor.
      *
@@ -73,7 +75,8 @@ class FareOptions
         $tickPreCheck,
         $currency,
         $feeIds,
-        $corporateQualifier
+        $corporateQualifier,
+        $multiTicket
     ) {
         if ($tickPreCheck === true) {
             $this->addPriceType(PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK);
@@ -89,6 +92,7 @@ class FareOptions
         }
 
         $this->loadCurrencyOverride($currency);
+        $this->loadMultiTicket($multiTicket);
         if (!is_null($feeIds)) {
             $this->loadFeeIds($feeIds);
         }
@@ -122,6 +126,19 @@ class FareOptions
             $this->conversionRate = new ConversionRate($currency);
         }
     }
+    
+
+    /**
+     * Set multi ticket on if needed
+     *
+     * @param string|null $currency
+     */
+     protected function loadMultiTicket($multiTicket)
+     {
+         if ($multiTicket) {
+             $this->addPriceType(PricingTicketing::PRICETYPE_MULTI_TICKET);
+         }
+     }
 
     /**
      * Add PriceType

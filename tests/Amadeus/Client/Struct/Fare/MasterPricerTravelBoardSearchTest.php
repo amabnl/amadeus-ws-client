@@ -24,6 +24,7 @@ namespace Test\Amadeus\Client\Struct\Fare;
 
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFCriteria;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFOtherCriteria;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
 use Amadeus\Client\RequestOptions\Fare\MPDate;
 use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
@@ -1250,5 +1251,39 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertCount(1, $message->customerRef->customerReferences);
         $this->assertEquals('AA1234567890123456789Z01234567890', $message->customerRef->customerReferences[0]->referenceNumber);
         $this->assertEquals(CustomerReferences::QUAL_AGENCY_GROUPING_ID, $message->customerRef->customerReferences[0]->referenceQualifier);
+    }
+
+    public function testCanMakeBaseMasterPricerMessageWithMultiTicket()
+    {
+        $opt = new FareMasterPricerTbSearch();
+        $opt->nrOfRequestedResults = 200;
+        $opt->nrOfRequestedPassengers = 1;
+        $opt->multiTicket = true;
+        $opt->multiTicketWeights = new MultiTicketWeights([
+            'oneWayOutbound' => 30,
+            'oneWayInbound' => 20,
+            'returnTrip' => 50
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertCount(5, $message->numberOfUnit->unitNumberDetail);
+
+        $this->assertEquals(1, $message->numberOfUnit->unitNumberDetail[0]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_PASS, $message->numberOfUnit->unitNumberDetail[0]->typeOfUnit);
+        
+        $this->assertEquals(200, $message->numberOfUnit->unitNumberDetail[1]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_RESULTS, $message->numberOfUnit->unitNumberDetail[1]->typeOfUnit);
+        
+        $this->assertEquals(30, $message->numberOfUnit->unitNumberDetail[2]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_OUTBOUND_RECOMMENDATION, $message->numberOfUnit->unitNumberDetail[2]->typeOfUnit);
+        
+        $this->assertEquals(20, $message->numberOfUnit->unitNumberDetail[3]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_INBBOUND_RECOMMENDATION, $message->numberOfUnit->unitNumberDetail[3]->typeOfUnit);
+        
+        $this->assertEquals(50, $message->numberOfUnit->unitNumberDetail[4]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_COMPLETE_RECOMMENDATION, $message->numberOfUnit->unitNumberDetail[4]->typeOfUnit);
+
+        $this->assertEquals("MTK", $message->fareOptions->pricingTickInfo->pricingTicketing->priceType[0]);
     }
 }

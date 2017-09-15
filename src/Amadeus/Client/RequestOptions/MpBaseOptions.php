@@ -128,4 +128,18 @@ class MpBaseOptions extends Base
      * @var Fare\MPFeeId[]
      */
     public $feeIds;
+    
+    /**
+     * Whether to perform a multi ticket search
+     *
+     * @var bool
+     */
+    public $multiTicket = false;
+
+    /**
+     * Optional. Weights for Multi Ticket functionality.
+     *
+     * @var Fare\MasterPricer\MultiTicketWeights
+     */
+    public $multiTicketWeights;
 }
