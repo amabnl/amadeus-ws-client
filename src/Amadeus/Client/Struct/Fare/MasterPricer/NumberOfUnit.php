@@ -21,7 +21,9 @@
  */
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
+
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
+
 /**
  * NumberOfUnit
  *
@@ -55,7 +57,7 @@ class NumberOfUnit
             );
         }
 
-        if($multiTicketWeights && $multiTicketWeights instanceof MultiTicketWeights) {
+        if ($multiTicketWeights && $multiTicketWeights instanceof MultiTicketWeights) {
             $this->unitNumberDetail[] = new UnitNumberDetail(
                 $multiTicketWeights->oneWayOutbound,
                 UnitNumberDetail::TYPE_OUTBOUND_RECOMMENDATION

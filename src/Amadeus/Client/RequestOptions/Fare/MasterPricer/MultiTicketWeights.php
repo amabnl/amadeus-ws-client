@@ -32,23 +32,22 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class MultiTicketWeights extends LoadParamsFromArray
 {
-  /**
-   * Recommendations for outbound (OWO)
-   *
-   * @var int
-   */
-  public $oneWayOutbound;
-  /**
-   * Recommendations for inbound (OWI)
-   *
-   * @var int
-   */
-  public $oneWayInbound;
-  /**
-   * Recommendations for complete journey (RT)
-   *
-   * @var int
-   */
-  public $returnTrip;
+    /**
+    * Recommendations for outbound (OWO)
+    *
+    * @var int
+    */
+    public $oneWayOutbound;
+    /**
+    * Recommendations for inbound (OWI)
+    *
+    * @var int
+    */
+    public $oneWayInbound;
+    /**
+    * Recommendations for complete journey (RT)
+    *
+    * @var int
+    */
+    public $returnTrip;
 }
-?>
