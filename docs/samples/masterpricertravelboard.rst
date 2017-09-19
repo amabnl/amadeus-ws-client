@@ -859,3 +859,52 @@ to be taken into consideration by Amadeus when returning Fare Shopping results:
         ],
         'dkNumber' => 'AA1234567890123456789Z01234567890'
     ]);
+
+Multi-Ticket
+============
+
+The Multi-Ticket option allows you to get inbound, outbound and complete flights in one response.
+Works only on return trip search. 
+
+`multiTicketWeights` is optional. If passed the sum of each weight has to sum up to 100. 
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
+    use Amadeus\Client\RequestOptionsFare\MPPassenger;
+    use Amadeus\Client\RequestOptionsFare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'PPT']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2012-08-10T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ]),
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PPT']),
+                'arrivalLocation' => new MPLocation(['city' => 'PAR']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2012-08-20T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ])
+        ],
+        'multiTicket' => true,
+        'multiTicketWeights' => new MultiTicketWeights([
+            'oneWayOutbound' => 80,
+            'oneWayInbound' => 0,
+            'returnTrip' => 20
+        ])
+    ]);

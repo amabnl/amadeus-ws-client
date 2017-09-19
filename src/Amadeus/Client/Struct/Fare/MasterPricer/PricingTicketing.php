@@ -46,6 +46,7 @@ class PricingTicketing
     const PRICETYPE_NO_SLICE_AND_DICE = "NSD";
     const PRICETYPE_DISPLAY_MIN_MAX_STAY = "MST";
     const PRICETYPE_OVERRIDE_CURRENCY_CONVERSION = "CUC";
+    const PRICETYPE_MULTI_TICKET = "MTK";
 
     /**
      * self::PRICETYPE_*
