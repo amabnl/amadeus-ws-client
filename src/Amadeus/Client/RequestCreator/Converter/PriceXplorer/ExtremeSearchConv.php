@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * PriceXplorer_ExtremeSearch Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\PriceXplorer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ExtremeSearchConv extends BaseConverter
 {

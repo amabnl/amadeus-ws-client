@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Air\RetrieveSeatMap;
  * AdditionalFareDetails
  *
  * @package Amadeus\Client\Struct\Air\RetrieveSeatMap
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class AdditionalFareDetails
 {

@@ -29,7 +29,7 @@ use Test\Amadeus\BaseTestCase;
  * PasswordTest
  *
  * @package Test\Amadeus\Client\Struct\HeaderV4
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PasswordTest extends BaseTestCase
 {

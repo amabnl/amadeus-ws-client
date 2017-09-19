@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Queue;
  * Structure class for the Dumbo message part for Queue_* messages
  *
  * @package Amadeus\Client\Struct\Queue
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Dumbo
 {

@@ -29,7 +29,7 @@ use Amadeus\Client\RequestOptions\RequestOptionsInterface;
  * RequestCreatorInterface is an interface for creating requests for various messages based on certain parameters
  *
  * @package Amadeus\Client\RequestCreator
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 interface RequestCreatorInterface
 {

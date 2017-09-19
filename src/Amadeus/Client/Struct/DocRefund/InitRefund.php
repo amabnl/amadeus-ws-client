@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * DocRefund_InitRefund request structure
  *
  * @package Amadeus\Client\Struct\DocRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class InitRefund extends BaseWsMessage
 {

@@ -30,7 +30,7 @@ use Amadeus\Client\Struct\Air\TravelProductInformation;
  * Mostly mirrors the TravelProductInformation structure from the Air messages structure.
  *
  * @package Amadeus\Client\Struct\Fare\InformativePricing13
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class SegmentInformation extends TravelProductInformation
 {

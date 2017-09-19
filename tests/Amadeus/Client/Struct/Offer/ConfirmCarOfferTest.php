@@ -17,7 +17,7 @@ use Test\Amadeus\BaseTestCase;
  * ConfirmCarOfferTest
  *
  * @package Test\Amadeus\Client\Struct\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ConfirmCarOfferTest extends BaseTestCase
 {

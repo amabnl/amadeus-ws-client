@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * Offer_ConfirmCarOffer Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ConfirmCarOfferConv extends BaseConverter
 {

@@ -28,7 +28,7 @@ use Amadeus\Client;
  * SoapHeader4: Session Handler for web service applications using Amadeus WS Soap Header v4.
  *
  * @package Amadeus\Client\Session\Handler
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class SoapHeader4 extends Base
 {

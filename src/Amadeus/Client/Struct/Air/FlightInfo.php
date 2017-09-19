@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * FlightInfo
  *
  * @package Amadeus\Client\Struct\Air
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FlightInfo extends BaseWsMessage
 {

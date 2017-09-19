@@ -28,7 +28,7 @@ use Amadeus\Client\Struct\WsMessageUtility;
  * ItemNumberGroup
  *
  * @package Amadeus\Client\Struct\DocRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ItemNumberGroup extends WsMessageUtility
 {

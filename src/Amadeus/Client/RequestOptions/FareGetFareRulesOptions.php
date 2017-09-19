@@ -26,7 +26,7 @@ namespace Amadeus\Client\RequestOptions;
  * Fare_GetFareRules Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FareGetFareRulesOptions extends Base
 {

@@ -32,7 +32,7 @@ use Amadeus\Client\RequestOptions\Fop\PaxRef;
  * FopGroup
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FopGroup
 {

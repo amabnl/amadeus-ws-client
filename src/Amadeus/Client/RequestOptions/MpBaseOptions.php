@@ -28,7 +28,7 @@ namespace Amadeus\Client\RequestOptions;
  * For MasterPricer options shared with ATC messages (such as Ticket_CheckEligibility)
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MpBaseOptions extends Base
 {

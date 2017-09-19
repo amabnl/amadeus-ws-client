@@ -28,7 +28,7 @@ use Amadeus\Client\Struct\Offer\Reference;
  * TattooReference
  *
  * @package Amadeus\Client\Struct\Offer\ConfirmCar
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TattooReference
 {

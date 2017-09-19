@@ -34,7 +34,7 @@ use Amadeus\Client\RequestOptions\Ticket\PaxSegRef;
  * Ticket_RepricePNRWithBookingClass request options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TicketRepricePnrWithBookingClassOptions extends Base
 {

@@ -33,7 +33,7 @@ use Amadeus\Client\Struct\Pnr\DisplayHistory\ScrollingDetails;
  * DisplayHistory
  *
  * @package Amadeus\Client\Struct\Pnr
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DisplayHistory extends BaseWsMessage
 {

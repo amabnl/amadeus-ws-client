@@ -34,7 +34,7 @@ use Amadeus\Client\Struct\PointOfRef\Search\PorFndQryParams;
  * PointOfRef_Search request message structure
  *
  * @package Amadeus\Client\Struct\PointOfRef
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Search extends BaseWsMessage
 {

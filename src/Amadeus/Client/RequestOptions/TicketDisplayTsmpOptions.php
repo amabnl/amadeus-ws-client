@@ -26,7 +26,7 @@ namespace Amadeus\Client\RequestOptions;
  * Ticket_DisplayTSMP Request options.
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TicketDisplayTsmpOptions extends Base
 {

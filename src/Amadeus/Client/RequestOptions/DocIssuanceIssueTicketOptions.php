@@ -29,7 +29,7 @@ use Amadeus\Client\RequestOptions\DocIssuance\CompoundOption;
  * DocIssuanceIssueTicketOptions
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DocIssuanceIssueTicketOptions extends Base
 {

@@ -29,7 +29,7 @@ use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
  *
  * @deprecated Use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis instead.
  * @package Amadeus\Client\RequestOptions\Fare
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class PricePnrBcFareBasis extends FareBasis
 {

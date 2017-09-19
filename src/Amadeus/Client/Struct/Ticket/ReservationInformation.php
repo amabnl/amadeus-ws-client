@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Ticket;
  * ReservationInformation
  *
  * @package Amadeus\Client\Struct\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ReservationInformation
 {

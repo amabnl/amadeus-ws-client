@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\PointOfRef\Search;
  * Name
  *
  * @package Amadeus\Client\Struct\PointOfRef\Search
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Name
 {

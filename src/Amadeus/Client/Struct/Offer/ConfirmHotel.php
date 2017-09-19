@@ -42,7 +42,7 @@ use Amadeus\Client\Struct\Offer\ConfirmHotel\TattooReference;
  * Offer_ConfirmHotelOffer
  *
  * @package Amadeus\Client\Struct\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ConfirmHotel extends BaseWsMessage
 {

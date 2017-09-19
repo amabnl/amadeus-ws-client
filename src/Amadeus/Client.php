@@ -35,7 +35,7 @@ use Amadeus\Client\Result;
  * - support older versions of SoapHeader (1)
  *
  * @package Amadeus
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Client extends Base
 {

@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct;
  * WsMessageUtility - provides utility functions when constructing web service messages
  *
  * @package Amadeus\Client\Struct
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class WsMessageUtility
 {

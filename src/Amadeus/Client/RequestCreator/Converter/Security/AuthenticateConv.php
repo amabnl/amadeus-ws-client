@@ -30,7 +30,7 @@ use Amadeus\Client\Struct\Security;
  * Authenticate
  *
  * @package Amadeus\Client\RequestCreator\Converter\Security
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class AuthenticateConv extends BaseConverter
 {

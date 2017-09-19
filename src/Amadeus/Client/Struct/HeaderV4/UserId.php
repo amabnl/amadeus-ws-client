@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\HeaderV4;
  * UserId
  *
  * @package Amadeus\Client\Struct\HeaderV4
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class UserId
 {

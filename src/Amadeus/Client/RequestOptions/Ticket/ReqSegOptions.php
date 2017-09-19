@@ -29,7 +29,7 @@ use Amadeus\Client\LoadParamsFromArray;
  *
  *
  * @package Amadeus\Client\RequestOptions\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ReqSegOptions extends LoadParamsFromArray
 {

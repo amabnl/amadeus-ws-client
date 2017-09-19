@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * Ticket_DeleteTST Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DeleteTSTConv extends BaseConverter
 {

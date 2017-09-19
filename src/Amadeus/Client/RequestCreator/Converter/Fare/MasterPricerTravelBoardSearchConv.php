@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * Fare_MasterPricerTravelBoardSearch Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MasterPricerTravelBoardSearchConv extends BaseConverter
 {

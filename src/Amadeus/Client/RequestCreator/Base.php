@@ -38,7 +38,7 @@ use Amadeus\Client\Struct;
  * - What message version is active in the current WSDL?
  *
  * @package Amadeus\Client\RequestCreator
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Base implements RequestCreatorInterface
 {

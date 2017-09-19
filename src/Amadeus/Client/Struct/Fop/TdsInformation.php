@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\WsMessageUtility;
  * TdsInformation
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TdsInformation extends WsMessageUtility
 {

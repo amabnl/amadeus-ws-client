@@ -36,7 +36,7 @@ use Amadeus\Client\Struct\Fare\GetFareRules\TripDescription;
  * Fare_GetFareRules request structure
  *
  * @package Amadeus\Client\Struct\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class GetFareRules extends BaseWsMessage
 {

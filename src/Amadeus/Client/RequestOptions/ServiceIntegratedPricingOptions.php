@@ -30,7 +30,7 @@ use Amadeus\Client\RequestOptions\Service\PaxSegRef;
  * ServiceIntegratedPricingOptions
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ServiceIntegratedPricingOptions extends Base
 {

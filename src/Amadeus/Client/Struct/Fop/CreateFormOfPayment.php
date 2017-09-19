@@ -30,7 +30,7 @@ use Amadeus\Client\Struct\Fop\CreateFormOfPayment\BestEffort;
  * CreateFormOfPayment
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class CreateFormOfPayment extends BaseWsMessage
 {

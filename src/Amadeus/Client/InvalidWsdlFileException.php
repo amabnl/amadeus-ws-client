@@ -26,7 +26,7 @@ namespace Amadeus\Client;
  * InvalidWsdlFileException exception when there are problems opening the WSDL file
  *
  * @package Amadeus\Client
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class InvalidWsdlFileException extends Exception
 {

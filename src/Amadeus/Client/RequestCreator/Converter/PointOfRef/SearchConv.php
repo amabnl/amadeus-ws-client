@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * PointOfRef_Search Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\PointOfRef
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class SearchConv extends BaseConverter
 {

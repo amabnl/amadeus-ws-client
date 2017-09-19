@@ -40,7 +40,7 @@ use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\ValidatingCarrierDetai
  * DisplayQueryReport
  *
  * @package Amadeus\Client\Struct\SalesReports
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DisplayQueryReport extends BaseWsMessage
 {

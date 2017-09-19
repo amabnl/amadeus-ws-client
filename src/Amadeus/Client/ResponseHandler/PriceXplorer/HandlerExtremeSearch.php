@@ -31,7 +31,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerExtremeSearch
  *
  * @package Amadeus\Client\ResponseHandler\PriceXplorer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerExtremeSearch extends StandardResponseHandler
 {

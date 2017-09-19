@@ -30,7 +30,7 @@ use Amadeus\Client\RequestOptions\Pnr\DisplayHistory\PredicateType;
  * Predicate
  *
  * @package Amadeus\Client\Struct\Pnr\DisplayHistory
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Predicate
 {

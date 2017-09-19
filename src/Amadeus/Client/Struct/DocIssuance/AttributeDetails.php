@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\DocIssuance;
  * AttributeDetails
  *
  * @package Amadeus\Client\Struct\DocIssuance
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class AttributeDetails
 {

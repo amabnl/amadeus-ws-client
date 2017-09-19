@@ -33,7 +33,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * to the actual message structure.
  *
  * @package Amadeus\Client\RequestCreator\Converter
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 interface ConvertInterface
 {

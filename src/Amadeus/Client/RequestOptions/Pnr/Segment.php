@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Basic PNR Segment
  *
  * @package Amadeus\Client\RequestOptions\Pnr
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Segment extends LoadParamsFromArray
 {

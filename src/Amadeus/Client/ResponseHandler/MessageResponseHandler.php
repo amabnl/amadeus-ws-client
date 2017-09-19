@@ -32,7 +32,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * The interface used to implement the analysis of a response from a specific Web Service message response.
  *
  * @package Amadeus\Client\ResponseHandler
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 interface MessageResponseHandler
 {

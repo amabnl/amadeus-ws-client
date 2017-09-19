@@ -28,7 +28,7 @@ use Amadeus\Client\Params\AuthParams;
  * SecurityAuthenticateOptions
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class SecurityAuthenticateOptions extends Base
 {

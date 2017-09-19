@@ -31,7 +31,7 @@ use Test\Amadeus\BaseTestCase;
  * VerifyTest
  *
  * @package Test\Amadeus\Client\Struct\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class VerifyTest extends BaseTestCase
 {

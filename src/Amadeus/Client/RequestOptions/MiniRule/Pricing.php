@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * MiniRule Pricing
  *
  * @package Amadeus\Client\RequestOptions\MiniRule
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Pricing extends LoadParamsFromArray
 {

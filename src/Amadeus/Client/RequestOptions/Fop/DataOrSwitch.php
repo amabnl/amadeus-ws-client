@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * DataOrSwitch
  *
  * @package Amadeus\Client\RequestOptions\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DataOrSwitch extends LoadParamsFromArray
 {

@@ -33,7 +33,7 @@ use Test\Amadeus\BaseTestCase;
  * RemoveItemTest
  *
  * @package Test\Amadeus\Client\Struct\Queue
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class RemoveItemTest extends BaseTestCase
 {

@@ -30,7 +30,7 @@ use Test\Amadeus\BaseTestCase;
  * ResultTest
  *
  * @package Test\Amadeus\Client
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ResultTest extends BaseTestCase
 {

@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * CheckRules
  *
  * @package Amadeus\Client\Struct\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class CheckRules extends BaseWsMessage
 {

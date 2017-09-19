@@ -26,7 +26,7 @@ namespace Amadeus\Client\RequestOptions;
  * OfferConfirmHotelOptions
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class OfferConfirmHotelOptions extends Base
 {

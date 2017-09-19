@@ -27,7 +27,7 @@ namespace Amadeus\Client\Struct;
  *
  * @todo to implement in Amadeus\Client\Session\Handler\SoapHeader4::createSoapHeaders
  * @package Amadeus\Client\Struct
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class SessionHeaderV4
 {

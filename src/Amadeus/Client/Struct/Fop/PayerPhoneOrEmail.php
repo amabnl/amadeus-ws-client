@@ -28,7 +28,7 @@ use Amadeus\Client\Struct\Offer\ConfirmCar\TelephoneNumberDetails;
  * PayerPhoneOrEmail
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PayerPhoneOrEmail
 {

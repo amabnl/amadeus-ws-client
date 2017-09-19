@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\DocIssuance\CompoundOption;
  * DocIssuance_IssueMiscellaneousDocuments Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DocIssuanceIssueMiscDocOptions extends Base
 {

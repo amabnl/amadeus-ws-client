@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fare\GetFareRules;
  * FareOptionDetails
  *
  * @package Amadeus\Client\Struct\Fare\CheckRules
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FareOptionDetails
 {

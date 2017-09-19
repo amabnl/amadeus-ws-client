@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * SearchCriteriaOpt
  *
  * @package Amadeus\Client\RequestOptions\Queue
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class SearchCriteriaOpt extends LoadParamsFromArray
 {

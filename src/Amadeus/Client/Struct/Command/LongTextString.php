@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Command;
  * Structure for the longTextString message part for Command_* messages
  *
  * @package Amadeus\Client\Struct\Command
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class LongTextString
 {

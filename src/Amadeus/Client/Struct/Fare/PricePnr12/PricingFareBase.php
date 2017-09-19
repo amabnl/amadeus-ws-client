@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
  * PricingFareBase
  *
  * @package Amadeus\Client\Struct\Fare\PricePnr12
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class PricingFareBase
 {

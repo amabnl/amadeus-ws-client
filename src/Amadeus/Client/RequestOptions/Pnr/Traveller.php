@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Traveller in a PNR
  *
  * @package Amadeus\Client\RequestOptions\Pnr
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Traveller extends LoadParamsFromArray
 {

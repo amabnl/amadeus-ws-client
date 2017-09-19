@@ -30,7 +30,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerDisplayQueryReport
  *
  * @package Amadeus\Client\ResponseHandler\SalesReports
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerDisplayQueryReport extends StandardResponseHandler
 {

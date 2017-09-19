@@ -26,7 +26,7 @@ namespace Amadeus\Client\RequestOptions;
  * InfoEncodeDecodeCityOptions
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class InfoEncodeDecodeCityOptions extends Base
 {

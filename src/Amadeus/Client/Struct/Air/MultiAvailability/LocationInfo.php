@@ -11,7 +11,7 @@ namespace Amadeus\Client\Struct\Air\MultiAvailability;
  * LocationInfo
  *
  * @package Amadeus\Client\Struct\Air\MultiAvailability
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class LocationInfo
 {

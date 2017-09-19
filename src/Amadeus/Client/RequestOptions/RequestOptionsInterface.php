@@ -28,7 +28,7 @@ namespace Amadeus\Client\RequestOptions;
  * Base interface to implement when creating an object containing options for a web service request
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 interface RequestOptionsInterface
 {

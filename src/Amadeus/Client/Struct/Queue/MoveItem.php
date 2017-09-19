@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * Class MoveItem
  *
  * @package Amadeus\Client\Struct\Queue
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MoveItem extends BaseWsMessage
 {

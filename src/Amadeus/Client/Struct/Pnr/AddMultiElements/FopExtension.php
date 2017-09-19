@@ -28,7 +28,7 @@ use Amadeus\Client\Struct\WsMessageUtility;
  * FopExtension
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FopExtension extends WsMessageUtility
 {

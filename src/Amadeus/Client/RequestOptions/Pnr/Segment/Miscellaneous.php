@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Pnr\Segment;
  * Miscellaneous Segment
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Segment
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Miscellaneous extends Segment
 {

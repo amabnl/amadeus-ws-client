@@ -30,7 +30,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * Fare_GetFareRules response handler
  *
  * @package Amadeus\Client\ResponseHandler\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerGetFareRules extends StandardResponseHandler
 {

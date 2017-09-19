@@ -28,7 +28,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * Structure class for representing the PNR_Retrieve request message
  *
  * @package Amadeus\Client\Struct\Pnr
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Retrieve extends BaseWsMessage
 {

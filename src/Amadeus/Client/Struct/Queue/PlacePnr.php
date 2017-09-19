@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * Structure class for representing the Queue_PlacePnr request message
  *
  * @package Amadeus\Client\Struct\Queue
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PlacePnr extends BaseWsMessage
 {

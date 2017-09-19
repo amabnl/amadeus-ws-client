@@ -26,7 +26,7 @@ namespace Amadeus\Client\RequestOptions;
  * Amadeus Queue - definition of a GDS Queue (Queue, Category and optional Office ID)
  *
  * @package Amadeus
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Queue
 {

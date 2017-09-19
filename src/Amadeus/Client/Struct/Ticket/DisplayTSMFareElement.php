@@ -30,7 +30,7 @@ use Amadeus\Client\Struct\Ticket\DisplayTSMFareElement\FareElementTattoo;
  * Ticket_DisplayTSMFareElement request structure
  *
  * @package Amadeus\Client\Struct\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DisplayTSMFareElement extends BaseWsMessage
 {

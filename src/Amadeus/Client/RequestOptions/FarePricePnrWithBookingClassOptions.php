@@ -34,7 +34,7 @@ use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
  * FarePricePnrWithBookingClassOptions
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FarePricePnrWithBookingClassOptions extends Base
 {

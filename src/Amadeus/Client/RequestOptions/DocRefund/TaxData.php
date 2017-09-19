@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * TaxData
  *
  * @package Amadeus\Client\RequestOptions\DocRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TaxData extends LoadParamsFromArray
 {

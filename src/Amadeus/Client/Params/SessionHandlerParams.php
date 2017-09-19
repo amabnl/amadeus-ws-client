@@ -29,7 +29,7 @@ use Psr\Log\LoggerInterface;
  * SessionHandlerParams contains all parameters for setting up the session handler
  *
  * @package Amadeus\Client\Params
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class SessionHandlerParams
 {

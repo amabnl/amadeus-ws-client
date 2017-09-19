@@ -26,7 +26,7 @@ namespace Amadeus\Client\Session\Handler;
  * Class Map for mapping PHP objects to WSDL objects.
  *
  * @package Amadeus\Client\Session\Handler
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Classmap
 {

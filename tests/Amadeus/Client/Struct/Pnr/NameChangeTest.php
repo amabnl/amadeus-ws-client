@@ -33,7 +33,7 @@ use Test\Amadeus\BaseTestCase;
  * NameChangeTest
  *
  * @package Amadeus\Client\Struct\Pnr
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class NameChangeTest extends BaseTestCase
 {

@@ -42,7 +42,7 @@ use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOption;
  * Service_IntegratedPricing request structure
  *
  * @package Amadeus\Client\Struct\Service
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class IntegratedPricing extends BasePricingMessage
 {

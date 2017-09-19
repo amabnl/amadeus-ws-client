@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * Fop_CreateFormOfPayment Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\FOP
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class CreateFormOfPaymentConv extends BaseConverter
 {

@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\Fop\MonetaryDetails as FopMonetaryDetails;
  * MonetaryDetails
  *
  * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MonetaryDetails extends FopMonetaryDetails
 {

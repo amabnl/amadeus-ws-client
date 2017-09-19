@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Payment - whole or partial payment
  *
  * @package Amadeus\Client\RequestOptions\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Payment extends LoadParamsFromArray
 {

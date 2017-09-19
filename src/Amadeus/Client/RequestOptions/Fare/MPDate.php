@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * MasterPricer request date settings
  *
  * @package Amadeus\Client\RequestOptions\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MPDate extends LoadParamsFromArray
 {

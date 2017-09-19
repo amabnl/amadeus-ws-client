@@ -30,7 +30,7 @@ use Test\Amadeus\BaseTestCase;
  * ExtendedPaymentDetailsTest
  *
  * @package Test\Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ExtendedPaymentDetailsTest extends BaseTestCase
 {

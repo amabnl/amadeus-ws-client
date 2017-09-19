@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Info;
  * SelectionDetails
  *
  * @package Amadeus\Client\Struct\Info
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class SelectionDetails
 {

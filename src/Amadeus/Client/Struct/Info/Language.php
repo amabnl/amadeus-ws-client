@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Info;
  * Language
  *
  * @package Amadeus\Client\Struct\Info
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Language
 {

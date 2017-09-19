@@ -15,7 +15,7 @@ use Test\Amadeus\BaseTestCase;
  * DisplayQueryReportTest
  *
  * @package Test\Amadeus\Client\Struct\SalesReports
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DisplayQueryReportTest extends BaseTestCase
 {

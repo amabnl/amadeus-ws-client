@@ -26,7 +26,7 @@ namespace Amadeus\Client\ResponseHandler\Ticket;
  * HandlerCreateTSMFareElement
  *
  * @package Amadeus\Client\ResponseHandler\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerCreateTSMFareElement extends HandlerDisplayTSMFareElement
 {

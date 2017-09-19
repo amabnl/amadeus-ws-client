@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Pnr\Segment;
  * PNR Air Segment
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Segment
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Air extends Segment
 {

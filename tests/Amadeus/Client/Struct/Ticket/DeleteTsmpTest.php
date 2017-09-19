@@ -30,7 +30,7 @@ use Test\Amadeus\BaseTestCase;
  * DeleteTsmpTest
  *
  * @package Test\Amadeus\Client\Struct\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DeleteTsmpTest extends BaseTestCase
 {

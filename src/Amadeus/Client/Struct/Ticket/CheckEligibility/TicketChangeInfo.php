@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Ticket\ReqSegOptions;
  * TicketChangeInfo
  *
  * @package Amadeus\Client\Struct\Ticket\CheckEligibility
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TicketChangeInfo
 {

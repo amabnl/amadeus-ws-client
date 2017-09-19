@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * ElementRef
  *
  * @package Amadeus\Client\RequestOptions\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ElementRef extends LoadParamsFromArray
 {

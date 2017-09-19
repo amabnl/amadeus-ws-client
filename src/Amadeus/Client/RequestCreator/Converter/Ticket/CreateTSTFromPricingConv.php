@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * Ticket_CreateTSTFromPricing Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class CreateTSTFromPricingConv extends BaseConverter
 {

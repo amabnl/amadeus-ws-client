@@ -28,7 +28,7 @@ use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\DateTime;
  * DocIssuanceDateTime
  *
  * @package Amadeus\Client\Struct\DocIssuance
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DocIssuanceDateTime extends DateTime
 {

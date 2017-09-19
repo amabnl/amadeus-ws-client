@@ -17,7 +17,7 @@ use Test\Amadeus\BaseTestCase;
  * MultiAvailabilityTest
  *
  * @package Test\Amadeus\Client\Struct\Air
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MultiAvailabilityTest extends BaseTestCase
 {

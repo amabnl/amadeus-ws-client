@@ -31,7 +31,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerCreateFormOfPayment
  *
  * @package Amadeus\Client\ResponseHandler\FOP
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerCreateFormOfPayment extends StandardResponseHandler
 {

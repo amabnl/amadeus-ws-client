@@ -33,7 +33,7 @@ namespace Amadeus\Client\Struct;
  * with data that we can already know is incorrect.
  *
  * @package Amadeus\Client\Struct
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class InvalidArgumentException extends \InvalidArgumentException
 {

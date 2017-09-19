@@ -31,7 +31,7 @@ use Amadeus\Client\InvalidWsdlFileException;
  * Extracts available messages & versions from it
  *
  * @package Amadeus\Client\Session\Handler
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class WsdlAnalyser
 {

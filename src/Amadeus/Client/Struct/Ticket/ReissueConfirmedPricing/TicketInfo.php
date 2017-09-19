@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\WsMessageUtility;
  * TicketInfo
  *
  * @package Amadeus\Client\Struct\Ticket\ReissueConfirmedPricing
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TicketInfo extends WsMessageUtility
 {

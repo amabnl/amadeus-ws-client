@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fare\GetFareRules;
  * ProductDateTimeDetails
  *
  * @package Amadeus\Client\Struct\Fare\GetFareRules
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ProductDateTimeDetails
 {

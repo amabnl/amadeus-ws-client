@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element\FrequentFlyer;
  * FrequentTravellerData
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FrequentTravellerData
 {

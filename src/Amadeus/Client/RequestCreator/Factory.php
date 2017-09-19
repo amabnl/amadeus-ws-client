@@ -28,7 +28,7 @@ use Amadeus\Client\Params\RequestCreatorParams;
  * Request Creator Factory
  *
  * @package Amadeus\Client\RequestCreator
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Factory
 {

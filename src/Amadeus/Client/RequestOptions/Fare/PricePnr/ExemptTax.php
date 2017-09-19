@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * ExemptTax
  *
  * @package Amadeus\Client\RequestOptions\Fare\PricePnr
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ExemptTax extends LoadParamsFromArray
 {

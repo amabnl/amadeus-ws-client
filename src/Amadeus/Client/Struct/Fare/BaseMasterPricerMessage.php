@@ -32,7 +32,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * BaseMasterPricerMessage
  *
  * @package Amadeus\Client\Struct\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class BaseMasterPricerMessage extends BaseWsMessage
 {

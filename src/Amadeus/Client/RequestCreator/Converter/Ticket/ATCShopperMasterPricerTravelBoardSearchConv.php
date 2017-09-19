@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * ATCShopperMasterPricerTravelBoardSearchConv
  *
  * @package Amadeus\Client\RequestCreator\Converter\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ATCShopperMasterPricerTravelBoardSearchConv extends BaseConverter
 {

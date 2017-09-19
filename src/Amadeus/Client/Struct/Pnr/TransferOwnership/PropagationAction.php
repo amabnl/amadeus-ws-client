@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Pnr\TransferOwnership;
  * PropagationAction
  *
  * @package Amadeus\Client\Struct\Pnr\TransferOwnership
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PropagationAction
 {

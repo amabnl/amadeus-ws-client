@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * A single flight segment to sell.
  *
  * @package Amadeus\Client\RequestOptions\Air\SellFromRecommendation
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class Segment extends LoadParamsFromArray
 {

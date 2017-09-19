@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\DocIssuance;
  * AgentInfo
  *
  * @package Amadeus\Client\Struct\DocIssuance
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class AgentInfo
 {

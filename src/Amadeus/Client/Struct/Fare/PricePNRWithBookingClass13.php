@@ -53,7 +53,7 @@ use Amadeus\Client\Struct\Fare\PricePnr13\TaxInformation;
  * Fare_PricePNRWithBookingClass v 13 and higher structure
  *
  * @package Amadeus\Client\Struct\Fare
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class PricePNRWithBookingClass13 extends BasePricingMessage
 {

@@ -28,7 +28,7 @@ namespace Amadeus\Client\RequestOptions;
  * The options available when doing a PNR_Retrieve call.
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PnrRetrieveOptions extends Base
 {

@@ -13,7 +13,7 @@ use Amadeus\Client\RequestOptions\Air\MultiAvailability\FrequentTraveller as Fre
  * FrequentTraveller
  *
  * @package Amadeus\Client\Struct\Air\MultiAvailability
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FrequentTraveller
 {

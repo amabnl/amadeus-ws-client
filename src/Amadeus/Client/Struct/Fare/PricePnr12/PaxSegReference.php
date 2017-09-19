@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
  * PaxSegReference
  *
  * @package Amadeus\Client\Struct\Fare\PricePnr12
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PaxSegReference
 {

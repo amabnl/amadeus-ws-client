@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Offer\PassengerDef;
  * PassengerReassociation
  *
  * @package Amadeus\Client\Struct\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PassengerReassociation
 {

@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct;
  * BaseWsMessage Base Web Service message class
  *
  * @package Amadeus\Client\Struct
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class BaseWsMessage extends WsMessageUtility
 {

@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\FarePricePnrWithLowestFareOptions;
  * PricePNRWithLowestFare12
  *
  * @package Amadeus\Client\Struct\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PricePNRWithLowestFare12 extends PricePNRWithBookingClass12
 {

@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Pnr\Retrieve;
  * Structure class for the reservation message part for PNR_Retrieve messages
  *
  * @package Amadeus\Client\Struct\Pnr\Retrieve
- * @author  Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author  Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Reservation
 {

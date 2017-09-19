@@ -26,7 +26,7 @@ namespace Amadeus\Client\ResponseHandler\PNR;
  * HandlerCancel
  *
  * @package Amadeus\Client\ResponseHandler\PNR
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerCancel extends HandlerRetrieve
 {

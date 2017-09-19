@@ -34,7 +34,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * MultiAvailability
  *
  * @package Amadeus\Client\Struct\Air
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MultiAvailability extends BaseWsMessage
 {

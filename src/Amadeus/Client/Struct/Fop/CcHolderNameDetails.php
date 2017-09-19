@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fop;
  * CcHolderNameDetails
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class CcHolderNameDetails
 {

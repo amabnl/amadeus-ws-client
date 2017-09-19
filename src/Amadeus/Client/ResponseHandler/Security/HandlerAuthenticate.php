@@ -30,7 +30,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerAuthenticate
  *
  * @package Amadeus\Client\ResponseHandler\Security
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerAuthenticate extends StandardResponseHandler
 {

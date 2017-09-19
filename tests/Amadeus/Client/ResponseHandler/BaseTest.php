@@ -31,7 +31,7 @@ use Amadeus\Client\ResponseHandler;
  * BaseTest
  *
  * @package Test\Amadeus\Client\ResponseHandler
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class BaseTest extends BaseTestCase
 {

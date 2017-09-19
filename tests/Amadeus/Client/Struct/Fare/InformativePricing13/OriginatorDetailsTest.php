@@ -29,7 +29,7 @@ use Test\Amadeus\BaseTestCase;
  * OriginatorDetailsTest
  *
  * @package Test\Amadeus\Client\Struct\Fare\InformativePricing13
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class OriginatorDetailsTest extends BaseTestCase
 {

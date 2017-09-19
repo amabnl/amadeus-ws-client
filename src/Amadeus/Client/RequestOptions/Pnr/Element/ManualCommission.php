@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element;
  * Manual Commission - FM element
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Element
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ManualCommission extends Element
 {

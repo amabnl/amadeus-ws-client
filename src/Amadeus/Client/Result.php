@@ -29,7 +29,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * Result object to encapsulate the Web Services response to library users.
  *
  * @package Amadeus\Client
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Result
 {

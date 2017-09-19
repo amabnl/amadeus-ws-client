@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * Info_EncodeDecodeCity
  *
  * @package Amadeus\Client\RequestCreator\Converter\Info
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class EncodeDecodeCityConv extends BaseConverter
 {
