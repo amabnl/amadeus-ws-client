@@ -1121,7 +1121,6 @@ class Client extends Base
      * @throws Client\RequestCreator\MessageVersionUnsupportedException
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
-     * @throws \SoapFault
      */
     protected function callMessage($messageName, $options, $messageOptions, $endSession = false)
     {
