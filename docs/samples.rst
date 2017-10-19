@@ -2253,6 +2253,33 @@ Send refund notice to email address stored in the PNR:
         ])
     );
 
+********
+Security
+********
+
+---------------------
+Security_Authenticate
+---------------------
+
+Send a ``Security_Authenticate`` to start a session. **Calling this message is not necessary in Soap Header 4 WSAP's**: the library will automatically send authentication headers when the first message is called.
+
+You do not need to provide any parameters to this call, the client will use the ``authParams`` that were provided on client instantiation.
+
+.. code-block:: php
+
+    $loginResponse = $client->securityAuthenticate();
+
+
+----------------
+Security_SignOut
+----------------
+
+To terminate an active (stateful) session. An alternative method is provided `in the how-to <how-to.rst#ending-a-stateful-session-soap-header-4>`_
+
+.. code-block:: php
+
+    $logoutResponse = $client->securitySignOut();
+
 
 *******
 Service
