@@ -351,7 +351,7 @@ class LocationDescription
      * @param string|null $code
      * @param string|null $name
      */
-    public function __construct($code, $name)
+    public function __construct($code, $name = null)
     {
         $this->code = $code;
         $this->name = $name;

@@ -20,31 +20,23 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Air;
+namespace Test\Amadeus\Client\Struct\Air\MultiAvailability;
 
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
-use Amadeus\Client\Struct;
+use Amadeus\Client\Struct\Air\MultiAvailability\AttributeDetails;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * Air_MultiAvailability Request options
+ * AttributeDetailsTest
  *
- * @package Amadeus\Client\RequestCreator\Converter\Air
+ * @package Test\Amadeus\Client\Struct\Air\MultiAvailability
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class MultiAvailabilityConv extends BaseConverter
+class AttributeDetailsTest extends BaseTestCase
 {
-    /**
-     * @param AirMultiAvailabilityOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Air\MultiAvailability
-     */
-    public function convert($requestOptions, $version)
-    {
-        if (floatval($version) < floatval(16)) {
-            return new Struct\Air\MultiAvailability($requestOptions);
-        } else {
-            return new Struct\Air\MultiAvailability16($requestOptions);
-        }
+    public function testCanConstruct() {
+        $obj = new AttributeDetails(AttributeDetails::TYPE_BOARD_POINT, 'RAI');
+
+        $this->assertEquals(AttributeDetails::TYPE_BOARD_POINT, $obj->attributeType);
+        $this->assertEquals('RAI', $obj->attributeDescription);
     }
 }

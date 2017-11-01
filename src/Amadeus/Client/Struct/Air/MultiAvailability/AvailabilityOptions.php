@@ -26,9 +26,9 @@ class AvailabilityOptions
     public $optionInfo = [];
 
     /**
-     * @var ProductAvailability
+     * @var ProductAvailability[]
      */
-    public $productAvailability;
+    public $productAvailability = [];
 
     /**
      * @var string

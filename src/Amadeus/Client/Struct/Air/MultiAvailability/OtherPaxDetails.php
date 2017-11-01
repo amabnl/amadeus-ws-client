@@ -15,6 +15,7 @@ namespace Amadeus\Client\Struct\Air\MultiAvailability;
  */
 class OtherPaxDetails
 {
+    const INFANT_INDICATOR = 1;
     /**
      * @var string
      */
@@ -31,7 +32,7 @@ class OtherPaxDetails
     public $uniqueCustomerIdentifier;
 
     /**
-     * @var string
+     * @var string|int
      */
     public $infantIndicator;
 

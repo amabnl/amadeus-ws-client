@@ -15,4 +15,18 @@ namespace Amadeus\Client\Struct\Air\MultiAvailability;
  */
 class UmRequest
 {
+    /**
+     * @var int
+     */
+    public $umAge;
+
+    /**
+     * UmRequest constructor.
+     *
+     * @param int $umAge
+     */
+    public function __construct($umAge)
+    {
+        $this->umAge = $umAge;
+    }
 }

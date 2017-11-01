@@ -20,31 +20,22 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Air;
+namespace Test\Amadeus\Client\Struct\Air\MultiAvailability;
 
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
-use Amadeus\Client\Struct;
+use Amadeus\Client\Struct\Air\MultiAvailability\UmRequest;
+use Test\Amadeus\BaseTestCase;
 
 /**
- * Air_MultiAvailability Request options
+ * UmRequestTest
  *
- * @package Amadeus\Client\RequestCreator\Converter\Air
+ * @package Test\Amadeus\Client\Struct\Air\MultiAvailability
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class MultiAvailabilityConv extends BaseConverter
+class UmRequestTest extends BaseTestCase
 {
-    /**
-     * @param AirMultiAvailabilityOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Air\MultiAvailability
-     */
-    public function convert($requestOptions, $version)
+    public function testCanConstruct()
     {
-        if (floatval($version) < floatval(16)) {
-            return new Struct\Air\MultiAvailability($requestOptions);
-        } else {
-            return new Struct\Air\MultiAvailability16($requestOptions);
-        }
+        $obj = new UmRequest(9);
+        $this->assertEquals(9, $obj->umAge);
     }
 }

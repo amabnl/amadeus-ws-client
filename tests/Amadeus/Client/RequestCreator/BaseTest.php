@@ -24,6 +24,8 @@ namespace Test\Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestCreator\Base;
+use Amadeus\Client\RequestOptions\Air\MultiAvailability\RequestOptions;
+use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
@@ -274,7 +276,7 @@ class BaseTest extends BaseTestCase
             ])
         );
 
-        //$this->assertInstanceOf('\Amadeus\Client\Struct\Fare\InformativePricingWithoutPNR12', $message);
+        $this->assertInstanceOf('\Amadeus\Client\Struct\Fare\InformativePricingWithoutPNR12', $message);
     }
 
     /**
@@ -318,6 +320,38 @@ class BaseTest extends BaseTestCase
         );
 
         $this->assertInstanceOf('\Amadeus\Client\Struct\Fare\PricePNRWithBookingClass12', $message);
+    }
+
+    public function testCanCreateAirMultiAvailability16()
+    {
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['Air_MultiAvailability' => ['version' => '16.1', 'wsdl' => 'aabbccdd']]
+        ]);
+
+        $rq = new Base($par);
+
+        $message = $rq->createRequest(
+            'Air_MultiAvailability',
+            new AirMultiAvailabilityOptions([
+                'actionCode' => AirMultiAvailabilityOptions::ACTION_SCHEDULE,
+                'requestOptions' => [
+                    new RequestOptions([
+                        'departureDate' => \DateTime::createFromFormat('Ymd-His', '20170215-140000', new \DateTimeZone('UTC')),
+                        'from' => 'NCE',
+                        'to' => 'NYC',
+                        'cabinCode' => RequestOptions::CABIN_ECONOMY_PREMIUM_MAIN,
+                        'includedConnections' => ['PAR'],
+                        'nrOfSeats' => 5,
+                        'includedAirlines' => ['AF'],
+                        'requestType' => RequestOptions::REQ_TYPE_BY_ARRIVAL_TIME
+                    ])
+                ]
+            ])
+        );
+
+        $this->assertInstanceOf('\Amadeus\Client\Struct\Air\MultiAvailability16', $message);
     }
 
     public function testCanTryBuildingSameMessageTwiceWillReuseBuilder()

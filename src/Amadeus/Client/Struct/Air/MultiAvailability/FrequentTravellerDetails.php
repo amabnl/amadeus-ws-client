@@ -15,6 +15,9 @@ namespace Amadeus\Client\Struct\Air\MultiAvailability;
  */
 class FrequentTravellerDetails
 {
+    const REFTYPE_FREQUENT_FLYER = "FF";
+    const REFTYPE_CORPORATE_FREQUENT_FLYER = "CFF";
+
     /**
      * @var string
      */
@@ -52,6 +55,8 @@ class FrequentTravellerDetails
      */
     public $customerValue;
     /**
+     * self::REFTYPE_*
+     *
      * @var string
      */
     public $referenceType;
@@ -61,7 +66,7 @@ class FrequentTravellerDetails
      *
      * @param string $carrier
      * @param string $number
-     * @param string|null $refType
+     * @param string|null $refType self::REFTYPE_*
      */
     public function __construct($carrier, $number, $refType = null)
     {

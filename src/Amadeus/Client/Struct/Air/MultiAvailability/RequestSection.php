@@ -86,9 +86,11 @@ class RequestSection
             $params->arrivalDate
         );
 
-        $this->availabilityOptions = new AvailabilityOptions(
-            $params->requestType
-        );
+        if ($this instanceof RequestSection16){
+            $this->availabilityOptions = new AvailabilityOptions16($params->requestType);
+        } else {
+            $this->availabilityOptions = new AvailabilityOptions($params->requestType);
+        }
 
         $this->loadCabinAndClass($params->cabinCode, $params->bookingClasses);
 

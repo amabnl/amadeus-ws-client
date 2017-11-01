@@ -20,31 +20,32 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Air;
+namespace Amadeus\Client\Struct\Air\MultiAvailability;
 
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
-use Amadeus\Client\Struct;
+use Amadeus\Client\Struct\Info\LocationDescription;
 
 /**
- * Air_MultiAvailability Request options
+ * ConnectionContext
  *
- * @package Amadeus\Client\RequestCreator\Converter\Air
+ * @package Amadeus\Client\Struct\Air\MultiAvailability
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class MultiAvailabilityConv extends BaseConverter
+class ConnectionContext
 {
     /**
-     * @param AirMultiAvailabilityOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Air\MultiAvailability
+     * @var string
      */
-    public function convert($requestOptions, $version)
-    {
-        if (floatval($version) < floatval(16)) {
-            return new Struct\Air\MultiAvailability($requestOptions);
-        } else {
-            return new Struct\Air\MultiAvailability16($requestOptions);
-        }
-    }
+    public $locationType;
+    /**
+     * @var LocationDescription
+     */
+    public $locationDescription;
+    /**
+     * @var LocationDescription
+     */
+    public $firstLocationDetails;
+    /**
+     * @var LocationDescription
+     */
+    public $secondLocationDetails;
 }

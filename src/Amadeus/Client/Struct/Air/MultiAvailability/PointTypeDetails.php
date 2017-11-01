@@ -20,31 +20,18 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Air;
-
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
-use Amadeus\Client\Struct;
+namespace Amadeus\Client\Struct\Air\MultiAvailability;
 
 /**
- * Air_MultiAvailability Request options
+ * PointTypeDetails
  *
- * @package Amadeus\Client\RequestCreator\Converter\Air
+ * @package Amadeus\Client\Struct\Air\MultiAvailability
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class MultiAvailabilityConv extends BaseConverter
+class PointTypeDetails
 {
     /**
-     * @param AirMultiAvailabilityOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Air\MultiAvailability
+     * @var AttributeDetails[]
      */
-    public function convert($requestOptions, $version)
-    {
-        if (floatval($version) < floatval(16)) {
-            return new Struct\Air\MultiAvailability($requestOptions);
-        } else {
-            return new Struct\Air\MultiAvailability16($requestOptions);
-        }
-    }
+    public $attributeDetails = [];
 }

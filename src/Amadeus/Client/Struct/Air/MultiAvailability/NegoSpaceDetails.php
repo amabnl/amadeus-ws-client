@@ -15,4 +15,16 @@ namespace Amadeus\Client\Struct\Air\MultiAvailability;
  */
 class NegoSpaceDetails
 {
+    /**
+     * @var string
+     */
+    public $tourName;
+    /**
+     * @var string
+     */
+    public $tourReference;
+    /**
+     * @var string
+     */
+    public $recordLocator;
 }

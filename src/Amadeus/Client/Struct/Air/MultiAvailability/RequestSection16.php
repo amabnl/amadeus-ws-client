@@ -20,31 +20,39 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Air;
-
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
-use Amadeus\Client\Struct;
+namespace Amadeus\Client\Struct\Air\MultiAvailability;
+use Amadeus\Client\RequestOptions\Air\MultiAvailability\RequestOptions;
 
 /**
- * Air_MultiAvailability Request options
+ * RequestSection for Air_MultiAvailability 16
  *
- * @package Amadeus\Client\RequestCreator\Converter\Air
+ * @package Amadeus\Client\Struct\Air\MultiAvailability
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class MultiAvailabilityConv extends BaseConverter
+class RequestSection16 extends RequestSection
 {
     /**
-     * @param AirMultiAvailabilityOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Air\MultiAvailability
+     * @var PointTypeDetails
      */
-    public function convert($requestOptions, $version)
+    public $pointTypeDetails;
+
+    /**
+     * @var QualifiedConnectionOption[]
+     */
+    public $qualifiedConnectionOption = [];
+
+    /**
+     * @var AvailabilityOptions16
+     */
+    public $availabilityOptions;
+
+    /**
+     * RequestSection16 constructor.
+     *
+     * @param RequestOptions $params
+     */
+    public function __construct(RequestOptions $params)
     {
-        if (floatval($version) < floatval(16)) {
-            return new Struct\Air\MultiAvailability($requestOptions);
-        } else {
-            return new Struct\Air\MultiAvailability16($requestOptions);
-        }
+        parent::__construct($params);
     }
 }
