@@ -86,7 +86,7 @@ class RequestSection
             $params->arrivalDate
         );
 
-        if ($this instanceof RequestSection16){
+        if ($this instanceof RequestSection16) {
             $this->availabilityOptions = new AvailabilityOptions16($params->requestType);
         } else {
             $this->availabilityOptions = new AvailabilityOptions($params->requestType);
