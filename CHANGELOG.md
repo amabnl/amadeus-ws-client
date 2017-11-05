@@ -5,6 +5,7 @@
 * Added support for Multi-Ticket operation for MasterPricer messages (https://github.com/amabnl/amadeus-ws-client/pull/94) - Michal Hernas
 * Added support for ``Air_MultiAvailability`` messages version 16. (https://github.com/amabnl/amadeus-ws-client/issues/99)
 * Implemented ``FOP_ValidateFOP`` (https://github.com/amabnl/amadeus-ws-client/pull/86) - Michal Hernas
+* Implemented ``Service_IntegratedCatalogue`` (https://github.com/amabnl/amadeus-ws-client/issues/80)
 
 # Release 1.4.0 (15 May 2017)
 * Added support for ``Fare_PricePNRWithBookingClass`` errors in message version 7.3 format (https://github.com/amabnl/amadeus-ws-client/issues/57)

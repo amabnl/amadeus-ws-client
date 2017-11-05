@@ -52,6 +52,7 @@ This is the list of messages that are at least partially supported at this time:
 - DocRefund_UpdateRefund
 - DocRefund_ProcessRefund
 - Service_IntegratedPricing
+- Service_IntegratedCatalogue
 - Offer_CreateOffer
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
@@ -90,7 +91,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Ticket_AddDocNumber
 - TTR_DisplayTrip
 - Media_GetMedia
-- Service_IntegratedCatalogue
 - Service_PriceServiceViaCatalogue
 - Service_PriceIntegratedMode
 - Service_StandaloneCatalogue

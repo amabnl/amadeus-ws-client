@@ -13,7 +13,6 @@ There, you can find more examples of all the options that are supported by the l
 ***
 PNR
 ***
-
 --------------------
 PNR_AddMultiElements
 --------------------
@@ -382,7 +381,6 @@ The example shows the message required to change the name of the passenger speci
 *****
 Queue
 *****
-
 ----------
 Queue_List
 ----------
@@ -557,7 +555,6 @@ Move a PNR from one queue to another:
 ****
 Fare
 ****
-
 ----------------------------------
 Fare_MasterPricerTravelboardSearch
 ----------------------------------
@@ -1059,7 +1056,6 @@ Convert 200 Euro to US Dollars in the exchange rate of 25th December 2015 *(this
 ***
 Air
 ***
-
 ---------------------
 Air_MultiAvailability
 ---------------------
@@ -1327,7 +1323,6 @@ Complex example: Seat Map with Prices
 ******
 Ticket
 ******
-
 ---------------------------
 Ticket_CreateTSTFromPricing
 ---------------------------
@@ -1721,7 +1716,6 @@ Reissue pricing for e-Ticket 057-2146640300:
 ***********
 DocIssuance
 ***********
-
 -----------------------
 DocIssuance_IssueTicket
 -----------------------
@@ -1913,7 +1907,6 @@ Document Receipts option (TTP/TTM/TRP):
 *********
 DocRefund
 *********
-
 --------------------
 DocRefund_InitRefund
 --------------------
@@ -2256,7 +2249,6 @@ Send refund notice to email address stored in the PNR:
 ********
 Security
 ********
-
 ---------------------
 Security_Authenticate
 ---------------------
@@ -2284,7 +2276,6 @@ To terminate an active (stateful) session. An alternative method is provided `in
 *******
 Service
 *******
-
 -------------------------
 Service_IntegratedPricing
 -------------------------
@@ -2442,10 +2433,34 @@ Frequent Flyer:
         ])
     );
 
+---------------------------
+Service_IntegratedCatalogue
+---------------------------
+
+The options for ``Service_IntegratedCatalogue`` are identical to ``Service_IntegratedPricing``.
+
+All the examples for ``Service_IntegratedPricing`` (see above) should also work for this message. You can just swap out the options object in the request. For example:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedCatalogueOptions;
+    use Amadeus\Client\RequestOptions\Service\PaxSegRef;
+
+    $pricingResponse = $client->serviceIntegratedCatalogue(
+        new ServiceIntegratedCatalogueOptions([
+            'accountCode' => 'AAA123456',
+            'accountCodeRefs' => [
+                new PaxSegRef([
+                    'type' => PaxSegRef::TYPE_PASSENGER,
+                    'reference' => 1
+                ])
+            ]
+        ])
+    );
+
 ***
 FOP
 ***
-
 -----------------------
 FOP_CreateFormOfPayment
 -----------------------
@@ -2526,7 +2541,6 @@ Find all train stations in New York:
 **********
 PointOfRef
 **********
-
 -----------------
 PointOfRef_Search
 -----------------
@@ -2607,7 +2621,6 @@ PointOfRef_CategoryList
 *****
 Offer
 *****
-
 -----------------
 Offer_CreateOffer
 -----------------
@@ -2778,7 +2791,6 @@ Confirm a given CAR offer:
 ********
 MiniRule
 ********
-
 --------------------------
 MiniRule_GetFromPricingRec
 --------------------------

@@ -1108,6 +1108,22 @@ class Client extends Base
     }
 
     /**
+     * Service_IntegratedCatalogue
+     *
+     * @param RequestOptions\ServiceIntegratedCatalogueOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function serviceIntegratedCatalogue(
+        RequestOptions\ServiceIntegratedCatalogueOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Service_IntegratedCatalogue';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Call a message with the given parameters
      *
      * @param string $messageName

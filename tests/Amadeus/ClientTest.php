@@ -3505,6 +3505,52 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendServiceIntegratedCatalogue()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('serviceIntegratedCatalogueReply142.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Service\IntegratedCatalogue(
+            new Client\RequestOptions\ServiceIntegratedCatalogueOptions([
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Service_IntegratedCatalogue', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));;
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Service_IntegratedCatalogue' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+
+        $response = $client->serviceIntegratedCatalogue(
+            new Client\RequestOptions\ServiceIntegratedCatalogueOptions([
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+
     public function testCanSendFopCreateFormOfPayment()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

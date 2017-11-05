@@ -1399,6 +1399,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("INVALID CURRENCY CODE", $result->messages[0]->text);
     }
 
+    public function testCanHandleServiceIntegratedCatalogueError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyServiceIntegratedCatalogueErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Service_IntegratedCatalogue');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('432', $result->messages[0]->code);
+        $this->assertEquals("INVALID CURRENCY CODE", $result->messages[0]->text);
+    }
+
     public function testCanHandleFopCreateFormOfPaymentFopError()
     {
         $respHandler = new ResponseHandler\Base();

@@ -1,0 +1,19 @@
+<Service_IntegratedCatalogueReply xmlns="http://xml.amadeus.com/TPICGR_17_1_1A">
+    <errorGroup>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>432</errorCode>
+                <errorCategory>EC</errorCategory>
+                <errorCodeOwner>PRY</errorCodeOwner>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <source>M</source>
+                <encoding>1</encoding>
+            </freeTextDetails>
+            <freeText>INVALID CURRENCY CODE</freeText>
+        </errorWarningDescription>
+    </errorGroup>
+</Service_IntegratedCatalogueReply>
