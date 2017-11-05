@@ -1,4 +1,7 @@
-# Release 1.5.0 (UNRELEASED)
+# Release 1.6.0 (UNRELEASED)
+
+
+# Release 1.5.0 (5 November 2017)
 * Added support for Vendor Code in FOP for Fare Pricing messages (https://github.com/amabnl/amadeus-ws-client/pull/82) - Michal Hernas
 * Added support in PNR_Retrieve for retrieving the PNR active in context (https://github.com/amabnl/amadeus-ws-client/pull/88) - Michal Hernas
 * Added support for Tour Code elements in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/90)
