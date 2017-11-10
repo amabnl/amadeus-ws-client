@@ -45,7 +45,7 @@ class SequenceNumberRanges
     {
         $this->itemNumberDetails[] = new ItemNumberDetails(ItemNumberDetails::TYPE_FROM, $from);
 
-        if (!is_null($to)){
+        if (!is_null($to)) {
             $this->itemNumberDetails[] = new ItemNumberDetails(ItemNumberDetails::TYPE_TO, $to);
         }
     }
