@@ -1310,6 +1310,22 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("RESTRICTED", $result->messages[0]->text);
     }
 
+
+    public function testCanHandleMiniRuleGetFromETicketErrorResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('miniRuleGetFromETicketErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'MiniRule_GetFromETicket');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('29149', $result->messages[0]->code);
+        $this->assertEquals("NO FARE RULES FOUND", $result->messages[0]->text);
+    }
+
     public function testCanHandleInfoEncodeDecodeCityErrResponse()
     {
         $respHandler = new ResponseHandler\Base();

@@ -2842,6 +2842,22 @@ Get Minirules for specific recommendations *(recommendations nr 1 & 2 in this ex
         ])
     );
 
+-----------------------
+MiniRule_GetFromETicket
+-----------------------
+
+Display Mini Rules corresponding to the e-ticket number 1234567891987:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\MiniRuleGetFromETicketOptions;
+
+    $miniRulesResponse = $client->miniRuleGetFromETicket(
+        new MiniRuleGetFromPricingOptions([
+            'eTicket' => '1234567891987'
+        ])
+    );
+
 
 ***************
 Command_Cryptic

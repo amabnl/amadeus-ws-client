@@ -721,6 +721,22 @@ class Client extends Base
     }
 
     /**
+     * MiniRule_GetFromETicket
+     *
+     * @param RequestOptions\MiniRuleGetFromETicketOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function miniRuleGetFromETicket(
+        RequestOptions\MiniRuleGetFromETicketOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'MiniRule_GetFromETicket';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Info_EncodeDecodeCity
      *
      * @param RequestOptions\InfoEncodeDecodeCityOptions $options

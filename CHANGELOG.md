@@ -1,5 +1,5 @@
 # Release 1.6.0 (UNRELEASED)
-
+* Implemented ``MiniRule_GetFromETicket`` (https://github.com/amabnl/amadeus-ws-client/issues/122)
 
 # Release 1.5.0 (5 November 2017)
 * Added support for Vendor Code in FOP for Fare Pricing messages (https://github.com/amabnl/amadeus-ws-client/pull/82) - Michal Hernas

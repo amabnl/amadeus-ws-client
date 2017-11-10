@@ -60,6 +60,7 @@ This is the list of messages that are at least partially supported at this time:
 - Offer_ConfirmCarOffer
 - MiniRule_GetFromPricingRec
 - MiniRule_GetFromPricing
+- MiniRule_GetFromETicket
 - Info_EncodeDecodeCity
 - PointOfRef_Search
 - Command_Cryptic
