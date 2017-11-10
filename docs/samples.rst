@@ -1713,6 +1713,103 @@ Reissue pricing for e-Ticket 057-2146640300:
         ])
     );
 
+------------------------------
+Ticket_CancelDocument
+------------------------------
+
+Request E-ticket Direct cancellation
+
+This operation allows the end user to initiate a void transaction using E-ticket direct feature. E-ticket direct cancellation is initiated from TNRMG210C office on XX airline stock:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCancelDocumentOptions;
+
+    $response = $client->ticketCancelDocument(
+        new TicketCancelDocumentOptions([
+            'eTicket' => '2327176820',
+            'airlineStockProvider' => 'XX',
+            'officeId' => 'TNRMG210C'
+        ])
+    );
+
+Request cancellation of a transaction by ticket number associated to sales report process(TRDC/SR)
+
+The void action has been requested by an authorized agent signed in office NCE6X0100, the ticket 1721587458965 is eligible for the void and option "sales report only" is used:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCancelDocumentOptions;
+
+    $response = $client->ticketCancelDocument(
+        new TicketCancelDocumentOptions([
+            'eTicket' => '1721587458965',
+            'airlineStockProvider' => '6X',
+            'officeId' => 'NCE6X0100',
+            'void' => true,
+        ])
+    );
+
+Request cancellation of a transaction by ticket number for Travel Agent:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCancelDocumentOptions;
+
+    $response = $client->ticketCancelDocument(
+        new TicketCancelDocumentOptions([
+            'eTicket' => '4600052609',
+            'marketStockProvider' => 'DE',
+            'officeId' => 'FRAL12177',
+        ])
+    );
+
+Request cancellation of a transaction from query report:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCancelDocumentOptions;
+    use Amadeus\Client\RequestOptions\Ticket\SequenceRange;
+
+    $response = $client->ticketCancelDocument(
+        new TicketCancelDocumentOptions([
+            'sequenceRanges' => [
+                new SequenceRange([
+                    'from' => '1408'
+                ])
+            ],
+            'airlineStockProvider' => '6X',
+            'officeId' => 'NCE6X0100',
+        ])
+    );
+
+Request cancellation of several tickets, individual items and ranges of items from query report:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCancelDocumentOptions;
+    use Amadeus\Client\RequestOptions\Ticket\SequenceRange;
+
+    $response = $client->ticketCancelDocument(
+        new TicketCancelDocumentOptions([
+            'sequenceRanges' => [
+                new SequenceRange([
+                    'from' => '1408'
+                ]),
+                new SequenceRange([
+                    'from' => '1410',
+                    'to' => '1412'
+                ]),
+                new SequenceRange([
+                    'from' => '1414'
+                ])
+            ],
+            'airlineStockProvider' => '6X',
+            'officeId' => 'NCE6X0100',
+        ])
+    );
+
+
 ***********
 DocIssuance
 ***********

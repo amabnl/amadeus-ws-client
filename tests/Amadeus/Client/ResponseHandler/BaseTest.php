@@ -1280,6 +1280,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('pricing', $result->messages[3]->level);*/
     }
 
+    public function testCanHandleTicketCancelDocumentErrorResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketCancelDocumentErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_CancelDocument');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertCount(1, $result->messages);
+        $this->assertEquals('118', $result->messages[0]->code);
+        $this->assertEquals("", $result->messages[0]->text);
+    }
+
     public function testCanHandleMiniRuleGetFromPricingRecErrResponse()
     {
         $respHandler = new ResponseHandler\Base();

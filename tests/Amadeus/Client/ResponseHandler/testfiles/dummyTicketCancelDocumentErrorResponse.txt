@@ -1,0 +1,21 @@
+<Ticket_CancelDocumentReply xmlns="http://xml.amadeus.com/TRCANR_11_1_1A">
+    <transactionResults>
+        <responseDetails>
+            <responseType>X</responseType>
+            <statusCode>N</statusCode>
+        </responseDetails>
+        <ticketNumbers>
+            <documentDetails>
+                <number>234567898</number>
+            </documentDetails>
+        </ticketNumbers>
+        <errorGroup>
+            <errorOrWarningCodeDetails>
+                <errorDetails>
+                    <errorCode>118</errorCode>
+                    <errorCodeOwner>ZZZ</errorCodeOwner>
+                </errorDetails>
+            </errorOrWarningCodeDetails>
+        </errorGroup>
+    </transactionResults>
+</Ticket_CancelDocumentReply>

@@ -45,6 +45,7 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_ATCShopperMasterPricerTravelBoardSearch
 - Ticket_RepricePNRWithBookingClass
 - Ticket_ReissueConfirmedPricing
+- Ticket_CancelDocument
 - DocIssuance_IssueTicket
 - DocIssuance_IssueMiscellaneousDocuments
 - DocIssuance_IssueCombined

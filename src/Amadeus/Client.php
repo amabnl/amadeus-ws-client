@@ -934,6 +934,22 @@ class Client extends Base
     }
 
     /**
+     * Ticket_CancelDocument
+     *
+     * @param RequestOptions\TicketCancelDocumentOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketCancelDocument(
+        RequestOptions\TicketCancelDocumentOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_CancelDocument';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Ticket_ReissueConfirmedPricing
      *
      * @param RequestOptions\TicketReissueConfirmedPricingOptions $options
