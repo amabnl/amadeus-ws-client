@@ -71,6 +71,21 @@ Fare types: Take into account Published Fares, Unifares, Negotiated fares:
         ])
     );
 
+Currency override
+=================
+
+Fare Currency Override to USD:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'currencyOverride' => 'USD',
+        ])
+    );
+
 
 OB Fees
 =======
