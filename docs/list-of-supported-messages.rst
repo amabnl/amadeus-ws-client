@@ -86,7 +86,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - PNR_CreateAuxiliarySegment
 - PointOfRef_CategoryList
 - Ticket_CreateManualTSMP
-- TSM_CreateTSMFromPricing
 - Ticket_UpdateTSMP
 - Ticket_ProcessEDoc
 - Ticket_RetrieveListOfTSM
@@ -97,12 +96,12 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Service_PriceIntegratedMode
 - Service_StandaloneCatalogue
 - Service_StandalonePricing
-- Hotel_MultiSingleAvailability
-- Hotel_DescriptiveInfo
-- Hotel_EnhancedPricing
-- Hotel_Sell
-- Hotel_CompleteReservationDetails
-- Hotel_Terms
+- Hotel_MultiSingleAvailability (see [issue 70](https://github.com/amabnl/amadeus-ws-client/issues/70))
+- Hotel_DescriptiveInfo (see [issue 70](https://github.com/amabnl/amadeus-ws-client/issues/70))
+- Hotel_EnhancedPricing (see [issue 70](https://github.com/amabnl/amadeus-ws-client/issues/70))
+- Hotel_Sell (see [issue 70](https://github.com/amabnl/amadeus-ws-client/issues/70))
+- Hotel_CompleteReservationDetails (see [issue 70](https://github.com/amabnl/amadeus-ws-client/issues/70))
+- Hotel_Terms (see [issue 70](https://github.com/amabnl/amadeus-ws-client/issues/70))
 - Car_Availability
 - Car_RateInformationFromAvailability
 - Car_Sell
