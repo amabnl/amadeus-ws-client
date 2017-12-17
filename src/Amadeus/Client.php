@@ -966,6 +966,19 @@ class Client extends Base
     }
 
     /**
+     * Ticket_ProcessEDoc
+     *
+     * @param RequestOptions\ticketProcessEdoc $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     */
+    public function ticketProcessEdoc(RequestOptions\ticketProcessEdoc $options, $messageOptions = [])
+    {
+        $msgName = 'Ticket_ProcessEDoc';
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocIssuance_IssueTicket
      *
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options
