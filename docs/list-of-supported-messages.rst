@@ -96,12 +96,12 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Service_PriceIntegratedMode
 - Service_StandaloneCatalogue
 - Service_StandalonePricing
-- Hotel_MultiSingleAvailability (see [issue 70](https://github.com/amabnl/amadeus-ws-client/issues/70))
-- Hotel_DescriptiveInfo (see [issue 70](https://github.com/amabnl/amadeus-ws-client/issues/70))
-- Hotel_EnhancedPricing (see [issue 70](https://github.com/amabnl/amadeus-ws-client/issues/70))
-- Hotel_Sell (see [issue 70](https://github.com/amabnl/amadeus-ws-client/issues/70))
-- Hotel_CompleteReservationDetails (see [issue 70](https://github.com/amabnl/amadeus-ws-client/issues/70))
-- Hotel_Terms (see [issue 70](https://github.com/amabnl/amadeus-ws-client/issues/70))
+- Hotel_MultiSingleAvailability (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
+- Hotel_DescriptiveInfo (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
+- Hotel_EnhancedPricing (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
+- Hotel_Sell (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
+- Hotel_CompleteReservationDetails (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
+- Hotel_Terms (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
 - Car_Availability
 - Car_RateInformationFromAvailability
 - Car_Sell
