@@ -20,27 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Ticket;
-
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\TicketProcessEDocOptions;
-use Amadeus\Client\Struct;
+namespace Amadeus\Client\Struct\Ticket\ProcessEDoc;
 
 /**
- * Ticket_ProcessEDoc Request converter
+ * FrequentTravellerDetails
  *
- * @package Amadeus\Client\RequestCreator\Converter\Ticket
- * @author Farah Hourani <farahhourani94@gmail.com>
+ * @package Amadeus\Client\Struct\Ticket\ProcessEDoc
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class ProcessEDocConv extends BaseConverter
+class FrequentTravellerDetails
 {
     /**
-     * @param TicketProcessEDocOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Ticket\ProcessEDoc
+     * @var string
      */
-    public function convert($requestOptions, $version)
+    public $carrier;
+
+    /**
+     * @var string
+     */
+    public $number;
+
+    /**
+     * FrequentTravellerDetails constructor.
+     *
+     * @param string $carrier
+     * @param string $number
+     */
+    public function __construct($carrier, $number)
     {
-        return new Struct\Ticket\ProcessEDoc($requestOptions);
+        $this->carrier = $carrier;
+        $this->number = $number;
     }
 }

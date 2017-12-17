@@ -1,4 +1,5 @@
 # Release 1.6.0 (UNRELEASED)
+* Implemented ``Ticket_ProcessEDoc`` (https://github.com/amabnl/amadeus-ws-client/pull/135) - "FarahHourani"
 * Implemented ``MiniRule_GetFromETicket`` (https://github.com/amabnl/amadeus-ws-client/issues/122)
 * Implemented ``Ticket_CancelDocument`` (https://github.com/amabnl/amadeus-ws-client/issues/93)
 

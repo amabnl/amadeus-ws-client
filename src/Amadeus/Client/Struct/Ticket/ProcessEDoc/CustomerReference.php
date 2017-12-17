@@ -20,30 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Ticket\EDoc;
-
-use Amadeus\Client\RequestOptions\TicketProcessEdoc;
+namespace Amadeus\Client\Struct\Ticket\ProcessEDoc;
 
 /**
- * InfoGroup
+ * CustomerReference
  *
- * @package Amadeus\Client\Struct\Ticket\EDoc
- * @author Farah Hourani <farahhourani94@gmail.com>
+ * @package Amadeus\Client\Struct\Ticket\ProcessEDoc
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class InfoGroup
+class CustomerReference
 {
-    /**
-     * @var DocInfo
-     */
-    public $docInfo;
-
-    /**
-     * InfoGroup constructor.
-     *
-     * @param string $option [which it the ticketnumber]
-     */
-    public function __construct($option)
-    {
-        $this->docInfo = new DocInfo($option);
-    }
 }

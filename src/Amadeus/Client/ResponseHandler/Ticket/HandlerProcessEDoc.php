@@ -20,28 +20,25 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
- namespace Amadeus\Client\Struct\Ticket\EDoc;
+namespace Amadeus\Client\ResponseHandler\Ticket;
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * DocInfo
+ * HandlerProcessEDoc
  *
- * @package Amadeus\Client\Struct\Ticket\EDoc
- * @author Farah Hourani <farahhourani94@gmail.com>
+ * @package Amadeus\Client\ResponseHandler\Ticket
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class DocInfo
+class HandlerProcessEDoc extends StandardResponseHandler
 {
     /**
-     * @var DocDetails
+     * @param SendResult $response
+     * @return Result
      */
-    public $documentDetails;
-
-    /**
-     * DocInfo constructor.
-     *
-     * @param string $option
-     */
-    public function __construct($option)
+    public function analyze(SendResult $response)
     {
-        $this->documentDetails = new DocDetails($option);
+        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
     }
 }

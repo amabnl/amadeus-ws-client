@@ -20,27 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Ticket;
+namespace Amadeus\Client\Struct\Ticket\ProcessEDoc;
 
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\TicketProcessEDocOptions;
-use Amadeus\Client\Struct;
+use Amadeus\Client\RequestOptions\Ticket\FrequentFlyer;
 
 /**
- * Ticket_ProcessEDoc Request converter
+ * FrequentTravellerInfo
  *
- * @package Amadeus\Client\RequestCreator\Converter\Ticket
- * @author Farah Hourani <farahhourani94@gmail.com>
+ * @package Amadeus\Client\Struct\Ticket\ProcessEDoc
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class ProcessEDocConv extends BaseConverter
+class FrequentTravellerInfo
 {
     /**
-     * @param TicketProcessEDocOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Ticket\ProcessEDoc
+     * @var FrequentTravellerDetails[]
      */
-    public function convert($requestOptions, $version)
+    public $frequentTravellerDetails = [];
+
+    /**
+     * FrequentTravellerInfo constructor.
+     *
+     * @param FrequentFlyer[] $frequentFlyers
+     */
+    public function __construct(array $frequentFlyers)
     {
-        return new Struct\Ticket\ProcessEDoc($requestOptions);
+        foreach ($frequentFlyers as $frequentFlyer) {
+            $this->frequentTravellerDetails[] = new FrequentTravellerDetails(
+                $frequentFlyer->carrier,
+                $frequentFlyer->number
+            );
+        }
     }
 }

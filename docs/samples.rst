@@ -1713,9 +1713,9 @@ Reissue pricing for e-Ticket 057-2146640300:
         ])
     );
 
-------------------------------
+---------------------
 Ticket_CancelDocument
-------------------------------
+---------------------
 
 Request E-ticket Direct cancellation
 
@@ -1809,6 +1809,44 @@ Request cancellation of several tickets, individual items and ranges of items fr
         ])
     );
 
+------------------
+Ticket_ProcessEDoc
+------------------
+
+Display an e-ticket by document (ticket) number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketProcessEDocOptions;
+
+    $response = $client->ticketProcessEDoc(
+        new TicketProcessEDocOptions([
+            'action' => TicketProcessEDocOptions::ACTION_ETICKET_DISPLAY,
+            'ticketNumber' => '5125756077483'
+        ])
+    );
+
+Enhanced ETKT list display:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketProcessEDocOptions;
+    use Amadeus\Client\RequestOptions\Ticket\FrequentFlyer;
+
+    $response = $client->ticketProcessEDoc(
+        new TicketProcessEDocOptions([
+            'action' => TicketProcessEDocOptions::ACTION_ETICKET_DISPLAY,
+            'additionalActions' => [
+                TicketProcessEDocOptions::ADD_ACTION_ENHANCED_LIST_DISPLAY
+            ],
+            'frequentTravellers' => [
+                new FrequentFlyer([
+                    'number' => '21354657',
+                    'carrier' => '6X'
+                ])
+            ]
+        ])
+    );
 
 ***********
 DocIssuance

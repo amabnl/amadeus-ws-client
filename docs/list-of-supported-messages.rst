@@ -46,6 +46,7 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_RepricePNRWithBookingClass
 - Ticket_ReissueConfirmedPricing
 - Ticket_CancelDocument
+- Ticket_ProcessEDoc
 - DocIssuance_IssueTicket
 - DocIssuance_IssueMiscellaneousDocuments
 - DocIssuance_IssueCombined
@@ -87,7 +88,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - PointOfRef_CategoryList
 - Ticket_CreateManualTSMP
 - Ticket_UpdateTSMP
-- Ticket_ProcessEDoc
 - Ticket_RetrieveListOfTSM
 - Ticket_AddDocNumber
 - TTR_DisplayTrip

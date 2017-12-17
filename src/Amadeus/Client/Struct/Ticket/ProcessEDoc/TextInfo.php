@@ -20,30 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Ticket\ProcessEDoc;
 
 /**
- * TicketDisplayTstOptions
+ * TextInfo
  *
- * @package Amadeus\Client\RequestOptions
- * @author Farah Hourani <farahhourani94@gmail.com>
+ * @package Amadeus\Client\Struct\Ticket\ProcessEDoc
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class TicketProcessEdoc extends Base
+class TextInfo
 {
-    const ETKT = "131";
-
-    /**
-     * the ticket number returned from amadeus
-     *
-     *@var string
-     */
-    public $ticketNumber;
-
-
-    /**
-     * to set the doc type for exmaple it takes 131 which means ETKT
-     *
-     *@var int
-     */
-    public $messageFunction;
 }

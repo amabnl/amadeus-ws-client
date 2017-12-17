@@ -20,27 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Ticket;
-
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\TicketProcessEDocOptions;
-use Amadeus\Client\Struct;
+namespace Amadeus\Client\Struct\Ticket\ProcessEDoc;
 
 /**
- * Ticket_ProcessEDoc Request converter
+ * InfoGroup
  *
- * @package Amadeus\Client\RequestCreator\Converter\Ticket
+ * @package Amadeus\Client\Struct\Ticket\ProcessEDoc
  * @author Farah Hourani <farahhourani94@gmail.com>
  */
-class ProcessEDocConv extends BaseConverter
+class InfoGroup
 {
     /**
-     * @param TicketProcessEDocOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Ticket\ProcessEDoc
+     * @var DocInfo
      */
-    public function convert($requestOptions, $version)
+    public $docInfo;
+
+    /**
+     * InfoGroup constructor.
+     *
+     * @param string $ticketNumber
+     */
+    public function __construct($ticketNumber)
     {
-        return new Struct\Ticket\ProcessEDoc($requestOptions);
+        $this->docInfo = new DocInfo($ticketNumber);
     }
 }

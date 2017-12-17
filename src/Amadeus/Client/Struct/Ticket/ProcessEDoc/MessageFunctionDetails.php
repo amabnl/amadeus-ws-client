@@ -20,27 +20,39 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Ticket;
-
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\TicketProcessEDocOptions;
-use Amadeus\Client\Struct;
+namespace Amadeus\Client\Struct\Ticket\ProcessEDoc;
 
 /**
- * Ticket_ProcessEDoc Request converter
+ * DocDetails
  *
- * @package Amadeus\Client\RequestCreator\Converter\Ticket
+ * @package Amadeus\Client\Struct\Ticket\ProcessEDoc
  * @author Farah Hourani <farahhourani94@gmail.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class ProcessEDocConv extends BaseConverter
+class MessageFunctionDetails
 {
     /**
-     * @param TicketProcessEDocOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Ticket\ProcessEDoc
+     * @var string
      */
-    public function convert($requestOptions, $version)
+    public $messageFunction;
+
+    /**
+     * @var string[]
+     */
+    public $additionalMessageFunction;
+
+    /**
+     * DocDetails constructor.
+     *
+     * @param string $option
+     * @param string[] $additionalActions
+     */
+    public function __construct($option, $additionalActions)
     {
-        return new Struct\Ticket\ProcessEDoc($requestOptions);
+        $this->messageFunction = $option;
+
+        if (!empty($additionalActions)) {
+            $this->additionalMessageFunction = $additionalActions;
+        }
     }
 }

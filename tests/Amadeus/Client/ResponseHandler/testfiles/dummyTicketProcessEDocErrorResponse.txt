@@ -1,0 +1,20 @@
+<Ticket_ProcessEDocReply xmlns="http://xml.amadeus.com/TATRES_15_2_1A">
+    <msgActionDetails>
+        <messageFunctionDetails>
+            <messageFunction>131</messageFunction>
+        </messageFunctionDetails>
+        <responseType>7</responseType>
+    </msgActionDetails>
+    <error>
+        <errorDetails>
+            <errorCode>118</errorCode>
+        </errorDetails>
+    </error>
+    <textInfo>
+        <freeTextQualification>
+            <textSubjectQualifier>4</textSubjectQualifier>
+            <informationType>23</informationType>
+        </freeTextQualification>
+        <freeText>SYSTEM UNABLE TO PROCESS</freeText>
+    </textInfo>
+</Ticket_ProcessEDocReply>

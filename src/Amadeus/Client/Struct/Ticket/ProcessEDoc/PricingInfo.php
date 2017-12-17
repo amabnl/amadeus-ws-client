@@ -20,32 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-
- namespace Amadeus\Client\Struct\Ticket\EDoc;
-
-use Amadeus\Client\RequestOptions\TicketProcessEdoc;
+namespace Amadeus\Client\Struct\Ticket\ProcessEDoc;
 
 /**
- * DocDetails
+ * PricingInfo
  *
- * @package Amadeus\Client\Struct\Ticket\EDoc
- * @author Farah Hourani <farahhourani94@gmail.com>
+ * @package Amadeus\Client\Struct\Ticket\ProcessEDoc
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class DocDetails
+class PricingInfo
 {
-    /**
-     *
-     * @var string
-     */
-    public $number;
-
-    /**
-     * DocDetails constructor.
-     *
-     * @param string $option
-     */
-    public function __construct($option)
-    {
-        $this->number = $option;
-    }
 }

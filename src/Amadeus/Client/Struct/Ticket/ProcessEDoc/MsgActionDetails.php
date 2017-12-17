@@ -20,32 +20,30 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-
- namespace Amadeus\Client\Struct\Ticket\EDoc;
-
-use Amadeus\Client\RequestOptions\TicketProcessEdoc;
+namespace Amadeus\Client\Struct\Ticket\ProcessEDoc;
 
 /**
- * DocDetails
+ * DocInfo
  *
- * @package Amadeus\Client\Struct\Ticket\EDoc
+ * @package Amadeus\Client\Struct\Ticket\ProcessEDoc
  * @author Farah Hourani <farahhourani94@gmail.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class MessageFunctionDetails
+class MsgActionDetails
 {
     /**
-     *
-     * @var string
+     * @var MessageFunctionDetails
      */
-    public $messageFunction;
+    public $messageFunctionDetails;
 
     /**
-     * DocDetails constructor.
+     * MsgActionDetails constructor.
      *
      * @param string $option
+     * @param string[] $additionalActions
      */
-    public function __construct($option)
+    public function __construct($option, $additionalActions)
     {
-        $this->messageFunction = $option;
+        $this->messageFunctionDetails = new MessageFunctionDetails($option, $additionalActions);
     }
 }
