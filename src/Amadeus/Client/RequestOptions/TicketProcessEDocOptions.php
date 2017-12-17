@@ -21,6 +21,7 @@
  */
 
 namespace Amadeus\Client\RequestOptions;
+
 use Amadeus\Client\RequestOptions\Ticket\FrequentFlyer;
 
 /**
