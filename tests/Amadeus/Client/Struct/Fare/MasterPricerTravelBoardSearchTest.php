@@ -1271,19 +1271,56 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
 
         $this->assertEquals(1, $message->numberOfUnit->unitNumberDetail[0]->numberOfUnits);
         $this->assertEquals(UnitNumberDetail::TYPE_PASS, $message->numberOfUnit->unitNumberDetail[0]->typeOfUnit);
-        
+
         $this->assertEquals(200, $message->numberOfUnit->unitNumberDetail[1]->numberOfUnits);
         $this->assertEquals(UnitNumberDetail::TYPE_RESULTS, $message->numberOfUnit->unitNumberDetail[1]->typeOfUnit);
-        
+
         $this->assertEquals(30, $message->numberOfUnit->unitNumberDetail[2]->numberOfUnits);
         $this->assertEquals(UnitNumberDetail::TYPE_OUTBOUND_RECOMMENDATION, $message->numberOfUnit->unitNumberDetail[2]->typeOfUnit);
-        
+
         $this->assertEquals(20, $message->numberOfUnit->unitNumberDetail[3]->numberOfUnits);
         $this->assertEquals(UnitNumberDetail::TYPE_INBBOUND_RECOMMENDATION, $message->numberOfUnit->unitNumberDetail[3]->typeOfUnit);
-        
+
         $this->assertEquals(50, $message->numberOfUnit->unitNumberDetail[4]->numberOfUnits);
         $this->assertEquals(UnitNumberDetail::TYPE_COMPLETE_RECOMMENDATION, $message->numberOfUnit->unitNumberDetail[4]->typeOfUnit);
 
         $this->assertEquals("MTK", $message->fareOptions->pricingTickInfo->pricingTicketing->priceType[0]);
+    }
+
+    public function testCanMakeMessageWithLayoverPerConnectionOptions()
+    {
+        $opt = new FareMasterPricerTbSearch([
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'IST']),
+                    'arrivalLocation' => new MPLocation(['city' => 'LON']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ]),
+            ],
+            'maxLayoverPerConnectionHours' => 2,
+            'maxLayoverPerConnectionMinutes' => 30,
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        foreach ($message->travelFlightInfo->unitNumberDetail as $unitNumberDetail) {
+            switch ($unitNumberDetail->typeOfUnit) {
+                case UnitNumberDetail::TYPE_MAX_LAYOVER_PER_CONNECTION_REQUESTED_SEGMENT_HOURS:
+                    $this->assertEquals(2, $unitNumberDetail->numberOfUnits);
+                    break;
+                case UnitNumberDetail::TYPE_MAX_LAYOVER_PER_CONNECTION_REQUESTED_SEGMENT_MINUTES:
+                    $this->assertEquals(30, $unitNumberDetail->numberOfUnits);
+                    break;
+            }
+        }
     }
 }
