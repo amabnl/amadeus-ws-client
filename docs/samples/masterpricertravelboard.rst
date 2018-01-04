@@ -908,3 +908,38 @@ Works only on return trip search.
             'returnTrip' => 20
         ])
     ]);
+
+Layover per connection
+============
+
+When itinerary consists of more than one segment, max layover per connection options narrows the search results by the specified hours and minutes value.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
+    use Amadeus\Client\RequestOptionsFare\MPPassenger;
+    use Amadeus\Client\RequestOptionsFare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'LON']),
+                'arrivalLocation' => new MPLocation(['city' => 'MOW']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ]),
+        ],
+        'maxLayoverPerConnectionHours' => 2,
+        'maxLayoverPerConnectionMinutes' => 30,
+    ]);
