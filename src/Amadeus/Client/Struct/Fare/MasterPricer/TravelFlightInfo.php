@@ -64,6 +64,8 @@ class TravelFlightInfo extends WsMessageUtility
      * @param array|null $airlineOptions
      * @param int|null $progressiveLegsMin
      * @param int|null $progressiveLegsMax
+     * @param int|null $maxLayoverPerConnectionHours
+     * @param int|null $maxLayoverPerConnectionMinutes
      */
     public function __construct(
         $cabinCode = null,
@@ -71,7 +73,9 @@ class TravelFlightInfo extends WsMessageUtility
         $flightTypes = null,
         $airlineOptions = null,
         $progressiveLegsMin = null,
-        $progressiveLegsMax = null
+        $progressiveLegsMax = null,
+        $maxLayoverPerConnectionHours = null,
+        $maxLayoverPerConnectionMinutes = null
     ) {
         if (!is_null($cabinCode) || !is_null($cabinOption)) {
             $this->cabinId = new CabinId($cabinCode, $cabinOption);
@@ -98,6 +102,20 @@ class TravelFlightInfo extends WsMessageUtility
             $this->unitNumberDetail[] = new UnitNumberDetail(
                 $progressiveLegsMax,
                 UnitNumberDetail::TYPE_MAXIMUM_PROGRESSIVE_CONNECTIONS
+            );
+        }
+
+        if (is_int($maxLayoverPerConnectionHours)) {
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $maxLayoverPerConnectionHours,
+                UnitNumberDetail::TYPE_MAX_LAYOVER_PER_CONNECTION_REQUESTED_SEGMENT_HOURS
+            );
+        }
+
+        if (is_int($maxLayoverPerConnectionMinutes)) {
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $maxLayoverPerConnectionMinutes,
+                UnitNumberDetail::TYPE_MAX_LAYOVER_PER_CONNECTION_REQUESTED_SEGMENT_MINUTES
             );
         }
     }

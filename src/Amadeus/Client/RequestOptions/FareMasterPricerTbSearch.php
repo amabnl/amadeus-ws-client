@@ -167,4 +167,18 @@ class FareMasterPricerTbSearch extends MpBaseOptions
      * @var string
      */
     public $dkNumber;
+
+    /**
+     * Each connection of each requested segment has a layover limited to X hours.
+     *
+     * @var int
+     */
+    public $maxLayoverPerConnectionHours;
+
+    /**
+     * Each connection of each requested segment has a layover limited to Y minutes.
+     *
+     * @var int
+     */
+    public $maxLayoverPerConnectionMinutes;
 }

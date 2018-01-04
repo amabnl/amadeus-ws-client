@@ -148,7 +148,9 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
             $options->requestedFlightTypes,
             $options->airlineOptions,
             $options->progressiveLegsMin,
-            $options->progressiveLegsMax
+            $options->progressiveLegsMax,
+            $options->maxLayoverPerConnectionHours,
+            $options->maxLayoverPerConnectionMinutes
         )) {
             $this->travelFlightInfo = new MasterPricer\TravelFlightInfo(
                 $options->cabinClass,
@@ -156,7 +158,9 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
                 $options->requestedFlightTypes,
                 $options->airlineOptions,
                 $options->progressiveLegsMin,
-                $options->progressiveLegsMax
+                $options->progressiveLegsMax,
+                $options->maxLayoverPerConnectionHours,
+                $options->maxLayoverPerConnectionMinutes
             );
         }
 
