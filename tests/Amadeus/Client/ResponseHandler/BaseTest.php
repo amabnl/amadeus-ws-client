@@ -51,6 +51,22 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('general', $result->messages[0]->level);
     }
 
+    public function testCanFindPassengerNameErrorMessageInPnrReply()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPnrAddMultElementsNameError.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_AddMultiElements');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('20', $result->messages[0]->code);
+        $this->assertEquals("RESTRICTED", $result->messages[0]->text);
+        $this->assertEquals('passenger', $result->messages[0]->level);
+    }
+
     public function testCanHandleIssue50ErrorMessageInPnrReply()
     {
         $respHandler = new ResponseHandler\Base();
