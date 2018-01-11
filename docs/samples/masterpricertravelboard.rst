@@ -919,7 +919,6 @@ When itinerary consists of more than one segment, max layover per connection opt
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
     use Amadeus\Client\RequestOptionsFare\MPPassenger;
     use Amadeus\Client\RequestOptionsFare\MPDate;
 
