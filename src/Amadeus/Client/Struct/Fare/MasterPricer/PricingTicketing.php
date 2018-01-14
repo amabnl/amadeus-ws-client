@@ -47,6 +47,7 @@ class PricingTicketing
     const PRICETYPE_DISPLAY_MIN_MAX_STAY = "MST";
     const PRICETYPE_OVERRIDE_CURRENCY_CONVERSION = "CUC";
     const PRICETYPE_MULTI_TICKET = "MTK";
+    const PRICETYPE_IN_FLIGHT_SERVICES = "IFS";
 
     /**
      * self::PRICETYPE_*

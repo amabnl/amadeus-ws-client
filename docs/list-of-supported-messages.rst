@@ -8,7 +8,7 @@ This is the list of messages that are at least partially supported at this time:
 - Security_SignOut
 - PNR_Retrieve
 - PNR_RetrieveAndDisplay
-- PNR_AddMultiElements *(both a dedicated PNR creation message and a "pure" PNR_AddMultiElements)*
+- PNR_AddMultiElements
 - PNR_Cancel
 - PNR_DisplayHistory
 - PNR_TransferOwnership
