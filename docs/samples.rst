@@ -36,7 +36,7 @@ Creating a PNR (simplified example containing only the most basic PNR elements n
         'firstName' => 'FirstName',
         'lastName' => 'LastName'
     ]);
-    $opt->itinerary[] = new Itinerary([
+    $opt->itineraries[] = new Itinerary([
         'segments' => [
             new Miscellaneous([
                 'status ' => Segment::STATUS_CONFIRMED,
