@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Pnr\Retrieve;
 
 use Amadeus\Client\Struct\Pnr\AddMultiElements\FrequentTraveller;
 use Amadeus\Client\RequestOptions\Pnr\Retrieve\FrequentTraveller as FrequentTravelerOptions;
+
 /**
  * FrequentFlyer
  *

@@ -25,7 +25,6 @@ namespace Amadeus\Client\RequestOptions;
 use Amadeus\Client\RequestOptions\Pnr\Retrieve\FrequentTraveller;
 use Amadeus\Client\RequestOptions\Pnr\Retrieve\Ticket;
 
-
 /**
  * PnrRetrieveRequestOptions
  *

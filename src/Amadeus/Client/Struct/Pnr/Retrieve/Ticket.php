@@ -41,7 +41,7 @@ class Ticket
 
     /**
      * Ticket constructor.
-     * 
+     *
      * @param string $airline
      * @param string $ticketNumber
      */
