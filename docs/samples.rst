@@ -102,6 +102,105 @@ Retrieve the PNR that is active in the current session context:
 **Note:** Retrieving a PNR this way is identical to performing a ``RT`` cryptic entry in Amadeus Selling Platform:
 This will re-retrieve the PNR that is currently active in the session's context *(if this action is performed in a stateful session)*.
 
+Retrieve PNR(s) by Customer Profile:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'customerProfile' => 'ABC987'
+    ]));
+
+Retrieve PNR(s) by Account Number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'accountNumber' => '12345'
+    ]));
+
+Retrieve PNR(s) by Name on a specific Office ID:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'officeId' => 'MIA1S213F',
+        'lastName' => 'childs'
+    ]));
+
+Retrieve PNR(s) by last name and departure date:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'lastName' => 'childs',
+        'departureDate' => \DateTime::createFromFormat(\DateTime::ISO8601, "2018-01-27T00:00:00+0000", new \DateTimeZone('UTC')),
+    ]));
+
+Retrieve PNR(s) by last name and departure date, retrieve only active PNR's:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'options' => [
+            PnrRetrieveOptions::OPTION_ACTIVE_ONLY
+        ],
+        'lastName' => 'childs',
+        'departureDate' => \DateTime::createFromFormat(\DateTime::ISO8601, "2018-01-27T00:00:00+0000", new \DateTimeZone('UTC')),
+    ]));
+
+Retrieve PNR by Record Locator with name and ticket number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Retrieve\Ticket;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'recordLocator' => 'YA76F8',
+        'lastName' => 'childs',
+        'ticket' => new Ticket([
+            'airline' => '057',
+            'number' => '7024209573'
+        ])
+    ]));
+
+Retrieve PNR(s) by service, last name and flight number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Retrieve\Ticket;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'service' => PnrRetrieveOptions::SERVICE_AIRLINE,
+        'lastName' => 'childs',
+        'departureDate' => \DateTime::createFromFormat(\DateTime::ISO8601, "2001-03-28T00:00:00+0000", new \DateTimeZone('UTC')),
+        'company' => '6X',
+        'flightNumber' => '6201',
+    ]));
+
+Retrieve PNR(s) by Frequent Traveller information:
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Retrieve\FrequentTraveller;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'frequentTraveller' => new FrequentTraveller([
+            'airline' => 'LH',
+            'number' => '992222899525661'
+        ])
+    ]));
+
 ----------------------
 PNR_RetrieveAndDisplay
 ----------------------

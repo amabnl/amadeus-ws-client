@@ -1,6 +1,7 @@
 # Release 1.6.0 (UNRELEASED)
 * Recognize Passenger-level error messages in ``PNR_Reply`` responses (https://github.com/amabnl/amadeus-ws-client/issues/139)
 * Added support for Layover per connection options in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/138) - Artem Zakharchenko
+* Implemented more retrieval options on ``PNR_Retrieve``
 * Implemented ``Ticket_ProcessEDoc`` (https://github.com/amabnl/amadeus-ws-client/pull/135) - "FarahHourani"
 * Implemented ``MiniRule_GetFromETicket`` (https://github.com/amabnl/amadeus-ws-client/issues/122)
 * Implemented ``Ticket_CancelDocument`` (https://github.com/amabnl/amadeus-ws-client/issues/93)
