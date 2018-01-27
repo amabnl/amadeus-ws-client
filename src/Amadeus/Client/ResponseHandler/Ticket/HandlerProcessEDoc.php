@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\ResponseHandler\Ticket;
 
+use Amadeus\Client\Exception;
 use Amadeus\Client\ResponseHandler\StandardResponseHandler;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
@@ -37,6 +38,7 @@ class HandlerProcessEDoc extends StandardResponseHandler
     /**
      * @param SendResult $response
      * @return Result
+     * @throws Exception
      */
     public function analyze(SendResult $response)
     {

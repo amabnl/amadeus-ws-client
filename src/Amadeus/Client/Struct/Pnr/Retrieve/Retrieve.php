@@ -63,9 +63,20 @@ class Retrieve
      * Construct retrieve element
      *
      * @param string $retrievalType
+     * @param string $office
+     * @param string[] $options
      */
-    public function __construct($retrievalType)
+    public function __construct($retrievalType, $office, $options)
     {
         $this->type = $retrievalType;
+        $this->office = $office;
+
+        foreach ($options as $key => $option) {
+            if ($key === 0) {
+                $this->option1 = $option;
+            } elseif ($key === 1) {
+                $this->option2 = $option;
+            }
+        }
     }
 }

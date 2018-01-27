@@ -44,7 +44,7 @@ class SoapHeader2Test extends BaseTestCase
 
         $handler->sendMessage(
             'PNR_Retrieve',
-            new Client\Struct\Pnr\Retrieve(Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC, 'ABC123'),
+            new Client\Struct\Pnr\Retrieve(new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])),
             [
                 'asString' => false,
                 'endSession' => false
@@ -94,7 +94,7 @@ class SoapHeader2Test extends BaseTestCase
 
         $messageResponse = $handler->sendMessage(
             'PNR_Retrieve',
-            new Client\Struct\Pnr\Retrieve(Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC, 'ABC123'),
+            new Client\Struct\Pnr\Retrieve(new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])),
             [
                 'asString' => true,
                 'endSession' => false

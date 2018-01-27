@@ -22,7 +22,8 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
-use Amadeus\Client\RequestOptions\Pnr\Element\FrequentFlyer;
+use Amadeus\Client\RequestOptions\Pnr\Element\FrequentFlyer as FrequentFlyerOpt;
+use Amadeus\Client\RequestOptions\Pnr\Retrieve\FrequentTraveller as FrequentTravellerOpt;
 
 /**
  * FrequentTraveller
@@ -45,9 +46,9 @@ class FrequentTraveller
     /**
      * FrequentTraveller constructor.
      *
-     * @param FrequentFlyer $params
+     * @param FrequentFlyerOpt|FrequentTravellerOpt $params
      */
-    public function __construct(FrequentFlyer $params)
+    public function __construct($params)
     {
         $this->companyId = $params->airline;
         $this->membershipNumber = $params->number;

@@ -20,44 +20,34 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
+namespace Amadeus\Client\Struct\Pnr\Retrieve;
 
 /**
- * Traveller
+ * Ticket
  *
- * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @package Amadeus\Client\Struct\Pnr\Retrieve
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class Traveller extends \Amadeus\Client\Struct\Pnr\Retrieve\Traveller
+class Ticket
 {
-    const QUAL_GROUP = "G";
-
     /**
-     * Traveller Qualifiers:
-     * - 766  Infant without seat
-     * - 767  Infant with seat
-     * - C  CBBG - Cabin Baggage
-     * - COR  CORPORATE NAME
-     * - E  EXST - Extra Seat
-     * - G  Group
-     * - INF  Infant not occupying a seat
-     * - MTH  Month
-     * - PAX  Passenger
-     * - YRS  Year
-     *
      * @var string
      */
-    public $qualifier;
+    public $airline;
     /**
-     * @var int
+     * @var string
      */
-    public $quantity;
+    public $ticketNumber;
 
     /**
-     * @param string $surName
+     * Ticket constructor.
+     * 
+     * @param string $airline
+     * @param string $ticketNumber
      */
-    public function __construct($surName)
+    public function __construct($airline, $ticketNumber)
     {
-        parent::__construct($surName);
+        $this->airline = $airline;
+        $this->ticketNumber = $ticketNumber;
     }
 }

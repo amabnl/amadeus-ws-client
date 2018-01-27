@@ -159,7 +159,9 @@ class ClientTest extends BaseTestCase
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $expectedPnrResult = new Client\Struct\Pnr\Retrieve(Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,'ABC123');
+        $expectedPnrResult = new Client\Struct\Pnr\Retrieve(new Client\RequestOptions\PnrRetrieveOptions([
+            'recordLocator' => 'ABC123'
+        ]));
 
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 

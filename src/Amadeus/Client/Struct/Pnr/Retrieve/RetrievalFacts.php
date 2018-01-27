@@ -22,50 +22,78 @@
 
 namespace Amadeus\Client\Struct\Pnr\Retrieve;
 
+use Amadeus\Client\RequestOptions\Pnr\Retrieve\FrequentTraveller;
+use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+use Amadeus\Client\Struct\Pnr\Retrieve as RetrieveMsg;
+use Amadeus\Client\Struct\WsMessageUtility;
+
 /**
  * Structure class for the RetrievalFacts message part for PNR_Retrieve messages
  *
  * @package Amadeus\Client\Struct\Pnr\Retrieve
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class RetrievalFacts
+class RetrievalFacts extends WsMessageUtility
 {
     /**
      * @var Retrieve
      */
     public $retrieve;
+
     /**
      * @var ReservationOrProfileIdentifier
      */
     public $reservationOrProfileIdentifier;
+
     /**
-     * @var mixed
-     * @todo Expand this structure
+     * @var PersonalFacts
      */
     public $personalFacts;
+
     /**
-     * @var mixed
-     * @todo Expand this structure
+     * @var FrequentFlyer
      */
     public $frequentFlyer;
+
     /**
-     * @var mixed
-     * @todo Expand this structure
+     * @var Accounting
      */
     public $accounting;
 
     /**
      * Construct retrievalFacts element
      *
-     * @param string $retrievalType
-     * @param string|null $recordLocator (OPTIONAL)
+     * @param PnrRetrieveOptions $options
      */
-    public function __construct($retrievalType, $recordLocator = null)
+    public function __construct($options)
     {
-        $this->retrieve = new Retrieve($retrievalType);
+        $this->retrieve = new Retrieve(
+            $options->retrievalType,
+            $options->officeId, $options->options
+        );
 
-        if ($recordLocator !== null) {
-            $this->reservationOrProfileIdentifier =
-                new ReservationOrProfileIdentifier($recordLocator);
+        if ($this->checkAnyNotEmpty($options->accountNumber)) {
+            $this->accounting = new Accounting($options->accountNumber);
+        }
+
+        if ($this->checkAnyNotEmpty($options->recordLocator, $options->customerProfile)) {
+            $controlNumber = ($options->retrievalType == RetrieveMsg::RETR_TYPE_BY_CUSTOMER_PROFILE) ? $options->customerProfile : $options->recordLocator;
+
+            $this->reservationOrProfileIdentifier = new ReservationOrProfileIdentifier($controlNumber);
+        }
+
+        if ($this->checkAnyNotEmpty($options->lastName, $options->departureDate, $options->ticket, $options->company, $options->flightNumber)) {
+            $this->personalFacts = new PersonalFacts(
+                $options->lastName,
+                $options->departureDate,
+                $options->ticket,
+                $options->company,
+                $options->flightNumber
+            );
+        }
+
+        if ($options->frequentTraveller instanceof FrequentTraveller) {
+            $this->frequentFlyer = new FrequentFlyer($options->frequentTraveller);
         }
     }
 }
