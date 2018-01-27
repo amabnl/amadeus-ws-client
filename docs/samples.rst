@@ -191,6 +191,8 @@ Retrieve PNR(s) by service, last name and flight number:
 
 Retrieve PNR(s) by Frequent Traveller information:
 
+.. code-block:: php
+
     use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
     use Amadeus\Client\RequestOptions\Pnr\Retrieve\FrequentTraveller;
 
