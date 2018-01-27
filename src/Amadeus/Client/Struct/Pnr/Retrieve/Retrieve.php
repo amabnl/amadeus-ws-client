@@ -31,29 +31,35 @@ namespace Amadeus\Client\Struct\Pnr\Retrieve;
 class Retrieve
 {
     /**
-     * @var string
+     * @var string|int
      */
     public $type;
+
     /**
      * @var string
      */
     public $service;
+
     /**
      * @var string
      */
     public $tattoo;
+
     /**
      * @var string
      */
     public $office;
+
     /**
      * @var string
      */
     public $targetSystem;
+
     /**
      * @var string
      */
     public $option1;
+
     /**
      * @var string
      */
@@ -62,7 +68,7 @@ class Retrieve
     /**
      * Construct retrieve element
      *
-     * @param string $retrievalType
+     * @param string|int $retrievalType
      * @param string $office
      * @param string[] $options
      */

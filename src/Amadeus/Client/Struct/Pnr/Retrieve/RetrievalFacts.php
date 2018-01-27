@@ -77,7 +77,7 @@ class RetrievalFacts extends WsMessageUtility
         }
 
         if ($this->checkAnyNotEmpty($options->recordLocator, $options->customerProfile)) {
-            $controlNumber = ($options->retrievalType == RetrieveMsg::RETR_TYPE_BY_CUSTOMER_PROFILE) ? $options->customerProfile : $options->recordLocator;
+            $controlNumber = ($options->retrievalType === RetrieveMsg::RETR_TYPE_BY_CUSTOMER_PROFILE) ? $options->customerProfile : $options->recordLocator;
 
             $this->reservationOrProfileIdentifier = new ReservationOrProfileIdentifier($controlNumber);
         }

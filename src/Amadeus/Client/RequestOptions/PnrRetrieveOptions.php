@@ -79,7 +79,7 @@ class PnrRetrieveOptions extends Base
      *
      * self::RETRIEVE_*
      *
-     * @var string
+     * @var int
      */
     public $retrievalType;
 
