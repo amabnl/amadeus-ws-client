@@ -11,12 +11,11 @@ coding_style:
 build:
     tests:
         override:
-           -
-               php-scrutinizer-run
-               command: 'phpunit --coverage-clover=build/logs/clover.xml'
-               coverage:
-                   file: 'build/logs/clover.xml'
-                   format: 'clover'
+            - php-scrutinizer-run
+                command: 'phpunit --coverage-clover=build/logs/clover.xml'
+                coverage:
+                    file: 'build/logs/clover.xml'
+                    format: 'clover'
     nodes:
         php54:
             environment:
