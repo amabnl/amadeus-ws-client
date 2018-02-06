@@ -87,7 +87,7 @@ You can provide all the WSDL's in your WSAP by passing an array of wsdl's in the
             'officeId' => 'BRUXX1111',
             'userId' => 'WSBENXXX',
             'passwordData' => 'dGhlIHBhc3N3b3Jk'
-        ]
+        ],
         'sessionHandlerParams' => [
             'soapHeaderVersion' => Client::HEADER_V4,
             'wsdl' => [
@@ -242,7 +242,7 @@ You can override the default ``\SoapClient`` options by passing them in the Sess
             'soapClientOptions' => [
                 'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP
             ]
-        ]
+        ],
         'requestCreatorParams' => [
             'receivedFrom' => 'my test project'
         ]
