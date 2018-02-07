@@ -1,4 +1,7 @@
-# Release 1.6.0 (UNRELEASED)
+# Release 1.7.0 (UNRELEASED)
+
+
+# Release 1.6.0 (7 February 2018)
 * Recognize Passenger-level error messages in ``PNR_Reply`` responses (https://github.com/amabnl/amadeus-ws-client/issues/139)
 * Added support for Layover per connection options in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/138) - Artem Zakharchenko
 * Implemented more retrieval options on ``PNR_Retrieve``
