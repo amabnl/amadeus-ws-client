@@ -107,11 +107,11 @@ Soap Header 2 example:
         'authParams' => [
             'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
             'userId' => 'WSBENXXX', //Also known as 'Originator' for Soap Header 1 & 2 WSDL's
-            'passwordData' => 'dGhlIHBhc3N3b3Jk' // **base 64 encoded** password
+            'passwordData' => 'dGhlIHBhc3N3b3Jk', // **base 64 encoded** password
             'passwordLength' => 12,
             'dutyCode' => 'SU',
             'organizationId' => 'DUMMY-ORG',
-        ]
+        ],
         'sessionHandlerParams' => [
             'soapHeaderVersion' => Client::HEADER_V2,
             'wsdl' => '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20110101_080000.wsdl', //Points to the location of the WSDL file for your WSAP. Make sure the associated XSD's are also available.
