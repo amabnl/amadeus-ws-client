@@ -47,7 +47,8 @@ class SellFromRecommendationTest extends BaseTestCase
                     'to' => 'LON',
                     'segments' => [
                         new Segment([
-                            'departureDate' => \DateTime::createFromFormat('Ymd','20170120', new \DateTimeZone('UTC')),
+                            'departureDate' => \DateTime::createFromFormat('Ymd', '20170120', new \DateTimeZone('UTC')),
+                            'arrivalDate' => \DateTime::createFromFormat('Ymd', '20170120', new \DateTimeZone('UTC')),
                             'from' => 'BRU',
                             'to' => 'LGW',
                             'companyCode' => 'SN',
@@ -75,6 +76,7 @@ class SellFromRecommendationTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Struct\Air\SegmentInformation', $msg->itineraryDetails[0]->segmentInformation[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Air\TravelProductInformation', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation);
         $this->assertEquals('200117', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightDate->departureDate);
+        $this->assertEquals('200117', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightDate->arrivalDate);
         $this->assertEquals('BRU', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->boardPointDetails->trueLocationId);
         $this->assertEquals('LGW', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->offpointDetails->trueLocationId);
         $this->assertEquals('123', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightIdentification->flightNumber);

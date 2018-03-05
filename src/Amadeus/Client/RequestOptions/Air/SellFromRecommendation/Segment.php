@@ -50,6 +50,13 @@ class Segment extends LoadParamsFromArray
     public $departureDate;
 
     /**
+     * Arrival date
+     *
+     * @var \DateTime
+     */
+    public $arrivalDate;
+
+    /**
      * Departure location
      *
      * @var string

@@ -1231,6 +1231,7 @@ To book the chosen recommendation from the Fare_MasterPricerTravelBoardSearch re
                 'segments' => [
                     new Segment([
                         'departureDate' => \DateTime::createFromFormat('Ymd','20170120', new \DateTimeZone('UTC')),
+                        'arrivalDate' => \DateTime::createFromFormat('Ymd','20170120', new \DateTimeZone('UTC')),
                         'from' => 'BRU',
                         'to' => 'LGW',
                         'companyCode' => 'SN',
