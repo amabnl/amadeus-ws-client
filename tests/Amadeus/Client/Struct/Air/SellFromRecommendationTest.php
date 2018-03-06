@@ -48,7 +48,6 @@ class SellFromRecommendationTest extends BaseTestCase
                     'segments' => [
                         new Segment([
                             'departureDate' => \DateTime::createFromFormat('Ymd', '20170120', new \DateTimeZone('UTC')),
-                            'arrivalDate' => \DateTime::createFromFormat('Ymd', '20170120', new \DateTimeZone('UTC')),
                             'from' => 'BRU',
                             'to' => 'LGW',
                             'companyCode' => 'SN',
@@ -76,12 +75,62 @@ class SellFromRecommendationTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Struct\Air\SegmentInformation', $msg->itineraryDetails[0]->segmentInformation[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Air\TravelProductInformation', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation);
         $this->assertEquals('200117', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightDate->departureDate);
-        $this->assertEquals('200117', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightDate->arrivalDate);
         $this->assertEquals('BRU', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->boardPointDetails->trueLocationId);
         $this->assertEquals('LGW', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->offpointDetails->trueLocationId);
         $this->assertEquals('123', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightIdentification->flightNumber);
         $this->assertEquals('Y', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightIdentification->bookingClass);
         $this->assertEquals('SN', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->companyDetails->marketingCompany);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Air\RelatedproductInformation', $msg->itineraryDetails[0]->segmentInformation[0]->relatedproductInformation);
+        $this->assertEquals(RelatedproductInformation::STATUS_SELL_SEGMENT, $msg->itineraryDetails[0]->segmentInformation[0]->relatedproductInformation->statusCode);
+        $this->assertEquals(1, $msg->itineraryDetails[0]->segmentInformation[0]->relatedproductInformation->quantity);
+    }
+
+    public function testCanMakeBaseSellFromRecommendationWithOptionalsMessage()
+    {
+        $opt = new AirSellFromRecommendationOptions([
+            'itinerary' => [
+                new Itinerary([
+                    'from' => 'SFO',
+                    'to' => 'NYC',
+                    'segments' => [
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('Ymd Hi','20180315 1540', new \DateTimeZone('UTC')),
+                            'arrivalDate' => \DateTime::createFromFormat('Ymd Hi','20180316 0010', new \DateTimeZone('UTC')),
+                            'from' => 'SFO',
+                            'to' => 'JFK',
+                            'companyCode' => 'AA',
+                            'flightNumber' => '20',
+                            'bookingClass' => 'S',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_SELL_SEGMENT
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new SellFromRecommendation($opt);
+
+        $this->assertEquals(1, count($msg->itineraryDetails));
+        $this->assertEquals(MessageFunctionDetails::MSGFUNC_LOWEST_FARE, $msg->messageActionDetails->messageFunctionDetails->messageFunction);
+        $this->assertEquals(MessageFunctionDetails::MSGFUNC_CANCEL_IF_UNSUCCESSFUL, $msg->messageActionDetails->messageFunctionDetails->additionalMessageFunction);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Air\ItineraryDetails', $msg->itineraryDetails[0]);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Air\Message', $msg->itineraryDetails[0]->message);
+        $this->assertEquals(MessageFunctionDetails::MSGFUNC_LOWEST_FARE, $msg->itineraryDetails[0]->message->messageFunctionDetails->messageFunction);
+        $this->assertEquals('SFO', $msg->itineraryDetails[0]->originDestinationDetails->origin);
+        $this->assertEquals('NYC', $msg->itineraryDetails[0]->originDestinationDetails->destination);
+        $this->assertEquals(1, count($msg->itineraryDetails[0]->segmentInformation));
+        $this->assertInstanceOf('Amadeus\Client\Struct\Air\SegmentInformation', $msg->itineraryDetails[0]->segmentInformation[0]);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Air\TravelProductInformation', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation);
+        $this->assertEquals('150318', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightDate->departureDate);
+        $this->assertEquals('1540', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightDate->departureTime);
+        $this->assertEquals('160318', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightDate->arrivalDate);
+        $this->assertEquals('0010', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightDate->arrivalTime);
+        $this->assertEquals('SFO', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->boardPointDetails->trueLocationId);
+        $this->assertEquals('JFK', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->offpointDetails->trueLocationId);
+        $this->assertEquals('20', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightIdentification->flightNumber);
+        $this->assertEquals('S', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->flightIdentification->bookingClass);
+        $this->assertEquals('AA', $msg->itineraryDetails[0]->segmentInformation[0]->travelProductInformation->companyDetails->marketingCompany);
         $this->assertInstanceOf('Amadeus\Client\Struct\Air\RelatedproductInformation', $msg->itineraryDetails[0]->segmentInformation[0]->relatedproductInformation);
         $this->assertEquals(RelatedproductInformation::STATUS_SELL_SEGMENT, $msg->itineraryDetails[0]->segmentInformation[0]->relatedproductInformation->statusCode);
         $this->assertEquals(1, $msg->itineraryDetails[0]->segmentInformation[0]->relatedproductInformation->quantity);
