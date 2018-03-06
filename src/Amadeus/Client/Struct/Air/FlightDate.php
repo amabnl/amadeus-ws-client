@@ -63,8 +63,9 @@ class FlightDate
      * FlightDate constructor.
      *
      * @param string|\DateTime $departureDate in format DDMMYY or \DateTime
+     * @param string|\DateTime|null $arrivalDate
      */
-    public function __construct($departureDate)
+    public function __construct($departureDate, $arrivalDate = null)
     {
         if (!($departureDate instanceof \DateTime)) {
             $this->departureDate = $departureDate;
@@ -74,6 +75,10 @@ class FlightDate
             if ($time !== "0000") {
                 $this->departureTime = $time;
             }
+        }
+
+        if ($arrivalDate instanceof \DateTime) {
+            $this->setArrivalDate($arrivalDate);
         }
     }
 

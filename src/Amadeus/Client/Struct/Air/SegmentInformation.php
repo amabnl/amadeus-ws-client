@@ -55,7 +55,8 @@ class SegmentInformation
             $seg->to,
             $seg->companyCode,
             $seg->flightNumber,
-            $seg->bookingClass
+            $seg->bookingClass,
+            $seg->arrivalDate
         );
 
         $this->relatedproductInformation = new RelatedproductInformation(

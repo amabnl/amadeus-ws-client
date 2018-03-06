@@ -131,10 +131,11 @@ class TravelProductInformation
      * @param string $company
      * @param string $flightNumber
      * @param string $bookingClass
+     * @param \DateTime|null $arrivalDate
      */
-    public function __construct($departureDate, $from, $to, $company, $flightNumber, $bookingClass)
+    public function __construct($departureDate, $from, $to, $company, $flightNumber, $bookingClass, $arrivalDate = null)
     {
-        $this->flightDate = new FlightDate($departureDate);
+        $this->flightDate = new FlightDate($departureDate, $arrivalDate);
         $this->boardPointDetails = new PointDetails($from);
         $this->offpointDetails = new PointDetails($to);
         $this->companyDetails = new CompanyDetails($company);
