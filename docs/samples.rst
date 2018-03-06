@@ -1231,12 +1231,43 @@ To book the chosen recommendation from the Fare_MasterPricerTravelBoardSearch re
                 'segments' => [
                     new Segment([
                         'departureDate' => \DateTime::createFromFormat('Ymd','20170120', new \DateTimeZone('UTC')),
-                        'arrivalDate' => \DateTime::createFromFormat('Ymd','20170120', new \DateTimeZone('UTC')),
                         'from' => 'BRU',
                         'to' => 'LGW',
                         'companyCode' => 'SN',
                         'flightNumber' => '123',
                         'bookingClass' => 'Y',
+                        'nrOfPassengers' => 1,
+                        'statusCode' => Segment::STATUS_SELL_SEGMENT
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $sellResult = $client->airSellFromRecommendation($opt);
+
+To book the chosen recommendation with specifying segment's arrival date, which is not mandatory but it may help with flights that are overnight.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
+    use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Segment;
+
+    $opt = new AirSellFromRecommendationOptions([
+        'itinerary' => [
+            new Itinerary([
+                'from' => 'SFO',
+                'to' => 'NYC',
+                'segments' => [
+                    new Segment([
+                        'departureDate' => \DateTime::createFromFormat('Ymd Hi','20180315 1540', new \DateTimeZone('UTC')),
+                        'arrivalDate' => \DateTime::createFromFormat('Ymd Hi','20180316 0010', new \DateTimeZone('UTC')),
+                        'from' => 'SFO',
+                        'to' => 'JFK',
+                        'companyCode' => 'AA',
+                        'flightNumber' => '20',
+                        'bookingClass' => 'S',
                         'nrOfPassengers' => 1,
                         'statusCode' => Segment::STATUS_SELL_SEGMENT
                     ])
