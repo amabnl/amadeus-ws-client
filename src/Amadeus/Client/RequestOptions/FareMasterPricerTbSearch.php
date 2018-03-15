@@ -181,4 +181,9 @@ class FareMasterPricerTbSearch extends MpBaseOptions
      * @var int
      */
     public $maxLayoverPerConnectionMinutes;
+
+    /**
+     * @var Fare\MPFeeOption[]
+     */
+    public $feeOption = [];
 }

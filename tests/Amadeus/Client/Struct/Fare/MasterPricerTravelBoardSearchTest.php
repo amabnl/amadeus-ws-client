@@ -22,11 +22,19 @@
 
 namespace Test\Amadeus\Client\Struct\Fare;
 
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\AssociatedAmounts;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\CarrierFeeDetails;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\DataTypeInformation;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeDetails;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeInfo;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeTypeInfo;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFCriteria;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFOtherCriteria;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\MonetaryDetails;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
 use Amadeus\Client\RequestOptions\Fare\MPDate;
 use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
+use Amadeus\Client\RequestOptions\Fare\MPFeeOption;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\Fare\MPLocation;
 use Amadeus\Client\RequestOptions\Fare\MPPassenger;
@@ -505,7 +513,48 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertNull($message->itinerary[0]->arrivalLocalization->arrivalPointDetails);
     }
 
+    public function testCanMakeMasterPricerMessageWithFeeOption()
+    {
+        $opt            = new FareMasterPricerTbSearch();
+        $opt->feeOption = [
+            new MPFeeOption([
+                'feeTypeInfo' => new FeeTypeInfo([
+                        'carrierFeeDetails' => new CarrierFeeDetails([
+                            'type' => CarrierFeeDetails::TYPE_TICKETING_FEES
+                        ])
+                    ]
+                ),
+                'feeDetails'  => [
+                    new FeeDetails([
+                        'feeInfo' => new FeeInfo([
+                            'dataTypeInformation' => new DataTypeInformation([
+                                'subType' => DataTypeInformation::SUB_TYPE_FARE_COMPONENT_AMOUNT,
+                                'option'  => DataTypeInformation::OPTION_MANUALLY_INCLUDED
+                            ])
+                        ]),
+                        'associatedAmounts' => new AssociatedAmounts([
+                            'monetaryDetails' => [
+                                new MonetaryDetails(
+                                    [
+                                        'typeQualifier' => MonetaryDetails::TYPE_QUALIFIER_ASSOCIATED_FEE,
+                                        'amount'        => 20.00
+                                    ]
+                                )
+                            ]
+                        ])
+                    ])
+                ]
+            ])
+        ];
 
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertEquals('OB', $message->feeOption[0]->feeTypeInfo->carrierFeeDetails->type);
+        $this->assertEquals('FCA', $message->feeOption[0]->feeDetails[0]->feeInfo->dataTypeInformation->subType);
+        $this->assertEquals('IN', $message->feeOption[0]->feeDetails[0]->feeInfo->dataTypeInformation->option);
+        $this->assertEquals('C', $message->feeOption[0]->feeDetails[0]->associatedAmounts->monetaryDetails[0]->typeQualifier);
+        $this->assertEquals(20.00, $message->feeOption[0]->feeDetails[0]->associatedAmounts->monetaryDetails[0]->amount);
+    }
 
     public function testCanMakeMessageWithFlightType()
     {
