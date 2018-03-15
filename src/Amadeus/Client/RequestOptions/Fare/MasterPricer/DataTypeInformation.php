@@ -36,10 +36,10 @@ class DataTypeInformation extends LoadParamsFromArray
     const SUB_TYPE_FARE_COMPONENT_AMOUNT = "FCA";
     const SUB_TYPE_UNKNOWN = "UNK";
 
-    CONST OPTION_CARRIER_SERVICE = "CS";
-    CONST OPTION_EXEMPTED = "EX";
-    CONST OPTION_MANUALLY_INCLUDED = "IN";
-    CONST OPTION_INDUSTRY_SERVICE = "IS";
+    const OPTION_CARRIER_SERVICE = "CS";
+    const OPTION_EXEMPTED = "EX";
+    const OPTION_MANUALLY_INCLUDED = "IN";
+    const OPTION_INDUSTRY_SERVICE = "IS";
     
     /**
      * Carrier fee code
