@@ -22,12 +22,7 @@
 
 namespace Test\Amadeus\Client\Struct\Fare\MasterPricer;
 
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\AssociatedAmounts;
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\CarrierFeeDetails;
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\DataTypeInformation;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeDetails;
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeInfo;
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeTypeInfo;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\MonetaryDetails;
 use Amadeus\Client\RequestOptions\Fare\MPFeeOption;
 use Amadeus\Client\Struct\Fare\MasterPricer\FeeOption;
@@ -37,37 +32,25 @@ use Test\Amadeus\BaseTestCase;
  * FeeOptionTest
  *
  * @package Test\Amadeus\Client\Struct\Fare\MasterPricer
- * @author Friedemann Schmuhl <friedemann@schmuhl.eu>
+ * @author  Friedemann Schmuhl <friedemann@schmuhl.eu>
  */
 class FeeOptionTest extends BaseTestCase
 {
     public function testCanCreate()
     {
         $feeOptionRequest = new MPFeeOption([
-                'feeTypeInfo' => new FeeTypeInfo([
-                        'carrierFeeDetails' => new CarrierFeeDetails([
-                            'type' => CarrierFeeDetails::TYPE_TICKETING_FEES
-                        ])
-                    ]
-                ),
-                'feeDetails'  => [
+                'type'       => MPFeeOption::TYPE_TICKETING_FEES,
+                'feeDetails' => [
                     new FeeDetails([
-                        'feeInfo'           => new FeeInfo([
-                            'dataTypeInformation' => new DataTypeInformation([
-                                'subType' => DataTypeInformation::SUB_TYPE_FARE_COMPONENT_AMOUNT,
-                                'option'  => DataTypeInformation::OPTION_MANUALLY_INCLUDED
-                            ])
-                        ]),
-                        'associatedAmounts' => new AssociatedAmounts([
-                            'monetaryDetails' => [
-                                new MonetaryDetails(
-                                    [
-                                        'typeQualifier' => MonetaryDetails::TYPE_QUALIFIER_ASSOCIATED_FEE,
-                                        'amount'        => 20.00
-                                    ]
-                                )
-                            ]
-                        ])
+                        'subType'         => FeeDetails::SUB_TYPE_FARE_COMPONENT_AMOUNT,
+                        'option'          => FeeDetails::OPTION_MANUALLY_INCLUDED,
+                        'monetaryDetails' => [
+                            new MonetaryDetails(
+                                [
+                                    'amount' => 20.00
+                                ]
+                            )
+                        ]
                     ])
                 ]
             ]

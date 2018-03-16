@@ -49,10 +49,10 @@ class FeeDetails
      */
     public function __construct(FeeDetailsRequest $feeDetail)
     {
-        $this->feeInfo = new FeeInfo($feeDetail->feeInfo);
+        $this->feeInfo = new FeeInfo($feeDetail);
 
-        if (!is_null($feeDetail->associatedAmounts) && !is_null($feeDetail->associatedAmounts->monetaryDetails)) {
-            $this->associatedAmounts = new AssociatedAmounts($feeDetail->associatedAmounts->monetaryDetails);
+        if (!is_null($feeDetail->monetaryDetails)) {
+            $this->associatedAmounts = new AssociatedAmounts($feeDetail->monetaryDetails);
         }
     }
 }

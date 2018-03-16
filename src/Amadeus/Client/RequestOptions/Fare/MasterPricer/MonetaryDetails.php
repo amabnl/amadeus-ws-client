@@ -36,10 +36,11 @@ class MonetaryDetails extends LoadParamsFromArray
 
     /**
      * Qualifier
+     * self::TYPE_QUALIFIER_*
      *
      * @var string
      */
-    public $typeQualifier;
+    public $typeQualifier = self::TYPE_QUALIFIER_ASSOCIATED_FEE;
 
     /**
      * Amount

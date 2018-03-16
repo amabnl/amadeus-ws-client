@@ -22,8 +22,6 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\CarrierFeeDetails as CarrierFeeDetailsRequest;
-
 /**
  * CarrierFeeDetails
  *
@@ -40,10 +38,10 @@ class CarrierFeeDetails
     /**
      * CarrierFeeDetails constructor.
      *
-     * @param CarrierFeeDetailsRequest $carrierFeeDetails
+     * @param string $type
      */
-    public function __construct(CarrierFeeDetailsRequest $carrierFeeDetails)
+    public function __construct($type)
     {
-        $this->type = $carrierFeeDetails->type;
+        $this->type = $type;
     }
 }

@@ -55,7 +55,7 @@ class FeeOption
 
     protected function loadFeeTypeInfo(MPFeeOption $feeOption)
     {
-        $this->feeTypeInfo = new FeeTypeInfo(new CarrierFeeDetails($feeOption->feeTypeInfo->carrierFeeDetails));
+        $this->feeTypeInfo = new FeeTypeInfo(new CarrierFeeDetails($feeOption->type));
     }
 
     private function loadFeeDetails(MPFeeOption $feeOption)

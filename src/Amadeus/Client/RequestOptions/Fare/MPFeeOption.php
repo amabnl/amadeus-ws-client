@@ -24,7 +24,6 @@ namespace Amadeus\Client\RequestOptions\Fare;
 
 use Amadeus\Client\LoadParamsFromArray;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeDetails;
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeTypeInfo;
 
 /**
  * MasterPricer FeeOption request settings
@@ -34,12 +33,16 @@ use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeTypeInfo;
  */
 class MPFeeOption extends LoadParamsFromArray
 {
+    const TYPE_BOOKING_FEES = "OA";
+    const TYPE_TICKETING_FEES = "OB";
+    const TYPE_SERVICE_FEES = "OC";
+
     /**
-     * Nature of the fee (OB,OC,..)
+     * Carrier fee type.
      *
-     * @var FeeTypeInfo
+     * @var string
      */
-    public $feeTypeInfo;
+    public $type;
 
     /**
      * Details for each fee.

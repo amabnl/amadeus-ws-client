@@ -22,7 +22,7 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\DataTypeInformation as DataTypeInformationRequest;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeDetails;
 
 /**
  * DataTypeInformation
@@ -49,13 +49,13 @@ class DataTypeInformation
     /**
      * DataTypeInformation constructor.
      *
-     * @param DataTypeInformationRequest $dataTypeInformation
+     * @param FeeDetails $feeDetails
      */
-    public function __construct(DataTypeInformationRequest $dataTypeInformation)
+    public function __construct(FeeDetails $feeDetails)
     {
-        $this->subType = $dataTypeInformation->subType;
-        if (!is_null($dataTypeInformation->option)) {
-            $this->option = $dataTypeInformation->option;
+        $this->subType = $feeDetails->subType;
+        if (!is_null($feeDetails->option)) {
+            $this->option = $feeDetails->option;
         }
     }
 }

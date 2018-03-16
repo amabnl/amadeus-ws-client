@@ -32,17 +32,37 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class FeeDetails extends LoadParamsFromArray
 {
+    const SUB_TYPE_ALL = "A";
+    const SUB_TYPE_FARE_COMPONENT_AMOUNT = "FCA";
+    const SUB_TYPE_UNKNOWN = "UNK";
+
+    const OPTION_CARRIER_SERVICE = "CS";
+    const OPTION_EXEMPTED = "EX";
+    const OPTION_MANUALLY_INCLUDED = "IN";
+    const OPTION_INDUSTRY_SERVICE = "IS";
+
     /**
-     * Fee information
+     * Carrier fee code
      *
-     * @var FeeInfo
+     * self::SUB_TYPE_*
+     *
+     * @var string
      */
-    public $feeInfo;
+    public $subType;
+
+    /**
+     * Status (automated, manually added, exempted). Default is automated
+     * self::OPTION_*
+     *
+     * @var string
+     */
+    public $option;
 
     /**
      * Associated amounts : amounts to take into account to calculate fee.
      *
-     * @var AssociatedAmounts
+     * @var MonetaryDetails[]
      */
-    public $associatedAmounts;
+    public $monetaryDetails;
+
 }
