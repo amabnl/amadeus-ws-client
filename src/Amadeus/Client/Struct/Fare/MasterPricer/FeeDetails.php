@@ -45,7 +45,7 @@ class FeeDetails
     /**
      * FlightDetails constructor.
      *
-     * @param $feeDetail
+     * @param FeeDetailsRequest $feeDetail
      */
     public function __construct(FeeDetailsRequest $feeDetail)
     {

@@ -64,5 +64,4 @@ class FeeDetails extends LoadParamsFromArray
      * @var MonetaryDetails[]
      */
     public $monetaryDetails;
-
 }

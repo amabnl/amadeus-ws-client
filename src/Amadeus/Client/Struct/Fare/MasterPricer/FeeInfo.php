@@ -22,8 +22,7 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeDetails;
-
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeDetails as FeeDetailsRequest;
 
 /**
  * FeeInfo
@@ -41,10 +40,10 @@ class FeeInfo
     /**
      * FeeInfo constructor.
      *
-     * @param FeeDetails $feeDetails
+     * @param FeeDetailsRequest $feeDetails
      */
-    public function __construct(FeeDetails $feeDetails)
+    public function __construct(FeeDetailsRequest $feeDetails)
     {
-         $this->dataTypeInformation = new DataTypeInformation($feeDetails);
+        $this->dataTypeInformation = new DataTypeInformation($feeDetails);
     }
 }
