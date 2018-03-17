@@ -70,5 +70,6 @@ class MonetaryDetails
         $this->typeQualifier = $monetaryDetails->typeQualifier;
         $this->amount        = $monetaryDetails->amount;
         $this->currency      = $monetaryDetails->currency;
+        $this->location      = $monetaryDetails->location;
     }
 }
