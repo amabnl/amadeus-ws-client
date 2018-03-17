@@ -98,7 +98,7 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
      */
     public $combinationFareFamilies;
     /**
-     * @var mixed
+     * @var MasterPricer\FeeOption[]
      */
     public $feeOption;
     /**
@@ -174,6 +174,8 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
         $this->loadFareFamilies($options->fareFamilies);
 
         $this->loadCustomerRefs($options->dkNumber);
+
+        $this->loadFeeOptions($options->feeOption);
     }
 
     /**
@@ -234,6 +236,15 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
                 $dkNumber,
                 MasterPricer\CustomerReferences::QUAL_AGENCY_GROUPING_ID
             );
+        }
+    }
+
+    private function loadFeeOptions($feeOptions)
+    {
+        if (!is_null($feeOptions)) {
+            foreach ($feeOptions as $feeOption) {
+                $this->feeOption[] = new MasterPricer\FeeOption($feeOption);
+            }
         }
     }
 }
