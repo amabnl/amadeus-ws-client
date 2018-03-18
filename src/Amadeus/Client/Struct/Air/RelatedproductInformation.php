@@ -40,6 +40,10 @@ class RelatedproductInformation
     const STATUS_SELL_REFUSED_UN = "UN";
     const STATUS_CANCEL_ACCEPTED = "XX";
 
+    //Constants for RebookAirSegment:
+    const STATUS_FORCE_BOOKING = "FB";
+    const STATUS_FORCE_GROUP = "FG";
+
     /**
      * @var int
      */

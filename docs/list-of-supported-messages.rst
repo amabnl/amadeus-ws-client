@@ -31,6 +31,7 @@ This is the list of messages that are at least partially supported at this time:
 - Air_SellFromRecommendation
 - Air_FlightInfo
 - Air_RetrieveSeatMap
+- Air_RebookAirSegment
 - FOP_CreateFormOfPayment
 - FOP_ValidateFOP
 - Ticket_CreateTSTFromPricing
@@ -82,7 +83,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Fare_PriceUpsellPNR
 - Fare_GetFareFamilyDescription
 - Fare_RebookAndCreateTST
-- Air_RebookAirSegment
 - Air_TLAGetAvailability
 - PNR_CreateAuxiliarySegment
 - PointOfRef_CategoryList

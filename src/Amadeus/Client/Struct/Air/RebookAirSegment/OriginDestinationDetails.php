@@ -20,47 +20,40 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Air;
+namespace Amadeus\Client\Struct\Air\RebookAirSegment;
 
-use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Itinerary;
+use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary;
+use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestination;
 
 /**
- * ItineraryDetails
+ * OriginDestinationDetails
  *
- * @package Amadeus\Client\Struct\Air
- * @author dieter <dermikagh@gmail.com>
+ * @package Amadeus\Client\Struct\Air\RebookAirSegment
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class ItineraryDetails
+class OriginDestinationDetails
 {
     /**
-     * @var OriginDestinationDetails
+     * @var OriginDestination
      */
-    public $originDestinationDetails;
+    public $originDestination;
 
     /**
-     * @var Message
+     * @var ItineraryInfo[]
      */
-    public $message;
+    public $itineraryInfo = [];
 
     /**
-     * @var SegmentInformation[]
-     */
-    public $segmentInformation = [];
-
-    /**
-     * ItineraryDetails constructor.
+     * OriginDestinationDetails constructor.
      *
      * @param Itinerary $itinerary
      */
-    public function __construct($itinerary)
+    public function __construct(Itinerary $itinerary)
     {
-        $this->originDestinationDetails = new OriginDestinationDetails(
-            $itinerary->from,
-            $itinerary->to
-        );
-        $this->message = new Message(MessageFunctionDetails::MSGFUNC_LOWEST_FARE);
+        $this->originDestination = new OriginDestination($itinerary->from, $itinerary->to);
+
         foreach ($itinerary->segments as $segment) {
-            $this->segmentInformation[] = new SegmentInformation($segment);
+            $this->itineraryInfo[] = new ItineraryInfo($segment);
         }
     }
 }

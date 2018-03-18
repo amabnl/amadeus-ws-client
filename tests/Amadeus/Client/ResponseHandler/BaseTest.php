@@ -408,6 +408,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("UNABLE TO SATISFY, NEED CONFIRMED FLIGHT STATUS", $result->messages[0]->text);
     }
 
+    public function testCanHandleAirRebookAirSegmentError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyAirRebookAirSegmentResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Air_RebookAirSegment');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('ZZZ', $result->messages[0]->code);
+        $this->assertEquals("UNABLE TO REPLICATE - INFORMATIONAL SEGMENT", $result->messages[0]->text);
+    }
+
     public function testCanFindAirFlightInfoError()
     {
         $respHandler = new ResponseHandler\Base();
