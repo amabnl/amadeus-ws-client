@@ -20,36 +20,36 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Air;
+namespace Amadeus\Client\Struct\Air\RebookAirSegment;
 
 use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Segment as SegmentOptions;
 
 /**
- * SegmentInformation
+ * ItineraryInfo
  *
- * @package Amadeus\Client\Struct\Air
- * @author dieter <dermikagh@gmail.com>
+ * @package Amadeus\Client\Struct\Air\RebookAirSegment
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class SegmentInformation
+class ItineraryInfo
 {
     /**
-     * @var TravelProductInformation
+     * @var FlightDetails
      */
-    public $travelProductInformation;
+    public $flightDetails;
 
     /**
-     * @var RelatedproductInformation
+     * @var RelatedFlightInfo
      */
-    public $relatedproductInformation;
+    public $relatedFlightInfo;
 
     /**
-     * SegmentInformation constructor.
+     * ItineraryInfo constructor.
      *
      * @param SegmentOptions $seg
      */
     public function __construct(SegmentOptions $seg)
     {
-        $this->travelProductInformation = new TravelProductInformation(
+        $this->flightDetails = new FlightDetails(
             $seg->departureDate,
             $seg->from,
             $seg->to,
@@ -61,7 +61,7 @@ class SegmentInformation
             $seg->dateVariation
         );
 
-        $this->relatedproductInformation = new RelatedproductInformation(
+        $this->relatedFlightInfo = new RelatedFlightInfo(
             $seg->nrOfPassengers,
             $seg->statusCode
         );

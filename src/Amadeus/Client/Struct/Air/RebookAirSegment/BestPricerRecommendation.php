@@ -20,36 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Air\SellFromRecommendation;
-
-use Amadeus\Client\LoadParamsFromArray;
+namespace Amadeus\Client\Struct\Air\RebookAirSegment;
 
 /**
- * Itinerary
+ * BestPricerRecommendation
  *
- * @package Amadeus\Client\RequestOptions\Air\SellFromRecommendation
- * @author dieter <dermikagh@gmail.com>
+ * @package Amadeus\Client\Struct\Air\RebookAirSegment
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class Itinerary extends LoadParamsFromArray
+class BestPricerRecommendation
 {
     /**
-     * Departure location
-     *
-     * @var string
+     * @var SelectionDetails
      */
-    public $from;
+    public $selectionDetails;
 
     /**
-     * Arrival location
+     * BestPricerRecommendation constructor.
      *
-     * @var string
+     * @param int $optionInformation
      */
-    public $to;
-
-    /**
-     * Flight segments
-     *
-     * @var Segment[]
-     */
-    public $segments = [];
+    public function __construct($optionInformation)
+    {
+        $this->selectionDetails = new SelectionDetails($optionInformation);
+    }
 }

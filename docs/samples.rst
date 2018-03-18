@@ -1452,6 +1452,218 @@ Complex example: Seat Map with Prices
         ])
     );
 
+--------------------
+Air_RebookAirSegment
+--------------------
+
+Class Rebook: Rebook a segment from class F to C:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRebookAirSegmentOptions;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Segment;
+
+    $rebookResponse = $client->airRebookAirSegment(
+        new AirRebookAirSegmentOptions([
+            'itinerary' => [
+                new Itinerary([
+                    'from' => 'FRA',
+                    'to' => 'BKK',
+                    'segments' => [
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                            'dateVariation' => 1,
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'F',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_CANCEL_SEGMENT
+                        ]),
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalTime' =>  \DateTime::createFromFormat('His','141000', new \DateTimeZone('UTC')),
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'C',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_SELL_SEGMENT
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+    );
+
+
+Class Rebook after pricing PNR with lower fare: This example is the same as the previous one, but in the case where rebook is performed following a PricePNRWithLowerFares request, and the reference of the recommendation selected by the user (number 2) is transmitted in the rebook:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRebookAirSegmentOptions;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Segment;
+
+    $rebookResponse = $client->airRebookAirSegment(
+        new AirRebookAirSegmentOptions([
+            'bestPricerOption' => 2,
+            'itinerary' => [
+                new Itinerary([
+                    'from' => 'FRA',
+                    'to' => 'BKK',
+                    'segments' => [
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                            'dateVariation' => 1,
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'F',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_CANCEL_SEGMENT
+                        ]),
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalTime' =>  \DateTime::createFromFormat('His','141000', new \DateTimeZone('UTC')),
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'C',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_SELL_SEGMENT
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+    );
+
+Force Rebook: This example is for the Force Rebook of the second segment from F Class to C Class:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRebookAirSegmentOptions;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Segment;
+
+    $rebookResponse = $client->airRebookAirSegment(
+        new AirRebookAirSegmentOptions([
+            'itinerary' => [
+                new Itinerary([
+                    'from' => 'FRA',
+                    'to' => 'BKK',
+                    'segments' => [
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                            'dateVariation' => 1,
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'F',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_CANCEL_SEGMENT
+                        ]),
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalTime' =>  \DateTime::createFromFormat('His','141000', new \DateTimeZone('UTC')),
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'C',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_FORCE_BOOKING
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+    );
+
+Rebook Two Segment Classes: This example shows the rebook of LH 744 from class F to class C and LX 182 from class J to class C:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRebookAirSegmentOptions;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Segment;
+
+    $rebookResponse = $client->airRebookAirSegment(
+        new AirRebookAirSegmentOptions([
+            'itinerary' => [
+                new Itinerary([
+                    'from' => 'FRA',
+                    'to' => 'BKK',
+                    'segments' => [
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                            'dateVariation' => 1,
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'F',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_CANCEL_SEGMENT
+                        ]),
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                            'dateVariation' => 1,
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'C',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_SELL_SEGMENT
+                        ])
+                    ]
+                ]),
+                new Itinerary([
+                    'from' => 'BKK',
+                    'to' => 'SIN',
+                    'segments' => [
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040309153000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309184500', new \DateTimeZone('UTC')),
+                            'dateVariation' => 0,
+                            'from' => 'BKK',
+                            'to' => 'SIN',
+                            'companyCode' => 'LX',
+                            'flightNumber' => '182',
+                            'bookingClass' => 'J',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_CANCEL_SEGMENT
+                        ]),
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040309153000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309184500', new \DateTimeZone('UTC')),
+                            'dateVariation' => 0,
+                            'from' => 'BKK',
+                            'to' => 'SIN',
+                            'companyCode' => 'LX',
+                            'flightNumber' => '182',
+                            'bookingClass' => 'C',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_SELL_SEGMENT
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+    );
 
 ******
 Ticket

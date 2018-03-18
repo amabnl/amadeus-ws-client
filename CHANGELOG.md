@@ -1,6 +1,7 @@
 # Release 1.7.0 (UNRELEASED)
 * Added support for Arrival date and time in ``Air_SellFromRecommendation`` (https://github.com/amabnl/amadeus-ws-client/pull/153) - Artem Zakharchenko
-* Added support for FeeOption in ``MasterPricerTravelBoardSearch``
+* Added support for FeeOption in ``MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/157) - Friedemann Schmuhl
+* Implemented ``Air_RebookAirSegment`` (https://github.com/amabnl/amadeus-ws-client/issues/149)
 
 # Release 1.6.0 (7 February 2018)
 * Recognize Passenger-level error messages in ``PNR_Reply`` responses (https://github.com/amabnl/amadeus-ws-client/issues/139)

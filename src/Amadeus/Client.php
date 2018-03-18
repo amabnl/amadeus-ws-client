@@ -216,6 +216,8 @@ class Client extends Base
      * @param RequestOptions\PnrRetrieveOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
      * @throws Exception
      */
     public function pnrRetrieve(RequestOptions\PnrRetrieveOptions $options, $messageOptions = [])
@@ -231,6 +233,9 @@ class Client extends Base
      * @param RequestOptions\PnrCreatePnrOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function pnrCreatePnr(RequestOptions\PnrCreatePnrOptions $options, $messageOptions = [])
     {
@@ -247,6 +252,9 @@ class Client extends Base
      * @param RequestOptions\PnrAddMultiElementsOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function pnrAddMultiElements(RequestOptions\PnrAddMultiElementsOptions $options, $messageOptions = [])
     {
@@ -265,6 +273,8 @@ class Client extends Base
      * @param RequestOptions\PnrRetrieveAndDisplayOptions $options Amadeus Record Locator for PNR
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
      * @throws Exception
      **/
     public function pnrRetrieveAndDisplay(RequestOptions\PnrRetrieveAndDisplayOptions $options, $messageOptions = [])
@@ -280,6 +290,9 @@ class Client extends Base
      * @param RequestOptions\PnrCancelOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function pnrCancel(RequestOptions\PnrCancelOptions $options, $messageOptions = [])
     {
@@ -294,6 +307,9 @@ class Client extends Base
      * @param RequestOptions\PnrDisplayHistoryOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function pnrDisplayHistory(RequestOptions\PnrDisplayHistoryOptions $options, $messageOptions = [])
     {
@@ -308,6 +324,9 @@ class Client extends Base
      * @param RequestOptions\PnrTransferOwnershipOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function pnrTransferOwnership(RequestOptions\PnrTransferOwnershipOptions $options, $messageOptions = [])
     {
@@ -322,6 +341,9 @@ class Client extends Base
      * @param RequestOptions\PnrNameChangeOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function pnrNameChange(RequestOptions\PnrNameChangeOptions $options, $messageOptions = [])
     {
@@ -338,6 +360,9 @@ class Client extends Base
      * @param RequestOptions\QueueListOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function queueList(RequestOptions\QueueListOptions $options, $messageOptions = [])
     {
@@ -352,6 +377,9 @@ class Client extends Base
      * @param RequestOptions\QueuePlacePnrOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function queuePlacePnr(RequestOptions\QueuePlacePnrOptions $options, $messageOptions = [])
     {
@@ -366,6 +394,9 @@ class Client extends Base
      * @param RequestOptions\QueueRemoveItemOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function queueRemoveItem(RequestOptions\QueueRemoveItemOptions $options, $messageOptions = [])
     {
@@ -380,6 +411,9 @@ class Client extends Base
      * @param RequestOptions\QueueMoveItemOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function queueMoveItem(RequestOptions\QueueMoveItemOptions $options, $messageOptions = [])
     {
@@ -394,6 +428,9 @@ class Client extends Base
      * @param RequestOptions\OfferCreateOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function offerCreate(RequestOptions\OfferCreateOptions $options, $messageOptions = [])
     {
@@ -410,6 +447,9 @@ class Client extends Base
      * @param RequestOptions\OfferVerifyOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function offerVerify(RequestOptions\OfferVerifyOptions $options, $messageOptions = [])
     {
@@ -424,6 +464,9 @@ class Client extends Base
      * @param RequestOptions\OfferConfirmAirOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function offerConfirmAir(RequestOptions\OfferConfirmAirOptions $options, $messageOptions = [])
     {
@@ -438,6 +481,9 @@ class Client extends Base
      * @param RequestOptions\OfferConfirmHotelOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function offerConfirmHotel(RequestOptions\OfferConfirmHotelOptions $options, $messageOptions = [])
     {
@@ -452,6 +498,9 @@ class Client extends Base
      * @param RequestOptions\OfferConfirmCarOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function offerConfirmCar(RequestOptions\OfferConfirmCarOptions $options, $messageOptions = [])
     {
@@ -466,6 +515,9 @@ class Client extends Base
      * @param RequestOptions\FareMasterPricerTbSearch $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function fareMasterPricerTravelBoardSearch(
         RequestOptions\FareMasterPricerTbSearch $options,
@@ -482,6 +534,9 @@ class Client extends Base
      * @param RequestOptions\FareMasterPricerCalendarOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function fareMasterPricerCalendar(
         RequestOptions\FareMasterPricerCalendarOptions $options,
@@ -498,6 +553,9 @@ class Client extends Base
      * @param RequestOptions\FarePricePnrWithBookingClassOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function farePricePnrWithBookingClass(
         RequestOptions\FarePricePnrWithBookingClassOptions $options,
@@ -514,6 +572,9 @@ class Client extends Base
      * @param RequestOptions\FarePricePnrWithLowerFaresOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function farePricePnrWithLowerFares(
         RequestOptions\FarePricePnrWithLowerFaresOptions $options,
@@ -530,6 +591,9 @@ class Client extends Base
      * @param RequestOptions\FarePricePnrWithLowestFareOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function farePricePnrWithLowestFare(
         RequestOptions\FarePricePnrWithLowestFareOptions $options,
@@ -546,6 +610,9 @@ class Client extends Base
      * @param RequestOptions\FareInformativePricingWithoutPnrOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function fareInformativePricingWithoutPnr(
         RequestOptions\FareInformativePricingWithoutPnrOptions $options,
@@ -562,6 +629,9 @@ class Client extends Base
      * @param RequestOptions\FareInformativeBestPricingWithoutPnrOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function fareInformativeBestPricingWithoutPnr(
         RequestOptions\FareInformativeBestPricingWithoutPnrOptions $options,
@@ -578,6 +648,9 @@ class Client extends Base
      * @param RequestOptions\FareCheckRulesOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function fareCheckRules(RequestOptions\FareCheckRulesOptions $options, $messageOptions = [])
     {
@@ -592,6 +665,9 @@ class Client extends Base
      * @param RequestOptions\FareGetFareRulesOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function fareGetFareRules(RequestOptions\FareGetFareRulesOptions $options, $messageOptions = [])
     {
@@ -606,6 +682,9 @@ class Client extends Base
      * @param RequestOptions\FareConvertCurrencyOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function fareConvertCurrency(RequestOptions\FareConvertCurrencyOptions $options, $messageOptions = [])
     {
@@ -620,6 +699,9 @@ class Client extends Base
      * @param RequestOptions\AirMultiAvailabilityOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function airMultiAvailability(
         RequestOptions\AirMultiAvailabilityOptions $options,
@@ -636,6 +718,9 @@ class Client extends Base
      * @param RequestOptions\AirSellFromRecommendationOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function airSellFromRecommendation(
         RequestOptions\AirSellFromRecommendationOptions $options,
@@ -652,6 +737,9 @@ class Client extends Base
      * @param RequestOptions\AirFlightInfoOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function airFlightInfo(RequestOptions\AirFlightInfoOptions $options, $messageOptions = [])
     {
@@ -666,10 +754,30 @@ class Client extends Base
      * @param RequestOptions\AirRetrieveSeatMapOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function airRetrieveSeatMap(RequestOptions\AirRetrieveSeatMapOptions $options, $messageOptions = [])
     {
         $msgName = 'Air_RetrieveSeatMap';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Air_RebookAirSegment
+     *
+     * @param RequestOptions\AirRebookAirSegmentOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function airRebookAirSegment(RequestOptions\AirRebookAirSegmentOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Air_RebookAirSegment';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
@@ -680,6 +788,9 @@ class Client extends Base
      * @param RequestOptions\CommandCrypticOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function commandCryptic(RequestOptions\CommandCrypticOptions $options, $messageOptions = [])
     {
@@ -694,6 +805,9 @@ class Client extends Base
      * @param RequestOptions\MiniRuleGetFromPricingRecOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function miniRuleGetFromPricingRec(
         RequestOptions\MiniRuleGetFromPricingRecOptions $options,
@@ -710,6 +824,9 @@ class Client extends Base
      * @param RequestOptions\MiniRuleGetFromPricingOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function miniRuleGetFromPricing(
         RequestOptions\MiniRuleGetFromPricingOptions $options,
@@ -726,6 +843,9 @@ class Client extends Base
      * @param RequestOptions\MiniRuleGetFromETicketOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function miniRuleGetFromETicket(
         RequestOptions\MiniRuleGetFromETicketOptions $options,
@@ -742,6 +862,9 @@ class Client extends Base
      * @param RequestOptions\InfoEncodeDecodeCityOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function infoEncodeDecodeCity(RequestOptions\InfoEncodeDecodeCityOptions $options, $messageOptions = [])
     {
@@ -756,6 +879,9 @@ class Client extends Base
      * @param RequestOptions\PointOfRefSearchOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function pointOfRefSearch(RequestOptions\PointOfRefSearchOptions $options, $messageOptions = [])
     {
@@ -771,6 +897,9 @@ class Client extends Base
      * @param RequestOptions\TicketCreateTstFromPricingOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketCreateTSTFromPricing(
         RequestOptions\TicketCreateTstFromPricingOptions $options,
@@ -787,6 +916,9 @@ class Client extends Base
      * @param RequestOptions\TicketCreateTsmFromPricingOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketCreateTSMFromPricing(
         RequestOptions\TicketCreateTsmFromPricingOptions $options,
@@ -803,6 +935,9 @@ class Client extends Base
      * @param RequestOptions\TicketCreateTsmFareElOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketCreateTSMFareElement(
         RequestOptions\TicketCreateTsmFareElOptions $options,
@@ -819,6 +954,9 @@ class Client extends Base
      * @param RequestOptions\TicketDeleteTstOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketDeleteTST(RequestOptions\TicketDeleteTstOptions $options, $messageOptions = [])
     {
@@ -833,6 +971,9 @@ class Client extends Base
      * @param RequestOptions\TicketDeleteTsmpOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketDeleteTSMP(RequestOptions\TicketDeleteTsmpOptions $options, $messageOptions = [])
     {
@@ -847,6 +988,9 @@ class Client extends Base
      * @param RequestOptions\TicketDisplayTstOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketDisplayTST(RequestOptions\TicketDisplayTstOptions $options, $messageOptions = [])
     {
@@ -861,6 +1005,9 @@ class Client extends Base
      * @param RequestOptions\TicketDisplayTsmpOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketDisplayTSMP(RequestOptions\TicketDisplayTsmpOptions $options, $messageOptions = [])
     {
@@ -875,6 +1022,9 @@ class Client extends Base
      * @param RequestOptions\TicketDisplayTsmFareElOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketDisplayTSMFareElement(
         RequestOptions\TicketDisplayTsmFareElOptions $options,
@@ -891,6 +1041,9 @@ class Client extends Base
      * @param RequestOptions\TicketCheckEligibilityOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketCheckEligibility(
         RequestOptions\TicketCheckEligibilityOptions $options,
@@ -907,6 +1060,9 @@ class Client extends Base
      * @param RequestOptions\TicketAtcShopperMpTbSearchOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketAtcShopperMasterPricerTravelBoardSearch(
         RequestOptions\TicketAtcShopperMpTbSearchOptions $options,
@@ -923,6 +1079,9 @@ class Client extends Base
      * @param RequestOptions\TicketRepricePnrWithBookingClassOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketRepricePnrWithBookingClass(
         RequestOptions\TicketRepricePnrWithBookingClassOptions $options,
@@ -939,6 +1098,9 @@ class Client extends Base
      * @param RequestOptions\TicketCancelDocumentOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketCancelDocument(
         RequestOptions\TicketCancelDocumentOptions $options,
@@ -955,6 +1117,9 @@ class Client extends Base
      * @param RequestOptions\TicketReissueConfirmedPricingOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketReissueConfirmedPricing(
         RequestOptions\TicketReissueConfirmedPricingOptions $options,
@@ -971,6 +1136,9 @@ class Client extends Base
      * @param RequestOptions\TicketProcessEDocOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function ticketProcessEDoc(RequestOptions\TicketProcessEDocOptions $options, $messageOptions = [])
     {
@@ -984,6 +1152,9 @@ class Client extends Base
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function docIssuanceIssueTicket(
         RequestOptions\DocIssuanceIssueTicketOptions $options,
@@ -1000,6 +1171,9 @@ class Client extends Base
      * @param RequestOptions\DocIssuanceIssueMiscDocOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function docIssuanceIssueMiscellaneousDocuments(
         RequestOptions\DocIssuanceIssueMiscDocOptions $options,
@@ -1016,6 +1190,9 @@ class Client extends Base
      * @param RequestOptions\DocIssuanceIssueCombinedOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function docIssuanceIssueCombined(
         RequestOptions\DocIssuanceIssueCombinedOptions $options,
@@ -1032,6 +1209,9 @@ class Client extends Base
      * @param RequestOptions\DocRefundInitRefundOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function docRefundInitRefund(
         RequestOptions\DocRefundInitRefundOptions $options,
@@ -1048,6 +1228,9 @@ class Client extends Base
      * @param RequestOptions\DocRefundUpdateRefundOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function docRefundUpdateRefund(
         RequestOptions\DocRefundUpdateRefundOptions $options,
@@ -1064,6 +1247,9 @@ class Client extends Base
      * @param RequestOptions\DocRefundProcessRefundOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function docRefundProcessRefund(
         RequestOptions\DocRefundProcessRefundOptions $options,
@@ -1081,6 +1267,9 @@ class Client extends Base
      * @param RequestOptions\FopCreateFopOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function fopCreateFormOfPayment(RequestOptions\FopCreateFopOptions $options, $messageOptions = [])
     {
@@ -1096,6 +1285,9 @@ class Client extends Base
      * @param RequestOptions\FopValidateFopOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function fopValidateFOP(RequestOptions\FopValidateFopOptions $options, $messageOptions = [])
     {
@@ -1110,6 +1302,9 @@ class Client extends Base
      * @param RequestOptions\PriceXplorerExtremeSearchOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function priceXplorerExtremeSearch(
         RequestOptions\PriceXplorerExtremeSearchOptions $options,
@@ -1126,6 +1321,9 @@ class Client extends Base
      * @param RequestOptions\SalesReportsDisplayQueryReportOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function salesReportsDisplayQueryReport(
         RequestOptions\SalesReportsDisplayQueryReportOptions $options,
@@ -1142,6 +1340,9 @@ class Client extends Base
      * @param RequestOptions\ServiceIntegratedPricingOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function serviceIntegratedPricing(
         RequestOptions\ServiceIntegratedPricingOptions $options,
@@ -1158,6 +1359,9 @@ class Client extends Base
      * @param RequestOptions\ServiceIntegratedCatalogueOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
      */
     public function serviceIntegratedCatalogue(
         RequestOptions\ServiceIntegratedCatalogueOptions $options,

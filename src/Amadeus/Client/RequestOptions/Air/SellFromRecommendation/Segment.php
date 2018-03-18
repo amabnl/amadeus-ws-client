@@ -32,6 +32,7 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class Segment extends LoadParamsFromArray
 {
+    //SellFromRecommendation and RebookAirSegment:
     const STATUS_SELL_SEGMENT = "NN";
     const STATUS_CONFIRMED = "HK";
     const STATUS_WAITLISTED = "HL";
@@ -42,19 +43,39 @@ class Segment extends LoadParamsFromArray
     const STATUS_SELL_REFUSED_UN = "UN";
     const STATUS_CANCEL_ACCEPTED = "XX";
 
+    //Specific for RebookAirSegment:
+    const STATUS_FORCE_BOOKING = "FB";
+    const STATUS_FORCE_GROUP = "FG";
+
     /**
-     * Departure date
+     * Departure date (& time)
      *
      * @var \DateTime
      */
     public $departureDate;
 
     /**
-     * Arrival date
+     * Arrival date (& time)
      *
      * @var \DateTime
      */
     public $arrivalDate;
+
+    /**
+     * Arrival Time
+     *
+     * Use this when you don't want to specify arrival date.
+     *
+     * @var \DateTime|string
+     */
+    public $arrivalTime;
+
+    /**
+     * To indicate the difference between first date and second date due to time zones.
+     *
+     * @var int
+     */
+    public $dateVariation;
 
     /**
      * Departure location
@@ -112,6 +133,9 @@ class Segment extends LoadParamsFromArray
      * UC Sell refused
      * UN Sell refused
      * XX Cancel accepted
+     *
+     * FB Force Booking
+     * FG Force Group
      *
      * @var string
      */

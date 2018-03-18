@@ -20,36 +20,16 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Air\SellFromRecommendation;
+namespace Amadeus\Client\RequestOptions\Air\RebookAirSegment;
 
-use Amadeus\Client\LoadParamsFromArray;
+use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Itinerary as SellFromRecommendationItinerary;
 
 /**
  * Itinerary
  *
- * @package Amadeus\Client\RequestOptions\Air\SellFromRecommendation
- * @author dieter <dermikagh@gmail.com>
+ * @package Amadeus\Client\RequestOptions\Air\RebookAirSegment
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class Itinerary extends LoadParamsFromArray
+class Itinerary extends SellFromRecommendationItinerary
 {
-    /**
-     * Departure location
-     *
-     * @var string
-     */
-    public $from;
-
-    /**
-     * Arrival location
-     *
-     * @var string
-     */
-    public $to;
-
-    /**
-     * Flight segments
-     *
-     * @var Segment[]
-     */
-    public $segments = [];
 }

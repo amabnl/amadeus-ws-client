@@ -2553,6 +2553,135 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendAirRebookAirSegment()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyairrebookairsegmentmessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Air\RebookAirSegment(
+            new Client\RequestOptions\AirRebookAirSegmentOptions([
+                'bestPricerOption' => 2,
+                'itinerary' => [
+                    new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary([
+                        'from' => 'FRA',
+                        'to' => 'BKK',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                                'dateVariation' => 1,
+                                'from' => 'FRA',
+                                'to' => 'BKK',
+                                'companyCode' => 'LH',
+                                'flightNumber' => '744',
+                                'bookingClass' => 'F',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_CANCEL_SEGMENT
+                            ])
+                        ]
+                    ]),
+                    new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary([
+                        'from' => 'FRA',
+                        'to' => 'BKK',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','00000000141000', new \DateTimeZone('UTC')),
+                                'from' => 'FRA',
+                                'to' => 'BKK',
+                                'companyCode' => 'LH',
+                                'flightNumber' => '744',
+                                'bookingClass' => 'C',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_SELL_SEGMENT
+                            ])
+                        ]
+                    ]),
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Air_RebookAirSegment', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Air_RebookAirSegment' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Air_RebookAirSegment')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->airRebookAirSegment(
+            new Client\RequestOptions\AirRebookAirSegmentOptions([
+                'bestPricerOption' => 2,
+                'itinerary' => [
+                    new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary([
+                        'from' => 'FRA',
+                        'to' => 'BKK',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                                'dateVariation' => 1,
+                                'from' => 'FRA',
+                                'to' => 'BKK',
+                                'companyCode' => 'LH',
+                                'flightNumber' => '744',
+                                'bookingClass' => 'F',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_CANCEL_SEGMENT
+                            ])
+                        ]
+                    ]),
+                    new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary([
+                        'from' => 'FRA',
+                        'to' => 'BKK',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','00000000141000', new \DateTimeZone('UTC')),
+                                'from' => 'FRA',
+                                'to' => 'BKK',
+                                'companyCode' => 'LH',
+                                'flightNumber' => '744',
+                                'bookingClass' => 'C',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_SELL_SEGMENT
+                            ])
+                        ]
+                    ]),
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanSendAirFlightInfo()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

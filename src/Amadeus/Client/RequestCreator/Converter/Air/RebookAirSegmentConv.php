@@ -20,36 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Air\SellFromRecommendation;
+namespace Amadeus\Client\RequestCreator\Converter\Air;
 
-use Amadeus\Client\LoadParamsFromArray;
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\AirRebookAirSegmentOptions;
+use Amadeus\Client\Struct;
 
 /**
- * Itinerary
+ * Air_RebookAirSegment Request Converter
  *
- * @package Amadeus\Client\RequestOptions\Air\SellFromRecommendation
- * @author dieter <dermikagh@gmail.com>
+ * @package Amadeus\Client\RequestCreator\Converter\Air
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class Itinerary extends LoadParamsFromArray
+class RebookAirSegmentConv extends BaseConverter
 {
     /**
-     * Departure location
-     *
-     * @var string
+     * @param AirRebookAirSegmentOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\Air\RebookAirSegment
      */
-    public $from;
-
-    /**
-     * Arrival location
-     *
-     * @var string
-     */
-    public $to;
-
-    /**
-     * Flight segments
-     *
-     * @var Segment[]
-     */
-    public $segments = [];
+    public function convert($requestOptions, $version)
+    {
+        return new Struct\Air\RebookAirSegment($requestOptions);
+    }
 }

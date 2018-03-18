@@ -62,23 +62,36 @@ class FlightDate
     /**
      * FlightDate constructor.
      *
-     * @param string|\DateTime $departureDate in format DDMMYY or \DateTime
-     * @param string|\DateTime|null $arrivalDate
+     * @param string|\DateTime|null $departureDate in format DDMMYY or \DateTime
+     * @param \DateTime|null $arrivalDate
+     * @param string|\DateTime|null $arrivalTime
+     * @param int|null $dateVariation
      */
-    public function __construct($departureDate, $arrivalDate = null)
+    public function __construct($departureDate, $arrivalDate = null, $arrivalTime = null, $dateVariation = null)
     {
-        if (!($departureDate instanceof \DateTime)) {
-            $this->departureDate = $departureDate;
-        } else {
-            $this->departureDate = $departureDate->format('dmy');
+        if ($departureDate instanceof \DateTime) {
+            $this->departureDate = ($departureDate->format('dmy') != '000000') ? $departureDate->format('dmy') : null;
             $time = $departureDate->format('Hi');
             if ($time !== "0000") {
                 $this->departureTime = $time;
             }
+        } elseif (!empty($departureDate)) {
+            $this->departureDate = $departureDate;
         }
 
         if ($arrivalDate instanceof \DateTime) {
             $this->setArrivalDate($arrivalDate);
+        } elseif ($arrivalTime instanceof \DateTime) {
+            $time = $arrivalTime->format('Hi');
+            if ($time !== "0000") {
+                $this->arrivalTime = $time;
+            }
+        } elseif (is_string($arrivalTime) && !empty($arrivalTime)) {
+            $this->arrivalTime = $arrivalTime;
+        }
+
+        if (!is_null($dateVariation)) {
+            $this->dateVariation = $dateVariation;
         }
     }
 
@@ -89,7 +102,7 @@ class FlightDate
      */
     public function setArrivalDate(\DateTime $arrivalDate)
     {
-        $this->arrivalDate = $arrivalDate->format('dmy');
+        $this->arrivalDate = ($arrivalDate->format('dmy') != '000000') ? $arrivalDate->format('dmy') : null;
         $time = $arrivalDate->format('Hi');
         if ($time !== "0000") {
             $this->arrivalTime = $time;
