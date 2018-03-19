@@ -3,6 +3,9 @@
 * Added support for FeeOption in ``MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/157) - Friedemann Schmuhl
 * Implemented ``Air_RebookAirSegment`` (https://github.com/amabnl/amadeus-ws-client/issues/149)
 
+# Release 1.6.1 (19 March 2018)
+* Do not remove ``<dummy>`` node from outgoing XML (https://github.com/amabnl/amadeus-ws-client/issues/161)
+
 # Release 1.6.0 (7 February 2018)
 * Recognize Passenger-level error messages in ``PNR_Reply`` responses (https://github.com/amabnl/amadeus-ws-client/issues/139)
 * Added support for Layover per connection options in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/138) - Artem Zakharchenko
