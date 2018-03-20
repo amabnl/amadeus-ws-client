@@ -61,7 +61,7 @@ class MopDescription extends WsMessageUtility
      */
     public function __construct(MopInfo $options)
     {
-        if (!empty($options->sequenceNr)) {
+        if (!is_null($options->sequenceNr)) {
             $this->fopSequenceNumber = new FopSequenceNumber($options->sequenceNr);
         }
 
