@@ -1,6 +1,7 @@
 # Release 1.7.0 (UNRELEASED)
 * Added support for Arrival date and time in ``Air_SellFromRecommendation`` (https://github.com/amabnl/amadeus-ws-client/pull/153) - Artem Zakharchenko
 * Added support for FeeOption in ``MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/157) - Friedemann Schmuhl
+* Implemented support for ``TransactionFlowLink`` SOAP header (https://github.com/amabnl/amadeus-ws-client/issues/146)
 * Implemented ``Air_RebookAirSegment`` (https://github.com/amabnl/amadeus-ws-client/issues/149)
 
 # Release 1.6.1 (19 March 2018)

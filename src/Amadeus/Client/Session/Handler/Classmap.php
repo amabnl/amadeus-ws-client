@@ -43,6 +43,8 @@ class Classmap
         'amasec:Security' => 'Amadeus\Client\Struct\HeaderV4\Security',
         'amasec:UsernameToken' => 'Amadeus\Client\Struct\HeaderV4\UsernameToken',
         'amasec:Session' => 'Amadeus\Client\Struct\HeaderV4\Session',
+        'amasec:TransactionFlowLink' => 'Amadeus\Client\Struct\HeaderV4\TransactionFlowLink',
+        'amasec:Consumer' => 'Amadeus\Client\Struct\HeaderV4\TransactionFlowLink\Consumer',
     ];
 
     /**
