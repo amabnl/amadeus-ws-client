@@ -57,7 +57,7 @@ class SoapHeader4 extends Base
 
     /**
      * TransactionFlowLink Consumer ID
-     * 
+     *
      * @var string|null
      */
     protected $consumerId;
