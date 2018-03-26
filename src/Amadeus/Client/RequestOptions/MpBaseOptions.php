@@ -48,6 +48,7 @@ class MpBaseOptions extends Base
     const FLIGHTOPT_DISPLAY_MIN_MAX_STAY = "MST";
     const FLIGHTOPT_TICKET_AVAILABILITY_CHECK = "TAC";
     const FLIGHTOPT_IN_FLIGHT_SERVICES = "IFS";
+    const FLIGHTOPT_ONLY_PTC = "PTC";
 
     const CORPORATE_QUALIFIER_AMADEUS_NEGO = "RC";
     const CORPORATE_QUALIFIER_UNIFARE = "RW";
@@ -130,7 +131,7 @@ class MpBaseOptions extends Base
      * @var Fare\MPFeeId[]
      */
     public $feeIds;
-    
+
     /**
      * Whether to perform a multi ticket search
      *
