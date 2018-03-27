@@ -147,7 +147,7 @@ class MasterPricerExpertSearch extends BaseMasterPricerMessage
             $options->maxLayoverPerConnectionHours,
             $options->maxLayoverPerConnectionMinutes
         )) {
-        $this->travelFlightInfo = new MasterPricer\TravelFlightInfo(
+            $this->travelFlightInfo = new MasterPricer\TravelFlightInfo(
             $options->cabinClass,
             $options->cabinOption,
             $options->requestedFlightTypes,
@@ -242,6 +242,4 @@ class MasterPricerExpertSearch extends BaseMasterPricerMessage
             }
         }
     }
-
-
 }
