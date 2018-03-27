@@ -32,217 +32,216 @@ use Amadeus\Client\Struct\Fare\MasterPricer;
 /**
  * Fare_MasterPricerExpertSearch message structure
  *
- * Also used for Fare_MasterPricerCalendar and Ticket_ATCShopperMasterPricerExpertSearch
- *
  * @package Amadeus\Client\Struct\Fare
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class MasterPricerExpertSearch extends BaseMasterPricerMessage {
+class MasterPricerExpertSearch extends BaseMasterPricerMessage
+{
 
-    /**
-     * @var mixed
-     */
+	/**
+	 * @var mixed
+	 */
 	public $globalOptions;
-    /**
-     * @var MasterPricer\CustomerRef
-     */
+	/**
+	 * @var MasterPricer\CustomerRef
+	 */
 	public $customerRef;
-    /**
-     * @var mixed
-     */
+	/**
+	 * @var mixed
+	 */
 	public $formOfPaymentByPassenger;
-    /**
-     * @var mixed
-     */
+	/**
+	 * @var mixed
+	 */
 	public $solutionFamily;
-    /**
-     * @var mixed[]
-     */
+	/**
+	 * @var mixed[]
+	 */
 	public $passengerInfoGrp = [];
-    /**
-     * @var MasterPricer\FareFamilies[]
-     */
+	/**
+	 * @var MasterPricer\FareFamilies[]
+	 */
 	public $fareFamilies = [];
-    /**
-     * @var MasterPricer\PriceToBeat
-     */
-    public $priceToBeat;
-    /**
-     * @var mixed
-     */
-    public $taxInfo;
-    /**
-     * @var MasterPricer\TravelFlightInfo
-     */
-    public $travelFlightInfo;
-    /**
-     * @var array
-     */
-    public $valueSearch = [];
-    /**
-     * Itinerary
-     *
-     * @var MasterPricer\Itinerary[]
-     */
-    public $itinerary = [];
-    /**
-     * @var mixed
-     */
+	/**
+	 * @var MasterPricer\PriceToBeat
+	 */
+	public $priceToBeat;
+	/**
+	 * @var mixed
+	 */
+	public $taxInfo;
+	/**
+	 * @var MasterPricer\TravelFlightInfo
+	 */
+	public $travelFlightInfo;
+	/**
+	 * @var array
+	 */
+	public $valueSearch = [];
+	/**
+	 * Itinerary
+	 *
+	 * @var MasterPricer\Itinerary[]
+	 */
+	public $itinerary = [];
+	/**
+	 * @var mixed
+	 */
 	public $ticketChangeInfo;
-    /**
-     * @var mixed
-     */
-    public $combinationFareFamilies;
-    /**
-     * @var MasterPricer\FeeOption[]
-     */
-    public $feeOption;
-    /**
-     * @var MasterPricer\OfficeIdDetails[]
-     */
-    public $officeIdDetails;
+	/**
+	 * @var mixed
+	 */
+	public $combinationFareFamilies;
+	/**
+	 * @var MasterPricer\FeeOption[]
+	 */
+	public $feeOption;
+	/**
+	 * @var MasterPricer\OfficeIdDetails[]
+	 */
+	public $officeIdDetails;
 
-    /**
-     * MasterPricerExpertSearch constructor.
-     *
-     * @param FareMasterPricerExSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpExSearchOptions|null $options
-     */
-    public function __construct($options = null)
-    {
-        if ($options instanceof FareMasterPricerExSearch) {
-            $this->loadOptions($options);
-        }
-    }
+	/**
+	 * MasterPricerExpertSearch constructor.
+	 *
+	 * @param FareMasterPricerExSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpExSearchOptions|null $options
+	 */
+	public function __construct($options = null)
+	{
+		if ($options instanceof FareMasterPricerExSearch) {
+			$this->loadOptions($options);
+		}
+	}
 
-    /**
-     * @param FareMasterPricerExSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpExSearchOptions $options
-     */
-    protected function loadOptions($options)
-    {
-        $this->loadNumberOfUnits($options);
+	/**
+	 * @param FareMasterPricerExSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpExSearchOptions $options
+	 */
+	protected function loadOptions($options)
+	{
+		$this->loadNumberOfUnits($options);
 
-        $this->loadFareOptions($options);
+		$this->loadFareOptions($options);
 
-        $passengerCounter = 1;
-        $infantCounter = 1;
-        foreach ($options->passengers as $passenger) {
-            $this->loadPassenger($passenger, $passengerCounter, $infantCounter);
-        }
+		$passengerCounter = 1;
+		$infantCounter = 1;
+		foreach ($options->passengers as $passenger) {
+			$this->loadPassenger($passenger, $passengerCounter, $infantCounter);
+		}
 
-        $segmentCounter = 1;
-        foreach ($options->itinerary as $itinerary) {
-            $this->loadItinerary($itinerary, $segmentCounter);
-        }
+		$segmentCounter = 1;
+		foreach ($options->itinerary as $itinerary) {
+			$this->loadItinerary($itinerary, $segmentCounter);
+		}
 
-        foreach ($options->officeIds as $officeId) {
-            $this->loadOfficeId($officeId);
-        }
+		foreach ($options->officeIds as $officeId) {
+			$this->loadOfficeId($officeId);
+		}
 
-        if ($this->checkAnyNotEmpty(
-            $options->cabinClass,
-            $options->cabinOption,
-            $options->requestedFlightTypes,
-            $options->airlineOptions,
-            $options->progressiveLegsMin,
-            $options->progressiveLegsMax,
-            $options->maxLayoverPerConnectionHours,
-            $options->maxLayoverPerConnectionMinutes
-        )) {
-            $this->travelFlightInfo = new MasterPricer\TravelFlightInfo(
-                $options->cabinClass,
-                $options->cabinOption,
-                $options->requestedFlightTypes,
-                $options->airlineOptions,
-                $options->progressiveLegsMin,
-                $options->progressiveLegsMax,
-                $options->maxLayoverPerConnectionHours,
-                $options->maxLayoverPerConnectionMinutes
-            );
-        }
+		if ($this->checkAnyNotEmpty(
+			$options->cabinClass,
+			$options->cabinOption,
+			$options->requestedFlightTypes,
+			$options->airlineOptions,
+			$options->progressiveLegsMin,
+			$options->progressiveLegsMax,
+			$options->maxLayoverPerConnectionHours,
+			$options->maxLayoverPerConnectionMinutes
+		)) {
+		$this->travelFlightInfo = new MasterPricer\TravelFlightInfo(
+			$options->cabinClass,
+			$options->cabinOption,
+			$options->requestedFlightTypes,
+			$options->airlineOptions,
+			$options->progressiveLegsMin,
+			$options->progressiveLegsMax,
+			$options->maxLayoverPerConnectionHours,
+			$options->maxLayoverPerConnectionMinutes
+		);
+		}
 
-        if (!empty($options->priceToBeat)) {
-            $this->priceToBeat = new MasterPricer\PriceToBeat(
-                $options->priceToBeat,
-                $options->priceToBeatCurrency
-            );
-        }
+		if (!empty($options->priceToBeat)) {
+			$this->priceToBeat = new MasterPricer\PriceToBeat(
+				$options->priceToBeat,
+				$options->priceToBeatCurrency
+			);
+		}
 
-        $this->loadFareFamilies($options->fareFamilies);
+		$this->loadFareFamilies($options->fareFamilies);
 
-        $this->loadCustomerRefs($options->dkNumber);
+		$this->loadCustomerRefs($options->dkNumber);
 
-        $this->loadFeeOptions($options->feeOption);
-    }
+		$this->loadFeeOptions($options->feeOption);
+	}
 
-    /**
-     * @param string $officeId
-     */
-    protected function loadOfficeId($officeId)
-    {
-        $this->officeIdDetails[] = new MasterPricer\OfficeIdDetails($officeId);
-    }
+	/**
+	 * @param string $officeId
+	 */
+	protected function loadOfficeId($officeId)
+	{
+		$this->officeIdDetails[] = new MasterPricer\OfficeIdDetails($officeId);
+	}
 
-    /**
-     * @param MPItinerary $itineraryOptions
-     * @param int $counter BYREF
-     */
-    protected function loadItinerary($itineraryOptions, &$counter)
-    {
-        $segmentRef = $counter;
+	/**
+	 * @param MPItinerary $itineraryOptions
+	 * @param int $counter BYREF
+	 */
+	protected function loadItinerary($itineraryOptions, &$counter)
+	{
+		$segmentRef = $counter;
 
-        if (!empty($itineraryOptions->segmentReference)) {
-            $segmentRef = $itineraryOptions->segmentReference;
-        }
+		if (!empty($itineraryOptions->segmentReference)) {
+			$segmentRef = $itineraryOptions->segmentReference;
+		}
 
-        $tmpItinerary = new MasterPricer\Itinerary($segmentRef);
+		$tmpItinerary = new MasterPricer\Itinerary($segmentRef);
 
-        $tmpItinerary->departureLocalization = new MasterPricer\DepartureLocalization(
-            $itineraryOptions->departureLocation
-        );
-        $tmpItinerary->arrivalLocalization = new MasterPricer\ArrivalLocalization(
-            $itineraryOptions->arrivalLocation
-        );
-        $tmpItinerary->timeDetails = new MasterPricer\TimeDetails($itineraryOptions->date);
+		$tmpItinerary->departureLocalization = new MasterPricer\DepartureLocalization(
+			$itineraryOptions->departureLocation
+		);
+		$tmpItinerary->arrivalLocalization = new MasterPricer\ArrivalLocalization(
+			$itineraryOptions->arrivalLocation
+		);
+		$tmpItinerary->timeDetails = new MasterPricer\TimeDetails($itineraryOptions->date);
 
-        $this->itinerary[] = $tmpItinerary;
+		$this->itinerary[] = $tmpItinerary;
 
-        $counter++;
-    }
+		$counter++;
+	}
 
-    /**
-     * @param MPFareFamily[] $fareFamilies
-     */
-    protected function loadFareFamilies($fareFamilies)
-    {
-        foreach ($fareFamilies as $fareFamily) {
-            $this->fareFamilies[] = new MasterPricer\FareFamilies($fareFamily);
-        }
-    }
+	/**
+	 * @param MPFareFamily[] $fareFamilies
+	 */
+	protected function loadFareFamilies($fareFamilies)
+	{
+		foreach ($fareFamilies as $fareFamily) {
+			$this->fareFamilies[] = new MasterPricer\FareFamilies($fareFamily);
+		}
+	}
 
-    /**
-     * Load Customer references
-     *
-     * @param string $dkNumber
-     */
-    protected function loadCustomerRefs($dkNumber)
-    {
-        if (!is_null($dkNumber)) {
-            $this->customerRef = new MasterPricer\CustomerRef();
-            $this->customerRef->customerReferences[] = new MasterPricer\CustomerReferences(
-                $dkNumber,
-                MasterPricer\CustomerReferences::QUAL_AGENCY_GROUPING_ID
-            );
-        }
-    }
+	/**
+	 * Load Customer references
+	 *
+	 * @param string $dkNumber
+	 */
+	protected function loadCustomerRefs($dkNumber)
+	{
+		if (!is_null($dkNumber)) {
+			$this->customerRef = new MasterPricer\CustomerRef();
+			$this->customerRef->customerReferences[] = new MasterPricer\CustomerReferences(
+				$dkNumber,
+				MasterPricer\CustomerReferences::QUAL_AGENCY_GROUPING_ID
+			);
+		}
+	}
 
-    private function loadFeeOptions($feeOptions)
-    {
-        if (!is_null($feeOptions)) {
-            foreach ($feeOptions as $feeOption) {
-                $this->feeOption[] = new MasterPricer\FeeOption($feeOption);
-            }
-        }
-    }
+	private function loadFeeOptions($feeOptions)
+	{
+		if (!is_null($feeOptions)) {
+			foreach ($feeOptions as $feeOption) {
+				$this->feeOption[] = new MasterPricer\FeeOption($feeOption);
+			}
+		}
+	}
 
 
 }
