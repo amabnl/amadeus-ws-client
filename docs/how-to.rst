@@ -56,7 +56,7 @@ After doing multiple calls with a stateful session, there are two ways to end th
 
 .. code-block:: php
 
-    $client->signOut(); //Terminates an active stateful session. There is no active session with stateless messages.
+    $client->securitySignOut(); //Terminates an active stateful session. There is no active session with stateless messages.
 
 - set an 'endSession' message option on the last call you want to make:
 
