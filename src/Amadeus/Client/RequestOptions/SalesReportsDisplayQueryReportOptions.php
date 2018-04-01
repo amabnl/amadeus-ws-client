@@ -23,7 +23,7 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * SalesReportsDisplayQueryReportOptions
+ * SalesReports_DisplayQueryReport Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>
@@ -33,108 +33,99 @@ class SalesReportsDisplayQueryReportOptions extends Base
     /**
      * All agents of the office
      */
-    const SELECT_OFFICE_ALL_AGENTS = "SOF";
+    const SELECT_OFFICE_ALL_AGENTS = 'SOF';
     /**
      * All offices sharing the same IATA number
      */
-    const SELECT_ALL_OFFICES_SHARING_IATA_NR = "SAN";
+    const SELECT_ALL_OFFICES_SHARING_IATA_NR = 'SAN';
     /**
      * Satellite ticket office
      */
-    const SELECT_SATELLITE_TICKET_OFFICE = "STP";
+    const SELECT_SATELLITE_TICKET_OFFICE = 'STP';
     /**
      * Ticket delivery office
      */
-    const SELECT_TICKET_DELIVERY_OFFICE = "TDO";
+    const SELECT_TICKET_DELIVERY_OFFICE = 'TDO';
     /**
      * by net remit qualifier
      */
-    const SELECT_BY_NET_REMIT = "BNR";
+    const SELECT_BY_NET_REMIT = 'BNR';
 
     /**
      * Reporting Office
      */
-    const AGENCY_SRC_REPORTING_OFFICE = "REP";
+    const AGENCY_SRC_REPORTING_OFFICE = 'REP';
     /**
      * STP office
      */
-    const AGENCY_SRC_STP_OFFICE = "STP";
+    const AGENCY_SRC_STP_OFFICE = 'STP';
     /**
      * TDO office
      */
-    const AGENCY_SRC_TDO_OFFICE = "TDO";
+    const AGENCY_SRC_TDO_OFFICE = 'TDO';
 
-
-    const DATE_TYPE_CURRENT = "C";
-
-    const DATE_TYPE_SALES_REPORT_CLOSURE = "D";
-
-    const DATE_TYPE_ISSUANCE = "I";
-
-    const DATE_TYPE_REFUNDING = "R";
-
-    const DATE_TYPE_SPECIFIC = "S";
-
+    const DATE_TYPE_CURRENT = 'C';
+    const DATE_TYPE_SALES_REPORT_CLOSURE = 'D';
+    const DATE_TYPE_ISSUANCE = 'I';
+    const DATE_TYPE_REFUNDING = 'R';
+    const DATE_TYPE_SPECIFIC = 'S';
 
     const CURRENCY_TARGET = 3;
-
     const CURRENCY_REFERENCE = 2;
-
 
     /**
      * On behalf of/in exchange for a document previously issued by a Sales Agent
      */
-    const FOP_ISSUED_BY_AGENT = "AGT";
+    const FOP_ISSUED_BY_AGENT = 'AGT';
     /**
      * Cash
      */
-    const FOP_CASH = "CA";
+    const FOP_CASH = 'CA';
     /**
      * Credit Card
      */
-    const FOP_CREDIT_CARD = "CC";
+    const FOP_CREDIT_CARD = 'CC';
     /**
      * Check
      */
-    const FOP_CHECK = "CK";
+    const FOP_CHECK = 'CK';
     /**
      * Government transportation request
      */
-    const FOP_GOVERNMENT_TRANSPORTATION_REQ = "GR";
+    const FOP_GOVERNMENT_TRANSPORTATION_REQ = 'GR';
     /**
      * Miscellaneous
      */
-    const FOP_MISCELLANEOUS = "MS";
+    const FOP_MISCELLANEOUS = 'MS';
     /**
      * Non-refundable (refund restricted)
      */
-    const FOP_NON_REFUNDABLE = "NR";
+    const FOP_NON_REFUNDABLE = 'NR';
     /**
      * Prepaid Ticket Advice (PTA)
      */
-    const FOP_PREPAID_TICKET_ADVICE = "PT";
+    const FOP_PREPAID_TICKET_ADVICE = 'PT';
     /**
      * Single government transportation request
      */
-    const FOP_SINGLE_GOVERNMENT_TRANSPORTATION_REQ = "SGR";
+    const FOP_SINGLE_GOVERNMENT_TRANSPORTATION_REQ = 'SGR';
     /**
      * United Nations Transportation Request
      */
-    const FOP_UNITED_NATIONS_TRANSPORTATION_REQ = "UN";
+    const FOP_UNITED_NATIONS_TRANSPORTATION_REQ = 'UN';
 
     /**
      * Domestic sale
      */
-    const SALESIND_DOMESTIC = "DOM";
+    const SALESIND_DOMESTIC = 'DOM';
     /**
      * International sale
      */
-    const SALESIND_INTERNATIONAL = "INT";
+    const SALESIND_INTERNATIONAL = 'INT';
     /**
      * Voided document
      */
-    const SALESIND_VOIDED_DOCUMENT = "V";
-
+    const SALESIND_VOIDED_DOCUMENT = 'V';
 
     /**
      * Request options

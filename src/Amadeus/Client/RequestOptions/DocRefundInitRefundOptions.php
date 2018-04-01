@@ -30,21 +30,21 @@ namespace Amadeus\Client\RequestOptions;
  */
 class DocRefundInitRefundOptions extends Base
 {
-    const ACTION_ATC_REFUND = "ATC";
-    const ACTION_ATC_REFUND_INVOLUNTARY = "ATI";
-    const ACTION_COVER_ADDITIONAL_EXPENDITURE = "COV";
-    const ACTION_EMD_TICKET_NUMBER = "EMD";
-    const ACTION_INVOLUNTARY_NO_REASON = "I";
-    const ACTION_NON_REFUNDABLE_INDICATORS_BYPASS = "NRF";
-    const ACTION_NOT_REPORTED_REFUND = "NRP";
-    const ACTION_NO_SHOW = "NS";
-    const ACTION_ZERO_REFUND = "NUL";
-    const ACTION_HOLD_FOR_FUTURE_USE= "RTF";
-    const ACTION_TAXES = "TAX";
+    const ACTION_ATC_REFUND = 'ATC';
+    const ACTION_ATC_REFUND_INVOLUNTARY = 'ATI';
+    const ACTION_COVER_ADDITIONAL_EXPENDITURE = 'COV';
+    const ACTION_EMD_TICKET_NUMBER = 'EMD';
+    const ACTION_INVOLUNTARY_NO_REASON = 'I';
+    const ACTION_NON_REFUNDABLE_INDICATORS_BYPASS = 'NRF';
+    const ACTION_NOT_REPORTED_REFUND = 'NRP';
+    const ACTION_NO_SHOW = 'NS';
+    const ACTION_ZERO_REFUND = 'NUL';
+    const ACTION_HOLD_FOR_FUTURE_USE= 'RTF';
+    const ACTION_TAXES = 'TAX';
 
-    const TYPE_FROM_NUMBER = "FRM";
-    const TYPE_TRANSMISSION_CONTROL_NUMBER = "TCN";
-    const TYPE_TO_NUMBER = "TO";
+    const TYPE_FROM_NUMBER = 'FRM';
+    const TYPE_TRANSMISSION_CONTROL_NUMBER = 'TCN';
+    const TYPE_TO_NUMBER = 'TO';
 
     /**
      * The number of the ticket or document to be refunded

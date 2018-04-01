@@ -8,7 +8,7 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * AirMultiAvailabilityOptions
+ * Air_MultiAvailability Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>
@@ -16,15 +16,10 @@ namespace Amadeus\Client\RequestOptions;
 class AirMultiAvailabilityOptions extends Base
 {
     const ACTION_AVAILABILITY = 44;
-
     const ACTION_SCHEDULE = 48;
-
     const ACTION_TIMETABLE = 51;
-
     const ACTION_SUBSEQUENT_BACKWARD = 54;
-
     const ACTION_SUBSEQUENT_FORWARD = 55;
-
     const ACTION_SUBSEQUENT_ORIGINAL = 61;
 
     const BUSINESS_AIR_PROVIDER = 1;

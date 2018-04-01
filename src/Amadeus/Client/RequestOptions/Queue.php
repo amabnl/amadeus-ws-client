@@ -46,7 +46,7 @@ class Queue
      *
      * @var string
      */
-    public $officeId = null;
+    public $officeId;
 
 
     /**

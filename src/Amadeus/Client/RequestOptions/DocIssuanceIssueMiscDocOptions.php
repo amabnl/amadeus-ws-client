@@ -25,41 +25,41 @@ namespace Amadeus\Client\RequestOptions;
 use Amadeus\Client\RequestOptions\DocIssuance\CompoundOption;
 
 /**
- * DocIssuance_IssueMiscellaneousDocuments Options
+ * DocIssuance_IssueMiscellaneousDocuments Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DocIssuanceIssueMiscDocOptions extends Base
 {
-    const PAX_TYPE_ADULT = "A";
-    const PAX_TYPE_INFANT = "IN";
+    const PAX_TYPE_ADULT = 'A';
+    const PAX_TYPE_INFANT = 'IN';
 
-    const OPTION_TEMPLATE_DISPLAY = "TMD";
-    const OPTION_TEMPLATE_OVERRIDE = "TMO";
-    const OPTION_EMD_ISSUANCE = "ED";
-    const OPTION_RETRIEVE_PNR = "RT";
-    const OPTION_BASIC_INVOICE = "INV";
-    const OPTION_BASIC_JOINT_INVOICE_ALL_PAX = "IVJ";
-    const OPTION_EXTENDED_INVOICE = "INE";
-    const OPTION_EXTENDED_INVOICE_ALL_PAX = "INJ";
-    const OPTION_CONCEALED_CREDIT_CARD = "CCC";
-    const OPTION_CREDIT_CARD_OVERRIDE = "CCO";
-    const OPTION_DOCUMENT_RECEIPT = "TRP";
-    const OPTION_ELECTRONIC_TICKETING_TCH = "TKP";
-    const OPTION_GROUP_ISSUANCE = "GRP";
-    const OPTION_PRINT_EXTENDED_ITINERARY = "IEP";
-    const OPTION_ITINERARY_RECEIPT = "ITR";
-    const OPTION_HOTEL_TERMS = "HT";
-    const OPTION_INHIBIT_CCCF_COUPON_PRINT = "ICP";
-    const OPTION_NO_CREDIT = "NCC";
-    const OPTION_OVERRIDE_NON_EXCHANGEABLE_IND = "ONX";
-    const OPTION_OVERRIDE_NAME_CHECK = "ONC";
-    const OPTION_PAPER_OVERRIDE = "PT";
-    const OPTION_FORCE_PASSENGER_RECEIPT = "CR";
-    const OPTION_PAYMENT_ON_DEMAND = "POD";
-    const OPTION_PRE_ISSUE_VALIDATION = "TKT";
-    const OPTION_PRESENT_CREDIT_CARD = "PCC";
+    const OPTION_TEMPLATE_DISPLAY = 'TMD';
+    const OPTION_TEMPLATE_OVERRIDE = 'TMO';
+    const OPTION_EMD_ISSUANCE = 'ED';
+    const OPTION_RETRIEVE_PNR = 'RT';
+    const OPTION_BASIC_INVOICE = 'INV';
+    const OPTION_BASIC_JOINT_INVOICE_ALL_PAX = 'IVJ';
+    const OPTION_EXTENDED_INVOICE = 'INE';
+    const OPTION_EXTENDED_INVOICE_ALL_PAX = 'INJ';
+    const OPTION_CONCEALED_CREDIT_CARD = 'CCC';
+    const OPTION_CREDIT_CARD_OVERRIDE = 'CCO';
+    const OPTION_DOCUMENT_RECEIPT = 'TRP';
+    const OPTION_ELECTRONIC_TICKETING_TCH = 'TKP';
+    const OPTION_GROUP_ISSUANCE = 'GRP';
+    const OPTION_PRINT_EXTENDED_ITINERARY = 'IEP';
+    const OPTION_ITINERARY_RECEIPT = 'ITR';
+    const OPTION_HOTEL_TERMS = 'HT';
+    const OPTION_INHIBIT_CCCF_COUPON_PRINT = 'ICP';
+    const OPTION_NO_CREDIT = 'NCC';
+    const OPTION_OVERRIDE_NON_EXCHANGEABLE_IND = 'ONX';
+    const OPTION_OVERRIDE_NAME_CHECK = 'ONC';
+    const OPTION_PAPER_OVERRIDE = 'PT';
+    const OPTION_FORCE_PASSENGER_RECEIPT = 'CR';
+    const OPTION_PAYMENT_ON_DEMAND = 'POD';
+    const OPTION_PRE_ISSUE_VALIDATION = 'TKT';
+    const OPTION_PRESENT_CREDIT_CARD = 'PCC';
 
     /**
      * The Ticket Issuance options to be triggered

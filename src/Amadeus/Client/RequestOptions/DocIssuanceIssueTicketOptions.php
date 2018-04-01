@@ -33,18 +33,18 @@ use Amadeus\Client\RequestOptions\DocIssuance\CompoundOption;
  */
 class DocIssuanceIssueTicketOptions extends Base
 {
-    const PAX_TYPE_ADULT = "A";
-    const PAX_TYPE_INFANT = "IN";
+    const PAX_TYPE_ADULT = 'A';
+    const PAX_TYPE_INFANT = 'IN';
 
-    const OPTION_ETICKET = "ET";
-    const OPTION_RETRIEVE_PNR = "RT";
-    const OPTION_ITINERARY_RECEIPT = "ITR";
-    const OPTION_PRE_ISSUE_VALIDATION = "TKT";
-    const OPTION_PRINT_ITIN = "IBP";
-    const OPTION_PRINT_JOINT_ITIN = "IBJ";
-    const OPTION_PRINT_EXTENDED_ITIN = "IEP";
-    const OPTION_PRINT_EXTENDED_JOINT_ITIN = "IEJ";
-    const OPTION_TICKET_ONLY = "TKA";
+    const OPTION_ETICKET = 'ET';
+    const OPTION_RETRIEVE_PNR = 'RT';
+    const OPTION_ITINERARY_RECEIPT = 'ITR';
+    const OPTION_PRE_ISSUE_VALIDATION = 'TKT';
+    const OPTION_PRINT_ITIN = 'IBP';
+    const OPTION_PRINT_JOINT_ITIN = 'IBJ';
+    const OPTION_PRINT_EXTENDED_ITIN = 'IEP';
+    const OPTION_PRINT_EXTENDED_JOINT_ITIN = 'IEJ';
+    const OPTION_TICKET_ONLY = 'TKA';
 
     /**
      * The Ticket Issuance options to be triggered

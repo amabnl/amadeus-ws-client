@@ -23,7 +23,7 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * AirRetrieveSeatMapOptions
+ * Air_RetrieveSeatMap Request Options
  *
  * Options available for the Air_RetrieveSeatMap message.
  *

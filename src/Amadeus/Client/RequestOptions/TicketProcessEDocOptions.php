@@ -25,7 +25,7 @@ namespace Amadeus\Client\RequestOptions;
 use Amadeus\Client\RequestOptions\Ticket\FrequentFlyer;
 
 /**
- * TicketDisplayTstOptions
+ * Ticket_ProcessEDoc Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Farah Hourani <farahhourani94@gmail.com>
@@ -40,13 +40,13 @@ class TicketProcessEDocOptions extends Base
     const ACTION_EMD_HISTORY = 797;
     const ACTION_EMD_UPDATE = 794;
 
-    const ADD_ACTION_CONSOLIDATED_DISPLAY = "CND";
-    const ADD_ACTION_CONSOLIDATED_DISPLAY_ALSO = "CNS";
-    const ADD_ACTION_DISPLAY_FROM_DCS = "DCS";
-    const ADD_ACTION_ENHANCED_LIST_DISPLAY = "EXT";
-    const ADD_ACTION_LIST_DISPLAY_BY_FREQ_TRAV = "FQT";
-    const ADD_ACTION_LIST_DISPLAY_BY_PAX_NAME = "PAX";
-    const ADD_ACTION_LIST_DISPLAY_BY_UNUSED_COUPON = "RUC";
+    const ADD_ACTION_CONSOLIDATED_DISPLAY = 'CND';
+    const ADD_ACTION_CONSOLIDATED_DISPLAY_ALSO = 'CNS';
+    const ADD_ACTION_DISPLAY_FROM_DCS = 'DCS';
+    const ADD_ACTION_ENHANCED_LIST_DISPLAY = 'EXT';
+    const ADD_ACTION_LIST_DISPLAY_BY_FREQ_TRAV = 'FQT';
+    const ADD_ACTION_LIST_DISPLAY_BY_PAX_NAME = 'PAX';
+    const ADD_ACTION_LIST_DISPLAY_BY_UNUSED_COUPON = 'RUC';
 
     /**
      * the ticket number returned from amadeus

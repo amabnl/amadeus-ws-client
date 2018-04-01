@@ -32,7 +32,6 @@ use Amadeus\Client\RequestOptions\Fop\Group;
  */
 class FopValidateFopOptions extends Base
 {
-  
     /**
      * Group of up to 127 different FOPs
      *
