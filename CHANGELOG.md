@@ -1,6 +1,16 @@
 # Release 1.7.0 (UNRELEASED)
 * Added support for Arrival date and time in ``Air_SellFromRecommendation`` (https://github.com/amabnl/amadeus-ws-client/pull/153) - Artem Zakharchenko
-* Added support for FeeOption in ``MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/157) - Friedemann Schmuhl
+* Added support for FeeOption in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/157) - Friedemann Schmuhl
+* Support for extra options  in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/issues/158):
+    - No Airport Change at itinerary level
+    - Maximum Elapsed Flying Time at itinerary level
+    - Segment-level options: 
+        - Include connection points
+        - Exclude connection points
+        - Specify a list of airlines/alliances as Mandatory/Preferred/Excluded/Night Class
+        - Flight Types (Direct, Non-stop, Connecting, Cheapest on-line, Overnight not allowed)
+        - Number of Connections
+        - No Airport Change
 * Added support for ``FOP_CreateFormOfPayment`` message version 14 and lower (https://github.com/amabnl/amadeus-ws-client/issues/163)
 * Fixed a bug where a ``FOP_CreateFormOfPayment`` message with sequence number 0 generated an incorrect message. (https://github.com/amabnl/amadeus-ws-client/pull/162) - Artem Zakharchenko
 * Implemented ``Air_RebookAirSegment`` (https://github.com/amabnl/amadeus-ws-client/issues/149)

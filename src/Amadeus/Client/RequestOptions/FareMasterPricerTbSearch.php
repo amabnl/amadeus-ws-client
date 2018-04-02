@@ -183,6 +183,22 @@ class FareMasterPricerTbSearch extends MpBaseOptions
     public $maxLayoverPerConnectionMinutes;
 
     /**
+     * Set to true to disallow connecting flight to change airports within a city.
+     *
+     * @var bool
+     */
+    public $noAirportChange = false;
+
+    /**
+     * Specify a maximum elapsed flying time (EFT): This is a percentage of the shortest EFT returned by the journey server
+     *
+     * @var int
+     */
+    public $maxElapsedFlyingTime;
+
+    /**
+     * Fee Options
+     *
      * @var Fare\MPFeeOption[]
      */
     public $feeOption = [];

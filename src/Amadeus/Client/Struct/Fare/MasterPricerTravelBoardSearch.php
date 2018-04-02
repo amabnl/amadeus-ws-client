@@ -150,7 +150,9 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
             $options->progressiveLegsMin,
             $options->progressiveLegsMax,
             $options->maxLayoverPerConnectionHours,
-            $options->maxLayoverPerConnectionMinutes
+            $options->maxLayoverPerConnectionMinutes,
+            $options->noAirportChange,
+            $options->maxElapsedFlyingTime
         )) {
             $this->travelFlightInfo = new MasterPricer\TravelFlightInfo(
                 $options->cabinClass,
@@ -160,11 +162,13 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
                 $options->progressiveLegsMin,
                 $options->progressiveLegsMax,
                 $options->maxLayoverPerConnectionHours,
-                $options->maxLayoverPerConnectionMinutes
+                $options->maxLayoverPerConnectionMinutes,
+                $options->noAirportChange,
+                $options->maxElapsedFlyingTime
             );
         }
 
-        if (!empty($options->priceToBeat)) {
+        if (!is_null($options->priceToBeat)) {
             $this->priceToBeat = new MasterPricer\PriceToBeat(
                 $options->priceToBeat,
                 $options->priceToBeatCurrency
@@ -187,26 +191,37 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
     }
 
     /**
-     * @param MPItinerary $itineraryOptions
+     * @param MPItinerary $opt
      * @param int $counter BYREF
      */
-    protected function loadItinerary($itineraryOptions, &$counter)
+    protected function loadItinerary($opt, &$counter)
     {
         $segmentRef = $counter;
 
-        if (!empty($itineraryOptions->segmentReference)) {
-            $segmentRef = $itineraryOptions->segmentReference;
+        if (!empty($opt->segmentReference)) {
+            $segmentRef = $opt->segmentReference;
         }
 
         $tmpItinerary = new MasterPricer\Itinerary($segmentRef);
 
         $tmpItinerary->departureLocalization = new MasterPricer\DepartureLocalization(
-            $itineraryOptions->departureLocation
+            $opt->departureLocation
         );
         $tmpItinerary->arrivalLocalization = new MasterPricer\ArrivalLocalization(
-            $itineraryOptions->arrivalLocation
+            $opt->arrivalLocation
         );
-        $tmpItinerary->timeDetails = new MasterPricer\TimeDetails($itineraryOptions->date);
+        $tmpItinerary->timeDetails = new MasterPricer\TimeDetails($opt->date);
+
+        if ($this->checkAnyNotEmpty($opt->airlineOptions, $opt->requestedFlightTypes, $opt->includedConnections, $opt->excludedConnections, $opt->nrOfConnections, $opt->noAirportChange)) {
+            $tmpItinerary->flightInfo = new MasterPricer\FlightInfo(
+                $opt->airlineOptions,
+                $opt->requestedFlightTypes,
+                $opt->includedConnections,
+                $opt->excludedConnections,
+                $opt->nrOfConnections,
+                $opt->noAirportChange
+            );
+        }
 
         $this->itinerary[] = $tmpItinerary;
 

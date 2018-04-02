@@ -57,7 +57,7 @@ class Itinerary
     /**
      * Specify Flight options.
      *
-     * @var mixed
+     * @var FlightInfo
      */
     public $flightInfo;
     /**

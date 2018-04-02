@@ -39,9 +39,11 @@ use Amadeus\Client\Struct\Fare\MasterPricer\BooleanExpression;
 use Amadeus\Client\Struct\Fare\MasterPricer\CabinId;
 use Amadeus\Client\Struct\Fare\MasterPricer\CompanyIdentity;
 use Amadeus\Client\Struct\Fare\MasterPricer\CustomerReferences;
+use Amadeus\Client\Struct\Fare\MasterPricer\ExclusionDetail;
 use Amadeus\Client\Struct\Fare\MasterPricer\FareFamilyInfo;
 use Amadeus\Client\Struct\Fare\MasterPricer\FirstDateTimeDetail;
 use Amadeus\Client\Struct\Fare\MasterPricer\FlightDetail;
+use Amadeus\Client\Struct\Fare\MasterPricer\InclusionDetail;
 use Amadeus\Client\Struct\Fare\MasterPricer\OtherCriteria;
 use Amadeus\Client\Struct\Fare\MasterPricer\PricingTicketing;
 use Amadeus\Client\Struct\Fare\MasterPricer\RangeOfDate;
@@ -75,7 +77,7 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $message = new MasterPricerTravelBoardSearch($opt);
 
         $this->assertInternalType('array', $message->itinerary);
-        $this->assertEquals(1, count($message->itinerary));
+        $this->assertCount(1, $message->itinerary);
         $this->assertInstanceOf('Amadeus\Client\Struct\Fare\MasterPricer\Itinerary', $message->itinerary[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Fare\MasterPricer\TimeDetails', $message->itinerary[0]->timeDetails);
         $this->assertInstanceOf('Amadeus\Client\Struct\Fare\MasterPricer\FirstDateTimeDetail', $message->itinerary[0]->timeDetails->firstDateTimeDetail);
@@ -86,6 +88,14 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertEquals('C', $message->itinerary[0]->departureLocalization->departurePoint->airportCityQualifier);
         $this->assertEquals('LON', $message->itinerary[0]->arrivalLocalization->arrivalPointDetails->locationId);
         $this->assertEquals('C', $message->itinerary[0]->arrivalLocalization->arrivalPointDetails->airportCityQualifier);
+
+        $this->assertEquals(1, $message->itinerary[0]->requestedSegmentRef->segRef);
+        $this->assertNull($message->itinerary[0]->requestedSegmentRef->locationForcing);
+
+        $this->assertNull($message->itinerary[0]->flightInfo);
+        $this->assertNull($message->itinerary[0]->attributes);
+        $this->assertNull($message->itinerary[0]->flightInfoPNR);
+        $this->assertNull($message->itinerary[0]->requestedSegmentAction);
 
         $this->assertCount(2, $message->numberOfUnit->unitNumberDetail);
         $this->assertEquals(1, $message->numberOfUnit->unitNumberDetail[0]->numberOfUnits);
@@ -99,6 +109,22 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertCount(1, $message->paxReference[0]->traveller);
         $this->assertEquals(1, $message->paxReference[0]->traveller[0]->ref);
         $this->assertNull($message->paxReference[0]->traveller[0]->infantIndicator);
+
+        $this->assertEmpty($message->buckets);
+        $this->assertNull($message->combinationFareFamilies);
+        $this->assertNull($message->customerRef);
+        $this->assertEmpty($message->fareFamilies);
+        $this->assertNull($message->feeOption);
+        $this->assertNull($message->formOfPaymentByPassenger);
+        $this->assertNull($message->globalOptions);
+        $this->assertNull($message->officeIdDetails);
+        $this->assertEmpty($message->passengerInfoGrp);
+        $this->assertNull($message->priceToBeat);
+        $this->assertNull($message->solutionFamily);
+        $this->assertNull($message->taxInfo);
+        $this->assertNull($message->ticketChangeInfo);
+        $this->assertEmpty($message->valueSearch);
+        $this->assertNull($message->travelFlightInfo);
     }
 
     public function testCanMakeReturnRequest()
@@ -757,6 +783,9 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         );
     }
 
+    /**
+     * 5.39 Operation: 04.03 Fare Option - Price To Beat
+     */
     public function testCanMakeMessageWithPriceToBeat()
     {
         $opt = new FareMasterPricerTbSearch([
@@ -1118,6 +1147,9 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertEmpty($message->fareFamilies[5]->otherPossibleCriteria);
     }
 
+    /**
+     * 5.62 Operation: 04.26 Fare Option - Alternate Price
+     */
     public function testCanMakeMassageWithFareFamiliesAlternatePrice()
     {
         $opt = new FareMasterPricerTbSearch([
@@ -1285,6 +1317,9 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertEquals(CustomerReferences::QUAL_AGENCY_GROUPING_ID, $message->customerRef->customerReferences[0]->referenceQualifier);
     }
 
+    /**
+     * 5.57 Operation: 04.21 Fare Option - Multi-Ticket - Weighted mode
+     */
     public function testCanMakeBaseMasterPricerMessageWithMultiTicket()
     {
         $opt = new FareMasterPricerTbSearch();
@@ -1311,7 +1346,7 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertEquals(UnitNumberDetail::TYPE_OUTBOUND_RECOMMENDATION, $message->numberOfUnit->unitNumberDetail[2]->typeOfUnit);
 
         $this->assertEquals(20, $message->numberOfUnit->unitNumberDetail[3]->numberOfUnits);
-        $this->assertEquals(UnitNumberDetail::TYPE_INBBOUND_RECOMMENDATION, $message->numberOfUnit->unitNumberDetail[3]->typeOfUnit);
+        $this->assertEquals(UnitNumberDetail::TYPE_INBOUND_RECOMMENDATION, $message->numberOfUnit->unitNumberDetail[3]->typeOfUnit);
 
         $this->assertEquals(50, $message->numberOfUnit->unitNumberDetail[4]->numberOfUnits);
         $this->assertEquals(UnitNumberDetail::TYPE_COMPLETE_RECOMMENDATION, $message->numberOfUnit->unitNumberDetail[4]->typeOfUnit);
@@ -1319,6 +1354,9 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertEquals("MTK", $message->fareOptions->pricingTickInfo->pricingTicketing->priceType[0]);
     }
 
+    /**
+     * 5.16 Operation: 02.15 Flight option - Maximum layover per connection
+     */
     public function testCanMakeMessageWithLayoverPerConnectionOptions()
     {
         $opt = new FareMasterPricerTbSearch([
@@ -1354,5 +1392,363 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
                     break;
             }
         }
+    }
+
+    /**
+     * 5.11 Operation: 02.10 Flight Option - Number of Connections
+     */
+    public function testCanMakeMessageWithItineraryNumberOfConnections()
+    {
+        $msg = new MasterPricerTravelBoardSearch(
+            new FareMasterPricerTbSearch([
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new MPPassenger([
+                        'type' => MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'itinerary' => [
+                    new MPItinerary([
+                        'departureLocation' => new MPLocation(['city' => 'PAR']),
+                        'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                        'date' => new MPDate([
+                            'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                        ]),
+                        'nrOfConnections' => 2
+                    ]),
+                ],
+            ])
+        );
+
+        $this->assertCount(1, $msg->itinerary);
+        $this->assertCount(1, $msg->itinerary[0]->flightInfo->unitNumberDetail);
+        $this->assertEquals(2, $msg->itinerary[0]->flightInfo->unitNumberDetail[0]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_NUM_OF_CONNECTIONS_ALLOWED, $msg->itinerary[0]->flightInfo->unitNumberDetail[0]->typeOfUnit);
+
+        $this->assertEmpty($msg->itinerary[0]->flightInfo->exclusionDetail);
+        $this->assertEmpty($msg->itinerary[0]->flightInfo->inclusionDetail);
+        $this->assertNull($msg->itinerary[0]->flightInfo->cabinId);
+        $this->assertEmpty($msg->itinerary[0]->flightInfo->companyIdentity);
+        $this->assertNull($msg->itinerary[0]->flightInfo->flightDetail);
+    }
+
+    /**
+     * 5.21 Operation: 02.21 Flight option - No airport change at requested segment level
+     */
+    public function testCanMakeMessageWithItineraryNoAirportChange()
+    {
+        $msg = new MasterPricerTravelBoardSearch(
+            new FareMasterPricerTbSearch([
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new MPPassenger([
+                        'type' => MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'itinerary' => [
+                    new MPItinerary([
+                        'departureLocation' => new MPLocation(['city' => 'PAR']),
+                        'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                        'date' => new MPDate([
+                            'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                        ]),
+                        'noAirportChange' => true
+                    ]),
+                ],
+            ])
+        );
+
+        $this->assertCount(1, $msg->itinerary);
+        $this->assertCount(1, $msg->itinerary[0]->flightInfo->unitNumberDetail);
+        $this->assertEquals(1, $msg->itinerary[0]->flightInfo->unitNumberDetail[0]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_NO_AIRPORT_CHANGE, $msg->itinerary[0]->flightInfo->unitNumberDetail[0]->typeOfUnit);
+
+        $this->assertEmpty($msg->itinerary[0]->flightInfo->exclusionDetail);
+        $this->assertEmpty($msg->itinerary[0]->flightInfo->inclusionDetail);
+        $this->assertNull($msg->itinerary[0]->flightInfo->cabinId);
+        $this->assertEmpty($msg->itinerary[0]->flightInfo->companyIdentity);
+        $this->assertNull($msg->itinerary[0]->flightInfo->flightDetail);
+    }
+
+    /**
+     * 5.4 Operation: 02.03 Flight Option - Connecting Point
+     */
+    public function testCanMakeMessageWithConnectionPoints()
+    {
+        $msg = new MasterPricerTravelBoardSearch(
+            new FareMasterPricerTbSearch([
+                'nrOfRequestedPassengers' => 1,
+                'nrOfRequestedResults' => 200,
+                'passengers' => [
+                    new MPPassenger([
+                        'type' => MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'itinerary' => [
+                    new MPItinerary([
+                        'departureLocation' => new MPLocation(['city' => 'PAR']),
+                        'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                        'date' => new MPDate([
+                            'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                        ]),
+                        'excludedConnections' => ['LGW']
+                    ]),
+                    new MPItinerary([
+                        'departureLocation' => new MPLocation(['city' => 'MIA']),
+                        'arrivalLocation' => new MPLocation(['city' => 'PAR']),
+                        'date' => new MPDate([
+                            'dateTime' => new \DateTime('2018-05-10T00:00:00+0000', new \DateTimeZone('UTC')),
+                        ]),
+                        'includedConnections' => ['NYC', 'LON']
+                    ]),
+                ],
+            ])
+        );
+
+        $this->assertCount(2, $msg->itinerary);
+
+        $this->assertCount(1, $msg->itinerary[0]->flightInfo->exclusionDetail);
+
+        $this->assertEquals(ExclusionDetail::IDENT_EXCLUDED, $msg->itinerary[0]->flightInfo->exclusionDetail[0]->exclusionIdentifier);
+        $this->assertEquals('LGW', $msg->itinerary[0]->flightInfo->exclusionDetail[0]->locationId);
+        $this->assertNull($msg->itinerary[0]->flightInfo->exclusionDetail[0]->airportCityQualifier);
+
+        $this->assertEmpty($msg->itinerary[0]->flightInfo->inclusionDetail);
+        $this->assertNull($msg->itinerary[0]->flightInfo->cabinId);
+        $this->assertEmpty($msg->itinerary[0]->flightInfo->companyIdentity);
+        $this->assertNull($msg->itinerary[0]->flightInfo->flightDetail);
+        $this->assertEmpty($msg->itinerary[0]->flightInfo->unitNumberDetail);
+
+        $this->assertCount(2, $msg->itinerary[1]->flightInfo->inclusionDetail);
+
+        $this->assertEquals(InclusionDetail::IDENT_MANDATORY, $msg->itinerary[1]->flightInfo->inclusionDetail[0]->inclusionIdentifier);
+        $this->assertEquals('NYC', $msg->itinerary[1]->flightInfo->inclusionDetail[0]->locationId);
+        $this->assertNull($msg->itinerary[1]->flightInfo->inclusionDetail[0]->airportCityQualifier);
+        $this->assertEquals(InclusionDetail::IDENT_MANDATORY, $msg->itinerary[1]->flightInfo->inclusionDetail[1]->inclusionIdentifier);
+        $this->assertEquals('LON', $msg->itinerary[1]->flightInfo->inclusionDetail[1]->locationId);
+        $this->assertNull($msg->itinerary[1]->flightInfo->inclusionDetail[1]->airportCityQualifier);
+
+        $this->assertEmpty($msg->itinerary[1]->flightInfo->exclusionDetail);
+        $this->assertNull($msg->itinerary[1]->flightInfo->cabinId);
+        $this->assertEmpty($msg->itinerary[1]->flightInfo->companyIdentity);
+        $this->assertNull($msg->itinerary[1]->flightInfo->flightDetail);
+        $this->assertEmpty($msg->itinerary[1]->flightInfo->unitNumberDetail);
+    }
+
+    /**
+     * 5.2 Operation: 02.01 Flight Option - Airline/Alliance (Include/Exclude)
+     */
+    public function testCanMakeMessageWithAirlinesIncludedExcludedSegmentLevel()
+    {
+        $msg = new MasterPricerTravelBoardSearch(
+            new FareMasterPricerTbSearch([
+                'nrOfRequestedPassengers' => 1,
+                'nrOfRequestedResults' => 200,
+                'passengers' => [
+                    new MPPassenger([
+                        'type' => MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'airlineOptions' => [
+                    FareMasterPricerTbSearch::AIRLINEOPT_MANDATORY => [
+                        'AF',
+                        'YY',
+                    ]
+                ],
+                'itinerary' => [
+                    new MPItinerary([
+                        'departureLocation' => new MPLocation(['city' => 'PAR']),
+                        'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                        'date' => new MPDate([
+                            'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                        ]),
+                        'airlineOptions' => [
+                            MPItinerary::AIRLINEOPT_EXCLUDED => ['AA']
+                        ]
+                    ]),
+                    new MPItinerary([
+                        'departureLocation' => new MPLocation(['city' => 'MIA']),
+                        'arrivalLocation' => new MPLocation(['city' => 'PAR']),
+                        'date' => new MPDate([
+                            'dateTime' => new \DateTime('2018-05-10T00:00:00+0000', new \DateTimeZone('UTC')),
+                        ]),
+                        'airlineOptions' => [
+                            MPItinerary::AIRLINEOPT_PREFERRED => ['BA']
+                        ]
+                    ]),
+                ],
+            ])
+        );
+
+        $this->assertCount(1, $msg->travelFlightInfo->companyIdentity);
+        $this->assertEquals(CompanyIdentity::QUAL_MANDATORY, $msg->travelFlightInfo->companyIdentity[0]->carrierQualifier);
+        $this->assertCount(2, $msg->travelFlightInfo->companyIdentity[0]->carrierId);
+        $this->assertEquals(['AF', 'YY'], $msg->travelFlightInfo->companyIdentity[0]->carrierId);
+
+        $this->assertCount(2, $msg->itinerary);
+
+        $this->assertCount(1, $msg->itinerary[0]->flightInfo->companyIdentity);
+        $this->assertEquals(CompanyIdentity::QUAL_EXCLUDED, $msg->itinerary[0]->flightInfo->companyIdentity[0]->carrierQualifier);
+        $this->assertInternalType('array', $msg->itinerary[0]->flightInfo->companyIdentity[0]->carrierId);
+        $this->assertCount(1, $msg->itinerary[0]->flightInfo->companyIdentity[0]->carrierId);
+        $this->assertEquals('AA', $msg->itinerary[0]->flightInfo->companyIdentity[0]->carrierId[0]);
+
+        $this->assertEmpty($msg->itinerary[0]->flightInfo->exclusionDetail);
+        $this->assertEmpty($msg->itinerary[0]->flightInfo->inclusionDetail);
+        $this->assertNull($msg->itinerary[0]->flightInfo->cabinId);
+        $this->assertNull($msg->itinerary[0]->flightInfo->flightDetail);
+        $this->assertEmpty($msg->itinerary[0]->flightInfo->unitNumberDetail);
+
+        $this->assertCount(1, $msg->itinerary[1]->flightInfo->companyIdentity);
+        $this->assertEquals(CompanyIdentity::QUAL_PREFERRED, $msg->itinerary[1]->flightInfo->companyIdentity[0]->carrierQualifier);
+        $this->assertInternalType('array', $msg->itinerary[1]->flightInfo->companyIdentity[0]->carrierId);
+        $this->assertCount(1, $msg->itinerary[1]->flightInfo->companyIdentity[0]->carrierId);
+        $this->assertEquals('BA', $msg->itinerary[1]->flightInfo->companyIdentity[0]->carrierId[0]);
+
+        $this->assertEmpty($msg->itinerary[1]->flightInfo->inclusionDetail);
+        $this->assertEmpty($msg->itinerary[1]->flightInfo->exclusionDetail);
+        $this->assertNull($msg->itinerary[1]->flightInfo->cabinId);
+        $this->assertNull($msg->itinerary[1]->flightInfo->flightDetail);
+        $this->assertEmpty($msg->itinerary[1]->flightInfo->unitNumberDetail);
+    }
+
+    /**
+     * 5.3 Operation: 02.02 Flight Option - Flight Category
+     */
+    public function testCanMakeMessageWithFlightCategory()
+    {
+        $msg = new MasterPricerTravelBoardSearch(
+            new FareMasterPricerTbSearch([
+                'nrOfRequestedPassengers' => 1,
+                'nrOfRequestedResults' => 200,
+                'passengers' => [
+                    new MPPassenger([
+                        'type' => MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'requestedFlightTypes' => [
+                    FareMasterPricerTbSearch::FLIGHTTYPE_NONSTOP,
+                    FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
+                ],
+                'itinerary' => [
+                    new MPItinerary([
+                        'departureLocation' => new MPLocation(['city' => 'PAR']),
+                        'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                        'date' => new MPDate([
+                            'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                        ]),
+                    ]),
+                    new MPItinerary([
+                        'departureLocation' => new MPLocation(['city' => 'MIA']),
+                        'arrivalLocation' => new MPLocation(['city' => 'NYC']),
+                        'date' => new MPDate([
+                            'dateTime' => new \DateTime('2018-05-10T00:00:00+0000', new \DateTimeZone('UTC')),
+                        ]),
+                        'requestedFlightTypes' => [
+                            MPItinerary::FLIGHTTYPE_DIRECT
+                        ]
+                    ]),
+                ],
+            ])
+        );
+
+        $this->assertEquals(
+            [
+                FlightDetail::FLIGHT_TYPE_NON_STOP,
+                FlightDetail::FLIGHT_TYPE_DIRECT,
+            ],
+            $msg->travelFlightInfo->flightDetail->flightType
+        );
+
+        $this->assertCount(2, $msg->itinerary);
+
+        $this->assertNull($msg->itinerary[0]->flightInfo);
+
+        $this->assertInternalType('array', $msg->itinerary[1]->flightInfo->flightDetail->flightType);
+        $this->assertCount(1, $msg->itinerary[1]->flightInfo->flightDetail->flightType);
+        $this->assertEquals(FlightDetail::FLIGHT_TYPE_DIRECT, $msg->itinerary[1]->flightInfo->flightDetail->flightType[0]);
+
+        $this->assertEmpty($msg->itinerary[1]->flightInfo->companyIdentity);
+        $this->assertEmpty($msg->itinerary[1]->flightInfo->inclusionDetail);
+        $this->assertEmpty($msg->itinerary[1]->flightInfo->exclusionDetail);
+        $this->assertNull($msg->itinerary[1]->flightInfo->cabinId);
+        $this->assertEmpty($msg->itinerary[1]->flightInfo->unitNumberDetail);
+    }
+
+    /**
+     * 5.20 Operation: 02.20 Flight option - No airport change at itinerary level
+     */
+    public function testCanMakeMessageNoAirportChangeAtItineraryLevel()
+    {
+        $msg = new MasterPricerTravelBoardSearch(
+            new FareMasterPricerTbSearch([
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new MPPassenger([
+                        'type' => MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'noAirportChange' => true,
+                'itinerary' => [
+                    new MPItinerary([
+                        'departureLocation' => new MPLocation(['city' => 'PAR']),
+                        'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                        'date' => new MPDate([
+                            'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                        ]),
+                    ]),
+                ],
+            ])
+        );
+
+        $this->assertCount(1, $msg->itinerary);
+
+        $this->assertCount(1, $msg->travelFlightInfo->unitNumberDetail);
+        $this->assertEquals(1, $msg->travelFlightInfo->unitNumberDetail[0]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_NO_AIRPORT_CHANGE, $msg->travelFlightInfo->unitNumberDetail[0]->typeOfUnit);
+
+        $this->assertNull($msg->itinerary[0]->flightInfo);
+    }
+
+    /**
+     * 5.15 Operation: 02.14 Flight option - Maximum EFT
+     */
+    public function testCanMakeMessageMaximumElapsedFlyingTime()
+    {
+        $msg = new MasterPricerTravelBoardSearch(
+            new FareMasterPricerTbSearch([
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new MPPassenger([
+                        'type' => MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'maxElapsedFlyingTime' => 120,
+                'itinerary' => [
+                    new MPItinerary([
+                        'departureLocation' => new MPLocation(['city' => 'PAR']),
+                        'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                        'date' => new MPDate([
+                            'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                        ]),
+                    ]),
+                ],
+            ])
+        );
+
+        $this->assertCount(1, $msg->itinerary);
+
+        $this->assertCount(1, $msg->travelFlightInfo->unitNumberDetail);
+        $this->assertEquals(120, $msg->travelFlightInfo->unitNumberDetail[0]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_PERCENTAGE_OF_SHORTEST_ELAPSED_FLYING_TIME, $msg->travelFlightInfo->unitNumberDetail[0]->typeOfUnit);
+
+        $this->assertNull($msg->itinerary[0]->flightInfo);
     }
 }

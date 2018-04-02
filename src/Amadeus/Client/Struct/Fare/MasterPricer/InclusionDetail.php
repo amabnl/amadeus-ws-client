@@ -23,34 +23,45 @@
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * FlightDetail
+ * InclusionDetail
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class FlightDetail
+class InclusionDetail
 {
-    const FLIGHT_TYPE_CONNECTING = 'C';
-    const FLIGHT_TYPE_DIRECT = 'D';
-    const FLIGHT_TYPE_DISABLE_NEGO_SPACE = 'DN';
-    const FLIGHT_TYPE_NON_STOP = 'N';
-    const FLIGHT_TYPE_RETURN_CHEAPEST_ONLINE = 'OL';
-    const FLIGHT_TYPE_OVERNIGHT_NOT_ALLOWED = 'OV';
+    const IDENT_MANDATORY = 'M';
+    const IDENT_NIGHT_CLASS = 'N';
+
+    const QUAL_AIRPORT = 'A';
+    const QUAL_CITY = 'C';
 
     /**
-     * self::FLIGHT_TYPE_*
-     *
-     * @var string[]
+     * @var string
      */
-    public $flightType = [];
+    public $inclusionIdentifier;
 
     /**
-     * FlightDetail constructor.
-     *
-     * @param string[] $flightType
+     * @var string
      */
-    public function __construct(array $flightType = [])
+    public $locationId;
+
+    /**
+     * self::QUAL_*
+     *
+     * @var string
+     */
+    public $airportCityQualifier;
+
+    /**
+     * InclusionDetail constructor.
+     *
+     * @param string $locationId
+     * @param string inclusionIdentifier
+     */
+    public function __construct($locationId, $inclusionIdentifier = self::IDENT_MANDATORY)
     {
-        $this->flightType = $flightType;
+        $this->inclusionIdentifier = $inclusionIdentifier;
+        $this->locationId = $locationId;
     }
 }

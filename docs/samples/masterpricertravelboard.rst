@@ -910,7 +910,7 @@ Works only on return trip search.
     ]);
 
 Layover per connection
-============
+======================
 
 When itinerary consists of more than one segment, max layover per connection options narrows the search results by the specified hours and minutes value.
 
@@ -942,3 +942,264 @@ When itinerary consists of more than one segment, max layover per connection opt
         'maxLayoverPerConnectionHours' => 2,
         'maxLayoverPerConnectionMinutes' => 30,
     ]);
+
+
+No airport change
+=================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'noAirportChange' => true,
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+            ]),
+        ],
+    ]);
+
+Maximum elapsed flying time
+===========================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'maxElapsedFlyingTime' => 120,
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+            ]),
+        ],
+    ]);
+
+Exclude/Include airlines at segment level
+=========================================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'nrOfRequestedResults' => 200,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'airlineOptions' => [
+            FareMasterPricerTbSearch::AIRLINEOPT_MANDATORY => [
+                'AF',
+                'YY',
+            ]
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+                'airlineOptions' => [
+                    MPItinerary::AIRLINEOPT_EXCLUDED => ['AA']
+                ]
+            ]),
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'MIA']),
+                'arrivalLocation' => new MPLocation(['city' => 'PAR']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-10T00:00:00+0000', new \DateTimeZone('UTC')),
+                ]),
+                'airlineOptions' => [
+                    MPItinerary::AIRLINEOPT_PREFERRED => ['BA']
+                ]
+            ]),
+        ],
+    ]);
+
+Flight Category at segment level
+================================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'nrOfRequestedResults' => 200,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'requestedFlightTypes' => [
+            FareMasterPricerTbSearch::FLIGHTTYPE_NONSTOP,
+            FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+            ]),
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'MIA']),
+                'arrivalLocation' => new MPLocation(['city' => 'NYC']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-10T00:00:00+0000', new \DateTimeZone('UTC')),
+                ]),
+                'requestedFlightTypes' => [
+                    MPItinerary::FLIGHTTYPE_DIRECT
+                ]
+            ]),
+        ],
+    ]);
+
+Include/Exclude connection points at segment level
+==================================================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'nrOfRequestedResults' => 200,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+                'excludedConnections' => ['LGW']
+            ]),
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'MIA']),
+                'arrivalLocation' => new MPLocation(['city' => 'PAR']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-10T00:00:00+0000', new \DateTimeZone('UTC')),
+                ]),
+                'includedConnections' => ['NYC', 'LON']
+            ]),
+        ],
+    ]);
+
+Number of Connections at segment level
+======================================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+                'nrOfConnections' => 2
+            ]),
+        ],
+    ]);
+
+No airport change at segment level
+==================================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+                'noAirportChange' => true
+            ]),
+        ],
+    ]);
+
