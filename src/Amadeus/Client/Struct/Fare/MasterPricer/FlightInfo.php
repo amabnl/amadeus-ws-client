@@ -70,8 +70,14 @@ class FlightInfo
      * @param int|null $connections
      * @param bool $noAirportChange
      */
-    public function __construct(array $airlineOptions, array $flightTypes, array $includedConnections = [], array $excludedConnections = [], $connections = null, $noAirportChange = false)
-    {
+    public function __construct(
+        array $airlineOptions,
+        array $flightTypes,
+        array $includedConnections = [],
+        array $excludedConnections = [],
+        $connections = null,
+        $noAirportChange = false
+    ) {
         foreach ($airlineOptions as $qualifier => $airlines) {
             $this->companyIdentity[] = new CompanyIdentity(
                 $qualifier,

@@ -73,6 +73,16 @@ class CreateFormOfPayment extends BaseWsMessage
             $this->bestEffort[] = new BestEffort($options->bestEffortIndicator, $options->bestEffortAction);
         }
 
+        $this->loadFopGroup($options);
+    }
+
+    /**
+     * Load fopGroup
+     *
+     * @param FopCreateFopOptions $options
+     */
+    protected function loadFopGroup(FopCreateFopOptions $options)
+    {
         foreach ($options->fopGroup as $group) {
             if ($this instanceof CreateFormOfPayment14) {
                 $this->fopGroup[] = new FopGroup14($group);

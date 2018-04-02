@@ -39,7 +39,7 @@ class DocRefundInitRefundOptions extends Base
     const ACTION_NOT_REPORTED_REFUND = 'NRP';
     const ACTION_NO_SHOW = 'NS';
     const ACTION_ZERO_REFUND = 'NUL';
-    const ACTION_HOLD_FOR_FUTURE_USE= 'RTF';
+    const ACTION_HOLD_FOR_FUTURE_USE = 'RTF';
     const ACTION_TAXES = 'TAX';
 
     const TYPE_FROM_NUMBER = 'FRM';

@@ -98,6 +98,32 @@ class TravelFlightInfo extends WsMessageUtility
             }
         }
 
+        $this->loadUnitNumberDetails(
+            $progressiveLegsMin,
+            $progressiveLegsMax,
+            $maxLayoverPerConnectionHours,
+            $maxLayoverPerConnectionMinutes,
+            $noAirportChange,
+            $maxElapsedFlyingTime
+        );
+    }
+
+    /**
+     * @param int|null $progressiveLegsMin
+     * @param int|null $progressiveLegsMax
+     * @param int|null $maxLayoverPerConnectionHours
+     * @param int|null $maxLayoverPerConnectionMinutes
+     * @param bool|null $noAirportChange
+     * @param int|null $maxElapsedFlyingTime
+     */
+    protected function loadUnitNumberDetails(
+        $progressiveLegsMin,
+        $progressiveLegsMax,
+        $maxLayoverPerConnectionHours,
+        $maxLayoverPerConnectionMinutes,
+        $noAirportChange,
+        $maxElapsedFlyingTime
+    ) {
         if ($this->checkAllIntegers($progressiveLegsMin, $progressiveLegsMax)) {
             $this->unitNumberDetail[] = new UnitNumberDetail(
                 $progressiveLegsMin,
