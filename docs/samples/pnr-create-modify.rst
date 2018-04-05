@@ -91,8 +91,8 @@ Add an infant to a traveller and provide the infant's first & last name and date
         ]
     ]);
 
-Add an infant what takes a seat is similar to adding child.
-But remember, not all airlines support INS and a different passenger could be quoted.
+Adding of an infant that takes a seat is similar to adding child.
+But remember, not all airlines support INS and a different passenger could be quoted:
 
 .. code-block:: php
 
