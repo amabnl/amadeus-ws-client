@@ -91,6 +91,24 @@ Add an infant to a traveller and provide the infant's first & last name and date
         ]
     ]);
 
+Adding of an infant that takes a seat is similar to adding child.
+But remember, not all airlines support INS and a different passenger could be quoted:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+
+    $opt = new PnrCreatePnrOptions([
+        'travellers' => [
+            new Traveller([
+                'lastName' => 'Dylan',
+                'firstName' => 'Junior',
+                'travellerType' => Traveller::TRAV_TYPE_INFANT_WITH_SEAT,
+            ])
+        ]
+    ]);
+
 Remarks
 =======
 
