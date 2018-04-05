@@ -102,8 +102,8 @@ But remember, not all airlines support INS and a different passenger could be qu
     $opt = new PnrCreatePnrOptions([
         'travellers' => [
             new Traveller([
-                'lastName' => 'Bowie',
-                'firstName' => 'David',
+                'lastName' => 'Dylan',
+                'firstName' => 'Junior',
                 'travellerType' => Traveller::TRAV_TYPE_INFANT_WITH_SEAT,
             ])
         ]
