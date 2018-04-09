@@ -64,6 +64,10 @@ class TravelFlightInfo extends WsMessageUtility
      * @param array|null $airlineOptions
      * @param int|null $progressiveLegsMin
      * @param int|null $progressiveLegsMax
+     * @param int|null $maxLayoverPerConnectionHours
+     * @param int|null $maxLayoverPerConnectionMinutes
+     * @param bool|null $noAirportChange
+     * @param int|null $maxElapsedFlyingTime
      */
     public function __construct(
         $cabinCode = null,
@@ -71,7 +75,11 @@ class TravelFlightInfo extends WsMessageUtility
         $flightTypes = null,
         $airlineOptions = null,
         $progressiveLegsMin = null,
-        $progressiveLegsMax = null
+        $progressiveLegsMax = null,
+        $maxLayoverPerConnectionHours = null,
+        $maxLayoverPerConnectionMinutes = null,
+        $noAirportChange = null,
+        $maxElapsedFlyingTime = null
     ) {
         if (!is_null($cabinCode) || !is_null($cabinOption)) {
             $this->cabinId = new CabinId($cabinCode, $cabinOption);
@@ -90,6 +98,32 @@ class TravelFlightInfo extends WsMessageUtility
             }
         }
 
+        $this->loadUnitNumberDetails(
+            $progressiveLegsMin,
+            $progressiveLegsMax,
+            $maxLayoverPerConnectionHours,
+            $maxLayoverPerConnectionMinutes,
+            $noAirportChange,
+            $maxElapsedFlyingTime
+        );
+    }
+
+    /**
+     * @param int|null $progressiveLegsMin
+     * @param int|null $progressiveLegsMax
+     * @param int|null $maxLayoverPerConnectionHours
+     * @param int|null $maxLayoverPerConnectionMinutes
+     * @param bool|null $noAirportChange
+     * @param int|null $maxElapsedFlyingTime
+     */
+    protected function loadUnitNumberDetails(
+        $progressiveLegsMin,
+        $progressiveLegsMax,
+        $maxLayoverPerConnectionHours,
+        $maxLayoverPerConnectionMinutes,
+        $noAirportChange,
+        $maxElapsedFlyingTime
+    ) {
         if ($this->checkAllIntegers($progressiveLegsMin, $progressiveLegsMax)) {
             $this->unitNumberDetail[] = new UnitNumberDetail(
                 $progressiveLegsMin,
@@ -98,6 +132,34 @@ class TravelFlightInfo extends WsMessageUtility
             $this->unitNumberDetail[] = new UnitNumberDetail(
                 $progressiveLegsMax,
                 UnitNumberDetail::TYPE_MAXIMUM_PROGRESSIVE_CONNECTIONS
+            );
+        }
+
+        if (is_int($maxLayoverPerConnectionHours)) {
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $maxLayoverPerConnectionHours,
+                UnitNumberDetail::TYPE_MAX_LAYOVER_PER_CONNECTION_REQUESTED_SEGMENT_HOURS
+            );
+        }
+
+        if (is_int($maxLayoverPerConnectionMinutes)) {
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $maxLayoverPerConnectionMinutes,
+                UnitNumberDetail::TYPE_MAX_LAYOVER_PER_CONNECTION_REQUESTED_SEGMENT_MINUTES
+            );
+        }
+
+        if ($noAirportChange === true) {
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                1,
+                UnitNumberDetail::TYPE_NO_AIRPORT_CHANGE
+            );
+        }
+
+        if (is_int($maxElapsedFlyingTime)) {
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $maxElapsedFlyingTime,
+                UnitNumberDetail::TYPE_PERCENTAGE_OF_SHORTEST_ELAPSED_FLYING_TIME
             );
         }
     }

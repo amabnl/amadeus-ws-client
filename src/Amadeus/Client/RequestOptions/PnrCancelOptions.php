@@ -23,10 +23,10 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PnrCancelOptions
+ * Pnr_Cancel Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PnrCancelOptions extends PnrBase
 {

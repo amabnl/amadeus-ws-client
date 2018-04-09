@@ -8,10 +8,10 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * TicketCreateTsmFromPricingOptions
+ * Ticket_CreateTsmFromPricing Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TicketCreateTsmFromPricingOptions extends TicketCreateTstFromPricingOptions
 {

@@ -30,7 +30,7 @@ use Amadeus\Client\Struct\WsMessageUtility;
  * EnhancedPassengerGroup
  *
  * @package Amadeus\Client\Struct\Pnr\NameChange
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class EnhancedPassengerGroup extends WsMessageUtility
 {

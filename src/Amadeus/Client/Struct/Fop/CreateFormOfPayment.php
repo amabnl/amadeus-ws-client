@@ -25,12 +25,13 @@ namespace Amadeus\Client\Struct\Fop;
 use Amadeus\Client\RequestOptions\FopCreateFopOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fop\CreateFormOfPayment\BestEffort;
+use Amadeus\Client\Struct\Fop\CreateFormOfPayment\FopGroup14;
 
 /**
- * CreateFormOfPayment
+ * FOP_CreateFormOfPayment message structure version 15 and up
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class CreateFormOfPayment extends BaseWsMessage
 {
@@ -72,8 +73,22 @@ class CreateFormOfPayment extends BaseWsMessage
             $this->bestEffort[] = new BestEffort($options->bestEffortIndicator, $options->bestEffortAction);
         }
 
+        $this->loadFopGroup($options);
+    }
+
+    /**
+     * Load fopGroup
+     *
+     * @param FopCreateFopOptions $options
+     */
+    protected function loadFopGroup(FopCreateFopOptions $options)
+    {
         foreach ($options->fopGroup as $group) {
-            $this->fopGroup[] = new FopGroup($group);
+            if ($this instanceof CreateFormOfPayment14) {
+                $this->fopGroup[] = new FopGroup14($group);
+            } else {
+                $this->fopGroup[] = new FopGroup($group);
+            }
         }
     }
 }

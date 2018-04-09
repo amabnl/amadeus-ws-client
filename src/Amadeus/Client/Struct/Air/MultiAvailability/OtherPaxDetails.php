@@ -11,10 +11,11 @@ namespace Amadeus\Client\Struct\Air\MultiAvailability;
  * OtherPaxDetails
  *
  * @package Amadeus\Client\Struct\Air\MultiAvailability
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class OtherPaxDetails
 {
+    const INFANT_INDICATOR = 1;
     /**
      * @var string
      */
@@ -31,7 +32,7 @@ class OtherPaxDetails
     public $uniqueCustomerIdentifier;
 
     /**
-     * @var string
+     * @var string|int
      */
     public $infantIndicator;
 

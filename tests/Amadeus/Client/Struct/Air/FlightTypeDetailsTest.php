@@ -29,7 +29,7 @@ use Test\Amadeus\BaseTestCase;
  * FlightTypeDetails
  *
  * @package Amadeus\Client\Struct\Air
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FlightTypeDetailsTest extends BaseTestCase
 {

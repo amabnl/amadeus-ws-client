@@ -30,7 +30,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerList
  *
  * @package Amadeus\Client\ResponseHandler\Queue
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerList extends StandardResponseHandler
 {

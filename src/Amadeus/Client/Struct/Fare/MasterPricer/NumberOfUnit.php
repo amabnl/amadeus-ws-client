@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
  * NumberOfUnit
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class NumberOfUnit
 {
@@ -40,7 +40,7 @@ class NumberOfUnit
     /**
      * @param int|null $requestedPax
      * @param int|null $requestedResults
-     * @param Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights|null $multiTicketWeights
+     * @param MultiTicketWeights|null $multiTicketWeights
      */
     public function __construct($requestedPax, $requestedResults, $multiTicketWeights)
     {
@@ -64,7 +64,7 @@ class NumberOfUnit
             );
             $this->unitNumberDetail[] = new UnitNumberDetail(
                 $multiTicketWeights->oneWayInbound,
-                UnitNumberDetail::TYPE_INBBOUND_RECOMMENDATION
+                UnitNumberDetail::TYPE_INBOUND_RECOMMENDATION
             );
             $this->unitNumberDetail[] = new UnitNumberDetail(
                 $multiTicketWeights->returnTrip,

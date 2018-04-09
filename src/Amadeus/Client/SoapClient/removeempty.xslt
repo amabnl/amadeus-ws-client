@@ -16,12 +16,12 @@
 	    - originDestination
 	    - markerRoomStayData, markerGlobalBookingInfo, markerRoomstayQuery, marker, markerOfExtra (Offer_ConfirmHotelOffer)
 	    - SalesReports_DisplayQueryReport (can be an empty request)
-	    - fopReference, authorisationSupplementaryData (FOP_CreateFormOfPayment)
+	    - fopReference, authorisationSupplementaryData, dummy (FOP_CreateFormOfPayment)
 
-	    Author: Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+	    Author: Dieter Devlieghere <dermikagh@gmail.com>
 	 -->
 	<xsl:template
-			match="node()[descendant-or-self::*[local-name(.) = 'Security_SignOut'] or descendant-or-self::*[local-name(.) = 'marker1'] or descendant-or-self::*[local-name(.) = 'dumbo'] or descendant-or-self::*[local-name(.) = 'boardOffPoints'] or descendant-or-self::*[local-name(.) = 'originDestination'] or descendant-or-self::*[local-name(.) = 'markerRoomStayData'] or descendant-or-self::*[local-name(.) = 'markerGlobalBookingInfo'] or descendant-or-self::*[local-name(.) = 'markerRoomstayQuery'] or descendant-or-self::*[local-name(.) = 'marker'] or descendant-or-self::*[local-name(.) = 'markerOfExtra'] or descendant-or-self::*[local-name(.) = 'SalesReports_DisplayQueryReport'] or descendant-or-self::*[local-name(.) = 'fopReference'] or descendant-or-self::*[local-name(.) = 'authorisationSupplementaryData'] or descendant-or-self::*[@*] or descendant-or-self::*[string-length(normalize-space(.)) &gt; 0]]">
+			match="node()[descendant-or-self::*[local-name(.) = 'Security_SignOut'] or descendant-or-self::*[local-name(.) = 'marker1'] or descendant-or-self::*[local-name(.) = 'dumbo'] or descendant-or-self::*[local-name(.) = 'boardOffPoints'] or descendant-or-self::*[local-name(.) = 'originDestination'] or descendant-or-self::*[local-name(.) = 'markerRoomStayData'] or descendant-or-self::*[local-name(.) = 'markerGlobalBookingInfo'] or descendant-or-self::*[local-name(.) = 'markerRoomstayQuery'] or descendant-or-self::*[local-name(.) = 'marker'] or descendant-or-self::*[local-name(.) = 'markerOfExtra'] or descendant-or-self::*[local-name(.) = 'SalesReports_DisplayQueryReport'] or descendant-or-self::*[local-name(.) = 'fopReference'] or descendant-or-self::*[local-name(.) = 'authorisationSupplementaryData'] or descendant-or-self::*[local-name(.) = 'dummy'] or descendant-or-self::*[@*] or descendant-or-self::*[string-length(normalize-space(.)) &gt; 0]]">
 		<xsl:copy>
 			<xsl:apply-templates select="@*"/>
 			<xsl:apply-templates select="node()"/>

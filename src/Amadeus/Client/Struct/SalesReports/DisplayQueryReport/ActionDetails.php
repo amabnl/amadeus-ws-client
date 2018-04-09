@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
  * ActionDetails
  *
  * @package Amadeus\Client\Struct\SalesReports\DisplayQueryReport
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ActionDetails
 {

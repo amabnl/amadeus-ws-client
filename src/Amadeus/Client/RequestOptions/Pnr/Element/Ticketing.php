@@ -29,7 +29,7 @@ use Amadeus\Client\RequestOptions\Queue;
  * Ticketing element
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Element
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Ticketing extends Element
 {

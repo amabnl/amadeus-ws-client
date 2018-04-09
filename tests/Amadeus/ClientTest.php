@@ -159,7 +159,9 @@ class ClientTest extends BaseTestCase
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $expectedPnrResult = new Client\Struct\Pnr\Retrieve(Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,'ABC123');
+        $expectedPnrResult = new Client\Struct\Pnr\Retrieve(new Client\RequestOptions\PnrRetrieveOptions([
+            'recordLocator' => 'ABC123'
+        ]));
 
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
@@ -1085,6 +1087,63 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendMiniRuleGetFromETicket()
+    {
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('miniRuleGetFromETicketReply131.txt');
+        $mockedSendResult->responseObject = new \stdClass();
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\MiniRule\GetFromETicket(
+            new Client\RequestOptions\MiniRuleGetFromETicketOptions([
+                'eTicket' => '1234567891987'
+            ])
+        );
+
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('MiniRule_GetFromETicket', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['MiniRule_GetFromETicket' => ['version' => "13.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'MiniRule_GetFromETicket')
+            ->will($this->returnValue($messageResult));
+
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->miniRuleGetFromETicket(
+            new Client\RequestOptions\MiniRuleGetFromETicketOptions([
+                'eTicket' => '1234567891987'
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoOfferCreateCall()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -1905,7 +1964,7 @@ class ClientTest extends BaseTestCase
     }
 
 
-    public function testCanDoTicketTicketCheckEligibility()
+    public function testCanDoTicketCheckEligibility()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
@@ -2227,6 +2286,130 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoTicketCancelDocument()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketCancelDocumentMessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\CancelDocument(
+            new Client\RequestOptions\TicketCancelDocumentOptions([
+                'eTicket' => '1721587458965',
+                'airlineStockProvider' => '6X',
+                'officeId' => 'NCE6X0100'
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with(
+                'Ticket_CancelDocument',
+                $expectedMessageResult,
+                ['endSession' => false, 'returnXml' => true]
+            )
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_CancelDocument' => ['version' => "11.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_CancelDocument')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketCancelDocument(
+            new Client\RequestOptions\TicketCancelDocumentOptions([
+                'eTicket' => '1721587458965',
+                'airlineStockProvider' => '6X',
+                'officeId' => 'NCE6X0100'
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoTicketProcessEDocDocument()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketProcessEDocMessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\ProcessEDoc(
+            new Client\RequestOptions\TicketProcessEDocOptions([
+                'ticketNumber' => '1721587458965',
+                'action' => Client\RequestOptions\TicketProcessEDocOptions::ACTION_EMD_DISPLAY,
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with(
+                'Ticket_ProcessEDoc',
+                $expectedMessageResult,
+                ['endSession' => false, 'returnXml' => true]
+            )
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_ProcessEDoc' => ['version' => "15.2", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_ProcessEDoc')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketProcessEDoc(
+            new Client\RequestOptions\TicketProcessEDocOptions([
+                'ticketNumber' => '1721587458965',
+                'action' => Client\RequestOptions\TicketProcessEDocOptions::ACTION_EMD_DISPLAY,
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoOfferConfirmAirOffer()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -2363,6 +2546,135 @@ class ClientTest extends BaseTestCase
                             ])
                         ]
                     ])
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendAirRebookAirSegment()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyairrebookairsegmentmessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Air\RebookAirSegment(
+            new Client\RequestOptions\AirRebookAirSegmentOptions([
+                'bestPricerOption' => 2,
+                'itinerary' => [
+                    new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary([
+                        'from' => 'FRA',
+                        'to' => 'BKK',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                                'dateVariation' => 1,
+                                'from' => 'FRA',
+                                'to' => 'BKK',
+                                'companyCode' => 'LH',
+                                'flightNumber' => '744',
+                                'bookingClass' => 'F',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_CANCEL_SEGMENT
+                            ])
+                        ]
+                    ]),
+                    new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary([
+                        'from' => 'FRA',
+                        'to' => 'BKK',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','00000000141000', new \DateTimeZone('UTC')),
+                                'from' => 'FRA',
+                                'to' => 'BKK',
+                                'companyCode' => 'LH',
+                                'flightNumber' => '744',
+                                'bookingClass' => 'C',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_SELL_SEGMENT
+                            ])
+                        ]
+                    ]),
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Air_RebookAirSegment', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Air_RebookAirSegment' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Air_RebookAirSegment')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->airRebookAirSegment(
+            new Client\RequestOptions\AirRebookAirSegmentOptions([
+                'bestPricerOption' => 2,
+                'itinerary' => [
+                    new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary([
+                        'from' => 'FRA',
+                        'to' => 'BKK',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                                'dateVariation' => 1,
+                                'from' => 'FRA',
+                                'to' => 'BKK',
+                                'companyCode' => 'LH',
+                                'flightNumber' => '744',
+                                'bookingClass' => 'F',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_CANCEL_SEGMENT
+                            ])
+                        ]
+                    ]),
+                    new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary([
+                        'from' => 'FRA',
+                        'to' => 'BKK',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','00000000141000', new \DateTimeZone('UTC')),
+                                'from' => 'FRA',
+                                'to' => 'BKK',
+                                'companyCode' => 'LH',
+                                'flightNumber' => '744',
+                                'bookingClass' => 'C',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_SELL_SEGMENT
+                            ])
+                        ]
+                    ]),
                 ]
             ])
         );
@@ -3504,6 +3816,52 @@ class ClientTest extends BaseTestCase
 
         $this->assertEquals($messageResult, $response);
     }
+
+    public function testCanSendServiceIntegratedCatalogue()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('serviceIntegratedCatalogueReply142.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Service\IntegratedCatalogue(
+            new Client\RequestOptions\ServiceIntegratedCatalogueOptions([
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Service_IntegratedCatalogue', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));;
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Service_IntegratedCatalogue' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+
+        $response = $client->serviceIntegratedCatalogue(
+            new Client\RequestOptions\ServiceIntegratedCatalogueOptions([
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
 
     public function testCanSendFopCreateFormOfPayment()
     {

@@ -30,7 +30,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerProcessRefund
  *
  * @package Amadeus\Client\ResponseHandler\DocRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerProcessRefund extends StandardResponseHandler
 {

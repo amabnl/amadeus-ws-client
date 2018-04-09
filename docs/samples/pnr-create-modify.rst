@@ -91,6 +91,24 @@ Add an infant to a traveller and provide the infant's first & last name and date
         ]
     ]);
 
+Adding of an infant that takes a seat is similar to adding child.
+But remember, not all airlines support INS and a different passenger could be quoted:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+
+    $opt = new PnrCreatePnrOptions([
+        'travellers' => [
+            new Traveller([
+                'lastName' => 'Dylan',
+                'firstName' => 'Junior',
+                'travellerType' => Traveller::TRAV_TYPE_INFANT_WITH_SEAT,
+            ])
+        ]
+    ]);
+
 Remarks
 =======
 
@@ -433,6 +451,23 @@ Add a service fee paid using Visa:
         ]
     ]);
 
+Free flow text Form of Payment:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\FormOfPayment;
+
+    $opt = new PnrCreatePnrOptions([
+        'elements' => [
+            new FormOfPayment([
+                'type' => FormOfPayment::TYPE_MISC,
+                'freeText' => 'the FOP free text content',
+            ])
+        ]
+    ]);
+
+
 Manual Commission FM
 ====================
 
@@ -591,6 +626,30 @@ Request seat 13f for passenger with tattoo 1 and segment with tattoo 1.
             ])
         ]
     ]);
+
+Request Special Seat Type Aisle
+===============================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $opt = new PnrAddMultiElementsOptions([
+        'elements' => [
+            new SeatRequest([
+                'specialType' => SeatRequest::SPECIAL_AISLE_SEAT,
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
+                        'id' => 1
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
 
 Group PNR
 =========

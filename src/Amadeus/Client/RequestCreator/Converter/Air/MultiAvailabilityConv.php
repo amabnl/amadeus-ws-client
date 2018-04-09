@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * Air_MultiAvailability Request options
  *
  * @package Amadeus\Client\RequestCreator\Converter\Air
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MultiAvailabilityConv extends BaseConverter
 {
@@ -41,6 +41,10 @@ class MultiAvailabilityConv extends BaseConverter
      */
     public function convert($requestOptions, $version)
     {
-        return new Struct\Air\MultiAvailability($requestOptions);
+        if (floatval($version) < floatval(16)) {
+            return new Struct\Air\MultiAvailability($requestOptions);
+        } else {
+            return new Struct\Air\MultiAvailability16($requestOptions);
+        }
     }
 }

@@ -1,0 +1,19 @@
+<Air_RebookAirSegmentReply xmlns="http://xml.amadeus.com/ARBKUR_14_1_1A">
+    <messageErrorInfo>
+        <errorCoded>
+            <errorDetails>
+                <errorCode>ZZZ</errorCode>
+                <errorCategory>EC</errorCategory>
+                <errorCodeOwner>AMD</errorCodeOwner>
+            </errorDetails>
+        </errorCoded>
+        <errorDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <source>F</source>
+                <encoding>2</encoding>
+            </freeTextDetails>
+            <freeText>UNABLE TO REPLICATE - INFORMATIONAL SEGMENT</freeText>
+        </errorDescription>
+    </messageErrorInfo>
+</Air_RebookAirSegmentReply>

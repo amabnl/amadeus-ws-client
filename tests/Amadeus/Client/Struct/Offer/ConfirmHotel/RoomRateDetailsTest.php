@@ -30,7 +30,7 @@ use Test\Amadeus\BaseTestCase;
  * RoomRateDetailsTest
  *
  * @package Test\Amadeus\Client\Struct\Offer\ConfirmHotel
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class RoomRateDetailsTest extends BaseTestCase
 {

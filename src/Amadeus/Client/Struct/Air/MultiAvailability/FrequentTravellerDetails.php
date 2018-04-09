@@ -11,10 +11,13 @@ namespace Amadeus\Client\Struct\Air\MultiAvailability;
  * FrequentTravellerDetails
  *
  * @package Amadeus\Client\Struct\Air\MultiAvailability
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FrequentTravellerDetails
 {
+    const REFTYPE_FREQUENT_FLYER = "FF";
+    const REFTYPE_CORPORATE_FREQUENT_FLYER = "CFF";
+
     /**
      * @var string
      */
@@ -52,6 +55,8 @@ class FrequentTravellerDetails
      */
     public $customerValue;
     /**
+     * self::REFTYPE_*
+     *
      * @var string
      */
     public $referenceType;
@@ -61,7 +66,7 @@ class FrequentTravellerDetails
      *
      * @param string $carrier
      * @param string $number
-     * @param string|null $refType
+     * @param string|null $refType self::REFTYPE_*
      */
     public function __construct($carrier, $number, $refType = null)
     {

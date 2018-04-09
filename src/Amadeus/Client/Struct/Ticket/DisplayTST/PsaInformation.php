@@ -28,7 +28,7 @@ use Amadeus\Client\Struct\Ticket\RefDetails;
  * PsaInformation
  *
  * @package Amadeus\Client\Struct\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PsaInformation
 {

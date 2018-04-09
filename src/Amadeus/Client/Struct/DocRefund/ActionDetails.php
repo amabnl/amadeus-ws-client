@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\DocRefund;
  * ActionDetails
  *
  * @package Amadeus\Client\Struct\DocRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ActionDetails
 {

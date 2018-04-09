@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Air;
  * TravelProductInformation
  *
  * @package Amadeus\Client\Struct\Air
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class TravelProductInformation
 {
@@ -131,10 +131,22 @@ class TravelProductInformation
      * @param string $company
      * @param string $flightNumber
      * @param string $bookingClass
+     * @param \DateTime|null $arrivalDate
+     * @param string|\DateTime|null $arrivalTime
+     * @param int|null $dateVariation
      */
-    public function __construct($departureDate, $from, $to, $company, $flightNumber, $bookingClass)
-    {
-        $this->flightDate = new FlightDate($departureDate);
+    public function __construct(
+        $departureDate,
+        $from,
+        $to,
+        $company,
+        $flightNumber,
+        $bookingClass,
+        $arrivalDate = null,
+        $arrivalTime = null,
+        $dateVariation = null
+    ) {
+        $this->flightDate = new FlightDate($departureDate, $arrivalDate, $arrivalTime, $dateVariation);
         $this->boardPointDetails = new PointDetails($from);
         $this->offpointDetails = new PointDetails($to);
         $this->companyDetails = new CompanyDetails($company);

@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * Fare_InformativePricingWithoutPNR Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class InformativePricingWithoutPNRConv extends BaseConverter
 {

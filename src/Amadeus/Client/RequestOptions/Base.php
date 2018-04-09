@@ -32,7 +32,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Will try to map keys in array to property names and fill in matching properties.
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 abstract class Base extends LoadParamsFromArray implements RequestOptionsInterface
 {

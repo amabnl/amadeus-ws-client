@@ -31,7 +31,7 @@ use Test\Amadeus\BaseTestCase;
  * FareFamilySegmentTest
  *
  * @package Test\Amadeus\Client\Struct\Fare\MasterPricer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FareFamilySegmentTest extends BaseTestCase
 {

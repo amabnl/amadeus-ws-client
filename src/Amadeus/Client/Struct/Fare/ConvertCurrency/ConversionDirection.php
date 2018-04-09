@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fare\ConvertCurrency;
  * ConversionDirection
  *
  * @package Amadeus\Client\Struct\Fare\ConvertCurrency
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ConversionDirection
 {

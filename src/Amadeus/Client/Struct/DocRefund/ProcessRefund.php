@@ -33,7 +33,7 @@ use Amadeus\Client\Struct\DocRefund\UpdateRefund\RefundedItinerary;
  * ProcessRefund
  *
  * @package Amadeus\Client\Struct\DocRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ProcessRefund extends BaseWsMessage
 {

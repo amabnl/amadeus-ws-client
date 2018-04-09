@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Passenger for who the name must be changed, updated or completed
  *
  * @package Amadeus\Client\RequestOptions\Pnr\NameChange
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Passenger extends LoadParamsFromArray
 {

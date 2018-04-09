@@ -23,10 +23,10 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * OfferConfirmHotelOptions
+ * Offer_ConfirmHotel Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class OfferConfirmHotelOptions extends Base
 {
@@ -41,9 +41,9 @@ class OfferConfirmHotelOptions extends Base
     const FOP_MISC_CHARGE_ORDER = 4;
     const FOP_CHECK = 6;
     const FOP_BUSINESS_ACCOUNT = 9;
-    const FOP_ADVANCE_DEPOSIT = "ADV";
-    const FOP_CRQCHECK_GUARANTEE = "HI";
-    const FOP_HOTEL_GUEST_IDENT = "ID";
+    const FOP_ADVANCE_DEPOSIT = 'ADV';
+    const FOP_CRQCHECK_GUARANTEE = 'HI';
+    const FOP_HOTEL_GUEST_IDENT = 'ID';
 
     /**
      * PNR record locator

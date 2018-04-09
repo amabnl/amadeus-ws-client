@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Segment
  *
  * @package Amadeus\Client\RequestOptions\Fare\InformativePricing
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Segment extends LoadParamsFromArray
 {

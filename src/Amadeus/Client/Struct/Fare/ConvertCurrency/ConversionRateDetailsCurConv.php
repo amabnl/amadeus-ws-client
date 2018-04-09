@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fare\ConvertCurrency;
  * ConversionRateDetailsCurConv
  *
  * @package Amadeus\Client\Struct\Fare\ConvertCurrency
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ConversionRateDetailsCurConv
 {

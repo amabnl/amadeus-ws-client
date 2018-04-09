@@ -34,7 +34,7 @@ use Amadeus\Client\RequestOptions\Ticket\PaxSegRef;
  * Ticket_RepricePNRWithBookingClass request options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TicketRepricePnrWithBookingClassOptions extends Base
 {
@@ -82,7 +82,7 @@ class TicketRepricePnrWithBookingClassOptions extends Base
     const OVERRIDE_WITHOLD_Q_SURCHARGES = "WQ";
     const OVERRIDE_WITHOLD_TAX = "WT";
     const OVERRIDE_WAIVER_OPTION = "WV";
-    const OVERRIDE_ZAP_OFF = "ZAP";
+    const OVERRIDE_ZAP_OFF = 'ZAP';
     
     /**
      * @var ExchangeInfoOptions[]

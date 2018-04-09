@@ -30,7 +30,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerIntegratedPricing
  *
  * @package Amadeus\Client\ResponseHandler\Service
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerIntegratedPricing extends StandardResponseHandler
 {

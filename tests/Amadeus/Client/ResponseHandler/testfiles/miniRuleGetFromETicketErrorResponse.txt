@@ -1,0 +1,22 @@
+<MiniRule_GetFromETicketReply xmlns="http://xml.amadeus.com/TMRERR_13_1_1A">
+    <responseDetails>
+        <statusCode>N</statusCode>
+    </responseDetails>
+    <errorWarningGroup>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>29149</errorCode>
+                <errorCategory>EC</errorCategory>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>831</textSubjectQualifier>
+                <language>EN</language>
+                <source>S</source>
+                <encoding>1</encoding>
+            </freeTextDetails>
+            <freeText>NO FARE RULES FOUND</freeText>
+        </errorWarningDescription>
+    </errorWarningGroup>
+</MiniRule_GetFromETicketReply>

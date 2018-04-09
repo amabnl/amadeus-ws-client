@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Ticket\CheckEligibility;
  * CustomerRef
  *
  * @package Amadeus\Client\Struct\Ticket\CheckEligibility
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class CustomerRef
 {

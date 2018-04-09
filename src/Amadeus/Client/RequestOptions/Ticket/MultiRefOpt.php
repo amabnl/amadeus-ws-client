@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Multiple pax/seg/tst/... references
  *
  * @package Amadeus\Client\RequestOptions\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MultiRefOpt extends LoadParamsFromArray
 {

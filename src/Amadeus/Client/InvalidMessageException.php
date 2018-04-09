@@ -28,7 +28,7 @@ namespace Amadeus\Client;
  * If you would call such a message anyway, you'd get the error "No agreement on destination".
  *
  * @package Amadeus\Client
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class InvalidMessageException extends Exception
 {

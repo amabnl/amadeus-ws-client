@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fare\MasterPricer;
  * PricingTicketing
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PricingTicketing
 {
@@ -47,6 +47,7 @@ class PricingTicketing
     const PRICETYPE_DISPLAY_MIN_MAX_STAY = "MST";
     const PRICETYPE_OVERRIDE_CURRENCY_CONVERSION = "CUC";
     const PRICETYPE_MULTI_TICKET = "MTK";
+    const PRICETYPE_IN_FLIGHT_SERVICES = "IFS";
 
     /**
      * self::PRICETYPE_*

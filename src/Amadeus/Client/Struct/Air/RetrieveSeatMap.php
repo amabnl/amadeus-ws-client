@@ -23,7 +23,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * RetrieveSeatMap
  *
  * @package Amadeus\Client\Struct\Air
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class RetrieveSeatMap extends BaseWsMessage
 {

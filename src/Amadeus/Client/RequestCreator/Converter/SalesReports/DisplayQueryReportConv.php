@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * SalesReports_DisplayQueryReport Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\SalesReports
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DisplayQueryReportConv extends BaseConverter
 {

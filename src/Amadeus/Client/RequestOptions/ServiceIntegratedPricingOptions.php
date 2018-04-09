@@ -27,42 +27,41 @@ use Amadeus\Client\RequestOptions\Service\FrequentFlyer;
 use Amadeus\Client\RequestOptions\Service\PaxSegRef;
 
 /**
- * ServiceIntegratedPricingOptions
+ * Service_IntegratedPricing Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ServiceIntegratedPricingOptions extends Base
 {
-    const OVERRIDE_ACCOUNT_CODE = "ACC";
-    const OVERRIDE_PRICING_ALL_SERVICES = "ALL";
-    const OVERRIDE_AWARD = "AWD";
-    const OVERRIDE_CODE_SELECTION = "COD";
-    const OVERRIDE_CORPORATION_NUMBER = "CRP";
-    const OVERRIDE_PRICING_DATE = "DAT";
-    const OVERRIDE_CURRENCY = "FCO";
-    const OVERRIDE_INFANT_PROCESSING = "INF";
-    const OVERRIDE_JOURNEY_TURNAROUND_POINT = "JTP";
-    const OVERRIDE_NO_BREAK_POINT = "NBP";
-    const OVERRIDE_NO_JOURNEY_TURNAROUND_POINT = "NJT";
-    const OVERRIDE_NO_OPTION = "NOP";
-    const OVERRIDE_NON_TRUSTED_REQUEST = "NTR";
-    const OVERRIDE_ORIGIN_DESTINATION = "OD";
-    const OVERRIDE_PASSENGER_DISCOUNT_PTC = "PAX";
-    const OVERRIDE_POINT_OF_SALE = "POS";
-    const OVERRIDE_PTCONLY = "PTC";
-    const OVERRIDE_SHOW_COMMERCIAL_DESCRIPTION = "SCD";
-    const OVERRIDE_PAX_SEG_ELEMENT_SELECTION = "SEL";
-    const OVERRIDE_SHOW_PRICING_DESCRIPTION = "SPD";
-    const OVERRIDE_TICKET_DESIGNATOR = "TKD";
-    const OVERRIDE_VALIDATING_CARRIER = "VC ";
-    const OVERRIDE_FORM_OF_PAYMENT = "FOP";
-    const OVERRIDE_FREQUENT_FLYER_INFORMATION = "FTI";
+    const OVERRIDE_ACCOUNT_CODE = 'ACC';
+    const OVERRIDE_PRICING_ALL_SERVICES = 'ALL';
+    const OVERRIDE_AWARD = 'AWD';
+    const OVERRIDE_CODE_SELECTION = 'COD';
+    const OVERRIDE_CORPORATION_NUMBER = 'CRP';
+    const OVERRIDE_PRICING_DATE = 'DAT';
+    const OVERRIDE_CURRENCY = 'FCO';
+    const OVERRIDE_INFANT_PROCESSING = 'INF';
+    const OVERRIDE_JOURNEY_TURNAROUND_POINT = 'JTP';
+    const OVERRIDE_NO_BREAK_POINT = 'NBP';
+    const OVERRIDE_NO_JOURNEY_TURNAROUND_POINT = 'NJT';
+    const OVERRIDE_NO_OPTION = 'NOP';
+    const OVERRIDE_NON_TRUSTED_REQUEST = 'NTR';
+    const OVERRIDE_ORIGIN_DESTINATION = 'OD';
+    const OVERRIDE_PASSENGER_DISCOUNT_PTC = 'PAX';
+    const OVERRIDE_POINT_OF_SALE = 'POS';
+    const OVERRIDE_PTCONLY = 'PTC';
+    const OVERRIDE_SHOW_COMMERCIAL_DESCRIPTION = 'SCD';
+    const OVERRIDE_PAX_SEG_ELEMENT_SELECTION = 'SEL';
+    const OVERRIDE_SHOW_PRICING_DESCRIPTION = 'SPD';
+    const OVERRIDE_TICKET_DESIGNATOR = 'TKD';
+    const OVERRIDE_VALIDATING_CARRIER = 'VC';
+    const OVERRIDE_FORM_OF_PAYMENT = 'FOP';
+    const OVERRIDE_FREQUENT_FLYER_INFORMATION = 'FTI';
 
-    const AWARDPRICING_MILES = "MIL";
-    const AWARDPRICING_POINTS = "PTS";
-    const AWARDPRICING_E_VOUCHER = "EVO";
-
+    const AWARDPRICING_MILES = 'MIL';
+    const AWARDPRICING_POINTS = 'PTS';
+    const AWARDPRICING_E_VOUCHER = 'EVO';
 
     /**
      * self::OVERRIDE_*

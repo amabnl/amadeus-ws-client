@@ -937,6 +937,62 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\Reference::QUAL_SEGTAT, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference[1]->qualifier);
     }
 
+    /**
+     * Special Seat Type
+     */
+    public function testCanMakeSeatRequestAisleSeatSpecialType()
+    {
+        $opt = new PnrAddMultiElementsOptions([
+            'actionCode' => PnrAddMultiElementsOptions::ACTION_NO_PROCESSING,
+            'travellers' => [
+                new Traveller([
+                    'number' => 1,
+                    'firstName' => 'John',
+                    'lastName' => 'Doe'
+                ])
+            ],
+            'elements' => [
+                new SeatRequest([
+                    'specialType' => SeatRequest::SPECIAL_AISLE_SEAT,
+                    'references' => [
+                        new Reference([
+                            'type' => Reference::TYPE_PASSENGER_REQUEST,
+                            'id' => 1
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new AddMultiElements($opt);
+
+        $this->assertCount(1, $msg->travellerInfo);
+        $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $msg->travellerInfo[0]->elementManagementPassenger->segmentName);
+        $this->assertEquals(1, $msg->travellerInfo[0]->elementManagementPassenger->reference->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $msg->travellerInfo[0]->elementManagementPassenger->reference->qualifier);
+        $this->assertCount(1, $msg->travellerInfo[0]->passengerData);
+        $this->assertEquals('Doe', $msg->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->surname);
+        $this->assertCount(1, $msg->travellerInfo[0]->passengerData[0]->travellerInformation->passenger);
+        $this->assertEquals('John', $msg->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->firstName);
+        $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $msg->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->type);
+
+
+        $this->assertCount(1, $msg->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_SEAT_REQUEST, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->freetextData);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->seat);
+        $this->assertCount(1, $msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->special);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->special[0]->data);
+        $this->assertEquals(AddMultiElements\Special::TYPE_AISLE_SEAT, $msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->special[0]->seatType);
+
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->railSeatPreferences);
+        $this->assertEmpty($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->railSeatReferenceInformation);
+
+        $this->assertCount(1, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference);
+        $this->assertEquals(1, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference[0]->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference[0]->qualifier);
+    }
+
     public function testCanCreateGroupPnr()
     {
         $createPnrOptions = new PnrCreatePnrOptions();

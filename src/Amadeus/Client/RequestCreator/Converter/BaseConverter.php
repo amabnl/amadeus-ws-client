@@ -28,7 +28,7 @@ use Amadeus\Client\Params\RequestCreatorParams;
  * BaseConverter
  *
  * @package Amadeus\Client\RequestCreator\Converter
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 abstract class BaseConverter implements ConvertInterface
 {

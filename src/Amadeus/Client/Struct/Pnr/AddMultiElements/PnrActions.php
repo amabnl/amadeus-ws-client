@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  * PnrActions - Structure class for the pnrActions message part for PNR_AddMultiElements messages
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PnrActions
 {

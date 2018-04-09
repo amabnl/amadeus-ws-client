@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * SellFromRecommendation
  *
  * @package Amadeus\Client\Struct\Air
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class SellFromRecommendation extends BaseWsMessage
 {

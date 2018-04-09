@@ -31,7 +31,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerSellFromRecommendation
  *
  * @package Amadeus\Client\ResponseHandler\Air
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerSellFromRecommendation extends StandardResponseHandler
 {

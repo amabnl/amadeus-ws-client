@@ -32,7 +32,7 @@ use Test\Amadeus\BaseTestCase;
  * EncodeDecodeCityTest
  *
  * @package Test\Amadeus\Client\Struct\Info
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class EncodeDecodeCityTest extends BaseTestCase
 {

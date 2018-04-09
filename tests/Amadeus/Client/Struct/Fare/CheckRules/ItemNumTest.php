@@ -29,7 +29,7 @@ use Test\Amadeus\BaseTestCase;
  * ItemNumTest
  *
  * @package Test\Amadeus\Client\Struct\Fare\CheckRules
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ItemNumTest extends BaseTestCase
 {

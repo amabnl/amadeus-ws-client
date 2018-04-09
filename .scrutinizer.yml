@@ -8,9 +8,7 @@ coding_style:
         indentation:
             general:
                 size: 1
-build: 
-    environment:
-        php: 5.6
+build:
     tests:
         override:
             -
@@ -18,3 +16,17 @@ build:
                 coverage:
                     file: 'build/logs/clover.xml'
                     format: 'clover'
+    nodes:
+        php54:
+            environment:
+                php: 5.4
+
+        php56:
+            environment:
+                php: 5.6
+        php71:
+            environment:
+                php: 7.1
+        php72:
+            environment:
+                php: 7.2

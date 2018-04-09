@@ -25,10 +25,10 @@ namespace Amadeus\Client\RequestOptions;
 use Amadeus\Client\Params\AuthParams;
 
 /**
- * SecurityAuthenticateOptions
+ * Security_Authenticate Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class SecurityAuthenticateOptions extends Base
 {

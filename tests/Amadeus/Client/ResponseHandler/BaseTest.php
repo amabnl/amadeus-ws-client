@@ -31,7 +31,7 @@ use Amadeus\Client\ResponseHandler;
  * BaseTest
  *
  * @package Test\Amadeus\Client\ResponseHandler
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class BaseTest extends BaseTestCase
 {
@@ -49,6 +49,22 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('8111', $result->messages[0]->code);
         $this->assertEquals("SIMULTANEOUS CHANGES TO PNR - USE WRA/RT TO PRINT OR IGNORE", $result->messages[0]->text);
         $this->assertEquals('general', $result->messages[0]->level);
+    }
+
+    public function testCanFindPassengerNameErrorMessageInPnrReply()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPnrAddMultElementsNameError.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_AddMultiElements');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('20', $result->messages[0]->code);
+        $this->assertEquals("RESTRICTED", $result->messages[0]->text);
+        $this->assertEquals('passenger', $result->messages[0]->level);
     }
 
     public function testCanHandleIssue50ErrorMessageInPnrReply()
@@ -390,6 +406,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
         $this->assertEquals('288', $result->messages[0]->code);
         $this->assertEquals("UNABLE TO SATISFY, NEED CONFIRMED FLIGHT STATUS", $result->messages[0]->text);
+    }
+
+    public function testCanHandleAirRebookAirSegmentError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyAirRebookAirSegmentResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Air_RebookAirSegment');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('ZZZ', $result->messages[0]->code);
+        $this->assertEquals("UNABLE TO REPLICATE - INFORMATIONAL SEGMENT", $result->messages[0]->text);
     }
 
     public function testCanFindAirFlightInfoError()
@@ -1280,6 +1311,36 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('pricing', $result->messages[3]->level);*/
     }
 
+    public function testCanHandleTicketCancelDocumentErrorResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketCancelDocumentErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_CancelDocument');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertCount(1, $result->messages);
+        $this->assertEquals('118', $result->messages[0]->code);
+        $this->assertEquals("", $result->messages[0]->text);
+    }
+
+    public function testCanHandleTicketProcessEDocErrorResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketProcessEDocErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_ProcessEDoc');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertCount(1, $result->messages);
+        $this->assertEquals('118', $result->messages[0]->code);
+        $this->assertEquals("SYSTEM UNABLE TO PROCESS", $result->messages[0]->text);
+    }
+
     public function testCanHandleMiniRuleGetFromPricingRecErrResponse()
     {
         $respHandler = new ResponseHandler\Base();
@@ -1308,6 +1369,22 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
         $this->assertEquals('20', $result->messages[0]->code);
         $this->assertEquals("RESTRICTED", $result->messages[0]->text);
+    }
+
+
+    public function testCanHandleMiniRuleGetFromETicketErrorResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('miniRuleGetFromETicketErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'MiniRule_GetFromETicket');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('29149', $result->messages[0]->code);
+        $this->assertEquals("NO FARE RULES FOUND", $result->messages[0]->text);
     }
 
     public function testCanHandleInfoEncodeDecodeCityErrResponse()
@@ -1392,6 +1469,21 @@ class BaseTest extends BaseTestCase
         $sendResult->responseXml = $this->getTestFile('dummyServiceIntegratedPricingErrorResponse.txt');
 
         $result = $respHandler->analyzeResponse($sendResult, 'Service_IntegratedPricing');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('432', $result->messages[0]->code);
+        $this->assertEquals("INVALID CURRENCY CODE", $result->messages[0]->text);
+    }
+
+    public function testCanHandleServiceIntegratedCatalogueError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyServiceIntegratedCatalogueErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Service_IntegratedCatalogue');
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
         $this->assertEquals(1, count($result->messages));

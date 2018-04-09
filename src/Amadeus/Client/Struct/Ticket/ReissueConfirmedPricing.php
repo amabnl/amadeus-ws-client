@@ -31,7 +31,7 @@ use Amadeus\Client\Struct\Ticket\ReissueConfirmedPricing\TicketInfo;
  * Ticket_ReissueConfirmedPricing request structure
  *
  * @package Amadeus\Client\Struct\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ReissueConfirmedPricing extends BaseWsMessage
 {

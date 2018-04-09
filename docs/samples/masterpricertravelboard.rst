@@ -18,8 +18,8 @@ Maximum 30 recommendations:
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedResults' => 30,
@@ -68,8 +68,8 @@ Convert all price amounts for recommendations to 'USD':
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedPassengers' => 1,
@@ -103,8 +103,8 @@ Note that the :code:`dateTime` property of the requested flight has the time par
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedResults' => 200,
@@ -138,8 +138,8 @@ London - New York return flight with mandatory Cabin class Business:
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedResults' => 50,
@@ -180,8 +180,8 @@ Brussels - London with preferred airlines BA or SN:
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedResults' => 30,
@@ -219,8 +219,8 @@ Multi-city request: Brussels or Charleroi to Valencia or Alicante for 2 passenge
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedResults' => 30,
@@ -262,8 +262,8 @@ Do a ticketability pre-check on recommendations:
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedResults' => 30,
@@ -304,8 +304,8 @@ Paris to Seattle, *arrive* in Seattle on 13 June 2017 at 18:30 (+/- 6 hours)
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedResults' => 30,
@@ -340,8 +340,8 @@ Simple flight, request published fares, unifares and corporate unifares (with a 
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedResults' => 30,
@@ -381,8 +381,8 @@ Simple flight, set "price to beat" at 500 EURO: Recommendations returned must be
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedResults' => 30,
@@ -483,8 +483,8 @@ This example illustrates a Lowest Fare request including 6 parametrized fare fam
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
     use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
     use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFCriteria;
     use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFOtherCriteria;
@@ -635,8 +635,8 @@ Alternate Fare Family:
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
     use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
     use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFCriteria;
     use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFOtherCriteria;
@@ -706,8 +706,8 @@ Here is example how to get information about airlines fare families and get addi
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
     use Amadeus\Client\RequestOptions\Fare\MPFeeId;
 
     $opt = new FareMasterPricerTbSearch([
@@ -743,8 +743,8 @@ Request MasterPricer recommendations with Multiple Office ID's specified. The sy
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
             'nrOfRequestedResults' => 30,
@@ -785,8 +785,8 @@ The example below illustrates a search with progressive legs range specified at 
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedPassengers' => 1,
@@ -830,8 +830,8 @@ to be taken into consideration by Amadeus when returning Fare Shopping results:
     use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedPassengers' => 1,
@@ -874,8 +874,8 @@ Works only on return trip search.
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
     use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
-    use Amadeus\Client\RequestOptionsFare\MPPassenger;
-    use Amadeus\Client\RequestOptionsFare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedPassengers' => 1,
@@ -908,3 +908,326 @@ Works only on return trip search.
             'returnTrip' => 20
         ])
     ]);
+
+Layover per connection
+======================
+
+When itinerary consists of more than one segment, max layover per connection options narrows the search results by the specified hours and minutes value.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'LON']),
+                'arrivalLocation' => new MPLocation(['city' => 'MOW']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ]),
+        ],
+        'maxLayoverPerConnectionHours' => 2,
+        'maxLayoverPerConnectionMinutes' => 30,
+    ]);
+
+
+No airport change
+=================
+
+Disallow connecting flights to change airports within a city:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'noAirportChange' => true,
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+            ]),
+        ],
+    ]);
+
+Maximum elapsed flying time
+===========================
+
+Specify a maximum elapsed flying time (EFT): This is a percentage of the shortest EFT returned by the journey server.
+
+The sample below will return recommendations up to 120% of the elapsed flying time of the shortest flight:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'maxElapsedFlyingTime' => 120,
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+            ]),
+        ],
+    ]);
+
+Exclude/Include airlines at segment level
+=========================================
+
+You can specify which airlines or alliances to exclude or include per leg of an itinerary.
+
+The sample below specifies that airline AA is excluded from the recommendations for the outbound leg, and BA is the preferred airline for the inbound leg:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'nrOfRequestedResults' => 200,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'airlineOptions' => [
+            FareMasterPricerTbSearch::AIRLINEOPT_MANDATORY => [
+                'AF',
+                'YY',
+            ]
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+                'airlineOptions' => [
+                    MPItinerary::AIRLINEOPT_EXCLUDED => ['AA']
+                ]
+            ]),
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'MIA']),
+                'arrivalLocation' => new MPLocation(['city' => 'PAR']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-10T00:00:00+0000', new \DateTimeZone('UTC')),
+                ]),
+                'airlineOptions' => [
+                    MPItinerary::AIRLINEOPT_PREFERRED => ['BA']
+                ]
+            ]),
+        ],
+    ]);
+
+Flight Category at segment level
+================================
+
+Specify Flight categories per leg of an itinerary. The sample below specifies that the recommendations should be limited to those where the second leg has direct flights:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'nrOfRequestedResults' => 200,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'requestedFlightTypes' => [
+            FareMasterPricerTbSearch::FLIGHTTYPE_NONSTOP,
+            FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+            ]),
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'MIA']),
+                'arrivalLocation' => new MPLocation(['city' => 'NYC']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-10T00:00:00+0000', new \DateTimeZone('UTC')),
+                ]),
+                'requestedFlightTypes' => [
+                    MPItinerary::FLIGHTTYPE_DIRECT
+                ]
+            ]),
+        ],
+    ]);
+
+Include/Exclude connection points at segment level
+==================================================
+
+Specify certain IATA codes to either include or exclude as a connection point between flights.
+
+When specifying multiple connection points to include, only recommendations will be returned having the same connection points as the ones specified, in the order as specified.
+
+The following example shows LGW as excluded connection point for the outbound leg and NYC followed by LON as mandatory connection points for the inbound leg from MIA to PAR:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'nrOfRequestedResults' => 200,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+                'excludedConnections' => ['LGW']
+            ]),
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'MIA']),
+                'arrivalLocation' => new MPLocation(['city' => 'PAR']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-10T00:00:00+0000', new \DateTimeZone('UTC')),
+                ]),
+                'includedConnections' => ['NYC', 'LON']
+            ]),
+        ],
+    ]);
+
+Number of Connections at segment level
+======================================
+
+A fixed number of connections can be requested for connecting flights.
+
+If you specify a value here, results will only show connecting flights with exactly the specified number of connections.
+
+The sample below will only return recommendations with exactly 2 connections from PAR to MIA:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+                'nrOfConnections' => 2
+            ]),
+        ],
+    ]);
+
+No airport change at segment level
+==================================
+
+Specify No Airport Change to make sure a connecting flight does not depart in another airport in the same city.
+
+The following sample disallows airport changes for the outbound leg:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'PAR']),
+                'arrivalLocation' => new MPLocation(['city' => 'MIA']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+                'noAirportChange' => true
+            ]),
+        ],
+    ]);
+

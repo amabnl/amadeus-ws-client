@@ -31,7 +31,7 @@ use Test\Amadeus\BaseTestCase;
  * AirAuxItineraryTest
  *
  * @package Test\Amadeus\Client\Struct\Pnr\AddMultiElements
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class AirAuxItineraryTest extends BaseTestCase
 {

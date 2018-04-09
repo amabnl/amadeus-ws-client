@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Traveller in a PNR
  *
  * @package Amadeus\Client\RequestOptions\Pnr
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Traveller extends LoadParamsFromArray
 {
@@ -37,6 +37,8 @@ class Traveller extends LoadParamsFromArray
     const TRAV_TYPE_CHILD = "CHD";
 
     const TRAV_TYPE_INFANT = "INF";
+
+    const TRAV_TYPE_INFANT_WITH_SEAT = "INS";
 
     /**
      * Unique sequence number for traveller

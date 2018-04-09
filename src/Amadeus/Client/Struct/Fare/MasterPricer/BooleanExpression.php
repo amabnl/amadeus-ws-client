@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fare\MasterPricer;
  * BooleanExpression
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class BooleanExpression
 {

@@ -13,7 +13,6 @@ There, you can find more examples of all the options that are supported by the l
 ***
 PNR
 ***
-
 --------------------
 PNR_AddMultiElements
 --------------------
@@ -37,7 +36,7 @@ Creating a PNR (simplified example containing only the most basic PNR elements n
         'firstName' => 'FirstName',
         'lastName' => 'LastName'
     ]);
-    $opt->itinerary[] = new Itinerary([
+    $opt->itineraries[] = new Itinerary([
         'segments' => [
             new Miscellaneous([
                 'status ' => Segment::STATUS_CONFIRMED,
@@ -102,6 +101,107 @@ Retrieve the PNR that is active in the current session context:
 
 **Note:** Retrieving a PNR this way is identical to performing a ``RT`` cryptic entry in Amadeus Selling Platform:
 This will re-retrieve the PNR that is currently active in the session's context *(if this action is performed in a stateful session)*.
+
+Retrieve PNR(s) by Customer Profile:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'customerProfile' => 'ABC987'
+    ]));
+
+Retrieve PNR(s) by Account Number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'accountNumber' => '12345'
+    ]));
+
+Retrieve PNR(s) by Name on a specific Office ID:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'officeId' => 'MIA1S213F',
+        'lastName' => 'childs'
+    ]));
+
+Retrieve PNR(s) by last name and departure date:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'lastName' => 'childs',
+        'departureDate' => \DateTime::createFromFormat(\DateTime::ISO8601, "2018-01-27T00:00:00+0000", new \DateTimeZone('UTC')),
+    ]));
+
+Retrieve PNR(s) by last name and departure date, retrieve only active PNR's:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'options' => [
+            PnrRetrieveOptions::OPTION_ACTIVE_ONLY
+        ],
+        'lastName' => 'childs',
+        'departureDate' => \DateTime::createFromFormat(\DateTime::ISO8601, "2018-01-27T00:00:00+0000", new \DateTimeZone('UTC')),
+    ]));
+
+Retrieve PNR by Record Locator with name and ticket number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Retrieve\Ticket;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'recordLocator' => 'YA76F8',
+        'lastName' => 'childs',
+        'ticket' => new Ticket([
+            'airline' => '057',
+            'number' => '7024209573'
+        ])
+    ]));
+
+Retrieve PNR(s) by service, last name and flight number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Retrieve\Ticket;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'service' => PnrRetrieveOptions::SERVICE_AIRLINE,
+        'lastName' => 'childs',
+        'departureDate' => \DateTime::createFromFormat(\DateTime::ISO8601, "2001-03-28T00:00:00+0000", new \DateTimeZone('UTC')),
+        'company' => '6X',
+        'flightNumber' => '6201',
+    ]));
+
+Retrieve PNR(s) by Frequent Traveller information:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Retrieve\FrequentTraveller;
+
+    $pnrContent = $client->pnrRetrieve(new PnrRetrieveOptions([
+        'frequentTraveller' => new FrequentTraveller([
+            'airline' => 'LH',
+            'number' => '992222899525661'
+        ])
+    ]));
 
 ----------------------
 PNR_RetrieveAndDisplay
@@ -382,7 +482,6 @@ The example shows the message required to change the name of the passenger speci
 *****
 Queue
 *****
-
 ----------
 Queue_List
 ----------
@@ -557,7 +656,6 @@ Move a PNR from one queue to another:
 ****
 Fare
 ****
-
 ----------------------------------
 Fare_MasterPricerTravelboardSearch
 ----------------------------------
@@ -1059,7 +1157,6 @@ Convert 200 Euro to US Dollars in the exchange rate of 25th December 2015 *(this
 ***
 Air
 ***
-
 ---------------------
 Air_MultiAvailability
 ---------------------
@@ -1139,6 +1236,38 @@ To book the chosen recommendation from the Fare_MasterPricerTravelBoardSearch re
                         'companyCode' => 'SN',
                         'flightNumber' => '123',
                         'bookingClass' => 'Y',
+                        'nrOfPassengers' => 1,
+                        'statusCode' => Segment::STATUS_SELL_SEGMENT
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $sellResult = $client->airSellFromRecommendation($opt);
+
+To book the chosen recommendation with specifying segment's arrival date, which is not mandatory but it may help with flights that are overnight.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
+    use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Segment;
+
+    $opt = new AirSellFromRecommendationOptions([
+        'itinerary' => [
+            new Itinerary([
+                'from' => 'SFO',
+                'to' => 'NYC',
+                'segments' => [
+                    new Segment([
+                        'departureDate' => \DateTime::createFromFormat('Ymd Hi','20180315 1540', new \DateTimeZone('UTC')),
+                        'arrivalDate' => \DateTime::createFromFormat('Ymd Hi','20180316 0010', new \DateTimeZone('UTC')),
+                        'from' => 'SFO',
+                        'to' => 'JFK',
+                        'companyCode' => 'AA',
+                        'flightNumber' => '20',
+                        'bookingClass' => 'S',
                         'nrOfPassengers' => 1,
                         'statusCode' => Segment::STATUS_SELL_SEGMENT
                     ])
@@ -1323,11 +1452,222 @@ Complex example: Seat Map with Prices
         ])
     );
 
+--------------------
+Air_RebookAirSegment
+--------------------
+
+Class Rebook: Rebook a segment from class F to C:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRebookAirSegmentOptions;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Segment;
+
+    $rebookResponse = $client->airRebookAirSegment(
+        new AirRebookAirSegmentOptions([
+            'itinerary' => [
+                new Itinerary([
+                    'from' => 'FRA',
+                    'to' => 'BKK',
+                    'segments' => [
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                            'dateVariation' => 1,
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'F',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_CANCEL_SEGMENT
+                        ]),
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalTime' =>  \DateTime::createFromFormat('His','141000', new \DateTimeZone('UTC')),
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'C',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_SELL_SEGMENT
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+    );
+
+
+Class Rebook after pricing PNR with lower fare: This example is the same as the previous one, but in the case where rebook is performed following a PricePNRWithLowerFares request, and the reference of the recommendation selected by the user (number 2) is transmitted in the rebook:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRebookAirSegmentOptions;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Segment;
+
+    $rebookResponse = $client->airRebookAirSegment(
+        new AirRebookAirSegmentOptions([
+            'bestPricerOption' => 2,
+            'itinerary' => [
+                new Itinerary([
+                    'from' => 'FRA',
+                    'to' => 'BKK',
+                    'segments' => [
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                            'dateVariation' => 1,
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'F',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_CANCEL_SEGMENT
+                        ]),
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalTime' =>  \DateTime::createFromFormat('His','141000', new \DateTimeZone('UTC')),
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'C',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_SELL_SEGMENT
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+    );
+
+Force Rebook: This example is for the Force Rebook of the second segment from F Class to C Class:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRebookAirSegmentOptions;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Segment;
+
+    $rebookResponse = $client->airRebookAirSegment(
+        new AirRebookAirSegmentOptions([
+            'itinerary' => [
+                new Itinerary([
+                    'from' => 'FRA',
+                    'to' => 'BKK',
+                    'segments' => [
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                            'dateVariation' => 1,
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'F',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_CANCEL_SEGMENT
+                        ]),
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalTime' =>  \DateTime::createFromFormat('His','141000', new \DateTimeZone('UTC')),
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'C',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_FORCE_BOOKING
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+    );
+
+Rebook Two Segment Classes: This example shows the rebook of LH 744 from class F to class C and LX 182 from class J to class C:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRebookAirSegmentOptions;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Segment;
+
+    $rebookResponse = $client->airRebookAirSegment(
+        new AirRebookAirSegmentOptions([
+            'itinerary' => [
+                new Itinerary([
+                    'from' => 'FRA',
+                    'to' => 'BKK',
+                    'segments' => [
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                            'dateVariation' => 1,
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'F',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_CANCEL_SEGMENT
+                        ]),
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                            'dateVariation' => 1,
+                            'from' => 'FRA',
+                            'to' => 'BKK',
+                            'companyCode' => 'LH',
+                            'flightNumber' => '744',
+                            'bookingClass' => 'C',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_SELL_SEGMENT
+                        ])
+                    ]
+                ]),
+                new Itinerary([
+                    'from' => 'BKK',
+                    'to' => 'SIN',
+                    'segments' => [
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040309153000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309184500', new \DateTimeZone('UTC')),
+                            'dateVariation' => 0,
+                            'from' => 'BKK',
+                            'to' => 'SIN',
+                            'companyCode' => 'LX',
+                            'flightNumber' => '182',
+                            'bookingClass' => 'J',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_CANCEL_SEGMENT
+                        ]),
+                        new Segment([
+                            'departureDate' => \DateTime::createFromFormat('YmdHis','20040309153000', new \DateTimeZone('UTC')),
+                            'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309184500', new \DateTimeZone('UTC')),
+                            'dateVariation' => 0,
+                            'from' => 'BKK',
+                            'to' => 'SIN',
+                            'companyCode' => 'LX',
+                            'flightNumber' => '182',
+                            'bookingClass' => 'C',
+                            'nrOfPassengers' => 1,
+                            'statusCode' => Segment::STATUS_SELL_SEGMENT
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+    );
 
 ******
 Ticket
 ******
-
 ---------------------------
 Ticket_CreateTSTFromPricing
 ---------------------------
@@ -1718,10 +2058,144 @@ Reissue pricing for e-Ticket 057-2146640300:
         ])
     );
 
+---------------------
+Ticket_CancelDocument
+---------------------
+
+Request E-ticket Direct cancellation
+
+This operation allows the end user to initiate a void transaction using E-ticket direct feature. E-ticket direct cancellation is initiated from TNRMG210C office on XX airline stock:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCancelDocumentOptions;
+
+    $response = $client->ticketCancelDocument(
+        new TicketCancelDocumentOptions([
+            'eTicket' => '2327176820',
+            'airlineStockProvider' => 'XX',
+            'officeId' => 'TNRMG210C'
+        ])
+    );
+
+Request cancellation of a transaction by ticket number associated to sales report process(TRDC/SR)
+
+The void action has been requested by an authorized agent signed in office NCE6X0100, the ticket 1721587458965 is eligible for the void and option "sales report only" is used:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCancelDocumentOptions;
+
+    $response = $client->ticketCancelDocument(
+        new TicketCancelDocumentOptions([
+            'eTicket' => '1721587458965',
+            'airlineStockProvider' => '6X',
+            'officeId' => 'NCE6X0100',
+            'void' => true,
+        ])
+    );
+
+Request cancellation of a transaction by ticket number for Travel Agent:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCancelDocumentOptions;
+
+    $response = $client->ticketCancelDocument(
+        new TicketCancelDocumentOptions([
+            'eTicket' => '4600052609',
+            'marketStockProvider' => 'DE',
+            'officeId' => 'FRAL12177',
+        ])
+    );
+
+Request cancellation of a transaction from query report:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCancelDocumentOptions;
+    use Amadeus\Client\RequestOptions\Ticket\SequenceRange;
+
+    $response = $client->ticketCancelDocument(
+        new TicketCancelDocumentOptions([
+            'sequenceRanges' => [
+                new SequenceRange([
+                    'from' => '1408'
+                ])
+            ],
+            'airlineStockProvider' => '6X',
+            'officeId' => 'NCE6X0100',
+        ])
+    );
+
+Request cancellation of several tickets, individual items and ranges of items from query report:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCancelDocumentOptions;
+    use Amadeus\Client\RequestOptions\Ticket\SequenceRange;
+
+    $response = $client->ticketCancelDocument(
+        new TicketCancelDocumentOptions([
+            'sequenceRanges' => [
+                new SequenceRange([
+                    'from' => '1408'
+                ]),
+                new SequenceRange([
+                    'from' => '1410',
+                    'to' => '1412'
+                ]),
+                new SequenceRange([
+                    'from' => '1414'
+                ])
+            ],
+            'airlineStockProvider' => '6X',
+            'officeId' => 'NCE6X0100',
+        ])
+    );
+
+------------------
+Ticket_ProcessEDoc
+------------------
+
+Display an e-ticket by document (ticket) number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketProcessEDocOptions;
+
+    $response = $client->ticketProcessEDoc(
+        new TicketProcessEDocOptions([
+            'action' => TicketProcessEDocOptions::ACTION_ETICKET_DISPLAY,
+            'ticketNumber' => '5125756077483'
+        ])
+    );
+
+Enhanced ETKT list display:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketProcessEDocOptions;
+    use Amadeus\Client\RequestOptions\Ticket\FrequentFlyer;
+
+    $response = $client->ticketProcessEDoc(
+        new TicketProcessEDocOptions([
+            'action' => TicketProcessEDocOptions::ACTION_ETICKET_DISPLAY,
+            'additionalActions' => [
+                TicketProcessEDocOptions::ADD_ACTION_ENHANCED_LIST_DISPLAY
+            ],
+            'frequentTravellers' => [
+                new FrequentFlyer([
+                    'number' => '21354657',
+                    'carrier' => '6X'
+                ])
+            ]
+        ])
+    );
+
 ***********
 DocIssuance
 ***********
-
 -----------------------
 DocIssuance_IssueTicket
 -----------------------
@@ -1913,7 +2387,6 @@ Document Receipts option (TTP/TTM/TRP):
 *********
 DocRefund
 *********
-
 --------------------
 DocRefund_InitRefund
 --------------------
@@ -2253,11 +2726,36 @@ Send refund notice to email address stored in the PNR:
         ])
     );
 
+********
+Security
+********
+---------------------
+Security_Authenticate
+---------------------
+
+Send a ``Security_Authenticate`` to start a session. **Calling this message is not necessary in Soap Header 4 WSAP's**: the library will automatically send authentication headers when the first message is called.
+
+You do not need to provide any parameters to this call, the client will use the ``authParams`` that were provided on client instantiation.
+
+.. code-block:: php
+
+    $loginResponse = $client->securityAuthenticate();
+
+
+----------------
+Security_SignOut
+----------------
+
+To terminate an active (stateful) session. An alternative method is provided `in the how-to <how-to.rst#ending-a-stateful-session-soap-header-4>`_
+
+.. code-block:: php
+
+    $logoutResponse = $client->securitySignOut();
+
 
 *******
 Service
 *******
-
 -------------------------
 Service_IntegratedPricing
 -------------------------
@@ -2415,10 +2913,34 @@ Frequent Flyer:
         ])
     );
 
+---------------------------
+Service_IntegratedCatalogue
+---------------------------
+
+The options for ``Service_IntegratedCatalogue`` are identical to ``Service_IntegratedPricing``.
+
+All the examples for ``Service_IntegratedPricing`` (see above) should also work for this message. You can just swap out the options object in the request. For example:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\ServiceIntegratedCatalogueOptions;
+    use Amadeus\Client\RequestOptions\Service\PaxSegRef;
+
+    $pricingResponse = $client->serviceIntegratedCatalogue(
+        new ServiceIntegratedCatalogueOptions([
+            'accountCode' => 'AAA123456',
+            'accountCodeRefs' => [
+                new PaxSegRef([
+                    'type' => PaxSegRef::TYPE_PASSENGER,
+                    'reference' => 1
+                ])
+            ]
+        ])
+    );
+
 ***
 FOP
 ***
-
 -----------------------
 FOP_CreateFormOfPayment
 -----------------------
@@ -2499,7 +3021,6 @@ Find all train stations in New York:
 **********
 PointOfRef
 **********
-
 -----------------
 PointOfRef_Search
 -----------------
@@ -2580,7 +3101,6 @@ PointOfRef_CategoryList
 *****
 Offer
 *****
-
 -----------------
 Offer_CreateOffer
 -----------------
@@ -2751,7 +3271,6 @@ Confirm a given CAR offer:
 ********
 MiniRule
 ********
-
 --------------------------
 MiniRule_GetFromPricingRec
 --------------------------
@@ -2800,6 +3319,22 @@ Get Minirules for specific recommendations *(recommendations nr 1 & 2 in this ex
     $miniRulesResponse = $client->miniRuleGetFromPricing(
         new MiniRuleGetFromPricingOptions([
             'pricings' => [1, 2]
+        ])
+    );
+
+-----------------------
+MiniRule_GetFromETicket
+-----------------------
+
+Display Mini Rules corresponding to the e-ticket number 1234567891987:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\MiniRuleGetFromETicketOptions;
+
+    $miniRulesResponse = $client->miniRuleGetFromETicket(
+        new MiniRuleGetFromPricingOptions([
+            'eTicket' => '1234567891987'
         ])
     );
 

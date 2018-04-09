@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Info;
  * LocationInformation
  *
  * @package Amadeus\Client\Struct\Info
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class LocationInformation
 {

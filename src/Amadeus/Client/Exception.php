@@ -26,7 +26,7 @@ namespace Amadeus\Client;
  * Exception class specific for this library
  *
  * @package Amadeus\Client
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Exception extends \Exception
 {

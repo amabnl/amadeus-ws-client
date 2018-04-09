@@ -30,7 +30,7 @@ use Test\Amadeus\BaseTestCase;
  * ConfirmAirOfferTest
  *
  * @package Amadeus\Client\Struct\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ConfirmAirOfferTest extends BaseTestCase
 {

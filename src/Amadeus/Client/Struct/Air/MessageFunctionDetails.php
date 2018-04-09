@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Air;
  * MessageFunctionDetails
  *
  * @package Amadeus\Client\RequestOptions\Air
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class MessageFunctionDetails
 {

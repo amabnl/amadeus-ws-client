@@ -30,7 +30,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerTransferOwnership
  *
  * @package Amadeus\Client\ResponseHandler\PNR
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerTransferOwnership extends StandardResponseHandler
 {

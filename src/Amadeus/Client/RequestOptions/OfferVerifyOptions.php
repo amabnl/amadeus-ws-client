@@ -23,13 +23,17 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * OfferVerifyOptions
+ * Offer_Verify Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class OfferVerifyOptions extends Base
 {
+    const SEGMENT_AIR = 'AIR';
+    const SEGMENT_CAR = 'CCR';
+    const SEGMENT_HOTEL = 'HHL';
+
     /**
      * Reference to the offer nr.
      *

@@ -436,8 +436,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
         $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
-            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
-            'ABC123'
+            new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])
         );
 
         $messageResponse = $sessionHandler->sendMessage(
@@ -494,8 +493,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         ]);
 
         $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
-            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
-            'ABC123'
+            new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])
         );
 
         $messageResponse = $sessionHandler->sendMessage(
@@ -556,8 +554,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
         $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
-            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
-            'ABC123'
+            new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])
         );
 
         $sendResult = $sessionHandler->sendMessage(
@@ -608,8 +605,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
         $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
-            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
-            'ABC123'
+            new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])
         );
 
         $sessionHandler->sendMessage(
@@ -650,8 +646,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
         $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
-            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
-            'ABC123'
+            new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])
         );
 
         $messageResponse = $sessionHandler->sendMessage(
@@ -795,8 +790,7 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
         $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
-            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
-            'ABC123'
+            new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])
         );
 
         $messageResponse = $sessionHandler->sendMessage(
@@ -896,8 +890,7 @@ EOT;
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
         $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
-            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
-            'ABC123'
+            new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])
         );
 
         $messageResponse = $sessionHandler->sendMessage(
@@ -960,8 +953,7 @@ EOT;
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
 
         $pnrRetrieveMessage = new Client\Struct\Pnr\Retrieve(
-            Client\Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
-            'ABC123'
+            new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123'])
         );
 
         $messageResponse = $sessionHandler->sendMessage(

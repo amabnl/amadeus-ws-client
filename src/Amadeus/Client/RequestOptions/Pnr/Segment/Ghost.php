@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Pnr\Segment;
  * Ghost segment - not yet implemented
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Segment
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Ghost extends Segment
 {

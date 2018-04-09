@@ -32,7 +32,7 @@ use Amadeus\Client\Struct\Ticket\DisplayTST\ScrollingInformation;
  * DisplayTST
  *
  * @package Amadeus\Client\Struct\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DisplayTST extends BaseWsMessage
 {

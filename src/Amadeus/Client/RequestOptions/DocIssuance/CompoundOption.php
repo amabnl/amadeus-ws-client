@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Compound Options
  *
  * @package Amadeus\Client\RequestOptions\DocIssuance
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class CompoundOption extends LoadParamsFromArray
 {

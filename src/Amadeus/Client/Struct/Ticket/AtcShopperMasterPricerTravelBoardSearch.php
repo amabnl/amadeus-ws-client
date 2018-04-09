@@ -31,7 +31,7 @@ use Amadeus\Client\Struct\Ticket\CheckEligibility\TicketChangeInfo;
  * Ticket_ATCShopperMasterPricerTravelBoardSearch message structure
  *
  * @package Amadeus\Client\Struct\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class AtcShopperMasterPricerTravelBoardSearch extends MasterPricerTravelBoardSearch
 {

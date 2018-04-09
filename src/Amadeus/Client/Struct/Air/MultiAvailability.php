@@ -28,13 +28,14 @@ use Amadeus\Client\Struct\Air\MultiAvailability\ConsumerReferenceInformation;
 use Amadeus\Client\Struct\Air\MultiAvailability\FrequentTraveller;
 use Amadeus\Client\Struct\Air\MultiAvailability\PointOfCommencement;
 use Amadeus\Client\Struct\Air\MultiAvailability\RequestSection;
+use Amadeus\Client\Struct\Air\MultiAvailability\RequestSection16;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * MultiAvailability
+ * Air_MultiAvailability version 15 and below
  *
  * @package Amadeus\Client\Struct\Air
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MultiAvailability extends BaseWsMessage
 {
@@ -73,7 +74,11 @@ class MultiAvailability extends BaseWsMessage
 
         if (count($params->requestOptions) > 0) {
             foreach ($params->requestOptions as $requestOption) {
-                $this->requestSection[] = new RequestSection($requestOption);
+                if ($this instanceof MultiAvailability16) {
+                    $this->requestSection[] = new RequestSection16($requestOption);
+                } else {
+                    $this->requestSection[] = new RequestSection($requestOption);
+                }
             }
         }
 

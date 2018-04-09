@@ -23,10 +23,10 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * OfferCreateOptions
+ * Offer_Create Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class OfferCreateOptions extends Base
 {

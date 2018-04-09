@@ -42,7 +42,7 @@ use Test\Amadeus\BaseTestCase;
  * InformativePricingWithoutPNR13Test
  *
  * @package Test\Amadeus\Client\Struct\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class InformativePricingWithoutPNR13Test extends BaseTestCase
 {

@@ -18,7 +18,7 @@ use Test\Amadeus\BaseTestCase;
  * DisplayHistoryTest
  *
  * @package Test\Amadeus\Client\Struct\Pnr
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DisplayHistoryTest extends BaseTestCase
 {

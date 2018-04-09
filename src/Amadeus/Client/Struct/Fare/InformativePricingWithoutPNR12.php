@@ -30,7 +30,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * InformativePricingWithoutPNR12
  *
  * @package Amadeus\Client\Struct\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class InformativePricingWithoutPNR12 extends BaseWsMessage
 {

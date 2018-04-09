@@ -87,7 +87,7 @@ You can provide all the WSDL's in your WSAP by passing an array of wsdl's in the
             'officeId' => 'BRUXX1111',
             'userId' => 'WSBENXXX',
             'passwordData' => 'dGhlIHBhc3N3b3Jk'
-        ]
+        ],
         'sessionHandlerParams' => [
             'soapHeaderVersion' => Client::HEADER_V4,
             'wsdl' => [
@@ -242,7 +242,7 @@ You can override the default ``\SoapClient`` options by passing them in the Sess
             'soapClientOptions' => [
                 'compression' => SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP
             ]
-        ]
+        ],
         'requestCreatorParams' => [
             'receivedFrom' => 'my test project'
         ]
@@ -313,6 +313,14 @@ If you also need the HTTP headers, that's possible too (exposes PHP's ``\SoapCli
     $lastRequestHeaders = $client->getLastRequestHeaders();
 
     $lastResponseHeaders = $client->getLastResponseHeaders();
+
+********************************************************
+Dealing with multiple versions of a message in your WSDL
+********************************************************
+
+Often, when your WSDL gets upgraded to new message versions by Amadeus, they will leave the older versions of the message in the WSDL. When using such a WSDL, the library will use the message in the WSDL it finds first (=the oldest version).
+
+If you want the library to use the newest version of a message, you have to **manually remove the old versions from the WSDL file**.
 
 
 ================

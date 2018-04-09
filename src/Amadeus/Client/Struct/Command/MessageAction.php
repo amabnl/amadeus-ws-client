@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Command;
  * MessageAction
  *
  * @package Amadeus\Client\Struct\Command
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class MessageAction
 {

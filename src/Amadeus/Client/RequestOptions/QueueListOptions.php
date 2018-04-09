@@ -25,12 +25,12 @@ namespace Amadeus\Client\RequestOptions;
 use Amadeus\Client\RequestOptions\Queue\SearchCriteriaOpt;
 
 /**
- * QueueListOptions
+ * Queue_List Request Options
  *
  * Options available for the Queue_List message.
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class QueueListOptions extends Base
 {

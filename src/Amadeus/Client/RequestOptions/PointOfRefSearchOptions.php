@@ -26,7 +26,7 @@ namespace Amadeus\Client\RequestOptions;
  * PointOfRef_Search Request options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PointOfRefSearchOptions extends Base
 {
@@ -35,12 +35,12 @@ class PointOfRefSearchOptions extends Base
     const FILT_STATE = 2;
     const FILT_IATA = 3;
 
-    const TARGET_ALL = "ALL";
-    const TARGET_HOTEL = "HTL";
-    const TARGET_AIRPORT = "APT";
-    const TARGET_TRAIN = "TRA";
+    const TARGET_ALL = 'ALL';
+    const TARGET_HOTEL = 'HTL';
+    const TARGET_AIRPORT = 'APT';
+    const TARGET_TRAIN = 'TRA';
 
-    const LIST_TYPE_SHORT = "S";
+    const LIST_TYPE_SHORT = 'S';
 
     /**
      * Resulting list type
@@ -66,7 +66,7 @@ class PointOfRefSearchOptions extends Base
     public $targetCategoryCode = self::TARGET_ALL;
 
     /**
-     * Longitude of the location where you want to find POR's
+     * Longitude of the location where you want to find Points of Reference
      *
      * Use either longitute/latitude or location codes country/state/iata
      *
@@ -74,56 +74,56 @@ class PointOfRefSearchOptions extends Base
      */
     public $longitude;
     /**
-     * Latitude of the location where you want to find POR's
+     * Latitude of the location where you want to find Points of Reference
      *
      * @var double
      */
     public $latitude;
 
     /**
-     * Country code of the location where you want to find POR's
+     * Country code of the location where you want to find Points of Reference
      *
      * @var string
      */
     public $country;
 
     /**
-     * State code of the location where you want to find POR's
+     * State code of the location where you want to find Points of Reference
      *
      * @var string
      */
     public $state;
 
     /**
-     * IATA location code of the location where you want to find POR's
+     * IATA location code of the location where you want to find Points of Reference
      *
      * @var string
      */
     public $iata;
 
     /**
-     * Business ID category code of the location where you want to find POR's
+     * Business ID category code of the location where you want to find Points of Reference
      *
      * @var string
      */
     public $businessCategory;
 
     /**
-     * Business ID foreign key in the given category of the location where you want to find POR's
+     * Business ID foreign key in the given category of the location where you want to find Points of Reference
      *
      * @var string
      */
     public $businessForeignKey;
 
     /**
-     * Radius (in meters) from the location where you want to find POR's
+     * Radius (in meters) from the location where you want to find Points of Reference
      *
      * @var double
      */
     public $searchRadius;
 
     /**
-     * A specific name of a POR
+     * A specific name of a Point of Reference
      *
      * @var string
      */

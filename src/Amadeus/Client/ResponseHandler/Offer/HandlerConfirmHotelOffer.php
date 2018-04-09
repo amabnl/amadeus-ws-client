@@ -31,7 +31,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerConfirmHotelOffer
  *
  * @package Amadeus\Client\ResponseHandler\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerConfirmHotelOffer extends StandardResponseHandler
 {

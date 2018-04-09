@@ -30,7 +30,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerGetFromPricingRec
  *
  * @package Amadeus\Client\ResponseHandler\MiniRule
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerGetFromPricingRec extends StandardResponseHandler
 {

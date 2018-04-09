@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Passenger
  *
  * @package Amadeus\Client\RequestOptions\Fare\InformativePricing
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Passenger extends LoadParamsFromArray
 {
@@ -37,6 +37,8 @@ class Passenger extends LoadParamsFromArray
     const TYPE_CHILD = "CH";
 
     const TYPE_INFANT = "INF";
+
+    const TYPE_INFANT_WITH_SEAT = "INS";
 
     /**
      * What type of passengers?

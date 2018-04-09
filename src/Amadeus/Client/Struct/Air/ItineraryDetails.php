@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Itinerary;
  * ItineraryDetails
  *
  * @package Amadeus\Client\Struct\Air
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class ItineraryDetails
 {
@@ -52,7 +52,7 @@ class ItineraryDetails
      *
      * @param Itinerary $itinerary
      */
-    public function __construct(Itinerary $itinerary)
+    public function __construct($itinerary)
     {
         $this->originDestinationDetails = new OriginDestinationDetails(
             $itinerary->from,

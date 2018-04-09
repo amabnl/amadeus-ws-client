@@ -27,12 +27,14 @@ use Amadeus\Client\RequestOptions\Fop\Group;
 use Amadeus\Client\RequestOptions\Fop\FopRef;
 use Amadeus\Client\RequestOptions\Fop\ObFeeComputation;
 use Amadeus\Client\RequestOptions\Fop\PaxRef;
+use Amadeus\Client\Struct\Fop\CreateFormOfPayment\FopGroup14;
+use Amadeus\Client\Struct\Fop\CreateFormOfPayment\MopDescription14;
 
 /**
  * FopGroup
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FopGroup
 {
@@ -81,7 +83,11 @@ class FopGroup
         $this->loadPaxElementRefs($options->paxRef, $options->elementRef);
 
         foreach ($options->mopInfo as $mopInfo) {
-            $this->mopDescription[] = new MopDescription($mopInfo);
+            if ($this instanceof FopGroup14) {
+                $this->mopDescription[] = new MopDescription14($mopInfo);
+            } else {
+                $this->mopDescription[] = new MopDescription($mopInfo);
+            }
         }
 
         if ($options->fopRef instanceof FopRef) {

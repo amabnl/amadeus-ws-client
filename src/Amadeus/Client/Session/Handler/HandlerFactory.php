@@ -30,7 +30,7 @@ use Amadeus\Client\Util\SomewhatRandomGenerator;
  * HandlerFactory generates the correct Session Handler based on the incoming params.
  *
  * @package Amadeus\Client\Session\Handler
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerFactory
 {

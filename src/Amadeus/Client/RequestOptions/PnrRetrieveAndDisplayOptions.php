@@ -23,18 +23,16 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PnrRetrieveAndDisplayOptions
+ * Pnr_RetrieveAndDisplay Reques Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PnrRetrieveAndDisplayOptions extends Base
 {
-    const RETRIEVEOPTION_ALL = "ALL";
-
-    const RETRIEVEOPTION_OFFERS = "OFR";
-
-    const RETRIEVEOPTION_PNR = "PNR";
+    const RETRIEVEOPTION_ALL = 'ALL';
+    const RETRIEVEOPTION_OFFERS = 'OFR';
+    const RETRIEVEOPTION_PNR = 'PNR';
 
     /**
      * 6-character Amadeus Record Locator

@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  * Structure class for the StayDuration message part for PriceXplorer_* messages
  *
  * @package Amadeus\Client\Struct\PriceXplorer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class StayDuration
 {

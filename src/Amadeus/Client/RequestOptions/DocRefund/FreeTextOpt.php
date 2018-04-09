@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Interactive Free Text Options
  *
  * @package Amadeus\Client\RequestOptions\DocRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FreeTextOpt extends LoadParamsFromArray
 {

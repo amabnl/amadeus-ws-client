@@ -33,7 +33,7 @@ use Amadeus\Client\Struct\Fare\ConvertCurrency\SelectionDetails;
  * ConvertCurrency
  *
  * @package Amadeus\Client\Struct\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ConvertCurrency extends BaseWsMessage
 {

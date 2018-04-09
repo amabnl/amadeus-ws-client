@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fare\PricePnr12;
  * RefDetails
  *
  * @package Amadeus\Client\Struct\Fare\PricePnr12
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class RefDetails extends \Amadeus\Client\Struct\Ticket\RefDetails
 {

@@ -28,7 +28,7 @@ use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\CompanyIdentification;
  * TransportService
  *
  * @package Amadeus\Client\Struct\Fare\GetFareRules
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TransportService
 {

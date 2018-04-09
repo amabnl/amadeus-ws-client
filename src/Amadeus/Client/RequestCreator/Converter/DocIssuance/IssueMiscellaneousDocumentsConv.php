@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * DocIssuance_IssueMiscellaneousDocuments Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\DocIssuance
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class IssueMiscellaneousDocumentsConv extends BaseConverter
 {

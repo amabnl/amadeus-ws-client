@@ -1,9 +1,40 @@
-# Release 1.5.0 (UNRELEASED)
+# Release 1.7.0 (UNRELEASED)
+* Added support for Arrival date and time in ``Air_SellFromRecommendation`` (https://github.com/amabnl/amadeus-ws-client/pull/153) - Artem Zakharchenko
+* Added support for FeeOption in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/157) - Friedemann Schmuhl
+* Support for extra options  in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/issues/158):
+    - No Airport Change at itinerary level
+    - Maximum Elapsed Flying Time at itinerary level
+    - Segment-level options: 
+        - Include connection points
+        - Exclude connection points
+        - Specify a list of airlines/alliances as Mandatory/Preferred/Excluded/Night Class
+        - Flight Types (Direct, Non-stop, Connecting, Cheapest on-line, Overnight not allowed)
+        - Number of Connections
+        - No Airport Change
+* Added support for ``FOP_CreateFormOfPayment`` message version 14 and lower (https://github.com/amabnl/amadeus-ws-client/issues/163)
+* Added support for Special Seat Types in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/174)
+* Fixed a bug where a ``FOP_CreateFormOfPayment`` message with sequence number 0 generated an incorrect message. (https://github.com/amabnl/amadeus-ws-client/pull/162) - Artem Zakharchenko
+* Implemented ``Air_RebookAirSegment`` (https://github.com/amabnl/amadeus-ws-client/issues/149)
+
+# Release 1.6.1 (19 March 2018)
+* Do not remove ``<dummy>`` node from outgoing XML (https://github.com/amabnl/amadeus-ws-client/issues/161)
+
+# Release 1.6.0 (7 February 2018)
+* Recognize Passenger-level error messages in ``PNR_Reply`` responses (https://github.com/amabnl/amadeus-ws-client/issues/139)
+* Added support for Layover per connection options in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/138) - Artem Zakharchenko
+* Implemented more retrieval options on ``PNR_Retrieve``
+* Implemented ``Ticket_ProcessEDoc`` (https://github.com/amabnl/amadeus-ws-client/pull/135) - "FarahHourani"
+* Implemented ``MiniRule_GetFromETicket`` (https://github.com/amabnl/amadeus-ws-client/issues/122)
+* Implemented ``Ticket_CancelDocument`` (https://github.com/amabnl/amadeus-ws-client/issues/93)
+
+# Release 1.5.0 (5 November 2017)
 * Added support for Vendor Code in FOP for Fare Pricing messages (https://github.com/amabnl/amadeus-ws-client/pull/82) - Michal Hernas
 * Added support in PNR_Retrieve for retrieving the PNR active in context (https://github.com/amabnl/amadeus-ws-client/pull/88) - Michal Hernas
 * Added support for Tour Code elements in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/90)
-* Implemented ``FOP_ValidateFOP`` (https://github.com/amabnl/amadeus-ws-client/pull/86) - Michal Hernas
 * Added support for Multi-Ticket operation for MasterPricer messages (https://github.com/amabnl/amadeus-ws-client/pull/94) - Michal Hernas
+* Added support for ``Air_MultiAvailability`` messages version 16. (https://github.com/amabnl/amadeus-ws-client/issues/99)
+* Implemented ``FOP_ValidateFOP`` (https://github.com/amabnl/amadeus-ws-client/pull/86) - Michal Hernas
+* Implemented ``Service_IntegratedCatalogue`` (https://github.com/amabnl/amadeus-ws-client/issues/80)
 
 # Release 1.4.0 (15 May 2017)
 * Added support for ``Fare_PricePNRWithBookingClass`` errors in message version 7.3 format (https://github.com/amabnl/amadeus-ws-client/issues/57)

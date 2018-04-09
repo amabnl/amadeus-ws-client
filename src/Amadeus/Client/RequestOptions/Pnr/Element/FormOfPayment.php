@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element;
  * FormOfPayment element - FP element
  *
  * @package Amadeus\Client\RequestOptions\Pnr\Element
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FormOfPayment extends Element
 {

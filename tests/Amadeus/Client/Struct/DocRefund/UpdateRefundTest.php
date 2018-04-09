@@ -41,7 +41,7 @@ use Test\Amadeus\BaseTestCase;
  * UpdateRefundTest
  *
  * @package Test\Amadeus\Client\Struct\DocRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class UpdateRefundTest extends BaseTestCase
 {

@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fop\CreateFormOfPayment;
  * StatusInformation
  *
  * @package Amadeus\Client\Struct\Fop\CreateFormOfPayment
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class StatusInformation
 {

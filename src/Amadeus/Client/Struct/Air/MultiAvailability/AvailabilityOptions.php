@@ -11,7 +11,7 @@ namespace Amadeus\Client\Struct\Air\MultiAvailability;
  * AvailabilityOptions
  *
  * @package Amadeus\Client\Struct\Air\MultiAvailability
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class AvailabilityOptions
 {
@@ -26,9 +26,9 @@ class AvailabilityOptions
     public $optionInfo = [];
 
     /**
-     * @var ProductAvailability
+     * @var ProductAvailability[]
      */
-    public $productAvailability;
+    public $productAvailability = [];
 
     /**
      * @var string

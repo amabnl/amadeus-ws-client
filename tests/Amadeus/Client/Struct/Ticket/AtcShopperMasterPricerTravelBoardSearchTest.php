@@ -38,7 +38,7 @@ use Test\Amadeus\BaseTestCase;
  * AtcShopperMasterPricerTravelBoardSearchTest
  *
  * @package Test\Amadeus\Client\Struct\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class AtcShopperMasterPricerTravelBoardSearchTest extends BaseTestCase
 {

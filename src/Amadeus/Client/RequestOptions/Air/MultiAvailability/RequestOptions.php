@@ -13,7 +13,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * RequestOptions
  *
  * @package Amadeus\Client\RequestOptions\Air\MultiAvailability
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class RequestOptions extends LoadParamsFromArray
 {

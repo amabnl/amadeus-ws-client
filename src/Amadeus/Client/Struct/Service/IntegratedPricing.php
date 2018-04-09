@@ -25,6 +25,7 @@ namespace Amadeus\Client\Struct\Service;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Service\FormOfPayment;
 use Amadeus\Client\RequestOptions\Service\FrequentFlyer;
+use Amadeus\Client\RequestOptions\ServiceIntegratedCatalogueOptions;
 use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
 use Amadeus\Client\Struct\Fare\BasePricingMessage;
 use Amadeus\Client\Struct\Fare\PricePnr13\CarrierInformation;
@@ -42,7 +43,7 @@ use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOption;
  * Service_IntegratedPricing request structure
  *
  * @package Amadeus\Client\Struct\Service
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class IntegratedPricing extends BasePricingMessage
 {
@@ -54,7 +55,7 @@ class IntegratedPricing extends BasePricingMessage
     /**
      * IntegratedPricing constructor.
      *
-     * @param ServiceIntegratedPricingOptions|null $options
+     * @param ServiceIntegratedPricingOptions|ServiceIntegratedCatalogueOptions|null $options
      */
     public function __construct($options = null)
     {
@@ -64,10 +65,10 @@ class IntegratedPricing extends BasePricingMessage
     }
 
     /**
-     * @param ServiceIntegratedPricingOptions $options
+     * @param ServiceIntegratedPricingOptions|ServiceIntegratedCatalogueOptions $options
      * @return PricingOption[]
      */
-    protected function loadPricingOptions(ServiceIntegratedPricingOptions $options)
+    protected function loadPricingOptions($options)
     {
         $priceOptions = [];
 

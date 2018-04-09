@@ -8,7 +8,7 @@ This is the list of messages that are at least partially supported at this time:
 - Security_SignOut
 - PNR_Retrieve
 - PNR_RetrieveAndDisplay
-- PNR_AddMultiElements *(both a dedicated PNR creation message and a "pure" PNR_AddMultiElements)*
+- PNR_AddMultiElements
 - PNR_Cancel
 - PNR_DisplayHistory
 - PNR_TransferOwnership
@@ -31,6 +31,7 @@ This is the list of messages that are at least partially supported at this time:
 - Air_SellFromRecommendation
 - Air_FlightInfo
 - Air_RetrieveSeatMap
+- Air_RebookAirSegment
 - FOP_CreateFormOfPayment
 - FOP_ValidateFOP
 - Ticket_CreateTSTFromPricing
@@ -45,6 +46,8 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_ATCShopperMasterPricerTravelBoardSearch
 - Ticket_RepricePNRWithBookingClass
 - Ticket_ReissueConfirmedPricing
+- Ticket_CancelDocument
+- Ticket_ProcessEDoc
 - DocIssuance_IssueTicket
 - DocIssuance_IssueMiscellaneousDocuments
 - DocIssuance_IssueCombined
@@ -52,6 +55,7 @@ This is the list of messages that are at least partially supported at this time:
 - DocRefund_UpdateRefund
 - DocRefund_ProcessRefund
 - Service_IntegratedPricing
+- Service_IntegratedCatalogue
 - Offer_CreateOffer
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
@@ -59,6 +63,7 @@ This is the list of messages that are at least partially supported at this time:
 - Offer_ConfirmCarOffer
 - MiniRule_GetFromPricingRec
 - MiniRule_GetFromPricing
+- MiniRule_GetFromETicket
 - Info_EncodeDecodeCity
 - PointOfRef_Search
 - Command_Cryptic
@@ -78,29 +83,25 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Fare_PriceUpsellPNR
 - Fare_GetFareFamilyDescription
 - Fare_RebookAndCreateTST
-- Air_RebookAirSegment
 - Air_TLAGetAvailability
 - PNR_CreateAuxiliarySegment
 - PointOfRef_CategoryList
 - Ticket_CreateManualTSMP
-- TSM_CreateTSMFromPricing
 - Ticket_UpdateTSMP
-- Ticket_ProcessEDoc
 - Ticket_RetrieveListOfTSM
 - Ticket_AddDocNumber
 - TTR_DisplayTrip
 - Media_GetMedia
-- Service_IntegratedCatalogue
 - Service_PriceServiceViaCatalogue
 - Service_PriceIntegratedMode
 - Service_StandaloneCatalogue
 - Service_StandalonePricing
-- Hotel_MultiSingleAvailability
-- Hotel_DescriptiveInfo
-- Hotel_EnhancedPricing
-- Hotel_Sell
-- Hotel_CompleteReservationDetails
-- Hotel_Terms
+- Hotel_MultiSingleAvailability (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
+- Hotel_DescriptiveInfo (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
+- Hotel_EnhancedPricing (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
+- Hotel_Sell (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
+- Hotel_CompleteReservationDetails (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
+- Hotel_Terms (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
 - Car_Availability
 - Car_RateInformationFromAvailability
 - Car_Sell

@@ -31,7 +31,7 @@ use Test\Amadeus\BaseTestCase;
  * MopDescriptionTest
  *
  * @package Test\Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MopDescriptionTest extends BaseTestCase
 {

@@ -28,11 +28,11 @@ use Amadeus\Client\LoadParamsFromArray;
  * Address Options
  *
  * @package Amadeus\Client\RequestOptions\DocRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class AddressOpt extends LoadParamsFromArray
 {
-    const TYPE_BILLING_ADDRESS = "AB";
+    const TYPE_BILLING_ADDRESS = 'AB';
 
     /**
      * self::TYPE_*

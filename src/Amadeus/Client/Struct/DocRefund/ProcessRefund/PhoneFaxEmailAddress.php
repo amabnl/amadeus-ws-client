@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\DocRefund\ProcessRefund;
  * PhoneFaxEmailAddress
  *
  * @package Amadeus\Client\Struct\DocRefund\ProcessRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PhoneFaxEmailAddress
 {

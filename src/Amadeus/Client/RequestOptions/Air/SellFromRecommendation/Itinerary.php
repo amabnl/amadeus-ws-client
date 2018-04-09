@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Itinerary
  *
  * @package Amadeus\Client\RequestOptions\Air\SellFromRecommendation
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class Itinerary extends LoadParamsFromArray
 {
@@ -51,5 +51,5 @@ class Itinerary extends LoadParamsFromArray
      *
      * @var Segment[]
      */
-    public $segments;
+    public $segments = [];
 }

@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * PNR_Retrieve Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\PNR
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class RetrieveConv extends BaseConverter
 {
@@ -41,20 +41,6 @@ class RetrieveConv extends BaseConverter
      */
     public function convert($requestOptions, $version)
     {
-        if (!$requestOptions->recordLocator) {
-            $retrieveRequest = new Struct\Pnr\Retrieve(
-                Struct\Pnr\Retrieve::RETR_TYPE_ACTIVE_PNR,
-                null
-            );
-    
-            return $retrieveRequest;
-        }
-        
-        $retrieveRequest = new Struct\Pnr\Retrieve(
-            Struct\Pnr\Retrieve::RETR_TYPE_BY_RECLOC,
-            $requestOptions->recordLocator
-        );
-
-        return $retrieveRequest;
+        return new Struct\Pnr\Retrieve($requestOptions);
     }
 }

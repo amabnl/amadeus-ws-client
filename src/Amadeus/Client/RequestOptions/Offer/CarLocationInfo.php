@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * CarLocationInfo
  *
  * @package Amadeus\Client\RequestOptions\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class CarLocationInfo extends LoadParamsFromArray
 {

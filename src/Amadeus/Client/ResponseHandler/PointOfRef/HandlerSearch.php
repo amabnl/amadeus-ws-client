@@ -31,7 +31,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerSearch
  *
  * @package Amadeus\Client\ResponseHandler\PointOfRef
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerSearch extends StandardResponseHandler
 {

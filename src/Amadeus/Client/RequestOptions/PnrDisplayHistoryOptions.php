@@ -23,22 +23,22 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PnrDisplayHistoryOptions
+ * Pnr_DisplayHistory Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PnrDisplayHistoryOptions extends Base
 {
     /**
      * Standard history
      */
-    const OPT_STANDARD = "S";
+    const OPT_STANDARD = 'S';
 
     /**
      * Filters out redundant elements from history
      */
-    const OPT_FILTER_REDUNDANT = "F";
+    const OPT_FILTER_REDUNDANT = 'F';
 
     /**
      * History option

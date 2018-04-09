@@ -26,13 +26,13 @@ namespace Amadeus\Client\RequestOptions;
  * Fare_GetFareRules Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FareGetFareRulesOptions extends Base
 {
-    const DIRECTION_ORIGIN_TO_DESTINATION = "OD";
-    const DIRECTION_DESTINATION_TO_ORIGIN = "DO";
-    const DIRECTION_BOTH = "BD";
+    const DIRECTION_ORIGIN_TO_DESTINATION = 'OD';
+    const DIRECTION_DESTINATION_TO_ORIGIN = 'DO';
+    const DIRECTION_BOTH = 'BD';
 
     /**
      * @var \DateTime

@@ -14,7 +14,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * Ticket_CreateTSMFromPricing request structure
  *
  * @package Amadeus\Client\Struct\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class CreateTSMFromPricing extends CreateTSTFromPricing
 {

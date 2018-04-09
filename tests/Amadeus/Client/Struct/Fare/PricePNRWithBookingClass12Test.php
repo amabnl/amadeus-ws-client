@@ -43,7 +43,7 @@ use Test\Amadeus\BaseTestCase;
 
 /**
  * @package Amadeus\Client\Struct\Fare
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class PricePNRWithBookingClass12Test extends BaseTestCase
 {

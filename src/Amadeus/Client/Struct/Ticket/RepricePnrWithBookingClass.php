@@ -49,7 +49,7 @@ use Amadeus\Client\Struct\Ticket\RepricePnrWithBookingClass\PricingOptionKey;
  * Ticket_RepricePNRWithBookingClass request structure
  *
  * @package Amadeus\Client\Struct\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class RepricePnrWithBookingClass extends BaseWsMessage
 {

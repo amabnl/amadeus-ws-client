@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Air;
  * RelatedproductInformation
  *
  * @package Amadeus\Client\Struct\Air
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class RelatedproductInformation
 {
@@ -39,6 +39,10 @@ class RelatedproductInformation
     const STATUS_SELL_REFUSED_UC = "UC";
     const STATUS_SELL_REFUSED_UN = "UN";
     const STATUS_CANCEL_ACCEPTED = "XX";
+
+    //Constants for RebookAirSegment:
+    const STATUS_FORCE_BOOKING = "FB";
+    const STATUS_FORCE_GROUP = "FG";
 
     /**
      * @var int

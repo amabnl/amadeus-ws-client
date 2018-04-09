@@ -30,7 +30,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerRetrieve
  *
  * @package Amadeus\Client\ResponseHandler\PNR
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerRetrieve extends StandardResponseHandler
 {
@@ -42,6 +42,8 @@ class HandlerRetrieve extends StandardResponseHandler
     const Q_S_MSG = "//m:originDestinationDetails//m:errorInfo/m:errorWarningDescription/m:freeText";
     const Q_E_ERR = "//m:dataElementsIndiv/m:elementErrorInformation/m:errorOrWarningCodeDetails//m:errorCode";
     const Q_E_MSG = "//m:dataElementsIndiv//m:elementErrorInformation/m:errorWarningDescription/m:freeText";
+    const Q_P_ERR = "//m:travellerInfo/m:nameError/m:errorOrWarningCodeDetails//m:errorCode";
+    const Q_P_MSG = "//m:travellerInfo/m:nameError/m:errorWarningDescription/m:freeText";
 
     /**
      * Analysing a PNR_Reply
@@ -79,6 +81,19 @@ class HandlerRetrieve extends StandardResponseHandler
             $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
 
             $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'general');
+        }
+
+        //Passenger error
+        $errorCodeNodeList = $domXpath->query(self::Q_P_ERR);
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $code = $errorCodeNodeList->item(0)->nodeValue;
+            $errorTextNodeList = $domXpath->query(self::Q_P_MSG);
+            $message = $this->makeMessageFromMessagesNodeList($errorTextNodeList);
+
+            $analyzeResponse->messages[] = new Result\NotOk($code, trim($message), 'passenger');
         }
 
         //Segment errors:

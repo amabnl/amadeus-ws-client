@@ -31,7 +31,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerDisplayHistory
  *
  * @package Amadeus\Client\ResponseHandler\PNR
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerDisplayHistory extends StandardResponseHandler
 {

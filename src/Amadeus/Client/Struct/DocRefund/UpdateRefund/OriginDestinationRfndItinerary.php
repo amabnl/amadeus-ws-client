@@ -28,7 +28,7 @@ use Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestination;
  * OriginDestinationRfndItinerary
  *
  * @package Amadeus\Client\Struct\DocRefund\UpdateRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class OriginDestinationRfndItinerary extends OriginDestination
 {

@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * MasterPricerPassenger
  *
  * @package Amadeus\Client\RequestOptions\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MPPassenger extends LoadParamsFromArray
 {
@@ -37,6 +37,10 @@ class MPPassenger extends LoadParamsFromArray
     const TYPE_CHILD = "CH";
 
     const TYPE_INFANT = "INF";
+
+    const TYPE_INFANT_WITH_SEAT = "INS";
+
+    const TYPE_STUDENT = "ST";
 
     /**
      * What type of passengers? self::TYPE_*

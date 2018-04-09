@@ -26,12 +26,12 @@ namespace Amadeus\Client\RequestOptions;
  * DocRefund_UpdateRefund Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DocRefundUpdateRefundOptions extends Base
 {
-    const PRICING_IND_DOMESTIC_ITINERARY = "D";
-    const PRICING_IND_INTERNATIONAL_ITINERARY = "I";
+    const PRICING_IND_DOMESTIC_ITINERARY = 'D';
+    const PRICING_IND_INTERNATIONAL_ITINERARY = 'I';
 
     /**
      * @var string

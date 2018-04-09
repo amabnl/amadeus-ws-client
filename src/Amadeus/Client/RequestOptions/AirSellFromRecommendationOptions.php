@@ -23,10 +23,10 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * AirSellFromRecommendation
+ * Air_SellFromRecommendation Request options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class AirSellFromRecommendationOptions extends Base
 {
@@ -42,6 +42,7 @@ class AirSellFromRecommendationOptions extends Base
      * @var string
      */
     public $algorithm = self::ALG_CANCEL_IF_UNSUCCESSFUL;
+
     /**
      * @var Air\SellFromRecommendation\Itinerary[]
      */

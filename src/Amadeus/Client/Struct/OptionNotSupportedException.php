@@ -31,7 +31,7 @@ namespace Amadeus\Client\Struct;
  * For example, in Fare_PricePNRWithBookingClass versions < 13, there are a number of options not supported.
  *
  * @package Amadeus\Client\Struct
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class OptionNotSupportedException extends InvalidArgumentException
 {

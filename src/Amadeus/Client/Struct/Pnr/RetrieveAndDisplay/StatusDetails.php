@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Pnr\RetrieveAndDisplay;
  * StatusDetails
  *
  * @package Amadeus\Client\Struct\Pnr\RetrieveAndDisplay
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class StatusDetails
 {

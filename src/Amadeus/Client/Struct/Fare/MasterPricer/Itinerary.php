@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fare\MasterPricer;
  * Itinerary
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Itinerary
 {
@@ -57,7 +57,7 @@ class Itinerary
     /**
      * Specify Flight options.
      *
-     * @var mixed
+     * @var FlightInfo
      */
     public $flightInfo;
     /**

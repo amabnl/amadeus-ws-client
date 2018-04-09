@@ -23,13 +23,15 @@
 namespace Amadeus\Client\Struct\Fop;
 
 use Amadeus\Client\RequestOptions\Fop\MopInfo;
+use Amadeus\Client\Struct\Fop\CreateFormOfPayment\GroupUsage14;
+use Amadeus\Client\Struct\Fop\CreateFormOfPayment\PaymentModule14;
 use Amadeus\Client\Struct\WsMessageUtility;
 
 /**
  * PaymentModule
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PaymentModule extends WsMessageUtility
 {
@@ -75,7 +77,11 @@ class PaymentModule extends WsMessageUtility
      */
     public function __construct($fopType)
     {
-        $this->groupUsage = new GroupUsage($fopType);
+        if ($this instanceof PaymentModule14) {
+            $this->groupUsage = new GroupUsage14($fopType);
+        } else {
+            $this->groupUsage = new GroupUsage($fopType);
+        }
     }
 
     /**

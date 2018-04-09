@@ -26,16 +26,12 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  * Traveller
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class Traveller
+class Traveller extends \Amadeus\Client\Struct\Pnr\Retrieve\Traveller
 {
     const QUAL_GROUP = "G";
 
-    /**
-     * @var string
-     */
-    public $surname;
     /**
      * Traveller Qualifiers:
      * - 766  Infant without seat
@@ -62,6 +58,6 @@ class Traveller
      */
     public function __construct($surName)
     {
-        $this->surname = $surName;
+        parent::__construct($surName);
     }
 }

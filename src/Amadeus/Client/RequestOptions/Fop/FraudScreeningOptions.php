@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * Fraud Screening Options for Credit Card payments
  *
  * @package Amadeus\Client\RequestOptions\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FraudScreeningOptions extends LoadParamsFromArray
 {

@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Air;
  * FlightDate
  *
  * @package Amadeus\Client\Struct\Air
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class FlightDate
 {
@@ -55,25 +55,60 @@ class FlightDate
      */
     public $arrivalTime;
     /**
-     * @var string
+     * @var string|int
      */
     public $dateVariation;
 
     /**
      * FlightDate constructor.
      *
-     * @param string|\DateTime $departureDate in format DDMMYY or \DateTime
+     * @param string|\DateTime|null $departureDate in format DDMMYY or \DateTime
+     * @param \DateTime|null $arrivalDate
+     * @param string|\DateTime|null $arrivalTime
+     * @param int|null $dateVariation
      */
-    public function __construct($departureDate)
+    public function __construct($departureDate, $arrivalDate = null, $arrivalTime = null, $dateVariation = null)
     {
-        if (!($departureDate instanceof \DateTime)) {
-            $this->departureDate = $departureDate;
-        } else {
-            $this->departureDate = $departureDate->format('dmy');
+        $this->loadDepartureDate($departureDate);
+
+        $this->loadArrivalDate($arrivalDate, $arrivalTime);
+
+        if (!is_null($dateVariation)) {
+            $this->dateVariation = $dateVariation;
+        }
+    }
+
+    /**
+     * @param \DateTime|string|null $departureDate
+     */
+    protected function loadDepartureDate($departureDate)
+    {
+        if ($departureDate instanceof \DateTime) {
+            $this->departureDate = ($departureDate->format('dmy') !== '000000') ? $departureDate->format('dmy') : null;
             $time = $departureDate->format('Hi');
-            if ($time !== "0000") {
+            if ($time !== '0000') {
                 $this->departureTime = $time;
             }
+        } elseif (!empty($departureDate)) {
+            $this->departureDate = $departureDate;
+        }
+    }
+
+    /**
+     * @param \DateTime|null $arrivalDate
+     * @param string|\DateTime|null $arrivalTime
+     */
+    protected function loadArrivalDate($arrivalDate, $arrivalTime)
+    {
+        if ($arrivalDate instanceof \DateTime) {
+            $this->setArrivalDate($arrivalDate);
+        } elseif ($arrivalTime instanceof \DateTime) {
+            $time = $arrivalTime->format('Hi');
+            if ($time !== '0000') {
+                $this->arrivalTime = $time;
+            }
+        } elseif (is_string($arrivalTime) && !empty($arrivalTime)) {
+            $this->arrivalTime = $arrivalTime;
         }
     }
 
@@ -84,9 +119,9 @@ class FlightDate
      */
     public function setArrivalDate(\DateTime $arrivalDate)
     {
-        $this->arrivalDate = $arrivalDate->format('dmy');
+        $this->arrivalDate = ($arrivalDate->format('dmy') !== '000000') ? $arrivalDate->format('dmy') : null;
         $time = $arrivalDate->format('Hi');
-        if ($time !== "0000") {
+        if ($time !== '0000') {
             $this->arrivalTime = $time;
         }
     }

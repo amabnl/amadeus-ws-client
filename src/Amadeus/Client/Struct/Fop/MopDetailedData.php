@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fop;
  * MopDetailedData
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MopDetailedData
 {

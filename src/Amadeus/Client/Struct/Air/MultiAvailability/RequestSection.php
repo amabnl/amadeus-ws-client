@@ -13,7 +13,7 @@ use Amadeus\Client\RequestOptions\Air\MultiAvailability\RequestOptions;
  * RequestSection
  *
  * @package Amadeus\Client\Struct\Air\MultiAvailability
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class RequestSection
 {
@@ -86,9 +86,11 @@ class RequestSection
             $params->arrivalDate
         );
 
-        $this->availabilityOptions = new AvailabilityOptions(
-            $params->requestType
-        );
+        if ($this instanceof RequestSection16) {
+            $this->availabilityOptions = new AvailabilityOptions16($params->requestType);
+        } else {
+            $this->availabilityOptions = new AvailabilityOptions($params->requestType);
+        }
 
         $this->loadCabinAndClass($params->cabinCode, $params->bookingClasses);
 

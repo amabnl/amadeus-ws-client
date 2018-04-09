@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Segment as SegmentO
  * SegmentInformation
  *
  * @package Amadeus\Client\Struct\Air
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class SegmentInformation
 {
@@ -55,7 +55,10 @@ class SegmentInformation
             $seg->to,
             $seg->companyCode,
             $seg->flightNumber,
-            $seg->bookingClass
+            $seg->bookingClass,
+            $seg->arrivalDate,
+            $seg->arrivalTime,
+            $seg->dateVariation
         );
 
         $this->relatedproductInformation = new RelatedproductInformation(

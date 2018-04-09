@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Air;
  * PointDetails
  *
  * @package Amadeus\Client\Struct\Air
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class PointDetails
 {

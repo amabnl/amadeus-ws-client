@@ -24,12 +24,20 @@ namespace Test\Amadeus\Client\RequestCreator;
 
 use Amadeus\Client\Params\RequestCreatorParams;
 use Amadeus\Client\RequestCreator\Base;
+use Amadeus\Client\RequestOptions\Air\MultiAvailability\RequestOptions;
+use Amadeus\Client\RequestOptions\AirMultiAvailabilityOptions;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
+use Amadeus\Client\RequestOptions\Fop\ElementRef;
+use Amadeus\Client\RequestOptions\Fop\Group;
+use Amadeus\Client\RequestOptions\Fop\MopInfo;
+use Amadeus\Client\RequestOptions\Fop\Payment;
+use Amadeus\Client\RequestOptions\FopCreateFopOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
@@ -274,7 +282,7 @@ class BaseTest extends BaseTestCase
             ])
         );
 
-        //$this->assertInstanceOf('\Amadeus\Client\Struct\Fare\InformativePricingWithoutPNR12', $message);
+        $this->assertInstanceOf('\Amadeus\Client\Struct\Fare\InformativePricingWithoutPNR12', $message);
     }
 
     /**
@@ -318,6 +326,97 @@ class BaseTest extends BaseTestCase
         );
 
         $this->assertInstanceOf('\Amadeus\Client\Struct\Fare\PricePNRWithBookingClass12', $message);
+    }
+
+    public function testCanCreateAirMultiAvailability16()
+    {
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['Air_MultiAvailability' => ['version' => '16.1', 'wsdl' => 'aabbccdd']]
+        ]);
+
+        $rq = new Base($par);
+
+        $message = $rq->createRequest(
+            'Air_MultiAvailability',
+            new AirMultiAvailabilityOptions([
+                'actionCode' => AirMultiAvailabilityOptions::ACTION_SCHEDULE,
+                'requestOptions' => [
+                    new RequestOptions([
+                        'departureDate' => \DateTime::createFromFormat('Ymd-His', '20170215-140000', new \DateTimeZone('UTC')),
+                        'from' => 'NCE',
+                        'to' => 'NYC',
+                        'cabinCode' => RequestOptions::CABIN_ECONOMY_PREMIUM_MAIN,
+                        'includedConnections' => ['PAR'],
+                        'nrOfSeats' => 5,
+                        'includedAirlines' => ['AF'],
+                        'requestType' => RequestOptions::REQ_TYPE_BY_ARRIVAL_TIME
+                    ])
+                ]
+            ])
+        );
+
+        $this->assertInstanceOf('\Amadeus\Client\Struct\Air\MultiAvailability16', $message);
+    }
+
+    public function testCanCreateFopCreateFormOfPayment14()
+    {
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['FOP_CreateFormOfPayment' => ['version' => '11.1', 'wsdl' => 'aabbccdd']]
+        ]);
+
+        $rq = new Base($par);
+
+        $message = $rq->createRequest(
+            'FOP_CreateFormOfPayment',
+            new FopCreateFopOptions([
+                'transactionCode' => FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+                'fopGroup' => [
+                    new Group([
+                        'elementRef' => [
+                            new ElementRef([
+                                'type' => ElementRef::TYPE_TST_NUMBER,
+                                'value' => 1
+                            ])
+                        ],
+                        'mopInfo' => [
+                            new MopInfo([
+                                'sequenceNr' => 0,
+                                'fopCode' => 'CCCA',
+                                'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                                'payMerchant' => 'BA',
+                                'payments' => [
+                                    new Payment([
+                                        'type' => Payment::TYPE_TOTAL_FARE_AMOUNT,
+                                        'amount' => 300,
+                                        'currency' => "EUR"
+                                    ])
+                                ],
+                                'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                                'creditCardInfo' => new CreditCardInfo([
+                                    'vendorCode' => 'CA',
+                                    'cardNumber' => '5000000000000009',
+                                    'expiryDate' => '1014',
+                                    'securityId' => 123,
+                                    'approvalCode' => '123456',
+                                    'sourceOfApproval' => CreditCardInfo::APPROVAL_SOURCE_MANUAL,
+                                    'name' => 'dummy name'
+                                ])
+                            ])
+                        ]
+                    ])
+                ]
+            ])
+        );
+
+        $this->assertInstanceOf('\Amadeus\Client\Struct\Fop\CreateFormOfPayment14', $message);
+
+        $this->assertInstanceOf('\Amadeus\Client\Struct\Fop\CreateFormOfPayment\GroupUsage14', $message->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage);
+        $this->assertInstanceOf('\Amadeus\Client\Struct\Fop\AttributeDetails', $message->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails);
+        $this->assertInternalType('string', $message->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails->attributeType);
     }
 
     public function testCanTryBuildingSameMessageTwiceWillReuseBuilder()

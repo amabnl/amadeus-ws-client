@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * Air_SellFromRecommendation Request options
  *
  * @package Amadeus\Client\RequestCreator\Converter\Air
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class SellFromRecommendationConv extends BaseConverter
 {

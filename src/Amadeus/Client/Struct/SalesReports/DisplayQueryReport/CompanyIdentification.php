@@ -11,7 +11,7 @@ namespace Amadeus\Client\Struct\SalesReports\DisplayQueryReport;
  * CompanyIdentification
  *
  * @package Amadeus\Client\Struct\SalesReports\DisplayQueryReport
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class CompanyIdentification
 {

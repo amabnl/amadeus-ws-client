@@ -28,7 +28,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * FareBasis - Pricing options when pricing by fare basis (pricing type 'FBA')
  *
  * @package Amadeus\Client\RequestOptions\Fare
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class FareBasis extends LoadParamsFromArray
 {

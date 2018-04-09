@@ -28,27 +28,30 @@ namespace Amadeus\Client\RequestOptions;
  * For MasterPricer options shared with ATC messages (such as Ticket_CheckEligibility)
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MpBaseOptions extends Base
 {
-    const FLIGHTOPT_PUBLISHED = "RP";
-    const FLIGHTOPT_UNIFARES = "RU";
-    const FLIGHTOPT_CORPORATE_UNIFARES = "RW";
-    const FLIGHTOPT_NO_RESTRICTION = "NR";
-    const FLIGHTOPT_REFUNDABLE = "RF";
-    const FLIGHTOPT_NO_ADVANCE_PURCHASE = "NAP";
-    const FLIGHTOPT_NO_PENALTIES = "NPE";
-    const FLIGHTOPT_NO_LOWCOST = "XLC";
-    const FLIGHTOPT_ELECTRONIC_TICKET = "ET";
-    const FLIGHTOPT_PAPER_TICKET = "PT";
-    const FLIGHTOPT_ELECTRONIC_PAPER_TICKET = "EP";
-    const FLIGHTOPT_FORCE_NEUTRAL_FARE_SEARCH = "NPF";
-    const FLIGHTOPT_NO_SLICE_AND_DICE = "NSD";
-    const FLIGHTOPT_DISPLAY_MIN_MAX_STAY = "MST";
+    const FLIGHTOPT_PUBLISHED = 'RP';
+    const FLIGHTOPT_UNIFARES = 'RU';
+    const FLIGHTOPT_CORPORATE_UNIFARES = 'RW';
+    const FLIGHTOPT_NO_RESTRICTION = 'NR';
+    const FLIGHTOPT_REFUNDABLE = 'RF';
+    const FLIGHTOPT_NO_ADVANCE_PURCHASE = 'NAP';
+    const FLIGHTOPT_NO_PENALTIES = 'NPE';
+    const FLIGHTOPT_NO_LOWCOST = 'XLC';
+    const FLIGHTOPT_ELECTRONIC_TICKET = 'ET';
+    const FLIGHTOPT_PAPER_TICKET = 'PT';
+    const FLIGHTOPT_ELECTRONIC_PAPER_TICKET = 'EP';
+    const FLIGHTOPT_FORCE_NEUTRAL_FARE_SEARCH = 'NPF';
+    const FLIGHTOPT_NO_SLICE_AND_DICE = 'NSD';
+    const FLIGHTOPT_DISPLAY_MIN_MAX_STAY = 'MST';
+    const FLIGHTOPT_TICKET_AVAILABILITY_CHECK = 'TAC';
+    const FLIGHTOPT_IN_FLIGHT_SERVICES = 'IFS';
+    const FLIGHTOPT_ONLY_PTC = 'PTC';
 
-    const CORPORATE_QUALIFIER_AMADEUS_NEGO = "RC";
-    const CORPORATE_QUALIFIER_UNIFARE = "RW";
+    const CORPORATE_QUALIFIER_AMADEUS_NEGO = 'RC';
+    const CORPORATE_QUALIFIER_UNIFARE = 'RW';
 
     /**
      * The total number of passengers.

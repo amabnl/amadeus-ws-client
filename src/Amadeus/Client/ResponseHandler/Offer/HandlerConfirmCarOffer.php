@@ -26,7 +26,7 @@ namespace Amadeus\Client\ResponseHandler\Offer;
  * HandlerConfirmCarOffer
  *
  * @package Amadeus\Client\ResponseHandler\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerConfirmCarOffer extends HandlerCreateOffer
 {

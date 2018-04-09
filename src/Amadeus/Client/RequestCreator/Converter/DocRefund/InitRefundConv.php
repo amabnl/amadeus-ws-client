@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * DocRefund_InitRefund request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\DocRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class InitRefundConv extends BaseConverter
 {

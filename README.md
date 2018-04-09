@@ -14,7 +14,7 @@ We currently support a full AIR booking flow with MasterPricer, including seat s
 
 # Purpose
 
-This library makes it much easier for developers to integrate content from the Amadeus Web Services into their projects. It takes care of:
+This library makes it a lot easier for developers to integrate content from the Amadeus Web Services into their projects. It takes care of:
 
 - Session management - setting the correct SOAP headers both for Soap Header 2 and 4.
 - Supports all features of Soap Header 4 such as Stateful and Stateless messages.
@@ -53,7 +53,7 @@ Once the client is installed, read the [About &amp; Get Started](docs/about-get-
 
 # Release history
 
-The current release is version 1.4.0. 
+The current release is version 1.6.1. 
 
 See the [Changelog](CHANGELOG.md).
 

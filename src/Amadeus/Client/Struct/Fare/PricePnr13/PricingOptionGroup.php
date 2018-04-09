@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
  * PricingOptionGroup
  *
  * @package Amadeus\Client\Struct\Fare\PricePnr13
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class PricingOptionGroup
 {

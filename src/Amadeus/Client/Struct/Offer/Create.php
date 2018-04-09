@@ -34,7 +34,7 @@ use Amadeus\Client\Struct\Offer\Create\TotalPrice;
  * Offer_CreateOffer request structure
  *
  * @package Amadeus\Client\Struct\Offer
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class Create extends BaseWsMessage
 {

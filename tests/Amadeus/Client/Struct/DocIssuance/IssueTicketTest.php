@@ -37,7 +37,7 @@ use Test\Amadeus\BaseTestCase;
  * IssueTicketTest
  *
  * @package Test\Amadeus\Client\Struct\DocIssuance
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class IssueTicketTest extends BaseTestCase
 {

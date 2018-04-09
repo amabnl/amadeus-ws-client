@@ -31,7 +31,7 @@ use Amadeus\Client\Struct\Fare\PricePnr13\TaxType;
  * TaxDetails
  *
  * @package Amadeus\Client\Struct\Fare\PricePnr12
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TaxDetails
 {

@@ -30,7 +30,7 @@ use Amadeus\Client\Struct;
  * Fare_ConvertCurrency Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ConvertCurrencyConv extends BaseConverter
 {

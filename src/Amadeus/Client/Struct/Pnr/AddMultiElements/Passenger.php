@@ -26,9 +26,9 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  * Passenger - Structure class for the passenger message part for PNR_AddMultiElements messages
  *
  * @package Amadeus\Client\Struct\Pnr\AddMultiElements
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class Passenger
+class Passenger extends \Amadeus\Client\Struct\Pnr\Retrieve\Passenger
 {
     const PASST_ADULT = "ADT";
     const PASST_INFANT = "INF";
@@ -50,11 +50,6 @@ class Passenger
      * This following TIF C324/6353 element will contain INF.
      */
     const INF_FULL = 3;
-
-    /**
-     * @var string
-     */
-    public $firstName;
     
     /*
      * self::PASST_*
@@ -247,12 +242,13 @@ class Passenger
 
     /**
      * Passenger constructor.
+     *
      * @param $firstName
      * @param $type
      */
     public function __construct($firstName, $type)
     {
-        $this->firstName = $firstName;
+        parent::__construct($firstName);
         $this->type = $type;
     }
 }

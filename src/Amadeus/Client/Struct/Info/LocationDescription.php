@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Info;
  * LocationDescription
  *
  * @package Amadeus\Client\Struct\Info
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class LocationDescription
 {
@@ -351,7 +351,7 @@ class LocationDescription
      * @param string|null $code
      * @param string|null $name
      */
-    public function __construct($code, $name)
+    public function __construct($code, $name = null)
     {
         $this->code = $code;
         $this->name = $name;

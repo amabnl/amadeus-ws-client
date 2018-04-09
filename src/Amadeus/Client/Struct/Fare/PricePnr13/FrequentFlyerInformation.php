@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Service\FrequentFlyer;
  * FrequentFlyerInformation
  *
  * @package Amadeus\Client\Struct\Fare\PricePnr13
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class FrequentFlyerInformation
 {

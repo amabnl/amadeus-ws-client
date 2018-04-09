@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fare\InformativePricing13;
  * SourceType
  *
  * @package Amadeus\Client\Struct\Fare\InformativePricing13
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class SourceType
 {

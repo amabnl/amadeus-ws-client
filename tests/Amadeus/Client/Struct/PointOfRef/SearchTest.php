@@ -30,7 +30,7 @@ use Test\Amadeus\BaseTestCase;
  * SearchTest
  *
  * @package Test\Amadeus\Client\Struct\PointOfRef
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class SearchTest extends BaseTestCase
 {

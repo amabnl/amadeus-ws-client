@@ -32,7 +32,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * Unknown response for Command_Cryptic because you need to analyse the cryptic response yourself
  *
  * @package Amadeus\Client\ResponseHandler\Command
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerCryptic extends StandardResponseHandler
 {

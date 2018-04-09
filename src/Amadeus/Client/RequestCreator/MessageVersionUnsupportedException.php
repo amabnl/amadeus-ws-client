@@ -31,7 +31,7 @@ use Amadeus\Client;
  * Pull request material!
  *
  * @package Amadeus\Client\RequestCreator
- * @author dieter <dieter.devlieghere@benelux.amadeus.com>
+ * @author dieter <dermikagh@gmail.com>
  */
 class MessageVersionUnsupportedException extends Client\Exception
 {

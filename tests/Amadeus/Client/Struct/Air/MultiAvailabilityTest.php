@@ -17,7 +17,7 @@ use Test\Amadeus\BaseTestCase;
  * MultiAvailabilityTest
  *
  * @package Test\Amadeus\Client\Struct\Air
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MultiAvailabilityTest extends BaseTestCase
 {
@@ -319,6 +319,5 @@ class MultiAvailabilityTest extends BaseTestCase
         $this->assertNull($msg->requestSection[0]->availabilityProductInfo->availabilityDetails[0]->arrivalTime);
         $this->assertEquals('BRU', $msg->requestSection[0]->availabilityProductInfo->departureLocationInfo->cityAirport);
         $this->assertEquals('LIS', $msg->requestSection[0]->availabilityProductInfo->arrivalLocationInfo->cityAirport);
-
     }
 }

@@ -28,7 +28,7 @@ use Amadeus\Client\ResponseHandler\Fare\HandlerMasterPricerTravelBoardSearch;
  * HandlerATCShopperMasterPricerTravelBoardSearch
  *
  * @package Amadeus\Client\ResponseHandler\Ticket
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerATCShopperMasterPricerTravelBoardSearch extends HandlerMasterPricerTravelBoardSearch
 {

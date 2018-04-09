@@ -28,7 +28,7 @@ use Amadeus\Client\RequestOptions\Offer\CarLocationInfo;
  * AddressDeliveryCollection
  *
  * @package Amadeus\Client\Struct\Offer\ConfirmCar
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class AddressDeliveryCollection
 {

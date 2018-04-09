@@ -29,7 +29,7 @@ use Test\Amadeus\BaseTestCase;
  * QuantityDetailsTest
  *
  * @package Test\Amadeus\Client\Struct\Offer\ConfirmHotel
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class QuantityDetailsTest extends BaseTestCase
 {

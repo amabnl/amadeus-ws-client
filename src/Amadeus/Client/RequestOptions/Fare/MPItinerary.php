@@ -28,10 +28,21 @@ use Amadeus\Client\LoadParamsFromArray;
  * MasterPricer Itinerary request settings
  *
  * @package Amadeus\Client\RequestOptions\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class MPItinerary extends LoadParamsFromArray
 {
+    const FLIGHTTYPE_DIRECT = 'D';
+    const FLIGHTTYPE_NONSTOP = 'N';
+    const FLIGHTTYPE_CONNECTING = 'C';
+    const FLIGHTTYPE_CHEAPEST_ONLINE = 'OL';
+    const FLIGHTTYPE_OVERNIGHT_NOT_ALLOWED = 'OV';
+
+    const AIRLINEOPT_PREFERRED = 'F';
+    const AIRLINEOPT_MANDATORY = 'M';
+    const AIRLINEOPT_NIGHT_CLASS = 'N';
+    const AIRLINEOPT_EXCLUDED = 'X';
+
     /**
      * Segment Reference (optional)
      *
@@ -57,4 +68,63 @@ class MPItinerary extends LoadParamsFromArray
      * @var MPDate
      */
     public $date;
+
+    /**
+     * List of airline options.
+     *
+     * Keys are the option to be used (self::AIRLINEOPT_*), values are the airline codes:
+     *
+     * e.g.
+     * 'airlineOptions' => [
+     *     self::AIRLINEOPT_PREFERRED => [
+     *         'LH',
+     *         'BA'
+     *     ]
+     * ]
+     *
+     * @var array
+     */
+    public $airlineOptions = [];
+
+    /**
+     * Flight options for this itinerary
+     *
+     * Choose from self::FLIGHTTYPE_*
+     *
+     * @var string[]
+     */
+    public $requestedFlightTypes = [];
+
+    /**
+     * List of IATA Airport/City locations which should be used as connection point.
+     *
+     * If you provide multiple connection points, only recommendations will be returned having the same connection
+     * points as the ones specified, in the same order as specified.
+     *
+     * @var string[]
+     */
+    public $includedConnections = [];
+
+    /**
+     * List of IATA Airport/City locations which should be excluded as connection point.
+     *
+     * @var string[]
+     */
+    public $excludedConnections = [];
+
+    /**
+     * A number of connections can be requested for connecting flights.
+     *
+     * If you specify a value here, results will only show connecting flights with exactly the specified number of connections.
+     *
+     * @var int
+     */
+    public $nrOfConnections;
+
+    /**
+     * Set to true to disallow connecting flight to change airports within a city.
+     *
+     * @var bool
+     */
+    public $noAirportChange = false;
 }

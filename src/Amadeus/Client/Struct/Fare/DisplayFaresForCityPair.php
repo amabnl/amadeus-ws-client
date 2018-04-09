@@ -28,7 +28,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * DisplayFaresForCityPair
  *
  * @package Amadeus\Client\Struct\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class DisplayFaresForCityPair extends BaseWsMessage
 {

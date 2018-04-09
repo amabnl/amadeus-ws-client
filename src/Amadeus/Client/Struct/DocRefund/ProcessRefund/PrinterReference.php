@@ -29,7 +29,7 @@ use Amadeus\Client\Struct\WsMessageUtility;
  * PrinterReference
  *
  * @package Amadeus\Client\Struct\DocRefund\ProcessRefund
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PrinterReference extends WsMessageUtility
 {

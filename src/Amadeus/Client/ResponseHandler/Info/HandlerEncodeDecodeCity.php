@@ -30,7 +30,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * EncodeDecodeCity
  *
  * @package Amadeus\Client\ResponseHandler\Info
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class HandlerEncodeDecodeCity extends StandardResponseHandler
 {
