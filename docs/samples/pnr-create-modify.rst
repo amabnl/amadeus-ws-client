@@ -627,6 +627,30 @@ Request seat 13f for passenger with tattoo 1 and segment with tattoo 1.
         ]
     ]);
 
+Request Special Seat Type Aisle
+===============================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $opt = new PnrAddMultiElementsOptions([
+        'elements' => [
+            new SeatRequest([
+                'specialType' => SeatRequest::SPECIAL_AISLE_SEAT,
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
+                        'id' => 1
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+
 Group PNR
 =========
 

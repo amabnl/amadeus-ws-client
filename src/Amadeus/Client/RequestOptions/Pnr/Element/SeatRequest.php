@@ -43,6 +43,18 @@ class SeatRequest extends Element
     const TYPE_PRE_RESERVED_SEAT = "SEAT";
     const TYPE_SEAT_REQUEST = "RQST";
 
+    const SPECIAL_AISLE_SEAT = 'A';
+    const SPECIAL_CHARGEABLE_SEAT = 'CH';
+    const SPECIAL_EXIT_ROW_SEAT = 'E';
+    const SPECIAL_SEAT_HANDICAPPED_INCAPACITATED = 'H';
+    const SPECIAL_SEAT_ADULT_WITH_INFANT = 'I';
+    const SPECIAL_BULKHEAD_SEAT = 'K';
+    const SPECIAL_MEDICALLY_OK = 'MA';
+    const SPECIAL_NON_SMOKING_SEAT = 'N';
+    const SPECIAL_SMOKING_SEAT = 'S';
+    const SPECIAL_SEAT_UNACCOMPANIED_MINOR = 'U';
+    const SPECIAL_WINDOW_SEAT = 'W';
+
     /**
      * Seat type
      *
@@ -51,6 +63,15 @@ class SeatRequest extends Element
      * @var string
      */
     public $type;
+
+    /**
+     * Special Seat Type
+     *
+     * self::SPECIAL_*
+     *
+     * @var string
+     */
+    public $specialType;
 
     /**
      * Seat Number
