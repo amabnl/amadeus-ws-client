@@ -140,4 +140,11 @@ class Segment extends LoadParamsFromArray
      * @var string
      */
     public $statusCode = self::STATUS_SELL_SEGMENT;
+
+    /**
+     * Booking context
+     *
+     * @var string
+     */
+    public $flightTypeDetails;
 }
