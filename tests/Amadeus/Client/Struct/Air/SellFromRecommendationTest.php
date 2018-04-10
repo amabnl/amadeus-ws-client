@@ -218,10 +218,4 @@ class SellFromRecommendationTest extends BaseTestCase
         $this->assertEquals(RelatedproductInformation::STATUS_SELL_SEGMENT, $segmentTwo->relatedproductInformation->statusCode);
         $this->assertEquals(1, $segmentTwo->relatedproductInformation->quantity);
     }
-
-    public function testCanMakeSellFromRecommendationWithConnectingFlights()
-    {
-
-    }
-
 }

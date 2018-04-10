@@ -1285,7 +1285,6 @@ Selling connecting segments with the slice and dice option:
     use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
     use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Itinerary;
     use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Segment;
-    use Amadeus\Client\Struct\Air\FlightTypeDetails;
 
     $opt = new AirSellFromRecommendationOptions([
         'itinerary' => [
@@ -1303,7 +1302,7 @@ Selling connecting segments with the slice and dice option:
                         'bookingClass' => 'V',
                         'nrOfPassengers' => 1,
                         'statusCode' => Segment::STATUS_SELL_SEGMENT,
-                        'flightTypeDetails' => FlightTypeDetails::INDICATOR_LOCAL_AVAILABILITY,
+                        'flightTypeDetails' => Segment::INDICATOR_LOCAL_AVAILABILITY,
                     ]),
                     new Segment([
                         'departureDate' => \DateTime::createFromFormat('Ymd','20181123', new \DateTimeZone('UTC')),
@@ -1315,7 +1314,7 @@ Selling connecting segments with the slice and dice option:
                         'bookingClass' => 'M',
                         'nrOfPassengers' => 1,
                         'statusCode' => Segment::STATUS_SELL_SEGMENT,
-                        'flightTypeDetails' => FlightTypeDetails::INDICATOR_LOCAL_AVAILABILITY,
+                        'flightTypeDetails' => Segment::INDICATOR_LOCAL_AVAILABILITY,
                     ]),
                 ],
             ]),
