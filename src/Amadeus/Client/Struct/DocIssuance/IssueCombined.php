@@ -40,5 +40,13 @@ class IssueCombined extends IssueTicket
     public function __construct(DocIssuanceIssueCombinedOptions $options)
     {
         parent::__construct($options);
+        foreach ($options->tsmTattoos as $tsm) {
+            $this->addSelectionItem(
+                new ReferenceDetails(
+                    $tsm,
+                    ReferenceDetails::TYPE_TSM_TATTOO
+                )
+            );
+        }
     }
 }

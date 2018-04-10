@@ -1270,7 +1270,7 @@ EOT;
                             'creditCardInfo' => new CreditCardInfo([
                                 'vendorCode' => 'CA',
                                 'cardNumber' => '5000000000000009',
-                                'expiryDate' => '1014',
+                                'expiryDate' => '0818',
                                 'securityId' => 123,
                                 'approvalCode' => '123456',
                                 'sourceOfApproval' => CreditCardInfo::APPROVAL_SOURCE_MANUAL,
@@ -1291,5 +1291,6 @@ EOT;
         $this->assertInstanceOf('\Amadeus\Client\Struct\FOP\AttributeDetails', $msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails);
         $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails->attributeDescription);
         $this->assertEquals('FP', $msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails->attributeType);
+        $this->assertEquals('0818', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->creditCardData->creditCardDetails->ccInfo->expiryDate);
     }
 }
