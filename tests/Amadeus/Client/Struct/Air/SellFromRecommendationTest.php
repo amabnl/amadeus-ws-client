@@ -25,6 +25,7 @@ namespace Test\Amadeus\Client\Struct\Air;
 use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Itinerary;
 use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Segment;
 use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
+use Amadeus\Client\Struct\Air\FlightTypeDetails;
 use Amadeus\Client\Struct\Air\MessageFunctionDetails;
 use Amadeus\Client\Struct\Air\RelatedproductInformation;
 use Amadeus\Client\Struct\Air\SellFromRecommendation;
@@ -154,7 +155,7 @@ class SellFromRecommendationTest extends BaseTestCase
                             'bookingClass' => 'W',
                             'nrOfPassengers' => 1,
                             'statusCode' => Segment::STATUS_SELL_SEGMENT,
-                            'flightTypeDetails' => 'LA',
+                            'flightTypeDetails' => FlightTypeDetails::INDICATOR_LOCAL_AVAILABILITY,
                         ]),
                         new Segment([
                             'departureDate' => \DateTime::createFromFormat('Ymd Hi','20180513 1635', new \DateTimeZone('UTC')),
@@ -166,7 +167,7 @@ class SellFromRecommendationTest extends BaseTestCase
                             'bookingClass' => 'W',
                             'nrOfPassengers' => 1,
                             'statusCode' => Segment::STATUS_SELL_SEGMENT,
-                            'flightTypeDetails' => 'LA',
+                            'flightTypeDetails' => FlightTypeDetails::INDICATOR_LOCAL_AVAILABILITY,
                         ]),
                     ],
                 ]),
