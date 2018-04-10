@@ -1278,6 +1278,51 @@ To book the chosen recommendation with specifying segment's arrival date, which 
 
     $sellResult = $client->airSellFromRecommendation($opt);
 
+Selling connecting segments with the slice and dice option:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
+    use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Segment;
+
+    $opt = new AirSellFromRecommendationOptions([
+        'itinerary' => [
+            new Itinerary([
+                'from' => 'PBI',
+                'to' => 'YYZ',
+                'segments' => [
+                    new Segment([
+                        'departureDate' => \DateTime::createFromFormat('Ymd','20181123', new \DateTimeZone('UTC')),
+                        'arrivalDate' => \DateTime::createFromFormat('Ymd','231115', new \DateTimeZone('UTC')),
+                        'from' => 'PBI',
+                        'to' => 'CLT',
+                        'companyCode' => '8X',
+                        'flightNumber' => '001',
+                        'bookingClass' => 'V',
+                        'nrOfPassengers' => 1,
+                        'statusCode' => Segment::STATUS_SELL_SEGMENT,
+                        'flightTypeDetails' => 'LA',
+                    ]),
+                    new Segment([
+                        'departureDate' => \DateTime::createFromFormat('Ymd','20181123', new \DateTimeZone('UTC')),
+                        'arrivalDate' => \DateTime::createFromFormat('Ymd','231115', new \DateTimeZone('UTC')),
+                        'from' => 'CLT',
+                        'to' => 'YYZ',
+                        'companyCode' => '8X',
+                        'flightNumber' => '002',
+                        'bookingClass' => 'M',
+                        'nrOfPassengers' => 1,
+                        'statusCode' => Segment::STATUS_SELL_SEGMENT,
+                        'flightTypeDetails' => 'LA',
+                    ]),
+                ],
+            ]),
+        ],
+    ]);
+
+    $sellResult = $client->airSellFromRecommendation($opt);
+
 --------------
 Air_FlightInfo
 --------------
