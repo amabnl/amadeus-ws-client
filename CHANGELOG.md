@@ -1,5 +1,7 @@
 # Release 1.7.0 (UNRELEASED)
 
+# Release 1.6.2 (10 April 2018)
+* Fixed the ``returnXml`` property in the Client Parameters being ignored (https://github.com/amabnl/amadeus-ws-client/issues/175)
 
 # Release 1.6.1 (19 March 2018)
 * Do not remove ``<dummy>`` node from outgoing XML (https://github.com/amabnl/amadeus-ws-client/issues/161)
