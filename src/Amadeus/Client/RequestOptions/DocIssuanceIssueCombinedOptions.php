@@ -30,12 +30,12 @@ namespace Amadeus\Client\RequestOptions;
  */
 class DocIssuanceIssueCombinedOptions extends DocIssuanceIssueTicketOptions
 {
-  /**
-   * The list of TSM's tattoos to be ticketed
-   *
-   * TTP/TTM/Mx
-   *
-   * @var int[]
-   */
-  public $tsmTattoos = [];
+    /**
+     * The list of TSM's tattoos to be ticketed
+     *
+     * TTP/TTM/Mx
+     *
+     * @var int[]
+     */
+    public $tsmTattoos = [];
 }
