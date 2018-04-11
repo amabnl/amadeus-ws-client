@@ -2429,6 +2429,19 @@ Document Receipts option (TTP/TTM/TRP):
         ])
     );
 
+Issue ticket for specific TSTs and specific TSMs (for example used in ATC):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueCombinedOptions;
+
+    $issueTicketResponse = $client->docIssuanceIssueCombined(
+        new DocIssuanceIssueCombinedOptions([
+            'tsts' => [1, 2],
+            'tsmTattoos' => [5, 8]
+        ])
+    );
+
 *********
 DocRefund
 *********

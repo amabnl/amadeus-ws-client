@@ -131,7 +131,7 @@ class MpBaseOptions extends Base
      * @var Fare\MPFeeId[]
      */
     public $feeIds;
-
+    
     /**
      * Whether to perform a multi ticket search
      *
