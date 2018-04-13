@@ -2784,6 +2784,22 @@ Send refund notice to email address stored in the PNR:
         ])
     );
 
+--------------------
+DocRefund_IgnoreRefund
+--------------------
+
+ATC refund ignore:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundIgnoreRefundOptions;
+
+    $refundResponse = $client->docRefundIgnoreRefund(
+        new DocRefundIgnoreRefundOptions([
+            'actionRequest' => DocRefundIgnoreRefundOptions::ACTION_IGNORE
+        ])
+    );
+
 ********
 Security
 ********

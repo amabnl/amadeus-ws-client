@@ -1223,6 +1223,25 @@ class Client extends Base
     }
 
     /**
+     * DocRefund_IgnoreRefund
+     *
+     * @param RequestOptions\DocRefundIgnoreRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function docRefundIgnoreRefund(
+        RequestOptions\DocRefundIgnoreRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'DocRefund_IgnoreRefund';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocRefund_UpdateRefund
      *
      * @param RequestOptions\DocRefundUpdateRefundOptions $options
