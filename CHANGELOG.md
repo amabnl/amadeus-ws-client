@@ -13,8 +13,12 @@
         - No Airport Change
 * Added support for ``FOP_CreateFormOfPayment`` message version 14 and lower (https://github.com/amabnl/amadeus-ws-client/issues/163)
 * Added support for Special Seat Types in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/174)
+* Added support for FlightTypeDetails (Master Pricer Slice and Dice) in ``Air_SellFromRecommendation`` (https://github.com/amabnl/amadeus-ws-client/pull/176) - Artem Zakharchenko
 * Fixed a bug where a ``FOP_CreateFormOfPayment`` message with sequence number 0 generated an incorrect message. (https://github.com/amabnl/amadeus-ws-client/pull/162) - Artem Zakharchenko
 * Implemented ``Air_RebookAirSegment`` (https://github.com/amabnl/amadeus-ws-client/issues/149)
+
+# Release 1.6.2 (10 April 2018)
+* Fixed the ``returnXml`` property in the Client Parameters being ignored (https://github.com/amabnl/amadeus-ws-client/issues/175)
 
 # Release 1.6.1 (19 March 2018)
 * Do not remove ``<dummy>`` node from outgoing XML (https://github.com/amabnl/amadeus-ws-client/issues/161)
