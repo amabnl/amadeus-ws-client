@@ -1147,6 +1147,22 @@ class Client extends Base
     }
 
     /**
+     * Ticket_ProcessETicket
+     *
+     * @param RequestOptions\TicketProcessETicketOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketProcessETicket(RequestOptions\TicketProcessETicketOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Ticket_ProcessETicket';
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocIssuance_IssueTicket
      *
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options

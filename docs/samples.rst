@@ -2200,6 +2200,23 @@ Request cancellation of several tickets, individual items and ranges of items fr
     );
 
 ------------------
+Ticket_ProcessETicket
+------------------
+
+Display an e-ticket by document (ticket) number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketProcessETicketOptions;
+
+    $response = $client->ticketProcessETicket(
+        new TicketProcessETicketOptions([
+            'action' => TicketProcessETicketOptions::ACTION_ETICKET_DISPLAY,
+            'ticketNumber' => '5125756077483'
+        ])
+    );
+
+------------------
 Ticket_ProcessEDoc
 ------------------
 
