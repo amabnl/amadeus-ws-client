@@ -20,38 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\ResponseHandler\Ticket;
 
-use Amadeus\Client\RequestOptions\Ticket\FrequentFlyer;
+use Amadeus\Client\Exception;
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * TicketProcessETicketOptions Request Options
+ * HandlerProcessETicket
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\ResponseHandler\Ticket
  * @author Mike Hernas <m@hern.as>
  */
-class TicketProcessETicketOptions extends Base
+class HandlerProcessETicket extends StandardResponseHandler
 {
-    const ACTION_ETICKET_DISPLAY = 131;
-    const ACTION_ETICKET_PRINT = 132;
-    const ACTION_ETICKET_VOID = 133;
-    const ACTION_ETICKET_HISTORY = 137;
-    const ACTION_ETICKET_HYBRID_PRINT = 153;
-    const ACTION_ETICKET_HYBRID_CANCEL = 79;
-    
-
     /**
-     * the ticket number returned from amadeus
-     *
-     * @var string
+     * @param SendResult $response
+     * @return Result
+     * @throws Exception
      */
-    public $ticketNumber;
-
-
-    /**
-     * The code to define the action the query should perform
-     *
-     * @var int
-     */
-    public $action;
+    public function analyze(SendResult $response)
+    {
+        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
+    }
 }
