@@ -32,6 +32,6 @@ class TicketInitRefundOptions extends Base
 {
     const ACTION_ATC_REFUND = 'ATC';
 
-    var $ticketNumbers = [];
-    var $actionDetails = [];
+    public $ticketNumbers = [];
+    public $actionDetails = [];
 }

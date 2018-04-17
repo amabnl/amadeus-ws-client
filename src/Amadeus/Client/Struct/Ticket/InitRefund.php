@@ -26,6 +26,7 @@ use Amadeus\Client\RequestOptions\TicketInitRefundOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Ticket\InitRefund\Contracts;
 use Amadeus\Client\Struct\Ticket\InitRefund\ActionDetails;
+
 /**
  * Ticket_InitRefund request structure
  *
