@@ -1,0 +1,55 @@
+<?php
+/**
+ * amadeus-ws-client
+ *
+ * Copyright 2015 Amadeus Benelux NV
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @package Amadeus
+ * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
+ */
+
+namespace Test\Amadeus\Client\Struct\AMA;
+
+use Amadeus\Client\RequestOptions\AmaTicketInitRefundOptions;
+use Amadeus\Client\Struct\AMA\TicketInitRefund;
+use Test\Amadeus\BaseTestCase;
+
+/**
+ * InitRefundTest
+ *
+ * @package Test\Amadeus\Client\Struct\AMA
+ * @author Mike Hernas <m@hern.as>
+ */
+class InitRefundTest extends BaseTestCase
+{
+    /**
+     * 5.1 Operation: ATC refund on a ticket paid with certificates
+     */
+    public function testCanMakeMessageAtcRefund()
+    {
+        $opt = new AmaTicketInitRefundOptions([
+          'ticketNumbers' => ['12313123123', '55555555']
+        ]);
+
+        $msg = new TicketInitRefund($opt);
+
+        $this->assertCount(2, $msg->Contracts);
+        $this->assertEquals('12313123123', $msg->Contracts[0]->enc_value);
+        $this->assertEquals('Number', $msg->Contracts[0]->enc_stype);
+        
+        $this->assertEquals('55555555', $msg->Contracts[1]->enc_value);
+        $this->assertEquals('Number', $msg->Contracts[1]->enc_stype);
+    }
+}

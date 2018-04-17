@@ -1294,8 +1294,44 @@ class Client extends Base
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
+    /**
+     * AMA_TicketInitRefundRQ
+     *
+     * @param RequestOptions\AmaTicketInitRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function amaTicketInitRefund(
+        RequestOptions\AmaTicketInitRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'AMA_TicketInitRefundRQ';
 
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+    /**
+     * AMA_TicketProcessRefundRQ
+     *
+     * @param RequestOptions\AmaTicketProcessRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function amaTicketProcessRefund(
+        RequestOptions\AmaTicketProcessRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'AMA_TicketProcessRefundRQ';
 
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    
     /**
      * FOP_CreateFormOfPayment
      *
