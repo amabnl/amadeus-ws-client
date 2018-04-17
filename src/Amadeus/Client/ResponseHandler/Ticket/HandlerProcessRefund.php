@@ -20,31 +20,26 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\AMA;
+namespace Amadeus\Client\ResponseHandler\Ticket;
 
-use Amadeus\Client\RequestOptions\AmaTicketInitRefundOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\AMA\TicketInitRefund\Contracts;
-use Amadeus\Client\Struct\AMA\TicketInitRefund\ActionDetails;
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
+
 /**
- * AMA_TicketInitRefundRQ request structure
+ * HandlerProcessRefund
  *
- * @package Amadeus\Client\Struct\AMA
+ * @package Amadeus\Client\ResponseHandler\Ticket
  * @author Mike Hernas <m@hern.as>
  */
-class TicketInitRefund extends BaseWsMessage
+class HandlerProcessRefund extends StandardResponseHandler
 {
-    var $Contracts = null;
-    var $ActionDetails = null;
-
     /**
-     * TicketInitRefund constructor.
-     *
-     * @param AmaTicketInitRefundOptions $options
+     * @param SendResult $response
+     * @return Result
      */
-    public function __construct($options)
+    public function analyze(SendResult $response)
     {
-        $this->Contracts = new Contracts($options->ticketNumbers);
-        $this->ActionDetails = new ActionDetails($options->actionDetails);
+        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
     }
 }

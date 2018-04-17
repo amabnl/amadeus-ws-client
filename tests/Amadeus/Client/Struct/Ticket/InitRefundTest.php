@@ -20,33 +20,33 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Test\Amadeus\Client\Struct\AMA;
+namespace Test\Amadeus\Client\Struct\Ticket;
 
-use Amadeus\Client\RequestOptions\AmaTicketInitRefundOptions;
-use Amadeus\Client\Struct\AMA\TicketInitRefund;
+use Amadeus\Client\RequestOptions\TicketInitRefundOptions;
+use Amadeus\Client\Struct\Ticket\InitRefund;
 use Test\Amadeus\BaseTestCase;
 
 /**
  * InitRefundTest
  *
- * @package Test\Amadeus\Client\Struct\AMA
+ * @package Test\Amadeus\Client\Struct\Ticket
  * @author Mike Hernas <m@hern.as>
  */
 class InitRefundTest extends BaseTestCase
 {
     /**
-     * 5.1 Operation: ATC refund on a ticket paid with certificates
+     * 5.2 Operation: Initiate ATC Refund
      */
     public function testCanMakeMessageAtcRefund()
     {
-        $opt = new AmaTicketInitRefundOptions([
+        $opt = new TicketInitRefundOptions([
           'ticketNumbers' => ['12313123123', '55555555'],
           'actionDetails' => [
-            AmaTicketInitRefundOptions::ACTION_ATC_REFUND
+            TicketInitRefundOptions::ACTION_ATC_REFUND
           ]
         ]);
 
-        $msg = new TicketInitRefund($opt);
+        $msg = new InitRefund($opt);
 
         $this->assertCount(2, $msg->Contracts->Contract);
         $this->assertEquals('12313123123', $msg->Contracts->Contract[0]->Number);

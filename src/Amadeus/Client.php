@@ -1295,9 +1295,9 @@ class Client extends Base
         return $this->callMessage($msgName, $options, $messageOptions);
     }
     /**
-     * AMA_TicketInitRefundRQ
+     * Ticket_InitRefund
      *
-     * @param RequestOptions\AmaTicketInitRefundOptions $options
+     * @param RequestOptions\TicketInitRefundOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
      * @throws Client\InvalidMessageException
@@ -1305,7 +1305,7 @@ class Client extends Base
      * @throws Exception
      */
     public function ticketInitRefund(
-        RequestOptions\AmaTicketInitRefundOptions $options,
+        RequestOptions\TicketInitRefundOptions $options,
         $messageOptions = []
     ) {
         $msgName = 'Ticket_InitRefund';
@@ -1313,20 +1313,38 @@ class Client extends Base
         return $this->callMessage($msgName, $options, $messageOptions);
     }
     /**
-     * AMA_TicketProcessRefundRQ
+     * Ticket_IgnoreRefund
      *
-     * @param RequestOptions\AmaTicketProcessRefundOptions $options
+     * @param RequestOptions\TicketIgnoreRefundOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
      * @throws Client\InvalidMessageException
      * @throws Client\RequestCreator\MessageVersionUnsupportedException
      * @throws Exception
      */
-    public function amaTicketProcessRefund(
-        RequestOptions\AmaTicketProcessRefundOptions $options,
+    public function ticketIgnoreRefund(
+        RequestOptions\TicketIgnoreRefundOptions $options,
         $messageOptions = []
     ) {
-        $msgName = 'AMA_TicketProcessRefundRQ';
+        $msgName = 'Ticket_IgnoreRefund';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+    /**
+     * Ticket_ProcessRefund
+     *
+     * @param RequestOptions\TicketProcessRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketProcessRefund(
+        RequestOptions\TicketProcessRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_ProcessRefund';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }

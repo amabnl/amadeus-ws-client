@@ -20,18 +20,29 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\Ticket\InitRefund;
+
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * AmaTicketInitRefundOptions Request Options
+ * Contracts request structure
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\Ticket\InitRefund
  * @author Mike Hernas <m@hern.as>
  */
-class AmaTicketInitRefundOptions extends Base
+class Contracts extends BaseWsMessage
 {
-  const ACTION_ATC_REFUND = 'ATC';
+    var $Contract = [];
 
-  var $ticketNumbers = [];
-  var $actionDetails = [];
+    /**
+     * Contracts constructor.
+     *
+     * @param array $ticketNumbers
+     */
+    public function __construct($ticketNumbers)
+    {
+        foreach($ticketNumbers as $ticketNumber) {
+            $this->Contract[] = new Contract($ticketNumber);
+        }
+    }
 }

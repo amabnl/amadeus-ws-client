@@ -20,29 +20,26 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\AMA\TicketInitRefund;
+namespace Amadeus\Client\ResponseHandler\Ticket;
 
-use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * ActionDetails request structure
+ * HandlerIgnoreRefund
  *
- * @package Amadeus\Client\Struct\AMA\TicketInitRefund
+ * @package Amadeus\Client\ResponseHandler\Ticket
  * @author Mike Hernas <m@hern.as>
  */
-class ActionDetails extends BaseWsMessage
+class HandlerIgnoreRefund extends StandardResponseHandler
 {
-    var $ActionDetail = [];
-
     /**
-     * ActionDetails constructor.
-     *
-     * @param array $options
+     * @param SendResult $response
+     * @return Result
      */
-    public function __construct($actionDetails)
+    public function analyze(SendResult $response)
     {
-        foreach($actionDetails as $actionDetail) {
-            $this->ActionDetail[] = new ActionDetail($actionDetail);
-        }
+        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
     }
 }

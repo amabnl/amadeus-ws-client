@@ -20,27 +20,26 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Ticket;
+namespace Amadeus\Client\ResponseHandler\Ticket;
 
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\AmaTicketInitRefundOptions;
-use Amadeus\Client\Struct;
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * Ticket_InitRefund request converter
+ * HandlerInitRefund
  *
- * @package Amadeus\Client\RequestCreator\Converter\Ticket\InitRefundConv
+ * @package Amadeus\Client\ResponseHandler\Ticket
  * @author Mike Hernas <m@hern.as>
  */
-class InitRefundConv extends BaseConverter
+class HandlerInitRefund extends StandardResponseHandler
 {
     /**
-     * @param TicketInitRefundOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Ticket\InitRefund
+     * @param SendResult $response
+     * @return Result
      */
-    public function convert($requestOptions, $version)
+    public function analyze(SendResult $response)
     {
-        return new Struct\Ticket\InitRefund($requestOptions);
+        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
     }
 }

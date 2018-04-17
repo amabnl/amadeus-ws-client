@@ -5113,17 +5113,17 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
-    public function testCanSendAMATicketInitRefundRQ()
+    public function testCanSendTicketInitRefund()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
         $mockedSendResult = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml = 'dummydocrefundinitrefundresponse';
+        $mockedSendResult->responseXml = 'dummyticketinitrefundresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $expectedMessageResult = new Client\Struct\AMA\TicketInitRefund(
-            new Client\RequestOptions\AmaTicketInitRefundOptions([])
+        $expectedMessageResult = new Client\Struct\Ticket\InitRefund(
+            new Client\RequestOptions\TicketInitRefundOptions([])
         );
 
         $mockSessionHandler
@@ -5158,7 +5158,109 @@ class ClientTest extends BaseTestCase
         $client = new Client($par);
 
         $response = $client->ticketInitRefund(
-            new Client\RequestOptions\AmaTicketInitRefundOptions([])
+            new Client\RequestOptions\TicketInitRefundOptions([])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTicketIgnoreRefund()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyticketignorerefundresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\IgnoreRefund(
+            new Client\RequestOptions\TicketIgnoreRefundOptions([])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_IgnoreRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_IgnoreRefund' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_IgnoreRefund')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketIgnoreRefund(
+            new Client\RequestOptions\TicketIgnoreRefundOptions([])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTicketProcessRefund()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyticketprocessrefundresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\ProcessRefund(
+            new Client\RequestOptions\TicketProcessRefundOptions([])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_ProcessRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_ProcessRefund' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_ProcessRefund')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketProcessRefund(
+            new Client\RequestOptions\TicketProcessRefundOptions([])
         );
 
         $this->assertEquals($messageResult, $response);

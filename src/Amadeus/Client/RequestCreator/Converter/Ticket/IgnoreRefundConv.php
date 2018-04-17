@@ -20,26 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler\AMA;
+namespace Amadeus\Client\RequestCreator\Converter\Ticket;
 
-use Amadeus\Client\ResponseHandler\StandardResponseHandler;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\AmaTicketIgnoreRefundOptions;
+use Amadeus\Client\Struct;
 
 /**
- * HandlerTicketInitRefundRQ
+ * Ticket_IgnoreRefund request converter
  *
- * @package Amadeus\Client\ResponseHandler\AMA
+ * @package Amadeus\Client\RequestCreator\Converter\Ticket\IgnoreRefundConv
  * @author Mike Hernas <m@hern.as>
  */
-class HandlerTicketInitRefundRQ extends StandardResponseHandler
+class IgnoreRefundConv extends BaseConverter
 {
     /**
-     * @param SendResult $response
-     * @return Result
+     * @param TicketIgnoreRefundOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\Ticket\IgnoreRefund
      */
-    public function analyze(SendResult $response)
+    public function convert($requestOptions, $version)
     {
-        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
+        return new Struct\Ticket\IgnoreRefund($requestOptions);
     }
 }

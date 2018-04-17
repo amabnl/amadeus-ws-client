@@ -20,27 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\AMA\TicketInitRefund;
-
-use Amadeus\Client\Struct\BaseWsMessage;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * Contract request structure
+ * TicketIgnoreRefundOptions Request Options
  *
- * @package Amadeus\Client\Struct\AMA\TicketInitRefund
+ * @package Amadeus\Client\RequestOptions
  * @author Mike Hernas <m@hern.as>
  */
-class Contract extends BaseWsMessage
+class TicketIgnoreRefundOptions extends Base
 {
-    var $Number = [];
-
-    /**
-     * Contract constructor.
-     *
-     * @param string $ticketNumber
-     */
-    public function __construct($ticketNumber)
-    {
-        $this->Number = $ticketNumber;
-    }
 }

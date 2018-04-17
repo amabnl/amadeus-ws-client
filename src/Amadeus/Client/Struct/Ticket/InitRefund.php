@@ -20,27 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\AMA\TicketInitRefund;
+namespace Amadeus\Client\Struct\Ticket;
 
+use Amadeus\Client\RequestOptions\TicketInitRefundOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
-
+use Amadeus\Client\Struct\Ticket\InitRefund\Contracts;
+use Amadeus\Client\Struct\Ticket\InitRefund\ActionDetails;
 /**
- * ActionDetail request structure
+ * Ticket_InitRefund request structure
  *
- * @package Amadeus\Client\Struct\AMA\TicketInitRefund
+ * @package Amadeus\Client\Struct\Ticket
  * @author Mike Hernas <m@hern.as>
  */
-class ActionDetail extends BaseWsMessage
+class InitRefund extends BaseWsMessage
 {
-    var $Indicator = null;
+    var $Contracts = null;
+    var $ActionDetails = null;
 
     /**
-     * ActionDetail constructor.
+     * InitRefund constructor.
      *
-     * @param string $indicator
+     * @param TicketInitRefundOptions $options
      */
-    public function __construct($indicator)
+    public function __construct($options)
     {
-      $this->Indicator = $indicator;
+        $this->Contracts = new Contracts($options->ticketNumbers);
+        $this->ActionDetails = new ActionDetails($options->actionDetails);
     }
 }

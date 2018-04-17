@@ -20,27 +20,25 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\Ticket;
+namespace Amadeus\Client\Struct\Ticket;
 
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\AmaTicketInitRefundOptions;
-use Amadeus\Client\Struct;
+use Amadeus\Client\RequestOptions\TicketProcessRefundOptions;
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
- * Ticket_InitRefund request converter
+ * Ticket_ProcessRefund request structure
  *
- * @package Amadeus\Client\RequestCreator\Converter\Ticket\InitRefundConv
+ * @package Amadeus\Client\Struct\Ticket
  * @author Mike Hernas <m@hern.as>
  */
-class InitRefundConv extends BaseConverter
+class ProcessRefund extends BaseWsMessage
 {
     /**
-     * @param TicketInitRefundOptions $requestOptions
-     * @param int|string $version
-     * @return Struct\Ticket\InitRefund
+     * TicketProcessRefund constructor.
+     *
+     * @param TicketProcessRefundOptions $options
      */
-    public function convert($requestOptions, $version)
+    public function __construct($options)
     {
-        return new Struct\Ticket\InitRefund($requestOptions);
     }
 }

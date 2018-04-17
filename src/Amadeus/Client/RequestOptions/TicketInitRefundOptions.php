@@ -20,26 +20,18 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\ResponseHandler\AMA;
-
-use Amadeus\Client\ResponseHandler\StandardResponseHandler;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * HandlerTicketProcessRefundRQ
+ * TicketInitRefundOptions Request Options
  *
- * @package Amadeus\Client\ResponseHandler\AMA
+ * @package Amadeus\Client\RequestOptions
  * @author Mike Hernas <m@hern.as>
  */
-class HandlerTicketProcessRefundRQ extends StandardResponseHandler
+class TicketInitRefundOptions extends Base
 {
-    /**
-     * @param SendResult $response
-     * @return Result
-     */
-    public function analyze(SendResult $response)
-    {
-        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
-    }
+  const ACTION_ATC_REFUND = 'ATC';
+
+  var $ticketNumbers = [];
+  var $actionDetails = [];
 }
