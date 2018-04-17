@@ -33,6 +33,8 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class IgnoreRefund extends BaseWsMessage
 {
+    public $Version = "1.001";
+    
     /**
      * IgnoreRefund constructor.
      *

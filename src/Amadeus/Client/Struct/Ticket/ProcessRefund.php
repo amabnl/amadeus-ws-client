@@ -33,6 +33,8 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class ProcessRefund extends BaseWsMessage
 {
+    public $Version = "1.001";
+    
     /**
      * TicketProcessRefund constructor.
      *

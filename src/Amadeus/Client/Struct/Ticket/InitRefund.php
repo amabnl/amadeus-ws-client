@@ -37,6 +37,7 @@ class InitRefund extends BaseWsMessage
 {
     public $Contracts = null;
     public $ActionDetails = null;
+    public $Version = "2.000";
 
     /**
      * InitRefund constructor.

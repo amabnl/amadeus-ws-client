@@ -47,6 +47,7 @@ class InitRefundTest extends BaseTestCase
         ]);
 
         $msg = new InitRefund($opt);
+        $this->assertEquals('2.000', $msg->Version);
 
         $this->assertCount(2, $msg->Contracts->Contract);
         $this->assertEquals('12313123123', $msg->Contracts->Contract[0]->Number);
