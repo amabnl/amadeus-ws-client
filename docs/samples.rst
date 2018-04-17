@@ -2255,6 +2255,55 @@ Enhanced ETKT list display:
         ])
     );
 
+---------------------------
+Ticket_InitRefund
+---------------------------
+
+Initiate Automated Refund:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketInitRefundOptions;
+
+    $response = $client->ticketInitRefund(
+        new TicketInitRefundOptions([
+            'ticketNumbers' => ['123456789'],
+            'actionDetails' => [
+                TicketInitRefundOptions::ACTION_ATC_REFUND
+            ]
+        ])
+    );
+
+
+---------------------------
+Ticket_IgnoreRefund
+---------------------------
+
+Ignore initiated refund:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketIgnoreRefundOptions;
+
+    $response = $client->ticketIgnoreRefund(
+        new TicketIgnoreRefundOptions([])
+    );
+
+
+---------------------------
+Ticket_ProcessRefund
+---------------------------
+
+Process initiated refund:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketProcessRefundOptions;
+
+    $response = $client->ticketProcessRefund(
+        new TicketProcessRefundOptions([])
+    );
+
 ***********
 DocIssuance
 ***********

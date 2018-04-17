@@ -1,0 +1,3 @@
+<AMA_TicketIgnoreRefundRS Version="2.000" xsi:schemaLocation="http://xml.amadeus.com/2010/06/TicketGTP_v2">
+    <Success></Success>
+</AMA_TicketIgnoreRefundRS>

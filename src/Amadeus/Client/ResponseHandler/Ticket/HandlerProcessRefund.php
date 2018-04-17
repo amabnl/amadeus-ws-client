@@ -40,6 +40,27 @@ class HandlerProcessRefund extends StandardResponseHandler
      */
     public function analyze(SendResult $response)
     {
-        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
+        $analyzeResponse = new Result($response);
+
+        $code = null;
+        $message = null;
+
+        $domXpath = $this->makeDomXpath($response->responseXml);
+        $success = $domXpath->query('//GeneralReply//Success');
+        if($success->length > 0) {
+            $analyzeResponse->status = Result::STATUS_OK;
+            return $analyzeResponse;
+        }
+
+        $errorCodeNodeList = $domXpath->query("//GeneralReply/Errors/Errors");
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $errorCatNode = $errorCodeNodeList->item(0);
+            $analyzeResponse->messages[] = trim($errorCatNode->nodeValue);
+        }
+
+        return $analyzeResponse;
     }
 }
