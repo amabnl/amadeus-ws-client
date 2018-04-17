@@ -1304,11 +1304,11 @@ class Client extends Base
      * @throws Client\RequestCreator\MessageVersionUnsupportedException
      * @throws Exception
      */
-    public function amaTicketInitRefund(
+    public function ticketInitRefund(
         RequestOptions\AmaTicketInitRefundOptions $options,
         $messageOptions = []
     ) {
-        $msgName = 'AMA_TicketInitRefundRQ';
+        $msgName = 'Ticket_InitRefund';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }

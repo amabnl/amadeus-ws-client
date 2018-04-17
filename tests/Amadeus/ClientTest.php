@@ -5129,7 +5129,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('sendMessage')
-            ->with('AMA_TicketInitRefundRQ', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->with('Ticket_InitRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
             ->will($this->returnValue($mockedSendResult));
         $mockSessionHandler
             ->expects($this->never())
@@ -5137,14 +5137,14 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['AMA_TicketInitRefundRQ' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
+            ->will($this->returnValue(['Ticket_InitRefund' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
 
         $mockResponseHandler
             ->expects($this->once())
             ->method('analyzeResponse')
-            ->with($mockedSendResult, 'AMA_TicketInitRefundRQ')
+            ->with($mockedSendResult, 'Ticket_InitRefund')
             ->will($this->returnValue($messageResult));
 
         $par = new Params();
@@ -5157,7 +5157,7 @@ class ClientTest extends BaseTestCase
 
         $client = new Client($par);
 
-        $response = $client->amaTicketInitRefund(
+        $response = $client->ticketInitRefund(
             new Client\RequestOptions\AmaTicketInitRefundOptions([])
         );
 

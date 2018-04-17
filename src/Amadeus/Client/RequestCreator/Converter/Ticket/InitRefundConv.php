@@ -20,19 +20,19 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\AMA;
+namespace Amadeus\Client\RequestCreator\Converter\Ticket;
 
 use Amadeus\Client\RequestCreator\Converter\BaseConverter;
 use Amadeus\Client\RequestOptions\AmaTicketInitRefundOptions;
 use Amadeus\Client\Struct;
 
 /**
- * AMA_TicketInitRefundRQConv request converter
+ * Ticket_InitRefund request converter
  *
- * @package Amadeus\Client\RequestCreator\Converter\AMA\TicketInitRefundRQConv
+ * @package Amadeus\Client\RequestCreator\Converter\AMA\InitRefundConv
  * @author Mike Hernas <m@hern.as>
  */
-class TicketInitRefundRQConv extends BaseConverter
+class InitRefundConv extends BaseConverter
 {
     /**
      * @param AmaTicketInitRefundOptions $requestOptions
