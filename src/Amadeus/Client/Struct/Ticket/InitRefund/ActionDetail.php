@@ -32,7 +32,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class ActionDetail extends BaseWsMessage
 {
-    var $Indicator = null;
+    public $Indicator = null;
 
     /**
      * ActionDetail constructor.
@@ -41,6 +41,6 @@ class ActionDetail extends BaseWsMessage
      */
     public function __construct($indicator)
     {
-      $this->Indicator = $indicator;
+        $this->Indicator = $indicator;
     }
 }

@@ -39,5 +39,4 @@ class DocRefundIgnoreRefundOptions extends Base
      * @var string
      */
     public $actionRequest = self::ACTION_IGNORE;
-
 }

@@ -32,7 +32,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class ActionDetails extends BaseWsMessage
 {
-    var $ActionDetail = [];
+    public $ActionDetail = [];
 
     /**
      * ActionDetails constructor.
@@ -41,7 +41,7 @@ class ActionDetails extends BaseWsMessage
      */
     public function __construct($actionDetails)
     {
-        foreach($actionDetails as $actionDetail) {
+        foreach ($actionDetails as $actionDetail) {
             $this->ActionDetail[] = new ActionDetail($actionDetail);
         }
     }

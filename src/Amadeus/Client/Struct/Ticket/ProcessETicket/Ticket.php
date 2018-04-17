@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\Struct\Ticket\ProcessETicket;
 use Amadeus\Client\Struct\Ticket\CheckEligibility\DocumentDetails;
+
 /**
  * TicketInfoGroup
  *

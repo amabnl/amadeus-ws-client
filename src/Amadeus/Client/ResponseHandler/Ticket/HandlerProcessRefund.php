@@ -47,7 +47,7 @@ class HandlerProcessRefund extends StandardResponseHandler
 
         $domXpath = $this->makeDomXpath($response->responseXml);
         $success = $domXpath->query('//GeneralReply//Success');
-        if($success->length > 0) {
+        if ($success->length > 0) {
             $analyzeResponse->status = Result::STATUS_OK;
             return $analyzeResponse;
         }

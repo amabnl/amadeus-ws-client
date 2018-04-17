@@ -32,7 +32,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class Contract extends BaseWsMessage
 {
-    var $Number = [];
+    public $Number = [];
 
     /**
      * Contract constructor.

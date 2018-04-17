@@ -44,7 +44,7 @@ class IgnoreRefund extends BaseWsMessage
      */
     public function __construct($options)
     {
-      // There are no parameters in IgnoreRefund
-      $this->ignoreInformation = new IgnoreInformation($options->actionRequest);
+        // There are no parameters in IgnoreRefund
+        $this->ignoreInformation = new IgnoreInformation($options->actionRequest);
     }
 }

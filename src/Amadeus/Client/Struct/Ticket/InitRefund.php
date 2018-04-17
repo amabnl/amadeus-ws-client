@@ -34,8 +34,8 @@ use Amadeus\Client\Struct\Ticket\InitRefund\ActionDetails;
  */
 class InitRefund extends BaseWsMessage
 {
-    var $Contracts = null;
-    var $ActionDetails = null;
+    public $Contracts = null;
+    public $ActionDetails = null;
 
     /**
      * InitRefund constructor.

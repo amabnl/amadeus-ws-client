@@ -42,6 +42,6 @@ class IgnoreInformation
      */
     public function __construct($actionRequest)
     {
-      $this->actionRequest = $actionRequest;
+        $this->actionRequest = $actionRequest;
     }
 }

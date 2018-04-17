@@ -32,7 +32,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class Contracts extends BaseWsMessage
 {
-    var $Contract = [];
+    public $Contract = [];
 
     /**
      * Contracts constructor.
@@ -41,7 +41,7 @@ class Contracts extends BaseWsMessage
      */
     public function __construct($ticketNumbers)
     {
-        foreach($ticketNumbers as $ticketNumber) {
+        foreach ($ticketNumbers as $ticketNumber) {
             $this->Contract[] = new Contract($ticketNumber);
         }
     }

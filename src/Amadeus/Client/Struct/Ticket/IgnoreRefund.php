@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Ticket;
 
 use Amadeus\Client\RequestOptions\TicketIgnoreRefundOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+
 /**
  * Ticket_IgnoreRefund request structure
  *
