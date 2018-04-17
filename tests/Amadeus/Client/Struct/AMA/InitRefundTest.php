@@ -40,16 +40,19 @@ class InitRefundTest extends BaseTestCase
     public function testCanMakeMessageAtcRefund()
     {
         $opt = new AmaTicketInitRefundOptions([
-          'ticketNumbers' => ['12313123123', '55555555']
+          'ticketNumbers' => ['12313123123', '55555555'],
+          'actionDetails' => [
+            AmaTicketInitRefundOptions::ACTION_ATC_REFUND
+          ]
         ]);
 
         $msg = new TicketInitRefund($opt);
 
-        $this->assertCount(2, $msg->Contracts);
-        $this->assertEquals('12313123123', $msg->Contracts[0]->enc_value);
-        $this->assertEquals('Number', $msg->Contracts[0]->enc_stype);
+        $this->assertCount(2, $msg->Contracts->Contract);
+        $this->assertEquals('12313123123', $msg->Contracts->Contract[0]->Number);
+        $this->assertEquals('55555555', $msg->Contracts->Contract[1]->Number);
         
-        $this->assertEquals('55555555', $msg->Contracts[1]->enc_value);
-        $this->assertEquals('Number', $msg->Contracts[1]->enc_stype);
+        $this->assertCount(1, $msg->ActionDetails->ActionDetail);
+        $this->assertEquals('ATC', $msg->ActionDetails->ActionDetail[0]->Indicator);
     }
 }

@@ -22,7 +22,6 @@
 
 namespace Amadeus\Client\Struct\AMA\TicketInitRefund;
 
-use Amadeus\Client\RequestOptions\AmaTicketInitRefundOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
@@ -33,17 +32,15 @@ use Amadeus\Client\Struct\BaseWsMessage;
  */
 class Contract extends BaseWsMessage
 {
-    var $Number = null;
+    var $Number = [];
 
     /**
      * Contract constructor.
      *
-     * @param AmaTicketInitRefundOptions $options
+     * @param string $ticketNumber
      */
     public function __construct($ticketNumber)
     {
-        foreach($options->ticketNumber as $ticketNumber) {
-            
-        }
+        $this->Number = $ticketNumber;
     }
 }

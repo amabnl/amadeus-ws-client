@@ -30,5 +30,8 @@ namespace Amadeus\Client\RequestOptions;
  */
 class AmaTicketInitRefundOptions extends Base
 {
+  const ACTION_ATC_REFUND = 'ATC';
+
   var $ticketNumbers = [];
+  var $actionDetails = [];
 }
