@@ -40,6 +40,28 @@ class HandlerIgnoreRefund extends StandardResponseHandler
      */
     public function analyze(SendResult $response)
     {
-        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
+        $analyzeResponse = new Result($response);
+        $domXpath = $this->makeDomXpath($response->responseXml);
+
+        $errorCodeNodeList = $domXpath->query("//ama:Errors");
+
+        if ($errorCodeNodeList->length > 0) {
+            $analyzeResponse->status = Result::STATUS_ERROR;
+
+            $errorCatNode = $errorCodeNodeList->item(0);
+            foreach(iterator_to_array($errorCodeNodeList) as $msg) {
+                $analyzeResponse->messages[] = trim($msg->nodeValue);
+            }
+
+            return $analyzeResponse;
+        }
+
+        $success = $domXpath->query('//m:GeneralReply//m:Success');
+        if ($success->length > 0) {
+            $analyzeResponse->status = Result::STATUS_OK;
+            return $analyzeResponse;
+        }
+
+        return $analyzeResponse;
     }
 }
