@@ -49,19 +49,20 @@ class HandlerIgnoreRefund extends StandardResponseHandler
             $analyzeResponse->status = Result::STATUS_ERROR;
 
             $errorCatNode = $errorCodeNodeList->item(0);
-            foreach(iterator_to_array($errorCodeNodeList) as $msg) {
+            foreach (iterator_to_array($errorCodeNodeList) as $msg) {
                 $analyzeResponse->messages[] = trim($msg->nodeValue);
             }
 
             return $analyzeResponse;
         }
 
-        $success = $domXpath->query('//m:GeneralReply//m:Success');
+        $success = $domXpath->query('//m:Success');
         if ($success->length > 0) {
             $analyzeResponse->status = Result::STATUS_OK;
             return $analyzeResponse;
         }
 
+        $analyzeResponse->status = Result::STATUS_UNKNOWN;
         return $analyzeResponse;
     }
 }

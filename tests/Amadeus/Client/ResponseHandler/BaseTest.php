@@ -1649,6 +1649,18 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
     }
 
+    public function testCanHandleUnknownTicketInitRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketInitRefundUnknownResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_InitRefund');
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
+    }
+
     public function testCanHandleOkTicketIgnoreRefund()
     {
         $respHandler = new ResponseHandler\Base();
@@ -1675,6 +1687,18 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
     }
 
+    public function testCanHandleUnknownTicketIgnoreRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketIgnoreRefundUnknownResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_IgnoreRefund');
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
+    }
+
     public function testCanHandleOkTicketProcessRefund()
     {
         $respHandler = new ResponseHandler\Base();
@@ -1699,6 +1723,18 @@ class BaseTest extends BaseTestCase
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
         $this->assertEquals(1, count($result->messages));
+    }
+
+    public function testCanHandleUnknownTicketProcessRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketProcessRefundUnknownResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_ProcessRefund');
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
     }
 
     public function testCanHandleTicketProcessETicket()

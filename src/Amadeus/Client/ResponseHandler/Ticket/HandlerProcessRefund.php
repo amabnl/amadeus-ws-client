@@ -49,7 +49,7 @@ class HandlerProcessRefund extends StandardResponseHandler
             $analyzeResponse->status = Result::STATUS_ERROR;
 
             $errorCatNode = $errorCodeNodeList->item(0);
-            foreach(iterator_to_array($errorCodeNodeList) as $msg) {
+            foreach (iterator_to_array($errorCodeNodeList) as $msg) {
                 $analyzeResponse->messages[] = trim($msg->nodeValue);
             }
 
@@ -62,6 +62,7 @@ class HandlerProcessRefund extends StandardResponseHandler
             return $analyzeResponse;
         }
 
+        $analyzeResponse->status = Result::STATUS_UNKNOWN;
         return $analyzeResponse;
     }
 }
