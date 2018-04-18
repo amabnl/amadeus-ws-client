@@ -1636,6 +1636,19 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(0, count($result->messages));
     }
 
+    public function testCanHandleFailTicketInitRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketInitRefundFailResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_InitRefund');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+    }
+
     public function testCanHandleOkTicketIgnoreRefund()
     {
         $respHandler = new ResponseHandler\Base();
