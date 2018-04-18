@@ -1687,4 +1687,17 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(Result::STATUS_OK, $result->status);
         $this->assertEquals(0, count($result->messages));
     }
+
+    public function testCanHandleDocRefundIgnoreRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyDocRefundIgnoreRefundResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'DocRefund_IgnoreRefund');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
 }
