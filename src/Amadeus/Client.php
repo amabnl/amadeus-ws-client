@@ -1147,6 +1147,22 @@ class Client extends Base
     }
 
     /**
+     * Ticket_ProcessETicket
+     *
+     * @param RequestOptions\TicketProcessETicketOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketProcessETicket(RequestOptions\TicketProcessETicketOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Ticket_ProcessETicket';
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocIssuance_IssueTicket
      *
      * @param RequestOptions\DocIssuanceIssueTicketOptions $options
@@ -1223,6 +1239,25 @@ class Client extends Base
     }
 
     /**
+     * DocRefund_IgnoreRefund
+     *
+     * @param RequestOptions\DocRefundIgnoreRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function docRefundIgnoreRefund(
+        RequestOptions\DocRefundIgnoreRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'DocRefund_IgnoreRefund';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocRefund_UpdateRefund
      *
      * @param RequestOptions\DocRefundUpdateRefundOptions $options
@@ -1259,8 +1294,62 @@ class Client extends Base
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
+    /**
+     * Ticket_InitRefund
+     *
+     * @param RequestOptions\TicketInitRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketInitRefund(
+        RequestOptions\TicketInitRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_InitRefund';
 
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+    /**
+     * Ticket_IgnoreRefund
+     *
+     * @param RequestOptions\TicketIgnoreRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketIgnoreRefund(
+        RequestOptions\TicketIgnoreRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_IgnoreRefund';
 
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+    /**
+     * Ticket_ProcessRefund
+     *
+     * @param RequestOptions\TicketProcessRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketProcessRefund(
+        RequestOptions\TicketProcessRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_ProcessRefund';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    
     /**
      * FOP_CreateFormOfPayment
      *

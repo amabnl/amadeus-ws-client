@@ -1,0 +1,5 @@
+<DocRefund_IgnoreRefundReply xmlns="http://xml.amadeus.com/TRFIDR_09_2_IA">
+    <ignoreInformation>
+        <actionRequest>OKI</actionRequest>
+    </ignoreInformation>
+</DocRefund_IgnoreRefundReply>

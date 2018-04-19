@@ -6,3 +6,4 @@ composer.phar
 /conf/*
 !conf/.gitkeep
 phpunit.xml
+launch.json

@@ -1,0 +1,98 @@
+<AMA_TicketInitRefundRS xmlns="http://xml.amadeus.com/2010/06/TicketGTP_v2" xmlns:ama="http://xml.amadeus.com/2010/06/Types_v2" xmlns:att="http://xml.amadeus.com/2010/06/TicketTypes_v1" xmlns:iata="http://www.iata.org/IATA/2007/00/IATA2010.1" xmlns:ota="http://www.opentravel.org/OTA/2003/05/OTA2010B" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="2.000">
+    <GeneralReply>
+        <Success></Success>
+    </GeneralReply>
+    <FunctionalData>
+        <ContractBundle ID="1">
+            <Success></Success>
+            <RefundDetails>
+                <att:RuleID>
+                    <att:ReferenceDetails>
+                        <att:Type>RID</att:Type>
+                        <att:Value>36</att:Value>
+                    </att:ReferenceDetails>
+                </att:RuleID>
+                <att:Contracts>
+                    <att:Contract ID="1" IssueDate="2013-09-23" JourneyType="DOM">
+                        <att:Passengers>
+                            <att:Passenger Tattoo="1">
+                                <att:FirstName>TEST</att:FirstName>
+                                <att:LastName>MULTIREF</att:LastName>
+                                <att:FullName>MULTIREF/TEST                </att:FullName>
+                            </att:Passenger>
+                        </att:Passengers>
+                        <att:Taxes>
+                            <att:Tax Amount="4000" Category="H" CurrencyCode="KRW" DecimalPlaces="0" ISO_Code="EB"></att:Tax>
+                            <att:Tax Amount="4000" Category="701" CurrencyCode="KRW" DecimalPlaces="0">
+                                <ota:TaxDescription Name="XT"></ota:TaxDescription>
+                            </att:Tax>
+                        </att:Taxes>
+                        <att:MonetaryInformations>
+                            <att:MonetaryInformation Amount="0" CurrencyCode="KRW" DecimalPlaces="0" Qualifier="RFU"></att:MonetaryInformation>
+                            <att:MonetaryInformation Amount="140100" CurrencyCode="KRW" DecimalPlaces="0" Qualifier="FRF"></att:MonetaryInformation>
+                            <att:MonetaryInformation Amount="144100" CurrencyCode="KRW" DecimalPlaces="0" Qualifier="RFT"></att:MonetaryInformation>
+                            <att:MonetaryInformation Amount="4000" CurrencyCode="KRW" DecimalPlaces="0" Qualifier="TXT"></att:MonetaryInformation>
+                            <att:MonetaryInformation Amount="4000" CurrencyCode="KRW" DecimalPlaces="0" Qualifier="TP"></att:MonetaryInformation>
+                        </att:MonetaryInformations>
+                        <att:PricingDetails>
+                            <att:PriceTicketDetails>
+                                <att:Indicator>D</att:Indicator>
+                            </att:PriceTicketDetails>
+                        </att:PricingDetails>
+                        <att:DocumentAndCouponInformation>
+                            <att:DocumentNumber Number="18085000898034"></att:DocumentNumber>
+                            <att:CouponGroup>
+                                <att:CouponInformationDetails>
+                                    <att:CouponNumber>1</att:CouponNumber>
+                                    <att:CouponStatus>RF</att:CouponStatus>
+                                </att:CouponInformationDetails>
+                            </att:CouponGroup>
+                        </att:DocumentAndCouponInformation>
+                        <att:RefundedRoute>
+                            <att:Station>GMP</att:Station>
+                            <att:Station>PUS</att:Station>
+                        </att:RefundedRoute>
+                        <att:Refundable Amount="144100" CurrencyCode="KRW" DecimalPlaces="0"></att:Refundable>
+                    </att:Contract>
+                </att:Contracts>
+                <att:DateTime>
+                    <att:BusinessSemantic Code="DR"></att:BusinessSemantic>
+                    <att:StructuredDateTime>
+                        <att:Year>2003</att:Year>
+                        <att:Month>11</att:Month>
+                        <att:Day>25</att:Day>
+                    </att:StructuredDateTime>
+                </att:DateTime>
+                <att:DateTime>
+                    <att:BusinessSemantic Code="710"></att:BusinessSemantic>
+                    <att:StructuredDateTime>
+                        <att:Year>2013</att:Year>
+                        <att:Month>09</att:Month>
+                        <att:Day>23</att:Day>
+                    </att:StructuredDateTime>
+                </att:DateTime>
+                <att:FormOfPayments>
+                    <att:FormOfPayment ID="1" Type="CC">
+                        <att:FreeFlow>CCVI4111111111111111/1215*E00</att:FreeFlow>
+                    </att:FormOfPayment>
+                </att:FormOfPayments>
+                <att:ReportingOffice>
+                    <att:AgentCode>11111111</att:AgentCode>
+                    <att:OfficeID>SELKE054Z</att:OfficeID>
+                    <att:Originator>0001AASU</att:Originator>
+                </att:ReportingOffice>
+                <att:TransactionCode>TKTT</att:TransactionCode>
+                <att:ReferenceDetails>
+                    <att:ReferenceDetail>
+                        <att:Type>TKT</att:Type>
+                        <att:Value>Y</att:Value>
+                    </att:ReferenceDetail>
+                    <att:ReferenceDetail>
+                        <att:Type>DIS</att:Type>
+                        <att:Value>F</att:Value>
+                    </att:ReferenceDetail>
+                </att:ReferenceDetails>
+            </RefundDetails>
+        </ContractBundle>
+    </FunctionalData>
+</AMA_TicketInitRefundRS>

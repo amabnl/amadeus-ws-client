@@ -2200,6 +2200,23 @@ Request cancellation of several tickets, individual items and ranges of items fr
     );
 
 ------------------
+Ticket_ProcessETicket
+------------------
+
+Display an e-ticket by document (ticket) number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketProcessETicketOptions;
+
+    $response = $client->ticketProcessETicket(
+        new TicketProcessETicketOptions([
+            'action' => TicketProcessETicketOptions::ACTION_ETICKET_DISPLAY,
+            'ticketNumber' => '5125756077483'
+        ])
+    );
+
+------------------
 Ticket_ProcessEDoc
 ------------------
 
@@ -2236,6 +2253,55 @@ Enhanced ETKT list display:
                 ])
             ]
         ])
+    );
+
+---------------------------
+Ticket_InitRefund
+---------------------------
+
+Initiate Automated Refund:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketInitRefundOptions;
+
+    $response = $client->ticketInitRefund(
+        new TicketInitRefundOptions([
+            'ticketNumbers' => ['123456789'],
+            'actionDetails' => [
+                TicketInitRefundOptions::ACTION_ATC_REFUND
+            ]
+        ])
+    );
+
+
+---------------------------
+Ticket_IgnoreRefund
+---------------------------
+
+Ignore initiated refund:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketIgnoreRefundOptions;
+
+    $response = $client->ticketIgnoreRefund(
+        new TicketIgnoreRefundOptions([])
+    );
+
+
+---------------------------
+Ticket_ProcessRefund
+---------------------------
+
+Process initiated refund:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketProcessRefundOptions;
+
+    $response = $client->ticketProcessRefund(
+        new TicketProcessRefundOptions([])
     );
 
 ***********
@@ -2781,6 +2847,22 @@ Send refund notice to email address stored in the PNR:
     $refundResponse = $client->docRefundProcessRefund(
         new Client\RequestOptions\DocRefundProcessRefundOptions([
             'sendNotificationToEmailInAPE' => true
+        ])
+    );
+
+--------------------
+DocRefund_IgnoreRefund
+--------------------
+
+ATC refund ignore:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundIgnoreRefundOptions;
+
+    $refundResponse = $client->docRefundIgnoreRefund(
+        new DocRefundIgnoreRefundOptions([
+            'actionRequest' => DocRefundIgnoreRefundOptions::ACTION_IGNORE
         ])
     );
 
