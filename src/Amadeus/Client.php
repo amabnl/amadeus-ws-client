@@ -228,6 +228,25 @@ class Client extends Base
     }
 
     /**
+     * PNR_Split
+     *
+     * @param RequestOptions\PnrSplitOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function pnrSplit(
+        RequestOptions\PnrSplitOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'PNR_Split';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Create a PNR using PNR_AddMultiElements
      *
      * @param RequestOptions\PnrCreatePnrOptions $options
