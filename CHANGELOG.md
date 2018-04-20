@@ -16,6 +16,7 @@
 * Added support for FlightTypeDetails (Master Pricer Slice and Dice) in ``Air_SellFromRecommendation`` (https://github.com/amabnl/amadeus-ws-client/pull/176) - Artem Zakharchenko
 * Fixed a bug where a ``FOP_CreateFormOfPayment`` message with sequence number 0 generated an incorrect message. (https://github.com/amabnl/amadeus-ws-client/pull/162) - Artem Zakharchenko
 * Implemented ``Air_RebookAirSegment`` (https://github.com/amabnl/amadeus-ws-client/issues/149)
+* Implemented no less than 5 new messages: ``DocRefund_IgnoreRefund``, ``Ticket_ProcessETicket``, ``Ticket_InitRefund``, ``Ticket_IgnoreRefund`` and ``Ticket_ProcessRefund`` (https://github.com/amabnl/amadeus-ws-client/pull/181) - Michal Hernas
 
 # Release 1.6.2 (10 April 2018)
 * Fixed the ``returnXml`` property in the Client Parameters being ignored (https://github.com/amabnl/amadeus-ws-client/issues/175)
