@@ -45,5 +45,4 @@ class PnrSplitOptions extends Base
      * @var array
      */
     public $passengerTattoos;
-
 }
