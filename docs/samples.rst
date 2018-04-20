@@ -478,6 +478,20 @@ The example shows the message required to change the name of the passenger speci
         ])
     );
 
+------------
+PNR_Split
+------------
+
+Retrieving a PNR:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrSplitOptions;
+
+    $pnrContent = $client->pnrSplit(
+        new PnrSplitOptions(['recordLocator' => 'ABC123', 'passengerTattoos' => [1, 2]])
+    );
+    
 
 *****
 Queue
