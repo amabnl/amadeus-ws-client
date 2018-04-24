@@ -586,6 +586,31 @@ Get the first 10 PNR's on a queue:
         ])
     );
 
+Also You can use predefined queues of Amadeus Queue Bank:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\QueueListOptions;
+    use Amadeus\Client\RequestOptions\Queue;
+
+    $queueGeneral = $client->queueList(
+        new QueueListOptions([
+            'queue' => new Queue([
+                'queue' => Queue::QUEUE_GENERAL,
+                'category' => 0
+            ])
+        ])
+    );
+
+    $queueTicketing = $client->queueList(
+        new QueueListOptions([
+            'queue' => new Queue([
+                'queue' => Queue::QUEUE_TICKETING,
+                'category' => 1
+            ])
+        ])
+    );
+
 --------------
 Queue_PlacePNR
 --------------
