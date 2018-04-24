@@ -482,7 +482,7 @@ The example shows the message required to change the name of the passenger speci
 PNR_Split
 ------------
 
-Retrieving a PNR:
+Split passengers 1 and 2 from PNR ABC123:
 
 .. code-block:: php
 
