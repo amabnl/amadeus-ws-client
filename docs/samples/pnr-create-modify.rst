@@ -10,7 +10,7 @@ Below are some examples of how to do specific things with regards to creating & 
 Multiple Action Codes (= optionCode)
 ------------------------------------
 
-Usually, only one actionCode is needed. However, it iss also possible to provide multiple actionCodes in the request (= ``optionCode`` XML node):
+Usually, only one actionCode is needed. However, it is also possible to provide multiple actionCodes in the request (= ``optionCode`` XML node):
 
 .. code-block:: php
 
