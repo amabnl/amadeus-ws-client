@@ -496,7 +496,7 @@ Get a list of all PNR's on a given queue:
     $queueContent = $client->queueList(
         new QueueListOptions([
             'queue' => new Queue([
-                'queue' => Queue::QUEUE_GENERAL,
+                'queue' => 50,
                 'category' => 0
             ])
         ])
@@ -512,7 +512,7 @@ Get a list of all PNR's on a given queue on a different office:
     $queueContent = $client->queueList(
         new QueueListOptions([
             'queue' => new Queue([
-                'queue' => Queue::QUEUE_GENERAL,
+                'queue' => 50,
                 'category' => 0,
                 'officeId' => 'NCE1A0950'
             ])
@@ -532,7 +532,7 @@ This example will display a List of the queue 12C0 in the office NCE1A0950 and s
     $queueContent = $client->queueList(
         new QueueListOptions([
             'queue' => new Queue([
-                'queue' => Queue::QUEUE_EXPIRED_TIME_LIMIT,
+                'queue' => 12,
                 'category' => 0,
                 'officeId' => 'NCE1A0950'
             ]),
@@ -562,7 +562,7 @@ Get a list of PNR's on a queue, sorted by Ticketing date:
         new QueueListOptions([
             'sortType' => QueueListOptions::SORT_TICKETING_DATE,
             'queue' => new Queue([
-                'queue' => Queue::QUEUE_GENERAL,
+                'queue' => 50,
                 'category' => 3
             ])
         ])
@@ -578,7 +578,7 @@ Get the first 10 PNR's on a queue:
     $queueContent = $client->queueList(
         new QueueListOptions([
             'queue' => new Queue([
-                'queue' => Queue::QUEUE_GENERAL,
+                'queue' => 50,
                 'category' => 3
             ]),
             'firstItemNr' => 0,
