@@ -13,6 +13,7 @@ This is the list of messages that are at least partially supported at this time:
 - PNR_DisplayHistory
 - PNR_TransferOwnership
 - PNR_NameChange
+- PNR_Split
 - Queue_List
 - Queue_PlacePNR
 - Queue_RemoveItem
