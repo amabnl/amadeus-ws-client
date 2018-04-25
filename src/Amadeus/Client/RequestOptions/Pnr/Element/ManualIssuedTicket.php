@@ -32,5 +32,10 @@ use Amadeus\Client\RequestOptions\Pnr\Element;
  */
 class ManualIssuedTicket extends Element
 {
-    //TODO: Not yet implemented
+    /**
+     * Manual ticket number
+     *
+     * @var string
+     */
+    public $ticketNumber;
 }

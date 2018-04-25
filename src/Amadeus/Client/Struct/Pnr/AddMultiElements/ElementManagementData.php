@@ -133,6 +133,13 @@ class ElementManagementData
     const SEGNAME_SEAT_REQUEST = "STR";
 
     /**
+     * FHE - Manual Document Registration element - with Eletronic Ticket number
+     *
+     * @var string
+     */
+    const SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER = "FHE";
+    
+    /**
      * @var Reference
      */
     public $reference;
