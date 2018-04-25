@@ -30,10 +30,28 @@ namespace Amadeus\Client\RequestOptions;
  */
 class Queue
 {
+    const QUEUE_GENERAL = 0;
+    const QUEUE_CONFIRMATION = 1;
+    const QUEUE_CONFIRMATION_WAITLIST = 2;
+    const QUEUE_OPTION = 3;
+    const QUEUE_RESPONSIBLE_OFFICE_CHANGE = 4;
+    const QUEUE_SCHEDULE_CHANGE = 7;
+    const QUEUE_TICKETING = 8;
+    const QUEUE_OTHER_AIRLINE_CONTROL = 9;
+    const QUEUE_EXPIRED_TIME_LIMIT = 12;
+    const QUEUE_REQUEST_FOR_REPLY = 23;
+    const QUEUE_PREPAID_TICKET_ADVICE = 80;
+    const QUEUE_GROUPS = 87;
+    const QUEUE_MESSAGE_CUSTOMER_PROFILE = 94;
+    const QUEUE_MESSAGE = 97;
+
     /**
+     * self::QUEUE_*
+     *
      * @var int
      */
     public $queue;
+
     /**
      * OPTIONAL
      *
