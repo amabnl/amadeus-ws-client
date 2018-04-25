@@ -45,6 +45,7 @@ class DocIssuanceIssueTicketOptions extends Base
     const OPTION_PRINT_EXTENDED_ITIN = 'IEP';
     const OPTION_PRINT_EXTENDED_JOINT_ITIN = 'IEJ';
     const OPTION_TICKET_ONLY = 'TKA';
+    const OPTION_ETICKET_REVALIDATION = 'ETR';
 
     /**
      * The Ticket Issuance options to be triggered
@@ -151,6 +152,20 @@ class DocIssuanceIssueTicketOptions extends Base
      */
     public $passengerTattoos = [];
 
+    /**
+     * Line numbers (for FOP line number in case of revalidation)
+     *
+     * @var int[]
+     */
+    public $lineNumbers = [];
+
+    /**
+     * Coupon numbers (for coupon number in case of revalidation)
+     *
+     * @var int[]
+     */
+    public $couponNumbers = [];
+    
     /**
      * PAX Passenger Type Selection
      *
