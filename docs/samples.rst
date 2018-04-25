@@ -2419,6 +2419,23 @@ Template Override (cryptic equivalent TTP/*CO.....).:
         ])
     );
 
+Revalidate ticket for ATC (changed segments: [3, 4], FA element line number: 14, coupon changed: [2, 3]):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
+
+    $issueTicketResponse = $client->docIssuanceIssueTicket(
+        new DocIssuanceIssueTicketOptions([
+            'options' => [
+                DocIssuanceIssueTicketOptions::OPTION_ETICKET_REVALIDATION
+            ],
+            'segmentTattoos' => [3, 4],
+            'lineNumbers' => [14],
+            'couponNumbers' => [2, 3]
+        ])
+    );
+
 
 ---------------------------------------
 DocIssuance_IssueMiscellaneousDocuments
