@@ -1502,7 +1502,9 @@ class AddMultiElementsTest extends BaseTestCase
         ]);
         $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->elements[] = new ManualIssuedTicket([
-            'ticketNumber' => '220-5118037484',
+            'ticketNumber' => '5118037484',
+            'passengerType' => ManualIssuedTicket::PASSENGER_TYPE_PASSENGER,
+            'companyId' => '220',
             'references' => [
                 new Reference([
                     'type' => Reference::TYPE_SEGMENT_TATTOO,
@@ -1520,10 +1522,9 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
         $this->assertEquals('OT', $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->qualifier);
         $this->assertEquals(1, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->number);
-        $this->assertEquals('P15', $msg->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->type);
-        $this->assertEquals('3', $msg->dataElementsMaster->dataElementsIndiv[0]->freetextData->freetextDetail->subjectQualifier);
-        $this->assertEquals('220-5118037484', $msg->dataElementsMaster->dataElementsIndiv[0]->freetextData->longFreetext);
-
+        $this->assertEquals('PAX', $msg->dataElementsMaster->dataElementsIndiv[0]->manualFareDocument->passengerType);
+        $this->assertEquals('5118037484', $msg->dataElementsMaster->dataElementsIndiv[0]->manualFareDocument->document->ticketNumber);
+        $this->assertEquals('220', $msg->dataElementsMaster->dataElementsIndiv[0]->manualFareDocument->document->companyId);
     }
 
     public function testCanCreateAirSegment()

@@ -269,9 +269,10 @@ class DataElementsIndiv extends WsMessageUtility
                 break;
             case 'ManualIssuedTicket':
                 /** @var Element\ReceivedFrom $element */
-                $this->freetextData = new FreetextData(
-                    $element->ticketNumber,
-                    FreetextDetail::TYPE_MANUAL_DOCUMENT
+                $this->manualFareDocument = new ManualDocumentRegistration(
+                    $element->passengerType,
+                    $element->companyId,
+                    $element->ticketNumber
                 );
                 break;
             default:
