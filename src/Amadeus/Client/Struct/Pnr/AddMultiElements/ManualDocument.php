@@ -30,15 +30,15 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
  */
 class ManualDocument
 {
-  /**
-   * @var str
-   */
-  public $companyId;
+    /**
+     * @var str
+     */
+    public $companyId;
 
-  /**
-   * @var str
-   */
-  public $ticketNumber;
+    /**
+     * @var str
+     */
+    public $ticketNumber;
 
     /**
      * ManualDocument constructor.

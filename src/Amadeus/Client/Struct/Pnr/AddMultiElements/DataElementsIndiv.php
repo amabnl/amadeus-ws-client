@@ -268,7 +268,7 @@ class DataElementsIndiv extends WsMessageUtility
                 $this->tourCode = new TourCode($element);
                 break;
             case 'ManualIssuedTicket':
-                /** @var Element\ReceivedFrom $element */
+                /** @var Element\ManualIssuedTicket $element */
                 $this->manualFareDocument = new ManualDocumentRegistration(
                     $element->passengerType,
                     $element->companyId,

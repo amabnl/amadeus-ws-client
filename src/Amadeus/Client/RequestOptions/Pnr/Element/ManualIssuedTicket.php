@@ -32,7 +32,6 @@ use Amadeus\Client\RequestOptions\Pnr\Element;
  */
 class ManualIssuedTicket extends Element
 {
-
     const PASSENGER_TYPE_INFANT = "INF";
     const PASSENGER_TYPE_PASSENGER = "PAX";
 
