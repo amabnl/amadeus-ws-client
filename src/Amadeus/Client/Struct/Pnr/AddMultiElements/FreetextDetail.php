@@ -69,6 +69,8 @@ class FreetextDetail
 
     const TYPE_OSI_ELEMENT = "P27";
 
+    const TYPE_MANUAL_DOCUMENT = "P15";
+
     /**
      * @var string
      */

@@ -36,6 +36,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest;
 use Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest;
 use Amadeus\Client\RequestOptions\Pnr\Element\Ticketing;
 use Amadeus\Client\RequestOptions\Pnr\Element\TourCode;
+use Amadeus\Client\RequestOptions\Pnr\Element;
 use Amadeus\Client\RequestOptions\Pnr\Itinerary;
 use Amadeus\Client\RequestOptions\Pnr\Reference;
 use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
@@ -51,6 +52,8 @@ use Amadeus\Client\RequestOptions\Queue;
 use Amadeus\Client\Struct\Pnr\AddMultiElements;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\PnrActions;
 use Test\Amadeus\BaseTestCase;
+
+class UnsupportedElement extends Element { }
 
 /**
  * AddMultiElementsTest
@@ -1472,7 +1475,7 @@ class AddMultiElementsTest extends BaseTestCase
     {
         $this->setExpectedException(
             'Amadeus\Client\Struct\InvalidArgumentException',
-            'Element type ManualIssuedTicket is not supported'
+            'Element type UnsupportedElement is not supported'
         );
 
         $createPnrOptions = new PnrCreatePnrOptions();
@@ -1483,9 +1486,45 @@ class AddMultiElementsTest extends BaseTestCase
             'firstName' => 'David'
         ]);
         $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
-        $createPnrOptions->elements[] = new ManualIssuedTicket();
+        $createPnrOptions->elements[] = new UnsupportedElement();
 
         new AddMultiElements($createPnrOptions);
+    }
+
+    public function testCreateManualTicketElement()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->elements[] = new ManualIssuedTicket([
+            'ticketNumber' => '5118037484',
+            'passengerType' => ManualIssuedTicket::PASSENGER_TYPE_PASSENGER,
+            'companyId' => '220',
+            'references' => [
+                new Reference([
+                    'type' => Reference::TYPE_SEGMENT_TATTOO,
+                    'id' => 3
+                ]),
+                new Reference([
+                    'type' => Reference::TYPE_PASSENGER_REQUEST,
+                    'id' => 2
+                ]),
+            ]
+        ]);
+
+        $msg = new AddMultiElements($createPnrOptions);
+        $this->assertCount(2, $msg->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals('OT', $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->qualifier);
+        $this->assertEquals(1, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->number);
+        $this->assertEquals('PAX', $msg->dataElementsMaster->dataElementsIndiv[0]->manualFareDocument->passengerType);
+        $this->assertEquals('5118037484', $msg->dataElementsMaster->dataElementsIndiv[0]->manualFareDocument->document->ticketNumber);
+        $this->assertEquals('220', $msg->dataElementsMaster->dataElementsIndiv[0]->manualFareDocument->document->companyId);
     }
 
     public function testCanCreateAirSegment()
