@@ -15,6 +15,7 @@
 * Added support for Special Seat Types in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/174)
 * Added support for FlightTypeDetails (Master Pricer Slice and Dice) in ``Air_SellFromRecommendation`` (https://github.com/amabnl/amadeus-ws-client/pull/176) - Artem Zakharchenko
 * Added support for ATC ticket revalidation in ``DocIssuance_IssueTicket`` (https://github.com/amabnl/amadeus-ws-client/pull/187) - Michal Hernas
+* Added support for ticketing TSM's in DocIssuance_IssueCombined (https://github.com/amabnl/amadeus-ws-client/pull/178) - Michal Hernas
 * Fixed a bug where a ``FOP_CreateFormOfPayment`` message with sequence number 0 generated an incorrect message. (https://github.com/amabnl/amadeus-ws-client/pull/162) - Artem Zakharchenko
 * Added default Amadeus queues as constants in Queue request options (https://github.com/amabnl/amadeus-ws-client/pull/185) - Artem Zakharchenko
 * Implemented ``Air_RebookAirSegment`` (https://github.com/amabnl/amadeus-ws-client/issues/149)
