@@ -14,9 +14,12 @@
 * Added support for ``FOP_CreateFormOfPayment`` message version 14 and lower (https://github.com/amabnl/amadeus-ws-client/issues/163)
 * Added support for Special Seat Types in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/174)
 * Added support for FlightTypeDetails (Master Pricer Slice and Dice) in ``Air_SellFromRecommendation`` (https://github.com/amabnl/amadeus-ws-client/pull/176) - Artem Zakharchenko
+* Added support for ATC ticket revalidation in ``DocIssuance_IssueTicket`` (https://github.com/amabnl/amadeus-ws-client/pull/187) - Michal Hernas
 * Fixed a bug where a ``FOP_CreateFormOfPayment`` message with sequence number 0 generated an incorrect message. (https://github.com/amabnl/amadeus-ws-client/pull/162) - Artem Zakharchenko
+* Added default Amadeus queues as constants in Queue request options (https://github.com/amabnl/amadeus-ws-client/pull/185) - Artem Zakharchenko
 * Implemented ``Air_RebookAirSegment`` (https://github.com/amabnl/amadeus-ws-client/issues/149)
 * Implemented no less than 5 new messages: ``DocRefund_IgnoreRefund``, ``Ticket_ProcessETicket``, ``Ticket_InitRefund``, ``Ticket_IgnoreRefund`` and ``Ticket_ProcessRefund`` (https://github.com/amabnl/amadeus-ws-client/pull/181) - Michal Hernas
+* Implemented ``PNR_Split`` (https://github.com/amabnl/amadeus-ws-client/pull/184) - Michal Hernas
 
 # Release 1.6.2 (10 April 2018)
 * Fixed the ``returnXml`` property in the Client Parameters being ignored (https://github.com/amabnl/amadeus-ws-client/issues/175)
