@@ -53,6 +53,15 @@ class SoapHeader4 extends Base
      */
     protected $isStateful = true;
 
+    protected $enableTransactionFlowLink = false;
+
+    /**
+     * TransactionFlowLink Consumer ID
+     *
+     * @var string|null
+     */
+    protected $consumerId;
+
     /**
      * @param bool $stateful
      */
@@ -69,6 +78,52 @@ class SoapHeader4 extends Base
     public function isStateful()
     {
         return $this->isStateful;
+    }
+
+    /**
+     * Is the TransactionFlowLink header enabled?
+     *
+     * @return bool
+     */
+    public function isTransactionFlowLinkEnabled()
+    {
+        return $this->enableTransactionFlowLink;
+    }
+
+    /**
+     * Enable or disable TransactionFlowLink header
+     *
+     * @param bool $enabled
+     */
+    public function setTransactionFlowLink($enabled)
+    {
+        $this->enableTransactionFlowLink = $enabled;
+    }
+
+    /**
+     * Get the TransactionFlowLink Consumer ID
+     *
+     * @param bool $generate Whether to generate a consumer ID
+     * @return string|null
+     */
+    public function getConsumerId($generate = false)
+    {
+        if (is_null($this->consumerId) && $generate) {
+            $this->consumerId = $this->generateGuid();
+        }
+
+        return $this->consumerId;
+    }
+
+    /**
+     * Set the TransactionFlowLink Consumer ID
+     *
+     * @param string $id
+     * @return void
+     */
+    public function setConsumerId($id)
+    {
+        $this->consumerId = $id;
     }
 
     /**
@@ -214,6 +269,21 @@ class SoapHeader4 extends Base
                 $this->getEndpointFromWsdl($wsdl, $messageName)
             )
         );
+
+        //TransactionFlowLink header
+        $tfl = $this->isTransactionFlowLinkEnabled();
+        if ($tfl) {
+            $consumerId = $this->getConsumerId(true);
+
+            array_push(
+                $headersToSet,
+                new \SoapHeader(
+                    'http://wsdl.amadeus.com/2010/06/ws/Link_v1',
+                    'TransactionFlowLink',
+                    new Client\Struct\HeaderV4\TransactionFlowLink($consumerId)
+                )
+            );
+        }
 
         //Send authentication info
         if ($this->isAuthenticated === false) {

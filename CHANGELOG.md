@@ -1,5 +1,6 @@
 # Release 1.7.0 (UNRELEASED)
 * Added support for Arrival date and time in ``Air_SellFromRecommendation`` (https://github.com/amabnl/amadeus-ws-client/pull/153) - Artem Zakharchenko
+* Implemented support for ``TransactionFlowLink`` SOAP header (https://github.com/amabnl/amadeus-ws-client/issues/146)
 * Added support for FeeOption in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/157) - Friedemann Schmuhl
 * Support for extra options  in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/issues/158):
     - No Airport Change at itinerary level

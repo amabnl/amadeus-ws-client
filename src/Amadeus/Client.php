@@ -27,6 +27,7 @@ use Amadeus\Client\Exception;
 use Amadeus\Client\Params;
 use Amadeus\Client\RequestOptions;
 use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\UnsupportedOperationException;
 
 /**
  * Amadeus Web Service Client.
@@ -58,7 +59,7 @@ class Client extends Base
      * @var string
      */
     const VERSION = "1.7.0-dev";
-    
+
     /**
      * An identifier string for the library (to be used in Received From entries)
      *
@@ -87,6 +88,29 @@ class Client extends Base
     public function isStateful()
     {
         return $this->sessionHandler->isStateful();
+    }
+
+    /**
+     * Get TransactionFlowLink Consumer Id
+     *
+     * @return string|null
+     */
+    public function getConsumerId()
+    {
+        return $this->sessionHandler->getConsumerId();
+    }
+
+    /**
+     * Set TransactionFlowLink Consumer Id
+     *
+     * @throws UnsupportedOperationException when used on unsupported WSAP versions
+     * @param string $id
+     * @return void
+     */
+    public function setConsumerId($id)
+    {
+        $this->sessionHandler->setTransactionFlowLink(true);
+        $this->sessionHandler->setConsumerId($id);
     }
 
     /**

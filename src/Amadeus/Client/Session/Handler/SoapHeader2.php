@@ -164,6 +164,54 @@ class SoapHeader2 extends Base
     }
 
     /**
+     * Is the TransactionFlowLink header enabled?
+     *
+     * @return bool
+     */
+    public function isTransactionFlowLinkEnabled()
+    {
+        return false; //Not supported
+    }
+
+    /**
+     * Enable or disable TransactionFlowLink header
+     *
+     * @throws UnsupportedOperationException when used on unsupported WSAP versions
+     * @param bool $enabled
+     */
+    public function setTransactionFlowLink($enabled)
+    {
+        if ($enabled === true) {
+            throw new UnsupportedOperationException('TransactionFlowLink header is not supported on SoapHeader 2');
+        }
+    }
+
+    /**
+     * Get the TransactionFlowLink Consumer ID
+     *
+     * @return string|null
+     */
+    public function getConsumerId()
+    {
+        return null; //Not supported
+    }
+
+    /**
+     * Set the TransactionFlowLink Consumer ID
+     *
+     * @throws UnsupportedOperationException when used on unsupported WSAP versions
+     * @param string $id
+     * @return void
+     */
+    public function setConsumerId($id)
+    {
+        if (!is_null($id)) {
+            throw new UnsupportedOperationException('TransactionFlowLink header is not supported on SoapHeader 2');
+        }
+    }
+
+
+    /**
      * Make SoapClient options for Soap Header 2 handler
      *
      * @return array
