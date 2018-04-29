@@ -36,6 +36,7 @@ use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest;
 use Amadeus\Client\RequestOptions\Pnr\Element\ServiceRequest;
 use Amadeus\Client\RequestOptions\Pnr\Element\Ticketing;
 use Amadeus\Client\RequestOptions\Pnr\Element\TourCode;
+use Amadeus\Client\RequestOptions\Pnr\Element;
 use Amadeus\Client\RequestOptions\Pnr\Itinerary;
 use Amadeus\Client\RequestOptions\Pnr\Reference;
 use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
@@ -51,6 +52,8 @@ use Amadeus\Client\RequestOptions\Queue;
 use Amadeus\Client\Struct\Pnr\AddMultiElements;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\PnrActions;
 use Test\Amadeus\BaseTestCase;
+
+class UnsupportedElement extends Element { }
 
 /**
  * AddMultiElementsTest
@@ -937,6 +940,62 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\Reference::QUAL_SEGTAT, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference[1]->qualifier);
     }
 
+    /**
+     * Special Seat Type
+     */
+    public function testCanMakeSeatRequestAisleSeatSpecialType()
+    {
+        $opt = new PnrAddMultiElementsOptions([
+            'actionCode' => PnrAddMultiElementsOptions::ACTION_NO_PROCESSING,
+            'travellers' => [
+                new Traveller([
+                    'number' => 1,
+                    'firstName' => 'John',
+                    'lastName' => 'Doe'
+                ])
+            ],
+            'elements' => [
+                new SeatRequest([
+                    'specialType' => SeatRequest::SPECIAL_AISLE_SEAT,
+                    'references' => [
+                        new Reference([
+                            'type' => Reference::TYPE_PASSENGER_REQUEST,
+                            'id' => 1
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new AddMultiElements($opt);
+
+        $this->assertCount(1, $msg->travellerInfo);
+        $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $msg->travellerInfo[0]->elementManagementPassenger->segmentName);
+        $this->assertEquals(1, $msg->travellerInfo[0]->elementManagementPassenger->reference->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $msg->travellerInfo[0]->elementManagementPassenger->reference->qualifier);
+        $this->assertCount(1, $msg->travellerInfo[0]->passengerData);
+        $this->assertEquals('Doe', $msg->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->surname);
+        $this->assertCount(1, $msg->travellerInfo[0]->passengerData[0]->travellerInformation->passenger);
+        $this->assertEquals('John', $msg->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->firstName);
+        $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $msg->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->type);
+
+
+        $this->assertCount(1, $msg->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_SEAT_REQUEST, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->freetextData);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->seat);
+        $this->assertCount(1, $msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->special);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->special[0]->data);
+        $this->assertEquals(AddMultiElements\Special::TYPE_AISLE_SEAT, $msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->special[0]->seatType);
+
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->railSeatPreferences);
+        $this->assertEmpty($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->railSeatReferenceInformation);
+
+        $this->assertCount(1, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference);
+        $this->assertEquals(1, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference[0]->number);
+        $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference[0]->qualifier);
+    }
+
     public function testCanCreateGroupPnr()
     {
         $createPnrOptions = new PnrCreatePnrOptions();
@@ -1416,7 +1475,7 @@ class AddMultiElementsTest extends BaseTestCase
     {
         $this->setExpectedException(
             'Amadeus\Client\Struct\InvalidArgumentException',
-            'Element type ManualIssuedTicket is not supported'
+            'Element type UnsupportedElement is not supported'
         );
 
         $createPnrOptions = new PnrCreatePnrOptions();
@@ -1427,9 +1486,45 @@ class AddMultiElementsTest extends BaseTestCase
             'firstName' => 'David'
         ]);
         $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
-        $createPnrOptions->elements[] = new ManualIssuedTicket();
+        $createPnrOptions->elements[] = new UnsupportedElement();
 
         new AddMultiElements($createPnrOptions);
+    }
+
+    public function testCreateManualTicketElement()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->elements[] = new ManualIssuedTicket([
+            'ticketNumber' => '5118037484',
+            'passengerType' => ManualIssuedTicket::PASSENGER_TYPE_PASSENGER,
+            'companyId' => '220',
+            'references' => [
+                new Reference([
+                    'type' => Reference::TYPE_SEGMENT_TATTOO,
+                    'id' => 3
+                ]),
+                new Reference([
+                    'type' => Reference::TYPE_PASSENGER_REQUEST,
+                    'id' => 2
+                ]),
+            ]
+        ]);
+
+        $msg = new AddMultiElements($createPnrOptions);
+        $this->assertCount(2, $msg->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals('OT', $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->qualifier);
+        $this->assertEquals(1, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->number);
+        $this->assertEquals('PAX', $msg->dataElementsMaster->dataElementsIndiv[0]->manualFareDocument->passengerType);
+        $this->assertEquals('5118037484', $msg->dataElementsMaster->dataElementsIndiv[0]->manualFareDocument->document->ticketNumber);
+        $this->assertEquals('220', $msg->dataElementsMaster->dataElementsIndiv[0]->manualFareDocument->document->companyId);
     }
 
     public function testCanCreateAirSegment()

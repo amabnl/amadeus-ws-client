@@ -30,12 +30,12 @@ namespace Amadeus\Client\Struct\Fare\MasterPricer;
  */
 class FlightDetail
 {
-    const FLIGHT_TYPE_CONNECTING = "C";
-    const FLIGHT_TYPE_DIRECT = "D";
-    const FLIGHT_TYPE_DISABLE_NEGO_SPACE = "DN";
-    const FLIGHT_TYPE_NON_STOP = "N";
-    const FLIGHT_TYPE_RETURN_CHEAPEST_ONLINE = "OL";
-    const FLIGHT_TYPE_OVERNIGHT_NOT_ALLOWED = "OV";
+    const FLIGHT_TYPE_CONNECTING = 'C';
+    const FLIGHT_TYPE_DIRECT = 'D';
+    const FLIGHT_TYPE_DISABLE_NEGO_SPACE = 'DN';
+    const FLIGHT_TYPE_NON_STOP = 'N';
+    const FLIGHT_TYPE_RETURN_CHEAPEST_ONLINE = 'OL';
+    const FLIGHT_TYPE_OVERNIGHT_NOT_ALLOWED = 'OV';
 
     /**
      * self::FLIGHT_TYPE_*
@@ -49,7 +49,7 @@ class FlightDetail
      *
      * @param string[] $flightType
      */
-    public function __construct($flightType = [])
+    public function __construct(array $flightType = [])
     {
         $this->flightType = $flightType;
     }

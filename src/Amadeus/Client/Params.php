@@ -109,6 +109,10 @@ class Params
      */
     protected function loadFromArray(array $params)
     {
+        if (isset($params['returnXml']) && is_bool($params['returnXml'])) {
+            $this->returnXml = $params['returnXml'];
+        }
+
         $this->loadRequestCreator($params);
         $this->loadSessionHandler($params);
         $this->loadResponseHandler($params);

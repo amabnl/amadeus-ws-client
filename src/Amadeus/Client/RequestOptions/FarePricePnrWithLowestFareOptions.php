@@ -23,7 +23,7 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * FarePricePnrWithLowestFareOptions
+ * Fare_PricePnrWithLowestFare Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>

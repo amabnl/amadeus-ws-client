@@ -38,6 +38,8 @@ class Passenger extends LoadParamsFromArray
 
     const TYPE_INFANT = "INF";
 
+    const TYPE_INFANT_WITH_SEAT = "INS";
+
     /**
      * What type of passengers?
      *

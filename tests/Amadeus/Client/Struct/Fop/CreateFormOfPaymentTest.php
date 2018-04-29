@@ -39,6 +39,7 @@ use Amadeus\Client\RequestOptions\Fop\ThreeDSecureInfo;
 use Amadeus\Client\RequestOptions\FopCreateFopOptions;
 use Amadeus\Client\Struct\Fop\AttributeDetails;
 use Amadeus\Client\Struct\Fop\CreateFormOfPayment;
+use Amadeus\Client\Struct\Fop\CreateFormOfPayment14;
 use Amadeus\Client\Struct\Fop\DeviceIdentification;
 use Amadeus\Client\Struct\Fop\FormOfPayment;
 use Amadeus\Client\Struct\Fop\FreeTextDetails;
@@ -1238,5 +1239,58 @@ EOT;
         $this->assertEquals($pares, $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->tdsInformation->tdsBlobData[1]->tdsBlbData->binaryData);
         $this->assertEquals(TdsBlbData::DATATYPE_BINARY, $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->tdsInformation->tdsBlobData[1]->tdsBlbData->dataType);
         $this->assertEquals(2996, $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->tdsInformation->tdsBlobData[1]->tdsBlbData->dataLength);
+    }
+
+    public function testCreateFopMessageGithubIssue163()
+    {
+        $options = new FopCreateFopOptions([
+            'transactionCode' => FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+            'fopGroup' => [
+                new Group([
+                    'elementRef' => [
+                        new ElementRef([
+                            'type' => ElementRef::TYPE_TST_NUMBER,
+                            'value' => 1
+                        ])
+                    ],
+                    'mopInfo' => [
+                        new MopInfo([
+                            'sequenceNr' => 0,
+                            'fopCode' => 'CCCA',
+                            'fopType' => MopInfo::FOPTYPE_FP_ELEMENT,
+                            'payMerchant' => 'BA',
+                            'payments' => [
+                                new Payment([
+                                    'type' => Payment::TYPE_TOTAL_FARE_AMOUNT,
+                                    'amount' => 300,
+                                    'currency' => "EUR"
+                                ])
+                            ],
+                            'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                            'creditCardInfo' => new CreditCardInfo([
+                                'vendorCode' => 'CA',
+                                'cardNumber' => '5000000000000009',
+                                'expiryDate' => '0818',
+                                'securityId' => 123,
+                                'approvalCode' => '123456',
+                                'sourceOfApproval' => CreditCardInfo::APPROVAL_SOURCE_MANUAL,
+                                'name' => 'dummy name'
+                            ])
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new CreateFormOfPayment14($options);
+
+        $this->assertInstanceOf('\Amadeus\Client\Struct\FOP\CreateFormOfPayment\FopGroup14', $msg->fopGroup[0]);
+        $this->assertInstanceOf('\Amadeus\Client\Struct\FOP\CreateFormOfPayment\MopDescription14', $msg->fopGroup[0]->mopDescription[0]);
+        $this->assertInstanceOf('\Amadeus\Client\Struct\FOP\CreateFormOfPayment\PaymentModule14', $msg->fopGroup[0]->mopDescription[0]->paymentModule);
+        $this->assertInstanceOf('\Amadeus\Client\Struct\FOP\CreateFormOfPayment\GroupUsage14', $msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage);
+        $this->assertInstanceOf('\Amadeus\Client\Struct\FOP\AttributeDetails', $msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails);
+        $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails->attributeDescription);
+        $this->assertEquals('FP', $msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails->attributeType);
+        $this->assertEquals('0818', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopInformation->creditCardData->creditCardDetails->ccInfo->expiryDate);
     }
 }

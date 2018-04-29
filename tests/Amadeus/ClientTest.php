@@ -508,6 +508,56 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoDummyPnrSplit()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->dummyProp = 'A dummy message result'; // Not an actual Soap reply.
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedPnrResult = new Client\Struct\Pnr\Split(
+            new Client\RequestOptions\PnrSplitOptions(['passengerTattoos' => [1, 2]])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_Split', $expectedPnrResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_Split' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'PNR_Split')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->pnrSplit(
+            new Client\RequestOptions\PnrSplitOptions(['passengerTattoos' => [1, 2]])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoDummyPnrDisplayHistoryCall()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -2418,6 +2468,67 @@ class ClientTest extends BaseTestCase
             new Client\RequestOptions\TicketProcessEDocOptions([
                 'ticketNumber' => '1721587458965',
                 'action' => Client\RequestOptions\TicketProcessEDocOptions::ACTION_EMD_DISPLAY,
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoTicketProcessETicketDocument()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketProcessETicketMessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\ProcessETicket(
+            new Client\RequestOptions\TicketProcessETicketOptions([
+                'ticketNumber' => '1721587458965',
+                'action' => Client\RequestOptions\TicketProcessETicketOptions::ACTION_ETICKET_DISPLAY,
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with(
+                'Ticket_ProcessETicket',
+                $expectedMessageResult,
+                ['endSession' => false, 'returnXml' => true]
+            )
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_ProcessETicket' => ['version' => "15.2", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_ProcessETicket')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketProcessETicket(
+            new Client\RequestOptions\TicketProcessETicketOptions([
+                'ticketNumber' => '1721587458965',
+                'action' => Client\RequestOptions\TicketProcessETicketOptions::ACTION_ETICKET_DISPLAY,
             ])
         );
 
@@ -4484,6 +4595,57 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendDocRefundIgnoreRefund()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummydocrefundignorerefundresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\DocRefund\IgnoreRefund(
+            new Client\RequestOptions\DocRefundIgnoreRefundOptions()
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('DocRefund_IgnoreRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['DocRefund_IgnoreRefund' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'DocRefund_IgnoreRefund')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->docRefundIgnoreRefund(
+            new Client\RequestOptions\DocRefundIgnoreRefundOptions()
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanSendDocRefundUpdateRefund()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -5010,6 +5172,159 @@ class ClientTest extends BaseTestCase
                     ])
                 ])]
             ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTicketInitRefund()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyticketinitrefundresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\InitRefund(
+            new Client\RequestOptions\TicketInitRefundOptions([])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_InitRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_InitRefund' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_InitRefund')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketInitRefund(
+            new Client\RequestOptions\TicketInitRefundOptions([])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTicketIgnoreRefund()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyticketignorerefundresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\IgnoreRefund(
+            new Client\RequestOptions\TicketIgnoreRefundOptions([])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_IgnoreRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_IgnoreRefund' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_IgnoreRefund')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketIgnoreRefund(
+            new Client\RequestOptions\TicketIgnoreRefundOptions([])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTicketProcessRefund()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyticketprocessrefundresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\ProcessRefund(
+            new Client\RequestOptions\TicketProcessRefundOptions([])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_ProcessRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_ProcessRefund' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_ProcessRefund')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketProcessRefund(
+            new Client\RequestOptions\TicketProcessRefundOptions([])
         );
 
         $this->assertEquals($messageResult, $response);

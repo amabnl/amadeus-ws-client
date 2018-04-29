@@ -25,7 +25,7 @@ namespace Amadeus\Client\RequestOptions;
 use Amadeus\Client\RequestOptions\Queue\SearchCriteriaOpt;
 
 /**
- * QueueListOptions
+ * Queue_List Request Options
  *
  * Options available for the Queue_List message.
  *

@@ -30,14 +30,14 @@ namespace Amadeus\Client\RequestOptions;
  */
 class DocRefundProcessRefundOptions extends Base
 {
-    const STATUS_INHIBIT_REFUND_NOTICE = "IRN";
-    const STATUS_REFUND_REVIEW_OPTION = "REV";
+    const STATUS_INHIBIT_REFUND_NOTICE = 'IRN';
+    const STATUS_REFUND_REVIEW_OPTION = 'REV';
 
-    const PRINTERTYPE_PRINTER_MNEMONIC = "MNE";
-    const PRINTERTYPE_RULE_ID = "RID";
-    const PRINTERTYPE_SETTLEMENT_AUTHORIZATION_CODE = "SAC";
-    const PRINTERTYPE_PRINTER_STOCK = "STK";
-    const PRINTERTYPE_TERMINAL_ID = "TRM";
+    const PRINTERTYPE_PRINTER_MNEMONIC = 'MNE';
+    const PRINTERTYPE_RULE_ID = 'RID';
+    const PRINTERTYPE_SETTLEMENT_AUTHORIZATION_CODE = 'SAC';
+    const PRINTERTYPE_PRINTER_STOCK = 'STK';
+    const PRINTERTYPE_TERMINAL_ID = 'TRM';
 
     /**
      * self::STATUS_*

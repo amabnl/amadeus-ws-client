@@ -13,6 +13,7 @@ This is the list of messages that are at least partially supported at this time:
 - PNR_DisplayHistory
 - PNR_TransferOwnership
 - PNR_NameChange
+- PNR_Split
 - Queue_List
 - Queue_PlacePNR
 - Queue_RemoveItem
@@ -48,12 +49,17 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_ReissueConfirmedPricing
 - Ticket_CancelDocument
 - Ticket_ProcessEDoc
+- Ticket_ProcessETicket
+- Ticket_InitRefund
+- Ticket_IgnoreRefund
+- Ticket_ProcessRefund
 - DocIssuance_IssueTicket
 - DocIssuance_IssueMiscellaneousDocuments
 - DocIssuance_IssueCombined
 - DocRefund_InitRefund
 - DocRefund_UpdateRefund
 - DocRefund_ProcessRefund
+- DocRefund_IgnoreRefund
 - Service_IntegratedPricing
 - Service_IntegratedCatalogue
 - Offer_CreateOffer

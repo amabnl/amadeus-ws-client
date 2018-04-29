@@ -1,0 +1,82 @@
+<AMA_TicketProcessRefundRS xmlns="http://xml.amadeus.com/2010/06/TicketGTP_v2" xmlns:ama="http://xml.amadeus.com/2010/06/Types_v2" xmlns:att="http://xml.amadeus.com/2010/06/TicketTypes_v1" xmlns:iata="http://www.iata.org/IATA/2007/00/IATA2010.1" xmlns:ota="http://www.opentravel.org/OTA/2003/05/OTA2010B" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="2.000">
+    <GeneralReply>
+        <Success></Success>
+    </GeneralReply>
+    <FunctionalData>
+        <ContractBundle Code="R.SWP" ID="1">
+            <Success></Success>
+            <RefundDetails>
+                <Contracts>
+                    <Contract ID="1" IssueDate="2014-05-23" RCI_Reference="BC3661AC0001" Status="Refunded" Tattoo="74" Type="006">
+                        <Segments>
+                            <Segment Tattoo="1"></Segment>
+                            <Segment Tattoo="2"></Segment>
+                        </Segments>
+                        <Passengers>
+                            <Passenger Tattoo="1">
+                                <FirstName>INGER MR</FirstName>
+                                <LastName>BERGENFALK KULL</LastName>
+                                <FullName>BERGENFALK KULL/INGER MR</FullName>
+                            </Passenger>
+                        </Passengers>
+                        <Seats>
+                            <Seat Tattoo="13"></Seat>
+                            <Seat Tattoo="16"></Seat>
+                        </Seats>
+                        <Taxes>
+                            <Tax Amount="11524" Category="R" CurrencyCode="SEK" DecimalPlaces="2"></Tax>
+                            <Tax Amount="0" Category="701" CurrencyCode="SEK" DecimalPlaces="0">
+                                <TaxDescription Name="XT"></TaxDescription>
+                            </Tax>
+                        </Taxes>
+                        <Fees>
+                            <Fee Amount="0" Category="RMF" CurrencyCode="SEK" DecimalPlaces="0"></Fee>
+                        </Fees>
+                        <Penalties>
+                            <Penalty Amount="0" CurrencyCode="SEK" DecimalPlaces="0" PenaltyType="CP" PercentOrAmount="A"></Penalty>
+                        </Penalties>
+                        <MonetaryInformations>
+                            <MonetaryInformation Amount="124000" CurrencyCode="SEK" DecimalPlaces="2" Qualifier="B"></MonetaryInformation>
+                            <MonetaryInformation Amount="1240" CurrencyCode="SEK" DecimalPlaces="0" Qualifier="RFT"></MonetaryInformation>
+                            <MonetaryInformation Amount="115" CurrencyCode="SEK" DecimalPlaces="0" Qualifier="TXT"></MonetaryInformation>
+                            <MonetaryInformation Amount="0" CurrencyCode="SEK" DecimalPlaces="0" Qualifier="TP"></MonetaryInformation>
+                        </MonetaryInformations>
+                        <DeliveryMethod DistributionType="004"></DeliveryMethod>
+                        <DocumentAndCouponInformation>
+                            <DocumentNumber Number="00000000000009"></DocumentNumber>
+                            <CouponGroup>
+                                <CouponInformationDetails>
+                                    <CouponNumber>1</CouponNumber>
+                                    <CouponStatus>RF</CouponStatus>
+                                </CouponInformationDetails>
+                            </CouponGroup>
+                            <CouponGroup>
+                                <CouponInformationDetails>
+                                    <CouponNumber>2</CouponNumber>
+                                    <CouponStatus>RF</CouponStatus>
+                                </CouponInformationDetails>
+                            </CouponGroup>
+                        </DocumentAndCouponInformation>
+                        <Refundable Amount="1240" CurrencyCode="SEK" DecimalPlaces="0"></Refundable>
+                    </Contract>
+                </Contracts>
+                <TotalAmounts>
+                    <Refundable Amount="1240" CurrencyCode="SEK" DecimalPlaces="0">
+                        <Penalty Amount="0" CurrencyCode="SEK" DecimalPlaces="0"></Penalty>
+                        <Fee Amount="0" CurrencyCode="SEK" DecimalPlaces="0"></Fee>
+                    </Refundable>
+                    <NonRefundable Amount="0" CurrencyCode="SEK" DecimalPlaces="0"></NonRefundable>
+                </TotalAmounts>
+                <DateTime>
+                    <BusinessSemantic Code="TID"></BusinessSemantic>
+                    <StructuredDateTime>
+                        <Year>2014</Year>
+                        <Month>04</Month>
+                        <Day>04</Day>
+                    </StructuredDateTime>
+                </DateTime>
+                <ReasonCode Code="002"></ReasonCode>
+            </RefundDetails>
+        </ContractBundle>
+    </FunctionalData>
+</AMA_TicketProcessRefundRS>

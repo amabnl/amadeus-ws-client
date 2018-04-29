@@ -23,6 +23,8 @@
 namespace Amadeus\Client\Struct\Fop;
 
 use Amadeus\Client\RequestOptions\Fop\MopInfo;
+use Amadeus\Client\Struct\Fop\CreateFormOfPayment\MopDescription14;
+use Amadeus\Client\Struct\Fop\CreateFormOfPayment\PaymentModule14;
 use Amadeus\Client\Struct\WsMessageUtility;
 
 /**
@@ -125,7 +127,11 @@ class MopDescription extends WsMessageUtility
             $options->payIds,
             $options->paySupData
         )) {
-            $this->paymentModule = new PaymentModule($options->fopType);
+            if ($this instanceof MopDescription14) {
+                $this->paymentModule = new PaymentModule14($options->fopType);
+            } else {
+                $this->paymentModule = new PaymentModule($options->fopType);
+            }
             $this->paymentModule->loadPaymentData($options);
 
             $this->loadMopInformation($options);

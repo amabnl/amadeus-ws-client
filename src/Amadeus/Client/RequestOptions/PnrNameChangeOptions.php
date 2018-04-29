@@ -23,16 +23,16 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PnrNameChangeOptions
+ * Pnr_NameChange Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PnrNameChangeOptions extends Base
 {
-    const OPERATION_CHANGE = "CHG";
-    const OPERATION_COMPLETE = "CMP";
-    const OPERATION_UPDATE = "UPD";
+    const OPERATION_CHANGE = 'CHG';
+    const OPERATION_COMPLETE = 'CMP';
+    const OPERATION_UPDATE = 'UPD';
 
     /**
      * self::OPERATION_*
