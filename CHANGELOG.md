@@ -1,4 +1,6 @@
-# Release 1.7.0 (UNRELEASED)
+# Release 1.8.0 (UNRELEASED)
+
+# Release 1.7.0 (30 April 2018)
 * Added support for Arrival date and time in ``Air_SellFromRecommendation`` (https://github.com/amabnl/amadeus-ws-client/pull/153) - Artem Zakharchenko
 * Implemented support for ``TransactionFlowLink`` SOAP header (https://github.com/amabnl/amadeus-ws-client/issues/146)
 * Added support for FeeOption in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/157) - Friedemann Schmuhl
@@ -14,6 +16,7 @@
         - No Airport Change
 * Added support for ``FOP_CreateFormOfPayment`` message version 14 and lower (https://github.com/amabnl/amadeus-ws-client/issues/163)
 * Added support for Special Seat Types in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/issues/174)
+* Added support for Manual Ticket elements in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/pull/188) - Michal Hernas
 * Added support for FlightTypeDetails (Master Pricer Slice and Dice) in ``Air_SellFromRecommendation`` (https://github.com/amabnl/amadeus-ws-client/pull/176) - Artem Zakharchenko
 * Added support for ATC ticket revalidation in ``DocIssuance_IssueTicket`` (https://github.com/amabnl/amadeus-ws-client/pull/187) - Michal Hernas
 * Added support for ticketing TSM's in DocIssuance_IssueCombined (https://github.com/amabnl/amadeus-ws-client/pull/178) - Michal Hernas
