@@ -22,8 +22,6 @@
     "psr/log": "^1.0"
   },
   "require-dev": {
-    "symfony/yaml": "2.8",
-    "phpdocumentor/reflection-docblock": "2.0.*",
     "phpunit/phpunit": "4.8.*"
   },
   "autoload": {
