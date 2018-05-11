@@ -1234,9 +1234,7 @@ The following sample disallows airport changes for the outbound leg:
 Ticketing Price Scheme
 ==================================
 
-Specify No Airport Change to make sure a connecting flight does not depart in another airport in the same city.
-
-The following sample disallows airport changes for the outbound leg:
+When needed to impose an additional Service Fee to the customer add PSR number (Price Scheme Reference):
 
 .. code-block:: php
 
