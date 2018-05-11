@@ -26,6 +26,7 @@ use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeDetails;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFCriteria;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFOtherCriteria;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\MonetaryDetails;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\MPTicketingPriceScheme;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
 use Amadeus\Client\RequestOptions\Fare\MPDate;
 use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
@@ -1750,5 +1751,35 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertEquals(UnitNumberDetail::TYPE_PERCENTAGE_OF_SHORTEST_ELAPSED_FLYING_TIME, $msg->travelFlightInfo->unitNumberDetail[0]->typeOfUnit);
 
         $this->assertNull($msg->itinerary[0]->flightInfo);
+    }
+
+    public function testCanMakeMessageWithTicketingPriceScheme()
+    {
+        $msg = new MasterPricerTravelBoardSearch(
+            new FareMasterPricerTbSearch([
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new MPPassenger([
+                        'type' => MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'itinerary' => [
+                    new MPItinerary([
+                        'departureLocation' => new MPLocation(['city' => 'NYC']),
+                        'arrivalLocation' => new MPLocation(['city' => 'LAX']),
+                        'date' => new MPDate([
+                            'dateTime' => new \DateTime('2018-07-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                        ]),
+                    ]),
+                ],
+                'ticketingPriceScheme' => new MPTicketingPriceScheme([
+                    'referenceNumber' => '00012345',
+                ]),
+            ])
+        );
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\Fare\MasterPricer\TicketingPriceScheme', $msg->fareOptions->ticketingPriceScheme);
+        $this->assertEquals('00012345', $msg->fareOptions->ticketingPriceScheme->referenceNumber);
     }
 }
