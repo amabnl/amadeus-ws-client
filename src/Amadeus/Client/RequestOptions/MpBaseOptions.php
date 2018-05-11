@@ -22,7 +22,7 @@
 
 namespace Amadeus\Client\RequestOptions;
 
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\MPTicketingPriceScheme;
+use Amadeus\Client\RequestOptions\Fare\MPTicketingPriceScheme;
 
 /**
  * MasterPricer Base Options

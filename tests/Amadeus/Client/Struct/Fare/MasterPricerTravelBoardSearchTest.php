@@ -26,7 +26,6 @@ use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeDetails;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFCriteria;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFOtherCriteria;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\MonetaryDetails;
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\MPTicketingPriceScheme;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
 use Amadeus\Client\RequestOptions\Fare\MPDate;
 use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
@@ -35,6 +34,7 @@ use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\Fare\MPLocation;
 use Amadeus\Client\RequestOptions\Fare\MPPassenger;
 use Amadeus\Client\RequestOptions\Fare\MPFeeId;
+use Amadeus\Client\RequestOptions\Fare\MPTicketingPriceScheme;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\Struct\Fare\MasterPricer\BooleanExpression;
 use Amadeus\Client\Struct\Fare\MasterPricer\CabinId;
@@ -1774,8 +1774,8 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
                     ]),
                 ],
                 'ticketingPriceScheme' => new MPTicketingPriceScheme([
-                    'referenceNumber' => '00012345',
-                ]),
+                    'referenceNumber' => '00012345'
+                ])
             ])
         );
 

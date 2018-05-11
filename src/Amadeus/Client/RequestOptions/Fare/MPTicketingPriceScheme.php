@@ -20,7 +20,7 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Fare\MasterPricer;
+namespace Amadeus\Client\RequestOptions\Fare;
 
 use Amadeus\Client\LoadParamsFromArray;
 
