@@ -23,6 +23,7 @@
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 use Amadeus\Client\RequestOptions\Fare\MPFeeId;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\TicketingPriceScheme;
 
 /**
  * FareOptions
@@ -68,6 +69,8 @@ class FareOptions
      * @param string|null $currency Override Currency conversion
      * @param MPFeeId[]|null $feeIds List of FeeIds
      * @param string|null Corporate qualifier for Corporate Unifares
+     * @param $multiTicket
+     * @param TicketingPriceScheme|null $ticketingPriceScheme
      */
     public function __construct(
         array $flightOptions,
@@ -76,7 +79,8 @@ class FareOptions
         $currency,
         $feeIds,
         $corporateQualifier,
-        $multiTicket
+        $multiTicket,
+        $ticketingPriceScheme
     ) {
         if ($tickPreCheck === true) {
             $this->addPriceType(PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK);
@@ -96,6 +100,7 @@ class FareOptions
         if (!is_null($feeIds)) {
             $this->loadFeeIds($feeIds);
         }
+        $this->ticketingPriceScheme = $ticketingPriceScheme;
     }
 
     /**
@@ -130,7 +135,7 @@ class FareOptions
     /**
      * Set multi ticket on if needed
      *
-     * @param string|null $currency
+     * @param string|null $multiTicket
      */
     protected function loadMultiTicket($multiTicket)
     {
