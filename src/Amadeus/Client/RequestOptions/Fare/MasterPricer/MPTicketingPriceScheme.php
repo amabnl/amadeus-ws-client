@@ -25,12 +25,12 @@ namespace Amadeus\Client\RequestOptions\Fare\MasterPricer;
 use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * TicketingPriceScheme
+ * MPTicketingPriceScheme
  *
  * @package Amadeus\Client\RequestOptions\Fare\MasterPricer
  * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
-class TicketingPriceScheme extends LoadParamsFromArray
+class MPTicketingPriceScheme extends LoadParamsFromArray
 {
     /**
      * Identification number.
