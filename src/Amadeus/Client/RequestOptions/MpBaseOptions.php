@@ -22,7 +22,7 @@
 
 namespace Amadeus\Client\RequestOptions;
 
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\TicketingPriceScheme;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\MPTicketingPriceScheme;
 
 /**
  * MasterPricer Base Options
@@ -142,7 +142,7 @@ class MpBaseOptions extends Base
     public $multiTicket = false;
 
     /**
-     * @var TicketingPriceScheme
+     * @var MPTicketingPriceScheme
      */
     public $ticketingPriceScheme;
 

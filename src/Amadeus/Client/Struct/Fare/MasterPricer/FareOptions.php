@@ -22,8 +22,8 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\MPTicketingPriceScheme;
 use Amadeus\Client\RequestOptions\Fare\MPFeeId;
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\TicketingPriceScheme;
 
 /**
  * FareOptions
@@ -41,7 +41,9 @@ class FareOptions
      * @var Corporate
      */
     public $corporate;
-
+    /**
+     * @var TicketingPriceScheme
+     */
     public $ticketingPriceScheme;
     /**
      * @var FeeIdDescription
@@ -70,7 +72,7 @@ class FareOptions
      * @param MPFeeId[]|null $feeIds List of FeeIds
      * @param string|null Corporate qualifier for Corporate Unifares
      * @param $multiTicket
-     * @param TicketingPriceScheme|null $ticketingPriceScheme
+     * @param MPTicketingPriceScheme|null $ticketingPriceScheme
      */
     public function __construct(
         array $flightOptions,
@@ -100,7 +102,9 @@ class FareOptions
         if (!is_null($feeIds)) {
             $this->loadFeeIds($feeIds);
         }
-        $this->ticketingPriceScheme = $ticketingPriceScheme;
+        if (!is_null($ticketingPriceScheme)) {
+            $this->loadTicketingPriceScheme($ticketingPriceScheme);
+        }
     }
 
     /**
@@ -159,5 +163,15 @@ class FareOptions
         }
 
         $this->pricingTickInfo->pricingTicketing->priceType[] = $type;
+    }
+
+    protected function loadTicketingPriceScheme($ticketingPriceScheme)
+    {
+        $priceScheme = new TicketingPriceScheme();
+        $priceScheme->referenceNumber = $ticketingPriceScheme->referenceNumber;
+        $priceScheme->name = $ticketingPriceScheme->name;
+        $priceScheme->status = $ticketingPriceScheme->status;
+        $priceScheme->description = $ticketingPriceScheme->description;
+        $this->ticketingPriceScheme = $priceScheme;
     }
 }
