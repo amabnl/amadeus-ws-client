@@ -267,6 +267,14 @@ class DataElementsIndiv extends WsMessageUtility
                 /** @var Element\TourCode $element */
                 $this->tourCode = new TourCode($element);
                 break;
+            case 'ManualIssuedTicket':
+                /** @var Element\ManualIssuedTicket $element */
+                $this->manualFareDocument = new ManualDocumentRegistration(
+                    $element->passengerType,
+                    $element->companyId,
+                    $element->ticketNumber
+                );
+                break;
             default:
                 throw new InvalidArgumentException('Element type '.$elementType.' is not supported');
         }
@@ -296,7 +304,8 @@ class DataElementsIndiv extends WsMessageUtility
             'OtherServiceInfo' => ElementManagementData::SEGNAME_OTHER_SERVICE_INFORMATION,
             'ManualCommission' => ElementManagementData::SEGNAME_COMMISSION,
             'SeatRequest' => ElementManagementData::SEGNAME_SEAT_REQUEST,
-            'TourCode' => ElementManagementData::SEGNAME_TOUR_CODE
+            'TourCode' => ElementManagementData::SEGNAME_TOUR_CODE,
+            'ManualIssuedTicket' => ElementManagementData::SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER
         ];
 
         if (array_key_exists($elementType, $sourceArray)) {

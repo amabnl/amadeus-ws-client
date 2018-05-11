@@ -322,6 +322,62 @@ Often, when your WSDL gets upgraded to new message versions by Amadeus, they wil
 
 If you want the library to use the newest version of a message, you have to **manually remove the old versions from the WSDL file**.
 
+****************************
+Transaction Flow Link header
+****************************
+
+An option can be enabled on a WSAP where all message operations are tagged with a unique ID which can be used
+by an application developer to link certain messages to a certain session or user on their system. This is called
+the Transaction Flow Link.
+
+To use this feature, initialize your client like this:
+
+.. code-block:: php
+
+    $params = new Params([
+        // Other parameters omitted for this example!
+        'sessionHandlerParams' => [
+            'soapHeaderVersion' => Client::HEADER_V4,
+            'wsdl' => '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20160101_080000.wsdl',
+            // Other parameters omitted for this example!
+            'enableTransactionFlowLink' => true,
+        ],
+    ]);
+
+    $client = new Client($params);
+
+Used like this, a Consumer ID will be generated on the first request which will be used during subsequent request.
+
+If you want to re-use the same Consumer ID in subsequent Client instances, you'll have to get the current Consumer ID like this:
+
+.. code-block:: php
+
+    $consumerId = $client->getConsumerId();
+
+
+Then, when re-instantiating a client, you can restore a previously used Consumer ID like this:
+
+.. code-block:: php
+
+    $consumerId = $client->setConsumerId($consumerId);
+
+or like this:
+
+.. code-block:: php
+
+    $params = new Params([
+        // Other parameters omitted for this example!
+        'sessionHandlerParams' => [
+            'soapHeaderVersion' => Client::HEADER_V4,
+            'wsdl' => '/home/user/mytestproject/data/amadeuswsdl/1ASIWXXXXXX_PDT_20160101_080000.wsdl',
+            // Other parameters omitted for this example!
+            'enableTransactionFlowLink' => true,
+            'consumerId' => $consumerId,
+        ],
+    ]);
+
+    $client = new Client($params);
+
 
 ================
 EXAMPLE MESSAGES

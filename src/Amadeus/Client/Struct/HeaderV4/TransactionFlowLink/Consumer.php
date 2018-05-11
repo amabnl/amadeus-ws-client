@@ -20,39 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr\Element;
-
-use Amadeus\Client\RequestOptions\Pnr\Element;
+namespace Amadeus\Client\Struct\HeaderV4\TransactionFlowLink;
 
 /**
- * ManualIssuedTicket
+ * Consumer
  *
- * @package Amadeus\Client\RequestOptions\Pnr\Element
+ * @package Amadeus\Client\Struct\HeaderV4\TransactionFlowLink
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class ManualIssuedTicket extends Element
+class Consumer
 {
-    const PASSENGER_TYPE_INFANT = "INF";
-    const PASSENGER_TYPE_PASSENGER = "PAX";
-
     /**
-     * self::PASSENGER_TYPE_*
-     *
      * @var string
      */
-    public $passengerType;
+    public $UniqueID;
 
     /**
-     * Company id (3 chars before `-` in ticket number)
+     * Consumer constructor.
      *
-     * @var string
+     * @param string $uniqueId
      */
-    public $companyId;
-
-    /**
-     * Ticket number (without company id, everything after `-`)
-     *
-     * @var string
-     */
-    public $ticketNumber;
+    public function __construct($uniqueId)
+    {
+        $this->UniqueID = $uniqueId;
+    }
 }

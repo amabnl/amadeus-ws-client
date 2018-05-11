@@ -126,6 +126,20 @@ class ClientTest extends BaseTestCase
         $this->assertFalse($current);
     }
 
+    public function testCanSetTfl()
+    {
+        $client = new Client($this->makeDummyParams());
+
+        $current = $client->getConsumerId();
+
+        $this->assertNull($current);
+
+        $client->setConsumerId('dummy');
+        $current = $client->getConsumerId();
+
+        $this->assertEquals('dummy', $current);
+    }
+
     public function testWillGetNullFromGetLastReqResWhenNoCallsWerMade()
     {
         $client = new Client($this->makeDummyParams());
@@ -489,6 +503,56 @@ class ClientTest extends BaseTestCase
                 'actionCode' => 10,
                 'cancelItinerary' => true
             ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoDummyPnrSplit()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->dummyProp = 'A dummy message result'; // Not an actual Soap reply.
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedPnrResult = new Client\Struct\Pnr\Split(
+            new Client\RequestOptions\PnrSplitOptions(['passengerTattoos' => [1, 2]])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_Split', $expectedPnrResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_Split' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'PNR_Split')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->pnrSplit(
+            new Client\RequestOptions\PnrSplitOptions(['passengerTattoos' => [1, 2]])
         );
 
         $this->assertEquals($messageResult, $response);

@@ -20,39 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr\Element;
+namespace Amadeus\Client\RequestCreator\Converter\PNR;
 
-use Amadeus\Client\RequestOptions\Pnr\Element;
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\PnrSplitOptions;
+use Amadeus\Client\Struct;
 
 /**
- * ManualIssuedTicket
+ * PNR_Split Request converter
  *
- * @package Amadeus\Client\RequestOptions\Pnr\Element
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @package Amadeus\Client\RequestCreator\Converter\PNR
+ * @author Mike Hernas <m@hern.as>
  */
-class ManualIssuedTicket extends Element
+class SplitConv extends BaseConverter
 {
-    const PASSENGER_TYPE_INFANT = "INF";
-    const PASSENGER_TYPE_PASSENGER = "PAX";
-
     /**
-     * self::PASSENGER_TYPE_*
-     *
-     * @var string
+     * @param PnrSplitOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\Pnr\Split
      */
-    public $passengerType;
-
-    /**
-     * Company id (3 chars before `-` in ticket number)
-     *
-     * @var string
-     */
-    public $companyId;
-
-    /**
-     * Ticket number (without company id, everything after `-`)
-     *
-     * @var string
-     */
-    public $ticketNumber;
+    public function convert($requestOptions, $version)
+    {
+        return new Struct\Pnr\Split($requestOptions);
+    }
 }

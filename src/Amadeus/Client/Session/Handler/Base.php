@@ -170,6 +170,8 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
             $this->soapClients[$params->overrideSoapClientWsdlName] = $params->overrideSoapClient;
         }
         $this->setStateful($params->stateful);
+        $this->setTransactionFlowLink($params->enableTransactionFlowLink);
+        $this->setConsumerId($params->consumerId);
     }
 
 

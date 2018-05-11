@@ -651,6 +651,36 @@ Request Special Seat Type Aisle
     ]);
 
 
+Add manual ticket (FHE command)
+===============================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\ManualIssuedTicket;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $opt = new PnrAddMultiElementsOptions([
+        'elements' => [
+            new ManualIssuedTicket([
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_SEGMENT_TATTOO,
+                        'id' => 1
+                    ]),
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
+                        'id' => 2
+                    ])
+                ],
+                'ticketNumber' => "123456789",
+                'passengerType' => ManualIssuedTicket::PASSENGER_TYPE_PASSENGER,
+                'companyId' => "172",
+            ])
+        ]
+    ]);
+
+
 Group PNR
 =========
 

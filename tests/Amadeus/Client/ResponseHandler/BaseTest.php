@@ -1762,4 +1762,17 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(Result::STATUS_OK, $result->status);
         $this->assertEquals(0, count($result->messages));
     }
+
+    public function testCanHandlePNRSplit()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPNRSplitResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_Split');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
 }

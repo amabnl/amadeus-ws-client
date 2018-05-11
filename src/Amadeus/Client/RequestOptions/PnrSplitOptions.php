@@ -20,39 +20,29 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr\Element;
-
-use Amadeus\Client\RequestOptions\Pnr\Element;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * ManualIssuedTicket
+ * PnrSplitOptions
  *
- * @package Amadeus\Client\RequestOptions\Pnr\Element
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * The options available when doing a PNR_Split call.
+ *
+ * @package Amadeus\Client\RequestOptions
+ * @author Mike Hernas <m@hern.as>
  */
-class ManualIssuedTicket extends Element
+class PnrSplitOptions extends Base
 {
-    const PASSENGER_TYPE_INFANT = "INF";
-    const PASSENGER_TYPE_PASSENGER = "PAX";
-
     /**
-     * self::PASSENGER_TYPE_*
+     * Amadeus Record Locator for PNR
      *
      * @var string
      */
-    public $passengerType;
+    public $recordLocator;
 
     /**
-     * Company id (3 chars before `-` in ticket number)
+     * Passenger tattoos to split from PNR
      *
-     * @var string
+     * @var array
      */
-    public $companyId;
-
-    /**
-     * Ticket number (without company id, everything after `-`)
-     *
-     * @var string
-     */
-    public $ticketNumber;
+    public $passengerTattoos;
 }

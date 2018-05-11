@@ -20,39 +20,30 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr\Element;
-
-use Amadeus\Client\RequestOptions\Pnr\Element;
+namespace Amadeus\Client\Struct\Pnr\Split;
 
 /**
- * ManualIssuedTicket
+ * Passenger
  *
- * @package Amadeus\Client\RequestOptions\Pnr\Element
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @package Amadeus\Client\Struct\Pnr\Split
+ * @author Mike Hernas <m@hern.as>
  */
-class ManualIssuedTicket extends Element
+class Passenger
 {
-    const PASSENGER_TYPE_INFANT = "INF";
-    const PASSENGER_TYPE_PASSENGER = "PAX";
+    public $type = "PT";
 
     /**
-     * self::PASSENGER_TYPE_*
-     *
-     * @var string
+     * @var array
      */
-    public $passengerType;
+    public $tattoo;
 
     /**
-     * Company id (3 chars before `-` in ticket number)
+     * Passenger constructor.
      *
-     * @var string
+     * @param array $tattoos
      */
-    public $companyId;
-
-    /**
-     * Ticket number (without company id, everything after `-`)
-     *
-     * @var string
-     */
-    public $ticketNumber;
+    public function __construct($tattoos)
+    {
+        $this->tattoo = $tattoos;
+    }
 }

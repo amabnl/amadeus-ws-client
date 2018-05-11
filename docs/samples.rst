@@ -478,6 +478,20 @@ The example shows the message required to change the name of the passenger speci
         ])
     );
 
+------------
+PNR_Split
+------------
+
+Split passengers 1 and 2 from PNR ABC123:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrSplitOptions;
+
+    $pnrContent = $client->pnrSplit(
+        new PnrSplitOptions(['recordLocator' => 'ABC123', 'passengerTattoos' => [1, 2]])
+    );
+    
 
 *****
 Queue
@@ -593,7 +607,7 @@ Also You can use predefined queues of Amadeus Queue Bank:
     use Amadeus\Client\RequestOptions\QueueListOptions;
     use Amadeus\Client\RequestOptions\Queue;
 
-    $queueGeneral = $client->queueList(
+    $pnrsOnGeneralQueue = $client->queueList(
         new QueueListOptions([
             'queue' => new Queue([
                 'queue' => Queue::QUEUE_GENERAL,
@@ -602,7 +616,7 @@ Also You can use predefined queues of Amadeus Queue Bank:
         ])
     );
 
-    $queueTicketing = $client->queueList(
+    $pnrsOnTicketingQueue = $client->queueList(
         new QueueListOptions([
             'queue' => new Queue([
                 'queue' => Queue::QUEUE_TICKETING,
@@ -2402,6 +2416,23 @@ Template Override (cryptic equivalent TTP/*CO.....).:
                     'subCompoundType' => 'ITJTAF0FRLEBUSEXT01A'
                 ])
             ]
+        ])
+    );
+
+Revalidate ticket for ATC (changed segments: [3, 4], FA element line number: 14, coupon changed: [2, 3]):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
+
+    $issueTicketResponse = $client->docIssuanceIssueTicket(
+        new DocIssuanceIssueTicketOptions([
+            'options' => [
+                DocIssuanceIssueTicketOptions::OPTION_ETICKET_REVALIDATION
+            ],
+            'segmentTattoos' => [3, 4],
+            'lineNumbers' => [14],
+            'couponNumbers' => [2, 3]
         ])
     );
 

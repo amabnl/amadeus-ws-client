@@ -20,39 +20,35 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr\Element;
-
-use Amadeus\Client\RequestOptions\Pnr\Element;
+namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 /**
- * ManualIssuedTicket
+ * ManualDocument
  *
- * @package Amadeus\Client\RequestOptions\Pnr\Element
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @package Amadeus\Client\Struct\Pnr\AddMultiElements
+ * @author Mike Hernas <m@hern.as>
  */
-class ManualIssuedTicket extends Element
+class ManualDocument
 {
-    const PASSENGER_TYPE_INFANT = "INF";
-    const PASSENGER_TYPE_PASSENGER = "PAX";
-
     /**
-     * self::PASSENGER_TYPE_*
-     *
-     * @var string
-     */
-    public $passengerType;
-
-    /**
-     * Company id (3 chars before `-` in ticket number)
-     *
-     * @var string
+     * @var str
      */
     public $companyId;
 
     /**
-     * Ticket number (without company id, everything after `-`)
-     *
-     * @var string
+     * @var str
      */
     public $ticketNumber;
+
+    /**
+     * ManualDocument constructor.
+     *
+     * @param str $companyId
+     * @param str $ticketNumber
+     */
+    public function __construct($companyId, $ticketNumber)
+    {
+        $this->companyId = $companyId;
+        $this->ticketNumber = $ticketNumber;
+    }
 }

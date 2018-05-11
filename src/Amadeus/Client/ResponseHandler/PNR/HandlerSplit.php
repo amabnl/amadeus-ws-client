@@ -20,39 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Pnr\Element;
-
-use Amadeus\Client\RequestOptions\Pnr\Element;
+namespace Amadeus\Client\ResponseHandler\PNR;
 
 /**
- * ManualIssuedTicket
+ * HandlerSplit
  *
- * @package Amadeus\Client\RequestOptions\Pnr\Element
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @package Amadeus\Client\ResponseHandler\PNR
+ * @author Mike Hernas <m@hern.as>
  */
-class ManualIssuedTicket extends Element
+class HandlerSplit extends HandlerRetrieve
 {
-    const PASSENGER_TYPE_INFANT = "INF";
-    const PASSENGER_TYPE_PASSENGER = "PAX";
-
-    /**
-     * self::PASSENGER_TYPE_*
-     *
-     * @var string
-     */
-    public $passengerType;
-
-    /**
-     * Company id (3 chars before `-` in ticket number)
-     *
-     * @var string
-     */
-    public $companyId;
-
-    /**
-     * Ticket number (without company id, everything after `-`)
-     *
-     * @var string
-     */
-    public $ticketNumber;
 }
