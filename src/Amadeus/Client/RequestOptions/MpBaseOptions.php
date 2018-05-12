@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\RequestOptions;
 
+use Amadeus\Client\RequestOptions\Fare\MPTicketingPriceScheme;
+
 /**
  * MasterPricer Base Options
  *
@@ -138,6 +140,11 @@ class MpBaseOptions extends Base
      * @var bool
      */
     public $multiTicket = false;
+
+    /**
+     * @var MPTicketingPriceScheme
+     */
+    public $ticketingPriceScheme;
 
     /**
      * Optional. Weights for Multi Ticket functionality.
