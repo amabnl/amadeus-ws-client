@@ -1967,6 +1967,20 @@ Get details of the form of payment associated to TSM of tattoo 18:
         ])
     );
 
+------------------
+Ticket_RetrieveListOfTSM
+------------------
+
+Retrieve all the active TSMs of the current PNR with adults and infants:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketRetrieveListOfTSMOptions;
+
+    $retrieveListOfTsmResult = $client->ticketRetrieveListOfTSM(
+        new TicketRetrieveListOfTSMOptions()
+    );
+
 
 -----------------------
 Ticket_CheckEligibility

@@ -43,6 +43,7 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_DeleteTST
 - Ticket_DeleteTSMP
 - Ticket_DisplayTSMFareElement
+- Ticket_RetrieveListOfTSM
 - Ticket_CheckEligibility
 - Ticket_ATCShopperMasterPricerTravelBoardSearch
 - Ticket_RepricePNRWithBookingClass

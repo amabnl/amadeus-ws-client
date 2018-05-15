@@ -2019,9 +2019,7 @@ class ClientTest extends BaseTestCase
         $client = new Client($par);
 
         $response = $client->ticketRetrieveListOfTSM(
-            new Client\RequestOptions\TicketRetrieveListOfTSMOptions([
-                'tattoo' => 3
-            ])
+            new Client\RequestOptions\TicketRetrieveListOfTSMOptions()
         );
 
         $this->assertEquals($messageResult, $response);
