@@ -126,6 +126,20 @@ class ClientTest extends BaseTestCase
         $this->assertFalse($current);
     }
 
+    public function testCanSetTfl()
+    {
+        $client = new Client($this->makeDummyParams());
+
+        $current = $client->getConsumerId();
+
+        $this->assertNull($current);
+
+        $client->setConsumerId('dummy');
+        $current = $client->getConsumerId();
+
+        $this->assertEquals('dummy', $current);
+    }
+
     public function testWillGetNullFromGetLastReqResWhenNoCallsWerMade()
     {
         $client = new Client($this->makeDummyParams());

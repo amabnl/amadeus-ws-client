@@ -607,7 +607,7 @@ Also You can use predefined queues of Amadeus Queue Bank:
     use Amadeus\Client\RequestOptions\QueueListOptions;
     use Amadeus\Client\RequestOptions\Queue;
 
-    $queueGeneral = $client->queueList(
+    $pnrsOnGeneralQueue = $client->queueList(
         new QueueListOptions([
             'queue' => new Queue([
                 'queue' => Queue::QUEUE_GENERAL,
@@ -616,7 +616,7 @@ Also You can use predefined queues of Amadeus Queue Bank:
         ])
     );
 
-    $queueTicketing = $client->queueList(
+    $pnrsOnTicketingQueue = $client->queueList(
         new QueueListOptions([
             'queue' => new Queue([
                 'queue' => Queue::QUEUE_TICKETING,
