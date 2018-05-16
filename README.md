@@ -68,3 +68,9 @@ See the [Changelog](CHANGELOG.md).
 
 
 See some [example applications](docs/sample-applications.rst) built with this library.
+
+# Donate
+
+If you want to support development of this library or just buy me a beer, you can do so here :)
+
+[![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/dermikabe)
