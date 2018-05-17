@@ -992,6 +992,25 @@ class Client extends Base
     }
 
     /**
+     * Ticket_CreateTASF
+     *
+     * @param RequestOptions\TicketCreateTasfOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketCreateTASF(
+        RequestOptions\TicketCreateTasfOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_CreateTASF';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Ticket_DeleteTST
      *
      * @param RequestOptions\TicketDeleteTstOptions $options
