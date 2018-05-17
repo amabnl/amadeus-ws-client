@@ -1060,6 +1060,23 @@ class Client extends Base
     }
 
     /**
+     * Ticket_RetrieveListOfTSM
+     *
+     * @param RequestOptions\TicketRetrieveListOfTSMOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketRetrieveListOfTSM(RequestOptions\TicketRetrieveListOfTSMOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Ticket_RetrieveListOfTSM';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+    
+    /**
      * Ticket_DisplayTSMFareElement
      *
      * @param RequestOptions\TicketDisplayTsmFareElOptions $options

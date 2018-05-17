@@ -1230,6 +1230,18 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("CHECK FARE ELEMENTS", $result->messages[0]->text);
     }
 
+    public function testCanHandleTicketRetrieveListOfTSMResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketRetrieveListOfTSMReplyResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_RetrieveListOfTSM');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+    }
+
     public function testCanHandleTicketCheckEligibilityErrResponse()
     {
         $respHandler = new ResponseHandler\Base();
