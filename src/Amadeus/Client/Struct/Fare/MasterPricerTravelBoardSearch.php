@@ -22,7 +22,7 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\TicketingPriceScheme;
+use Amadeus\Client\RequestOptions\Fare\MPTicketingPriceScheme;
 use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
@@ -91,7 +91,7 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
      */
     public $itinerary = [];
     /**
-     * @var TicketingPriceScheme
+     * @var MPTicketingPriceScheme
      */
     public $ticketingPriceScheme;
     /**

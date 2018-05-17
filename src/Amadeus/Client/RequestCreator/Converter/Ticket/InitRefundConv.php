@@ -23,7 +23,7 @@
 namespace Amadeus\Client\RequestCreator\Converter\Ticket;
 
 use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\AmaTicketInitRefundOptions;
+use Amadeus\Client\RequestOptions\TicketInitRefundOptions;
 use Amadeus\Client\Struct;
 
 /**

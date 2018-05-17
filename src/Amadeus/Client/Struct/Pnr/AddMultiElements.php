@@ -78,6 +78,7 @@ class AddMultiElements extends BaseWsMessage
      * Create PNR_AddMultiElements object
      *
      * @param PnrAddMultiElementsBase|null $params
+     * @throws \ReflectionException
      */
     public function __construct(PnrAddMultiElementsBase $params = null)
     {
@@ -96,6 +97,7 @@ class AddMultiElements extends BaseWsMessage
      * For doing specific actions like ignoring or saving PNR.
      *
      * @param PnrAddMultiElementsOptions $params
+     * @throws \ReflectionException
      */
     protected function loadBare(PnrAddMultiElementsOptions $params)
     {
@@ -142,6 +144,7 @@ class AddMultiElements extends BaseWsMessage
      *
      * @throws InvalidArgumentException When invalid input is provided
      * @param PnrCreatePnrOptions $params
+     * @throws \ReflectionException
      */
     protected function loadCreatePnr(PnrCreatePnrOptions $params)
     {
@@ -174,6 +177,7 @@ class AddMultiElements extends BaseWsMessage
      * @param Itinerary[] $itineraries
      * @param Segment[] $legacySegments
      * @param int $tattooCounter (BYREF)
+     * @throws \ReflectionException
      */
     protected function addItineraries($itineraries, $legacySegments, &$tattooCounter)
     {
@@ -196,7 +200,7 @@ class AddMultiElements extends BaseWsMessage
      * @param int $tattooCounter
      * @param string|null $origin
      * @param string|null $destination
-     *
+     * @throws \ReflectionException
      */
     protected function addSegments($segments, &$tattooCounter, $origin = null, $destination = null)
     {
@@ -217,6 +221,7 @@ class AddMultiElements extends BaseWsMessage
      * @param Segment $segment
      * @param int $tattooCounter (BYREF)
      * @return ItineraryInfo
+     * @throws \ReflectionException
      */
     protected function createSegment($segment, &$tattooCounter)
     {
@@ -297,6 +302,7 @@ class AddMultiElements extends BaseWsMessage
      * @param bool $autoAddRf
      * @param string|null $defaultRf
      * @param string|null $explicitRf
+     * @throws \ReflectionException
      */
     protected function addElements($elements, &$tattooCounter, $autoAddRf, $defaultRf, $explicitRf = null)
     {
@@ -335,6 +341,7 @@ class AddMultiElements extends BaseWsMessage
      * @param int $tattooCounter (BYREF)
      * @throws InvalidArgumentException
      * @return DataElementsIndiv
+     * @throws \ReflectionException
      */
     protected function createElement($element, &$tattooCounter)
     {
@@ -358,6 +365,7 @@ class AddMultiElements extends BaseWsMessage
      * @param bool $doAutoAdd Wether to automatically add an RF field.
      * @param string|null $defaultRf The default RF string set in the client.
      * @param int $tattooCounter (BYREF)
+     * @throws \ReflectionException
      */
     protected function addReceivedFrom($explicitRf, $doAutoAdd, $defaultRf, &$tattooCounter)
     {
