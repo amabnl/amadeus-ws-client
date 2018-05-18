@@ -2160,6 +2160,75 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoTicketCreateTASF()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketCreateTASFmessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\CreateTASF(
+            new Client\RequestOptions\TicketCreateTasfOptions([
+                'passengerTattoo' => new Client\RequestOptions\Ticket\PassengerTattoo([
+                    'type' => Client\RequestOptions\Ticket\PassengerTattoo::TYPE_ADULT,
+                    'value' => 1,
+                ]),
+                'monetaryInformation' => new Client\RequestOptions\Ticket\MonetaryInformation([
+                    'amount' => 30,
+                    'currency' => 'EUR',
+                ]),
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_CreateTASF', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_CreateTASF' => ['version' => "12.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_CreateTASF')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketCreateTASF(
+            new Client\RequestOptions\TicketCreateTasfOptions([
+                'passengerTattoo' => new Client\RequestOptions\Ticket\PassengerTattoo([
+                    'type' => Client\RequestOptions\Ticket\PassengerTattoo::TYPE_ADULT,
+                    'value' => 1,
+                ]),
+                'monetaryInformation' => new Client\RequestOptions\Ticket\MonetaryInformation([
+                    'amount' => 30,
+                    'currency' => 'EUR',
+                ]),
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoTicketAtcShopperMasterPricerTravelBoardSearch()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();

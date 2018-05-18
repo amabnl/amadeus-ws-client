@@ -1836,6 +1836,54 @@ Set the form of payment Check to the TSM of tattoo 18:
         ])
     );
 
+---------------------------
+Ticket_CreateTASF
+---------------------------
+
+Create TASF of 30 euros with no RFIC (generic TASF):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCreateTasfOptions;
+    use Amadeus\Client\RequestOptions\Ticket\PassengerTattoo;
+    use Amadeus\Client\RequestOptions\Ticket\MonetaryInformation;
+
+    $createTasfResponse = $client->ticketCreateTASF(
+        new TicketCreateTasfOptions([
+            'passengerTattoo' => new PassengerTattoo([
+                'type' => PassengerTattoo::TYPE_ADULT,
+                'value' => 1
+            ]),
+            'monetaryInformation' => new MonetaryInformation([
+                'amount' => 30,
+                'currency' => 'EUR'
+            ])
+        ])
+    );
+
+
+TASF of 30 euros with an RFIC ("TASF for ticket issuance"). In this example, the RFIC "T" is used:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCreateTasfOptions;
+    use Amadeus\Client\RequestOptions\Ticket\PassengerTattoo;
+    use Amadeus\Client\RequestOptions\Ticket\MonetaryInformation;
+
+    $createTasfResponse = $client->ticketCreateTASF(
+        new TicketCreateTasfOptions([
+            'passengerTattoo' => new PassengerTattoo([
+                'type' => PassengerTattoo::TYPE_ADULT,
+                'value' => 1
+            ]),
+            'monetaryInformation' => new MonetaryInformation([
+                'amount' => 30,
+                'currency' => 'EUR'
+            ]),
+            'reasonForIssuanceCode' => 'T'
+        ])
+    );
+
 ----------------
 Ticket_DeleteTST
 ----------------

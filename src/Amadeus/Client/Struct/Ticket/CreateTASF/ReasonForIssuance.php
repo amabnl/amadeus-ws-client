@@ -12,10 +12,10 @@ class ReasonForIssuance
     /**
      * ReasonForIssuance constructor.
      *
-     * @param string $attributeType
+     * @param CriteriaDetails $criteriaDetails
      */
-    public function __construct($attributeType)
+    public function __construct(CriteriaDetails $criteriaDetails)
     {
-        $this->criteriaDetails = new CriteriaDetails($attributeType);
+        $this->criteriaDetails = $criteriaDetails;
     }
 }
