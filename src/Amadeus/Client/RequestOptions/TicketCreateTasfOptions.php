@@ -2,6 +2,9 @@
 
 namespace Amadeus\Client\RequestOptions;
 
+use Amadeus\Client\RequestOptions\Ticket\MonetaryInformation;
+use Amadeus\Client\RequestOptions\Ticket\PassengerTattoo;
+
 /**
  * TicketCreateTasfOptions
  *
@@ -10,5 +13,20 @@ namespace Amadeus\Client\RequestOptions;
  */
 class TicketCreateTasfOptions extends Base
 {
+    /**
+     * @var PassengerTattoo
+     */
+    public $passengerTattoo;
 
+    /**
+     * @var MonetaryInformation
+     */
+    public $monetaryInformation;
+
+    /**
+     * Used to specify the RFIC.
+     *
+     * @var string
+     */
+    public $reasonForIssuanceCode;
 }
