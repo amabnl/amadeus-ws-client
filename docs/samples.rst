@@ -1846,12 +1846,13 @@ Create TASF of 30 euros with no RFIC (generic TASF):
 
     use Amadeus\Client\RequestOptions\TicketCreateTasfOptions;
     use Amadeus\Client\RequestOptions\Ticket\PassengerTattoo;
+    use Amadeus\Client\RequestOptions\Ticket\PassengerReference;
     use Amadeus\Client\RequestOptions\Ticket\MonetaryInformation;
 
     $createTasfResponse = $client->ticketCreateTASF(
         new TicketCreateTasfOptions([
             'passengerTattoo' => new PassengerTattoo([
-                'type' => PassengerTattoo::TYPE_ADULT,
+                'type' => PassengerReference::TYPE_ADULT,
                 'value' => 1
             ]),
             'monetaryInformation' => new MonetaryInformation([
