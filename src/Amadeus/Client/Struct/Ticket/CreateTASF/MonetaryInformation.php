@@ -5,21 +5,9 @@ namespace Amadeus\Client\Struct\Ticket\CreateTASF;
 class MonetaryInformation
 {
     /**
-     * Must be always set to F
-     *
-     * @var string
+     * @var MonetaryDetails
      */
-    public $typeQualifier = 'F';
-
-    /**
-     * @var string|int
-     */
-    public $amount;
-
-    /**
-     * @var string
-     */
-    public $currency;
+    public $monetaryDetails;
 
     /**
      * MonetaryInformation constructor.
@@ -29,7 +17,6 @@ class MonetaryInformation
      */
     public function __construct($amount, $currency)
     {
-        $this->amount = $amount;
-        $this->currency = $currency;
+        $this->monetaryDetails = new MonetaryDetails($amount, $currency);
     }
 }

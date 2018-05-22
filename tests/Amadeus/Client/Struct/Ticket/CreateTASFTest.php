@@ -53,8 +53,8 @@ class CreateTASFTest extends BaseTestCase
 
         $this->assertEquals(PassengerTattoo::TYPE_ADULT, $message->passengerTattoo->passengerReference->type);
         $this->assertEquals(1, $message->passengerTattoo->passengerReference->value);
-        $this->assertEquals(30, $message->monetaryInformation->amount);
-        $this->assertEquals('EUR', $message->monetaryInformation->currency);
+        $this->assertEquals(30, $message->monetaryInformation->monetaryDetails->amount);
+        $this->assertEquals('EUR', $message->monetaryInformation->monetaryDetails->currency);
     }
 
     public function testCanMakeTASFOptionsWithRFIC()
@@ -75,8 +75,8 @@ class CreateTASFTest extends BaseTestCase
 
         $this->assertEquals(PassengerTattoo::TYPE_ADULT, $message->passengerTattoo->passengerReference->type);
         $this->assertEquals(1, $message->passengerTattoo->passengerReference->value);
-        $this->assertEquals(30, $message->monetaryInformation->amount);
-        $this->assertEquals('EUR', $message->monetaryInformation->currency);
+        $this->assertEquals(30, $message->monetaryInformation->monetaryDetails->amount);
+        $this->assertEquals('EUR', $message->monetaryInformation->monetaryDetails->currency);
 
         $this->assertEquals('T', $message->reasonForIssuanceCode->criteriaDetails->attributeType);
     }
