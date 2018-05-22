@@ -51,8 +51,8 @@ class CreateTASFTest extends BaseTestCase
 
         $message = new CreateTASF($opt);
 
-        $this->assertEquals(PassengerTattoo::TYPE_ADULT, $message->passengerTattoo->type);
-        $this->assertEquals(1, $message->passengerTattoo->value);
+        $this->assertEquals(PassengerTattoo::TYPE_ADULT, $message->passengerTattoo->passengerReference->type);
+        $this->assertEquals(1, $message->passengerTattoo->passengerReference->value);
         $this->assertEquals(30, $message->monetaryInformation->amount);
         $this->assertEquals('EUR', $message->monetaryInformation->currency);
     }
@@ -73,8 +73,8 @@ class CreateTASFTest extends BaseTestCase
 
         $message = new CreateTASF($opt);
 
-        $this->assertEquals(PassengerTattoo::TYPE_ADULT, $message->passengerTattoo->type);
-        $this->assertEquals(1, $message->passengerTattoo->value);
+        $this->assertEquals(PassengerTattoo::TYPE_ADULT, $message->passengerTattoo->passengerReference->type);
+        $this->assertEquals(1, $message->passengerTattoo->passengerReference->value);
         $this->assertEquals(30, $message->monetaryInformation->amount);
         $this->assertEquals('EUR', $message->monetaryInformation->currency);
 
