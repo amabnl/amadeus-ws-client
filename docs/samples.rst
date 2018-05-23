@@ -1852,7 +1852,7 @@ Create TASF of 30 euros with no RFIC (generic TASF):
         new TicketCreateTasfOptions([
             'passengerTattoo' => new PassengerTattoo([
                 'type' => PassengerTattoo::TYPE_ADULT,
-                'value' => PassengerTattoo
+                'value' => 1
             ]),
             'monetaryInformation' => new MonetaryInformation([
                 'amount' => 30,
