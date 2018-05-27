@@ -36,16 +36,16 @@ class ManualDocumentRegistration
     public $document;
 
     /**
-     * @var str
+     * @var string
      */
     public $passengerType;
 
     /**
      * ManualDocumentRegistration constructor.
      *
-     * @param str $passengerType
-     * @param str $companyId
-     * @param str $ticketNumber
+     * @param string $passengerType
+     * @param string $companyId
+     * @param string $ticketNumber
      */
     public function __construct($passengerType, $companyId, $ticketNumber)
     {

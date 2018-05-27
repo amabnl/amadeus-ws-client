@@ -31,7 +31,7 @@ namespace Amadeus\Client\Struct\DocRefund;
 class IgnoreInformation
 {
     /**
-     * @var str
+     * @var string
      */
     public $actionRequest;
 

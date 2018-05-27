@@ -104,6 +104,7 @@ class WsdlAnalyser
     /**
      * Loads messages & versions from WSDL.
      *
+     * @param $wsdls
      * @return array
      */
     public static function loadMessagesAndVersions($wsdls)

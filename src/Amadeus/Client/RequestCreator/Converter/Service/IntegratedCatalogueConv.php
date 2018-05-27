@@ -24,7 +24,6 @@ namespace Amadeus\Client\RequestCreator\Converter\Service;
 
 use Amadeus\Client\RequestCreator\Converter\BaseConverter;
 use Amadeus\Client\RequestOptions\ServiceIntegratedCatalogueOptions;
-use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
 use Amadeus\Client\Struct;
 
 /**

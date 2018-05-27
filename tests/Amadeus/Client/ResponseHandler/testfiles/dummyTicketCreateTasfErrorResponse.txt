@@ -1,0 +1,37 @@
+<Ticket_CreateTASFReply
+    xmlns="http://xml.amadeus.com/TTASCR_12_1_1A" >
+    <errorGroup>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>00477</errorCode>
+                <errorCategory>EC</errorCategory>
+                <errorCodeOwner>FCN</errorCodeOwner>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <source>S</source>
+                <encoding>7</encoding>
+            </freeTextDetails>
+            <freeText>INVALID FORMAT</freeText>
+        </errorWarningDescription>
+    </errorGroup>
+    <errorGroup>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>32293</errorCode>
+                <errorCategory>EC</errorCategory>
+                <errorCodeOwner>PCK</errorCodeOwner>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <source>S</source>
+                <encoding>7</encoding>
+            </freeTextDetails>
+            <freeText>ERROR DURING TASF CREATION</freeText>
+        </errorWarningDescription>
+    </errorGroup>
+</Ticket_CreateTASFReply>

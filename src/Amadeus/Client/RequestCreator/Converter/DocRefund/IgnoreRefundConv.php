@@ -23,7 +23,6 @@
 namespace Amadeus\Client\RequestCreator\Converter\DocRefund;
 
 use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\DocRefundInitRefundOptions;
 use Amadeus\Client\Struct;
 
 /**
@@ -35,6 +34,7 @@ use Amadeus\Client\Struct;
 class IgnoreRefundConv extends BaseConverter
 {
     /**
+     * @param $requestOptions
      * @param int|string $version
      * @return Struct\DocRefund\IgnoreRefund
      */

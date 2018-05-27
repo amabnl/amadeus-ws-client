@@ -22,7 +22,6 @@
 
 namespace Amadeus\Client\ResponseHandler\Air;
 
-use Amadeus\Client\Exception;
 use Amadeus\Client\ResponseHandler\StandardResponseHandler;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;

@@ -71,7 +71,6 @@ class ProcessETicket extends BaseWsMessage
 
     /**
      * @param string $action
-     * @param string[] $additionalActions
      */
     protected function loadMsgAction($action)
     {

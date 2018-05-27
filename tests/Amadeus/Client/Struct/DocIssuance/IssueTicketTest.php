@@ -30,7 +30,6 @@ use Amadeus\Client\Struct\DocIssuance\IssueTicket;
 use Amadeus\Client\Struct\DocIssuance\OverrideDate;
 use Amadeus\Client\Struct\DocIssuance\PassengerReference;
 use Amadeus\Client\Struct\DocIssuance\ReferenceDetails;
-use Amadeus\Client\Struct\DocIssuance\StatusDetails;
 use Test\Amadeus\BaseTestCase;
 
 /**
@@ -215,6 +214,5 @@ class IssueTicketTest extends BaseTestCase
 
         $this->assertEquals(3, $message->selection[0]->referenceDetails[2]->value);
         $this->assertEquals(ReferenceDetails::TYPE_COUPON_NUMBER, $message->selection[0]->referenceDetails[2]->type);
-        
     }
 }

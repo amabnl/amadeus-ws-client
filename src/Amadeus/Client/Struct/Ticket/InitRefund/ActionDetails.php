@@ -37,7 +37,7 @@ class ActionDetails extends BaseWsMessage
     /**
      * ActionDetails constructor.
      *
-     * @param array $options
+     * @param array $actionDetails
      */
     public function __construct($actionDetails)
     {

@@ -31,20 +31,20 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 class ManualDocument
 {
     /**
-     * @var str
+     * @var string
      */
     public $companyId;
 
     /**
-     * @var str
+     * @var string
      */
     public $ticketNumber;
 
     /**
      * ManualDocument constructor.
      *
-     * @param str $companyId
-     * @param str $ticketNumber
+     * @param string $companyId
+     * @param string $ticketNumber
      */
     public function __construct($companyId, $ticketNumber)
     {

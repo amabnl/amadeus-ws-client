@@ -8,7 +8,6 @@
 namespace Amadeus\Client\Struct\Ticket;
 
 use Amadeus\Client\RequestOptions\TicketCreateTsmFromPricingOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
  * Ticket_CreateTSMFromPricing request structure
