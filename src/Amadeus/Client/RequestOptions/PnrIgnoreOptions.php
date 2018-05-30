@@ -26,7 +26,7 @@ namespace Amadeus\Client\RequestOptions;
  * Pnr_Cancel Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @author  Michael Mueller <michael.mueller@invia.de>
  */
 class PnrIgnoreOptions extends PnrBase
 {
