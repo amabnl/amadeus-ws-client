@@ -432,6 +432,24 @@ class Client extends Base
     }
 
     /**
+     * PNR_Ignore - Ignore an Amadeus PNR by record locator
+     *
+     * @param RequestOptions\PnrIgnoreOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function pnrIgnore(RequestOptions\PnrIgnoreOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PNR_Ignore';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+
+    /**
      * Queue_RemoveItem - remove an item (a PNR) from a given queue
      *
      * @param RequestOptions\QueueRemoveItemOptions $options
