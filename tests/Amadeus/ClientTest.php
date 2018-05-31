@@ -35,24 +35,22 @@ class ClientTest extends BaseTestCase
 {
     public function testCanCreateClient()
     {
-        $par = new Params(
-            [
-                'sessionHandlerParams' => [
-                    'wsdl'       => $this->makePathToDummyWSDL(),
-                    'stateful'   => true,
-                    'logger'     => new NullLogger(),
-                    'authParams' => [
-                        'officeId'           => 'BRUXXXXXX',
-                        'originatorTypeCode' => 'U',
-                        'userId'             => 'WSXXXXXX',
-                        'passwordData'       => base64_encode('TEST'),
-                    ],
-                ],
-                'requestCreatorParams' => [
-                    'receivedFrom' => 'some RF string',
-                ],
+        $par = new Params([
+            'sessionHandlerParams' => [
+                'wsdl' => $this->makePathToDummyWSDL(),
+                'stateful' => true,
+                'logger' => new NullLogger(),
+                'authParams' => [
+                    'officeId' => 'BRUXXXXXX',
+                    'originatorTypeCode' => 'U',
+                    'userId' => 'WSXXXXXX',
+                    'passwordData' => base64_encode('TEST')
+                ]
+            ],
+            'requestCreatorParams' => [
+                'receivedFrom' => 'some RF string'
             ]
-        );
+        ]);
 
         $client = new Client($par);
 
@@ -61,13 +59,11 @@ class ClientTest extends BaseTestCase
 
     public function testCanCreateClientWithOverriddenSessionHandlerRequestCreatorAndResponseHandler()
     {
-        $par = new Params(
-            [
-                'sessionHandler'  => $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock(),
-                'requestCreator'  => $this->getMockBuilder('Amadeus\Client\RequestCreator\RequestCreatorInterface')->getMock(),
-                'responseHandler' => $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock(),
-            ]
-        );
+        $par = new Params([
+            'sessionHandler' => $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock(),
+            'requestCreator' => $this->getMockBuilder('Amadeus\Client\RequestCreator\RequestCreatorInterface')->getMock(),
+            'responseHandler' => $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock()
+        ]);
 
         $client = new Client($par);
 
@@ -80,24 +76,22 @@ class ClientTest extends BaseTestCase
 
     public function testCanCreateClientWithAuthOptionsAndSessionParams()
     {
-        $par = new Params(
-            [
-                'authParams'           => [
-                    'officeId'           => 'BRUXXXXXX',
-                    'originatorTypeCode' => 'U',
-                    'userId'             => 'WSXXXXXX',
-                    'passwordData'       => base64_encode('TEST'),
-                ],
-                'sessionHandlerParams' => [
-                    'wsdl'     => $this->makePathToDummyWSDL(),
-                    'stateful' => true,
-                    'logger'   => new NullLogger(),
-                ],
-                'requestCreatorParams' => [
-                    'receivedFrom' => 'some RF string',
-                ],
+        $par = new Params([
+            'authParams' => [
+                'officeId' => 'BRUXXXXXX',
+                'originatorTypeCode' => 'U',
+                'userId' => 'WSXXXXXX',
+                'passwordData' => base64_encode('TEST')
+            ],
+            'sessionHandlerParams' => [
+                'wsdl' => $this->makePathToDummyWSDL(),
+                'stateful' => true,
+                'logger' => new NullLogger()
+            ],
+            'requestCreatorParams' => [
+                'receivedFrom' => 'some RF string'
             ]
-        );
+        ]);
 
         $client = new Client($par);
 
@@ -174,18 +168,14 @@ class ClientTest extends BaseTestCase
 
     public function testCanDoDummyPnrRetrieveCall()
     {
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply.
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $expectedPnrResult = new Client\Struct\Pnr\Retrieve(
-            new Client\RequestOptions\PnrRetrieveOptions(
-                [
-                    'recordLocator' => 'ABC123',
-                ]
-            )
-        );
+        $expectedPnrResult = new Client\Struct\Pnr\Retrieve(new Client\RequestOptions\PnrRetrieveOptions([
+            'recordLocator' => 'ABC123'
+        ]));
 
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
@@ -207,19 +197,17 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PNR_Retrieve')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
-        $response = $client->pnrRetrieve(new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123']));
+        $response = $client->pnrRetrieve(new Client\RequestOptions\PnrRetrieveOptions(['recordLocator'=>'ABC123']));
 
         $this->assertEquals($messageResult, $response);
     }
@@ -227,9 +215,9 @@ class ClientTest extends BaseTestCase
 
     public function testCanDoDummyPnrRetrieveAndDisplayCall()
     {
-        $mockedSendResult                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml               = 'A dummy message result'; // Not an actual XML reply.
-        $mockedSendResult->responseObject            = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply.
+        $mockedSendResult->responseObject = new \stdClass();
         $mockedSendResult->responseObject->dummyprop = 'A dummy property'; // Not an actual response property.
 
         $messageResult = new Client\Result($mockedSendResult);
@@ -256,19 +244,17 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PNR_RetrieveAndDisplay')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
-        $response = $client->pnrRetrieveAndDisplay(new Client\RequestOptions\PnrRetrieveAndDisplayOptions(['recordLocator' => 'ABC123']));
+        $response = $client->pnrRetrieveAndDisplay(new Client\RequestOptions\PnrRetrieveAndDisplayOptions(['recordLocator'=>'ABC123']));
 
         $this->assertEquals($messageResult, $response);
     }
@@ -276,51 +262,41 @@ class ClientTest extends BaseTestCase
 
     public function testCanDoCreatePnrCall()
     {
-        $mockedSendResult                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml               = 'A dummy message result'; // Not an actual XML reply.
-        $mockedSendResult->responseObject            = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply.
+        $mockedSendResult->responseObject = new \stdClass();
         $mockedSendResult->responseObject->dummyprop = 'A dummy message result'; // Not an actual response property
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $options                      = new Client\RequestOptions\PnrCreatePnrOptions();
-        $options->actionCode          = 11; //11 End transact with retrieve (ER)
-        $options->travellers[]        = new Client\RequestOptions\Pnr\Traveller(
-            [
-                'number'    => 1,
-                'firstName' => 'FirstName',
-                'lastName'  => 'LastName',
-            ]
-        );
-        $options->itineraries         = [
-            new Client\RequestOptions\Pnr\Itinerary(
-                [
-                    'segments' => [
-                        new Client\RequestOptions\Pnr\Segment\Miscellaneous(
-                            [
-                                'status '  => Client\RequestOptions\Pnr\Segment::STATUS_CONFIRMED,
-                                'company'  => '1A',
-                                'date'     => \DateTime::createFromFormat('Ymd', '20161022', new \DateTimeZone('UTC')),
-                                'cityCode' => 'BRU',
-                                'freeText' => 'DUMMY MISCELLANEOUS SEGMENT',
-                            ]
-                        ),
-                    ],
+        $options = new Client\RequestOptions\PnrCreatePnrOptions();
+        $options->actionCode = 11; //11 End transact with retrieve (ER)
+        $options->travellers[] = new Client\RequestOptions\Pnr\Traveller([
+            'number' => 1,
+            'firstName' => 'FirstName',
+            'lastName' => 'LastName'
+        ]);
+        $options->itineraries = [
+            new Client\RequestOptions\Pnr\Itinerary([
+                'segments' => [
+                    new Client\RequestOptions\Pnr\Segment\Miscellaneous([
+                        'status ' => Client\RequestOptions\Pnr\Segment::STATUS_CONFIRMED,
+                        'company' => '1A',
+                        'date' => \DateTime::createFromFormat('Ymd', '20161022', new \DateTimeZone('UTC')),
+                        'cityCode' => 'BRU',
+                        'freeText' => 'DUMMY MISCELLANEOUS SEGMENT'
+                    ])
                 ]
-            ),
+            ])
         ];
-        $options->elements[]          = new Client\RequestOptions\Pnr\Element\Ticketing(
-            [
-                'ticketMode' => 'OK',
-            ]
-        );
-        $options->elements[]          = new Client\RequestOptions\Pnr\Element\Contact(
-            [
-                'type'  => Client\RequestOptions\Pnr\Element\Contact::TYPE_PHONE_MOBILE,
-                'value' => '+3222222222',
-            ]
-        );
-        $options->defaultReceivedFrom = 'some RF string amabnl-amadeus-ws-client-' . Client::VERSION;
+        $options->elements[] = new Client\RequestOptions\Pnr\Element\Ticketing([
+            'ticketMode' => 'OK'
+        ]);
+        $options->elements[] = new Client\RequestOptions\Pnr\Element\Contact([
+            'type' => Client\RequestOptions\Pnr\Element\Contact::TYPE_PHONE_MOBILE,
+            'value' => '+3222222222'
+        ]);
+        $options->defaultReceivedFrom = 'some RF string amabnl-amadeus-ws-client-'.Client::VERSION;
         $options->autoAddReceivedFrom = true;
 
         $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($options);
@@ -345,15 +321,13 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PNR_AddMultiElements')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -366,22 +340,20 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseObject            = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
         $mockedSendResult->responseObject->dummyProp = 'A dummy message result'; // Not an actual Soap reply.
-        $mockedSendResult->responseXml               = 'A dummy message result'; // Not an actual XML reply
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $options = new Client\RequestOptions\PnrAddMultiElementsOptions(
-            [
-                'actionCode' => Client\RequestOptions\PnrAddMultiElementsOptions::ACTION_END_TRANSACT_RETRIEVE,
-            ]
-        );
+        $options = new Client\RequestOptions\PnrAddMultiElementsOptions([
+            'actionCode' => Client\RequestOptions\PnrAddMultiElementsOptions::ACTION_END_TRANSACT_RETRIEVE,
+        ]);
 
         /** @var Client\RequestOptions\PnrAddMultiElementsOptions $expectedResultOpt */
-        $expectedResultOpt               = clone $options;
-        $expectedResultOpt->receivedFrom = 'some RF string ' . Client::RECEIVED_FROM_IDENTIFIER . '-' . Client::VERSION;
+        $expectedResultOpt = clone $options;
+        $expectedResultOpt->receivedFrom = 'some RF string '.Client::RECEIVED_FROM_IDENTIFIER.'-'.Client::VERSION;
 
         $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($expectedResultOpt);
 
@@ -404,15 +376,13 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PNR_AddMultiElements')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -425,23 +395,22 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseObject            = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
         $mockedSendResult->responseObject->dummyProp = 'A dummy message result'; // Not an actual Soap reply.
-        $mockedSendResult->responseXml               = 'A dummy message result'; // Not an actual XML reply
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $options               = new Client\RequestOptions\PnrAddMultiElementsOptions();
-        $options->actionCode   = 11; //11 End transact with retrieve (ER)
+        $options = new Client\RequestOptions\PnrAddMultiElementsOptions();
+        $options->actionCode = 11; //11 End transact with retrieve (ER)
         $options->receivedFrom = 'a unit test machine thingie';
 
         $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($options);
 
         $expectedPnrResult->dataElementsMaster = new Client\Struct\Pnr\AddMultiElements\DataElementsMaster();
 
-        $receivedFromElement               =
-            new Client\Struct\Pnr\AddMultiElements\DataElementsIndiv(Client\Struct\Pnr\AddMultiElements\ElementManagementData::SEGNAME_RECEIVE_FROM, 2);
+        $receivedFromElement = new Client\Struct\Pnr\AddMultiElements\DataElementsIndiv(Client\Struct\Pnr\AddMultiElements\ElementManagementData::SEGNAME_RECEIVE_FROM, 2);
         $receivedFromElement->freetextData = new Client\Struct\Pnr\AddMultiElements\FreetextData(
             'a unit test machine thingie',
             Client\Struct\Pnr\AddMultiElements\FreetextDetail::TYPE_RECEIVE_FROM
@@ -468,15 +437,13 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PNR_AddMultiElements')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -489,20 +456,18 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseObject            = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
         $mockedSendResult->responseObject->dummyProp = 'A dummy message result'; // Not an actual Soap reply.
-        $mockedSendResult->responseXml               = 'A dummy message result'; // Not an actual XML reply
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedPnrResult = new Client\Struct\Pnr\Cancel(
-            new Client\RequestOptions\PnrCancelOptions(
-                [
-                    'actionCode'      => 10,
-                    'cancelItinerary' => true,
-                ]
-            )
+            new Client\RequestOptions\PnrCancelOptions([
+                'actionCode' => 10,
+                'cancelItinerary' => true
+            ])
         );
 
         $mockSessionHandler
@@ -523,25 +488,21 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PNR_Cancel')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->pnrCancel(
-            new Client\RequestOptions\PnrCancelOptions(
-                [
-                    'actionCode'      => 10,
-                    'cancelItinerary' => true,
-                ]
-            )
+            new Client\RequestOptions\PnrCancelOptions([
+                'actionCode' => 10,
+                'cancelItinerary' => true
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -551,10 +512,10 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseObject            = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
         $mockedSendResult->responseObject->dummyProp = 'A dummy message result'; // Not an actual Soap reply.
-        $mockedSendResult->responseXml               = 'A dummy message result'; // Not an actual XML reply
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply
 
         $messageResult = new Client\Result($mockedSendResult);
 
@@ -580,15 +541,13 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PNR_Split')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -603,19 +562,17 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseObject            = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
         $mockedSendResult->responseObject->dummyProp = 'A dummy message result'; // Not an actual Soap reply.
-        $mockedSendResult->responseXml               = 'A dummy message result'; // Not an actual XML reply
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedPnrResult = new Client\Struct\Pnr\DisplayHistory(
-            new Client\RequestOptions\PnrDisplayHistoryOptions(
-                [
-                    'recordLocator' => 'ABC123',
-                ]
-            )
+            new Client\RequestOptions\PnrDisplayHistoryOptions([
+                'recordLocator' => 'ABC123'
+            ])
         );
 
         $mockSessionHandler
@@ -636,24 +593,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PNR_DisplayHistory')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->pnrDisplayHistory(
-            new Client\RequestOptions\PnrDisplayHistoryOptions(
-                [
-                    'recordLocator' => 'ABC123',
-                ]
-            )
+            new Client\RequestOptions\PnrDisplayHistoryOptions([
+                'recordLocator' => 'ABC123'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -663,20 +616,18 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseObject            = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
         $mockedSendResult->responseObject->dummyProp = 'A dummy message result'; // Not an actual Soap reply.
-        $mockedSendResult->responseXml               = 'A dummy message result'; // Not an actual XML reply
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedPnrResult = new Client\Struct\Pnr\TransferOwnership(
-            new Client\RequestOptions\PnrTransferOwnershipOptions(
-                [
-                    'recordLocator' => 'ABC123',
-                    'newOffice'     => 'BRUXXXXXX',
-                ]
-            )
+            new Client\RequestOptions\PnrTransferOwnershipOptions([
+                'recordLocator' => 'ABC123',
+                'newOffice' => 'BRUXXXXXX'
+            ])
         );
 
         $mockSessionHandler
@@ -697,25 +648,21 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PNR_TransferOwnership')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->pnrTransferOwnership(
-            new Client\RequestOptions\PnrTransferOwnershipOptions(
-                [
-                    'recordLocator' => 'ABC123',
-                    'newOffice'     => 'BRUXXXXXX',
-                ]
-            )
+            new Client\RequestOptions\PnrTransferOwnershipOptions([
+                'recordLocator' => 'ABC123',
+                'newOffice' => 'BRUXXXXXX'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -725,29 +672,25 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseObject            = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
         $mockedSendResult->responseObject->dummyProp = 'A dummy message result'; // Not an actual Soap reply.
-        $mockedSendResult->responseXml               = $this->getTestFile('pnrNameChangeReply141.txt');
+        $mockedSendResult->responseXml = $this->getTestFile('pnrNameChangeReply141.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedPnrResult = new Client\Struct\Pnr\NameChange(
-            new Client\RequestOptions\PnrNameChangeOptions(
-                [
-                    'operation'  => Client\RequestOptions\PnrNameChangeOptions::OPERATION_CHANGE,
-                    'passengers' => [
-                        new Client\RequestOptions\Pnr\NameChange\Passenger(
-                            [
-                                'reference' => 1,
-                                'type'      => 'ADT',
-                                'lastName'  => 'SURNAME',
-                                'firstName' => 'GIVENNAME MR',
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\PnrNameChangeOptions([
+                'operation' => Client\RequestOptions\PnrNameChangeOptions::OPERATION_CHANGE,
+                'passengers' => [
+                    new Client\RequestOptions\Pnr\NameChange\Passenger([
+                        'reference' => 1,
+                        'type' => 'ADT',
+                        'lastName' => 'SURNAME',
+                        'firstName' => 'GIVENNAME MR'
+                    ])
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -768,34 +711,28 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PNR_NameChange')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->pnrNameChange(
-            new Client\RequestOptions\PnrNameChangeOptions(
-                [
-                    'operation'  => Client\RequestOptions\PnrNameChangeOptions::OPERATION_CHANGE,
-                    'passengers' => [
-                        new Client\RequestOptions\Pnr\NameChange\Passenger(
-                            [
-                                'reference' => 1,
-                                'type'      => 'ADT',
-                                'lastName'  => 'SURNAME',
-                                'firstName' => 'GIVENNAME MR',
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\PnrNameChangeOptions([
+                'operation' => Client\RequestOptions\PnrNameChangeOptions::OPERATION_CHANGE,
+                'passengers' => [
+                    new Client\RequestOptions\Pnr\NameChange\Passenger([
+                        'reference' => 1,
+                        'type' => 'ADT',
+                        'lastName' => 'SURNAME',
+                        'firstName' => 'GIVENNAME MR'
+                    ])
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -806,27 +743,21 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $lastResponse  =
-            '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:awsse="http://xml.amadeus.com/2010/06/Session_v3" xmlns:wsa="http://www.w3.org/2005/08/addressing"><SOAP-ENV:Header><wsa:To>http://www.w3.org/2005/08/addressing/anonymous</wsa:To><wsa:From><wsa:Address>https://dummy.endpoint/ENDPOINT</wsa:Address></wsa:From><wsa:Action>http://webservices.amadeus.com/QDQLRQ_11_1_1A</wsa:Action><wsa:MessageID>urn:uuid:916bb446-a6fc-b8a4-b543-ce4b8ba124e1</wsa:MessageID><wsa:RelatesTo RelationshipType="http://www.w3.org/2005/08/addressing/reply">86653CF8-2017-2F7C-AFC2-BD07B22BD185</wsa:RelatesTo><awsse:Session TransactionStatusCode="End"><awsse:SessionId>SESSIONID</awsse:SessionId><awsse:SequenceNumber>1</awsse:SequenceNumber><awsse:SecurityToken>SECTOKEN</awsse:SecurityToken></awsse:Session></SOAP-ENV:Header><SOAP-ENV:Body><Queue_ListReply xmlns="http://xml.amadeus.com/QDQLRR_11_1_1A"><queueView><agent><originatorDetails><inHouseIdentification1>BRU1AXXXX</inHouseIdentification1></originatorDetails></agent><queueNumber><queueDetails><number>0</number></queueDetails></queueNumber><categoryDetails><subQueueInfoDetails><identificationType>C</identificationType><itemNumber>0</itemNumber></subQueueInfoDetails></categoryDetails><pnrCount><quantityDetails><numberOfUnit>1</numberOfUnit></quantityDetails></pnrCount><pnrCount><quantityDetails><numberOfUnit>1</numberOfUnit></quantityDetails></pnrCount><pnrCount><quantityDetails><numberOfUnit>1</numberOfUnit></quantityDetails></pnrCount><item><paxName><paxDetails><surname>TURBO</surname><type>0</type><quantity>0</quantity></paxDetails></paxName><recLoc><reservation><controlNumber>23TCZS</controlNumber></reservation></recLoc><agent><originatorDetails><inHouseIdentification1>BRU1AXXXX</inHouseIdentification1><inHouseIdentification2>WS</inHouseIdentification2></originatorDetails></agent><pnrdates><timeMode>700</timeMode><dateTime><year>2015</year><month>12</month><day>11</day></dateTime></pnrdates><pnrdates><timeMode>701</timeMode><dateTime><year>2016</year><month>1</month><day>5</day></dateTime></pnrdates><pnrdates><timeMode>711</timeMode><dateTime><year>2015</year><month>12</month><day>11</day><hour>12</hour><minutes>28</minutes></dateTime></pnrdates></item></queueView></Queue_ListReply></SOAP-ENV:Body></SOAP-ENV:Envelope>';
-        $messageResult =
-            '<Queue_ListReply xmlns="http://xml.amadeus.com/QDQLRR_11_1_1A"><queueView><agent><originatorDetails><inHouseIdentification1>BRU1AXXXX</inHouseIdentification1></originatorDetails></agent><queueNumber><queueDetails><number>0</number></queueDetails></queueNumber><categoryDetails><subQueueInfoDetails><identificationType>C</identificationType><itemNumber>0</itemNumber></subQueueInfoDetails></categoryDetails><pnrCount><quantityDetails><numberOfUnit>1</numberOfUnit></quantityDetails></pnrCount><pnrCount><quantityDetails><numberOfUnit>1</numberOfUnit></quantityDetails></pnrCount><pnrCount><quantityDetails><numberOfUnit>1</numberOfUnit></quantityDetails></pnrCount><item><paxName><paxDetails><surname>TURBO</surname><type>0</type><quantity>0</quantity></paxDetails></paxName><recLoc><reservation><controlNumber>23TCZS</controlNumber></reservation></recLoc><agent><originatorDetails><inHouseIdentification1>BRU1AXXXX</inHouseIdentification1><inHouseIdentification2>WS</inHouseIdentification2></originatorDetails></agent><pnrdates><timeMode>700</timeMode><dateTime><year>2015</year><month>12</month><day>11</day></dateTime></pnrdates><pnrdates><timeMode>701</timeMode><dateTime><year>2016</year><month>1</month><day>5</day></dateTime></pnrdates><pnrdates><timeMode>711</timeMode><dateTime><year>2015</year><month>12</month><day>11</day><hour>12</hour><minutes>28</minutes></dateTime></pnrdates></item></queueView></Queue_ListReply>';
+        $lastResponse = '<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:awsse="http://xml.amadeus.com/2010/06/Session_v3" xmlns:wsa="http://www.w3.org/2005/08/addressing"><SOAP-ENV:Header><wsa:To>http://www.w3.org/2005/08/addressing/anonymous</wsa:To><wsa:From><wsa:Address>https://dummy.endpoint/ENDPOINT</wsa:Address></wsa:From><wsa:Action>http://webservices.amadeus.com/QDQLRQ_11_1_1A</wsa:Action><wsa:MessageID>urn:uuid:916bb446-a6fc-b8a4-b543-ce4b8ba124e1</wsa:MessageID><wsa:RelatesTo RelationshipType="http://www.w3.org/2005/08/addressing/reply">86653CF8-2017-2F7C-AFC2-BD07B22BD185</wsa:RelatesTo><awsse:Session TransactionStatusCode="End"><awsse:SessionId>SESSIONID</awsse:SessionId><awsse:SequenceNumber>1</awsse:SequenceNumber><awsse:SecurityToken>SECTOKEN</awsse:SecurityToken></awsse:Session></SOAP-ENV:Header><SOAP-ENV:Body><Queue_ListReply xmlns="http://xml.amadeus.com/QDQLRR_11_1_1A"><queueView><agent><originatorDetails><inHouseIdentification1>BRU1AXXXX</inHouseIdentification1></originatorDetails></agent><queueNumber><queueDetails><number>0</number></queueDetails></queueNumber><categoryDetails><subQueueInfoDetails><identificationType>C</identificationType><itemNumber>0</itemNumber></subQueueInfoDetails></categoryDetails><pnrCount><quantityDetails><numberOfUnit>1</numberOfUnit></quantityDetails></pnrCount><pnrCount><quantityDetails><numberOfUnit>1</numberOfUnit></quantityDetails></pnrCount><pnrCount><quantityDetails><numberOfUnit>1</numberOfUnit></quantityDetails></pnrCount><item><paxName><paxDetails><surname>TURBO</surname><type>0</type><quantity>0</quantity></paxDetails></paxName><recLoc><reservation><controlNumber>23TCZS</controlNumber></reservation></recLoc><agent><originatorDetails><inHouseIdentification1>BRU1AXXXX</inHouseIdentification1><inHouseIdentification2>WS</inHouseIdentification2></originatorDetails></agent><pnrdates><timeMode>700</timeMode><dateTime><year>2015</year><month>12</month><day>11</day></dateTime></pnrdates><pnrdates><timeMode>701</timeMode><dateTime><year>2016</year><month>1</month><day>5</day></dateTime></pnrdates><pnrdates><timeMode>711</timeMode><dateTime><year>2015</year><month>12</month><day>11</day><hour>12</hour><minutes>28</minutes></dateTime></pnrdates></item></queueView></Queue_ListReply></SOAP-ENV:Body></SOAP-ENV:Envelope>';
+        $messageResult = '<Queue_ListReply xmlns="http://xml.amadeus.com/QDQLRR_11_1_1A"><queueView><agent><originatorDetails><inHouseIdentification1>BRU1AXXXX</inHouseIdentification1></originatorDetails></agent><queueNumber><queueDetails><number>0</number></queueDetails></queueNumber><categoryDetails><subQueueInfoDetails><identificationType>C</identificationType><itemNumber>0</itemNumber></subQueueInfoDetails></categoryDetails><pnrCount><quantityDetails><numberOfUnit>1</numberOfUnit></quantityDetails></pnrCount><pnrCount><quantityDetails><numberOfUnit>1</numberOfUnit></quantityDetails></pnrCount><pnrCount><quantityDetails><numberOfUnit>1</numberOfUnit></quantityDetails></pnrCount><item><paxName><paxDetails><surname>TURBO</surname><type>0</type><quantity>0</quantity></paxDetails></paxName><recLoc><reservation><controlNumber>23TCZS</controlNumber></reservation></recLoc><agent><originatorDetails><inHouseIdentification1>BRU1AXXXX</inHouseIdentification1><inHouseIdentification2>WS</inHouseIdentification2></originatorDetails></agent><pnrdates><timeMode>700</timeMode><dateTime><year>2015</year><month>12</month><day>11</day></dateTime></pnrdates><pnrdates><timeMode>701</timeMode><dateTime><year>2016</year><month>1</month><day>5</day></dateTime></pnrdates><pnrdates><timeMode>711</timeMode><dateTime><year>2015</year><month>12</month><day>11</day><hour>12</hour><minutes>28</minutes></dateTime></pnrdates></item></queueView></Queue_ListReply>';
 
-        $sendResult              = new Client\Session\Handler\SendResult();
+        $sendResult = new Client\Session\Handler\SendResult();
         $sendResult->responseXml = $messageResult;
 
         $expected = new Client\Result($sendResult);
 
         $expectedMessageResult = new Client\Struct\Queue\QueueList(
-            new Client\RequestOptions\QueueListOptions(
-                [
-                    'queue' => new Client\RequestOptions\Queue(
-                        [
-                            'queue'    => 50,
-                            'category' => 0,
-                        ]
-                    ),
-                ]
-            )
+            new Client\RequestOptions\QueueListOptions([
+                'queue' => new Client\RequestOptions\Queue([
+                    'queue' => 50,
+                    'category' => 0
+                ])
+            ])
         );
 
         $mockSessionHandler
@@ -851,29 +782,23 @@ class ClientTest extends BaseTestCase
             ->with($sendResult, 'Queue_List')
             ->will($this->returnValue($expected));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->queueList(
-            new Client\RequestOptions\QueueListOptions(
-                [
-                    'queue' => new Client\RequestOptions\Queue(
-                        [
-                            'queue'    => 50,
-                            'category' => 0,
-                        ]
-                    ),
-                ]
-            )
+            new Client\RequestOptions\QueueListOptions([
+                'queue' => new Client\RequestOptions\Queue([
+                    'queue' => 50,
+                    'category' => 0
+                ])
+            ])
         );
 
 
@@ -884,7 +809,7 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dumyplacepnrmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
@@ -892,12 +817,10 @@ class ClientTest extends BaseTestCase
         $expectedMessageResult = new Client\Struct\Queue\PlacePnr(
             'ABC123',
             'BRUXX0000',
-            new Client\RequestOptions\Queue(
-                [
-                    'queue'    => 50,
-                    'category' => 0,
-                ]
-            )
+            new Client\RequestOptions\Queue([
+                'queue'=> 50,
+                'category' => 0
+            ])
         );
 
         $mockSessionHandler
@@ -921,26 +844,22 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Queue_PlacePNR')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->queuePlacePnr(
-            new Client\RequestOptions\QueuePlacePnrOptions(
-                [
-                    'recordLocator'  => 'ABC123',
-                    'sourceOfficeId' => 'BRUXX0000',
-                    'targetQueue'    => new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0]),
-                ]
-            )
+            new Client\RequestOptions\QueuePlacePnrOptions([
+                'recordLocator' => 'ABC123',
+                'sourceOfficeId' => 'BRUXX0000',
+                'targetQueue' => new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0])
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -950,12 +869,12 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dumyremoveitemmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $expectedMessageResult = new Client\Struct\Queue\RemoveItem(new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0]), 'ABC123', 'BRUXX0000');
+        $expectedMessageResult = new Client\Struct\Queue\RemoveItem(new Client\RequestOptions\Queue(['queue'=> 50, 'category' => 0]), 'ABC123', 'BRUXX0000');
 
         $mockSessionHandler
             ->expects($this->once())
@@ -978,26 +897,22 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Queue_RemoveItem')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->queueRemoveItem(
-            new Client\RequestOptions\QueueRemoveItemOptions(
-                [
-                    'recordLocator'      => 'ABC123',
-                    'originatorOfficeId' => 'BRUXX0000',
-                    'queue'              => new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0]),
-                ]
-            )
+            new Client\RequestOptions\QueueRemoveItemOptions([
+                'recordLocator' => 'ABC123',
+                'originatorOfficeId' => 'BRUXX0000',
+                'queue' => new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0])
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1007,15 +922,12 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummymoveitemmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $expectedMessageResult = new Client\Struct\Queue\MoveItem(
-            'ABC123', 'BRUXX0000', new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0]),
-            new Client\RequestOptions\Queue(['queue' => 60, 'category' => 5])
-        );
+        $expectedMessageResult = new Client\Struct\Queue\MoveItem('ABC123', 'BRUXX0000', new Client\RequestOptions\Queue(['queue'=> 50, 'category' => 0]), new Client\RequestOptions\Queue(['queue'=> 60, 'category' => 5]));
 
         $mockSessionHandler
             ->expects($this->once())
@@ -1038,27 +950,23 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Queue_MoveItem')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->queueMoveItem(
-            new Client\RequestOptions\QueueMoveItemOptions(
-                [
-                    'recordLocator'    => 'ABC123',
-                    'officeId'         => 'BRUXX0000',
-                    'sourceQueue'      => new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0]),
-                    'destinationQueue' => new Client\RequestOptions\Queue(['queue' => 60, 'category' => 5]),
-                ]
-            )
+            new Client\RequestOptions\QueueMoveItemOptions([
+                'recordLocator' => 'ABC123',
+                'officeId' => 'BRUXX0000',
+                'sourceQueue' => new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0]),
+                'destinationQueue' => new Client\RequestOptions\Queue(['queue' => 60, 'category' => 5])
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1066,9 +974,9 @@ class ClientTest extends BaseTestCase
 
     public function testCanCrypticCall()
     {
-        $mockedSendResult                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml               = 'dummycrypticresponse';
-        $mockedSendResult->responseObject            = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummycrypticresponse';
+        $mockedSendResult->responseObject = new \stdClass();
         $mockedSendResult->responseObject->dummyprop = 'dummycrypticresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
@@ -1098,24 +1006,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Command_Cryptic')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->commandCryptic(
-            new Client\RequestOptions\CommandCrypticOptions(
-                [
-                    'entry' => 'DAC BRU',
-                ]
-            )
+            new Client\RequestOptions\CommandCrypticOptions([
+                'entry' => 'DAC BRU'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1123,24 +1027,21 @@ class ClientTest extends BaseTestCase
 
     public function testCanSendMiniRuleGetFromPricingRec()
     {
-        $mockedSendResult                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml               = 'dummyminiruleresponse';
-        $mockedSendResult->responseObject            = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyminiruleresponse';
+        $mockedSendResult->responseObject = new \stdClass();
         $mockedSendResult->responseObject->dummyprop = 'dummyminiruleresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\MiniRule\GetFromPricingRec(
-            new Client\RequestOptions\MiniRuleGetFromPricingRecOptions(
-                [
+            new Client\RequestOptions\MiniRuleGetFromPricingRecOptions([
                     'pricings' => [
-                        new Client\RequestOptions\MiniRule\Pricing(
-                            [
-                                'type' => Client\RequestOptions\MiniRule\Pricing::TYPE_OFFER,
-                                'id'   => Client\RequestOptions\MiniRule\Pricing::ALL_PRICINGS,
-                            ]
-                        ),
-                    ],
+                        new Client\RequestOptions\MiniRule\Pricing([
+                            'type' => Client\RequestOptions\MiniRule\Pricing::TYPE_OFFER,
+                            'id' => Client\RequestOptions\MiniRule\Pricing::ALL_PRICINGS
+                        ])
+                    ]
                 ]
             )
         );
@@ -1169,31 +1070,25 @@ class ClientTest extends BaseTestCase
             ->will($this->returnValue($messageResult));
 
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->miniRuleGetFromPricingRec(
-            new Client\RequestOptions\MiniRuleGetFromPricingRecOptions(
-                [
-                    'pricings' => [
-                        new Client\RequestOptions\MiniRule\Pricing(
-                            [
-                                'type' => Client\RequestOptions\MiniRule\Pricing::TYPE_OFFER,
-                                'id'   => Client\RequestOptions\MiniRule\Pricing::ALL_PRICINGS,
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\MiniRuleGetFromPricingRecOptions([
+                'pricings' => [
+                    new Client\RequestOptions\MiniRule\Pricing([
+                        'type' => Client\RequestOptions\MiniRule\Pricing::TYPE_OFFER,
+                        'id' => Client\RequestOptions\MiniRule\Pricing::ALL_PRICINGS
+                    ])
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1201,18 +1096,16 @@ class ClientTest extends BaseTestCase
 
     public function testCanSendMiniRuleGetFromPricing()
     {
-        $mockedSendResult                 = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml    = $this->getTestFile('miniRuleGetFromPricing11Reply.txt');
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('miniRuleGetFromPricing11Reply.txt');
         $mockedSendResult->responseObject = new \stdClass();
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\MiniRule\GetFromPricing(
-            new Client\RequestOptions\MiniRuleGetFromPricingOptions(
-                [
-                    'pricings' => [1],
-                ]
-            )
+            new Client\RequestOptions\MiniRuleGetFromPricingOptions([
+                'pricings' => [1]
+            ])
         );
 
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -1239,24 +1132,20 @@ class ClientTest extends BaseTestCase
             ->will($this->returnValue($messageResult));
 
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->miniRuleGetFromPricing(
-            new Client\RequestOptions\MiniRuleGetFromPricingOptions(
-                [
-                    'pricings' => [1],
-                ]
-            )
+            new Client\RequestOptions\MiniRuleGetFromPricingOptions([
+                'pricings' => [1]
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1264,18 +1153,16 @@ class ClientTest extends BaseTestCase
 
     public function testCanSendMiniRuleGetFromETicket()
     {
-        $mockedSendResult                 = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml    = $this->getTestFile('miniRuleGetFromETicketReply131.txt');
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('miniRuleGetFromETicketReply131.txt');
         $mockedSendResult->responseObject = new \stdClass();
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\MiniRule\GetFromETicket(
-            new Client\RequestOptions\MiniRuleGetFromETicketOptions(
-                [
-                    'eTicket' => '1234567891987',
-                ]
-            )
+            new Client\RequestOptions\MiniRuleGetFromETicketOptions([
+                'eTicket' => '1234567891987'
+            ])
         );
 
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -1302,24 +1189,20 @@ class ClientTest extends BaseTestCase
             ->will($this->returnValue($messageResult));
 
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->miniRuleGetFromETicket(
-            new Client\RequestOptions\MiniRuleGetFromETicketOptions(
-                [
-                    'eTicket' => '1234567891987',
-                ]
-            )
+            new Client\RequestOptions\MiniRuleGetFromETicketOptions([
+                'eTicket' => '1234567891987'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1329,31 +1212,25 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('offerCreateOfferReply132.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Offer\Create(
-            new Client\RequestOptions\OfferCreateOptions(
-                [
-                    'airRecommendations' => [
-                        new Client\RequestOptions\Offer\AirRecommendation(
-                            [
-                                'type'          => Client\RequestOptions\Offer\AirRecommendation::TYPE_FARE_RECOMMENDATION_NR,
-                                'id'            => 2,
-                                'paxReferences' => [
-                                    new Client\RequestOptions\Offer\PassengerDef(
-                                        [
-                                            'passengerTattoo' => 1,
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\OfferCreateOptions([
+                'airRecommendations' => [
+                    new Client\RequestOptions\Offer\AirRecommendation([
+                        'type' => Client\RequestOptions\Offer\AirRecommendation::TYPE_FARE_RECOMMENDATION_NR,
+                        'id' => 2,
+                        'paxReferences' => [
+                            new Client\RequestOptions\Offer\PassengerDef([
+                                'passengerTattoo' => 1
+                            ])
+                        ]
+                    ])
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -1377,38 +1254,30 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Offer_CreateOffer')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->offerCreate(
-            new Client\RequestOptions\OfferCreateOptions(
-                [
-                    'airRecommendations' => [
-                        new Client\RequestOptions\Offer\AirRecommendation(
-                            [
-                                'type'          => Client\RequestOptions\Offer\AirRecommendation::TYPE_FARE_RECOMMENDATION_NR,
-                                'id'            => 2,
-                                'paxReferences' => [
-                                    new Client\RequestOptions\Offer\PassengerDef(
-                                        [
-                                            'passengerTattoo' => 1,
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\OfferCreateOptions([
+                'airRecommendations' => [
+                    new Client\RequestOptions\Offer\AirRecommendation([
+                        'type' => Client\RequestOptions\Offer\AirRecommendation::TYPE_FARE_RECOMMENDATION_NR,
+                        'id' => 2,
+                        'paxReferences' => [
+                            new Client\RequestOptions\Offer\PassengerDef([
+                                'passengerTattoo' => 1
+                            ])
+                        ]
+                    ])
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1418,7 +1287,7 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyofferverifymessage';
 
         $messageResult = new Client\Result($mockedSendResult);
@@ -1449,25 +1318,21 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Offer_VerifyOffer')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->offerVerify(
-            new Client\RequestOptions\OfferVerifyOptions(
-                [
-                    'offerReference' => 1,
-                    'segmentName'    => 'AIR',
-                ]
-            )
+            new Client\RequestOptions\OfferVerifyOptions([
+                'offerReference' => 1,
+                'segmentName' => 'AIR'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1477,16 +1342,14 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyofferconfirmhotelmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Offer\ConfirmHotel(
-            new Client\RequestOptions\OfferConfirmHotelOptions(
-                [
-                ]
-            )
+            new Client\RequestOptions\OfferConfirmHotelOptions([
+            ])
         );
 
         $mockSessionHandler
@@ -1510,23 +1373,19 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Offer_ConfirmHotelOffer')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->offerConfirmHotel(
-            new Client\RequestOptions\OfferConfirmHotelOptions(
-                [
-                ]
-            )
+            new Client\RequestOptions\OfferConfirmHotelOptions([
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1536,18 +1395,16 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyofferconfirmcarmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Offer\ConfirmCar(
-            new Client\RequestOptions\OfferConfirmCarOptions(
-                [
-                    'passengerTattoo' => 1,
-                    'offerTattoo'     => 2,
-                ]
-            )
+            new Client\RequestOptions\OfferConfirmCarOptions([
+                'passengerTattoo' => 1,
+                'offerTattoo' => 2
+            ])
         );
 
         $mockSessionHandler
@@ -1571,25 +1428,21 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Offer_ConfirmCarOffer')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->offerConfirmCar(
-            new Client\RequestOptions\OfferConfirmCarOptions(
-                [
-                    'passengerTattoo' => 1,
-                    'offerTattoo'     => 2,
-                ]
-            )
+            new Client\RequestOptions\OfferConfirmCarOptions([
+                'passengerTattoo' => 1,
+                'offerTattoo' => 2
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1597,17 +1450,15 @@ class ClientTest extends BaseTestCase
 
     public function testCanDoInfoEncodeDecodeCity()
     {
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyinfo-encodedecodecity-message';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Info\EncodeDecodeCity(
-            new Client\RequestOptions\InfoEncodeDecodeCityOptions(
-                [
-                    'locationCode' => 'OPO',
-                ]
-            )
+            new Client\RequestOptions\InfoEncodeDecodeCityOptions([
+                'locationCode' => 'OPO'
+            ])
         );
 
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -1633,24 +1484,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Info_EncodeDecodeCity')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->infoEncodeDecodeCity(
-            new Client\RequestOptions\InfoEncodeDecodeCityOptions(
-                [
-                    'locationCode' => 'OPO',
-                ]
-            )
+            new Client\RequestOptions\InfoEncodeDecodeCityOptions([
+                'locationCode' => 'OPO'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1658,20 +1505,18 @@ class ClientTest extends BaseTestCase
 
     public function testCanDoPointOfRefSearch()
     {
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyinfo-pointofrefsearch-message';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\PointOfRef\Search(
-            new Client\RequestOptions\PointOfRefSearchOptions(
-                [
-                    'targetCategoryCode' => Client\RequestOptions\PointOfRefSearchOptions::TARGET_TRAIN,
-                    'latitude'           => '5099155',
-                    'longitude'          => '332824',
-                    'searchRadius'       => '15000',
-                ]
-            )
+            new Client\RequestOptions\PointOfRefSearchOptions([
+                'targetCategoryCode' => Client\RequestOptions\PointOfRefSearchOptions::TARGET_TRAIN,
+                'latitude' => '5099155',
+                'longitude' => '332824',
+                'searchRadius' => '15000'
+            ])
         );
 
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -1697,27 +1542,23 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PointOfRef_Search')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->pointOfRefSearch(
-            new Client\RequestOptions\PointOfRefSearchOptions(
-                [
-                    'targetCategoryCode' => Client\RequestOptions\PointOfRefSearchOptions::TARGET_TRAIN,
-                    'latitude'           => '5099155',
-                    'longitude'          => '332824',
-                    'searchRadius'       => '15000',
-                ]
-            )
+            new Client\RequestOptions\PointOfRefSearchOptions([
+                'targetCategoryCode' => Client\RequestOptions\PointOfRefSearchOptions::TARGET_TRAIN,
+                'latitude' => '5099155',
+                'longitude' => '332824',
+                'searchRadius' => '15000'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1728,23 +1569,19 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketCreateTSTFromPricingmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\CreateTSTFromPricing(
-            new Client\RequestOptions\TicketCreateTstFromPricingOptions(
-                [
-                    'pricings' => [
-                        new Client\RequestOptions\Ticket\Pricing(
-                            [
-                                'tstNumber' => 1,
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\TicketCreateTstFromPricingOptions([
+                'pricings' => [
+                    new Client\RequestOptions\Ticket\Pricing([
+                        'tstNumber' => 1
+                    ])
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -1768,30 +1605,24 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_CreateTSTFromPricing')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketCreateTSTFromPricing(
-            new Client\RequestOptions\TicketCreateTstFromPricingOptions(
-                [
-                    'pricings' => [
-                        new Client\RequestOptions\Ticket\Pricing(
-                            [
-                                'tstNumber' => 1,
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\TicketCreateTstFromPricingOptions([
+                'pricings' => [
+                    new Client\RequestOptions\Ticket\Pricing([
+                        'tstNumber' => 1
+                    ])
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1801,23 +1632,19 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketCreateTSMFromPricingmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\CreateTSMFromPricing(
-            new Client\RequestOptions\TicketCreateTsmFromPricingOptions(
-                [
-                    'pricings' => [
-                        new Client\RequestOptions\Ticket\Pricing(
-                            [
-                                'tsmNumber' => 1,
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\TicketCreateTsmFromPricingOptions([
+                'pricings' => [
+                    new Client\RequestOptions\Ticket\Pricing([
+                        'tsmNumber' => 1
+                    ])
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -1841,30 +1668,24 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_CreateTSMFromPricing')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketCreateTSMFromPricing(
-            new Client\RequestOptions\TicketCreateTsmFromPricingOptions(
-                [
-                    'pricings' => [
-                        new Client\RequestOptions\Ticket\Pricing(
-                            [
-                                'tsmNumber' => 1,
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\TicketCreateTsmFromPricingOptions([
+                'pricings' => [
+                    new Client\RequestOptions\Ticket\Pricing([
+                        'tsmNumber' => 1
+                    ])
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1874,19 +1695,17 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketCreateTSMFareElementmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\CreateTSMFareElement(
-            new Client\RequestOptions\TicketCreateTsmFareElOptions(
-                [
-                    'type'   => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
-                    'tattoo' => '18',
-                    'info'   => '#####',
-                ]
-            )
+            new Client\RequestOptions\TicketCreateTsmFareElOptions([
+                'type' => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+                'tattoo' => '18',
+                'info' => '#####',
+            ])
         );
 
         $mockSessionHandler
@@ -1910,26 +1729,22 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_CreateTSMFareElement')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketCreateTSMFareElement(
-            new Client\RequestOptions\TicketCreateTsmFareElOptions(
-                [
-                    'type'   => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
-                    'tattoo' => '18',
-                    'info'   => '#####',
-                ]
-            )
+            new Client\RequestOptions\TicketCreateTsmFareElOptions([
+                'type' => Client\RequestOptions\TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
+                'tattoo' => '18',
+                'info' => '#####',
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -1939,18 +1754,16 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketDeleteTSTmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\DeleteTST(
-            new Client\RequestOptions\TicketDeleteTstOptions(
-                [
-                    'deleteMode' => Client\RequestOptions\TicketDeleteTstOptions::DELETE_MODE_SELECTIVE,
-                    'tstNumber'  => 1,
-                ]
-            )
+            new Client\RequestOptions\TicketDeleteTstOptions([
+                'deleteMode' => Client\RequestOptions\TicketDeleteTstOptions::DELETE_MODE_SELECTIVE,
+                'tstNumber' => 1
+            ])
         );
 
         $mockSessionHandler
@@ -1974,25 +1787,21 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_DeleteTST')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketDeleteTST(
-            new Client\RequestOptions\TicketDeleteTstOptions(
-                [
-                    'deleteMode' => Client\RequestOptions\TicketDeleteTstOptions::DELETE_MODE_SELECTIVE,
-                    'tstNumber'  => 1,
-                ]
-            )
+            new Client\RequestOptions\TicketDeleteTstOptions([
+                'deleteMode' => Client\RequestOptions\TicketDeleteTstOptions::DELETE_MODE_SELECTIVE,
+                'tstNumber' => 1
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2002,17 +1811,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('ticketDeleteTsmpReply81.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\DeleteTSMP(
-            new Client\RequestOptions\TicketDeleteTsmpOptions(
-                [
-                    'paxTattoos' => [1, 2],
-                ]
-            )
+            new Client\RequestOptions\TicketDeleteTsmpOptions([
+                'paxTattoos' => [1, 2]
+            ])
         );
 
         $mockSessionHandler
@@ -2036,24 +1843,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_DeleteTSMP')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketDeleteTSMP(
-            new Client\RequestOptions\TicketDeleteTsmpOptions(
-                [
-                    'paxTattoos' => [1, 2],
-                ]
-            )
+            new Client\RequestOptions\TicketDeleteTsmpOptions([
+                'paxTattoos' => [1, 2]
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2063,17 +1866,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketDisplayTSTmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\DisplayTST(
-            new Client\RequestOptions\TicketDisplayTstOptions(
-                [
-                    'displayMode' => Client\RequestOptions\TicketDisplayTstOptions::MODE_ALL,
-                ]
-            )
+            new Client\RequestOptions\TicketDisplayTstOptions([
+                'displayMode' => Client\RequestOptions\TicketDisplayTstOptions::MODE_ALL
+            ])
         );
 
         $mockSessionHandler
@@ -2097,24 +1898,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_DisplayTST')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketDisplayTST(
-            new Client\RequestOptions\TicketDisplayTstOptions(
-                [
-                    'displayMode' => Client\RequestOptions\TicketDisplayTstOptions::MODE_ALL,
-                ]
-            )
+            new Client\RequestOptions\TicketDisplayTstOptions([
+                'displayMode' => Client\RequestOptions\TicketDisplayTstOptions::MODE_ALL
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2124,17 +1921,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketDisplayTSMPmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\DisplayTSMP(
-            new Client\RequestOptions\TicketDisplayTsmpOptions(
-                [
-                    'tattoo' => 3,
-                ]
-            )
+            new Client\RequestOptions\TicketDisplayTsmpOptions([
+                'tattoo' => 3
+            ])
         );
 
         $mockSessionHandler
@@ -2158,24 +1953,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_DisplayTSMP')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketDisplayTSMP(
-            new Client\RequestOptions\TicketDisplayTsmpOptions(
-                [
-                    'tattoo' => 3,
-                ]
-            )
+            new Client\RequestOptions\TicketDisplayTsmpOptions([
+                'tattoo' => 3
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2185,17 +1976,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketRetrieveListOfTSMmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\RetrieveListOfTSM(
-            new Client\RequestOptions\TicketRetrieveListOfTSMOptions(
-                [
-                    'tattoo' => 3,
-                ]
-            )
+            new Client\RequestOptions\TicketRetrieveListOfTSMOptions([
+                'tattoo' => 3
+            ])
         );
 
         $mockSessionHandler
@@ -2219,15 +2008,13 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_RetrieveListOfTSM')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -2242,17 +2029,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketDisplayTSMFareElementmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\DisplayTSMFareElement(
-            new Client\RequestOptions\TicketDisplayTsmFareElOptions(
-                [
-                    'tattoo' => 18,
-                ]
-            )
+            new Client\RequestOptions\TicketDisplayTsmFareElOptions([
+                'tattoo' => 18
+            ])
         );
 
         $mockSessionHandler
@@ -2276,24 +2061,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_DisplayTSMFareElement')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketDisplayTSMFareElement(
-            new Client\RequestOptions\TicketDisplayTsmFareElOptions(
-                [
-                    'tattoo' => 18,
-                ]
-            )
+            new Client\RequestOptions\TicketDisplayTsmFareElOptions([
+                'tattoo' => 18
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2304,31 +2085,27 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketCheckEligibilitymessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\CheckEligibility(
-            new Client\RequestOptions\TicketCheckEligibilityOptions(
-                [
-                    'nrOfRequestedPassengers' => 1,
-                    'passengers'              => [
-                        new Client\RequestOptions\Fare\MPPassenger(
-                            [
-                                'type'  => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
-                                'count' => 1,
-                            ]
-                        ),
-                    ],
-                    'flightOptions'           => [
-                        Client\RequestOptions\TicketCheckEligibilityOptions::FLIGHTOPT_PUBLISHED,
-                    ],
-                    'ticketNumbers'           => [
-                        '1722300000004',
-                    ],
+            new Client\RequestOptions\TicketCheckEligibilityOptions([
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new Client\RequestOptions\Fare\MPPassenger([
+                        'type' => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'flightOptions' => [
+                    Client\RequestOptions\TicketCheckEligibilityOptions::FLIGHTOPT_PUBLISHED,
+                ],
+                'ticketNumbers' => [
+                    '1722300000004'
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -2352,38 +2129,32 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_CheckEligibility')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketCheckEligibility(
-            new Client\RequestOptions\TicketCheckEligibilityOptions(
-                [
-                    'nrOfRequestedPassengers' => 1,
-                    'passengers'              => [
-                        new Client\RequestOptions\Fare\MPPassenger(
-                            [
-                                'type'  => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
-                                'count' => 1,
-                            ]
-                        ),
-                    ],
-                    'flightOptions'           => [
-                        Client\RequestOptions\TicketCheckEligibilityOptions::FLIGHTOPT_PUBLISHED,
-                    ],
-                    'ticketNumbers'           => [
-                        '1722300000004',
-                    ],
+            new Client\RequestOptions\TicketCheckEligibilityOptions([
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new Client\RequestOptions\Fare\MPPassenger([
+                        'type' => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'flightOptions' => [
+                    Client\RequestOptions\TicketCheckEligibilityOptions::FLIGHTOPT_PUBLISHED,
+                ],
+                'ticketNumbers' => [
+                    '1722300000004'
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2393,28 +2164,22 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketCreateTASFmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\CreateTASF(
-            new Client\RequestOptions\TicketCreateTasfOptions(
-                [
-                    'passengerTattoo'     => new Client\RequestOptions\Ticket\PassengerTattoo(
-                        [
-                            'type'  => Client\RequestOptions\Ticket\PassengerTattoo::TYPE_ADULT,
-                            'value' => 1,
-                        ]
-                    ),
-                    'monetaryInformation' => new Client\RequestOptions\Ticket\MonetaryInformation(
-                        [
-                            'amount'   => 30,
-                            'currency' => 'EUR',
-                        ]
-                    ),
-                ]
-            )
+            new Client\RequestOptions\TicketCreateTasfOptions([
+                'passengerTattoo' => new Client\RequestOptions\Ticket\PassengerTattoo([
+                    'type' => Client\RequestOptions\Ticket\PassengerTattoo::TYPE_ADULT,
+                    'value' => 1,
+                ]),
+                'monetaryInformation' => new Client\RequestOptions\Ticket\MonetaryInformation([
+                    'amount' => 30,
+                    'currency' => 'EUR',
+                ]),
+            ])
         );
 
         $mockSessionHandler
@@ -2438,35 +2203,27 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_CreateTASF')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketCreateTASF(
-            new Client\RequestOptions\TicketCreateTasfOptions(
-                [
-                    'passengerTattoo'     => new Client\RequestOptions\Ticket\PassengerTattoo(
-                        [
-                            'type'  => Client\RequestOptions\Ticket\PassengerTattoo::TYPE_ADULT,
-                            'value' => 1,
-                        ]
-                    ),
-                    'monetaryInformation' => new Client\RequestOptions\Ticket\MonetaryInformation(
-                        [
-                            'amount'   => 30,
-                            'currency' => 'EUR',
-                        ]
-                    ),
-                ]
-            )
+            new Client\RequestOptions\TicketCreateTasfOptions([
+                'passengerTattoo' => new Client\RequestOptions\Ticket\PassengerTattoo([
+                    'type' => Client\RequestOptions\Ticket\PassengerTattoo::TYPE_ADULT,
+                    'value' => 1,
+                ]),
+                'monetaryInformation' => new Client\RequestOptions\Ticket\MonetaryInformation([
+                    'amount' => 30,
+                    'currency' => 'EUR',
+                ]),
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2476,17 +2233,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketAtcShopperMasterPricerTravelBoardSearchMessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\AtcShopperMasterPricerTravelBoardSearch(
-            new Client\RequestOptions\TicketAtcShopperMpTbSearchOptions(
-                [
+            new Client\RequestOptions\TicketAtcShopperMpTbSearchOptions([
 
-                ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -2514,24 +2269,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_ATCShopperMasterPricerTravelBoardSearch')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketAtcShopperMasterPricerTravelBoardSearch(
-            new Client\RequestOptions\TicketAtcShopperMpTbSearchOptions(
-                [
+            new Client\RequestOptions\TicketAtcShopperMpTbSearchOptions([
 
-                ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2541,64 +2292,48 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketRepricePNRWithBookingClassMessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\RepricePnrWithBookingClass(
-            new Client\RequestOptions\TicketRepricePnrWithBookingClassOptions(
-                [
-                    'exchangeInfo'    => [
-                        new Client\RequestOptions\Ticket\ExchangeInfoOptions(
-                            [
-                                'number'   => 1,
-                                'eTickets' => [
-                                    '9998550225521',
-                                ],
-                            ]
-                        ),
-                    ],
-                    'multiReferences' => [
-                        new Client\RequestOptions\Ticket\MultiRefOpt(
-                            [
-                                'references' => [
-                                    new Client\RequestOptions\Ticket\PaxSegRef(
-                                        [
-                                            'reference' => 3,
-                                            'type'      => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT,
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\Ticket\PaxSegRef(
-                                        [
-                                            'reference' => 4,
-                                            'type'      => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT,
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                        new Client\RequestOptions\Ticket\MultiRefOpt(
-                            [
-                                'references' => [
-                                    new Client\RequestOptions\Ticket\PaxSegRef(
-                                        [
-                                            'reference' => 1,
-                                            'type'      => Client\RequestOptions\Ticket\PaxSegRef::TYPE_PASSENGER_ADULT,
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\Ticket\PaxSegRef(
-                                        [
-                                            'reference' => 1,
-                                            'type'      => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SERVICE,
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\TicketRepricePnrWithBookingClassOptions([
+                'exchangeInfo' => [
+                    new Client\RequestOptions\Ticket\ExchangeInfoOptions([
+                        'number' => 1,
+                        'eTickets' => [
+                            '9998550225521'
+                        ]
+                    ])
+                ],
+                'multiReferences' => [
+                    new Client\RequestOptions\Ticket\MultiRefOpt([
+                        'references' => [
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 3,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT
+                            ]),
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 4,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT
+                            ])
+                        ]
+                    ]),
+                    new Client\RequestOptions\Ticket\MultiRefOpt([
+                        'references' => [
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 1,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_PASSENGER_ADULT
+                            ]),
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 1,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SERVICE
+                            ])
+                        ]
+                    ]),
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -2626,71 +2361,53 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_RepricePNRWithBookingClass')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketRepricePnrWithBookingClass(
-            new Client\RequestOptions\TicketRepricePnrWithBookingClassOptions(
-                [
-                    'exchangeInfo'    => [
-                        new Client\RequestOptions\Ticket\ExchangeInfoOptions(
-                            [
-                                'number'   => 1,
-                                'eTickets' => [
-                                    '9998550225521',
-                                ],
-                            ]
-                        ),
-                    ],
-                    'multiReferences' => [
-                        new Client\RequestOptions\Ticket\MultiRefOpt(
-                            [
-                                'references' => [
-                                    new Client\RequestOptions\Ticket\PaxSegRef(
-                                        [
-                                            'reference' => 3,
-                                            'type'      => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT,
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\Ticket\PaxSegRef(
-                                        [
-                                            'reference' => 4,
-                                            'type'      => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT,
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                        new Client\RequestOptions\Ticket\MultiRefOpt(
-                            [
-                                'references' => [
-                                    new Client\RequestOptions\Ticket\PaxSegRef(
-                                        [
-                                            'reference' => 1,
-                                            'type'      => Client\RequestOptions\Ticket\PaxSegRef::TYPE_PASSENGER_ADULT,
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\Ticket\PaxSegRef(
-                                        [
-                                            'reference' => 1,
-                                            'type'      => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SERVICE,
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\TicketRepricePnrWithBookingClassOptions([
+                'exchangeInfo' => [
+                    new Client\RequestOptions\Ticket\ExchangeInfoOptions([
+                        'number' => 1,
+                        'eTickets' => [
+                            '9998550225521'
+                        ]
+                    ])
+                ],
+                'multiReferences' => [
+                    new Client\RequestOptions\Ticket\MultiRefOpt([
+                        'references' => [
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 3,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT
+                            ]),
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 4,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SEGMENT
+                            ])
+                        ]
+                    ]),
+                    new Client\RequestOptions\Ticket\MultiRefOpt([
+                        'references' => [
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 1,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_PASSENGER_ADULT
+                            ]),
+                            new Client\RequestOptions\Ticket\PaxSegRef([
+                                'reference' => 1,
+                                'type' => Client\RequestOptions\Ticket\PaxSegRef::TYPE_SERVICE
+                            ])
+                        ]
+                    ]),
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2700,17 +2417,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketReissueConfirmedPricingMessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\ReissueConfirmedPricing(
-            new Client\RequestOptions\TicketReissueConfirmedPricingOptions(
-                [
-                    'eTickets' => ['0572146640300'],
-                ]
-            )
+            new Client\RequestOptions\TicketReissueConfirmedPricingOptions([
+                'eTickets' => ['0572146640300']
+            ])
         );
 
         $mockSessionHandler
@@ -2738,24 +2453,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_ReissueConfirmedPricing')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketReissueConfirmedPricing(
-            new Client\RequestOptions\TicketReissueConfirmedPricingOptions(
-                [
-                    'eTickets' => ['0572146640300'],
-                ]
-            )
+            new Client\RequestOptions\TicketReissueConfirmedPricingOptions([
+                'eTickets' => ['0572146640300']
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2765,19 +2476,17 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketCancelDocumentMessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\CancelDocument(
-            new Client\RequestOptions\TicketCancelDocumentOptions(
-                [
-                    'eTicket'              => '1721587458965',
-                    'airlineStockProvider' => '6X',
-                    'officeId'             => 'NCE6X0100',
-                ]
-            )
+            new Client\RequestOptions\TicketCancelDocumentOptions([
+                'eTicket' => '1721587458965',
+                'airlineStockProvider' => '6X',
+                'officeId' => 'NCE6X0100'
+            ])
         );
 
         $mockSessionHandler
@@ -2805,26 +2514,22 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_CancelDocument')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketCancelDocument(
-            new Client\RequestOptions\TicketCancelDocumentOptions(
-                [
-                    'eTicket'              => '1721587458965',
-                    'airlineStockProvider' => '6X',
-                    'officeId'             => 'NCE6X0100',
-                ]
-            )
+            new Client\RequestOptions\TicketCancelDocumentOptions([
+                'eTicket' => '1721587458965',
+                'airlineStockProvider' => '6X',
+                'officeId' => 'NCE6X0100'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2834,18 +2539,16 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketProcessEDocMessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\ProcessEDoc(
-            new Client\RequestOptions\TicketProcessEDocOptions(
-                [
-                    'ticketNumber' => '1721587458965',
-                    'action'       => Client\RequestOptions\TicketProcessEDocOptions::ACTION_EMD_DISPLAY,
-                ]
-            )
+            new Client\RequestOptions\TicketProcessEDocOptions([
+                'ticketNumber' => '1721587458965',
+                'action' => Client\RequestOptions\TicketProcessEDocOptions::ACTION_EMD_DISPLAY,
+            ])
         );
 
         $mockSessionHandler
@@ -2873,25 +2576,21 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_ProcessEDoc')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketProcessEDoc(
-            new Client\RequestOptions\TicketProcessEDocOptions(
-                [
-                    'ticketNumber' => '1721587458965',
-                    'action'       => Client\RequestOptions\TicketProcessEDocOptions::ACTION_EMD_DISPLAY,
-                ]
-            )
+            new Client\RequestOptions\TicketProcessEDocOptions([
+                'ticketNumber' => '1721587458965',
+                'action' => Client\RequestOptions\TicketProcessEDocOptions::ACTION_EMD_DISPLAY,
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2901,18 +2600,16 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyTicketProcessETicketMessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Ticket\ProcessETicket(
-            new Client\RequestOptions\TicketProcessETicketOptions(
-                [
-                    'ticketNumber' => '1721587458965',
-                    'action'       => Client\RequestOptions\TicketProcessETicketOptions::ACTION_ETICKET_DISPLAY,
-                ]
-            )
+            new Client\RequestOptions\TicketProcessETicketOptions([
+                'ticketNumber' => '1721587458965',
+                'action' => Client\RequestOptions\TicketProcessETicketOptions::ACTION_ETICKET_DISPLAY,
+            ])
         );
 
         $mockSessionHandler
@@ -2940,25 +2637,21 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_ProcessETicket')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->ticketProcessETicket(
-            new Client\RequestOptions\TicketProcessETicketOptions(
-                [
-                    'ticketNumber' => '1721587458965',
-                    'action'       => Client\RequestOptions\TicketProcessETicketOptions::ACTION_ETICKET_DISPLAY,
-                ]
-            )
+            new Client\RequestOptions\TicketProcessETicketOptions([
+                'ticketNumber' => '1721587458965',
+                'action' => Client\RequestOptions\TicketProcessETicketOptions::ACTION_ETICKET_DISPLAY,
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -2968,16 +2661,14 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyofferconfirmairmessage';
-        $messageResult                 = new Client\Result($mockedSendResult);
+        $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Offer\ConfirmAir(
-            new Client\RequestOptions\OfferConfirmAirOptions(
-                [
-                    'tattooNumber' => 1,
-                ]
-            )
+            new Client\RequestOptions\OfferConfirmAirOptions([
+                'tattooNumber' => 1
+            ])
         );
 
         $mockSessionHandler
@@ -3001,24 +2692,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Offer_ConfirmAirOffer')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->offerConfirmAir(
-            new Client\RequestOptions\OfferConfirmAirOptions(
-                [
-                    'tattooNumber' => 1,
-                ]
-            )
+            new Client\RequestOptions\OfferConfirmAirOptions([
+                'tattooNumber' => 1
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -3028,38 +2715,32 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyairsellfromrecommendationrmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Air\SellFromRecommendation(
-            new Client\RequestOptions\AirSellFromRecommendationOptions(
-                [
-                    'itinerary' => [
-                        new Client\RequestOptions\Air\SellFromRecommendation\Itinerary(
-                            [
-                                'from'     => 'BRU',
-                                'to'       => 'LON',
-                                'segments' => [
-                                    new Client\RequestOptions\Air\SellFromRecommendation\Segment(
-                                        [
-                                            'departureDate'  => \DateTime::createFromFormat('YmdHis', '20170120000000', new \DateTimeZone('UTC')),
-                                            'from'           => 'BRU',
-                                            'to'             => 'LGW',
-                                            'companyCode'    => 'SN',
-                                            'flightNumber'   => '123',
-                                            'bookingClass'   => 'Y',
-                                            'nrOfPassengers' => 1,
-                                            'statusCode'     => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_SELL_SEGMENT,
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\AirSellFromRecommendationOptions([
+                'itinerary' => [
+                    new Client\RequestOptions\Air\SellFromRecommendation\Itinerary([
+                        'from' => 'BRU',
+                        'to' => 'LON',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20170120000000', new \DateTimeZone('UTC')),
+                                'from' => 'BRU',
+                                'to' => 'LGW',
+                                'companyCode' => 'SN',
+                                'flightNumber' => '123',
+                                'bookingClass' => 'Y',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_SELL_SEGMENT
+                            ])
+                        ]
+                    ])
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -3083,45 +2764,37 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Air_SellFromRecommendation')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->airSellFromRecommendation(
-            new Client\RequestOptions\AirSellFromRecommendationOptions(
-                [
-                    'itinerary' => [
-                        new Client\RequestOptions\Air\SellFromRecommendation\Itinerary(
-                            [
-                                'from'     => 'BRU',
-                                'to'       => 'LON',
-                                'segments' => [
-                                    new Client\RequestOptions\Air\SellFromRecommendation\Segment(
-                                        [
-                                            'departureDate'  => \DateTime::createFromFormat('YmdHis', '20170120000000', new \DateTimeZone('UTC')),
-                                            'from'           => 'BRU',
-                                            'to'             => 'LGW',
-                                            'companyCode'    => 'SN',
-                                            'flightNumber'   => '123',
-                                            'bookingClass'   => 'Y',
-                                            'nrOfPassengers' => 1,
-                                            'statusCode'     => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_SELL_SEGMENT,
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\AirSellFromRecommendationOptions([
+                'itinerary' => [
+                    new Client\RequestOptions\Air\SellFromRecommendation\Itinerary([
+                        'from' => 'BRU',
+                        'to' => 'LON',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20170120000000', new \DateTimeZone('UTC')),
+                                'from' => 'BRU',
+                                'to' => 'LGW',
+                                'companyCode' => 'SN',
+                                'flightNumber' => '123',
+                                'bookingClass' => 'Y',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_SELL_SEGMENT
+                            ])
+                        ]
+                    ])
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -3131,62 +2804,52 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyairrebookairsegmentmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Air\RebookAirSegment(
-            new Client\RequestOptions\AirRebookAirSegmentOptions(
-                [
-                    'bestPricerOption' => 2,
-                    'itinerary'        => [
-                        new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary(
-                            [
-                                'from'     => 'FRA',
-                                'to'       => 'BKK',
-                                'segments' => [
-                                    new Client\RequestOptions\Air\SellFromRecommendation\Segment(
-                                        [
-                                            'departureDate'  => \DateTime::createFromFormat('YmdHis', '20040308220000', new \DateTimeZone('UTC')),
-                                            'arrivalDate'    => \DateTime::createFromFormat('YmdHis', '20040309141000', new \DateTimeZone('UTC')),
-                                            'dateVariation'  => 1,
-                                            'from'           => 'FRA',
-                                            'to'             => 'BKK',
-                                            'companyCode'    => 'LH',
-                                            'flightNumber'   => '744',
-                                            'bookingClass'   => 'F',
-                                            'nrOfPassengers' => 1,
-                                            'statusCode'     => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_CANCEL_SEGMENT,
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                        new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary(
-                            [
-                                'from'     => 'FRA',
-                                'to'       => 'BKK',
-                                'segments' => [
-                                    new Client\RequestOptions\Air\SellFromRecommendation\Segment(
-                                        [
-                                            'departureDate'  => \DateTime::createFromFormat('YmdHis', '20040308220000', new \DateTimeZone('UTC')),
-                                            'arrivalDate'    => \DateTime::createFromFormat('YmdHis', '00000000141000', new \DateTimeZone('UTC')),
-                                            'from'           => 'FRA',
-                                            'to'             => 'BKK',
-                                            'companyCode'    => 'LH',
-                                            'flightNumber'   => '744',
-                                            'bookingClass'   => 'C',
-                                            'nrOfPassengers' => 1,
-                                            'statusCode'     => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_SELL_SEGMENT,
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\AirRebookAirSegmentOptions([
+                'bestPricerOption' => 2,
+                'itinerary' => [
+                    new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary([
+                        'from' => 'FRA',
+                        'to' => 'BKK',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                                'dateVariation' => 1,
+                                'from' => 'FRA',
+                                'to' => 'BKK',
+                                'companyCode' => 'LH',
+                                'flightNumber' => '744',
+                                'bookingClass' => 'F',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_CANCEL_SEGMENT
+                            ])
+                        ]
+                    ]),
+                    new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary([
+                        'from' => 'FRA',
+                        'to' => 'BKK',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','00000000141000', new \DateTimeZone('UTC')),
+                                'from' => 'FRA',
+                                'to' => 'BKK',
+                                'companyCode' => 'LH',
+                                'flightNumber' => '744',
+                                'bookingClass' => 'C',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_SELL_SEGMENT
+                            ])
+                        ]
+                    ]),
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -3210,69 +2873,57 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Air_RebookAirSegment')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->airRebookAirSegment(
-            new Client\RequestOptions\AirRebookAirSegmentOptions(
-                [
-                    'bestPricerOption' => 2,
-                    'itinerary'        => [
-                        new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary(
-                            [
-                                'from'     => 'FRA',
-                                'to'       => 'BKK',
-                                'segments' => [
-                                    new Client\RequestOptions\Air\SellFromRecommendation\Segment(
-                                        [
-                                            'departureDate'  => \DateTime::createFromFormat('YmdHis', '20040308220000', new \DateTimeZone('UTC')),
-                                            'arrivalDate'    => \DateTime::createFromFormat('YmdHis', '20040309141000', new \DateTimeZone('UTC')),
-                                            'dateVariation'  => 1,
-                                            'from'           => 'FRA',
-                                            'to'             => 'BKK',
-                                            'companyCode'    => 'LH',
-                                            'flightNumber'   => '744',
-                                            'bookingClass'   => 'F',
-                                            'nrOfPassengers' => 1,
-                                            'statusCode'     => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_CANCEL_SEGMENT,
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                        new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary(
-                            [
-                                'from'     => 'FRA',
-                                'to'       => 'BKK',
-                                'segments' => [
-                                    new Client\RequestOptions\Air\SellFromRecommendation\Segment(
-                                        [
-                                            'departureDate'  => \DateTime::createFromFormat('YmdHis', '20040308220000', new \DateTimeZone('UTC')),
-                                            'arrivalDate'    => \DateTime::createFromFormat('YmdHis', '00000000141000', new \DateTimeZone('UTC')),
-                                            'from'           => 'FRA',
-                                            'to'             => 'BKK',
-                                            'companyCode'    => 'LH',
-                                            'flightNumber'   => '744',
-                                            'bookingClass'   => 'C',
-                                            'nrOfPassengers' => 1,
-                                            'statusCode'     => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_SELL_SEGMENT,
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\AirRebookAirSegmentOptions([
+                'bestPricerOption' => 2,
+                'itinerary' => [
+                    new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary([
+                        'from' => 'FRA',
+                        'to' => 'BKK',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                                'dateVariation' => 1,
+                                'from' => 'FRA',
+                                'to' => 'BKK',
+                                'companyCode' => 'LH',
+                                'flightNumber' => '744',
+                                'bookingClass' => 'F',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_CANCEL_SEGMENT
+                            ])
+                        ]
+                    ]),
+                    new \Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary([
+                        'from' => 'FRA',
+                        'to' => 'BKK',
+                        'segments' => [
+                            new Client\RequestOptions\Air\SellFromRecommendation\Segment([
+                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','00000000141000', new \DateTimeZone('UTC')),
+                                'from' => 'FRA',
+                                'to' => 'BKK',
+                                'companyCode' => 'LH',
+                                'flightNumber' => '744',
+                                'bookingClass' => 'C',
+                                'nrOfPassengers' => 1,
+                                'statusCode' => Client\RequestOptions\Air\SellFromRecommendation\Segment::STATUS_SELL_SEGMENT
+                            ])
+                        ]
+                    ]),
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -3282,21 +2933,19 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyairflightinformessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Air\FlightInfo(
-            new Client\RequestOptions\AirFlightInfoOptions(
-                [
-                    'airlineCode'       => 'SN',
-                    'flightNumber'      => '652',
-                    'departureDate'     => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
-                    'departureLocation' => 'BRU',
-                    'arrivalLocation'   => 'LIS',
-                ]
-            )
+            new Client\RequestOptions\AirFlightInfoOptions([
+                'airlineCode' => 'SN',
+                'flightNumber' => '652',
+                'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
+                'departureLocation' => 'BRU',
+                'arrivalLocation' => 'LIS'
+            ])
         );
 
         $mockSessionHandler
@@ -3320,28 +2969,24 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Air_FlightInfo')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->airFlightInfo(
-            new Client\RequestOptions\AirFlightInfoOptions(
-                [
-                    'airlineCode'       => 'SN',
-                    'flightNumber'      => '652',
-                    'departureDate'     => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
-                    'departureLocation' => 'BRU',
-                    'arrivalLocation'   => 'LIS',
-                ]
-            )
+            new Client\RequestOptions\AirFlightInfoOptions([
+                'airlineCode' => 'SN',
+                'flightNumber' => '652',
+                'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
+                'departureLocation' => 'BRU',
+                'arrivalLocation' => 'LIS'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -3351,25 +2996,21 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('airRetrieveSeatMapReply142.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Air\RetrieveSeatMap(
-            new Client\RequestOptions\AirRetrieveSeatMapOptions(
-                [
-                    'flight' => new Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo(
-                        [
-                            'airline'       => 'SN',
-                            'flightNumber'  => '652',
-                            'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
-                            'departure'     => 'BRU',
-                            'arrival'       => 'LIS',
-                        ]
-                    ),
-                ]
-            )
+            new Client\RequestOptions\AirRetrieveSeatMapOptions([
+                'flight' => new Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo([
+                    'airline' => 'SN',
+                    'flightNumber' => '652',
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
+                    'departure' => 'BRU',
+                    'arrival' => 'LIS'
+                ])
+            ])
         );
 
         $mockSessionHandler
@@ -3393,32 +3034,26 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Air_RetrieveSeatMap')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->airRetrieveSeatMap(
-            new Client\RequestOptions\AirRetrieveSeatMapOptions(
-                [
-                    'flight' => new Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo(
-                        [
-                            'airline'       => 'SN',
-                            'flightNumber'  => '652',
-                            'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
-                            'departure'     => 'BRU',
-                            'arrival'       => 'LIS',
-                        ]
-                    ),
-                ]
-            )
+            new Client\RequestOptions\AirRetrieveSeatMapOptions([
+                'flight' => new Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo([
+                    'airline' => 'SN',
+                    'flightNumber' => '652',
+                    'departureDate' => \DateTime::createFromFormat('Y-m-d', '2016-05-18', new \DateTimeZone('UTC')),
+                    'departure' => 'BRU',
+                    'arrival' => 'LIS'
+                ])
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -3428,27 +3063,23 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('AirMultiAvailabilityReply.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Air\MultiAvailability(
-            new Client\RequestOptions\AirMultiAvailabilityOptions(
-                [
-                    'actionCode'     => Client\RequestOptions\AirMultiAvailabilityOptions::ACTION_AVAILABILITY,
-                    'requestOptions' => [
-                        new Client\RequestOptions\Air\MultiAvailability\RequestOptions(
-                            [
-                                'departureDate' => \DateTime::createFromFormat('Ymd-His', '20170320-000000', new \DateTimeZone('UTC')),
-                                'from'          => 'BRU',
-                                'to'            => 'LIS',
-                                'requestType'   => Client\RequestOptions\Air\MultiAvailability\RequestOptions::REQ_TYPE_NEUTRAL_ORDER,
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\AirMultiAvailabilityOptions([
+                'actionCode' => Client\RequestOptions\AirMultiAvailabilityOptions::ACTION_AVAILABILITY,
+                'requestOptions' => [
+                    new Client\RequestOptions\Air\MultiAvailability\RequestOptions([
+                        'departureDate' => \DateTime::createFromFormat('Ymd-His', '20170320-000000', new \DateTimeZone('UTC')),
+                        'from' => 'BRU',
+                        'to' => 'LIS',
+                        'requestType' => Client\RequestOptions\Air\MultiAvailability\RequestOptions::REQ_TYPE_NEUTRAL_ORDER
+                    ])
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -3472,34 +3103,28 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Air_MultiAvailability')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->airMultiAvailability(
-            new Client\RequestOptions\AirMultiAvailabilityOptions(
-                [
-                    'actionCode'     => Client\RequestOptions\AirMultiAvailabilityOptions::ACTION_AVAILABILITY,
-                    'requestOptions' => [
-                        new Client\RequestOptions\Air\MultiAvailability\RequestOptions(
-                            [
-                                'departureDate' => \DateTime::createFromFormat('Ymd-His', '20170320-000000', new \DateTimeZone('UTC')),
-                                'from'          => 'BRU',
-                                'to'            => 'LIS',
-                                'requestType'   => Client\RequestOptions\Air\MultiAvailability\RequestOptions::REQ_TYPE_NEUTRAL_ORDER,
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\AirMultiAvailabilityOptions([
+                'actionCode' => Client\RequestOptions\AirMultiAvailabilityOptions::ACTION_AVAILABILITY,
+                'requestOptions' => [
+                    new Client\RequestOptions\Air\MultiAvailability\RequestOptions([
+                        'departureDate' => \DateTime::createFromFormat('Ymd-His', '20170320-000000', new \DateTimeZone('UTC')),
+                        'from' => 'BRU',
+                        'to' => 'LIS',
+                        'requestType' => Client\RequestOptions\Air\MultiAvailability\RequestOptions::REQ_TYPE_NEUTRAL_ORDER
+                    ])
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -3509,42 +3134,34 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyfarepricemasterpricertravelboardsearchresponsemessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\MasterPricerTravelBoardSearch(
-            new Client\RequestOptions\FareMasterPricerTbSearch(
-                [
-                    'nrOfRequestedResults'    => 200,
-                    'nrOfRequestedPassengers' => 1,
-                    'passengers'              => [
-                        new Client\RequestOptions\Fare\MPPassenger(
-                            [
-                                'type'  => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
-                                'count' => 1,
-                            ]
-                        ),
-                    ],
-                    'itinerary'               => [
-                        new Client\RequestOptions\Fare\MPItinerary(
-                            [
-                                'departureLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
-                                'arrivalLocation'   => new Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
-                                'date'              => new Client\RequestOptions\Fare\MPDate(
-                                    [
-                                        'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC')),
-                                    ]
-                                ),
-                            ]
-                        ),
-                    ],
-                    'requestedFlightTypes'    => [
-                        Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT,
-                    ],
+            new Client\RequestOptions\FareMasterPricerTbSearch([
+                'nrOfRequestedResults' => 200,
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new Client\RequestOptions\Fare\MPPassenger([
+                        'type' => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'itinerary' => [
+                    new Client\RequestOptions\Fare\MPItinerary([
+                        'departureLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
+                        'arrivalLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
+                        'date' => new Client\RequestOptions\Fare\MPDate([
+                            'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+                        ])
+                    ])
+                ],
+                'requestedFlightTypes' => [
+                    Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -3568,49 +3185,39 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Fare_MasterPricerTravelBoardSearch')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->fareMasterPricerTravelBoardSearch(
-            new Client\RequestOptions\FareMasterPricerTbSearch(
-                [
-                    'nrOfRequestedResults'    => 200,
-                    'nrOfRequestedPassengers' => 1,
-                    'passengers'              => [
-                        new Client\RequestOptions\Fare\MPPassenger(
-                            [
-                                'type'  => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
-                                'count' => 1,
-                            ]
-                        ),
-                    ],
-                    'itinerary'               => [
-                        new Client\RequestOptions\Fare\MPItinerary(
-                            [
-                                'departureLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
-                                'arrivalLocation'   => new Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
-                                'date'              => new Client\RequestOptions\Fare\MPDate(
-                                    [
-                                        'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC')),
-                                    ]
-                                ),
-                            ]
-                        ),
-                    ],
-                    'requestedFlightTypes'    => [
-                        Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT,
-                    ],
+            new Client\RequestOptions\FareMasterPricerTbSearch([
+                'nrOfRequestedResults' => 200,
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new Client\RequestOptions\Fare\MPPassenger([
+                        'type' => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'itinerary' => [
+                    new Client\RequestOptions\Fare\MPItinerary([
+                        'departureLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
+                        'arrivalLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
+                        'date' => new Client\RequestOptions\Fare\MPDate([
+                            'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+                        ])
+                    ])
+                ],
+                'requestedFlightTypes' => [
+                    Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -3620,44 +3227,36 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyfarepricemasterpricercalendarresponsemessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\MasterPricerCalendar(
-            new Client\RequestOptions\FareMasterPricerCalendarOptions(
-                [
-                    'nrOfRequestedResults'    => 200,
-                    'nrOfRequestedPassengers' => 1,
-                    'passengers'              => [
-                        new Client\RequestOptions\Fare\MPPassenger(
-                            [
-                                'type'  => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
-                                'count' => 1,
-                            ]
-                        ),
-                    ],
-                    'itinerary'               => [
-                        new Client\RequestOptions\Fare\MPItinerary(
-                            [
-                                'departureLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
-                                'arrivalLocation'   => new Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
-                                'date'              => new Client\RequestOptions\Fare\MPDate(
-                                    [
-                                        'date'      => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC')),
-                                        'rangeMode' => Client\RequestOptions\Fare\MPDate::RANGEMODE_MINUS_PLUS,
-                                        'range'     => 3,
-                                    ]
-                                ),
-                            ]
-                        ),
-                    ],
-                    'requestedFlightTypes'    => [
-                        Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT,
-                    ],
+            new Client\RequestOptions\FareMasterPricerCalendarOptions([
+                'nrOfRequestedResults' => 200,
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new Client\RequestOptions\Fare\MPPassenger([
+                        'type' => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'itinerary' => [
+                    new Client\RequestOptions\Fare\MPItinerary([
+                        'departureLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
+                        'arrivalLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
+                        'date' => new Client\RequestOptions\Fare\MPDate([
+                            'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC')),
+                            'rangeMode' => Client\RequestOptions\Fare\MPDate::RANGEMODE_MINUS_PLUS,
+                            'range' => 3,
+                        ])
+                    ])
+                ],
+                'requestedFlightTypes' => [
+                    Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -3681,51 +3280,41 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Fare_MasterPricerCalendar')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->fareMasterPricerCalendar(
-            new Client\RequestOptions\FareMasterPricerCalendarOptions(
-                [
-                    'nrOfRequestedResults'    => 200,
-                    'nrOfRequestedPassengers' => 1,
-                    'passengers'              => [
-                        new Client\RequestOptions\Fare\MPPassenger(
-                            [
-                                'type'  => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
-                                'count' => 1,
-                            ]
-                        ),
-                    ],
-                    'itinerary'               => [
-                        new Client\RequestOptions\Fare\MPItinerary(
-                            [
-                                'departureLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
-                                'arrivalLocation'   => new Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
-                                'date'              => new Client\RequestOptions\Fare\MPDate(
-                                    [
-                                        'date'      => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC')),
-                                        'rangeMode' => Client\RequestOptions\Fare\MPDate::RANGEMODE_MINUS_PLUS,
-                                        'range'     => 3,
-                                    ]
-                                ),
-                            ]
-                        ),
-                    ],
-                    'requestedFlightTypes'    => [
-                        Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT,
-                    ],
+            new Client\RequestOptions\FareMasterPricerCalendarOptions([
+                'nrOfRequestedResults' => 200,
+                'nrOfRequestedPassengers' => 1,
+                'passengers' => [
+                    new Client\RequestOptions\Fare\MPPassenger([
+                        'type' => Client\RequestOptions\Fare\MPPassenger::TYPE_ADULT,
+                        'count' => 1
+                    ])
+                ],
+                'itinerary' => [
+                    new Client\RequestOptions\Fare\MPItinerary([
+                        'departureLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'BRU']),
+                        'arrivalLocation' => new Client\RequestOptions\Fare\MPLocation(['city' => 'LON']),
+                        'date' => new Client\RequestOptions\Fare\MPDate([
+                            'date' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC')),
+                            'rangeMode' => Client\RequestOptions\Fare\MPDate::RANGEMODE_MINUS_PLUS,
+                            'range' => 3,
+                        ])
+                    ])
+                ],
+                'requestedFlightTypes' => [
+                    Client\RequestOptions\FareMasterPricerTbSearch::FLIGHTTYPE_DIRECT
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -3735,22 +3324,20 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummypricexplorerextremesearchresponsemessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\PriceXplorer\ExtremeSearch(
-            new Client\RequestOptions\PriceXplorerExtremeSearchOptions(
-                [
-                    'resultAggregationOption' => Client\RequestOptions\PriceXplorerExtremeSearchOptions::AGGR_COUNTRY,
-                    'origin'                  => 'BRU',
-                    'destinations'            => ['SYD', 'CBR'],
-                    'earliestDepartureDate'   => \DateTime::createFromFormat('Y-m-d', '2016-08-25', new \DateTimeZone('UTC')),
-                    'latestDepartureDate'     => \DateTime::createFromFormat('Y-m-d', '2016-09-28', new \DateTimeZone('UTC')),
-                    'searchOffice'            => 'LONBG2222',
-                ]
-            )
+            new Client\RequestOptions\PriceXplorerExtremeSearchOptions([
+                'resultAggregationOption' => Client\RequestOptions\PriceXplorerExtremeSearchOptions::AGGR_COUNTRY,
+                'origin' => 'BRU',
+                'destinations' => ['SYD', 'CBR'],
+                'earliestDepartureDate' => \DateTime::createFromFormat('Y-m-d','2016-08-25', new \DateTimeZone('UTC')),
+                'latestDepartureDate' => \DateTime::createFromFormat('Y-m-d','2016-09-28', new \DateTimeZone('UTC')),
+                'searchOffice' => 'LONBG2222'
+            ])
         );
 
         $mockSessionHandler
@@ -3774,29 +3361,25 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PriceXplorer_ExtremeSearch')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->priceXplorerExtremeSearch(
-            new Client\RequestOptions\PriceXplorerExtremeSearchOptions(
-                [
-                    'resultAggregationOption' => Client\RequestOptions\PriceXplorerExtremeSearchOptions::AGGR_COUNTRY,
-                    'origin'                  => 'BRU',
-                    'destinations'            => ['SYD', 'CBR'],
-                    'earliestDepartureDate'   => \DateTime::createFromFormat('Y-m-d', '2016-08-25', new \DateTimeZone('UTC')),
-                    'latestDepartureDate'     => \DateTime::createFromFormat('Y-m-d', '2016-09-28', new \DateTimeZone('UTC')),
-                    'searchOffice'            => 'LONBG2222',
-                ]
-            )
+            new Client\RequestOptions\PriceXplorerExtremeSearchOptions([
+                'resultAggregationOption' => Client\RequestOptions\PriceXplorerExtremeSearchOptions::AGGR_COUNTRY,
+                'origin' => 'BRU',
+                'destinations' => ['SYD', 'CBR'],
+                'earliestDepartureDate' => \DateTime::createFromFormat('Y-m-d','2016-08-25', new \DateTimeZone('UTC')),
+                'latestDepartureDate' => \DateTime::createFromFormat('Y-m-d','2016-09-28', new \DateTimeZone('UTC')),
+                'searchOffice' => 'LONBG2222'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -3806,19 +3389,17 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('SalesReportsDisplayQueryReportReply.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\SalesReports\DisplayQueryReport(
-            new Client\RequestOptions\SalesReportsDisplayQueryReportOptions(
-                [
-                    'requestOptions' => [
-                        Client\RequestOptions\SalesReportsDisplayQueryReportOptions::SELECT_OFFICE_ALL_AGENTS,
-                    ],
+            new Client\RequestOptions\SalesReportsDisplayQueryReportOptions([
+                'requestOptions' => [
+                    Client\RequestOptions\SalesReportsDisplayQueryReportOptions::SELECT_OFFICE_ALL_AGENTS
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -3842,26 +3423,22 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'SalesReports_DisplayQueryReport')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->salesReportsDisplayQueryReport(
-            new Client\RequestOptions\SalesReportsDisplayQueryReportOptions(
-                [
-                    'requestOptions' => [
-                        Client\RequestOptions\SalesReportsDisplayQueryReportOptions::SELECT_OFFICE_ALL_AGENTS,
-                    ],
+            new Client\RequestOptions\SalesReportsDisplayQueryReportOptions([
+                'requestOptions' => [
+                    Client\RequestOptions\SalesReportsDisplayQueryReportOptions::SELECT_OFFICE_ALL_AGENTS
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -3871,22 +3448,20 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyfaregetfarerulesmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\GetFareRules(
-            new Client\RequestOptions\FareGetFareRulesOptions(
-                [
-                    'ticketingDate'    => \DateTime::createFromFormat('dmY', '23032011'),
-                    'fareBasis'        => 'OA21ERD1',
-                    'ticketDesignator' => 'DISC',
-                    'airline'          => 'AA',
-                    'origin'           => 'DFW',
-                    'destination'      => 'MKC',
-                ]
-            )
+            new Client\RequestOptions\FareGetFareRulesOptions([
+                'ticketingDate' => \DateTime::createFromFormat('dmY', '23032011'),
+                'fareBasis' => 'OA21ERD1',
+                'ticketDesignator' => 'DISC',
+                'airline' => 'AA',
+                'origin' => 'DFW',
+                'destination' => 'MKC'
+            ])
         );
 
         $mockSessionHandler
@@ -3910,29 +3485,25 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Fare_GetFareRules')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->fareGetFareRules(
-            new Client\RequestOptions\FareGetFareRulesOptions(
-                [
-                    'ticketingDate'    => \DateTime::createFromFormat('dmY', '23032011'),
-                    'fareBasis'        => 'OA21ERD1',
-                    'ticketDesignator' => 'DISC',
-                    'airline'          => 'AA',
-                    'origin'           => 'DFW',
-                    'destination'      => 'MKC',
-                ]
-            )
+            new Client\RequestOptions\FareGetFareRulesOptions([
+                'ticketingDate' => \DateTime::createFromFormat('dmY', '23032011'),
+                'fareBasis' => 'OA21ERD1',
+                'ticketDesignator' => 'DISC',
+                'airline' => 'AA',
+                'origin' => 'DFW',
+                'destination' => 'MKC'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -3942,17 +3513,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyfarecheckrulesmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\CheckRules(
-            new Client\RequestOptions\FareCheckRulesOptions(
-                [
-                    'recommendations' => [1],
-                ]
-            )
+            new Client\RequestOptions\FareCheckRulesOptions([
+                'recommendations' => [1]
+            ])
         );
 
         $mockSessionHandler
@@ -3976,24 +3545,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Fare_CheckRules')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->fareCheckRules(
-            new Client\RequestOptions\FareCheckRulesOptions(
-                [
-                    'recommendations' => [1],
-                ]
-            )
+            new Client\RequestOptions\FareCheckRulesOptions([
+                'recommendations' => [1]
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4003,20 +3568,18 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyfareconvertcurrencymessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\ConvertCurrency(
-            new Client\RequestOptions\FareConvertCurrencyOptions(
-                [
-                    'from'             => 'EUR',
-                    'to'               => 'USD',
-                    'amount'           => '200',
-                    'rateOfConversion' => Client\RequestOptions\FareConvertCurrencyOptions::RATE_TYPE_BANKERS_SELLER_RATE,
-                ]
-            )
+            new Client\RequestOptions\FareConvertCurrencyOptions([
+                'from' => 'EUR',
+                'to' => 'USD',
+                'amount' => '200',
+                'rateOfConversion' => Client\RequestOptions\FareConvertCurrencyOptions::RATE_TYPE_BANKERS_SELLER_RATE
+            ])
         );
 
         $mockSessionHandler
@@ -4040,27 +3603,23 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Fare_ConvertCurrency')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->fareConvertCurrency(
-            new Client\RequestOptions\FareConvertCurrencyOptions(
-                [
-                    'from'             => 'EUR',
-                    'to'               => 'USD',
-                    'amount'           => '200',
-                    'rateOfConversion' => Client\RequestOptions\FareConvertCurrencyOptions::RATE_TYPE_BANKERS_SELLER_RATE,
-                ]
-            )
+            new Client\RequestOptions\FareConvertCurrencyOptions([
+                'from' => 'EUR',
+                'to' => 'USD',
+                'amount' => '200',
+                'rateOfConversion' => Client\RequestOptions\FareConvertCurrencyOptions::RATE_TYPE_BANKERS_SELLER_RATE
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4070,17 +3629,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyfarepricepnrwithbookingclassmessage';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\PricePNRWithBookingClass12(
-            new Client\RequestOptions\FarePricePnrWithBookingClassOptions(
-                [
-                    'validatingCarrier' => 'SN',
-                ]
-            )
+            new Client\RequestOptions\FarePricePnrWithBookingClassOptions([
+                'validatingCarrier' => 'SN'
+            ])
         );
 
         $mockSessionHandler
@@ -4104,24 +3661,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Fare_PricePNRWithBookingClass')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->farePricePnrWithBookingClass(
-            new Client\RequestOptions\FarePricePnrWithBookingClassOptions(
-                [
-                    'validatingCarrier' => 'SN',
-                ]
-            )
+            new Client\RequestOptions\FarePricePnrWithBookingClassOptions([
+                'validatingCarrier' => 'SN'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4131,17 +3684,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('farePricePnrWithBookingClassReply14.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\PricePNRWithBookingClass13(
-            new Client\RequestOptions\FarePricePnrWithBookingClassOptions(
-                [
-                    'validatingCarrier' => 'SN',
-                ]
-            )
+            new Client\RequestOptions\FarePricePnrWithBookingClassOptions([
+                'validatingCarrier' => 'SN'
+            ])
         );
 
         $mockSessionHandler
@@ -4157,24 +3708,20 @@ class ClientTest extends BaseTestCase
             ->method('getMessagesAndVersions')
             ->will($this->returnValue(['Fare_PricePNRWithBookingClass' => ['version' => "14.3", 'wsdl' => 'dc22e4ee']]));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
 
         $client = new Client($par);
 
 
         $response = $client->farePricePnrWithBookingClass(
-            new Client\RequestOptions\FarePricePnrWithBookingClassOptions(
-                [
-                    'validatingCarrier' => 'SN',
-                ]
-            )
+            new Client\RequestOptions\FarePricePnrWithBookingClassOptions([
+                'validatingCarrier' => 'SN'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4184,17 +3731,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('farePricePnrWithLowerFaresReply14.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\PricePNRWithLowerFares13(
-            new Client\RequestOptions\FarePricePnrWithLowerFaresOptions(
-                [
-                    'validatingCarrier' => 'SN',
-                ]
-            )
+            new Client\RequestOptions\FarePricePnrWithLowerFaresOptions([
+                'validatingCarrier' => 'SN'
+            ])
         );
 
         $mockSessionHandler
@@ -4210,23 +3755,19 @@ class ClientTest extends BaseTestCase
             ->method('getMessagesAndVersions')
             ->will($this->returnValue(['Fare_PricePNRWithLowerFares' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
 
         $client = new Client($par);
 
         $response = $client->farePricePnrWithLowerFares(
-            new Client\RequestOptions\FarePricePnrWithLowerFaresOptions(
-                [
-                    'validatingCarrier' => 'SN',
-                ]
-            )
+            new Client\RequestOptions\FarePricePnrWithLowerFaresOptions([
+                'validatingCarrier' => 'SN'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4236,17 +3777,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyfarepricepnrwithlowerfaresv12message';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\PricePNRWithLowerFares12(
-            new Client\RequestOptions\FarePricePnrWithLowerFaresOptions(
-                [
-                    'validatingCarrier' => 'SN',
-                ]
-            )
+            new Client\RequestOptions\FarePricePnrWithLowerFaresOptions([
+                'validatingCarrier' => 'SN'
+            ])
         );
 
         $mockSessionHandler
@@ -4270,24 +3809,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Fare_PricePNRWithLowerFares')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->farePricePnrWithLowerFares(
-            new Client\RequestOptions\FarePricePnrWithLowerFaresOptions(
-                [
-                    'validatingCarrier' => 'SN',
-                ]
-            )
+            new Client\RequestOptions\FarePricePnrWithLowerFaresOptions([
+                'validatingCarrier' => 'SN'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4297,17 +3832,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('farePricePnrWithLowestFareReply14.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\PricePNRWithLowestFare13(
-            new Client\RequestOptions\FarePricePnrWithLowestFareOptions(
-                [
-                    'validatingCarrier' => 'SN',
-                ]
-            )
+            new Client\RequestOptions\FarePricePnrWithLowestFareOptions([
+                'validatingCarrier' => 'SN'
+            ])
         );
 
         $mockSessionHandler
@@ -4323,23 +3856,19 @@ class ClientTest extends BaseTestCase
             ->method('getMessagesAndVersions')
             ->will($this->returnValue(['Fare_PricePNRWithLowestFare' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
 
         $client = new Client($par);
 
         $response = $client->farePricePnrWithLowestFare(
-            new Client\RequestOptions\FarePricePnrWithLowestFareOptions(
-                [
-                    'validatingCarrier' => 'SN',
-                ]
-            )
+            new Client\RequestOptions\FarePricePnrWithLowestFareOptions([
+                'validatingCarrier' => 'SN'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4349,17 +3878,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyfarepricepnrwithlowestfarev12message';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\PricePNRWithLowestFare12(
-            new Client\RequestOptions\FarePricePnrWithLowestFareOptions(
-                [
-                    'validatingCarrier' => 'SN',
-                ]
-            )
+            new Client\RequestOptions\FarePricePnrWithLowestFareOptions([
+                'validatingCarrier' => 'SN'
+            ])
         );
 
         $mockSessionHandler
@@ -4383,24 +3910,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Fare_PricePNRWithLowestFare')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->farePricePnrWithLowestFare(
-            new Client\RequestOptions\FarePricePnrWithLowestFareOptions(
-                [
-                    'validatingCarrier' => 'SN',
-                ]
-            )
+            new Client\RequestOptions\FarePricePnrWithLowestFareOptions([
+                'validatingCarrier' => 'SN'
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4410,16 +3933,14 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('fareInformativePricingWithoutPnrReply14.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\InformativePricingWithoutPNR13(
-            new Client\RequestOptions\FareInformativePricingWithoutPnrOptions(
-                [
-                ]
-            )
+            new Client\RequestOptions\FareInformativePricingWithoutPnrOptions([
+            ])
         );
 
         $mockSessionHandler
@@ -4435,23 +3956,19 @@ class ClientTest extends BaseTestCase
             ->method('getMessagesAndVersions')
             ->will($this->returnValue(['Fare_InformativePricingWithoutPNR' => ['version' => "15.1", 'wsdl' => 'dc22e4ee']]));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
 
         $client = new Client($par);
 
 
         $response = $client->fareInformativePricingWithoutPnr(
-            new Client\RequestOptions\FareInformativePricingWithoutPnrOptions(
-                [
-                ]
-            )
+            new Client\RequestOptions\FareInformativePricingWithoutPnrOptions([
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4461,16 +3978,14 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('fareInformativeBestPricingWithoutPnrReply14.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fare\InformativeBestPricingWithoutPNR13(
-            new Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions(
-                [
-                ]
-            )
+            new Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions([
+            ])
         );
 
         $mockSessionHandler
@@ -4486,23 +4001,19 @@ class ClientTest extends BaseTestCase
             ->method('getMessagesAndVersions')
             ->will($this->returnValue(['Fare_InformativeBestPricingWithoutPNR' => ['version' => "14.1", 'wsdl' => 'dc22e4ee']]));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
 
         $client = new Client($par);
 
 
         $response = $client->fareInformativeBestPricingWithoutPnr(
-            new Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions(
-                [
-                ]
-            )
+            new Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions([
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4512,16 +4023,14 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('serviceIntegratedPricingReply151.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Service\IntegratedPricing(
-            new Client\RequestOptions\ServiceIntegratedPricingOptions(
-                [
-                ]
-            )
+            new Client\RequestOptions\ServiceIntegratedPricingOptions([
+            ])
         );
 
         $mockSessionHandler
@@ -4537,23 +4046,19 @@ class ClientTest extends BaseTestCase
             ->method('getMessagesAndVersions')
             ->will($this->returnValue(['Service_IntegratedPricing' => ['version' => "15.1", 'wsdl' => 'dc22e4ee']]));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
 
         $client = new Client($par);
 
 
         $response = $client->serviceIntegratedPricing(
-            new Client\RequestOptions\ServiceIntegratedPricingOptions(
-                [
-                ]
-            )
+            new Client\RequestOptions\ServiceIntegratedPricingOptions([
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4563,16 +4068,14 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('serviceIntegratedCatalogueReply142.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Service\IntegratedCatalogue(
-            new Client\RequestOptions\ServiceIntegratedCatalogueOptions(
-                [
-                ]
-            )
+            new Client\RequestOptions\ServiceIntegratedCatalogueOptions([
+            ])
         );
 
         $mockSessionHandler
@@ -4588,23 +4091,19 @@ class ClientTest extends BaseTestCase
             ->method('getMessagesAndVersions')
             ->will($this->returnValue(['Service_IntegratedCatalogue' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
 
         $client = new Client($par);
 
 
         $response = $client->serviceIntegratedCatalogue(
-            new Client\RequestOptions\ServiceIntegratedCatalogueOptions(
-                [
-                ]
-            )
+            new Client\RequestOptions\ServiceIntegratedCatalogueOptions([
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4615,47 +4114,37 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = $this->getTestFile('fopCreateForpOfPaymentReply154.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fop\CreateFormOfPayment(
-            new Client\RequestOptions\FopCreateFopOptions(
-                [
-                    'transactionCode' => Client\RequestOptions\FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
-                    'fopGroup'        => [
-                        new Client\RequestOptions\Fop\Group(
-                            [
-                                'elementRef' => [
-                                    new Client\RequestOptions\Fop\ElementRef(
-                                        [
-                                            'type'  => Client\RequestOptions\Fop\ElementRef::TYPE_TST_NUMBER,
-                                            'value' => 1,
-                                        ]
-                                    ),
-                                ],
-                                'mopInfo'    => [
-                                    new Client\RequestOptions\Fop\MopInfo(
-                                        [
-                                            'sequenceNr'   => 1,
-                                            'fopCode'      => 'VI',
-                                            'freeFlowText' => 'VI4541099100010016/0919',
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\Fop\MopInfo(
-                                        [
-                                            'sequenceNr'   => 2,
-                                            'fopCode'      => 'VI',
-                                            'freeFlowText' => 'VI4541099100010024/0919/EUR20',
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\FopCreateFopOptions([
+                'transactionCode' => Client\RequestOptions\FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+                'fopGroup' => [
+                    new Client\RequestOptions\Fop\Group([
+                        'elementRef' => [
+                            new Client\RequestOptions\Fop\ElementRef([
+                                'type' => Client\RequestOptions\Fop\ElementRef::TYPE_TST_NUMBER,
+                                'value' => 1
+                            ])
+                        ],
+                        'mopInfo' => [
+                            new Client\RequestOptions\Fop\MopInfo([
+                                'sequenceNr' => 1,
+                                'fopCode' => 'VI',
+                                'freeFlowText' => 'VI4541099100010016/0919'
+                            ]),
+                            new Client\RequestOptions\Fop\MopInfo([
+                                'sequenceNr' => 2,
+                                'fopCode' => 'VI',
+                                'freeFlowText' => 'VI4541099100010024/0919/EUR20'
+                            ]),
+                        ]
+                    ])
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -4671,54 +4160,42 @@ class ClientTest extends BaseTestCase
             ->method('getMessagesAndVersions')
             ->will($this->returnValue(['FOP_CreateFormOfPayment' => ['version' => "15.4", 'wsdl' => 'dc22e4ee']]));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
 
         $client = new Client($par);
 
 
         $response = $client->fopCreateFormOfPayment(
-            new Client\RequestOptions\FopCreateFopOptions(
-                [
-                    'transactionCode' => Client\RequestOptions\FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
-                    'fopGroup'        => [
-                        new Client\RequestOptions\Fop\Group(
-                            [
-                                'elementRef' => [
-                                    new Client\RequestOptions\Fop\ElementRef(
-                                        [
-                                            'type'  => Client\RequestOptions\Fop\ElementRef::TYPE_TST_NUMBER,
-                                            'value' => 1,
-                                        ]
-                                    ),
-                                ],
-                                'mopInfo'    => [
-                                    new Client\RequestOptions\Fop\MopInfo(
-                                        [
-                                            'sequenceNr'   => 1,
-                                            'fopCode'      => 'VI',
-                                            'freeFlowText' => 'VI4541099100010016/0919',
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\Fop\MopInfo(
-                                        [
-                                            'sequenceNr'   => 2,
-                                            'fopCode'      => 'VI',
-                                            'freeFlowText' => 'VI4541099100010024/0919/EUR20',
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\FopCreateFopOptions([
+                'transactionCode' => Client\RequestOptions\FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+                'fopGroup' => [
+                    new Client\RequestOptions\Fop\Group([
+                        'elementRef' => [
+                            new Client\RequestOptions\Fop\ElementRef([
+                                'type' => Client\RequestOptions\Fop\ElementRef::TYPE_TST_NUMBER,
+                                'value' => 1
+                            ])
+                        ],
+                        'mopInfo' => [
+                            new Client\RequestOptions\Fop\MopInfo([
+                                'sequenceNr' => 1,
+                                'fopCode' => 'VI',
+                                'freeFlowText' => 'VI4541099100010016/0919'
+                            ]),
+                            new Client\RequestOptions\Fop\MopInfo([
+                                'sequenceNr' => 2,
+                                'fopCode' => 'VI',
+                                'freeFlowText' => 'VI4541099100010024/0919/EUR20'
+                            ]),
+                        ]
+                    ])
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -4726,10 +4203,10 @@ class ClientTest extends BaseTestCase
 
     public function testCanDoSignOutCall()
     {
-        $mockedSendResult                                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml                               = '<ns1:Security_SignOut/>';
-        $mockedSendResult->responseObject                            = new \stdClass();
-        $mockedSendResult->responseObject->processStatus             = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = '<ns1:Security_SignOut/>';
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->processStatus = new \stdClass();
         $mockedSendResult->responseObject->processStatus->statusCode = 'P';
 
         $messageResult = new Client\Result($mockedSendResult);
@@ -4759,15 +4236,13 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Security_SignOut')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -4779,22 +4254,20 @@ class ClientTest extends BaseTestCase
     public function testCanDoAuthenticateCall()
     {
 
-        $authParams = new Params\AuthParams(
-            [
-                'officeId'           => 'BRUXXXXXX',
-                'originatorTypeCode' => 'U',
-                'userId'             => 'WSXXXXXX',
-                'passwordData'       => base64_encode('TEST'),
-                'passwordLength'     => 4,
-                'dutyCode'           => 'SU',
-                'organizationId'     => 'DUMMY-ORG',
-            ]
-        );
+        $authParams = new Params\AuthParams([
+            'officeId' => 'BRUXXXXXX',
+            'originatorTypeCode' => 'U',
+            'userId' => 'WSXXXXXX',
+            'passwordData' => base64_encode('TEST'),
+            'passwordLength' => 4,
+            'dutyCode' => 'SU',
+            'organizationId' => 'DUMMY-ORG',
+        ]);
 
-        $mockedSendResult                                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml                               = 'dummy auth response xml';
-        $mockedSendResult->responseObject                            = new \stdClass();
-        $mockedSendResult->responseObject->processStatus             = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummy auth response xml';
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->processStatus = new \stdClass();
         $mockedSendResult->responseObject->processStatus->statusCode = 'P';
 
         $messageResult = new Client\Result($mockedSendResult);
@@ -4828,16 +4301,14 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Security_Authenticate')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->authParams           = $authParams;
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->authParams = $authParams;
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -4856,36 +4327,32 @@ class ClientTest extends BaseTestCase
      */
     public function testCanDoAuthenticateCallWithAuthParamsOnSessionHandlerSoapHeader2()
     {
-        $sessionHandlerParams = new Params\SessionHandlerParams(
-            [
-                'authParams' => [
-                    'officeId'           => 'BRUXXXXXX',
-                    'originatorTypeCode' => 'U',
-                    'userId'             => 'WSXXXXXX',
-                    'passwordData'       => base64_encode('TEST'),
-                    'passwordLength'     => 4,
-                    'dutyCode'           => 'SU',
-                    'organizationId'     => 'DUMMY-ORG',
-                ],
-            ]
-        );
-
-        $authParams = new Params\AuthParams(
-            [
-                'officeId'           => 'BRUXXXXXX',
+        $sessionHandlerParams = new Params\SessionHandlerParams([
+            'authParams' => [
+                'officeId' => 'BRUXXXXXX',
                 'originatorTypeCode' => 'U',
-                'userId'             => 'WSXXXXXX',
-                'passwordData'       => base64_encode('TEST'),
-                'passwordLength'     => 4,
-                'dutyCode'           => 'SU',
-                'organizationId'     => 'DUMMY-ORG',
+                'userId' => 'WSXXXXXX',
+                'passwordData' => base64_encode('TEST'),
+                'passwordLength' => 4,
+                'dutyCode' => 'SU',
+                'organizationId' => 'DUMMY-ORG',
             ]
-        );
+        ]);
 
-        $mockedSendResult                                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml                               = 'dummy auth response xml';
-        $mockedSendResult->responseObject                            = new \stdClass();
-        $mockedSendResult->responseObject->processStatus             = new \stdClass();
+        $authParams = new Params\AuthParams([
+            'officeId' => 'BRUXXXXXX',
+            'originatorTypeCode' => 'U',
+            'userId' => 'WSXXXXXX',
+            'passwordData' => base64_encode('TEST'),
+            'passwordLength' => 4,
+            'dutyCode' => 'SU',
+            'organizationId' => 'DUMMY-ORG',
+        ]);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummy auth response xml';
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->processStatus = new \stdClass();
         $mockedSendResult->responseObject->processStatus->statusCode = 'P';
 
         $messageResult = new Client\Result($mockedSendResult);
@@ -4925,16 +4392,14 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Security_Authenticate')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
         $par->sessionHandlerParams = $sessionHandlerParams;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -4948,9 +4413,9 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
         $dummySessionData = [
-            'sessionId'      => 'XFHZEKLRZHREJ',
+            'sessionId' => 'XFHZEKLRZHREJ',
             'sequenceNumber' => 12,
-            'securityToken'  => 'RKLERJEZLKRHZEJKLRHEZJKLREZRHEZK',
+            'securityToken' => 'RKLERJEZLKRHZEJKLRHEZJKLREZRHEZK'
         ];
 
         $mockSessionHandler
@@ -4959,14 +4424,12 @@ class ClientTest extends BaseTestCase
             ->with($dummySessionData)
             ->will($this->returnValue(true));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
 
         $client = new Client($par);
 
@@ -4980,9 +4443,9 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
         $mockedSession = [
-            'sessionId'      => '01ZWHV5EMT',
+            'sessionId' => '01ZWHV5EMT',
             'sequenceNumber' => '1',
-            'securityToken'  => '3WY60GB9B0FX2SLIR756QZ4G2',
+            'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'
         ];
 
         $mockSessionHandler
@@ -4990,14 +4453,12 @@ class ClientTest extends BaseTestCase
             ->method('getSessionData')
             ->will($this->returnValue($mockedSession));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
 
         $client = new Client($par);
 
@@ -5009,13 +4470,11 @@ class ClientTest extends BaseTestCase
     public function testWillGetErrorOnInvalidSessionHandlerParams()
     {
         $this->setExpectedException('InvalidArgumentException', 'Invalid parameters');
-        $par                       = new Params();
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
+        $par = new Params();
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
 
         $client = new Client($par);
 
@@ -5026,17 +4485,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummydocissuanceissueticketresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\DocIssuance\IssueTicket(
-            new Client\RequestOptions\DocIssuanceIssueTicketOptions(
-                [
-                    'options' => [Client\RequestOptions\DocIssuanceIssueTicketOptions::OPTION_ETICKET],
-                ]
-            )
+            new Client\RequestOptions\DocIssuanceIssueTicketOptions([
+                'options' => [Client\RequestOptions\DocIssuanceIssueTicketOptions::OPTION_ETICKET]
+            ])
         );
 
         $mockSessionHandler
@@ -5060,24 +4517,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'DocIssuance_IssueTicket')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->docIssuanceIssueTicket(
-            new Client\RequestOptions\DocIssuanceIssueTicketOptions(
-                [
-                    'options' => [Client\RequestOptions\DocIssuanceIssueTicketOptions::OPTION_ETICKET],
-                ]
-            )
+            new Client\RequestOptions\DocIssuanceIssueTicketOptions([
+                'options' => [Client\RequestOptions\DocIssuanceIssueTicketOptions::OPTION_ETICKET]
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -5087,17 +4540,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummydocissuanceissuemiscdocresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\DocIssuance\IssueMiscellaneousDocuments(
-            new Client\RequestOptions\DocIssuanceIssueMiscDocOptions(
-                [
-                    'options' => [Client\RequestOptions\DocIssuanceIssueMiscDocOptions::OPTION_EMD_ISSUANCE],
-                ]
-            )
+            new Client\RequestOptions\DocIssuanceIssueMiscDocOptions([
+                'options' => [Client\RequestOptions\DocIssuanceIssueMiscDocOptions::OPTION_EMD_ISSUANCE]
+            ])
         );
 
         $mockSessionHandler
@@ -5121,24 +4572,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'DocIssuance_IssueMiscellaneousDocuments')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->docIssuanceIssueMiscellaneousDocuments(
-            new Client\RequestOptions\DocIssuanceIssueMiscDocOptions(
-                [
-                    'options' => [Client\RequestOptions\DocIssuanceIssueMiscDocOptions::OPTION_EMD_ISSUANCE],
-                ]
-            )
+            new Client\RequestOptions\DocIssuanceIssueMiscDocOptions([
+                'options' => [Client\RequestOptions\DocIssuanceIssueMiscDocOptions::OPTION_EMD_ISSUANCE]
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -5148,24 +4595,20 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummydocissuanceissuecombinedresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\DocIssuance\IssueCombined(
-            new Client\RequestOptions\DocIssuanceIssueCombinedOptions(
-                [
-                    'options' => [
-                        new Client\RequestOptions\DocIssuance\Option(
-                            [
-                                'indicator'       => Client\RequestOptions\DocIssuance\Option::INDICATOR_DOCUMENT_RECEIPT,
-                                'subCompoundType' => 'EMPRA',
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\DocIssuanceIssueCombinedOptions([
+                'options' => [
+                    new Client\RequestOptions\DocIssuance\Option([
+                        'indicator' => Client\RequestOptions\DocIssuance\Option::INDICATOR_DOCUMENT_RECEIPT,
+                        'subCompoundType' => 'EMPRA'
+                    ])
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -5189,31 +4632,25 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'DocIssuance_IssueCombined')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->docIssuanceIssueCombined(
-            new Client\RequestOptions\DocIssuanceIssueCombinedOptions(
-                [
-                    'options' => [
-                        new Client\RequestOptions\DocIssuance\Option(
-                            [
-                                'indicator'       => Client\RequestOptions\DocIssuance\Option::INDICATOR_DOCUMENT_RECEIPT,
-                                'subCompoundType' => 'EMPRA',
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\DocIssuanceIssueCombinedOptions([
+                'options' => [
+                    new Client\RequestOptions\DocIssuance\Option([
+                        'indicator' => Client\RequestOptions\DocIssuance\Option::INDICATOR_DOCUMENT_RECEIPT,
+                        'subCompoundType' => 'EMPRA'
+                    ])
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -5223,20 +4660,18 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummydocrefundinitrefundresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\DocRefund\InitRefund(
-            new Client\RequestOptions\DocRefundInitRefundOptions(
-                [
-                    'ticketNumber' => '5272404450587',
-                    'actionCodes'  => [
-                        Client\RequestOptions\DocRefundInitRefundOptions::ACTION_ATC_REFUND,
-                    ],
+            new Client\RequestOptions\DocRefundInitRefundOptions([
+                'ticketNumber' => '5272404450587',
+                'actionCodes' => [
+                    Client\RequestOptions\DocRefundInitRefundOptions::ACTION_ATC_REFUND
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -5260,27 +4695,23 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'DocRefund_InitRefund')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->docRefundInitRefund(
-            new Client\RequestOptions\DocRefundInitRefundOptions(
-                [
-                    'ticketNumber' => '5272404450587',
-                    'actionCodes'  => [
-                        Client\RequestOptions\DocRefundInitRefundOptions::ACTION_ATC_REFUND,
-                    ],
+            new Client\RequestOptions\DocRefundInitRefundOptions([
+                'ticketNumber' => '5272404450587',
+                'actionCodes' => [
+                    Client\RequestOptions\DocRefundInitRefundOptions::ACTION_ATC_REFUND
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -5290,7 +4721,7 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummydocrefundignorerefundresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
@@ -5320,15 +4751,13 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'DocRefund_IgnoreRefund')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -5343,255 +4772,193 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummydocrefundupdaterefundresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\DocRefund\UpdateRefund(
-            new Client\RequestOptions\DocRefundUpdateRefundOptions(
-                [
-                    'originator'                 => '0001AA',
-                    'originatorId'               => '23491193',
-                    'refundDate'                 => \DateTime::createFromFormat('Ymd', '20031125'),
-                    'ticketedDate'               => \DateTime::createFromFormat('Ymd', '20030522'),
-                    'references'                 => [
-                        new Client\RequestOptions\DocRefund\Reference(
-                            [
-                                'type'  => Client\RequestOptions\DocRefund\Reference::TYPE_TKT_INDICATOR,
-                                'value' => 'Y',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\Reference(
-                            [
-                                'type'  => Client\RequestOptions\DocRefund\Reference::TYPE_DATA_SOURCE,
-                                'value' => 'F',
-                            ]
-                        ),
-                    ],
-                    'tickets'                    => [
-                        new Client\RequestOptions\DocRefund\Ticket(
-                            [
-                                'number'      => '22021541124593',
-                                'ticketGroup' => [
-                                    new Client\RequestOptions\DocRefund\TickGroupOpt(
-                                        [
-                                            'couponNumber'     => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
-                                            'couponStatus'     => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
-                                            'boardingPriority' => 'LH07A',
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\DocRefund\TickGroupOpt(
-                                        [
-                                            'couponNumber'     => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
-                                            'couponStatus'     => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
-                                            'boardingPriority' => 'LH07A',
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\DocRefund\TickGroupOpt(
-                                        [
-                                            'couponNumber'     => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_3,
-                                            'couponStatus'     => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
-                                            'boardingPriority' => 'LH07A',
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\DocRefund\TickGroupOpt(
-                                        [
-                                            'couponNumber'     => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_4,
-                                            'couponStatus'     => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
-                                            'boardingPriority' => 'LH07A',
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\Ticket(
-                            [
-                                'number'      => '22021541124604',
-                                'ticketGroup' => [
-                                    new Client\RequestOptions\DocRefund\TickGroupOpt(
-                                        [
-                                            'couponNumber'     => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
-                                            'couponStatus'     => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
-                                            'boardingPriority' => 'LH07A',
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\DocRefund\TickGroupOpt(
-                                        [
-                                            'couponNumber'     => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
-                                            'couponStatus'     => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
-                                            'boardingPriority' => 'LH07A',
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
-                    'travellerPrioDateOfJoining' => \DateTime::createFromFormat('Ymd', '20070101'),
-                    'travellerPrioReference'     => '0077701F',
-                    'monetaryData'               => [
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => Client\RequestOptions\DocRefund\MonetaryData::TYPE_BASE_FARE,
-                                'amount'   => 401.00,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_USED,
-                                'amount'   => 0.00,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_REFUND,
-                                'amount'   => 401.00,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => Client\RequestOptions\DocRefund\MonetaryData::TYPE_REFUND_TOTAL,
-                                'amount'   => 457.74,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => Client\RequestOptions\DocRefund\MonetaryData::TYPE_TOTAL_TAXES,
-                                'amount'   => 56.74,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => 'TP',
-                                'amount'   => 56.74,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => 'OBP',
-                                'amount'   => 0.00,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => 'TGV',
-                                'amount'   => 374.93,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                    ],
-                    'taxData'                    => [
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 16.14,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'DE',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 3.45,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'YC',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 9.67,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'US',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 9.67,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'US',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 3.14,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'XA',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 4.39,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'XY',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 6.28,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'AY',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 4.00,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'DU',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => '701',
-                                'rate'         => 56.74,
-                                'currencyCode' => 'EUR',
-                                'type'         => Client\RequestOptions\DocRefund\TaxData::TYPE_EXTENDED_TAXES,
-                            ]
-                        ),
-                    ],
-                    'formOfPayment'              => [
-                        new Client\RequestOptions\DocRefund\FopOpt(
-                            [
-                                'fopType'   => Client\RequestOptions\DocRefund\FopOpt::TYPE_MISCELLANEOUS,
-                                'fopAmount' => 457.74,
-                                'freeText'  => [
-                                    new Client\RequestOptions\DocRefund\FreeTextOpt(
-                                        [
-                                            'type'     => 'CFP',
-                                            'freeText' => '##0##',
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\DocRefund\FreeTextOpt(
-                                        [
-                                            'type'     => 'CFP',
-                                            'freeText' => 'IDBANK',
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
-                    'refundedRouteStations'      => [
-                        'FRA',
-                        'MUC',
-                        'JFK',
-                        'BKK',
-                        'FRA',
-                    ],
+            new Client\RequestOptions\DocRefundUpdateRefundOptions([
+                'originator' => '0001AA',
+                'originatorId' => '23491193',
+                'refundDate' => \DateTime::createFromFormat('Ymd', '20031125'),
+                'ticketedDate' => \DateTime::createFromFormat('Ymd', '20030522'),
+                'references' => [
+                    new Client\RequestOptions\DocRefund\Reference([
+                        'type' => Client\RequestOptions\DocRefund\Reference::TYPE_TKT_INDICATOR,
+                        'value' => 'Y'
+                    ]),
+                    new Client\RequestOptions\DocRefund\Reference([
+                        'type' => Client\RequestOptions\DocRefund\Reference::TYPE_DATA_SOURCE,
+                        'value' => 'F'
+                    ])
+                ],
+                'tickets' => [
+                    new Client\RequestOptions\DocRefund\Ticket([
+                        'number' => '22021541124593',
+                        'ticketGroup' => [
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_3,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_4,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ])
+                        ]
+                    ]),
+                    new Client\RequestOptions\DocRefund\Ticket([
+                        'number' => '22021541124604',
+                        'ticketGroup' => [
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ])
+                        ]
+                    ])
+                ],
+                'travellerPrioDateOfJoining' => \DateTime::createFromFormat('Ymd', '20070101'),
+                'travellerPrioReference' => '0077701F',
+                'monetaryData' => [
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_BASE_FARE,
+                        'amount' => 401.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_USED,
+                        'amount' => 0.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_REFUND,
+                        'amount' => 401.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_REFUND_TOTAL,
+                        'amount' => 457.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_TOTAL_TAXES,
+                        'amount' => 56.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'TP',
+                        'amount' => 56.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'OBP',
+                        'amount' => 0.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'TGV',
+                        'amount' => 374.93,
+                        'currency' => 'EUR'
+                    ])
+                ],
+                'taxData' => [
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 16.14,
+                        'currencyCode' => 'EUR',
+                        'type' => 'DE'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 3.45,
+                        'currencyCode' => 'EUR',
+                        'type' => 'YC'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 9.67,
+                        'currencyCode' => 'EUR',
+                        'type' => 'US'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 9.67,
+                        'currencyCode' => 'EUR',
+                        'type' => 'US'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 3.14,
+                        'currencyCode' => 'EUR',
+                        'type' => 'XA'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 4.39,
+                        'currencyCode' => 'EUR',
+                        'type' => 'XY'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 6.28,
+                        'currencyCode' => 'EUR',
+                        'type' => 'AY'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 4.00,
+                        'currencyCode' => 'EUR',
+                        'type' => 'DU'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => '701',
+                        'rate' => 56.74,
+                        'currencyCode' => 'EUR',
+                        'type' => Client\RequestOptions\DocRefund\TaxData::TYPE_EXTENDED_TAXES
+                    ])
+                ],
+                'formOfPayment' => [
+                    new Client\RequestOptions\DocRefund\FopOpt([
+                        'fopType' => Client\RequestOptions\DocRefund\FopOpt::TYPE_MISCELLANEOUS,
+                        'fopAmount' => 457.74,
+                        'freeText' => [
+                            new Client\RequestOptions\DocRefund\FreeTextOpt([
+                                'type' => 'CFP',
+                                'freeText' => '##0##'
+                            ]),
+                            new Client\RequestOptions\DocRefund\FreeTextOpt([
+                                'type' => 'CFP',
+                                'freeText' => 'IDBANK'
+                            ])
+                        ]
+                    ])
+                ],
+                'refundedRouteStations' => [
+                    'FRA',
+                    'MUC',
+                    'JFK',
+                    'BKK',
+                    'FRA'
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -5615,262 +4982,198 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'DocRefund_UpdateRefund')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->docRefundUpdateRefund(
-            new Client\RequestOptions\DocRefundUpdateRefundOptions(
-                [
-                    'originator'                 => '0001AA',
-                    'originatorId'               => '23491193',
-                    'refundDate'                 => \DateTime::createFromFormat('Ymd', '20031125'),
-                    'ticketedDate'               => \DateTime::createFromFormat('Ymd', '20030522'),
-                    'references'                 => [
-                        new Client\RequestOptions\DocRefund\Reference(
-                            [
-                                'type'  => Client\RequestOptions\DocRefund\Reference::TYPE_TKT_INDICATOR,
-                                'value' => 'Y',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\Reference(
-                            [
-                                'type'  => Client\RequestOptions\DocRefund\Reference::TYPE_DATA_SOURCE,
-                                'value' => 'F',
-                            ]
-                        ),
-                    ],
-                    'tickets'                    => [
-                        new Client\RequestOptions\DocRefund\Ticket(
-                            [
-                                'number'      => '22021541124593',
-                                'ticketGroup' => [
-                                    new Client\RequestOptions\DocRefund\TickGroupOpt(
-                                        [
-                                            'couponNumber'     => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
-                                            'couponStatus'     => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
-                                            'boardingPriority' => 'LH07A',
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\DocRefund\TickGroupOpt(
-                                        [
-                                            'couponNumber'     => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
-                                            'couponStatus'     => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
-                                            'boardingPriority' => 'LH07A',
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\DocRefund\TickGroupOpt(
-                                        [
-                                            'couponNumber'     => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_3,
-                                            'couponStatus'     => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
-                                            'boardingPriority' => 'LH07A',
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\DocRefund\TickGroupOpt(
-                                        [
-                                            'couponNumber'     => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_4,
-                                            'couponStatus'     => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
-                                            'boardingPriority' => 'LH07A',
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\Ticket(
-                            [
-                                'number'      => '22021541124604',
-                                'ticketGroup' => [
-                                    new Client\RequestOptions\DocRefund\TickGroupOpt(
-                                        [
-                                            'couponNumber'     => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
-                                            'couponStatus'     => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
-                                            'boardingPriority' => 'LH07A',
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\DocRefund\TickGroupOpt(
-                                        [
-                                            'couponNumber'     => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
-                                            'couponStatus'     => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
-                                            'boardingPriority' => 'LH07A',
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
-                    'travellerPrioDateOfJoining' => \DateTime::createFromFormat('Ymd', '20070101'),
-                    'travellerPrioReference'     => '0077701F',
-                    'monetaryData'               => [
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => Client\RequestOptions\DocRefund\MonetaryData::TYPE_BASE_FARE,
-                                'amount'   => 401.00,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_USED,
-                                'amount'   => 0.00,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_REFUND,
-                                'amount'   => 401.00,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => Client\RequestOptions\DocRefund\MonetaryData::TYPE_REFUND_TOTAL,
-                                'amount'   => 457.74,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => Client\RequestOptions\DocRefund\MonetaryData::TYPE_TOTAL_TAXES,
-                                'amount'   => 56.74,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => 'TP',
-                                'amount'   => 56.74,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => 'OBP',
-                                'amount'   => 0.00,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\MonetaryData(
-                            [
-                                'type'     => 'TGV',
-                                'amount'   => 374.93,
-                                'currency' => 'EUR',
-                            ]
-                        ),
-                    ],
-                    'taxData'                    => [
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 16.14,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'DE',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 3.45,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'YC',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 9.67,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'US',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 9.67,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'US',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 3.14,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'XA',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 4.39,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'XY',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 6.28,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'AY',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => 'H',
-                                'rate'         => 4.00,
-                                'currencyCode' => 'EUR',
-                                'type'         => 'DU',
-                            ]
-                        ),
-                        new Client\RequestOptions\DocRefund\TaxData(
-                            [
-                                'category'     => '701',
-                                'rate'         => 56.74,
-                                'currencyCode' => 'EUR',
-                                'type'         => Client\RequestOptions\DocRefund\TaxData::TYPE_EXTENDED_TAXES,
-                            ]
-                        ),
-                    ],
-                    'formOfPayment'              => [
-                        new Client\RequestOptions\DocRefund\FopOpt(
-                            [
-                                'fopType'   => Client\RequestOptions\DocRefund\FopOpt::TYPE_MISCELLANEOUS,
-                                'fopAmount' => 457.74,
-                                'freeText'  => [
-                                    new Client\RequestOptions\DocRefund\FreeTextOpt(
-                                        [
-                                            'type'     => 'CFP',
-                                            'freeText' => '##0##',
-                                        ]
-                                    ),
-                                    new Client\RequestOptions\DocRefund\FreeTextOpt(
-                                        [
-                                            'type'     => 'CFP',
-                                            'freeText' => 'IDBANK',
-                                        ]
-                                    ),
-                                ],
-                            ]
-                        ),
-                    ],
-                    'refundedRouteStations'      => [
-                        'FRA',
-                        'MUC',
-                        'JFK',
-                        'BKK',
-                        'FRA',
-                    ],
+            new Client\RequestOptions\DocRefundUpdateRefundOptions([
+                'originator' => '0001AA',
+                'originatorId' => '23491193',
+                'refundDate' => \DateTime::createFromFormat('Ymd', '20031125'),
+                'ticketedDate' => \DateTime::createFromFormat('Ymd', '20030522'),
+                'references' => [
+                    new Client\RequestOptions\DocRefund\Reference([
+                        'type' => Client\RequestOptions\DocRefund\Reference::TYPE_TKT_INDICATOR,
+                        'value' => 'Y'
+                    ]),
+                    new Client\RequestOptions\DocRefund\Reference([
+                        'type' => Client\RequestOptions\DocRefund\Reference::TYPE_DATA_SOURCE,
+                        'value' => 'F'
+                    ])
+                ],
+                'tickets' => [
+                    new Client\RequestOptions\DocRefund\Ticket([
+                        'number' => '22021541124593',
+                        'ticketGroup' => [
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_3,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_4,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ])
+                        ]
+                    ]),
+                    new Client\RequestOptions\DocRefund\Ticket([
+                        'number' => '22021541124604',
+                        'ticketGroup' => [
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_1,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ]),
+                            new Client\RequestOptions\DocRefund\TickGroupOpt([
+                                'couponNumber' => Client\RequestOptions\DocRefund\TickGroupOpt::COUPON_2,
+                                'couponStatus' => Client\RequestOptions\DocRefund\TickGroupOpt::STATUS_REFUNDED,
+                                'boardingPriority' => 'LH07A'
+                            ])
+                        ]
+                    ])
+                ],
+                'travellerPrioDateOfJoining' => \DateTime::createFromFormat('Ymd', '20070101'),
+                'travellerPrioReference' => '0077701F',
+                'monetaryData' => [
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_BASE_FARE,
+                        'amount' => 401.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_USED,
+                        'amount' => 0.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_FARE_REFUND,
+                        'amount' => 401.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_REFUND_TOTAL,
+                        'amount' => 457.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => Client\RequestOptions\DocRefund\MonetaryData::TYPE_TOTAL_TAXES,
+                        'amount' => 56.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'TP',
+                        'amount' => 56.74,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'OBP',
+                        'amount' => 0.00,
+                        'currency' => 'EUR'
+                    ]),
+                    new Client\RequestOptions\DocRefund\MonetaryData([
+                        'type' => 'TGV',
+                        'amount' => 374.93,
+                        'currency' => 'EUR'
+                    ])
+                ],
+                'taxData' => [
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 16.14,
+                        'currencyCode' => 'EUR',
+                        'type' => 'DE'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 3.45,
+                        'currencyCode' => 'EUR',
+                        'type' => 'YC'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 9.67,
+                        'currencyCode' => 'EUR',
+                        'type' => 'US'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 9.67,
+                        'currencyCode' => 'EUR',
+                        'type' => 'US'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 3.14,
+                        'currencyCode' => 'EUR',
+                        'type' => 'XA'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 4.39,
+                        'currencyCode' => 'EUR',
+                        'type' => 'XY'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 6.28,
+                        'currencyCode' => 'EUR',
+                        'type' => 'AY'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => 'H',
+                        'rate' => 4.00,
+                        'currencyCode' => 'EUR',
+                        'type' => 'DU'
+                    ]),
+                    new Client\RequestOptions\DocRefund\TaxData([
+                        'category' => '701',
+                        'rate' => 56.74,
+                        'currencyCode' => 'EUR',
+                        'type' => Client\RequestOptions\DocRefund\TaxData::TYPE_EXTENDED_TAXES
+                    ])
+                ],
+                'formOfPayment' => [
+                    new Client\RequestOptions\DocRefund\FopOpt([
+                        'fopType' => Client\RequestOptions\DocRefund\FopOpt::TYPE_MISCELLANEOUS,
+                        'fopAmount' => 457.74,
+                        'freeText' => [
+                            new Client\RequestOptions\DocRefund\FreeTextOpt([
+                                'type' => 'CFP',
+                                'freeText' => '##0##'
+                            ]),
+                            new Client\RequestOptions\DocRefund\FreeTextOpt([
+                                'type' => 'CFP',
+                                'freeText' => 'IDBANK'
+                            ])
+                        ]
+                    ])
+                ],
+                'refundedRouteStations' => [
+                    'FRA',
+                    'MUC',
+                    'JFK',
+                    'BKK',
+                    'FRA'
                 ]
-            )
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -5880,17 +5183,15 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummydocrefundprocessrefundresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\DocRefund\ProcessRefund(
-            new Client\RequestOptions\DocRefundProcessRefundOptions(
-                [
-                    'statusIndicators' => [Client\RequestOptions\DocRefundProcessRefundOptions::STATUS_INHIBIT_REFUND_NOTICE],
-                ]
-            )
+            new Client\RequestOptions\DocRefundProcessRefundOptions([
+                'statusIndicators' => [Client\RequestOptions\DocRefundProcessRefundOptions::STATUS_INHIBIT_REFUND_NOTICE]
+            ])
         );
 
         $mockSessionHandler
@@ -5914,24 +5215,20 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'DocRefund_ProcessRefund')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->docRefundProcessRefund(
-            new Client\RequestOptions\DocRefundProcessRefundOptions(
-                [
-                    'statusIndicators' => [Client\RequestOptions\DocRefundProcessRefundOptions::STATUS_INHIBIT_REFUND_NOTICE],
-                ]
-            )
+            new Client\RequestOptions\DocRefundProcessRefundOptions([
+                'statusIndicators' => [Client\RequestOptions\DocRefundProcessRefundOptions::STATUS_INHIBIT_REFUND_NOTICE]
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -5941,28 +5238,20 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyfopvalidatefopresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\Fop\ValidateFormOfPayment(
-            new Client\RequestOptions\FopValidateFopOptions(
-                [
-                    'fopGroup' => [
-                        new Client\RequestOptions\Fop\Group(
-                            [
-                                'fopRef' => new Client\RequestOptions\Fop\FopRef(
-                                    [
-                                        'qualifier' => Client\RequestOptions\Fop\FopRef::QUAL_FORM_OF_PAYMENT_TATTOO,
-                                        'number'    => 1,
-                                    ]
-                                ),
-                            ]
-                        ),
-                    ],
-                ]
-            )
+            new Client\RequestOptions\FopValidateFopOptions([
+                'fopGroup' => [new Client\RequestOptions\Fop\Group([
+                    'fopRef' => new Client\RequestOptions\Fop\FopRef([
+                        'qualifier' => Client\RequestOptions\Fop\FopRef::QUAL_FORM_OF_PAYMENT_TATTOO,
+                        'number' => 1
+                    ])
+                ])]
+            ])
         );
 
         $mockSessionHandler
@@ -5986,35 +5275,25 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'FOP_ValidateFOP')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
         $response = $client->fopValidateFOP(
-            new Client\RequestOptions\FopValidateFopOptions(
-                [
-                    'fopGroup' => [
-                        new Client\RequestOptions\Fop\Group(
-                            [
-                                'fopRef' => new Client\RequestOptions\Fop\FopRef(
-                                    [
-                                        'qualifier' => Client\RequestOptions\Fop\FopRef::QUAL_FORM_OF_PAYMENT_TATTOO,
-                                        'number'    => 1,
-                                    ]
-                                ),
-                            ]
-                        ),
-                    ],
-                ]
-            )
+            new Client\RequestOptions\FopValidateFopOptions([
+                'fopGroup' => [new Client\RequestOptions\Fop\Group([
+                    'fopRef' => new Client\RequestOptions\Fop\FopRef([
+                        'qualifier' => Client\RequestOptions\Fop\FopRef::QUAL_FORM_OF_PAYMENT_TATTOO,
+                        'number' => 1
+                    ])
+                ])]
+            ])
         );
 
         $this->assertEquals($messageResult, $response);
@@ -6024,7 +5303,7 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyticketinitrefundresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
@@ -6054,15 +5333,13 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_InitRefund')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -6077,7 +5354,7 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyticketignorerefundresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
@@ -6107,15 +5384,13 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_IgnoreRefund')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -6130,7 +5405,7 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult              = new Client\Session\Handler\SendResult();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
         $mockedSendResult->responseXml = 'dummyticketprocessrefundresponse';
 
         $messageResult = new Client\Result($mockedSendResult);
@@ -6160,15 +5435,13 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'Ticket_ProcessRefund')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -6186,27 +5459,23 @@ class ClientTest extends BaseTestCase
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
-        $mockedSendResult                               = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseObject               = new \stdClass();
-        $mockedSendResult->responseObject->dummy        = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->dummy = new \stdClass();
         $mockedSendResult->responseObject->dummy->value = 'this is a dummy value';
-        $mockedSendResult->responseXml                  = 'this is a dummy result which should be removed because we requested no response XML';
+        $mockedSendResult->responseXml = 'this is a dummy result which should be removed because we requested no response XML';
 
         $messageResult = new Client\Result($mockedSendResult);
 
         $expectedMessageResult = new Client\Struct\DocIssuance\IssueCombined(
-            new Client\RequestOptions\DocIssuanceIssueCombinedOptions(
-                [
-                    'options' => [
-                        new Client\RequestOptions\DocIssuance\Option(
-                            [
-                                'indicator'       => Client\RequestOptions\DocIssuance\Option::INDICATOR_DOCUMENT_RECEIPT,
-                                'subCompoundType' => 'EMPRA',
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\DocIssuanceIssueCombinedOptions([
+                'options' => [
+                    new Client\RequestOptions\DocIssuance\Option([
+                        'indicator' => Client\RequestOptions\DocIssuance\Option::INDICATOR_DOCUMENT_RECEIPT,
+                        'subCompoundType' => 'EMPRA'
+                    ])
                 ]
-            )
+            ])
         );
 
         $mockSessionHandler
@@ -6230,37 +5499,31 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'DocIssuance_IssueCombined')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
 
-        $expectedMessage              = clone $messageResult;
+        $expectedMessage = clone $messageResult;
         $expectedMessage->responseXml = null;
 
 
         $client = new Client($par);
 
         $response = $client->docIssuanceIssueCombined(
-            new Client\RequestOptions\DocIssuanceIssueCombinedOptions(
-                [
-                    'options' => [
-                        new Client\RequestOptions\DocIssuance\Option(
-                            [
-                                'indicator'       => Client\RequestOptions\DocIssuance\Option::INDICATOR_DOCUMENT_RECEIPT,
-                                'subCompoundType' => 'EMPRA',
-                            ]
-                        ),
-                    ],
+            new Client\RequestOptions\DocIssuanceIssueCombinedOptions([
+                'options' => [
+                    new Client\RequestOptions\DocIssuance\Option([
+                        'indicator' => Client\RequestOptions\DocIssuance\Option::INDICATOR_DOCUMENT_RECEIPT,
+                        'subCompoundType' => 'EMPRA'
+                    ])
                 ]
-            ),
+            ]),
             [
-                'returnXml' => false,
+                'returnXml' => false
             ]
         );
 
@@ -6269,14 +5532,14 @@ class ClientTest extends BaseTestCase
 
     public function testCanDoIgnorePnrCall()
     {
-        $mockedSendResult                            = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml               = 'A dummy message result'; // Not an actual XML reply.
-        $mockedSendResult->responseObject            = new \stdClass();
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply.
+        $mockedSendResult->responseObject = new \stdClass();
         $mockedSendResult->responseObject->dummyprop = 'A dummy message result'; // Not an actual response property
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $options                = new Client\RequestOptions\PnrIgnoreOptions();
+        $options = new Client\RequestOptions\PnrIgnoreOptions();
         $options->actionRequest = Client\Struct\Pnr\Ignore\ClearInformation::CODE_IGNORE;
 
         $expectedPnrResult = new Client\Struct\Pnr\Ignore($options);
@@ -6301,15 +5564,10 @@ class ClientTest extends BaseTestCase
             ->with($mockedSendResult, 'PNR_Ignore')
             ->will($this->returnValue($messageResult));
 
-        $par                       = new Params();
-        $par->sessionHandler       = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
-        $par->responseHandler      = $mockResponseHandler;
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams(['receivedFrom' => 'some RF string', 'originatorOfficeId' => 'BRUXXXXXX']);
+        $par->responseHandler = $mockResponseHandler;
 
         $client = new Client($par);
 
@@ -6328,46 +5586,46 @@ class ClientTest extends BaseTestCase
             [
                 ['endSession' => false, 'returnXml' => true],
                 [
-                    [],
-                ],
+                    []
+                ]
             ],
             //Override returnXml by user:
             [
                 ['endSession' => false, 'returnXml' => true],
                 [
-                    ['returnXml' => true],
-                ],
+                    ['returnXml' => true]
+                ]
             ],
             //Override returnXml by user:
             [
                 ['endSession' => false, 'returnXml' => false],
                 [
-                    ['returnXml' => false],
-                ],
+                    ['returnXml' => false]
+                ]
             ],
             //Override endSession in message definition:
             [
                 ['endSession' => false, 'returnXml' => true],
                 [
                     [],
-                    false,
-                ],
+                    false
+                ]
             ],
             //Override endSession by user:
             [
                 ['endSession' => true, 'returnXml' => true],
                 [
-                    ['endSession' => true],
-                ],
+                    ['endSession' => true]
+                ]
             ],
             //Override endSession in message definition:
             [
                 ['endSession' => true, 'returnXml' => true],
                 [
                     [],
-                    true,
-                ],
-            ],
+                    true
+                ]
+            ]
         ];
     }
 
@@ -6376,25 +5634,21 @@ class ClientTest extends BaseTestCase
      */
     protected function makeDummyParams()
     {
-        return new Params(
-            [
-                'sessionHandlerParams' => [
-                    'wsdl'       => realpath(
-                        dirname(__FILE__) . DIRECTORY_SEPARATOR . "Client" . DIRECTORY_SEPARATOR . "testfiles" . DIRECTORY_SEPARATOR . "dummywsdl.wsdl"
-                    ),
-                    'stateful'   => true,
-                    'logger'     => new NullLogger(),
-                    'authParams' => [
-                        'officeId'     => 'BRUXXXXXX',
-                        'userId'       => 'WSXXXXXX',
-                        'passwordData' => base64_encode('TEST'),
-                    ],
-                ],
-                'requestCreatorParams' => [
-                    'receivedFrom' => 'some RF string',
-                ],
+        return new Params([
+            'sessionHandlerParams' => [
+                'wsdl' => realpath(dirname(__FILE__) . DIRECTORY_SEPARATOR . "Client" . DIRECTORY_SEPARATOR . "testfiles" . DIRECTORY_SEPARATOR . "dummywsdl.wsdl"),
+                'stateful' => true,
+                'logger' => new NullLogger(),
+                'authParams' => [
+                    'officeId' => 'BRUXXXXXX',
+                    'userId' => 'WSXXXXXX',
+                    'passwordData' => base64_encode('TEST')
+                ]
+            ],
+            'requestCreatorParams' => [
+                'receivedFrom' => 'some RF string'
             ]
-        );
+        ]);
     }
 
     /**
@@ -6402,14 +5656,12 @@ class ClientTest extends BaseTestCase
      */
     protected function makeClientWithMockedSessionHandler()
     {
-        $par                       = new Params();
-        $par->sessionHandler       = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
-        $par->requestCreatorParams = new Params\RequestCreatorParams(
-            [
-                'receivedFrom'       => 'some RF string',
-                'originatorOfficeId' => 'BRUXXXXXX',
-            ]
-        );
+        $par = new Params();
+        $par->sessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
 
         return new Client($par);
     }
@@ -6420,8 +5672,8 @@ class ClientTest extends BaseTestCase
     protected function makePathToDummyWSDL()
     {
         return realpath(
-            dirname(__FILE__) . DIRECTORY_SEPARATOR . "Client" .
-            DIRECTORY_SEPARATOR . "testfiles" . DIRECTORY_SEPARATOR . "dummywsdl.wsdl"
+            dirname(__FILE__).DIRECTORY_SEPARATOR."Client".
+            DIRECTORY_SEPARATOR."testfiles".DIRECTORY_SEPARATOR."dummywsdl.wsdl"
         );
     }
 }
