@@ -14,6 +14,7 @@ This is the list of messages that are at least partially supported at this time:
 - PNR_TransferOwnership
 - PNR_NameChange
 - PNR_Split
+- PNR_Ignore
 - Queue_List
 - Queue_PlacePNR
 - Queue_RemoveItem

@@ -2024,7 +2024,7 @@ class ClientTest extends BaseTestCase
 
         $this->assertEquals($messageResult, $response);
     }
-    
+
     public function testCanDoTicketDisplayTSMFareElement()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -5528,6 +5528,52 @@ class ClientTest extends BaseTestCase
         );
 
         $this->assertEquals($expectedMessage, $response);
+    }
+
+    public function testCanDoIgnorePnrCall()
+    {
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply.
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->dummyprop = 'A dummy message result'; // Not an actual response property
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $options = new Client\RequestOptions\PnrIgnoreOptions();
+        $options->actionRequest = Client\Struct\Pnr\Ignore\ClearInformation::CODE_IGNORE;
+
+        $expectedPnrResult = new Client\Struct\Pnr\Ignore($options);
+
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_Ignore', $expectedPnrResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_Ignore' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'PNR_Ignore')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams(['receivedFrom' => 'some RF string', 'originatorOfficeId' => 'BRUXXXXXX']);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->pnrIgnore($options);
+
+        $this->assertEquals($messageResult, $response);
     }
 
     /**
