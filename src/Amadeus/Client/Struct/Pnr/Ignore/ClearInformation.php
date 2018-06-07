@@ -37,7 +37,7 @@ class ClearInformation extends BaseWsMessage
     /**
      * @var self::CODE_*
      */
-    public $actionRequestCode;
+    public $actionRequest;
 
     /**
      * Ignore constructor.
@@ -46,6 +46,6 @@ class ClearInformation extends BaseWsMessage
      */
     public function __construct($actionRequestCode)
     {
-        $this->actionRequestCode = $actionRequestCode;
+        $this->actionRequest = $actionRequestCode;
     }
 }
