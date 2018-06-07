@@ -39,6 +39,8 @@ class ClearInformation extends BaseWsMessage
      */
     public $actionRequest;
 
+
+
     /**
      * Ignore constructor.
      *
