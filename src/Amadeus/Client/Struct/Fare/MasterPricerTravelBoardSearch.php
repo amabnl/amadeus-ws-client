@@ -223,7 +223,9 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
             $opt->includedConnections,
             $opt->excludedConnections,
             $opt->nrOfConnections,
-            $opt->noAirportChange
+            $opt->noAirportChange,
+            $opt->cabinClass,
+            $opt->cabinOption
         )) {
             $tmpItinerary->flightInfo = new MasterPricer\FlightInfo(
                 $opt->airlineOptions,
@@ -231,7 +233,9 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
                 $opt->includedConnections,
                 $opt->excludedConnections,
                 $opt->nrOfConnections,
-                $opt->noAirportChange
+                $opt->noAirportChange,
+                $opt->cabinClass,
+                $opt->cabinOption
             );
         }
 

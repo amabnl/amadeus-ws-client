@@ -1782,4 +1782,27 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Struct\Fare\MasterPricer\TicketingPriceScheme', $msg->fareOptions->ticketingPriceScheme);
         $this->assertEquals('00012345', $msg->fareOptions->ticketingPriceScheme->referenceNumber);
     }
+
+    public function testCanSpecifyCabinPerItinerary()
+    {
+        $opt = new FareMasterPricerTbSearch();
+        $opt->nrOfRequestedResults = 200;
+        $opt->nrOfRequestedPassengers = 1;
+        $opt->passengers[] = new MPPassenger([
+            'type' => MPPassenger::TYPE_ADULT,
+            'count' => 1
+        ]);
+        $opt->itinerary[] = new MPItinerary([
+            'departureLocation' => new MPLocation(['city' => 'BRU']),
+            'arrivalLocation' => new MPLocation(['city' => 'LON']),
+            'date' => new MPDate(['dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))]),
+            'cabinClass' => FareMasterPricerTbSearch::CABIN_ECONOMY_PREMIUM
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertEquals(FareMasterPricerTbSearch::CABIN_ECONOMY_PREMIUM, $message->itinerary[0]->flightInfo->cabinId->cabin);
+        $this->assertNull($message->itinerary[0]->flightInfo->cabinId->cabinQualifier);
+    }
+
 }

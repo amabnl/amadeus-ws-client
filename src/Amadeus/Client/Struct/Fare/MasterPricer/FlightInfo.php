@@ -69,6 +69,8 @@ class FlightInfo
      * @param array $excludedConnections
      * @param int|null $connections
      * @param bool $noAirportChange
+     * @param string|null $cabinCode CabinId::CABIN_*
+     * @param string|null $cabinOption CabinId::CABINOPT_*
      */
     public function __construct(
         array $airlineOptions,
@@ -76,7 +78,9 @@ class FlightInfo
         array $includedConnections = [],
         array $excludedConnections = [],
         $connections = null,
-        $noAirportChange = false
+        $noAirportChange = false,
+        $cabinCode = null,
+        $cabinOption = null
     ) {
         foreach ($airlineOptions as $qualifier => $airlines) {
             $this->companyIdentity[] = new CompanyIdentity(
@@ -102,6 +106,9 @@ class FlightInfo
 
         if ($noAirportChange === true) {
             $this->unitNumberDetail[] = new UnitNumberDetail(1, UnitNumberDetail::TYPE_NO_AIRPORT_CHANGE);
+        }
+        if (!is_null($cabinCode) || !is_null($cabinOption)) {
+            $this->cabinId = new CabinId($cabinCode, $cabinOption);
         }
     }
 }
