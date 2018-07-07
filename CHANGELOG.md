@@ -1,6 +1,9 @@
 # Release 1.8.0 (UNRELEASED)
 * Added support for Ticketing Price Scheme option in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/193) - Artem Zakharchenko
+* Added support for cabin options on itinerary-level in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/202) - Michal Hernas
 * Implemented ``Ticket_RetrieveListOfTSM`` (https://github.com/amabnl/amadeus-ws-client/pull/194) - Michal Hernas
+* Implemented ``Ticket_CreateTASF`` (https://github.com/amabnl/amadeus-ws-client/pull/197) - Artem Zakharchenko
+* Implemented ``PNR_Ignore`` (https://github.com/amabnl/amadeus-ws-client/pull/198) - Michael Mueller
 
 # Release 1.7.0 (30 April 2018)
 * Implemented support for ``TransactionFlowLink`` SOAP header (https://github.com/amabnl/amadeus-ws-client/issues/146)
