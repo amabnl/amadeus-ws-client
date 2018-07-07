@@ -306,7 +306,8 @@ Provide mandatory SR DOCS with APIS information for flights to the US *(must be 
     ]);
 
 **FULL APIS FORMAT**
-As mentioned here, this is the full APIS format:
+
+As mentioned `here <https://github.com/amabnl/amadeus-ws-client/issues/195#issuecomment-389520926>`_, this is the full APIS format:
 
     'P-<PASSPORT_ISSUING_COUNTRY>-<PASSPORT_NR>-<NATIONALITY>-<BIRTHDAY>-<GENDER>-<PASSPORT_EXPIRATION_DATE>-<LAST_NAME>-<FIRST_NAME>_<MIDDLE_NAME>
 
