@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
+use Amadeus\Client\RequestOptions\Fare\MPTicketingPriceScheme;
 use Amadeus\Client\RequestOptions\Fare\MPFeeId;
 
 /**
@@ -40,7 +41,9 @@ class FareOptions
      * @var Corporate
      */
     public $corporate;
-
+    /**
+     * @var TicketingPriceScheme
+     */
     public $ticketingPriceScheme;
     /**
      * @var FeeIdDescription
@@ -68,6 +71,8 @@ class FareOptions
      * @param string|null $currency Override Currency conversion
      * @param MPFeeId[]|null $feeIds List of FeeIds
      * @param string|null Corporate qualifier for Corporate Unifares
+     * @param $multiTicket
+     * @param MPTicketingPriceScheme|null $ticketingPriceScheme
      */
     public function __construct(
         array $flightOptions,
@@ -76,7 +81,8 @@ class FareOptions
         $currency,
         $feeIds,
         $corporateQualifier,
-        $multiTicket
+        $multiTicket,
+        $ticketingPriceScheme
     ) {
         if ($tickPreCheck === true) {
             $this->addPriceType(PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK);
@@ -95,6 +101,9 @@ class FareOptions
         $this->loadMultiTicket($multiTicket);
         if (!is_null($feeIds)) {
             $this->loadFeeIds($feeIds);
+        }
+        if (!is_null($ticketingPriceScheme)) {
+            $this->loadTicketingPriceScheme($ticketingPriceScheme);
         }
     }
 
@@ -130,7 +139,7 @@ class FareOptions
     /**
      * Set multi ticket on if needed
      *
-     * @param string|null $currency
+     * @param string|null $multiTicket
      */
     protected function loadMultiTicket($multiTicket)
     {
@@ -154,5 +163,15 @@ class FareOptions
         }
 
         $this->pricingTickInfo->pricingTicketing->priceType[] = $type;
+    }
+
+    protected function loadTicketingPriceScheme($ticketingPriceScheme)
+    {
+        $priceScheme = new TicketingPriceScheme();
+        $priceScheme->referenceNumber = $ticketingPriceScheme->referenceNumber;
+        $priceScheme->name = $ticketingPriceScheme->name;
+        $priceScheme->status = $ticketingPriceScheme->status;
+        $priceScheme->description = $ticketingPriceScheme->description;
+        $this->ticketingPriceScheme = $priceScheme;
     }
 }

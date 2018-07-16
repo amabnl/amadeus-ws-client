@@ -82,7 +82,7 @@ class TicketRepricePnrWithBookingClassOptions extends Base
     const OVERRIDE_WITHOLD_Q_SURCHARGES = "WQ";
     const OVERRIDE_WITHOLD_TAX = "WT";
     const OVERRIDE_WAIVER_OPTION = "WV";
-    const OVERRIDE_ZAP_OFF = "ZAP";
+    const OVERRIDE_ZAP_OFF = 'ZAP';
     
     /**
      * @var ExchangeInfoOptions[]

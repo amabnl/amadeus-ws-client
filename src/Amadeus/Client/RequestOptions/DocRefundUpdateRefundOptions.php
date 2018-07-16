@@ -30,8 +30,8 @@ namespace Amadeus\Client\RequestOptions;
  */
 class DocRefundUpdateRefundOptions extends Base
 {
-    const PRICING_IND_DOMESTIC_ITINERARY = "D";
-    const PRICING_IND_INTERNATIONAL_ITINERARY = "I";
+    const PRICING_IND_DOMESTIC_ITINERARY = 'D';
+    const PRICING_IND_INTERNATIONAL_ITINERARY = 'I';
 
     /**
      * @var string

@@ -25,7 +25,7 @@ namespace Amadeus\Client\RequestOptions;
 use Amadeus\Client\Params\AuthParams;
 
 /**
- * SecurityAuthenticateOptions
+ * Security_Authenticate Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>

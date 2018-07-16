@@ -78,9 +78,68 @@ class ParamsTest extends BaseTestCase
         $this->assertEquals(4, $params->sessionHandlerParams->authParams->passwordLength);
 
         //Defaults:
+        $this->assertTrue($params->returnXml);
         $this->assertEquals('SU', $params->sessionHandlerParams->authParams->dutyCode);
         $this->assertNull($params->sessionHandlerParams->authParams->nonceBase);
 
+        $this->assertInstanceOf('Amadeus\Client\Params\RequestCreatorParams', $params->requestCreatorParams);
+        $this->assertEquals('BRUXXXXXX', $params->requestCreatorParams->originatorOfficeId);
+        $this->assertEquals('some RF string', $params->requestCreatorParams->receivedFrom);
+    }
+
+
+    public function testCanMakeParamsFromArrayDisableReturnXml()
+    {
+        $theParamArray = [
+            'returnXml' => false,
+            'authParams' => [
+                'officeId' => 'BRUXXXXXX',
+                'originatorTypeCode' => 'U',
+                'userId' => 'WSXXXXXX',
+                'organizationId' => 'NMC-XXXXXX',
+                'passwordLength' => '4',
+                'passwordData' => base64_encode('TEST')
+            ],
+            'sessionHandlerParams' => [
+                'wsdl' => '/var/fake/file/path',
+                'stateful' => true,
+                'logger' => new NullLogger()
+            ],
+            'requestCreatorParams' => [
+                'originatorOfficeId' => 'BRUXXXXXX',
+                'receivedFrom' => 'some RF string'
+            ]
+        ];
+
+        $params = new Params($theParamArray);
+
+        $this->assertFalse($params->returnXml);
+
+        //No Auth params on sessionhandlerparams level:
+        $this->assertNull($params->sessionHandlerParams->authParams);
+
+        //Auth Params on highest level:
+        $this->assertInstanceOf('Amadeus\Client\Params\AuthParams', $params->authParams);
+        $this->assertEquals('BRUXXXXXX', $params->authParams->officeId);
+        $this->assertEquals('NMC-XXXXXX', $params->authParams->organizationId);
+        $this->assertEquals('WSXXXXXX', $params->authParams->userId);
+        $this->assertEquals('U', $params->authParams->originatorTypeCode);
+        $this->assertEquals(base64_encode('TEST'), $params->authParams->passwordData);
+        $this->assertEquals(4, $params->authParams->passwordLength);
+        $this->assertEquals('SU', $params->authParams->dutyCode);
+        $this->assertNull($params->authParams->nonceBase);
+
+        $this->assertNull($params->requestCreator);
+        $this->assertNull($params->sessionHandler);
+
+        $this->assertInstanceOf('Amadeus\Client\Params\SessionHandlerParams', $params->sessionHandlerParams);
+        $this->assertTrue($params->sessionHandlerParams->stateful);
+        $this->assertInstanceOf('Psr\Log\LoggerInterface', $params->sessionHandlerParams->logger);
+        $this->assertInternalType('array', $params->sessionHandlerParams->wsdl);
+        $this->assertCount(1, $params->sessionHandlerParams->wsdl);
+        $this->assertEquals('/var/fake/file/path', $params->sessionHandlerParams->wsdl[0]);
+
+        //Defaults:
         $this->assertInstanceOf('Amadeus\Client\Params\RequestCreatorParams', $params->requestCreatorParams);
         $this->assertEquals('BRUXXXXXX', $params->requestCreatorParams->originatorOfficeId);
         $this->assertEquals('some RF string', $params->requestCreatorParams->receivedFrom);

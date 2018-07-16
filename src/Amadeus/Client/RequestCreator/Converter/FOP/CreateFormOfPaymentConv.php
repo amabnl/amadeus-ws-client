@@ -41,6 +41,11 @@ class CreateFormOfPaymentConv extends BaseConverter
      */
     public function convert($requestOptions, $version)
     {
-        return new Struct\Fop\CreateFormOfPayment($requestOptions);
+        if (floatval($version) < floatval(15)) {
+            // attributeDetails became an array between v14.6 and v15.3
+            return new Struct\Fop\CreateFormOfPayment14($requestOptions);
+        } else {
+            return new Struct\Fop\CreateFormOfPayment($requestOptions);
+        }
     }
 }

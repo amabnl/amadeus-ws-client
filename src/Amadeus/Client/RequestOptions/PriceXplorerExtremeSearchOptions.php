@@ -23,23 +23,19 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PriceXplorerExtremeSearchOptions
+ * PriceXplorer_ExtremeSearch Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class PriceXplorerExtremeSearchOptions extends Base
 {
-    const CURRENCY_EURO = "EUR";
+    const CURRENCY_EURO = 'EUR';
 
     const AGGR_DEST = 'D';
-
     const AGGR_DEST_WEEK = 'DW';
-
     const AGGR_DEST_WEEK_DEPART = 'DWDP';
-
     const AGGR_DEST_WEEK_DEPART_STAY = 'DWDPS';
-
     const AGGR_COUNTRY = 'C';
 
     /**

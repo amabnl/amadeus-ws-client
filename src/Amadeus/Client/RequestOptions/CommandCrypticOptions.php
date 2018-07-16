@@ -23,7 +23,7 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * CommandCrypticOptions
+ * Command_Cryptic Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>

@@ -32,7 +32,7 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class AddressOpt extends LoadParamsFromArray
 {
-    const TYPE_BILLING_ADDRESS = "AB";
+    const TYPE_BILLING_ADDRESS = 'AB';
 
     /**
      * self::TYPE_*

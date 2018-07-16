@@ -22,8 +22,6 @@
 
 namespace Amadeus\Client\RequestOptions\Fare\PricePnr;
 
-use Amadeus\Client\LoadParamsFromArray;
-
 /**
  * Tax
  *

@@ -10,7 +10,7 @@ Below are some examples of how to do specific things with regards to creating & 
 Multiple Action Codes (= optionCode)
 ------------------------------------
 
-Usually, only one actionCode is needed. However, it iss also possible to provide multiple actionCodes in the request (= ``optionCode`` XML node):
+Usually, only one actionCode is needed. However, it is also possible to provide multiple actionCodes in the request (= ``optionCode`` XML node):
 
 .. code-block:: php
 
@@ -87,6 +87,24 @@ Add an infant to a traveller and provide the infant's first & last name and date
                     'lastName' => 'Dylan',
                     'dateOfBirth' => \DateTime::createFromFormat('Y-m-d', '2016-01-08')
                 ])
+            ])
+        ]
+    ]);
+
+Adding of an infant that takes a seat is similar to adding child.
+But remember, not all airlines support INS and a different passenger could be quoted:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+
+    $opt = new PnrCreatePnrOptions([
+        'travellers' => [
+            new Traveller([
+                'lastName' => 'Dylan',
+                'firstName' => 'Junior',
+                'travellerType' => Traveller::TRAV_TYPE_INFANT_WITH_SEAT,
             ])
         ]
     ]);
@@ -286,6 +304,12 @@ Provide mandatory SR DOCS with APIS information for flights to the US *(must be 
             ])
         ]
     ]);
+
+**FULL APIS FORMAT**
+
+As mentioned `here <https://github.com/amabnl/amadeus-ws-client/issues/195#issuecomment-389520926>`_, this is the full APIS format:
+
+    'P-<PASSPORT_ISSUING_COUNTRY>-<PASSPORT_NR>-<NATIONALITY>-<BIRTHDAY>-<GENDER>-<PASSPORT_EXPIRATION_DATE>-<LAST_NAME>-<FIRST_NAME>_<MIDDLE_NAME>
 
 Meal request
 ------------
@@ -608,6 +632,60 @@ Request seat 13f for passenger with tattoo 1 and segment with tattoo 1.
             ])
         ]
     ]);
+
+Request Special Seat Type Aisle
+===============================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $opt = new PnrAddMultiElementsOptions([
+        'elements' => [
+            new SeatRequest([
+                'specialType' => SeatRequest::SPECIAL_AISLE_SEAT,
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
+                        'id' => 1
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+
+Add manual ticket (FHE command)
+===============================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\ManualIssuedTicket;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $opt = new PnrAddMultiElementsOptions([
+        'elements' => [
+            new ManualIssuedTicket([
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_SEGMENT_TATTOO,
+                        'id' => 1
+                    ]),
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
+                        'id' => 2
+                    ])
+                ],
+                'ticketNumber' => "123456789",
+                'passengerType' => ManualIssuedTicket::PASSENGER_TYPE_PASSENGER,
+                'companyId' => "172",
+            ])
+        ]
+    ]);
+
 
 Group PNR
 =========

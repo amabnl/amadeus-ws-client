@@ -1,0 +1,24 @@
+<Ticket_CreateTASFReply xmlns="http://xml.amadeus.com/TTASCR_12_1_1A" >
+    <passengerTattoo>
+        <passengerReference>
+            <type>PT</type>
+            <value>1</value>
+        </passengerReference>
+    </passengerTattoo>
+    <svcReferences>
+        <reference>
+            <type>ST</type>
+            <value>3</value>
+        </reference>
+        <segmentName>IU</segmentName>
+        <lineNumber>2</lineNumber>
+    </svcReferences>
+    <tsmReferences>
+        <referenceType>PQR</referenceType>
+        <uniqueReference>18</uniqueReference>
+        <idSection>
+            <referenceQualifier>DN</referenceQualifier>
+            <primeId>1</primeId>
+        </idSection>
+    </tsmReferences>
+</Ticket_CreateTASFReply>

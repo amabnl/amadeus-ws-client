@@ -53,6 +53,10 @@ class SeatRequest
             $this->seat = new Seat($seatReq->type);
         }
 
+        if (!empty($seatReq->specialType)) {
+            $this->special[] = new Special(null, $seatReq->specialType);
+        }
+
         if (!empty($seatReq->seatNumber)) {
             $this->special[] = new Special($seatReq->seatNumber);
         }

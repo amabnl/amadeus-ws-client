@@ -22,10 +22,6 @@
 
 namespace Amadeus\Client\ResponseHandler\Ticket;
 
-use Amadeus\Client\ResponseHandler\StandardResponseHandler;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
-
 /**
  * HandlerDeleteTST
  *

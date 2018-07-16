@@ -27,6 +27,7 @@ use Amadeus\Client\Exception;
 use Amadeus\Client\Params;
 use Amadeus\Client\RequestOptions;
 use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\UnsupportedOperationException;
 
 /**
  * Amadeus Web Service Client.
@@ -57,8 +58,8 @@ class Client extends Base
      *
      * @var string
      */
-    const VERSION = "1.7.0-dev";
-    
+    const VERSION = "1.8.0-dev";
+
     /**
      * An identifier string for the library (to be used in Received From entries)
      *
@@ -87,6 +88,29 @@ class Client extends Base
     public function isStateful()
     {
         return $this->sessionHandler->isStateful();
+    }
+
+    /**
+     * Get TransactionFlowLink Consumer Id
+     *
+     * @return string|null
+     */
+    public function getConsumerId()
+    {
+        return $this->sessionHandler->getConsumerId();
+    }
+
+    /**
+     * Set TransactionFlowLink Consumer Id
+     *
+     * @throws UnsupportedOperationException when used on unsupported WSAP versions
+     * @param string $id
+     * @return void
+     */
+    public function setConsumerId($id)
+    {
+        $this->sessionHandler->setTransactionFlowLink(true);
+        $this->sessionHandler->setConsumerId($id);
     }
 
     /**
@@ -223,6 +247,25 @@ class Client extends Base
     public function pnrRetrieve(RequestOptions\PnrRetrieveOptions $options, $messageOptions = [])
     {
         $msgName = 'PNR_Retrieve';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * PNR_Split
+     *
+     * @param RequestOptions\PnrSplitOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function pnrSplit(
+        RequestOptions\PnrSplitOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'PNR_Split';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
@@ -387,6 +430,24 @@ class Client extends Base
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
+
+    /**
+     * PNR_Ignore - Ignore an Amadeus PNR by record locator
+     *
+     * @param RequestOptions\PnrIgnoreOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function pnrIgnore(RequestOptions\PnrIgnoreOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PNR_Ignore';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
 
     /**
      * Queue_RemoveItem - remove an item (a PNR) from a given queue
@@ -949,6 +1010,25 @@ class Client extends Base
     }
 
     /**
+     * Ticket_CreateTASF
+     *
+     * @param RequestOptions\TicketCreateTasfOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketCreateTASF(
+        RequestOptions\TicketCreateTasfOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_CreateTASF';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Ticket_DeleteTST
      *
      * @param RequestOptions\TicketDeleteTstOptions $options
@@ -1012,6 +1092,25 @@ class Client extends Base
     public function ticketDisplayTSMP(RequestOptions\TicketDisplayTsmpOptions $options, $messageOptions = [])
     {
         $msgName = 'Ticket_DisplayTSMP';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Ticket_RetrieveListOfTSM
+     *
+     * @param RequestOptions\TicketRetrieveListOfTSMOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketRetrieveListOfTSM(
+        RequestOptions\TicketRetrieveListOfTSMOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_RetrieveListOfTSM';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
@@ -1143,6 +1242,24 @@ class Client extends Base
     public function ticketProcessEDoc(RequestOptions\TicketProcessEDocOptions $options, $messageOptions = [])
     {
         $msgName = 'Ticket_ProcessEDoc';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Ticket_ProcessETicket
+     *
+     * @param RequestOptions\TicketProcessETicketOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketProcessETicket(RequestOptions\TicketProcessETicketOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Ticket_ProcessETicket';
+
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 
@@ -1223,6 +1340,25 @@ class Client extends Base
     }
 
     /**
+     * DocRefund_IgnoreRefund
+     *
+     * @param RequestOptions\DocRefundIgnoreRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function docRefundIgnoreRefund(
+        RequestOptions\DocRefundIgnoreRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'DocRefund_IgnoreRefund';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * DocRefund_UpdateRefund
      *
      * @param RequestOptions\DocRefundUpdateRefundOptions $options
@@ -1260,6 +1396,62 @@ class Client extends Base
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 
+    /**
+     * Ticket_InitRefund
+     *
+     * @param RequestOptions\TicketInitRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketInitRefund(
+        RequestOptions\TicketInitRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_InitRefund';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Ticket_IgnoreRefund
+     *
+     * @param RequestOptions\TicketIgnoreRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketIgnoreRefund(
+        RequestOptions\TicketIgnoreRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_IgnoreRefund';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Ticket_ProcessRefund
+     *
+     * @param RequestOptions\TicketProcessRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketProcessRefund(
+        RequestOptions\TicketProcessRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_ProcessRefund';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
 
     /**
      * FOP_CreateFormOfPayment

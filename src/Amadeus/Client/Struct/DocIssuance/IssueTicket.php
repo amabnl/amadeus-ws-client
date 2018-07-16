@@ -104,5 +104,23 @@ class IssueTicket extends DocIssuanceBaseMsg
                 )
             );
         }
+
+        foreach ($options->lineNumbers as $lineNumber) {
+            $this->addSelectionItem(
+                new ReferenceDetails(
+                    $lineNumber,
+                    ReferenceDetails::TYPE_LINE_NUMBER
+                )
+            );
+        }
+
+        foreach ($options->couponNumbers as $couponNumber) {
+            $this->addSelectionItem(
+                new ReferenceDetails(
+                    $couponNumber,
+                    ReferenceDetails::TYPE_COUPON_NUMBER
+                )
+            );
+        }
     }
 }

@@ -30,7 +30,6 @@ use Amadeus\Client\Struct\DocIssuance\IssueTicket;
 use Amadeus\Client\Struct\DocIssuance\OverrideDate;
 use Amadeus\Client\Struct\DocIssuance\PassengerReference;
 use Amadeus\Client\Struct\DocIssuance\ReferenceDetails;
-use Amadeus\Client\Struct\DocIssuance\StatusDetails;
 use Test\Amadeus\BaseTestCase;
 
 /**
@@ -183,5 +182,37 @@ class IssueTicketTest extends BaseTestCase
         $this->assertEmpty($message->paxSelection);
         $this->assertEmpty($message->selection);
         $this->assertNull($message->stock);
+    }
+
+    public function testCanMakeRevalidationWithFOPLineNumberSegmentChaneAndCouponNumber()
+    {
+        $opt = new DocIssuanceIssueTicketOptions([
+            'options' => [
+                DocIssuanceIssueTicketOptions::OPTION_ETICKET_REVALIDATION
+            ],
+            'segmentTattoos' => [1],
+            'lineNumbers' => [14],
+            'couponNumbers' => [3]
+        ]);
+
+        $message = new IssueTicket($opt);
+
+        $this->assertCount(1, $message->optionGroup);
+        $this->assertEquals(
+            DocIssuanceIssueTicketOptions::OPTION_ETICKET_REVALIDATION,
+            $message->optionGroup[0]->switches->statusDetails->indicator
+        );
+
+        $this->assertCount(1, $message->selection);
+        $this->assertCount(3, $message->selection[0]->referenceDetails);
+
+        $this->assertEquals(1, $message->selection[0]->referenceDetails[0]->value);
+        $this->assertEquals(ReferenceDetails::TYPE_SEGMENT_TATTOO, $message->selection[0]->referenceDetails[0]->type);
+
+        $this->assertEquals(14, $message->selection[0]->referenceDetails[1]->value);
+        $this->assertEquals(ReferenceDetails::TYPE_LINE_NUMBER, $message->selection[0]->referenceDetails[1]->type);
+
+        $this->assertEquals(3, $message->selection[0]->referenceDetails[2]->value);
+        $this->assertEquals(ReferenceDetails::TYPE_COUPON_NUMBER, $message->selection[0]->referenceDetails[2]->type);
     }
 }

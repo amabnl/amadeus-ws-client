@@ -23,35 +23,24 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * InfoEncodeDecodeCityOptions
+ * Info_EncodeDecodeCity Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class InfoEncodeDecodeCityOptions extends Base
 {
-    const SEARCHMODE_EXACT = "EXT";
+    const SEARCHMODE_EXACT = 'EXT';
+    const SEARCHMODE_PHONETIC = 'PHO';
 
-    const SEARCHMODE_PHONETIC = "PHO";
-
-
-    const SELECT_ALL_LOCATIONS = "ALL";
-
-    const SELECT_AIRPORTS = "A";
-
-    const SELECT_HELIPORTS = "H";
-
-    const SELECT_BUS_STATIONS = "B";
-
-    const SELECT_TRAIN_STATIONS = "R";
-
-    const SELECT_ASSOCIATED_LOCATION = "S";
-
-    const SELECT_GROUND_TRANSPORT = "G";
-
-    const SELECT_OFFLINE_POINT = "O";
-
-
+    const SELECT_ALL_LOCATIONS = 'ALL';
+    const SELECT_AIRPORTS = 'A';
+    const SELECT_HELIPORTS = 'H';
+    const SELECT_BUS_STATIONS = 'B';
+    const SELECT_TRAIN_STATIONS = 'R';
+    const SELECT_ASSOCIATED_LOCATION = 'S';
+    const SELECT_GROUND_TRANSPORT = 'G';
+    const SELECT_OFFLINE_POINT = 'O';
 
     /**
      * Search for an exact result or phonetic result

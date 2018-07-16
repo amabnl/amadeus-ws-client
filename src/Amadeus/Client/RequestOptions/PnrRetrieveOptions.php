@@ -35,9 +35,9 @@ use Amadeus\Client\RequestOptions\Pnr\Retrieve\Ticket;
  */
 class PnrRetrieveOptions extends Base
 {
-    const OPTION_ASSOCIATED_PNRS = "X";
-    const OPTION_ACTIVE_ONLY = "A";
-    const OPTION_MERGE_SPLIT_PNRS = "V";
+    const OPTION_ASSOCIATED_PNRS = 'X';
+    const OPTION_ACTIVE_ONLY = 'A';
+    const OPTION_MERGE_SPLIT_PNRS = 'V';
 
     const RETRIEVE_ACTIVE_PNR = 1;
     const RETRIEVE_BY_RECORD_LOCATOR = 2;
