@@ -25,7 +25,7 @@ namespace Amadeus\Client\RequestOptions;
 use Amadeus\Client\RequestOptions\Air\RebookAirSegment\Itinerary;
 
 /**
- * AirRebookAirSegmentOptions
+ * Air_RebookAirSegment Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>

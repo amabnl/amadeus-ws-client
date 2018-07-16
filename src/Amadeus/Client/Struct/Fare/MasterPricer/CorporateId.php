@@ -48,6 +48,7 @@ class CorporateId
      * CorporateId constructor.
      *
      * @param string[] $identity
+     * @param $corporateQualifier
      */
     public function __construct($identity, $corporateQualifier)
     {

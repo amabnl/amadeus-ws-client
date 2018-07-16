@@ -126,4 +126,35 @@ interface HandlerInterface
      * @return string|null
      */
     public function getLastResponseHeaders($msgName);
+
+    /**
+     * Is the TransactionFlowLink header enabled?
+     *
+     * @return bool
+     */
+    public function isTransactionFlowLinkEnabled();
+
+    /**
+     * Enable or disable TransactionFlowLink header
+     *
+     * @throws UnsupportedOperationException when used on unsupported WSAP versions
+     * @param bool $enabled
+     */
+    public function setTransactionFlowLink($enabled);
+
+    /**
+     * Get the TransactionFlowLink Consumer ID
+     *
+     * @return string|null
+     */
+    public function getConsumerId();
+
+    /**
+     * Set the TransactionFlowLink Consumer ID
+     *
+     * @throws UnsupportedOperationException when used on unsupported WSAP versions
+     * @param string $id
+     * @return void
+     */
+    public function setConsumerId($id);
 }

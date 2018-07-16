@@ -30,9 +30,9 @@ namespace Amadeus\Client\RequestOptions;
  */
 class FareGetFareRulesOptions extends Base
 {
-    const DIRECTION_ORIGIN_TO_DESTINATION = "OD";
-    const DIRECTION_DESTINATION_TO_ORIGIN = "DO";
-    const DIRECTION_BOTH = "BD";
+    const DIRECTION_ORIGIN_TO_DESTINATION = 'OD';
+    const DIRECTION_DESTINATION_TO_ORIGIN = 'DO';
+    const DIRECTION_BOTH = 'BD';
 
     /**
      * @var \DateTime

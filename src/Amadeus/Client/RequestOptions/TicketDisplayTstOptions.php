@@ -23,16 +23,15 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * TicketDisplayTstOptions
+ * Ticket_DisplayTST Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TicketDisplayTstOptions extends Base
 {
-    const MODE_ALL = "ALL";
-
-    const MODE_SELECTIVE = "SEL";
+    const MODE_ALL = 'ALL';
+    const MODE_SELECTIVE = 'SEL';
 
     /**
      * Display all TST's or display selectively?

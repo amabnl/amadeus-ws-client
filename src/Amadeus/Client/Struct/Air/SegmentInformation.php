@@ -58,7 +58,8 @@ class SegmentInformation
             $seg->bookingClass,
             $seg->arrivalDate,
             $seg->arrivalTime,
-            $seg->dateVariation
+            $seg->dateVariation,
+            $seg->flightTypeDetails
         );
 
         $this->relatedproductInformation = new RelatedproductInformation(

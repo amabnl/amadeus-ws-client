@@ -35,41 +35,40 @@ class FopCreateFopOptions extends Base
     /**
      * Perform Authorization on Ticket & MCO/EMD
      */
-    const TRANS_AUTH_ON_TICKET_MCO_EMD = "DEF";
+    const TRANS_AUTH_ON_TICKET_MCO_EMD = 'DEF';
     /**
      * Perform Authorization on MCO/EMD
      */
-    const TRANS_AUTH_ON_MCO_EMD = "DEFM";
+    const TRANS_AUTH_ON_MCO_EMD = 'DEFM';
     /**
      * Perform Authorization on Ticket
      */
-    const TRANS_AUTH_ON_TICKET = "DEFP";
+    const TRANS_AUTH_ON_TICKET = 'DEFP';
     /**
      * DEFX Transaction
      */
-    const TRANS_DEFX = "DEFX";
+    const TRANS_DEFX = 'DEFX';
     /**
      * Create form of payment only
      */
-    const TRANS_CREATE_FORM_OF_PAYMENT = "FP";
+    const TRANS_CREATE_FORM_OF_PAYMENT = 'FP';
 
     /**
      * create FOP(s) in PNR even if Authorization failed
      */
-    const BESTEFFORT_IND_CREATE_FOP_IF_AUTH_FAILS = "CFP";
+    const BESTEFFORT_IND_CREATE_FOP_IF_AUTH_FAILS = 'CFP';
     /**
      * Split pricing record
      */
-    const BESTEFFORT_IND_SPLIT_PRICING_RECORD = "SPT";
-
+    const BESTEFFORT_IND_SPLIT_PRICING_RECORD = 'SPT';
     /**
      * Confirmation
      */
-    const BESTEFFORT_ACT_CONFIRM = "KK";
+    const BESTEFFORT_ACT_CONFIRM = 'KK';
     /**
      * Refusal
      */
-    const BESTEFFORT_ACT_REFUSE = "UU";
+    const BESTEFFORT_ACT_REFUSE = 'UU';
 
 
     /**

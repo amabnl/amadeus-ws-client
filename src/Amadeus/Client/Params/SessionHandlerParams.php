@@ -94,6 +94,20 @@ class SessionHandlerParams
     public $overrideSoapClientWsdlName;
 
     /**
+     * Enable the TransactionFlowLink SOAP Header?
+     *
+     * @var bool
+     */
+    public $enableTransactionFlowLink = false;
+
+    /**
+     * Consumer ID for Transaction Flow Link
+     *
+     * @var string|null
+     */
+    public $consumerId = null;
+
+    /**
      * @param array $params
      */
     public function __construct($params = [])
@@ -122,6 +136,8 @@ class SessionHandlerParams
 
             $this->loadOverrideSoapClient($params);
             $this->loadSoapClientOptions($params);
+
+            $this->loadTransactionFlowLink($params);
         }
     }
 
@@ -214,6 +230,20 @@ class SessionHandlerParams
     {
         if (isset($params['soapClientOptions']) && is_array($params['soapClientOptions'])) {
             $this->soapClientOptions = $params['soapClientOptions'];
+        }
+    }
+
+    /**
+     * Load TransactionFlowLink options from config
+     *
+     * @param array $params
+     * @return void
+     */
+    protected function loadTransactionFlowLink($params)
+    {
+        if (isset($params['enableTransactionFlowLink']) && $params['enableTransactionFlowLink'] === true) {
+            $this->enableTransactionFlowLink = true;
+            $this->consumerId = (isset($params['consumerId'])) ? $params['consumerId'] : null;
         }
     }
 }

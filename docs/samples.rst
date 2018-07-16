@@ -478,6 +478,20 @@ The example shows the message required to change the name of the passenger speci
         ])
     );
 
+------------
+PNR_Split
+------------
+
+Split passengers 1 and 2 from PNR ABC123:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrSplitOptions;
+
+    $pnrContent = $client->pnrSplit(
+        new PnrSplitOptions(['recordLocator' => 'ABC123', 'passengerTattoos' => [1, 2]])
+    );
+    
 
 *****
 Queue
@@ -583,6 +597,31 @@ Get the first 10 PNR's on a queue:
             ]),
             'firstItemNr' => 0,
             'lastItemNr' => 10
+        ])
+    );
+
+Also You can use predefined queues of Amadeus Queue Bank:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\QueueListOptions;
+    use Amadeus\Client\RequestOptions\Queue;
+
+    $pnrsOnGeneralQueue = $client->queueList(
+        new QueueListOptions([
+            'queue' => new Queue([
+                'queue' => Queue::QUEUE_GENERAL,
+                'category' => 0
+            ])
+        ])
+    );
+
+    $pnrsOnTicketingQueue = $client->queueList(
+        new QueueListOptions([
+            'queue' => new Queue([
+                'queue' => Queue::QUEUE_TICKETING,
+                'category' => 1
+            ])
         ])
     );
 
@@ -1278,6 +1317,51 @@ To book the chosen recommendation with specifying segment's arrival date, which 
 
     $sellResult = $client->airSellFromRecommendation($opt);
 
+Selling connecting segments with the slice and dice option:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirSellFromRecommendationOptions;
+    use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Itinerary;
+    use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Segment;
+
+    $opt = new AirSellFromRecommendationOptions([
+        'itinerary' => [
+            new Itinerary([
+                'from' => 'PBI',
+                'to' => 'YYZ',
+                'segments' => [
+                    new Segment([
+                        'departureDate' => \DateTime::createFromFormat('Ymd','20181123', new \DateTimeZone('UTC')),
+                        'arrivalDate' => \DateTime::createFromFormat('Ymd','231115', new \DateTimeZone('UTC')),
+                        'from' => 'PBI',
+                        'to' => 'CLT',
+                        'companyCode' => '8X',
+                        'flightNumber' => '001',
+                        'bookingClass' => 'V',
+                        'nrOfPassengers' => 1,
+                        'statusCode' => Segment::STATUS_SELL_SEGMENT,
+                        'flightTypeDetails' => Segment::INDICATOR_LOCAL_AVAILABILITY,
+                    ]),
+                    new Segment([
+                        'departureDate' => \DateTime::createFromFormat('Ymd','20181123', new \DateTimeZone('UTC')),
+                        'arrivalDate' => \DateTime::createFromFormat('Ymd','231115', new \DateTimeZone('UTC')),
+                        'from' => 'CLT',
+                        'to' => 'YYZ',
+                        'companyCode' => '8X',
+                        'flightNumber' => '002',
+                        'bookingClass' => 'M',
+                        'nrOfPassengers' => 1,
+                        'statusCode' => Segment::STATUS_SELL_SEGMENT,
+                        'flightTypeDetails' => Segment::INDICATOR_LOCAL_AVAILABILITY,
+                    ]),
+                ],
+            ]),
+        ],
+    ]);
+
+    $sellResult = $client->airSellFromRecommendation($opt);
+
 --------------
 Air_FlightInfo
 --------------
@@ -1752,6 +1836,54 @@ Set the form of payment Check to the TSM of tattoo 18:
         ])
     );
 
+---------------------------
+Ticket_CreateTASF
+---------------------------
+
+Create TASF of 30 euros with no RFIC (generic TASF):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCreateTasfOptions;
+    use Amadeus\Client\RequestOptions\Ticket\PassengerTattoo;
+    use Amadeus\Client\RequestOptions\Ticket\MonetaryInformation;
+
+    $createTasfResponse = $client->ticketCreateTASF(
+        new TicketCreateTasfOptions([
+            'passengerTattoo' => new PassengerTattoo([
+                'type' => PassengerTattoo::TYPE_ADULT,
+                'value' => 1
+            ]),
+            'monetaryInformation' => new MonetaryInformation([
+                'amount' => 30,
+                'currency' => 'EUR'
+            ])
+        ])
+    );
+
+
+TASF of 30 euros with an RFIC ("TASF for ticket issuance"). In this example, the RFIC "T" is used:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCreateTasfOptions;
+    use Amadeus\Client\RequestOptions\Ticket\PassengerTattoo;
+    use Amadeus\Client\RequestOptions\Ticket\MonetaryInformation;
+
+    $createTasfResponse = $client->ticketCreateTASF(
+        new TicketCreateTasfOptions([
+            'passengerTattoo' => new PassengerTattoo([
+                'type' => PassengerTattoo::TYPE_ADULT,
+                'value' => 1
+            ]),
+            'monetaryInformation' => new MonetaryInformation([
+                'amount' => 30,
+                'currency' => 'EUR'
+            ]),
+            'reasonForIssuanceCode' => 'T'
+        ])
+    );
+
 ----------------
 Ticket_DeleteTST
 ----------------
@@ -1881,6 +2013,20 @@ Get details of the form of payment associated to TSM of tattoo 18:
             'tattoo' => 18,
             'type' => TicketDisplayTsmFareElOptions::TYPE_FORM_OF_PAYMENT
         ])
+    );
+
+------------------
+Ticket_RetrieveListOfTSM
+------------------
+
+Retrieve all the active TSMs of the current PNR with adults and infants:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketRetrieveListOfTSMOptions;
+
+    $retrieveListOfTsmResult = $client->ticketRetrieveListOfTSM(
+        new TicketRetrieveListOfTSMOptions()
     );
 
 
@@ -2155,6 +2301,23 @@ Request cancellation of several tickets, individual items and ranges of items fr
     );
 
 ------------------
+Ticket_ProcessETicket
+------------------
+
+Display an e-ticket by document (ticket) number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketProcessETicketOptions;
+
+    $response = $client->ticketProcessETicket(
+        new TicketProcessETicketOptions([
+            'action' => TicketProcessETicketOptions::ACTION_ETICKET_DISPLAY,
+            'ticketNumber' => '5125756077483'
+        ])
+    );
+
+------------------
 Ticket_ProcessEDoc
 ------------------
 
@@ -2191,6 +2354,55 @@ Enhanced ETKT list display:
                 ])
             ]
         ])
+    );
+
+---------------------------
+Ticket_InitRefund
+---------------------------
+
+Initiate Automated Refund:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketInitRefundOptions;
+
+    $response = $client->ticketInitRefund(
+        new TicketInitRefundOptions([
+            'ticketNumbers' => ['123456789'],
+            'actionDetails' => [
+                TicketInitRefundOptions::ACTION_ATC_REFUND
+            ]
+        ])
+    );
+
+
+---------------------------
+Ticket_IgnoreRefund
+---------------------------
+
+Ignore initiated refund:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketIgnoreRefundOptions;
+
+    $response = $client->ticketIgnoreRefund(
+        new TicketIgnoreRefundOptions([])
+    );
+
+
+---------------------------
+Ticket_ProcessRefund
+---------------------------
+
+Process initiated refund:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketProcessRefundOptions;
+
+    $response = $client->ticketProcessRefund(
+        new TicketProcessRefundOptions([])
     );
 
 ***********
@@ -2266,6 +2478,23 @@ Template Override (cryptic equivalent TTP/*CO.....).:
                     'subCompoundType' => 'ITJTAF0FRLEBUSEXT01A'
                 ])
             ]
+        ])
+    );
+
+Revalidate ticket for ATC (changed segments: [3, 4], FA element line number: 14, coupon changed: [2, 3]):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueTicketOptions;
+
+    $issueTicketResponse = $client->docIssuanceIssueTicket(
+        new DocIssuanceIssueTicketOptions([
+            'options' => [
+                DocIssuanceIssueTicketOptions::OPTION_ETICKET_REVALIDATION
+            ],
+            'segmentTattoos' => [3, 4],
+            'lineNumbers' => [14],
+            'couponNumbers' => [2, 3]
         ])
     );
 
@@ -2381,6 +2610,19 @@ Document Receipts option (TTP/TTM/TRP):
                     'subCompoundType' => 'EMPRA'
                 ])
             ]
+        ])
+    );
+
+Issue ticket for specific TSTs and specific TSMs (for example used in ATC):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocIssuanceIssueCombinedOptions;
+
+    $issueTicketResponse = $client->docIssuanceIssueCombined(
+        new DocIssuanceIssueCombinedOptions([
+            'tsts' => [1, 2],
+            'tsmTattoos' => [5, 8]
         ])
     );
 
@@ -2723,6 +2965,22 @@ Send refund notice to email address stored in the PNR:
     $refundResponse = $client->docRefundProcessRefund(
         new Client\RequestOptions\DocRefundProcessRefundOptions([
             'sendNotificationToEmailInAPE' => true
+        ])
+    );
+
+--------------------
+DocRefund_IgnoreRefund
+--------------------
+
+ATC refund ignore:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\DocRefundIgnoreRefundOptions;
+
+    $refundResponse = $client->docRefundIgnoreRefund(
+        new DocRefundIgnoreRefundOptions([
+            'actionRequest' => DocRefundIgnoreRefundOptions::ACTION_IGNORE
         ])
     );
 

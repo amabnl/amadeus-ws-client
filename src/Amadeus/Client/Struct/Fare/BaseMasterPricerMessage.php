@@ -119,7 +119,8 @@ class BaseMasterPricerMessage extends BaseWsMessage
                 $options->flightOptions,
                 $options->currencyOverride,
                 $options->feeIds,
-                $options->multiTicket
+                $options->multiTicket,
+                $options->ticketingPriceScheme
             )
         ) {
             $this->fareOptions = new MasterPricer\FareOptions(
@@ -129,7 +130,8 @@ class BaseMasterPricerMessage extends BaseWsMessage
                 $options->currencyOverride,
                 $options->feeIds,
                 $options->corporateQualifier,
-                $options->multiTicket
+                $options->multiTicket,
+                $options->ticketingPriceScheme
             );
         }
     }

@@ -1,0 +1,3 @@
+<AMA_TicketIgnoreRefundRS Version="2.000"  xmlns="http://xml.amadeus.com/2010/06/TicketGTP_v2" xmlns:ama="http://xml.amadeus.com/2010/06/Types_v2" xmlns:att="http://xml.amadeus.com/2010/06/TicketTypes_v1" xmlns:iata="http://www.iata.org/IATA/2007/00/IATA2010.1" xmlns:ota="http://www.opentravel.org/OTA/2003/05/OTA2010B" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <Success></Success>
+</AMA_TicketIgnoreRefundRS>

@@ -30,22 +30,26 @@ namespace Amadeus\Client\Struct\Fare\MasterPricer;
  */
 class CompanyIdentity
 {
-    const QUAL_PREFERRED = "F";
-    const QUAL_MANDATORY = "M";
-    const QUAL_NIGHT_CLASS = "N";
-    const QUAL_FORCE_FULLAIRLINE_RECOMMENDATION = "O";
+    const QUAL_PREFERRED = 'F';
+    const QUAL_MANDATORY = 'M';
+    const QUAL_NIGHT_CLASS = 'N';
+    const QUAL_FORCE_FULLAIRLINE_RECOMMENDATION = 'O';
     /**
      * @deprecated
      */
-    const QUAL_POLLED = "P";
+    const QUAL_POLLED = 'P';
     /**
      * @deprecated
      */
-    const QUAL_FARE_FAMILY_REPARTITION = "R";
-    const QUAL_CARRIERS_LIST_BYPASS_BSP_CHECKS = "T";
-    const QUAL_MANDATORY_VALIDATING_CARRIER = "V";
-    const QUAL_EXCLUDED_VALIDATING_CARRIER = "W";
-    const QUAL_EXCLUDED = "X";
+    const QUAL_FARE_FAMILY_REPARTITION = 'R';
+    const QUAL_CARRIERS_LIST_BYPASS_BSP_CHECKS = 'T';
+    const QUAL_MANDATORY_VALIDATING_CARRIER = 'V';
+    const QUAL_EXCLUDED_VALIDATING_CARRIER = 'W';
+    const QUAL_EXCLUDED = 'X';
+
+    const QUAL_ITINERARY_MAJOR_CABIN = 'MC';
+    const QUAL_ITINERARY_MANDATORY_ALL_SEGMENTS = 'MD';
+    const QUAL_ITINERARY_RECOMMENDED_AT_LEAST_ONE_SEGMENT = 'RC';
 
     /**
      * self::QUAL_*

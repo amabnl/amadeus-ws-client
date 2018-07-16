@@ -56,14 +56,46 @@ class CreateTSTFromPricingTest extends BaseTestCase
             ])
         );
 
-        $this->assertEquals(1, count($msg->psaList));
+        $this->assertCount(1, $msg->psaList);
         $this->assertEquals(3, $msg->psaList[0]->itemReference->uniqueReference);
         $this->assertEquals(ItemReference::REFTYPE_TST, $msg->psaList[0]->itemReference->referenceType);
 
-        $this->assertEquals(1, count($msg->psaList[0]->paxReference->refDetails));
+        $this->assertCount(1, $msg->psaList[0]->paxReference->refDetails);
         $this->assertEquals(1, $msg->psaList[0]->paxReference->refDetails[0]->refNumber);
         $this->assertEquals(RefDetails::QUAL_ADULT, $msg->psaList[0]->paxReference->refDetails[0]->refQualifier);
     }
+
+    public function testCanMakeMultiTstFromPricing()
+    {
+        $msg = new CreateTSTFromPricing(
+            new TicketCreateTstFromPricingOptions([
+                'pricings' => [
+                    new Pricing([
+                        'tstNumber' => 1
+                    ]),
+                    new Pricing([
+                        'tstNumber' => 2
+                    ]),
+                    new Pricing([
+                        'tstNumber' => 3
+                    ]),
+
+                ]
+            ])
+        );
+
+        $this->assertEquals(3, count($msg->psaList));
+        $this->assertEquals(1, $msg->psaList[0]->itemReference->uniqueReference);
+        $this->assertEquals(ItemReference::REFTYPE_TST, $msg->psaList[0]->itemReference->referenceType);
+        $this->assertNull($msg->psaList[0]->paxReference);
+        $this->assertEquals(2, $msg->psaList[1]->itemReference->uniqueReference);
+        $this->assertEquals(ItemReference::REFTYPE_TST, $msg->psaList[1]->itemReference->referenceType);
+        $this->assertNull($msg->psaList[1]->paxReference);
+        $this->assertEquals(3, $msg->psaList[2]->itemReference->uniqueReference);
+        $this->assertEquals(ItemReference::REFTYPE_TST, $msg->psaList[2]->itemReference->referenceType);
+        $this->assertNull($msg->psaList[2]->paxReference);
+    }
+
 
     public function testCanMakeTstFromPricingWithPnrInfo()
     {

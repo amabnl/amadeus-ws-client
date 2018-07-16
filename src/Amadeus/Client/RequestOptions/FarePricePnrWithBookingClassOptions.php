@@ -31,7 +31,7 @@ use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
 
 /**
- * FarePricePnrWithBookingClassOptions
+ * Fare_PricePnrWithBookingClass Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>
@@ -51,12 +51,12 @@ class FarePricePnrWithBookingClassOptions extends Base
     const OVERRIDE_PTC_ONLY = 'PTC';
     const OVERRIDE_FORM_OF_PAYMENT = 'FOP';
 
-    const PRICING_LOGIC_IATA = "IATA";
-    const PRICING_LOGIC_ATAF = "ATAF";
+    const PRICING_LOGIC_IATA = 'IATA';
+    const PRICING_LOGIC_ATAF = 'ATAF';
 
-    const TICKET_TYPE_ELECTRONIC = "ET";
-    const TICKET_TYPE_PAPER = "PT";
-    const TICKET_TYPE_BOTH = "EP";
+    const TICKET_TYPE_ELECTRONIC = 'ET';
+    const TICKET_TYPE_PAPER = 'PT';
+    const TICKET_TYPE_BOTH = 'EP';
 
 
     /**

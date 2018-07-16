@@ -25,7 +25,7 @@ namespace Amadeus\Client;
 /**
  * LoadParamsFromArray
  *
- * Povides the ability to load parameters in the constructor through an associative array
+ * Provides the ability to load parameters in the constructor through an associative array
  *
  * The keys in the associative array should be property names, and if that matches, the values will be set
  * to those properties.

@@ -30,37 +30,37 @@ namespace Amadeus\Client\RequestOptions;
  */
 class FareMasterPricerTbSearch extends MpBaseOptions
 {
-    const FLIGHTTYPE_DIRECT = "D";
-    const FLIGHTTYPE_NONSTOP = "N";
-    const FLIGHTTYPE_CONNECTING = "C";
+    const FLIGHTTYPE_DIRECT = 'D';
+    const FLIGHTTYPE_NONSTOP = 'N';
+    const FLIGHTTYPE_CONNECTING = 'C';
 
-    const CABIN_ECONOMY = "Y";
-    const CABIN_ECONOMY_STANDARD = "M";
-    const CABIN_ECONOMY_PREMIUM = "W";
-    const CABIN_BUSINESS = "C";
-    const CABIN_FIRST_SUPERSONIC = "F";
+    const CABIN_ECONOMY = 'Y';
+    const CABIN_ECONOMY_STANDARD = 'M';
+    const CABIN_ECONOMY_PREMIUM = 'W';
+    const CABIN_BUSINESS = 'C';
+    const CABIN_FIRST_SUPERSONIC = 'F';
 
-    const AIRLINEOPT_PREFERRED = "F";
-    const AIRLINEOPT_MANDATORY = "M";
-    const AIRLINEOPT_NIGHT_CLASS = "N";
-    const AIRLINEOPT_FORCE_FULLAIRLINE_RECOMMENDATION = "O";
-    const AIRLINEOPT_CARRIERS_LIST_BYPASS_BSP_CHECKS = "T";
-    const AIRLINEOPT_MANDATORY_VALIDATING_CARRIER = "V";
-    const AIRLINEOPT_EXCLUDED_VALIDATING_CARRIER = "W";
-    const AIRLINEOPT_EXCLUDED = "X";
+    const AIRLINEOPT_PREFERRED = 'F';
+    const AIRLINEOPT_MANDATORY = 'M';
+    const AIRLINEOPT_NIGHT_CLASS = 'N';
+    const AIRLINEOPT_FORCE_FULLAIRLINE_RECOMMENDATION = 'O';
+    const AIRLINEOPT_CARRIERS_LIST_BYPASS_BSP_CHECKS = 'T';
+    const AIRLINEOPT_MANDATORY_VALIDATING_CARRIER = 'V';
+    const AIRLINEOPT_EXCLUDED_VALIDATING_CARRIER = 'W';
+    const AIRLINEOPT_EXCLUDED = 'X';
 
     /**
      * Major cabin
      */
-    const CABINOPT_MAJOR = "MC";
+    const CABINOPT_MAJOR = 'MC';
     /**
      * Mandatory cabin for all segments
      */
-    const CABINOPT_MANDATORY = "MD";
+    const CABINOPT_MANDATORY = 'MD';
     /**
      * Recommended cabin to be used at least one segment
      */
-    const CABINOPT_RECOMMENDED = "RC";
+    const CABINOPT_RECOMMENDED = 'RC';
 
     /**
      * List of airline options.
@@ -183,6 +183,22 @@ class FareMasterPricerTbSearch extends MpBaseOptions
     public $maxLayoverPerConnectionMinutes;
 
     /**
+     * Set to true to disallow connecting flight to change airports within a city.
+     *
+     * @var bool
+     */
+    public $noAirportChange = false;
+
+    /**
+     * Specify a maximum elapsed flying time (EFT): This is a percentage of the shortest EFT returned by the journey server
+     *
+     * @var int
+     */
+    public $maxElapsedFlyingTime;
+
+    /**
+     * Fee Options
+     *
      * @var Fare\MPFeeOption[]
      */
     public $feeOption = [];

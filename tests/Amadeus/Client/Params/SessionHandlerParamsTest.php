@@ -120,4 +120,22 @@ class SessionHandlerParamsTest extends BaseTestCase
             $par->soapClientOptions['compression']
         );
     }
+
+    public function testCanMakeSessionHandlerWithTransactionFlowLink()
+    {
+        $par = new Params\SessionHandlerParams([
+            'wsdl' => realpath(dirname(dirname(dirname(__FILE__))) . DIRECTORY_SEPARATOR . "testfiles" . DIRECTORY_SEPARATOR . "dummywsdl.wsdl"),
+            'stateful' => true,
+            'authParams' => new Params\AuthParams([
+                'officeId' => 'BRUXXXXXX',
+                'userId' => 'WSXXXXXX',
+                'passwordData' => base64_encode('TEST')
+            ]),
+            'enableTransactionFlowLink' => true,
+            'consumerId' => 'dummy-consumer-id',
+        ]);
+
+        $this->assertTrue($par->enableTransactionFlowLink);
+        $this->assertEquals('dummy-consumer-id', $par->consumerId);
+    }
 }

@@ -1140,6 +1140,34 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("CHECK PASSENGER NUMBER", $result->messages[0]->text);
     }
 
+    public function testCanHandleTicketCreateTasf()
+    {
+        $responseHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketCreateTASFResponse.txt');
+
+        $result = $responseHandler->analyzeResponse($sendResult, 'Ticket_CreateTASF');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleTicketCreateTasfErrorResponse()
+    {
+        $responseHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketCreateTasfErrorResponse.txt');
+
+        $result = $responseHandler->analyzeResponse($sendResult, 'Ticket_CreateTASF');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('00477', $result->messages[0]->code);
+        $this->assertEquals("INVALID FORMAT - ERROR DURING TASF CREATION", $result->messages[0]->text);
+    }
+
     public function testCanHandleTicketReissueConfirmedPricingErrResponse()
     {
         $respHandler = new ResponseHandler\Base();
@@ -1228,6 +1256,18 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
         $this->assertEquals('02085', $result->messages[0]->code);
         $this->assertEquals("CHECK FARE ELEMENTS", $result->messages[0]->text);
+    }
+
+    public function testCanHandleTicketRetrieveListOfTSMResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketRetrieveListOfTSMReplyResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_RetrieveListOfTSM');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
     }
 
     public function testCanHandleTicketCheckEligibilityErrResponse()
@@ -1621,5 +1661,158 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
         $this->assertEquals('432', $result->messages[0]->code);
         $this->assertEquals("INVALID CURRENCY CODE", $result->messages[0]->text);
+    }
+
+    public function testCanHandleOkTicketInitRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketInitRefundResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_InitRefund');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleFailTicketInitRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketInitRefundFailResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_InitRefund');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+    }
+
+    public function testCanHandleUnknownTicketInitRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketInitRefundUnknownResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_InitRefund');
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
+    }
+
+    public function testCanHandleOkTicketIgnoreRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketIgnoreRefundResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_IgnoreRefund');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleFailTicketIgnoreRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketIgnoreRefundFailResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_IgnoreRefund');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+    }
+
+    public function testCanHandleUnknownTicketIgnoreRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketIgnoreRefundUnknownResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_IgnoreRefund');
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
+    }
+
+    public function testCanHandleOkTicketProcessRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketProcessRefundResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_ProcessRefund');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleFailTicketProcessRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketProcessRefundFailResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_ProcessRefund');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+    }
+
+    public function testCanHandleUnknownTicketProcessRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketProcessRefundUnknownResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_ProcessRefund');
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
+    }
+
+    public function testCanHandleTicketProcessETicket()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketProcessETicketResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_ProcessETicket');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleDocRefundIgnoreRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyDocRefundIgnoreRefundResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'DocRefund_IgnoreRefund');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandlePNRSplit()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyPNRSplitResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'PNR_Split');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
     }
 }

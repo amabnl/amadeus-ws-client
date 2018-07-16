@@ -32,5 +32,27 @@ use Amadeus\Client\RequestOptions\Pnr\Element;
  */
 class ManualIssuedTicket extends Element
 {
-    //TODO: Not yet implemented
+    const PASSENGER_TYPE_INFANT = "INF";
+    const PASSENGER_TYPE_PASSENGER = "PAX";
+
+    /**
+     * self::PASSENGER_TYPE_*
+     *
+     * @var string
+     */
+    public $passengerType;
+
+    /**
+     * Company id (3 chars before `-` in ticket number)
+     *
+     * @var string
+     */
+    public $companyId;
+
+    /**
+     * Ticket number (without company id, everything after `-`)
+     *
+     * @var string
+     */
+    public $ticketNumber;
 }

@@ -233,6 +233,42 @@ class SoapHeader2Test extends BaseTestCase
         $this->assertTrue($isStateful);
     }
 
+    public function testSetTflNotSupported()
+    {
+        $this->setExpectedException('\Amadeus\Client\Session\Handler\UnsupportedOperationException');
+
+        $sessionHandler = new SoapHeader2($this->makeSessionHandlerParams());
+
+        $sessionHandler->setTransactionFlowLink(true);
+    }
+
+    public function testGetTflWillReturnFalse()
+    {
+        $sessionHandler = new SoapHeader2($this->makeSessionHandlerParams());
+
+        $tflEnabled = $sessionHandler->isTransactionFlowLinkEnabled();
+
+        $this->assertFalse($tflEnabled);
+    }
+
+    public function testSetConsumerIdNotSupported()
+    {
+        $this->setExpectedException('\Amadeus\Client\Session\Handler\UnsupportedOperationException');
+
+        $sessionHandler = new SoapHeader2($this->makeSessionHandlerParams());
+
+        $sessionHandler->setConsumerId('be5fcc1c-b46d-f153-e690-1d313b20eae0');
+    }
+
+    public function testGetConsumerIdWillReturnNull()
+    {
+        $sessionHandler = new SoapHeader2($this->makeSessionHandlerParams());
+
+        $consumerId = $sessionHandler->getConsumerId();
+
+        $this->assertNull($consumerId);
+    }
+
     /**
      * @param \SoapClient|null $overrideSoapClient
      * @return SessionHandlerParams
