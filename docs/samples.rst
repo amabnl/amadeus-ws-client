@@ -3199,6 +3199,9 @@ All the examples for ``Service_IntegratedPricing`` (see above) should also work 
 ---------------------------
 Service_StandaloneCatalogue
 ---------------------------
+
+.. code-block:: php
+
 	use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 	use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\Passenger as servicePassenger;
 	use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\Segment as serviceSegment;
