@@ -29,7 +29,7 @@ use Amadeus\Client\Struct;
  * Service_StandaloneCatalogue Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\Service
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
 class StandaloneCatalogueConv extends BaseConverter
 {

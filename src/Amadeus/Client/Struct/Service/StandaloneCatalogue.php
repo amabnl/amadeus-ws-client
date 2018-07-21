@@ -30,15 +30,12 @@ use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\PassengerInfoGroup;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\FlightInfo;
 use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\PricingOptions;
-/* use Amadeus\Client\Struct\Fare\InformativePricing13\OriginatorGroup;
-
-use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionGroup; */
 
 /**
- * InformativePricingWithoutPNR
+ * StandaloneCatalogue
  *
  * @package Amadeus\Client\Struct\Fare
- * @author Dieter Devlieghere <dieter.devlieghere@benelux.amadeus.com>
+ * @author StandaloneCatalogue.php
  */
 class StandaloneCatalogue extends BaseWsMessage
 {
@@ -58,9 +55,9 @@ class StandaloneCatalogue extends BaseWsMessage
     public $pricingOption = [];
 
     /**
-     * InformativePricingWithoutPNR13 constructor.
+     * StandaloneCatalogue constructor.
      *
-     * @param FareInformativePricingWithoutPnrOptions|null $options
+     * @param ServiceStandaloneCatalogueOptions|null $options
      */
     public function __construct($options)
     {
