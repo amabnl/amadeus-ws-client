@@ -36,6 +36,7 @@ use Amadeus\Client\Struct\Fare\PricePnr13\FrequentFlyerInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\LocationInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\OptionDetail;
 use Amadeus\Client\Struct\Fare\PricePnr13\PaxSegTstReference;
+use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionGroup;
 use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOptionKey;
 use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOption;
 
@@ -68,10 +69,15 @@ class IntegratedPricing extends BasePricingMessage
      * @param ServiceIntegratedPricingOptions|ServiceIntegratedCatalogueOptions $options
      * @return PricingOption[]
      */
-    protected function loadPricingOptions($options)
+    public static function loadPricingOptions($options)
     {
         $priceOptions = [];
-
+		
+        $priceOptions = self::mergeOptions(
+        		$priceOptions,
+        		self::makePricingOptionFareBasisOverride($options->pricingsFareBasis)
+        );
+        
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makePricingOptionForValidatingCarrier($options->validatingCarrier)
@@ -155,6 +161,37 @@ class IntegratedPricing extends BasePricingMessage
 
         return $priceOptions;
     }
+    
+    /**
+     * @param FareBasis[] $pricingsFareBasis
+     * @return PricingOptionGroup[]
+     */
+    protected static function makePricingOptionFareBasisOverride($pricingsFareBasis)
+    {
+    	$opt = [];
+    
+    	if ($pricingsFareBasis !== null) {
+    		foreach ($pricingsFareBasis as $pricingFareBasis) {
+    			$po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
+    
+    			//Support for legacy fareBasisPrimaryCode to be removed when breaking BC:
+    			$po->optionDetail = new OptionDetail(
+    					$pricingFareBasis->fareBasisPrimaryCode.$pricingFareBasis->fareBasisCode
+    			);
+    
+    			//Support for legacy segmentReference to be removed when breaking BC:
+    			$po->paxSegTstReference = new PaxSegTstReference(
+    					$pricingFareBasis->references,
+    					$pricingFareBasis->segmentReference
+    			);
+    
+    			$opt[] = $po;
+    		}
+    	}
+    
+    	return $opt;
+    }
+    
 
     /**
      * @param string|null $validatingCarrier
