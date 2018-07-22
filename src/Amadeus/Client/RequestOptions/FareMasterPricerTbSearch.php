@@ -46,5 +46,4 @@ class FareMasterPricerTbSearch extends FareMasterPricerExSearch
      * @var int
      */
     public $maxElapsedFlyingTime;
-
 }

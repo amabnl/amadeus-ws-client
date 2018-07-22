@@ -188,6 +188,4 @@ class FareMasterPricerExSearch extends MpBaseOptions
      * @var Fare\MPFeeOption[]
      */
     public $feeOption = [];
-
-
 }
