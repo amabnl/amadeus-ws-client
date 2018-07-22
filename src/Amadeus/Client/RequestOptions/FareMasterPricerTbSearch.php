@@ -20,7 +20,7 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-use Amadeus\Client\RequestOptions\FareMasterPricerExSearch as FareMasterPricerExSearch;
+use Amadeus\Client\RequestOptions\FareMasterPricerExSearchOptions as FareMasterPricerExSearchOptions;
 
 namespace Amadeus\Client\RequestOptions;
 
@@ -30,7 +30,7 @@ namespace Amadeus\Client\RequestOptions;
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class FareMasterPricerTbSearch extends FareMasterPricerExSearch
+class FareMasterPricerTbSearch extends FareMasterPricerExSearchOptions
 {
 
     /**

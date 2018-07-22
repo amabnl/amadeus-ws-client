@@ -28,7 +28,7 @@ namespace Amadeus\Client\RequestOptions;
  * @package Amadeus\Client\RequestOptions
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class FareMasterPricerExSearch extends MpBaseOptions
+class FareMasterPricerExSearchOptions extends MpBaseOptions
 {
     const FLIGHTTYPE_DIRECT = 'D';
     const FLIGHTTYPE_NONSTOP = 'N';
