@@ -1,5 +1,5 @@
 {
-  "name": "LeoTravel/amadeus-ws-client",
+  "name": "amabnl/amadeus-ws-client",
   "type": "library",
   "description": "SOAP Web Service client library for interacting with the Amadeus GDS through its SOAP interface",
   "keywords": ["amadeus", "gds", "service", "webservice", "soap", "wsdl", "client", "xml", "travel", "airline", "hotel", "booking", "car", "rental", "offer", "masterpricer"],
