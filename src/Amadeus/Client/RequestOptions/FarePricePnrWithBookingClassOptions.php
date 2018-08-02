@@ -123,6 +123,12 @@ class FarePricePnrWithBookingClassOptions extends Base
      */
     public $overrideOptions = [];
 
+
+    /**
+     * @var array
+     */
+    public $overrideOptionsWithCriteria = [];
+
     /**
      * Specify the validating carrier
      *
@@ -265,4 +271,5 @@ class FarePricePnrWithBookingClassOptions extends Base
      * @var PaxSegRef[]
      */
     public $references = [];
+
 }

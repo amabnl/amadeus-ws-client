@@ -68,6 +68,7 @@ class InformativePricingWithoutPNR13 extends BaseWsMessage
     public function __construct($options)
     {
         if (!is_null($options)) {
+
             $this->loadPassengers($options->passengers);
 
             $this->loadSegments($options->segments);
