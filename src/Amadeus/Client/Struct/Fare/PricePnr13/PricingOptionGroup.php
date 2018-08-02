@@ -99,7 +99,7 @@ class PricingOptionGroup
     public function __construct($key, $optionDetail=null)
     {
         $this->pricingOptionKey = new PricingOptionKey($key);
-        if(isset($optionDetail)){
+        if (isset($optionDetail)){
             $this->optionDetail = new OptionDetail($optionDetail);
         }
     }
