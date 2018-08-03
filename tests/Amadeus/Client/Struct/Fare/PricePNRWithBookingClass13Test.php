@@ -135,6 +135,44 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $negofarePo));
     }
 
+    public function testCanDoPricePnrCallWithOverrideOptionWithCriteriaParams()
+    {
+        $opt = new FarePricePnrWithBookingClassOptions([
+            'overrideOptions' => [FarePricePnrWithBookingClassOptions::OVERRIDE_FARETYPE_NEG],
+            'validatingCarrier' => 'BA',
+            'currencyOverride' => 'EUR',
+            'overrideOptionsWithCriteria' => [
+                [
+                    'key' => 'SBF',
+                    'optionDetail' => '1'
+                ]
+            ]
+        ]);
+
+        $msg = new PricePNRWithBookingClass13($opt);
+
+        $validatingCarrierPo = new PricingOptionGroup(PricingOptionKey::OPTION_VALIDATING_CARRIER);
+        $validatingCarrierPo->carrierInformation = new CarrierInformation('BA');
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $validatingCarrierPo));
+
+        $currencyOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE);
+        $currencyOverridePo->currency = new Currency('EUR');
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $currencyOverridePo));
+
+        $fareBasisOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
+        $fareBasisOverridePo->optionDetail = new OptionDetail();
+        $fareBasisOverridePo->optionDetail->criteriaDetails[] = new CriteriaDetails('QNC469W2');
+        $fareBasisOverridePo->paxSegTstReference = new PaxSegTstReference([new PaxSegRef(['type'=> PaxSegRef::TYPE_SEGMENT, 'reference' => 2])]);
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $fareBasisOverridePo));
+
+        $negofarePo = new PricingOptionGroup(PricingOptionKey::OPTION_NEGOTIATED_FARES);
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $negofarePo));
+    }
+
     public function testCanDoPricePnrCallWithNoOptions()
     {
         $opt = new FarePricePnrWithBookingClassOptions();
