@@ -145,6 +145,25 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
         new PricePNRWithBookingClass12($opt);
     }
 
+    public function testCanThrowExceptioWhenDoPricePnrCallWithOverrideOptionsWithCriteria()
+    {
+        $this->setExpectedException(
+            '\Amadeus\Client\Struct\OptionNotSupportedException',
+            'Override Options With Criteria are not supported in version 12 or lower'
+        );
+
+        $opt = new FarePricePnrWithBookingClassOptions([
+            'overrideOptionsWithCriteria' => [
+                [
+                    'key' => 'SBF',
+                    'optionDetail' => '1'
+                ]
+            ]
+        ]);
+
+        new PricePNRWithBookingClass12($opt);
+    }
+
     public function testCanDoPricePnrCallWithCorpNegoFare()
     {
         $opt = new FarePricePnrWithBookingClassOptions([
