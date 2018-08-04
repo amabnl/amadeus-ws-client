@@ -30,6 +30,7 @@ namespace Amadeus\Client\Struct\Service\IntegratedPricing;
  */
 class PricingOptionKey
 {
+	const OPTION_FARE_BASIS_SIMPLE_OVERRIDE = "FBA";
     const OVERRIDE_ACCOUNT_CODE = "ACC";
     const OVERRIDE_PRICING_ALL_SERVICES = "ALL";
     const OVERRIDE_AWARD = "AWD";
