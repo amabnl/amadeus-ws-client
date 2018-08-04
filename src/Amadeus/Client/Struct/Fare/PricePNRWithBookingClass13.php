@@ -171,6 +171,11 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
             self::makeOverrideOptions($options->overrideOptions, $priceOptions)
         );
 
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::makeOverrideOptionsWithCriteria($options->overrideOptionsWithCriteria, $priceOptions)
+        );
+
         // All options processed, no options found:
         if (empty($priceOptions)) {
             $priceOptions[] = new PricingOptionGroup(PricingOptionKey::OPTION_NO_OPTION);
@@ -191,6 +196,24 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
         foreach ($overrideOptions as $overrideOption) {
             if (!self::hasPricingGroup($overrideOption, $priceOptions)) {
                 $opt[] = new PricingOptionGroup($overrideOption);
+            }
+        }
+
+        return $opt;
+    }
+
+    /**
+     * @param string[] $overrideOptionsWithCriteria
+     * @param PricingOptionGroup[] $priceOptions
+     * @return PricingOptionGroup[]
+     */
+    protected static function makeOverrideOptionsWithCriteria($overrideOptionsWithCriteria, $priceOptions)
+    {
+        $opt = [];
+
+        foreach ($overrideOptionsWithCriteria as $overrideOptionWithCriteria) {
+            if (!self::hasPricingGroup($overrideOptionWithCriteria["key"], $priceOptions)) {
+                $opt[] = new PricingOptionGroup($overrideOptionWithCriteria["key"], $overrideOptionWithCriteria["optionDetail"]);
             }
         }
 
