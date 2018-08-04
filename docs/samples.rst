@@ -3197,7 +3197,7 @@ All the examples for ``Service_IntegratedPricing`` (see above) should also work 
     );
     
 ---------------------------
-Service_IntegratedCatalogue
+Service_StandaloneCatalogue
 ---------------------------
 
 .. code-block:: php
