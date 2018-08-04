@@ -71,6 +71,26 @@ Fare types: Take into account Published Fares, Unifares, Negotiated fares:
         ])
     );
 
+Overrides with Option Details
+=============================
+
+Show Baggage Fares - include 1 free item of baggage when pricing:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'overrideOptionsWithCriteria' => [
+                [
+                    'key' => 'SBF',
+                    'optionDetail' => '1'
+                ]
+            ]
+        ])
+    );
+
 Currency override
 =================
 
