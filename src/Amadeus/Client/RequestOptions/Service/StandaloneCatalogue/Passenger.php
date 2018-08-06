@@ -49,13 +49,11 @@ class Passenger extends LoadParamsFromArray
     public $type;
 
     /**
-     * List of _unique_ identifiers for these passengers.
+     * Specifies the passenger index
      *
-     * If you have 3 passengers of this type, you need to provide 3 unique tattoos.
+     * If you have 3 passengers of this type, you need to provide 3 unique passenger index.
      *
-     * For infants in a seat with an adult, you must provide the ID of the adult as their tattoo.
-     *
-     * @var int[]
+     * @var int
      */
-    public $tattoos = [];
+    public $reference;
 }
