@@ -20,6 +20,7 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 namespace Amadeus\Client\RequestOptions\Service\StandaloneCatalogue;
+
 use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
 /**
  * Pricing Options for the Fare_InformativePricingWithoutPNR message
@@ -30,8 +31,7 @@ use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
  * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
 class PricingOptions extends ServiceIntegratedPricingOptions
-{
-		
+{		
 	/**
 	 * Provide a fare basis to price with
 	 *
