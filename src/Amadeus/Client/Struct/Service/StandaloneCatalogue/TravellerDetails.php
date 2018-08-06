@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
  * TravellerDetails
  *
  * @package  Amadeus\Client\Struct\Service\StandaloneCatalogue
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
 class TravellerDetails
 {

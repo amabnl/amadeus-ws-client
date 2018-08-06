@@ -22,14 +22,15 @@
 
 namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
 
-use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\Segment;
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
+use Amadeus\Client\Struct\Fare\InformativePricing13\SegmentInformation;
 use Amadeus\Client\Struct\Air\FlightTypeDetails;
 
 /**
- * SegmentGroup
+ * FlightInfo
  *
- * @package Amadeus\Client\Struct\Fare\InformativePricing13
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @package Amadeus\Client\Struct\Service\StandaloneCatalogue
+ * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
 class FlightInfo
 {

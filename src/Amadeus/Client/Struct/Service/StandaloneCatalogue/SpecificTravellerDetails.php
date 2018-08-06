@@ -23,10 +23,10 @@
 namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
 
 /**
- * SegmentRepetitionControl
+ * SpecificTravellerDetails
  *
  * @package Amadeus\Client\Struct\Service\StandaloneCatalogue
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
 class SpecificTravellerDetails
 {

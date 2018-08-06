@@ -22,13 +22,13 @@
 
 namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
 
-use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\Passenger;
+use Amadeus\Client\Struct\Service\StandaloneCatalogue\Passenger;
 
 /**
  * PassengersGroup
  *
- * @package Amadeus\Client\Struct\Fare\InformativePricing13
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @package Amadeus\Client\Struct\Service\StandaloneCatalogue
+ * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
 class PassengerInfoGroup
 {
