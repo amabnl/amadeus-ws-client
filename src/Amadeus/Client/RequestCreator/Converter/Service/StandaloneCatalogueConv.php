@@ -21,6 +21,7 @@
  */
 
 namespace Amadeus\Client\RequestCreator\Converter\Service;
+
 use Amadeus\Client\RequestCreator\Converter\BaseConverter;
 use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 use Amadeus\Client\Struct;
