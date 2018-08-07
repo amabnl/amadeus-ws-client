@@ -32,13 +32,15 @@ use Amadeus\Client\Struct\Service\StandaloneCatalogue\Passenger;
  */
 class PassengerInfoGroup
 {
+
     /**
+     *
      * @var specificTravellerDetails
      */
     public $specificTravellerDetails;
 
-
     /**
+     *
      * @var fareInfo
      */
     public $fareInfo;
@@ -47,13 +49,13 @@ class PassengerInfoGroup
      * PassengersGroup constructor.
      *
      * @param Passenger $passenger
-     * @param int $group
+     * @param int $referenceNumber
      */
     public function __construct($passenger, $referenceNumber)
-    {    	
-    	$this->specificTravellerDetails = new SpecificTravellerDetails($referenceNumber);
-
-        if (!empty($passenger->type)) {
+    {
+        $this->specificTravellerDetails = new SpecificTravellerDetails($referenceNumber);
+        
+        if (! empty($passenger->type)) {
             $this->fareInfo = new FareInfo($passenger->type);
         }
     }

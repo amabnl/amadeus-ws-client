@@ -35,7 +35,7 @@ use Amadeus\Client\Struct\Air\FlightTypeDetails;
 class FlightInfo
 {
     /**
-     * @var SegmentInformation
+     * @var flightDetails
      */
     public $flightDetails;
 

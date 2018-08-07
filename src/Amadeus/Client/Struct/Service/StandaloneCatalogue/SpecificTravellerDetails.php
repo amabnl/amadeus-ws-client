@@ -30,7 +30,9 @@ namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
  */
 class SpecificTravellerDetails
 {
+
     /**
+     *
      * @var specificTravellerDetails[]
      */
     public $travellerDetails;
@@ -39,11 +41,9 @@ class SpecificTravellerDetails
      * segmentControlDetails constructor.
      *
      * @param int $referenceNumber
-      */
+     */
     public function __construct($referenceNumber)
     {
-        $this->travellerDetails = new TravellerDetails(
-            $referenceNumber
-        );
+        $this->travellerDetails = new TravellerDetails($referenceNumber);
     }
 }
