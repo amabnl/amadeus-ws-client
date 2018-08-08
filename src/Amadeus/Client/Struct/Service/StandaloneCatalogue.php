@@ -24,10 +24,11 @@ namespace Amadeus\Client\Struct\Service;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\Passenger;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
+use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
 use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\PassengerInfoGroup;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\FlightInfo;
-use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\PricingOptions;
+
 
 /**
  * StandaloneCatalogue
@@ -102,8 +103,8 @@ class StandaloneCatalogue extends BaseWsMessage
      */
     protected function loadPricingOptions($pricingOptions)
     {
-        if (! ($pricingOptions instanceof PricingOptions)) {
-            $pricingOptions = new PricingOptions();
+        if (! ($pricingOptions instanceof ServiceIntegratedPricingOptions)) {
+            $pricingOptions = new ServiceIntegratedPricingOptions();
         }
         $this->pricingOption = IntegratedPricing::loadPricingOptions($pricingOptions);
     }

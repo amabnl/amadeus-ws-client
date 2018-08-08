@@ -27,6 +27,7 @@ use Amadeus\Client\RequestOptions\Service\FormOfPayment;
 use Amadeus\Client\RequestOptions\Service\FrequentFlyer;
 use Amadeus\Client\RequestOptions\ServiceIntegratedCatalogueOptions;
 use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 use Amadeus\Client\Struct\Fare\BasePricingMessage;
 use Amadeus\Client\Struct\Fare\PricePnr13\CarrierInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\Currency;
@@ -74,7 +75,7 @@ class IntegratedPricing extends BasePricingMessage
     public static function loadPricingOptions($options)
     {
         $priceOptions = [];
-        
+	    
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makePricingOptionFareBasisOverride($options->pricingsFareBasis)
