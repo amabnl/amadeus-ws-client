@@ -72,7 +72,7 @@ class IntegratedPricing extends BasePricingMessage
     public static function loadPricingOptions($options)
     {
         $priceOptions = [];
-
+		
         $priceOptions = self::mergeOptions(
         		$priceOptions,
         		self::makePricingOptionFareBasisOverride($options->pricingsFareBasis)
@@ -122,36 +122,17 @@ class IntegratedPricing extends BasePricingMessage
 
         $priceOptions = self::mergeOptions(
             $priceOptions,
-            self::makePricingOptionWithOptionDetailAndRefs(
-                PricingOptionKey::OVERRIDE_TICKET_DESIGNATOR,
-                $options->ticketDesignator,
-                []
-            )
-        );
-
-        $priceOptions = self::mergeOptions(
-            $priceOptions,
-            self::loadPointOverrides($options->pointOfSaleOverride)
-        );
-
-        $priceOptions = self::mergeOptions(
-            $priceOptions,
-            self::loadFormOfPaymentOverride($options->formOfPayment)
-        );
-
-        $priceOptions = self::mergeOptions(
-            $priceOptions,
-            self::loadFrequentFlyerOverride($options->frequentFlyers)
-        );
-
-        $priceOptions = self::mergeOptions(
-            $priceOptions,
-            self::loadReferences($options->references)
-        );
-
-        $priceOptions = self::mergeOptions(
-            $priceOptions,
-            self::makeOverrideOptions($options->overrideOptions, $priceOptions)
+            self::makePricingOptionWithOptionDetailAndRefs(PricingOptionKey::OVERRIDE_TICKET_DESIGNATOR, $options->ticketDesignator, []));
+        
+        $priceOptions = self::mergeOptions($priceOptions, self::loadPointOverrides($options->pointOfSaleOverride));
+        
+        $priceOptions = self::mergeOptions($priceOptions, self::loadFormOfPaymentOverride($options->formOfPayment));
+        
+        $priceOptions = self::mergeOptions($priceOptions, self::loadFrequentFlyerOverride($options->frequentFlyers));
+        
+        $priceOptions = self::mergeOptions($priceOptions, self::loadReferences($options->references));
+        
+        $priceOptions = self::mergeOptions($priceOptions, self::makeOverrideOptions($options->overrideOptions, $priceOptions)
         );
 
         // All options processed, no options found:
@@ -161,35 +142,28 @@ class IntegratedPricing extends BasePricingMessage
 
         return $priceOptions;
     }
-    
+
     /**
+     *
      * @param FareBasis[] $pricingsFareBasis
      * @return PricingOptionGroup[]
      */
     protected static function makePricingOptionFareBasisOverride($pricingsFareBasis)
     {
-    	$opt = [];
-    
-    	if ($pricingsFareBasis !== null) {
-    		foreach ($pricingsFareBasis as $pricingFareBasis) {
-    			$po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_BASIS_SIMPLE_OVERRIDE);
-    
-    			//Support for legacy fareBasisPrimaryCode to be removed when breaking BC:
-    			$po->optionDetail = new OptionDetail(
-    					$pricingFareBasis->fareBasisPrimaryCode.$pricingFareBasis->fareBasisCode
-    			);
-    
-    			//Support for legacy segmentReference to be removed when breaking BC:
-    			$po->paxSegTstReference = new PaxSegTstReference(
-    					$pricingFareBasis->references,
-    					$pricingFareBasis->segmentReference
-    			);
-    
-    			$opt[] = $po;
-    		}
-    	}
-    
-    	return $opt;
+        $opt = [];
+        if ($pricingsFareBasis !== null) {
+            foreach ($pricingsFareBasis as $pricingFareBasis) {
+                $po = new PricingOptionGroup($pricingFareBasis->overrideType);
+                
+                $po->optionDetail = new OptionDetail($pricingFareBasis->fareBasisCode);
+                
+                $po->paxSegTstReference = new PaxSegTstReference($pricingFareBasis->references);
+                
+                $opt[] = $po;
+            }
+        }
+        
+        return $opt;
     }
     
 
