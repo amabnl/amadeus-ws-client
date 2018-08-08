@@ -1575,12 +1575,11 @@ class Client extends Base
      * @throws Client\RequestCreator\MessageVersionUnsupportedException
      * @throws Exception
      */
-    public function serviceStandaloneCatalogue(
-        RequestOptions\ServiceStandaloneCatalogueOptions $options, $messageOptions = []) 
+    public function serviceStandaloneCatalogue(RequestOptions\ServiceStandaloneCatalogueOptions $options, $messageOptions = [])
     {
         $msgName = 'Service_StandaloneCatalogue';
-    
-   	    return $this->callMessage($msgName, $options, $messageOptions);
+        
+        return $this->callMessage($msgName, $options, $messageOptions);
     }
     
     /**
