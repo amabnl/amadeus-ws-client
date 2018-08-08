@@ -48,7 +48,9 @@ use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOption;
  */
 class IntegratedPricing extends BasePricingMessage
 {
+
     /**
+     *
      * @var PricingOption[]
      */
     public $pricingOption = [];
@@ -211,7 +213,7 @@ class IntegratedPricing extends BasePricingMessage
      * @param PaxSegRef[] $references
      * @return PricingOption[]
      */
-    protected function makePricingOptionWithOptionDetailAndRefs($overrideCode, $options, $references)
+    protected static function makePricingOptionWithOptionDetailAndRefs($overrideCode, $options, $references)
     {
         $opt = [];
 
