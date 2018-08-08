@@ -19,14 +19,12 @@
  * @package Amadeus
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
-
 namespace Amadeus\Client\Struct\Service;
 
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\Passenger;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
 use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
-
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\PassengerInfoGroup;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\FlightInfo;
 use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\PricingOptions;
@@ -39,17 +37,21 @@ use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\PricingOptions;
  */
 class StandaloneCatalogue extends BaseWsMessage
 {
-     /**
+
+    /**
+     *
      * @var passengerInfoGroup[]
      */
     public $passengerInfoGroup = [];
 
     /**
+     *
      * @var flightInfo[]
      */
     public $flightInfo = [];
 
     /**
+     *
      * @var pricingOption[]
      */
     public $pricingOption = [];
@@ -61,28 +63,30 @@ class StandaloneCatalogue extends BaseWsMessage
      */
     public function __construct($options)
     {
-        if (!is_null($options)) {
-           	$this->loadPassengers($options->passengers);
-           			
+        if (! is_null($options)) {
+            $this->loadPassengers($options->passengers);
+            
             $this->loadflightDetails($options->segments);
-
+            
             $this->loadPricingOptions($options->pricingOptions);
         }
     }
 
     /**
+     *
      * @param Passenger[] $passengers
      */
     protected function loadPassengers($passengers)
     {
         $counter = 1;
-		foreach ($passengers as $passenger) {
+        foreach ($passengers as $passenger) {
             $this->passengerInfoGroup[] = new PassengerInfoGroup($passenger, $counter);
-            $counter++;
+            $counter ++;
         }
     }
 
     /**
+     *
      * @param Segment[] $segments
      */
     protected function loadflightDetails($segments)
@@ -93,11 +97,12 @@ class StandaloneCatalogue extends BaseWsMessage
     }
 
     /**
+     *
      * @param PricingOptions|null $pricingOptions
      */
     protected function loadPricingOptions($pricingOptions)
     {
-        if (!($pricingOptions instanceof PricingOptions)) {
+        if (! ($pricingOptions instanceof PricingOptions)) {
             $pricingOptions = new PricingOptions();
         }
         $this->pricingOption = IntegratedPricing::loadPricingOptions($pricingOptions);
