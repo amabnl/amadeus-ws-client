@@ -24,6 +24,7 @@ namespace Test\Amadeus\Client\Struct\Service;
 
 use Amadeus\Client\RequestOptions\Service\PaxSegRef;
 use Amadeus\Client\RequestOptions\ServiceIntegratedCatalogueOptions;
+use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 use Amadeus\Client\Struct\Service\IntegratedCatalogue;
 use Amadeus\Client\Struct\Service\IntegratedPricing;
 use Amadeus\Client\Struct\Fare\PricePnr13\ReferenceDetails;
