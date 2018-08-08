@@ -25,12 +25,11 @@ namespace Amadeus\Client\Struct\Fare;
 use Amadeus\Client\RequestOptions\FarePriceUpsellWithoutPNROptions;
 
 /**
- * InformativeBestPricingWithoutPNR13
+ * PriceUpsellWithoutPNRConv
  *
- * @package Amadeus\Client\Struct\Fare
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @package Amadeus\Client\RequestCreator\Converter\Fare
  */
-class InformativePriceUpsellWithoutPNR16 extends InformativePricingWithoutPNR13
+class PriceUpsellWithoutPNRConv extends InformativePricingWithoutPNR13
 {
     /**
      * InformativeBestPricingWithoutPNR13 constructor.

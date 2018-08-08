@@ -1649,8 +1649,7 @@ class Client extends Base
     public function farePriceUpsellWithoutPnr(
         RequestOptions\FarePriceUpsellWithoutPNROptions $options,
         $messageOptions = []
-    )
-    {
+    ) {
         $msgName = 'Fare_PriceUpsellWithoutPNR';
 
         return $this->callMessage($msgName, $options, $messageOptions);
