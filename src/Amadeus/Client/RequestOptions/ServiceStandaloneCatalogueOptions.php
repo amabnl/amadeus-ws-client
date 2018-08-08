@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * amadeus-ws-client
  *
@@ -29,12 +29,10 @@ namespace Amadeus\Client\RequestOptions;
  */
 class ServiceStandaloneCatalogueOptions extends Base
 {
-	public $passengers = [];
-	
-	public $segments = [];
-	
-	public $pricingOptions;
+
+    public $passengers = [];
+
+    public $segments = [];
+
+    public $pricingOptions;
 }
-
-
-?>

@@ -22,20 +22,20 @@
 namespace Amadeus\Client\RequestOptions\Service\StandaloneCatalogue;
 
 use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
+
 /**
- * Pricing Options for the Fare_InformativePricingWithoutPNR message
- *
- * The pricing options are the same as a Fare_PricePnrWithBookingClassOptions
+ * Pricing Options for the Service_StandaloneCatalogue message
  *
  * @package Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions
  * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
 class PricingOptions extends ServiceIntegratedPricingOptions
-{		
-	/**
-	 * Provide a fare basis to price with
-	 *
-	 * @var FareBasis[]
-	 */
-	public $pricingsFareBasis = [];
+{
+
+    /**
+     * Provide a fare basis to price with
+     *
+     * @var pricingsFareBasis[]
+     */
+    public $pricingsFareBasis = [];
 }

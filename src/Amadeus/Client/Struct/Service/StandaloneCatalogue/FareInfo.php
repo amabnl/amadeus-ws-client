@@ -19,25 +19,25 @@
  * @package Amadeus
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
-
 namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
 
 /**
  * FareInfo
  *
  * @package Amadeus\Client\Struct\Service\StandaloneCatalogue
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @author Arvind PAndey <arvindpandey87@gmail.com>
  */
 class FareInfo
 {
+
     /**
+     *
      * @var string
      */
     public $valueQualifier;
 
-   
     public function __construct($paxType)
     {
-    	$this->valueQualifier = $paxType;
+        $this->valueQualifier = $paxType;
     }
 }

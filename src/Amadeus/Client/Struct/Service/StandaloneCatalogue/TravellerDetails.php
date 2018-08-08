@@ -19,18 +19,19 @@
  * @package Amadeus
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
-
 namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
 
 /**
  * TravellerDetails
  *
- * @package  Amadeus\Client\Struct\Service\StandaloneCatalogue
+ * @package Amadeus\Client\Struct\Service\StandaloneCatalogue
  * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
 class TravellerDetails
 {
-	 /**
+
+    /**
+     *
      * @var int
      */
     public $referenceNumber;
