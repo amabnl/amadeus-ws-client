@@ -29,7 +29,6 @@ use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\PassengerInfoGroup;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\FlightInfo;
 
-
 /**
  * StandaloneCatalogue
  *
