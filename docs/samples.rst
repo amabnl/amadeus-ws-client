@@ -3230,10 +3230,20 @@ Service_StandaloneCatalogue
                 'segmentTattoo' => 1
             ])
         ],
-        'pricingOptions' => new PricingOptions([
+        'pricingOptions' => new ServiceIntegratedPricingOptions([
             'pricingsFareBasis' => [
                 new FareBasis([
                     'fareBasisCode' => 'LOXOW',
+                ])
+            ],
+            'references' => [
+                new PaxSegRef([
+                    'reference' => 1,
+                    'type' => 'S'
+                ]),
+                new PaxSegRef([
+                    'reference' => 1,
+                    'type' => 'P'
                 ])
             ]
         ])
