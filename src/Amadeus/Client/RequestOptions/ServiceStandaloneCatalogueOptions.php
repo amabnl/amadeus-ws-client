@@ -34,5 +34,4 @@ class ServiceStandaloneCatalogueOptions extends Base
     public $segments = [];
 
     public $pricingOptions;
-    
 }
