@@ -25,7 +25,7 @@ namespace Amadeus\Client\Struct\Fare;
 use Amadeus\Client\RequestOptions\FarePriceUpsellWithoutPNROptions;
 
 /**
- * InformativeBestPricingWithoutPNR13
+ * InformativePriceUpsellWithoutPNR16
  *
  * @package Amadeus\Client\Struct\Fare
  * @author Leonardo Travel <dermikagh@gmail.com>
@@ -33,7 +33,7 @@ use Amadeus\Client\RequestOptions\FarePriceUpsellWithoutPNROptions;
 class InformativePriceUpsellWithoutPNR16 extends InformativePricingWithoutPNR13
 {
     /**
-     * InformativeBestPricingWithoutPNR13 constructor.
+     * InformativePriceUpsellWithoutPNR16 constructor.
      *
      * @param FarePriceUpsellWithoutPNROptions|null $options
      */

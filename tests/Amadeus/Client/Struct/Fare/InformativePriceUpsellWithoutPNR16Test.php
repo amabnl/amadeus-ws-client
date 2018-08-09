@@ -89,7 +89,7 @@ class InformativePriceUpsellWithoutPNR16Test extends BaseTestCase
         $msg = new InformativePriceUpsellWithoutPNR16($opt);
 
 
-        $this->assertCount(0, $msg->passengersGroup);
+        $this->assertCount(2, $msg->passengersGroup);
         $this->assertEquals('ADT', $msg->passengersGroup[0]->discountPtc->valueQualifier);
         $this->assertCount(1, $msg->passengersGroup[0]->travellersID->travellerDetails);
         $this->assertEquals(1, $msg->passengersGroup[0]->travellersID->travellerDetails[0]->measurementValue);
@@ -97,13 +97,12 @@ class InformativePriceUpsellWithoutPNR16Test extends BaseTestCase
         $this->assertEquals(1, $msg->passengersGroup[0]->segmentRepetitionControl->segmentControlDetails[0]->numberOfUnits);
         $this->assertEquals(1, $msg->passengersGroup[0]->segmentRepetitionControl->segmentControlDetails[0]->quantity);
 
-        $this->assertCount(1, $msg->passengersGroup);
-        $this->assertEquals('CH', $msg->passengersGroup[0]->discountPtc->valueQualifier);
-        $this->assertCount(1, $msg->passengersGroup[0]->travellersID->travellerDetails);
-        $this->assertEquals(2, $msg->passengersGroup[0]->travellersID->travellerDetails[0]->measurementValue);
-        $this->assertCount(2, $msg->passengersGroup[0]->segmentRepetitionControl->segmentControlDetails);
-        $this->assertEquals(1, $msg->passengersGroup[0]->segmentRepetitionControl->segmentControlDetails[0]->numberOfUnits);
-        $this->assertEquals(2, $msg->passengersGroup[0]->segmentRepetitionControl->segmentControlDetails[0]->quantity);
+        $this->assertEquals('CH', $msg->passengersGroup[1]->discountPtc->valueQualifier);
+        $this->assertCount(1, $msg->passengersGroup[1]->travellersID->travellerDetails);
+        $this->assertEquals(2, $msg->passengersGroup[1]->travellersID->travellerDetails[0]->measurementValue);
+        $this->assertCount(2, $msg->passengersGroup[1]->segmentRepetitionControl->segmentControlDetails);
+        $this->assertEquals(1, $msg->passengersGroup[1]->segmentRepetitionControl->segmentControlDetails[0]->numberOfUnits);
+        $this->assertEquals(2, $msg->passengersGroup[1]->segmentRepetitionControl->segmentControlDetails[0]->quantity);
 
         $this->assertCount(1, $msg->segmentGroup);
 
@@ -126,7 +125,7 @@ class InformativePriceUpsellWithoutPNR16Test extends BaseTestCase
 
         $this->assertEquals(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
         $this->assertEquals('EUR', $msg->pricingOptionGroup[0]->currency->firstCurrencyDetails->currencyIsoCode);
-        $this->assertEquals(FirstCurrencyDetails::QUAL_CURRENCY_OVERRIDE, $msg->pricingOptionGroup[0]->currency->firstCurrencyDetails->currencyQualifier);
+        $this->assertEquals(FirstCurrencyDetails::QUAL_CURRENCY_OVERRIDE, $msg->pricingOptionGroup[1]->currency->firstCurrencyDetails->currencyQualifier);
         $this->assertEquals(PricingOptionKey::OPTION_PUBLISHED_FARES, $msg->pricingOptionGroup[2]->pricingOptionKey->pricingOptionKey);
         $this->assertEquals(PricingOptionKey::OPTION_UNIFARES, $msg->pricingOptionGroup[3]->pricingOptionKey->pricingOptionKey);
     }

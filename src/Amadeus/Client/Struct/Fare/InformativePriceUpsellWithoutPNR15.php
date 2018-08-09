@@ -35,7 +35,7 @@ use Amadeus\Client\Struct\BaseWsMessage;
 class InformativePriceUpsellWithoutPNR15 extends BaseWsMessage
 {
     /**
-     * InformativeBestPricingWithoutPNR12 constructor.
+     * InformativePriceUpsellWithoutPNR15 constructor.
      *
      * @param FarePriceUpsellWithoutPNROptions|null $options
      * @throws MessageVersionUnsupportedException
