@@ -28,14 +28,14 @@ use Amadeus\Client\RequestOptions\FarePriceUpsellWithoutPNROptions;
  * InformativeBestPricingWithoutPNR13
  *
  * @package Amadeus\Client\Struct\Fare
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @author Leonardo Travel <dermikagh@gmail.com>
  */
 class InformativePriceUpsellWithoutPNR16 extends InformativePricingWithoutPNR13
 {
     /**
      * InformativeBestPricingWithoutPNR13 constructor.
      *
-     * @param FareInformativeBestPricingWithoutPnrOptions|null $options
+     * @param FarePriceUpsellWithoutPNROptions|null $options
      */
     public function __construct(FarePriceUpsellWithoutPNROptions $options = null)
     {
