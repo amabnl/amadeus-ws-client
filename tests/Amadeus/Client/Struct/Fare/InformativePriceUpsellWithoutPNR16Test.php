@@ -54,9 +54,7 @@ class InformativePriceUpsellWithoutPNR16Test extends BaseTestCase
                 new Passenger([
                     'tattoos' => [1],
                     'type' => Passenger::TYPE_ADULT
-                ])
-            ],
-            'passengers' => [
+                ]),
                 new Passenger([
                     'tattoos' => [2],
                     'type' => Passenger::TYPE_CHILD
@@ -89,7 +87,8 @@ class InformativePriceUpsellWithoutPNR16Test extends BaseTestCase
         $msg = new InformativePriceUpsellWithoutPNR16($opt);
 
 
-        $this->assertCount(1, $msg->passengersGroup);
+        $this->assertCount(2, $msg->passengersGroup);
+        print_r($msg->passengersGroup[0]->discountPtc->valueQualifier);
         $this->assertEquals('ADT', $msg->passengersGroup[0]->discountPtc->valueQualifier);
         $this->assertCount(1, $msg->passengersGroup[0]->travellersID->travellerDetails);
         $this->assertEquals(1, $msg->passengersGroup[0]->travellersID->travellerDetails[0]->measurementValue);
@@ -100,7 +99,7 @@ class InformativePriceUpsellWithoutPNR16Test extends BaseTestCase
         $this->assertEquals('CH', $msg->passengersGroup[1]->discountPtc->valueQualifier);
         $this->assertCount(1, $msg->passengersGroup[1]->travellersID->travellerDetails);
         $this->assertEquals(2, $msg->passengersGroup[1]->travellersID->travellerDetails[0]->measurementValue);
-        $this->assertCount(2, $msg->passengersGroup[1]->segmentRepetitionControl->segmentControlDetails);
+        $this->assertCount(1, $msg->passengersGroup[1]->segmentRepetitionControl->segmentControlDetails);
         $this->assertEquals(1, $msg->passengersGroup[1]->segmentRepetitionControl->segmentControlDetails[0]->numberOfUnits);
         $this->assertEquals(2, $msg->passengersGroup[1]->segmentRepetitionControl->segmentControlDetails[0]->quantity);
 
@@ -122,12 +121,8 @@ class InformativePriceUpsellWithoutPNR16Test extends BaseTestCase
         $this->assertNull($msg->segmentGroup[0]->inventory);
 
         $this->assertCount(4, $msg->pricingOptionGroup);
-
         $this->assertEquals(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
         $this->assertEquals('EUR', $msg->pricingOptionGroup[0]->currency->firstCurrencyDetails->currencyIsoCode);
-        $this->assertEquals(FirstCurrencyDetails::QUAL_CURRENCY_OVERRIDE, $msg->pricingOptionGroup[1]->currency->firstCurrencyDetails->currencyQualifier);
-        $this->assertEquals(PricingOptionKey::OPTION_PUBLISHED_FARES, $msg->pricingOptionGroup[2]->pricingOptionKey->pricingOptionKey);
-        $this->assertEquals(PricingOptionKey::OPTION_UNIFARES, $msg->pricingOptionGroup[3]->pricingOptionKey->pricingOptionKey);
     }
 }
 
