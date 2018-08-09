@@ -30,20 +30,20 @@ use Amadeus\Client\Struct\BaseWsMessage;
  * InformativePriceUpsellWithoutPNR15
  *
  * @package Amadeus\Client\Struct\Fare
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @author Leonardo Travel <dermikagh@gmail.com>
  */
 class InformativePriceUpsellWithoutPNR15 extends BaseWsMessage
 {
     /**
      * InformativeBestPricingWithoutPNR12 constructor.
      *
-     * @param FareInformativeBestPricingWithoutPnrOptions|null $options
+     * @param FarePriceUpsellWithoutPNROptions|null $options
      * @throws MessageVersionUnsupportedException
      */
     public function __construct(FarePriceUpsellWithoutPNROptions $options = null)
     {
         throw new MessageVersionUnsupportedException(
-            'Fare_InformativeBestPricingWithoutPNR versions < 16 are not yet implemented'
+            'Fare_PriceUpsellWithoutPNR versions < 16 are not yet implemented'
         );
     }
 }

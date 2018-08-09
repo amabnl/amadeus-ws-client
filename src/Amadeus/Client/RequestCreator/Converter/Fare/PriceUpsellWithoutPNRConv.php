@@ -2,7 +2,7 @@
 /**
  * amadeus-ws-client
  *
- * Copyright 2018 Leonardo Travel
+ * Copyright 2015 Amadeus Benelux NV
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,24 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare;
+namespace Amadeus\Client\RequestCreator\Converter\Fare;
 
-use Amadeus\Client\RequestOptions\FarePriceUpsellWithoutPNROptions;
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions;
+use Amadeus\Client\Struct;
 
 /**
- * PriceUpsellWithoutPNRConv
+ * Fare_InformativeBestPricingWithoutPNR Request converter
  *
  * @package Amadeus\Client\RequestCreator\Converter\Fare
+ * @author Leonardo Travel <dermikagh@gmail.com>
  */
-class PriceUpsellWithoutPNRConv extends InformativePricingWithoutPNR13
+class PriceUpsellWithoutPNRConv extends BaseConverter
 {
     /**
-     * InformativeBestPricingWithoutPNR13 constructor.
-     *
-     * @param FareInformativeBestPricingWithoutPnrOptions|null $options
+     * @param FareInformativeBestPricingWithoutPnrOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\Fare\InformativePriceUpsellWithoutPNR15|Struct\Fare\InformativePriceUpsellWithoutPNR16
      */
-    public function __construct(FarePriceUpsellWithoutPNROptions $options = null)
+    public function convert($requestOptions, $version)
     {
-        parent::__construct($options);
+        if (floatval($version) < floatval(16)) {
+            return new Struct\Fare\InformativePriceUpsellWithoutPNR15($requestOptions);
+        } else {
+            return new Struct\Fare\InformativePriceUpsellWithoutPNR16($requestOptions);
+        }
     }
 }
