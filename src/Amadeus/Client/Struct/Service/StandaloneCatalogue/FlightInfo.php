@@ -23,6 +23,7 @@
 namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
 
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
+use Amadeus\Client\Struct\Fare\InformativePricing13\SegmentGroup;
 use Amadeus\Client\Struct\Fare\InformativePricing13\SegmentInformation;
 use Amadeus\Client\Struct\Air\FlightTypeDetails;
 
@@ -32,7 +33,7 @@ use Amadeus\Client\Struct\Air\FlightTypeDetails;
  * @package Amadeus\Client\Struct\Service\StandaloneCatalogue
  * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
-class FlightInfo
+class FlightInfo extends SegmentGroup
 {
     /**
      * @var flightDetails
@@ -40,19 +41,9 @@ class FlightInfo
     public $flightDetails;
 
     /**
-     * @var AdditionalSegmentDetails
-     */
-    public $additionnalSegmentDetails;
-
-    /**
-     * @var Inventory
-     */
-    public $inventory;
-
-    /**
-     * SegmentGroup constructor.
+     * FlightInfo constructor.
      *
-     * @param Segment $options
+     * @param FlightInfo $options
      */
     public function __construct($options)
     {
@@ -68,13 +59,13 @@ class FlightInfo
 
         $this->loadOptionalSegmentInformation($options);
 
-        $this->loadInventory($options->inventory);
+        SegmentGroup::loadInventory($options->inventory);
     }
 
     /**
      * Load non-required options if available
      *
-     * @param Segment $options
+     * @param FlightInfo $options
      */
     protected function loadOptionalSegmentInformation($options)
     {
@@ -90,36 +81,7 @@ class FlightInfo
             $this->flightDetails->flightTypeDetails = new FlightTypeDetails($options->groupNumber);
         }
 
-        $this->loadAdditionalSegmentDetails($options->airplaneCode, $options->nrOfStops);
+        SegmentGroup::loadAdditionalSegmentDetails($options->airplaneCode, $options->nrOfStops);
     }
-
-    /**
-     * @param string|null $airplaneCode
-     * @param int|null $nrOfStops
-     */
-    protected function loadAdditionalSegmentDetails($airplaneCode, $nrOfStops)
-    {
-        if (!empty($airplaneCode) || !empty($nrOfStops)) {
-            $this->additionalFlightInfo = new AdditionalSegmentDetails($airplaneCode, $nrOfStops);
-        }
-    }
-
-    /**
-     * Load inventory information
-     *
-     * @param array $inventory
-     */
-    protected function loadInventory($inventory)
-    {
-        if (is_array($inventory) && count($inventory) > 0) {
-            $this->inventory = new Inventory();
-
-            foreach ($inventory as $bookingClass => $availabilityAmount) {
-                $this->inventory->bookingClassDetails[] = new BookingClassDetails(
-                    $bookingClass,
-                    $availabilityAmount
-                );
-            }
-        }
-    }
+    
 }
