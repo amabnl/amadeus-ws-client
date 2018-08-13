@@ -83,5 +83,4 @@ class FlightInfo extends SegmentGroup
 
         SegmentGroup::loadAdditionalSegmentDetails($options->airplaneCode, $options->nrOfStops);
     }
-    
 }
