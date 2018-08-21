@@ -50,6 +50,13 @@ class MPPassenger extends LoadParamsFromArray
     public $type;
 
     /**
+     * If it's resident search*
+     *
+     * @var bool
+     */
+    public $isresident;
+
+    /**
      * How many passengers of this type ?
      *
      * @var int
