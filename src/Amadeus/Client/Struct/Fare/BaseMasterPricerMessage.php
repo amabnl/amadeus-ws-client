@@ -68,7 +68,8 @@ class BaseMasterPricerMessage extends BaseWsMessage
         $paxRef = new MasterPricer\PaxReference(
             $isInfant ? $infantCounter : $counter,
             $isInfant,
-            $passenger->type
+            $passenger->type,
+            $passenger->isresident
         );
 
         if ($isInfant) {
