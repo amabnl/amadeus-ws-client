@@ -71,6 +71,26 @@ Fare types: Take into account Published Fares, Unifares, Negotiated fares:
         ])
     );
 
+Overrides with Option Details
+=============================
+
+Show Baggage Fares - include 1 free item of baggage when pricing:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'overrideOptionsWithCriteria' => [
+                [
+                    'key' => 'SBF',
+                    'optionDetail' => '1'
+                ]
+            ]
+        ])
+    );
+
 Currency override
 =================
 
@@ -360,7 +380,7 @@ This option is used to price an itinerary applying an award program for a given 
 .. code-block:: php
 
     use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
-    user Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 
     $pricingResponse = $client->farePricePnrWithBookingClass(
         new FarePricePnrWithBookingClassOptions([
@@ -383,7 +403,7 @@ This option is used to specify the form of payment information to use.
 .. code-block:: php
 
     use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
-    user Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 
     $pricingResponse = $client->farePricePnrWithBookingClass(
         new FarePricePnrWithBookingClassOptions([

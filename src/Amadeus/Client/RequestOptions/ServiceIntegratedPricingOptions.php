@@ -94,6 +94,13 @@ class ServiceIntegratedPricingOptions extends Base
     public $overrideOptions = [];
 
     /**
+     * Provide a fare basis to price with
+     *
+     * @var pricingsFareBasis[]
+     */
+    public $pricingsFareBasis = [];
+    
+    /**
      * self::AWARDPRICING_*
      *
      * @var string
