@@ -22,11 +22,11 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
-use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
-use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
 use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
+use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\InformativePricing13\OriginatorGroup;
 use Amadeus\Client\Struct\Fare\InformativePricing13\PassengersGroup;
 use Amadeus\Client\Struct\Fare\InformativePricing13\SegmentGroup;
@@ -73,6 +73,12 @@ class InformativePricingWithoutPNR13 extends BaseWsMessage
             $this->loadSegments($options->segments);
 
             $this->loadPricingOptions($options->pricingOptions);
+
+            if (isset($options->pricingOptionsArray) && is_array($options->pricingOptionsArray)) {
+                foreach ($options->pricingOptionsArray as $option) {
+                    $this->loadPricingOptions($option);
+                }
+            }
         }
     }
 
@@ -107,6 +113,10 @@ class InformativePricingWithoutPNR13 extends BaseWsMessage
         if (!($pricingOptions instanceof PricingOptions)) {
             $pricingOptions = new PricingOptions();
         }
-        $this->pricingOptionGroup = PricePNRWithBookingClass13::loadPricingOptionsFromRequestOptions($pricingOptions);
+        $priceOpt = PricePNRWithBookingClass13::loadPricingOptionsFromRequestOptions($pricingOptions);
+
+        foreach ($priceOpt as $opt) {
+            $this->pricingOptionGroup[] = $opt;
+        }
     }
 }
