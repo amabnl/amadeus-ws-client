@@ -23,7 +23,7 @@
 namespace Amadeus\Client\RequestCreator\Converter\Fare;
 
 use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\FareMasterPricerExSearch;
+use Amadeus\Client\RequestOptions\FareMasterPricerExSearchOptions;
 use Amadeus\Client\Struct;
 
 /**

@@ -20,9 +20,9 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-use Amadeus\Client\RequestOptions\FareMasterPricerExSearchOptions as FareMasterPricerExSearchOptions;
-
 namespace Amadeus\Client\RequestOptions;
+
+use Amadeus\Client\RequestOptions\FareMasterPricerExSearchOptions as FareMasterPricerExSearchOptions;
 
 /**
  * Request Options for Fare_MasterPricerTravelboardSearch
