@@ -27,11 +27,6 @@ namespace Amadeus\Client\RequestOptions;
  * @package Amadeus\Client\RequestOptions
  * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
-class ServiceStandaloneCatalogueOptions extends Base
+class ServiceStandaloneCatalogueOptions extends FareInformativePricingWithoutPnrOptions
 {
-    public $passengers = [];
-
-    public $segments = [];
-
-    public $pricingOptions;
 }
