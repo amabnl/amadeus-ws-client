@@ -74,7 +74,7 @@ class InformativePricingWithoutPNR13 extends BaseWsMessage
 
             $this->loadPricingOptions($options->pricingOptions);
 
-            if (isset($options->pricingOptionsArray) && is_array($options->pricingOptionsArray)) {
+            if (isset($options->pricingOptionsArray)) {
                 foreach ($options->pricingOptionsArray as $option) {
                     $this->loadPricingOptions($option);
                 }
