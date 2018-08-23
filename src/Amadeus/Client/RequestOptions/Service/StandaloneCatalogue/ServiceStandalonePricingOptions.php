@@ -19,31 +19,19 @@
  * @package Amadeus
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
+namespace Amadeus\Client\RequestOptions\Service\StandaloneCatalogue;
 
-namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
 
 /**
- * SpecificTravellerDetails
+ * Pricing Options for the Service_StandaloneCatalogue message
  *
- * @package Amadeus\Client\Struct\Service\StandaloneCatalogue
+ * @package Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions
  * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
-class SpecificTravellerDetails
+class ServiceStandalonePricingOptions extends PricingOptions
 {
 
-    /**
-     *
-     * @var specificTravellerDetails[]
-     */
-    public $travellerDetails;
-
-    /**
-     * SpecificTravellerDetails constructor.
-     *
-     * @param int $referenceNumber
-     */
-    public function __construct($referenceNumber)
-    {
-        $this->travellerDetails = new TravellerDetails($referenceNumber);
-    }
+    const OVERRIDE_MANUAL_INPUT_FORMATTED = 'MIF';
+    const OVERRIDE_COMMERCIAL_DESCRIPTION = 'SCD';
 }

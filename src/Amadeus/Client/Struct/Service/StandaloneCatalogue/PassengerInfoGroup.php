@@ -46,7 +46,7 @@ class PassengerInfoGroup
     public $fareInfo;
 
     /**
-     * PassengersGroup constructor.
+     * PassengerInfoGroup constructor.
      *
      * @param Passenger $passenger
      * @param int $referenceNumber

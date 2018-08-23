@@ -69,18 +69,18 @@ class FlightInfo extends SegmentGroup
      */
     protected function loadOptionalSegmentInformation($options)
     {
-        if (!empty($options->operatingCompany)) {
+        if (! empty($options->operatingCompany)) {
             $this->flightDetails->companyDetails->operatingCompany = $options->operatingCompany;
         }
-
+        
         if ($options->arrivalDate instanceof \DateTime) {
             $this->flightDetails->flightDate->setArrivalDate($options->arrivalDate);
         }
-
-        if (!empty($options->groupNumber)) {
+        
+        if (! empty($options->groupNumber)) {
             $this->flightDetails->flightTypeDetails = new FlightTypeDetails($options->groupNumber);
         }
-
+        
         SegmentGroup::loadAdditionalSegmentDetails($options->airplaneCode, $options->nrOfStops);
     }
 }
