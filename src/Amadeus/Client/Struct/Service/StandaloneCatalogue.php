@@ -24,16 +24,18 @@ namespace Amadeus\Client\Struct\Service;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\Passenger;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
+use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\ServiceStandalonePricingOptions;
 use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
 use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\PassengerInfoGroup;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\FlightInfo;
+use Amadeus\Client\Struct\Fare\PricePNRWithBookingClass13;
 
 /**
  * StandaloneCatalogue
  *
  * @package Amadeus\Client\Struct\Fare
- * @author StandaloneCatalogue.php
+ * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
 class StandaloneCatalogue extends BaseWsMessage
 {
@@ -92,7 +94,7 @@ class StandaloneCatalogue extends BaseWsMessage
     protected function loadflightDetails($segments)
     {
         foreach ($segments as $segment) {
-            $this->flightInfo[] = new flightInfo($segment);
+            $this->flightInfo[] = new FlightInfo($segment);
         }
     }
 
@@ -102,9 +104,8 @@ class StandaloneCatalogue extends BaseWsMessage
      */
     protected function loadPricingOptions($pricingOptions)
     {
-        if (! ($pricingOptions instanceof ServiceIntegratedPricingOptions)) {
-            $pricingOptions = new ServiceIntegratedPricingOptions();
-        }
-        $this->pricingOption = IntegratedPricing::loadPricingOptions($pricingOptions);
+        
+        $this->pricingOption = PricePNRWithBookingClass13::loadPricingOptionsFromRequestOptions($pricingOptions);
+            
     }
 }
