@@ -573,7 +573,7 @@ class Client extends Base
     /**
      * Fare_MasterPricerExpertSearch
      *
-     * @param RequestOptions\FareMasterPricerExSearch $options
+     * @param RequestOptions\FareMasterPricerExSearchOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
      * @throws Client\InvalidMessageException
@@ -581,7 +581,7 @@ class Client extends Base
      * @throws Exception
      */
     public function fareMasterPricerExpertSearch(
-        RequestOptions\FareMasterPricerExSearch $options,
+        RequestOptions\FareMasterPricerExSearchOptions $options,
         $messageOptions = []
     ) {
         $msgName = 'Fare_MasterPricerExpertSearch';
