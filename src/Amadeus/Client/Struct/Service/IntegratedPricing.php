@@ -27,7 +27,6 @@ use Amadeus\Client\RequestOptions\Service\FormOfPayment;
 use Amadeus\Client\RequestOptions\Service\FrequentFlyer;
 use Amadeus\Client\RequestOptions\ServiceIntegratedCatalogueOptions;
 use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
-use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 use Amadeus\Client\Struct\Fare\BasePricingMessage;
 use Amadeus\Client\Struct\Fare\PricePnr13\CarrierInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\Currency;
@@ -37,7 +36,6 @@ use Amadeus\Client\Struct\Fare\PricePnr13\FrequentFlyerInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\LocationInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\OptionDetail;
 use Amadeus\Client\Struct\Fare\PricePnr13\PaxSegTstReference;
-use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionGroup;
 use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOptionKey;
 use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOption;
 
@@ -49,13 +47,11 @@ use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOption;
  */
 class IntegratedPricing extends BasePricingMessage
 {
-
     /**
-     *
      * @var PricingOption[]
      */
     public $pricingOption = [];
-
+    
     /**
      * IntegratedPricing constructor.
      *
@@ -67,80 +63,99 @@ class IntegratedPricing extends BasePricingMessage
             $this->pricingOption = $this->loadPricingOptions($options);
         }
     }
-
+    
     /**
      * @param ServiceIntegratedPricingOptions|ServiceIntegratedCatalogueOptions $options
      * @return PricingOption[]
      */
-    public static function loadPricingOptions($options)
+    protected function loadPricingOptions($options)
     {
         $priceOptions = [];
-	    
+        
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makePricingOptionForValidatingCarrier($options->validatingCarrier)
-        );
-
+            );
+        
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makePricingOptionForCurrencyOverride($options->currencyOverride)
-        );
-
+            );
+        
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makePricingOptionWithOptionDetailAndRefs(
                 PricingOptionKey::OVERRIDE_ACCOUNT_CODE,
                 $options->accountCode,
                 $options->accountCodeRefs
-            )
-        );
-
+                )
+            );
+        
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makePricingOptionWithOptionDetailAndRefs(
                 PricingOptionKey::OVERRIDE_AWARD,
                 $options->awardPricing,
                 []
-            )
-        );
-
+                )
+            );
+        
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makePricingOptionWithOptionDetailAndRefs(
                 PricingOptionKey::OVERRIDE_CORPORATION_NUMBER,
                 $options->corporationNumber,
                 []
-            )
-        );
-
+                )
+            );
+        
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::loadDateOverride($options->overrideDate)
-        );
-
+            );
+        
         $priceOptions = self::mergeOptions(
             $priceOptions,
-            self::makePricingOptionWithOptionDetailAndRefs(PricingOptionKey::OVERRIDE_TICKET_DESIGNATOR, $options->ticketDesignator, []));
+            self::makePricingOptionWithOptionDetailAndRefs(
+                PricingOptionKey::OVERRIDE_TICKET_DESIGNATOR,
+                $options->ticketDesignator,
+                []
+                )
+            );
         
-        $priceOptions = self::mergeOptions($priceOptions, self::loadPointOverrides($options->pointOfSaleOverride));
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadPointOverrides($options->pointOfSaleOverride)
+            );
         
-        $priceOptions = self::mergeOptions($priceOptions, self::loadFormOfPaymentOverride($options->formOfPayment));
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadFormOfPaymentOverride($options->formOfPayment)
+            );
         
-        $priceOptions = self::mergeOptions($priceOptions, self::loadFrequentFlyerOverride($options->frequentFlyers));
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadFrequentFlyerOverride($options->frequentFlyers)
+            );
         
-        $priceOptions = self::mergeOptions($priceOptions, self::loadReferences($options->references));
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadReferences($options->references)
+            );
         
-        $priceOptions = self::mergeOptions($priceOptions, self::makeOverrideOptions($options->overrideOptions, $priceOptions)
-        );
-
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::makeOverrideOptions($options->overrideOptions, $priceOptions)
+            );
+        
         // All options processed, no options found:
         if (empty($priceOptions)) {
             $priceOptions[] = new PricingOption(PricingOptionKey::OVERRIDE_NO_OPTION);
         }
-
+        
         return $priceOptions;
     }
-
+    
     /**
      * @param string|null $validatingCarrier
      * @return PricingOption[]
@@ -148,18 +163,18 @@ class IntegratedPricing extends BasePricingMessage
     protected static function makePricingOptionForValidatingCarrier($validatingCarrier)
     {
         $opt = [];
-
+        
         if ($validatingCarrier !== null) {
             $po = new PricingOption(PricingOptionKey::OVERRIDE_VALIDATING_CARRIER);
-
+            
             $po->carrierInformation = new CarrierInformation($validatingCarrier);
-
+            
             $opt[] = $po;
         }
-
+        
         return $opt;
     }
-
+    
     /**
      * @param string|null $currency
      * @return PricingOption[]
@@ -167,43 +182,43 @@ class IntegratedPricing extends BasePricingMessage
     protected static function makePricingOptionForCurrencyOverride($currency)
     {
         $opt = [];
-
+        
         if ($currency !== null) {
             $po = new PricingOption(PricingOptionKey::OVERRIDE_CURRENCY);
-
+            
             $po->currency = new Currency($currency);
-
+            
             $opt[] = $po;
         }
-
+        
         return $opt;
     }
-
+    
     /**
      * @param string $overrideCode
      * @param string|array|null $options
      * @param PaxSegRef[] $references
      * @return PricingOption[]
      */
-    protected static function makePricingOptionWithOptionDetailAndRefs($overrideCode, $options, $references)
+    protected function makePricingOptionWithOptionDetailAndRefs($overrideCode, $options, $references)
     {
         $opt = [];
-
+        
         if ($options !== null) {
             $po = new PricingOption($overrideCode);
-
+            
             $po->optionDetail = new OptionDetail($options);
-
+            
             if (!empty($references)) {
                 $po->paxSegTstReference = new PaxSegTstReference($references);
             }
-
+            
             $opt[] = $po;
         }
-
+        
         return $opt;
     }
-
+    
     /**
      * @param \DateTime|null $dateOverride
      * @return PricingOption[]
@@ -211,21 +226,21 @@ class IntegratedPricing extends BasePricingMessage
     protected static function loadDateOverride($dateOverride)
     {
         $opt = [];
-
+        
         if ($dateOverride instanceof \DateTime) {
             $po = new PricingOption(PricingOptionKey::OVERRIDE_PRICING_DATE);
-
+            
             $po->dateInformation = new DateInformation(
                 DateInformation::OPT_DATE_OVERRIDE,
                 $dateOverride
-            );
-
+                );
+            
             $opt[] = $po;
         }
-
+        
         return $opt;
     }
-
+    
     /**
      * @param string|null $posOverride
      * @return PricingOption[]
@@ -233,21 +248,21 @@ class IntegratedPricing extends BasePricingMessage
     protected static function loadPointOverrides($posOverride)
     {
         $opt = [];
-
+        
         if (!empty($posOverride)) {
             $po = new PricingOption(PricingOptionKey::OVERRIDE_POINT_OF_SALE);
-
+            
             $po->locationInformation = new LocationInformation(
                 LocationInformation::TYPE_POINT_OF_SALE,
                 $posOverride
-            );
-
+                );
+            
             $opt[] = $po;
         }
-
+        
         return $opt;
     }
-
+    
     /**
      * @param FormOfPayment[] $formOfPayment
      * @return PricingOption[]
@@ -255,18 +270,18 @@ class IntegratedPricing extends BasePricingMessage
     protected static function loadFormOfPaymentOverride($formOfPayment)
     {
         $opt = [];
-
+        
         if (!empty($formOfPayment)) {
             $po = new PricingOption(PricingOptionKey::OVERRIDE_FORM_OF_PAYMENT);
-
+            
             $po->formOfPaymentInformation = new FormOfPaymentInformation($formOfPayment);
-
+            
             $opt[] = $po;
         }
-
+        
         return $opt;
     }
-
+    
     /**
      * @param FrequentFlyer[] $frequentFlyers
      * @return PricingOption[]
@@ -274,18 +289,18 @@ class IntegratedPricing extends BasePricingMessage
     protected static function loadFrequentFlyerOverride($frequentFlyers)
     {
         $opt = [];
-
+        
         if (!empty($frequentFlyers)) {
             $po = new PricingOption(PricingOptionKey::OVERRIDE_FREQUENT_FLYER_INFORMATION);
-
+            
             $po->frequentFlyerInformation = new FrequentFlyerInformation($frequentFlyers);
-
+            
             $opt[] = $po;
         }
-
+        
         return $opt;
     }
-
+    
     /**
      * @param PaxSegRef[] $references
      * @return PricingOption[]
@@ -293,18 +308,18 @@ class IntegratedPricing extends BasePricingMessage
     protected static function loadReferences($references)
     {
         $opt = [];
-
+        
         if (!empty($references)) {
             $po = new PricingOption(PricingOptionKey::OVERRIDE_PAX_SEG_ELEMENT_SELECTION);
-
+            
             $po->paxSegTstReference = new PaxSegTstReference($references);
-
+            
             $opt[] = $po;
         }
-
+        
         return $opt;
     }
-
+    
     /**
      * @param string[] $overrideOptions
      * @param PricingOption[] $priceOptions
@@ -313,16 +328,16 @@ class IntegratedPricing extends BasePricingMessage
     protected static function makeOverrideOptions($overrideOptions, $priceOptions)
     {
         $opt = [];
-
+        
         foreach ($overrideOptions as $overrideOption) {
             if (!self::hasPricingGroup($overrideOption, $priceOptions)) {
                 $opt[] = new PricingOption($overrideOption);
             }
         }
-
+        
         return $opt;
     }
-
+    
     /**
      * Merges Pricing options
      *
@@ -336,9 +351,9 @@ class IntegratedPricing extends BasePricingMessage
             $existingOptions = array_merge(
                 $existingOptions,
                 $newOptions
-            );
+                );
         }
-
+        
         return $existingOptions;
     }
 }
