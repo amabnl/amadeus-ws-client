@@ -55,7 +55,7 @@ class IntegratedPricing extends BasePricingMessage
      * @var PricingOption[]
      */
     public $pricingOption = [];
-        
+
     /**
      * IntegratedPricing constructor.
      *
@@ -75,7 +75,7 @@ class IntegratedPricing extends BasePricingMessage
     public static function loadPricingOptions($options)
     {
         $priceOptions = [];
-        
+	    
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makePricingOptionFareBasisOverride($options->pricingsFareBasis)
