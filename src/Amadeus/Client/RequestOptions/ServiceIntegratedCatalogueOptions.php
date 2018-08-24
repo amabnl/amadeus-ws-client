@@ -26,7 +26,7 @@ namespace Amadeus\Client\RequestOptions;
  * Service_IntegratedCatalogue Request Options
  *
  * @package Amadeus\Client\RequestOptions
- * @author Arvind Pandey <arvindpandey87@gmail.com>
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class ServiceIntegratedCatalogueOptions extends ServiceIntegratedPricingOptions
 {
