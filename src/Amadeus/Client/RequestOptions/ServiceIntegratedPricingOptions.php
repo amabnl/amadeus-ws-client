@@ -174,3 +174,4 @@ class ServiceIntegratedPricingOptions extends Base
      */
     public $references = [];
 }
+
