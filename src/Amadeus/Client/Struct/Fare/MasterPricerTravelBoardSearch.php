@@ -80,7 +80,7 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
      * @var array
      */
     public $valueSearch = [];
-   /**
+    /**
      * Itinerary
      *
      * @var MasterPricer\Itinerary[]
