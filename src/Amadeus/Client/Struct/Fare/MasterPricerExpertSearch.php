@@ -218,7 +218,7 @@ class MasterPricerExpertSearch extends BaseMasterPricerMessage
                 $opt->includedConnections,
                 $opt->excludedConnections,
 				$opt->nrOfConnections,
-				NULL,
+				null,
                 $opt->cabinClass,
                 $opt->cabinOption
             );
