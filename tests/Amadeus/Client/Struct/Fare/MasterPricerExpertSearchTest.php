@@ -1435,45 +1435,6 @@ class MasterPricerExpertSearchTest extends BaseTestCase
     }
 
     /**
-     * 5.21 Operation: 02.21 Flight option - No airport change at requested segment level
-     */
-    public function testCanMakeMessageWithItineraryNoAirportChange()
-    {
-        $msg = new MasterPricerExpertSearch(
-            new FareMasterPricerExSearch([
-                'nrOfRequestedPassengers' => 1,
-                'passengers' => [
-                    new MPPassenger([
-                        'type' => MPPassenger::TYPE_ADULT,
-                        'count' => 1
-                    ])
-                ],
-                'itinerary' => [
-                    new MPItinerary([
-                        'departureLocation' => new MPLocation(['city' => 'PAR']),
-                        'arrivalLocation' => new MPLocation(['city' => 'MIA']),
-                        'date' => new MPDate([
-                            'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
-                        ]),
-                        'noAirportChange' => true
-                    ]),
-                ],
-            ])
-        );
-
-        $this->assertCount(1, $msg->itinerary);
-        $this->assertCount(1, $msg->itinerary[0]->flightInfo->unitNumberDetail);
-        $this->assertEquals(1, $msg->itinerary[0]->flightInfo->unitNumberDetail[0]->numberOfUnits);
-        $this->assertEquals(UnitNumberDetail::TYPE_NO_AIRPORT_CHANGE, $msg->itinerary[0]->flightInfo->unitNumberDetail[0]->typeOfUnit);
-
-        $this->assertEmpty($msg->itinerary[0]->flightInfo->exclusionDetail);
-        $this->assertEmpty($msg->itinerary[0]->flightInfo->inclusionDetail);
-        $this->assertNull($msg->itinerary[0]->flightInfo->cabinId);
-        $this->assertEmpty($msg->itinerary[0]->flightInfo->companyIdentity);
-        $this->assertNull($msg->itinerary[0]->flightInfo->flightDetail);
-    }
-
-    /**
      * 5.4 Operation: 02.03 Flight Option - Connecting Point
      */
     public function testCanMakeMessageWithConnectionPoints()
@@ -1681,79 +1642,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
         $this->assertEmpty($msg->itinerary[1]->flightInfo->unitNumberDetail);
     }
 
-    /**
-     * 5.20 Operation: 02.20 Flight option - No airport change at itinerary level
-     */
-    public function testCanMakeMessageNoAirportChangeAtItineraryLevel()
-    {
-        $msg = new MasterPricerExpertSearch(
-            new FareMasterPricerExSearch([
-                'nrOfRequestedPassengers' => 1,
-                'passengers' => [
-                    new MPPassenger([
-                        'type' => MPPassenger::TYPE_ADULT,
-                        'count' => 1
-                    ])
-                ],
-                'noAirportChange' => true,
-                'itinerary' => [
-                    new MPItinerary([
-                        'departureLocation' => new MPLocation(['city' => 'PAR']),
-                        'arrivalLocation' => new MPLocation(['city' => 'MIA']),
-                        'date' => new MPDate([
-                            'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
-                        ]),
-                    ]),
-                ],
-            ])
-        );
-
-        $this->assertCount(1, $msg->itinerary);
-
-        $this->assertCount(1, $msg->travelFlightInfo->unitNumberDetail);
-        $this->assertEquals(1, $msg->travelFlightInfo->unitNumberDetail[0]->numberOfUnits);
-        $this->assertEquals(UnitNumberDetail::TYPE_NO_AIRPORT_CHANGE, $msg->travelFlightInfo->unitNumberDetail[0]->typeOfUnit);
-
-        $this->assertNull($msg->itinerary[0]->flightInfo);
-    }
-
-    /**
-     * 5.15 Operation: 02.14 Flight option - Maximum EFT
-     */
-    public function testCanMakeMessageMaximumElapsedFlyingTime()
-    {
-        $msg = new MasterPricerExpertSearch(
-            new FareMasterPricerExSearch([
-                'nrOfRequestedPassengers' => 1,
-                'passengers' => [
-                    new MPPassenger([
-                        'type' => MPPassenger::TYPE_ADULT,
-                        'count' => 1
-                    ])
-                ],
-                'maxElapsedFlyingTime' => 120,
-                'itinerary' => [
-                    new MPItinerary([
-                        'departureLocation' => new MPLocation(['city' => 'PAR']),
-                        'arrivalLocation' => new MPLocation(['city' => 'MIA']),
-                        'date' => new MPDate([
-                            'dateTime' => new \DateTime('2018-05-05T00:00:00+0000', new \DateTimeZone('UTC'))
-                        ]),
-                    ]),
-                ],
-            ])
-        );
-
-        $this->assertCount(1, $msg->itinerary);
-
-        $this->assertCount(1, $msg->travelFlightInfo->unitNumberDetail);
-        $this->assertEquals(120, $msg->travelFlightInfo->unitNumberDetail[0]->numberOfUnits);
-        $this->assertEquals(UnitNumberDetail::TYPE_PERCENTAGE_OF_SHORTEST_ELAPSED_FLYING_TIME, $msg->travelFlightInfo->unitNumberDetail[0]->typeOfUnit);
-
-        $this->assertNull($msg->itinerary[0]->flightInfo);
-    }
-
-    public function testCanMakeMessageWithTicketingPriceScheme()
+	public function testCanMakeMessageWithTicketingPriceScheme()
     {
         $msg = new MasterPricerExpertSearch(
             new FareMasterPricerExSearch([

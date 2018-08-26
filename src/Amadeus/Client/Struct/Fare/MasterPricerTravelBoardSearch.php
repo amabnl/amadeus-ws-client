@@ -123,7 +123,7 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
      * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpTbSearchOptions $options
      */
     protected function loadOptions($options)
-    {
+	{
         $this->loadNumberOfUnits($options);
 
         $this->loadFareOptions($options);
