@@ -80,11 +80,7 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
      * @var array
      */
     public $valueSearch = [];
-    /**
-     * @var array
-     */
-    public $buckets = [];
-    /**
+   /**
      * Itinerary
      *
      * @var MasterPricer\Itinerary[]
@@ -127,7 +123,7 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
      * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpTbSearchOptions $options
      */
     protected function loadOptions($options)
-    {
+	{
         $this->loadNumberOfUnits($options);
 
         $this->loadFareOptions($options);
