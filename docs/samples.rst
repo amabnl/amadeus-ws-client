@@ -3203,21 +3203,21 @@ Service_StandaloneCatalogue
 .. code-block:: php
 
     use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
-    use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\Passenger as servicePassenger;
-    use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\Segment as serviceSegment;
-    use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\PricingOptions;
+    use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\ServiceStandalonePricingOptions;
+    use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\ServicePassenger;
+    use Amadeus\Client\RequestOptions\Service\PaxSegRef;
     use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
-
+    
     $standaloneCatalogueResponse = $client->serviceStandaloneCatalogue(
     new ServiceStandaloneCatalogueOptions([
         'passengers' => [
-            new servicePassenger([
-                'tattoos' => [1, 2],
-                'type' => Passenger::TYPE_ADULT
+            new ServicePassenger([
+                'reference' => 1,
+                'type' => ServicePassenger::TYPE_ADULT
             ])
         ],
         'segments' => [
-            new serviceSegment([
+            new fareSegment([
                 'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2018-07-31 12:55:00'),
                 'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2018-07-31 15:10:00'),
                 'from' => 'CAI',
@@ -3230,7 +3230,7 @@ Service_StandaloneCatalogue
                 'segmentTattoo' => 1
             ])
         ],
-        'pricingOptions' => new ServiceIntegratedPricingOptions([
+        'pricingOptions' => new ServiceStandalonePricingOptions([
             'pricingsFareBasis' => [
                 new FareBasis([
                     'fareBasisCode' => 'LOXOW',
