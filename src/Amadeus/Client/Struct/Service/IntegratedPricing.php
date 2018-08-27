@@ -71,7 +71,7 @@ class IntegratedPricing extends BasePricingMessage
     protected function loadPricingOptions($options)
     {
         $priceOptions = [];
-        
+
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makePricingOptionForValidatingCarrier($options->validatingCarrier)
