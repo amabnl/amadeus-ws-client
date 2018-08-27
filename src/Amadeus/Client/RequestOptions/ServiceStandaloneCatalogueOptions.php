@@ -23,12 +23,11 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * Service_StandaloneCatalogue Request Options
+ * ServiceStandaloneCatalogueOptions Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
 class ServiceStandaloneCatalogueOptions extends FareInformativePricingWithoutPnrOptions
 {
-
 }
