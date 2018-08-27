@@ -71,6 +71,7 @@ class IntegratedPricing extends BasePricingMessage
     protected function loadPricingOptions($options)
     {
         $priceOptions = [];
+        
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makePricingOptionForValidatingCarrier($options->validatingCarrier)
@@ -121,26 +122,32 @@ class IntegratedPricing extends BasePricingMessage
                 []
             )
         );
+
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::loadPointOverrides($options->pointOfSaleOverride)
         );
+
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::loadFormOfPaymentOverride($options->formOfPayment)
         );
+
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::loadFrequentFlyerOverride($options->frequentFlyers)
         );
+
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::loadReferences($options->references)
         );
+
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makeOverrideOptions($options->overrideOptions, $priceOptions)
         );
+
         // All options processed, no options found:
         if (empty($priceOptions)) {
             $priceOptions[] = new PricingOption(PricingOptionKey::OVERRIDE_NO_OPTION);
