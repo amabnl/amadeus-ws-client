@@ -29,4 +29,5 @@ namespace Amadeus\Client\RequestOptions;
  */
 class ServiceStandaloneCatalogueOptions extends FareInformativePricingWithoutPnrOptions
 {
+
 }

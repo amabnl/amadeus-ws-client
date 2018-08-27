@@ -104,8 +104,6 @@ class StandaloneCatalogue extends BaseWsMessage
      */
     protected function loadPricingOptions($pricingOptions)
     {
-        
         $this->pricingOption = PricePNRWithBookingClass13::loadPricingOptionsFromRequestOptions($pricingOptions);
-            
     }
 }

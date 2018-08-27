@@ -31,7 +31,6 @@ use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
  */
 class ServiceStandalonePricingOptions extends PricingOptions
 {
-
     const OVERRIDE_MANUAL_INPUT_FORMATTED = 'MIF';
     const OVERRIDE_COMMERCIAL_DESCRIPTION = 'SCD';
 }
