@@ -27,7 +27,6 @@ use Amadeus\Client\RequestOptions\Service\FormOfPayment;
 use Amadeus\Client\RequestOptions\Service\FrequentFlyer;
 use Amadeus\Client\RequestOptions\ServiceIntegratedCatalogueOptions;
 use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
-use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 use Amadeus\Client\Struct\Fare\BasePricingMessage;
 use Amadeus\Client\Struct\Fare\PricePnr13\CarrierInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\Currency;
@@ -37,7 +36,6 @@ use Amadeus\Client\Struct\Fare\PricePnr13\FrequentFlyerInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\LocationInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\OptionDetail;
 use Amadeus\Client\Struct\Fare\PricePnr13\PaxSegTstReference;
-use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionGroup;
 use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOptionKey;
 use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOption;
 
@@ -49,9 +47,7 @@ use Amadeus\Client\Struct\Service\IntegratedPricing\PricingOption;
  */
 class IntegratedPricing extends BasePricingMessage
 {
-
     /**
-     *
      * @var PricingOption[]
      */
     public $pricingOption = [];
@@ -75,7 +71,6 @@ class IntegratedPricing extends BasePricingMessage
     protected function loadPricingOptions($options)
     {
         $priceOptions = [];
-	    
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makePricingOptionForValidatingCarrier($options->validatingCarrier)
@@ -120,19 +115,32 @@ class IntegratedPricing extends BasePricingMessage
 
         $priceOptions = self::mergeOptions(
             $priceOptions,
-            self::makePricingOptionWithOptionDetailAndRefs(PricingOptionKey::OVERRIDE_TICKET_DESIGNATOR, $options->ticketDesignator, []));
-        
-        $priceOptions = self::mergeOptions($priceOptions, self::loadPointOverrides($options->pointOfSaleOverride));
-        
-        $priceOptions = self::mergeOptions($priceOptions, self::loadFormOfPaymentOverride($options->formOfPayment));
-        
-        $priceOptions = self::mergeOptions($priceOptions, self::loadFrequentFlyerOverride($options->frequentFlyers));
-        
-        $priceOptions = self::mergeOptions($priceOptions, self::loadReferences($options->references));
-        
-        $priceOptions = self::mergeOptions($priceOptions, self::makeOverrideOptions($options->overrideOptions, $priceOptions)
+            self::makePricingOptionWithOptionDetailAndRefs(
+                PricingOptionKey::OVERRIDE_TICKET_DESIGNATOR,
+                $options->ticketDesignator,
+                []
+            )
         );
-
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadPointOverrides($options->pointOfSaleOverride)
+        );
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadFormOfPaymentOverride($options->formOfPayment)
+        );
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadFrequentFlyerOverride($options->frequentFlyers)
+        );
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadReferences($options->references)
+        );
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::makeOverrideOptions($options->overrideOptions, $priceOptions)
+        );
         // All options processed, no options found:
         if (empty($priceOptions)) {
             $priceOptions[] = new PricingOption(PricingOptionKey::OVERRIDE_NO_OPTION);
@@ -208,7 +216,7 @@ class IntegratedPricing extends BasePricingMessage
      * @param \DateTime|null $dateOverride
      * @return PricingOption[]
      */
-    protected function loadDateOverride($dateOverride)
+    protected static function loadDateOverride($dateOverride)
     {
         $opt = [];
 
