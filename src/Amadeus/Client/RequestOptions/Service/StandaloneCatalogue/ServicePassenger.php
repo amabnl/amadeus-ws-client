@@ -22,7 +22,7 @@
 
 namespace Amadeus\Client\RequestOptions\Service\StandaloneCatalogue;
 
-use Amadeus\Client\LoadParamsFromArray;
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
 
 /**
  * Passenger
@@ -30,24 +30,8 @@ use Amadeus\Client\LoadParamsFromArray;
  * @package Amadeus\Client\RequestOptions\Fare\InformativePricing
  * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
-class Passenger extends LoadParamsFromArray
+class ServicePassenger extends Passenger
 {
-    const TYPE_ADULT = "ADT";
-
-    const TYPE_CHILD = "CH";
-
-    const TYPE_INFANT = "INF";
-
-    const TYPE_INFANT_WITH_SEAT = "INS";
-
-    /**
-     * What type of passengers?
-     *
-     * @see self::TYPE_*
-     * @var string
-     */
-    public $type;
-
     /**
      * Specifies the passenger index
      *
