@@ -46,4 +46,9 @@ class FareInformativePricingWithoutPnrOptions extends Base
      * @var Fare\InformativePricing\PricingOptions
      */
     public $pricingOptions;
+
+    /**
+     * @var Fare\InformativePricing\PricingOptions[]
+     */
+    public $pricingOptionsArray = [];
 }
