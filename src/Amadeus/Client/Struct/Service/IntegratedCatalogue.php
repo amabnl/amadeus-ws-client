@@ -22,9 +22,6 @@
 
 namespace Amadeus\Client\Struct\Service;
 
-use Amadeus\Client\RequestOptions\ServiceIntegratedCatalogueOptions;
-use Amadeus\Client\Struct\Service\IntegratedCatalogue\ReservationInformation;
-
 /**
  * Service_IntegratedCatalogue request structure
  *

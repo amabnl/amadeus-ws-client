@@ -136,6 +136,7 @@ class DataElementsIndiv extends WsMessageUtility
     /**
      * @param Element|string $element Either an element or an element name
      * @param int $tattoo Unique tattoo number for this element
+     * @throws \ReflectionException
      */
     public function __construct($element, $tattoo)
     {

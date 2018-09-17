@@ -59,9 +59,21 @@ class Reservation
      * Reservation constructor.
      *
      * @param string $controlNumber
+     * @param string $companyId
+     * @param \DateTime|null $date
      */
-    public function __construct($controlNumber)
+    public function __construct($controlNumber, $companyId, $date = null)
     {
         $this->controlNumber = $controlNumber;
+        $this->companyId = $companyId;
+
+        if ($date instanceof \DateTime) {
+            $this->date = $date->format('dmy');
+            $timeString = $date->format('Hi');
+
+            if ($timeString !== '0000') {
+                $this->time = $timeString;
+            }
+        }
     }
 }

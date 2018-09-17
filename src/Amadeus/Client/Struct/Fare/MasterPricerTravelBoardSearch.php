@@ -22,7 +22,7 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
-use Amadeus\Client\RequestOptions\Fare\MasterPricer\TicketingPriceScheme;
+use Amadeus\Client\RequestOptions\Fare\MPTicketingPriceScheme;
 use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
@@ -91,7 +91,7 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
      */
     public $itinerary = [];
     /**
-     * @var TicketingPriceScheme
+     * @var MPTicketingPriceScheme
      */
     public $ticketingPriceScheme;
     /**
@@ -223,7 +223,9 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
             $opt->includedConnections,
             $opt->excludedConnections,
             $opt->nrOfConnections,
-            $opt->noAirportChange
+            $opt->noAirportChange,
+            $opt->cabinClass,
+            $opt->cabinOption
         )) {
             $tmpItinerary->flightInfo = new MasterPricer\FlightInfo(
                 $opt->airlineOptions,
@@ -231,7 +233,9 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
                 $opt->includedConnections,
                 $opt->excludedConnections,
                 $opt->nrOfConnections,
-                $opt->noAirportChange
+                $opt->noAirportChange,
+                $opt->cabinClass,
+                $opt->cabinOption
             );
         }
 

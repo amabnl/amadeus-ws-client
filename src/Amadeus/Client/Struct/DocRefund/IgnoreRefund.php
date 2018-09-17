@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\Struct\DocRefund;
 
+use Amadeus\Client\RequestOptions\DocRefundIgnoreRefundOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 
 /**

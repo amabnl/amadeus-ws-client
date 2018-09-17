@@ -44,6 +44,19 @@ class MPItinerary extends LoadParamsFromArray
     const AIRLINEOPT_EXCLUDED = 'X';
 
     /**
+     * Major cabin
+     */
+    const CABINOPT_MAJOR = 'MC';
+    /**
+     * Mandatory cabin for all segments
+     */
+    const CABINOPT_MANDATORY = 'MD';
+    /**
+     * Recommended cabin to be used at least one segment
+     */
+    const CABINOPT_RECOMMENDED = 'RC';
+
+    /**
      * Segment Reference (optional)
      *
      * @var int
@@ -127,4 +140,24 @@ class MPItinerary extends LoadParamsFromArray
      * @var bool
      */
     public $noAirportChange = false;
+
+
+
+    /**
+     * Cabin class requested for the entire itinerary
+     *
+     * self::CABIN_*
+     *
+     * @var string
+     */
+    public $cabinClass;
+
+    /**
+     * Cabin option - how to interpret the cabin class
+     *
+     * self::CABINOPT_*
+     *
+     * @var string
+     */
+    public $cabinOption;
 }

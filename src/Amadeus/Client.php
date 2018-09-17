@@ -432,6 +432,24 @@ class Client extends Base
     }
 
     /**
+     * PNR_Ignore - Ignore an Amadeus PNR by record locator
+     *
+     * @param RequestOptions\PnrIgnoreOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function pnrIgnore(RequestOptions\PnrIgnoreOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PNR_Ignore';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+
+    /**
      * Queue_RemoveItem - remove an item (a PNR) from a given queue
      *
      * @param RequestOptions\QueueRemoveItemOptions $options
@@ -992,6 +1010,25 @@ class Client extends Base
     }
 
     /**
+     * Ticket_CreateTASF
+     *
+     * @param RequestOptions\TicketCreateTasfOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketCreateTASF(
+        RequestOptions\TicketCreateTasfOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_CreateTASF';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Ticket_DeleteTST
      *
      * @param RequestOptions\TicketDeleteTstOptions $options
@@ -1069,13 +1106,15 @@ class Client extends Base
      * @throws Client\RequestCreator\MessageVersionUnsupportedException
      * @throws Exception
      */
-    public function ticketRetrieveListOfTSM(RequestOptions\TicketRetrieveListOfTSMOptions $options, $messageOptions = [])
-    {
+    public function ticketRetrieveListOfTSM(
+        RequestOptions\TicketRetrieveListOfTSMOptions $options,
+        $messageOptions = []
+    ) {
         $msgName = 'Ticket_RetrieveListOfTSM';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
-    
+
     /**
      * Ticket_DisplayTSMFareElement
      *
@@ -1203,6 +1242,7 @@ class Client extends Base
     public function ticketProcessEDoc(RequestOptions\TicketProcessEDocOptions $options, $messageOptions = [])
     {
         $msgName = 'Ticket_ProcessEDoc';
+
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 
@@ -1219,6 +1259,7 @@ class Client extends Base
     public function ticketProcessETicket(RequestOptions\TicketProcessETicketOptions $options, $messageOptions = [])
     {
         $msgName = 'Ticket_ProcessETicket';
+
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 
@@ -1354,6 +1395,7 @@ class Client extends Base
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
+
     /**
      * Ticket_InitRefund
      *
@@ -1372,6 +1414,7 @@ class Client extends Base
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
+
     /**
      * Ticket_IgnoreRefund
      *
@@ -1390,6 +1433,7 @@ class Client extends Base
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
+
     /**
      * Ticket_ProcessRefund
      *
@@ -1409,7 +1453,6 @@ class Client extends Base
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 
-    
     /**
      * FOP_CreateFormOfPayment
      *
