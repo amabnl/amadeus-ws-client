@@ -22,7 +22,6 @@
 
 namespace Test\Amadeus\Client\Struct\Ticket;
 
-use Amadeus\Client\RequestOptions\Ticket\FrequentFlyer;
 use Amadeus\Client\RequestOptions\TicketProcessETicketOptions;
 use Amadeus\Client\Struct\Ticket\ProcessETicket;
 use Test\Amadeus\BaseTestCase;

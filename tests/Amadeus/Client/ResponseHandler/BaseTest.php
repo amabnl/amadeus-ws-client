@@ -1140,6 +1140,34 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("CHECK PASSENGER NUMBER", $result->messages[0]->text);
     }
 
+    public function testCanHandleTicketCreateTasf()
+    {
+        $responseHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketCreateTASFResponse.txt');
+
+        $result = $responseHandler->analyzeResponse($sendResult, 'Ticket_CreateTASF');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleTicketCreateTasfErrorResponse()
+    {
+        $responseHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketCreateTasfErrorResponse.txt');
+
+        $result = $responseHandler->analyzeResponse($sendResult, 'Ticket_CreateTASF');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('00477', $result->messages[0]->code);
+        $this->assertEquals("INVALID FORMAT - ERROR DURING TASF CREATION", $result->messages[0]->text);
+    }
+
     public function testCanHandleTicketReissueConfirmedPricingErrResponse()
     {
         $respHandler = new ResponseHandler\Base();

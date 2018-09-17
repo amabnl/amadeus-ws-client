@@ -135,6 +135,36 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $negofarePo));
     }
 
+    public function testCanDoPricePnrCallWithOverrideOptionWithCriteriaParams()
+    {
+        $opt = new FarePricePnrWithBookingClassOptions([
+            'validatingCarrier' => 'BA',
+            'currencyOverride' => 'EUR',
+            'overrideOptionsWithCriteria' => [
+                [
+                    'key' => 'SBF',
+                    'optionDetail' => '1'
+                ]
+            ]
+        ]);
+
+        $msg = new PricePNRWithBookingClass13($opt);
+
+        $validatingCarrierPo = new PricingOptionGroup(PricingOptionKey::OPTION_VALIDATING_CARRIER);
+        $validatingCarrierPo->carrierInformation = new CarrierInformation('BA');
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $validatingCarrierPo));
+
+        $currencyOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE);
+        $currencyOverridePo->currency = new Currency('EUR');
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $currencyOverridePo));
+
+        $negofarePo = new PricingOptionGroup('SBF','1');
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $negofarePo));
+    }
+
     public function testCanDoPricePnrCallWithNoOptions()
     {
         $opt = new FarePricePnrWithBookingClassOptions();

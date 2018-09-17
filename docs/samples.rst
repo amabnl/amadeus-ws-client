@@ -1536,6 +1536,33 @@ Complex example: Seat Map with Prices
         ])
     );
 
+Most restrictive Seat Map request:
+
+- Multiple passenger context
+- Requesting the most restrictive seat map display
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
+
+    $seatmapInfo = $client->airRetrieveSeatMap(
+        new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'departureDate' => \DateTime::createFromFormat('Ymd', '20150615'),
+                'departure' => 'CDG',
+                'arrival' => 'YUL',
+                'airline' => 'AF',
+                'flightNumber' => '0346',
+                'bookingClass' => 'Y'
+            ]),
+            'recordLocator' => '7BFHEJ',
+            'company' => '1A',
+            'date' =>  \DateTime::createFromFormat('Ymd', '20150610'),
+            'mostRestrictive' => true
+        ])
+    );
+
 --------------------
 Air_RebookAirSegment
 --------------------
@@ -1833,6 +1860,54 @@ Set the form of payment Check to the TSM of tattoo 18:
             'type' => TicketCreateTsmFareElOptions::TYPE_FORM_OF_PAYMENT,
             'tattoo' => 18,
             'info' => 'CHECK/EUR304.89'
+        ])
+    );
+
+---------------------------
+Ticket_CreateTASF
+---------------------------
+
+Create TASF of 30 euros with no RFIC (generic TASF):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCreateTasfOptions;
+    use Amadeus\Client\RequestOptions\Ticket\PassengerTattoo;
+    use Amadeus\Client\RequestOptions\Ticket\MonetaryInformation;
+
+    $createTasfResponse = $client->ticketCreateTASF(
+        new TicketCreateTasfOptions([
+            'passengerTattoo' => new PassengerTattoo([
+                'type' => PassengerTattoo::TYPE_ADULT,
+                'value' => 1
+            ]),
+            'monetaryInformation' => new MonetaryInformation([
+                'amount' => 30,
+                'currency' => 'EUR'
+            ])
+        ])
+    );
+
+
+TASF of 30 euros with an RFIC ("TASF for ticket issuance"). In this example, the RFIC "T" is used:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketCreateTasfOptions;
+    use Amadeus\Client\RequestOptions\Ticket\PassengerTattoo;
+    use Amadeus\Client\RequestOptions\Ticket\MonetaryInformation;
+
+    $createTasfResponse = $client->ticketCreateTASF(
+        new TicketCreateTasfOptions([
+            'passengerTattoo' => new PassengerTattoo([
+                'type' => PassengerTattoo::TYPE_ADULT,
+                'value' => 1
+            ]),
+            'monetaryInformation' => new MonetaryInformation([
+                'amount' => 30,
+                'currency' => 'EUR'
+            ]),
+            'reasonForIssuanceCode' => 'T'
         ])
     );
 

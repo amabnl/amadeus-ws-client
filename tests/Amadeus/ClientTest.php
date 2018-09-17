@@ -2024,7 +2024,7 @@ class ClientTest extends BaseTestCase
 
         $this->assertEquals($messageResult, $response);
     }
-    
+
     public function testCanDoTicketDisplayTSMFareElement()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -2154,6 +2154,75 @@ class ClientTest extends BaseTestCase
                 'ticketNumbers' => [
                     '1722300000004'
                 ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanDoTicketCreateTASF()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketCreateTASFmessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\CreateTASF(
+            new Client\RequestOptions\TicketCreateTasfOptions([
+                'passengerTattoo' => new Client\RequestOptions\Ticket\PassengerTattoo([
+                    'type' => Client\RequestOptions\Ticket\PassengerTattoo::TYPE_ADULT,
+                    'value' => 1,
+                ]),
+                'monetaryInformation' => new Client\RequestOptions\Ticket\MonetaryInformation([
+                    'amount' => 30,
+                    'currency' => 'EUR',
+                ]),
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_CreateTASF', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Ticket_CreateTASF' => ['version' => "12.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_CreateTASF')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketCreateTASF(
+            new Client\RequestOptions\TicketCreateTasfOptions([
+                'passengerTattoo' => new Client\RequestOptions\Ticket\PassengerTattoo([
+                    'type' => Client\RequestOptions\Ticket\PassengerTattoo::TYPE_ADULT,
+                    'value' => 1,
+                ]),
+                'monetaryInformation' => new Client\RequestOptions\Ticket\MonetaryInformation([
+                    'amount' => 30,
+                    'currency' => 'EUR',
+                ]),
             ])
         );
 
@@ -5459,6 +5528,52 @@ class ClientTest extends BaseTestCase
         );
 
         $this->assertEquals($expectedMessage, $response);
+    }
+
+    public function testCanDoIgnorePnrCall()
+    {
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'A dummy message result'; // Not an actual XML reply.
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->dummyprop = 'A dummy message result'; // Not an actual response property
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $options = new Client\RequestOptions\PnrIgnoreOptions();
+        $options->actionRequest = Client\Struct\Pnr\Ignore\ClearInformation::CODE_IGNORE;
+
+        $expectedPnrResult = new Client\Struct\Pnr\Ignore($options);
+
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_Ignore', $expectedPnrResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_Ignore' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'PNR_Ignore')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams(['receivedFrom' => 'some RF string', 'originatorOfficeId' => 'BRUXXXXXX']);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->pnrIgnore($options);
+
+        $this->assertEquals($messageResult, $response);
     }
 
     /**
