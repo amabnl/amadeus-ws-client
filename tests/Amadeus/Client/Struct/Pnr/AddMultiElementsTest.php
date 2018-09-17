@@ -561,7 +561,7 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(1, count($requestStruct->travellerInfo));
         $this->assertEquals(1, count($requestStruct->travellerInfo[0]->passengerData));
         $this->assertEquals(706, $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->qualifier);
-        $this->assertEquals('08011947', $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->date);
+        $this->assertEquals('08JAN47', $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->date);
     }
 
     public function testMakePnrWithGenericRemarkAndExplicitReceivedFrom()
@@ -1161,7 +1161,7 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertNull($requestStruct->travellerInfo[0]->elementManagementPassenger->reference);
         $this->assertEquals(1, count($requestStruct->travellerInfo[0]->passengerData));
         $this->assertEquals(706, $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->qualifier);
-        $this->assertEquals('31012010', $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->date);
+        $this->assertEquals('31JAN10', $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->date);
         $this->assertEquals('CHD', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->type);
     }
 
@@ -1388,7 +1388,7 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals('Cohen', $msg->travellerInfo[0]->passengerData[1]->travellerInformation->traveller->surname);
         $this->assertEquals('Junior', $msg->travellerInfo[0]->passengerData[1]->travellerInformation->passenger[0]->firstName);
         $this->assertEquals(AddMultiElements\Passenger::PASST_INFANT, $msg->travellerInfo[0]->passengerData[1]->travellerInformation->passenger[0]->type);
-        $this->assertEquals('08012016', $msg->travellerInfo[0]->passengerData[1]->dateOfBirth->dateAndTimeDetails->date);
+        $this->assertEquals('08JAN16', $msg->travellerInfo[0]->passengerData[1]->dateOfBirth->dateAndTimeDetails->date);
     }
 
     public function testCanHandleAddInfantPassengerWhereMainPassengerHasNoFirstName()
