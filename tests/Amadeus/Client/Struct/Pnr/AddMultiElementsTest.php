@@ -1235,13 +1235,10 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\Reference::QUAL_OTHER, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->reference->qualifier);
         $this->assertEquals('GENERIC TRAVEL REQUEST', $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->freetextItinerary->longFreetext);
         $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_CONFIRMED, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
-
-
     }
 
     public function testCanCreateMessageForManipulateExistingPnr()
     {
-
         $ameOptions = new PnrAddMultiElementsOptions([
             'recordLocator' => 'ABC123',
             'actionCode' => PnrAddMultiElementsOptions::ACTION_END_TRANSACT,
@@ -1305,7 +1302,6 @@ class AddMultiElementsTest extends BaseTestCase
 
     public function testaddInfantPassengerWithFirstnameNoSurname()
     {
-
         $createPnrOptions = new PnrCreatePnrOptions();
         $createPnrOptions->receivedFrom = "unittest";
         $createPnrOptions->travellers[] = new Traveller([
@@ -1346,7 +1342,6 @@ class AddMultiElementsTest extends BaseTestCase
 
     public function testaddInfantPassengerWithFirstnameSurnameAndBirthDate()
     {
-
         $createPnrOptions = new PnrCreatePnrOptions();
         $createPnrOptions->receivedFrom = "unittest";
         $createPnrOptions->travellers[] = new Traveller([
@@ -1393,7 +1388,6 @@ class AddMultiElementsTest extends BaseTestCase
 
     public function testCanHandleAddInfantPassengerWhereMainPassengerHasNoFirstName()
     {
-
         $createPnrOptions = new PnrCreatePnrOptions();
         $createPnrOptions->receivedFrom = "unittest";
         $createPnrOptions->travellers[] = new Traveller([
