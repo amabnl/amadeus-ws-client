@@ -206,7 +206,7 @@ class SoapHeader4 extends Base
             $newSessionData['sessionId'] = $responseDomXpath->evaluate($querySessionId);
             $newSessionData['sequenceNumber'] = $responseDomXpath->evaluate($querySequenceNumber);
             if (!empty($newSessionData['sequenceNumber'])) {
-                $newSessionData['sequenceNumber'] = (int) $newSessionData['sequenceNumber'];
+                $newSessionData['sequenceNumber'] = (int)$newSessionData['sequenceNumber'];
             }
             $newSessionData['securityToken'] = $responseDomXpath->evaluate($querySecurityToken);
         }
@@ -408,15 +408,15 @@ class SoapHeader4 extends Base
      */
     protected function generateGuid()
     {
-        mt_srand((double) microtime() * 10000);
+        mt_srand((double)microtime() * 10000);
         $charId = strtoupper(md5(uniqid(rand(), true)));
         $hyphen = chr(45); // "-"
 
-        $uuid = substr($charId, 0, 8).$hyphen
-            .substr($charId, 8, 4).$hyphen
-            .substr($charId, 12, 4).$hyphen
-            .substr($charId, 16, 4).$hyphen
-            .substr($charId, 20, 12);
+        $uuid = substr($charId, 0, 8) . $hyphen
+            . substr($charId, 8, 4) . $hyphen
+            . substr($charId, 12, 4) . $hyphen
+            . substr($charId, 16, 4) . $hyphen
+            . substr($charId, 20, 12);
 
         return $uuid;
     }
@@ -454,7 +454,7 @@ class SoapHeader4 extends Base
                 true
             ),
             0,
-            16
+            20
         );
     }
 

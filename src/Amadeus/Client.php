@@ -264,7 +264,8 @@ class Client extends Base
     public function pnrSplit(
         RequestOptions\PnrSplitOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'PNR_Split';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -583,7 +584,8 @@ class Client extends Base
     public function fareMasterPricerTravelBoardSearch(
         RequestOptions\FareMasterPricerTbSearch $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Fare_MasterPricerTravelBoardSearch';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -602,7 +604,8 @@ class Client extends Base
     public function fareMasterPricerCalendar(
         RequestOptions\FareMasterPricerCalendarOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Fare_MasterPricerCalendar';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -621,7 +624,8 @@ class Client extends Base
     public function farePricePnrWithBookingClass(
         RequestOptions\FarePricePnrWithBookingClassOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Fare_PricePNRWithBookingClass';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -640,7 +644,8 @@ class Client extends Base
     public function farePricePnrWithLowerFares(
         RequestOptions\FarePricePnrWithLowerFaresOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Fare_PricePNRWithLowerFares';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -659,7 +664,8 @@ class Client extends Base
     public function farePricePnrWithLowestFare(
         RequestOptions\FarePricePnrWithLowestFareOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Fare_PricePNRWithLowestFare';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -678,7 +684,8 @@ class Client extends Base
     public function fareInformativePricingWithoutPnr(
         RequestOptions\FareInformativePricingWithoutPnrOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Fare_InformativePricingWithoutPNR';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -697,7 +704,8 @@ class Client extends Base
     public function fareInformativeBestPricingWithoutPnr(
         RequestOptions\FareInformativeBestPricingWithoutPnrOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Fare_InformativeBestPricingWithoutPNR';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -767,7 +775,8 @@ class Client extends Base
     public function airMultiAvailability(
         RequestOptions\AirMultiAvailabilityOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Air_MultiAvailability';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -786,7 +795,8 @@ class Client extends Base
     public function airSellFromRecommendation(
         RequestOptions\AirSellFromRecommendationOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Air_SellFromRecommendation';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -873,7 +883,8 @@ class Client extends Base
     public function miniRuleGetFromPricingRec(
         RequestOptions\MiniRuleGetFromPricingRecOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'MiniRule_GetFromPricingRec';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -892,7 +903,8 @@ class Client extends Base
     public function miniRuleGetFromPricing(
         RequestOptions\MiniRuleGetFromPricingOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'MiniRule_GetFromPricing';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -911,7 +923,8 @@ class Client extends Base
     public function miniRuleGetFromETicket(
         RequestOptions\MiniRuleGetFromETicketOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'MiniRule_GetFromETicket';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -965,7 +978,8 @@ class Client extends Base
     public function ticketCreateTSTFromPricing(
         RequestOptions\TicketCreateTstFromPricingOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_CreateTSTFromPricing';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -984,7 +998,8 @@ class Client extends Base
     public function ticketCreateTSMFromPricing(
         RequestOptions\TicketCreateTsmFromPricingOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_CreateTSMFromPricing';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1003,7 +1018,8 @@ class Client extends Base
     public function ticketCreateTSMFareElement(
         RequestOptions\TicketCreateTsmFareElOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_CreateTSMFareElement';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1022,7 +1038,8 @@ class Client extends Base
     public function ticketCreateTASF(
         RequestOptions\TicketCreateTasfOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_CreateTASF';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1109,7 +1126,8 @@ class Client extends Base
     public function ticketRetrieveListOfTSM(
         RequestOptions\TicketRetrieveListOfTSMOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_RetrieveListOfTSM';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1128,7 +1146,8 @@ class Client extends Base
     public function ticketDisplayTSMFareElement(
         RequestOptions\TicketDisplayTsmFareElOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_DisplayTSMFareElement';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1147,7 +1166,8 @@ class Client extends Base
     public function ticketCheckEligibility(
         RequestOptions\TicketCheckEligibilityOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_CheckEligibility';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1166,7 +1186,8 @@ class Client extends Base
     public function ticketAtcShopperMasterPricerTravelBoardSearch(
         RequestOptions\TicketAtcShopperMpTbSearchOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_ATCShopperMasterPricerTravelBoardSearch';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1185,7 +1206,8 @@ class Client extends Base
     public function ticketRepricePnrWithBookingClass(
         RequestOptions\TicketRepricePnrWithBookingClassOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_RepricePNRWithBookingClass';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1204,7 +1226,8 @@ class Client extends Base
     public function ticketCancelDocument(
         RequestOptions\TicketCancelDocumentOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_CancelDocument';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1223,7 +1246,8 @@ class Client extends Base
     public function ticketReissueConfirmedPricing(
         RequestOptions\TicketReissueConfirmedPricingOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_ReissueConfirmedPricing';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1276,7 +1300,8 @@ class Client extends Base
     public function docIssuanceIssueTicket(
         RequestOptions\DocIssuanceIssueTicketOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'DocIssuance_IssueTicket';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1295,7 +1320,8 @@ class Client extends Base
     public function docIssuanceIssueMiscellaneousDocuments(
         RequestOptions\DocIssuanceIssueMiscDocOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'DocIssuance_IssueMiscellaneousDocuments';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1314,7 +1340,8 @@ class Client extends Base
     public function docIssuanceIssueCombined(
         RequestOptions\DocIssuanceIssueCombinedOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'DocIssuance_IssueCombined';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1333,7 +1360,8 @@ class Client extends Base
     public function docRefundInitRefund(
         RequestOptions\DocRefundInitRefundOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'DocRefund_InitRefund';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1352,7 +1380,8 @@ class Client extends Base
     public function docRefundIgnoreRefund(
         RequestOptions\DocRefundIgnoreRefundOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'DocRefund_IgnoreRefund';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1371,7 +1400,8 @@ class Client extends Base
     public function docRefundUpdateRefund(
         RequestOptions\DocRefundUpdateRefundOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'DocRefund_UpdateRefund';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1390,7 +1420,8 @@ class Client extends Base
     public function docRefundProcessRefund(
         RequestOptions\DocRefundProcessRefundOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'DocRefund_ProcessRefund';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1409,7 +1440,8 @@ class Client extends Base
     public function ticketInitRefund(
         RequestOptions\TicketInitRefundOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_InitRefund';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1428,7 +1460,8 @@ class Client extends Base
     public function ticketIgnoreRefund(
         RequestOptions\TicketIgnoreRefundOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_IgnoreRefund';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1447,7 +1480,8 @@ class Client extends Base
     public function ticketProcessRefund(
         RequestOptions\TicketProcessRefundOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Ticket_ProcessRefund';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1501,7 +1535,8 @@ class Client extends Base
     public function priceXplorerExtremeSearch(
         RequestOptions\PriceXplorerExtremeSearchOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'PriceXplorer_ExtremeSearch';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1520,7 +1555,8 @@ class Client extends Base
     public function salesReportsDisplayQueryReport(
         RequestOptions\SalesReportsDisplayQueryReportOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'SalesReports_DisplayQueryReport';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1539,7 +1575,8 @@ class Client extends Base
     public function serviceIntegratedPricing(
         RequestOptions\ServiceIntegratedPricingOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Service_IntegratedPricing';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1558,7 +1595,8 @@ class Client extends Base
     public function serviceIntegratedCatalogue(
         RequestOptions\ServiceIntegratedCatalogueOptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Service_IntegratedCatalogue';
 
         return $this->callMessage($msgName, $options, $messageOptions);
@@ -1649,8 +1687,89 @@ class Client extends Base
     public function farePriceUpsellWithoutPnr(
         RequestOptions\FarePriceUpsellWithoutPNROptions $options,
         $messageOptions = []
-    ) {
+    )
+    {
         $msgName = 'Fare_PriceUpsellWithoutPNR';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Profile_ReadProfile
+     *
+     * @param RequestOptions\ProfileReadProfileOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function profileReadProfile(
+        RequestOptions\ProfileReadProfileOptions $options,
+        $messageOptions = []
+    )
+    {
+        $msgName = 'Profile_ReadProfile';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Profile_CreateProfile
+     *
+     * @param RequestOptions\ProfileReadProfileOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function profileCreateProfile(
+        RequestOptions\ProfileCreateProfileOptions $options,
+        $messageOptions = []
+    )
+    {
+        $msgName = 'Profile_CreateProfile';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Profile_CreateProfile
+     *
+     * @param RequestOptions\ProfileReadProfileOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function profileDeleteProfile(
+        RequestOptions\ProfileDeleteProfileOptions $options,
+        $messageOptions = []
+    )
+    {
+        $msgName = 'Profile_DeleteProfile';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Profile_UpdateProfile
+     *
+     * @param RequestOptions\ProfileUpdateProfileOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function profileUpdateProfile(
+        RequestOptions\ProfileUpdateProfileOptions $options,
+        $messageOptions = []
+    )
+    {
+        $msgName = 'Profile_UpdateProfile';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
