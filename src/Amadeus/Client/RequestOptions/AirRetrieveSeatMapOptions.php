@@ -87,6 +87,20 @@ class AirRetrieveSeatMapOptions extends Base
     public $recordLocator;
 
     /**
+     * Airline code - to be provided in combination with Record Locator
+     *
+     * @var string
+     */
+    public $company;
+
+    /**
+     * Date (and optionally time) - to be provided in combination with Record Locator
+     *
+     * @var \DateTime
+     */
+    public $date;
+
+    /**
      * Number of passengers
      *
      * @var int
@@ -99,4 +113,11 @@ class AirRetrieveSeatMapOptions extends Base
      * @var string
      */
     public $bookingStatus;
+
+    /**
+     * Set to true to request the most restrictive seat map display
+     *
+     * @var bool
+     */
+    public $mostRestrictive = false;
 }

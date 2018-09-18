@@ -23,57 +23,28 @@
 namespace Amadeus\Client\Struct\Air\RetrieveSeatMap;
 
 /**
- * Reservation
+ * StatusInformation
  *
  * @package Amadeus\Client\Struct\Air\RetrieveSeatMap
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class Reservation
+class StatusInformation
 {
-    /**
-     * @var string
-     */
-    public $companyId;
+    const ACTION_MOST_RESTRICTIVE = 'MRE';
+    const ACTION_NEUTRAL_SEAT_MAP = 'NSM';
 
     /**
      * @var string
      */
-    public $controlNumber;
+    public $action;
 
     /**
-     * @var string
-     */
-    public $controlType;
-
-    /**
-     * @var string
-     */
-    public $date;
-
-    /**
-     * @var string
-     */
-    public $time;
-
-    /**
-     * Reservation constructor.
+     * StatusInformation constructor.
      *
-     * @param string $controlNumber
-     * @param string $companyId
-     * @param \DateTime|null $date
+     * @param string $action
      */
-    public function __construct($controlNumber, $companyId, $date = null)
+    public function __construct($action)
     {
-        $this->controlNumber = $controlNumber;
-        $this->companyId = $companyId;
-
-        if ($date instanceof \DateTime) {
-            $this->date = $date->format('dmy');
-            $timeString = $date->format('Hi');
-
-            if ($timeString !== '0000') {
-                $this->time = $timeString;
-            }
-        }
+        $this->action = $action;
     }
 }
