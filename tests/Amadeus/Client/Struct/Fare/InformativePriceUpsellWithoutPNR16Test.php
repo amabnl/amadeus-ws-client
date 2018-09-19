@@ -88,7 +88,6 @@ class InformativePriceUpsellWithoutPNR16Test extends BaseTestCase
 
 
         $this->assertCount(2, $msg->passengersGroup);
-        print_r($msg->passengersGroup[0]->discountPtc->valueQualifier);
         $this->assertEquals('ADT', $msg->passengersGroup[0]->discountPtc->valueQualifier);
         $this->assertCount(1, $msg->passengersGroup[0]->travellersID->travellerDetails);
         $this->assertEquals(1, $msg->passengersGroup[0]->travellersID->travellerDetails[0]->measurementValue);
