@@ -561,7 +561,7 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(1, count($requestStruct->travellerInfo));
         $this->assertEquals(1, count($requestStruct->travellerInfo[0]->passengerData));
         $this->assertEquals(706, $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->qualifier);
-        $this->assertEquals('08011947', $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->date);
+        $this->assertEquals('08JAN47', $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->date);
     }
 
     public function testMakePnrWithGenericRemarkAndExplicitReceivedFrom()
@@ -1161,7 +1161,7 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertNull($requestStruct->travellerInfo[0]->elementManagementPassenger->reference);
         $this->assertEquals(1, count($requestStruct->travellerInfo[0]->passengerData));
         $this->assertEquals(706, $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->qualifier);
-        $this->assertEquals('31012010', $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->date);
+        $this->assertEquals('31JAN10', $requestStruct->travellerInfo[0]->passengerData[0]->dateOfBirth->dateAndTimeDetails->date);
         $this->assertEquals('CHD', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->type);
     }
 
@@ -1235,13 +1235,10 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\Reference::QUAL_OTHER, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->reference->qualifier);
         $this->assertEquals('GENERIC TRAVEL REQUEST', $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->freetextItinerary->longFreetext);
         $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_CONFIRMED, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
-
-
     }
 
     public function testCanCreateMessageForManipulateExistingPnr()
     {
-
         $ameOptions = new PnrAddMultiElementsOptions([
             'recordLocator' => 'ABC123',
             'actionCode' => PnrAddMultiElementsOptions::ACTION_END_TRANSACT,
@@ -1305,7 +1302,6 @@ class AddMultiElementsTest extends BaseTestCase
 
     public function testaddInfantPassengerWithFirstnameNoSurname()
     {
-
         $createPnrOptions = new PnrCreatePnrOptions();
         $createPnrOptions->receivedFrom = "unittest";
         $createPnrOptions->travellers[] = new Traveller([
@@ -1346,7 +1342,6 @@ class AddMultiElementsTest extends BaseTestCase
 
     public function testaddInfantPassengerWithFirstnameSurnameAndBirthDate()
     {
-
         $createPnrOptions = new PnrCreatePnrOptions();
         $createPnrOptions->receivedFrom = "unittest";
         $createPnrOptions->travellers[] = new Traveller([
@@ -1388,12 +1383,11 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals('Cohen', $msg->travellerInfo[0]->passengerData[1]->travellerInformation->traveller->surname);
         $this->assertEquals('Junior', $msg->travellerInfo[0]->passengerData[1]->travellerInformation->passenger[0]->firstName);
         $this->assertEquals(AddMultiElements\Passenger::PASST_INFANT, $msg->travellerInfo[0]->passengerData[1]->travellerInformation->passenger[0]->type);
-        $this->assertEquals('08012016', $msg->travellerInfo[0]->passengerData[1]->dateOfBirth->dateAndTimeDetails->date);
+        $this->assertEquals('08JAN16', $msg->travellerInfo[0]->passengerData[1]->dateOfBirth->dateAndTimeDetails->date);
     }
 
     public function testCanHandleAddInfantPassengerWhereMainPassengerHasNoFirstName()
     {
-
         $createPnrOptions = new PnrCreatePnrOptions();
         $createPnrOptions->receivedFrom = "unittest";
         $createPnrOptions->travellers[] = new Traveller([
