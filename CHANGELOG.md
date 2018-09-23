@@ -8,6 +8,9 @@
 * Implemented ``Ticket_CreateTASF`` (https://github.com/amabnl/amadeus-ws-client/pull/197) - Artem Zakharchenko
 * Implemented ``PNR_Ignore`` (https://github.com/amabnl/amadeus-ws-client/pull/198) - Michael Mueller
 
+# Release 1.7.1 (23 September 2018)
+* Fixed a bug with wrong date format in dateOfBirth for ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/pull/231) - Artem Zakharchenko
+
 # Release 1.7.0 (30 April 2018)
 * Implemented support for ``TransactionFlowLink`` SOAP header (https://github.com/amabnl/amadeus-ws-client/issues/146)
 * Added support for Arrival date and time in ``Air_SellFromRecommendation`` (https://github.com/amabnl/amadeus-ws-client/pull/153) - Artem Zakharchenko
