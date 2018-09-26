@@ -285,81 +285,84 @@ class SoapHeader4 extends Base
             );
         }
 
-        //Send authentication info
-        if ($this->isAuthenticated === false) {
-            //Generate nonce, msg creation string & password digest:
-            $password = base64_decode($params->authParams->passwordData);
-            $creation = new \DateTime('now', new \DateTimeZone('UTC'));
-            $t = microtime(true);
-            $micro = sprintf("%03d", ($t - floor($t)) * 1000);
-            $creationString = $this->createDateTimeStringForAuth($creation, $micro);
-            $messageNonce = $this->generateUniqueNonce($params->authParams->nonceBase, $creationString);
-            $encodedNonce = base64_encode($messageNonce);
-            $digest = $this->generatePasswordDigest($password, $creationString, $messageNonce);
+        // If not Security_Authenticate message - send authentication information in headers
+        if ($this->isNotSecurityAuthenticateMessage($messageName)) {
+            //Send authentication info
+            if ($this->isAuthenticated === false) {
+                //Generate nonce, msg creation string & password digest:
+                $password = base64_decode($params->authParams->passwordData);
+                $creation = new \DateTime('now', new \DateTimeZone('UTC'));
+                $t = microtime(true);
+                $micro = sprintf("%03d", ($t - floor($t)) * 1000);
+                $creationString = $this->createDateTimeStringForAuth($creation, $micro);
+                $messageNonce = $this->generateUniqueNonce($params->authParams->nonceBase, $creationString);
+                $encodedNonce = base64_encode($messageNonce);
+                $digest = $this->generatePasswordDigest($password, $creationString, $messageNonce);
 
-            $securityHeaderXml = $this->generateSecurityHeaderRawXml(
-                $params->authParams->userId,
-                $encodedNonce,
-                $digest,
-                $creationString
-            );
+                $securityHeaderXml = $this->generateSecurityHeaderRawXml(
+                    $params->authParams->userId,
+                    $encodedNonce,
+                    $digest,
+                    $creationString
+                );
 
-            //Authentication header
-            array_push(
-                $headersToSet,
-                new \SoapHeader(
-                    'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
-                    'Security',
-                    new \SoapVar($securityHeaderXml, XSD_ANYXML)
-                )
-            );
+                //Authentication header
+                array_push(
+                    $headersToSet,
+                    new \SoapHeader(
+                        'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
+                        'Security',
+                        new \SoapVar($securityHeaderXml, XSD_ANYXML)
+                    )
+                );
 
-            if ($stateful === true) {
-                //Not authenticated but stateful: start session!
+                if ($stateful === true) {
+                    //Not authenticated but stateful: start session!
+                    array_push(
+                        $headersToSet,
+                        new \SoapHeader(
+                            'http://xml.amadeus.com/2010/06/Session_v3',
+                            'Session',
+                            new Client\Struct\HeaderV4\Session(
+                                null,
+                                "Start"
+                            )
+                        )
+                    );
+                }
+
+                //AMA_SecurityHostedUser header
+                array_push(
+                    $headersToSet,
+                    new \SoapHeader(
+                        'http://xml.amadeus.com/2010/06/Security_v1',
+                        'AMA_SecurityHostedUser',
+                        new Client\Struct\HeaderV4\SecurityHostedUser(
+                            $params->authParams->officeId,
+                            $params->authParams->originatorTypeCode,
+                            1,
+                            $params->authParams->dutyCode
+                        )
+                    )
+                );
+            } elseif ($stateful === true) {
+                //We are authenticated and stateful: provide session header to continue or terminate session
+                $statusCode =
+                    (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) ?
+                        "End" : "InSeries";
+
                 array_push(
                     $headersToSet,
                     new \SoapHeader(
                         'http://xml.amadeus.com/2010/06/Session_v3',
                         'Session',
                         new Client\Struct\HeaderV4\Session(
-                            null,
-                            "Start"
+                            $sessionData,
+                            $statusCode
                         )
                     )
                 );
             }
-
-            //AMA_SecurityHostedUser header
-            array_push(
-                $headersToSet,
-                new \SoapHeader(
-                    'http://xml.amadeus.com/2010/06/Security_v1',
-                    'AMA_SecurityHostedUser',
-                    new Client\Struct\HeaderV4\SecurityHostedUser(
-                        $params->authParams->officeId,
-                        $params->authParams->originatorTypeCode,
-                        1,
-                        $params->authParams->dutyCode
-                    )
-                )
-            );
-        } elseif ($stateful === true) {
-            //We are authenticated and stateful: provide session header to continue or terminate session
-            $statusCode =
-                (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) ?
-                    "End" : "InSeries";
-
-            array_push(
-                $headersToSet,
-                new \SoapHeader(
-                    'http://xml.amadeus.com/2010/06/Session_v3',
-                    'Session',
-                    new Client\Struct\HeaderV4\Session(
-                        $sessionData,
-                        $statusCode
-                    )
-                )
-            );
         }
 
         return $headersToSet;
@@ -508,5 +511,16 @@ class SoapHeader4 extends Base
         }
 
         return $options;
+    }
+
+    /**
+     * Check is called message is not Security_Authenticate.
+     *
+     * @param $messageName
+     * @return bool
+     */
+    protected function isNotSecurityAuthenticateMessage($messageName)
+    {
+        return 'Security_Authenticate' !== $messageName;
     }
 }
