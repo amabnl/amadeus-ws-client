@@ -35,6 +35,7 @@ class PasswordInfo
      *
      * See Amadeus Core Webservices documentation
      * [DATA TYPE codesets (Ref: 116Z 1A 02.1.8)]
+     *
      * @var string
      */
     const DATA_TYPE_EDIFACT = 'E';
@@ -43,9 +44,22 @@ class PasswordInfo
      *
      * See Amadeus Core Webservices documentation
      * [DATA TYPE codesets (Ref: 116Z 1A 02.1.8)]
+     *
      * @var string
      */
     const DATA_TYPE_BINARY = 'B';
+    /**
+     * When using "EDIFACT DATA" type, password length value must be 12.
+     *
+     * @var int
+     */
+    const PASSWORD_LENGTH_EDIFACT = 12;
+    /**
+     * When using "BINARY DATA" type, password length value must be 40.
+     *
+     * @var int
+     */
+    const PASSWORD_LENGTH_BINARY = 40;
 
     /**
      * @var int
@@ -67,8 +81,11 @@ class PasswordInfo
      * @param int $passwordLength
      * @param string $type
      */
-    public function __construct($passwordData, $passwordLength, $type = self::DATA_TYPE_EDIFACT)
-    {
+    public function __construct(
+        $passwordData,
+        $passwordLength = self::PASSWORD_LENGTH_EDIFACT,
+        $type = self::DATA_TYPE_EDIFACT
+    ) {
         $this->binaryData = $passwordData;
         $this->dataLength = $passwordLength;
         $this->dataType = $type;
