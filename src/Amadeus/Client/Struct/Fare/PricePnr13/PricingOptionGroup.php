@@ -90,17 +90,20 @@ class PricingOptionGroup
      */
     public $paxSegTstReference;
 
+    public $attributeDescription;
+
     /**
      * PricingOptionGroup constructor.
      *
      * @param string $key
      * @param string $optionDetail
+     * @param string $attributeDescription
      */
-    public function __construct($key, $optionDetail=null)
+    public function __construct($key, $optionDetail = null, $attributeDescription = null)
     {
         $this->pricingOptionKey = new PricingOptionKey($key);
         if (isset($optionDetail)) {
-            $this->optionDetail = new OptionDetail($optionDetail);
+            $this->optionDetail = new OptionDetail($optionDetail,$attributeDescription);
         }
     }
 }

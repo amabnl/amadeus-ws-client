@@ -45,8 +45,10 @@ class CriteriaDetails
      *
      * @param string $type
      */
-    public function __construct($type)
+    public function __construct($type, $description = null)
     {
         $this->attributeType = $type;
+        if (isset($description))
+            $this->attributeDescription = $description;
     }
 }
