@@ -89,8 +89,13 @@ class PricingOptionGroup
      * @var PaxSegTstReference
      */
     public $paxSegTstReference;
-
+    /**
+     * @var $attributeDescription
+     */
     public $attributeDescription;
+
+
+    public $references = [];
 
     /**
      * PricingOptionGroup constructor.
@@ -99,11 +104,14 @@ class PricingOptionGroup
      * @param string $optionDetail
      * @param string $attributeDescription
      */
-    public function __construct($key, $optionDetail = null, $attributeDescription = null)
+    public function __construct($key, $optionDetail = null, $attributeDescription = null, $references = null)
     {
         $this->pricingOptionKey = new PricingOptionKey($key);
+        if(isset($references)){
+            $this->paxSegTstReference = new PaxSegTstReference($references);
+        }
         if (isset($optionDetail)) {
-            $this->optionDetail = new OptionDetail($optionDetail,$attributeDescription);
+            $this->optionDetail = new OptionDetail($optionDetail, $attributeDescription, $references);
         }
     }
 }

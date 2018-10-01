@@ -88,7 +88,6 @@ class Base implements RequestCreatorInterface
         $this->checkMessageIsInWsdl($messageName);
 
         $builder = $this->findBuilderForMessage($messageName);
-
         if ($builder instanceof ConvertInterface) {
             return $builder->convert($params, $this->getActiveVersionFor($messageName));
         } else {

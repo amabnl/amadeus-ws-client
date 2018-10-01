@@ -209,14 +209,13 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
      */
     protected static function makeOverrideOptionsWithCriteria($overrideOptionsWithCriteria, $priceOptions)
     {
-        $opt = [];
 
+        $opt = [];
         foreach ($overrideOptionsWithCriteria as $overrideOptionWithCriteria) {
+
             if (!self::hasPricingGroup($overrideOptionWithCriteria["key"], $priceOptions)) {
-                if(!isset($overrideOptionWithCriteria["attributeDescription"]))
-                    $opt[] = new PricingOptionGroup($overrideOptionWithCriteria["key"], $overrideOptionWithCriteria["optionDetail"]);
-                else
-                    $opt[] = new PricingOptionGroup($overrideOptionWithCriteria["key"], $overrideOptionWithCriteria["optionDetail"],$overrideOptionWithCriteria["attributeDescription"]);
+                $opt[] = new PricingOptionGroup($overrideOptionWithCriteria["key"], $overrideOptionWithCriteria["optionDetail"], $overrideOptionWithCriteria["attributeDescription"], $overrideOptionWithCriteria["references"]);
+
             }
         }
 
@@ -275,7 +274,7 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
                 //Support for legacy fareBasisPrimaryCode to be removed when breaking BC:
                 $po->optionDetail = new OptionDetail(
-                    $pricingFareBasis->fareBasisPrimaryCode.$pricingFareBasis->fareBasisCode
+                    $pricingFareBasis->fareBasisPrimaryCode . $pricingFareBasis->fareBasisCode
                 );
 
                 //Support for legacy segmentReference to be removed when breaking BC:
