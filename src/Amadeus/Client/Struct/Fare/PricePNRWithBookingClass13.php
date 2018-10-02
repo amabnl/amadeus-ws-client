@@ -214,7 +214,9 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
         foreach ($overrideOptionsWithCriteria as $overrideOptionWithCriteria) {
 
             if (!self::hasPricingGroup($overrideOptionWithCriteria["key"], $priceOptions)) {
-                $opt[] = new PricingOptionGroup($overrideOptionWithCriteria["key"], $overrideOptionWithCriteria["optionDetail"], $overrideOptionWithCriteria["attributeDescription"], $overrideOptionWithCriteria["references"]);
+                $opt[] = new PricingOptionGroup($overrideOptionWithCriteria["key"], $overrideOptionWithCriteria["optionDetail"],
+                    isset($overrideOptionWithCriteria["attributeDescription"]) ? $overrideOptionWithCriteria["attributeDescription"] : null,
+                    isset($overrideOptionWithCriteria["references"]) ? $overrideOptionWithCriteria["references"] : null);
 
             }
         }
