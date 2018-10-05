@@ -22,6 +22,10 @@
 
 namespace Amadeus\Client\Struct\SalesReports;
 
+use Amadeus\Client\RequestOptions\SalesReportsDisplayNetRemitReportOptions;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\SalesIndicator;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\TransactionData;
+
 /**
  * DisplayNetRemitReport
  *
@@ -30,4 +34,67 @@ namespace Amadeus\Client\Struct\SalesReports;
  */
 class DisplayNetRemitReport extends DisplayQueryReport
 {
+    /**
+     * @var DisplayQueryReport\TransactionData[]
+     */
+    public $transactionTypeCodeInfo;
+
+    /**
+     * @var DisplayQueryReport\SalesIndicator
+     */
+    public $documentInfo;
+
+    /**
+     * DisplayDailyorSummarizedReport constructor.
+     *
+     * @param SalesReportsDisplayNetRemitReportOptions $options
+     */
+    public function __construct(SalesReportsDisplayNetRemitReportOptions $options)
+    {
+        $this->loadRequestOptions($options->requestOptions);
+
+        $this->loadAgencySource($options->agencySourceType, $options->agencyIataNumber, $options->agencyOfficeId);
+
+        $this->loadAgent($options->agentCode);
+
+        $this->loadTransaction(
+            $options->transactionCode,
+            $options->transactionType,
+            $options->transactionIssueIndicator
+        );
+
+        $this->loadValidatingCarrier($options->validatingCarrier);
+
+        $this->loadDateRange($options->startDate, $options->endDate);
+
+        $this->loadDate($options->specificDateType, $options->specificDate);
+
+        $this->loadCurrency($options->currencyType, $options->currency);
+
+        $this->loadFormOfPayment($options->fopType, $options->fopVendor);
+
+        $this->loadDocumentInfo($options->documentInfo);
+    }
+
+    /**
+     * @param string|null $code
+     * @param string|null $type
+     * @param string|null $issueIndicator
+     */
+    protected function loadTransaction($code, $type, $issueIndicator)
+    {
+        if ($this->checkAnyNotEmpty($type, $code, $issueIndicator)) {
+            $this->transactionTypeCodeInfo[] = new TransactionData($type, $code, $issueIndicator);
+        }
+    }
+
+    /**
+     * @param string $indicator
+     */
+    protected function loadDocumentInfo($indicator)
+    {
+        if (!empty($indicator)) {
+            $this->documentInfo = new SalesIndicator($indicator);
+        }
+    }
 }

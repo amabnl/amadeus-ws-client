@@ -23,12 +23,12 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * SalesReports_DisplayNetRemitReportOptions Request Options
+ * SalesReports_DisplayDailyorSummarizedReport Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
-class SalesReportsDisplayNetRemitReportOptions extends Base
+class SalesReportsDisplayDailyorSummarizedReportOptions extends Base
 {
     /**
      * All agents of the office
@@ -128,6 +128,15 @@ class SalesReportsDisplayNetRemitReportOptions extends Base
     const SALESIND_VOIDED_DOCUMENT = 'V';
 
     /**
+     * Relative sales report
+     */
+    const SALES_REPORT_IDENTIFICATION_TYPE_RELATIVE = 'H';
+    /**
+     * Sales report number
+     */
+    const SALES_REPORT_IDENTIFICATION_TYPE_NUMBER = 'NU';
+
+    /**
      * Request options
      *
      * self::SELECT_*
@@ -162,73 +171,6 @@ class SalesReportsDisplayNetRemitReportOptions extends Base
      * @var string
      */
     public $agentCode;
-    /**
-     * The Transaction code for which you want reporting
-     *
-     * Possible values:
-     * ACMA Agency credit memo
-     * ACMR Refund credit memo
-     * ADMA Agency debit memo
-     * BPAS Boarding-Pass-Only
-     * CANN Cancelled computer generated ticket number
-     * CANR Cancellation with reversal
-     * CANX Cancelled document
-     * EM50 Miscelaneous charges order - Electronic
-     * MCOA Automated MCO
-     * MCOM Miscelaneous Charges order - Manual
-     * MD50 Miscelaneous charges order - Automated
-     * PSCN Printed stock control number
-     * PTAM Prepaid ticket advice - Manual
-     * RCSM Commission recall statement
-     * RENA Automated Refund and Exchange Notice
-     * RENM Manual Refund and Exchange Notice
-     * RFND Refund
-     * RSCN Regenarated stock control number
-     * SSAC Sales summary adjustment notice - due to agent
-     * SSAD sales summary adjustment notice - due to airline
-     * TAAD Travel agent automated deduction
-     * TASF Travel Agency service fee
-     * TKTA OPTAT sale - Automated
-     * TKTB OPATB sale - Automated
-     * TKTM Manual sale
-     * TKTT Electronic ticketing sale - Automated
-     * TORM Tour order - Manual
-     * VSCN Voided stock control number
-     * XSBA Excess baggage Ticket - Automated
-     * XSBM Excess baggage Ticket - Manual
-     *
-     * @var string
-     */
-    public $transactionCode;
-    /**
-     * Transaction type
-     *
-     * Possible values:
-     * ADJA Adustment for Agent
-     * ADJP Adjustment for provider
-     * AUTS Automated sale document
-     * CCAS Cancelled cash sale document
-     * CCCS Cancelled credit card sale document
-     * INVT Inventory Document
-     * MANS Manual sale document
-     * REFD Refund document
-     * SALE Sale document
-     * VOID Voided document
-     *
-     * @var string
-     */
-    public $transactionType;
-
-    /**
-     * Transaction Issue Indicator
-     *
-     * Possible values:
-     * C Current transaction code
-     * O Original transaction code
-     *
-     * @var string
-     */
-    public $transactionIssueIndicator;
     /**
      * IATA Airline code for validating carier
      *
@@ -269,29 +211,28 @@ class SalesReportsDisplayNetRemitReportOptions extends Base
     public $currencyType;
     /**
      * The currency to report on
+     *
      * @var string
      */
     public $currency;
     /**
-     * Form of Payment Type
-     *
-     * self::FOP_*
-     *
-     * @var string
-     */
-    public $fopType;
-    /**
-     * Form of Payment Vendor code
-     *
-     * @var string
-     */
-    public $fopVendor;
-    /**
-     * Document Info
+     * Sales Indicator
      *
      * self::SALESIND_*
      *
      * @var string
      */
-    public $documentInfo;
+    public $salesIndicator;
+    /**
+     * Conveys numbers related to the sales report
+     *
+     * @var string
+     */
+    public $salesReportIdentificationNumber;
+    /**
+     * self::SALES_REPORT_IDENTIFICATION_TYPE_*
+     *
+     * @var string
+     */
+    public $salesReportIdentificationType;
 }

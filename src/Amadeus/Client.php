@@ -1567,7 +1567,7 @@ class Client extends Base
     /**
      * SalesReports_DisplayorSummarizedReport
      *
-     * @param RequestOptions\SalesReportsDisplayDailyorSummarizedReport $options
+     * @param RequestOptions\SalesReportsDisplayDailyorSummarizedReportOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
      * @throws Client\InvalidMessageException
@@ -1575,7 +1575,7 @@ class Client extends Base
      * @throws Exception
      */
     public function salesReportsDisplayDailyorSummarizedReport(
-        RequestOptions\SalesReportsDisplayDailyorSummarizedReport $options,
+        RequestOptions\SalesReportsDisplayDailyorSummarizedReportOptions $options,
         $messageOptions = []
     ) {
         $msgName = 'SalesReports_DisplayorSummarizedReport';

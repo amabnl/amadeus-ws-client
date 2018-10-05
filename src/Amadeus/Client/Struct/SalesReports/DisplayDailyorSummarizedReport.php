@@ -22,6 +22,10 @@
 
 namespace Amadeus\Client\Struct\SalesReports;
 
+use Amadeus\Client\RequestOptions\SalesReportsDisplayDailyorSummarizedReportOptions;
+use Amadeus\Client\Struct\SalesReports\DisplayDailyorSummarizedReport\SalesReportIdentification;
+use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\CurrencyInfo;
+
 /**
  * DisplayDailyorSummarizedReport
  *
@@ -30,4 +34,65 @@ namespace Amadeus\Client\Struct\SalesReports;
  */
 class DisplayDailyorSummarizedReport extends DisplayQueryReport
 {
+    /**
+     * @var SalesReportIdentification
+     */
+    public $salesReportIdentification;
+
+    /**
+     * @var DisplayQueryReport\CurrencyInfo
+     */
+    public $currency;
+
+    /**
+     * @var string
+     */
+    public $dummy;
+
+    /**
+     * DisplayDailyorSummarizedReport constructor.
+     *
+     * @param SalesReportsDisplayDailyorSummarizedReportOptions $options
+     */
+    public function __construct(SalesReportsDisplayDailyorSummarizedReportOptions $options)
+    {
+        $this->loadRequestOptions($options->requestOptions);
+
+        $this->loadAgencySource($options->agencySourceType, $options->agencyIataNumber, $options->agencyOfficeId);
+
+        $this->loadAgent($options->agentCode);
+
+        $this->loadValidatingCarrier($options->validatingCarrier);
+
+        $this->loadDateRange($options->startDate, $options->endDate);
+
+        $this->loadDate($options->specificDateType, $options->specificDate);
+
+        $this->loadCurrency($options->currencyType, $options->currency);
+
+        $this->loadSalesIndicator($options->salesIndicator);
+
+        $this->loadSalesReportIdentification(
+            $options->salesReportIdentificationNumber,
+            $options->salesReportIdentificationType
+        );
+    }
+
+    /**
+     * @param string $type
+     * @param string $currency
+     */
+    protected function loadCurrency($type, $currency)
+    {
+        if ($this->checkAnyNotEmpty($type, $currency)) {
+            $this->currency = new CurrencyInfo($type, $currency);
+        }
+    }
+
+    protected function loadSalesReportIdentification($number, $type)
+    {
+        if (!empty($number) && !empty($type)) {
+            $this->salesReportIdentification = new SalesReportIdentification($number, $type);
+        }
+    }
 }

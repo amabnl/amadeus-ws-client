@@ -3712,10 +3712,9 @@ Request a basic Extreme Search result:
 
     $extremeSearchResult = $client->priceXplorerExtremeSearch($opt);
 
-
-*******
+********
 SalesReports
-*******
+********
 
 -------------------------
 SalesReports_DisplayQueryReport
@@ -3739,21 +3738,20 @@ Request a sales report from a certain date to another date, issued in all office
 
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
 
-
 -------------------------
 SalesReports_DisplayDailyorSummarizedReport
 -------------------------
 
-SalesReports_DisplayDailyorSummarizedReport request options are exactly the same as for SalesReports_DisplayQueryReport.
+SalesReports_DisplayDailyorSummarizedReport request options are exact the same as for SalesReports_DisplayQueryReport except
+this have SalesReportIdentification options and request doesn't have scrolling options.
 
 .. code-block:: php
 
-    use Amadeus\Client\RequestOptions\SalesReportsDisplayDailyorSummarizedReportOptions;
+    use Amadeus\Client\RequestOptions\SalesReportsDisplayDailyorSummarizedReportRequestOptions;
 
-    $opt = new SalesReportsDisplayDailyorSummarizedReportOptions([
-        'requestOptions' => [
-            SalesReportsDisplayQueryReportOptions::SELECT_ALL_OFFICES_SHARING_IATA_NR
-        ]
+    $opt = new SalesReportsDisplayDailyorSummarizedReportRequestOptions([
+        'salesReportIdentificationNumber' => 197,
+        'salesReportIdentificationType' => SalesReportsDisplayDailyorSummarizedReportOptions::SALES_REPORT_IDENTIFICATION_TYPE_NUMBER
     ]);
 
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
@@ -3762,16 +3760,15 @@ SalesReports_DisplayDailyorSummarizedReport request options are exactly the same
 SalesReports_DisplayNetRemitReport
 -------------------------
 
-SalesReports_DisplayNetRemitReport request options are exactly the same as for SalesReports_DisplayQueryReport.
+SalesReports_DisplayNetRemitReport request options are exactly the same as for SalesReports_DisplayQueryReport except
+that 'salesIndicator' option here named as 'documentInfo' and request doesn't have scrolling options:
 
 .. code-block:: php
 
     use Amadeus\Client\RequestOptions\SalesReportsDisplayNetRemitReportOptions;
 
     $opt = new SalesReportsDisplayNetRemitReportOptions([
-        'requestOptions' => [
-            SalesReportsDisplayNetRemitReportOptions::SELECT_ALL_OFFICES_SHARING_IATA_NR
-        ]
+        'documentInfo' => SalesReportsDisplayNetRemitReportOptions::SALESIND_DOMESTIC
     ]);
 
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);

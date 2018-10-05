@@ -20,14 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\Struct\SalesReports\DisplayDailyorSummarizedReport;
 
 /**
- * SalesReports_DisplayDailyorSummarizedReport Request Options
+ * SalesReportIdentification
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\SalesReports\DisplayDailyorSummarizedReport
  * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
-class SalesReportsDisplayDailyorSummarizedReport extends SalesReportsDisplayQueryReportOptions
+class SalesReportIdentification
 {
+    /**
+     * A number allocated to a group or an item.
+     *
+     * @var ItemNumberDetails[]
+     */
+    public $itemNumberDetails;
+
+    /**
+     * SalesReportIdentification constructor.
+     *
+     * @param $number
+     * @param $type
+     */
+    public function __construct($number, $type)
+    {
+        $this->itemNumberDetails[] = new ItemNumberDetails($number, $type);
+    }
 }
