@@ -20,12 +20,12 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\SalesReports\DisplayDailyorSummarizedReport;
+namespace Amadeus\Client\Struct\SalesReports\DisplayDailyOrSummarizedReport;
 
 /**
  * ItemNumberDetails
  *
- * @package Amadeus\Client\Struct\SalesReports\DisplayDailyorSummarizedReport
+ * @package Amadeus\Client\Struct\SalesReports\DisplayDailyOrSummarizedReport
  * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
 class ItemNumberDetails

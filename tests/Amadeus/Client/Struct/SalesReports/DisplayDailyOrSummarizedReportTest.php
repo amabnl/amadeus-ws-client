@@ -7,22 +7,22 @@
 
 namespace Test\Amadeus\Client\Struct\SalesReports;
 
-use Amadeus\Client\RequestOptions\SalesReportsDisplayDailyorSummarizedReportOptions;
-use Amadeus\Client\Struct\SalesReports\DisplayDailyorSummarizedReport;
-use Amadeus\Client\Struct\SalesReports\DisplayDailyorSummarizedReport\ItemNumberDetails;
+use Amadeus\Client\RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions;
+use Amadeus\Client\Struct\SalesReports\DisplayDailyOrSummarizedReport;
+use Amadeus\Client\Struct\SalesReports\DisplayDailyOrSummarizedReport\ItemNumberDetails;
 use Test\Amadeus\BaseTestCase;
 
 /**
- * DisplayDailyorSummarizedReportTest
+ * DisplayDailyOrSummarizedReportTest
  *
  * @package Test\Amadeus\Client\Struct\SalesReports
  * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
-class DisplayDailyorSummarizedReportTest extends BaseTestCase
+class DisplayDailyOrSummarizedReportTest extends BaseTestCase
 {
     public function testCanMakeMessageEmpty()
     {
-        $msg = new DisplayDailyorSummarizedReport(new SalesReportsDisplayDailyorSummarizedReportOptions());
+        $msg = new DisplayDailyOrSummarizedReport(new SalesReportsDisplayDailyOrSummarizedReportOptions());
 
         $this->assertNull($msg->actionDetails);
         $this->assertNull($msg->agencyDetails);
@@ -39,14 +39,14 @@ class DisplayDailyorSummarizedReportTest extends BaseTestCase
     public function testCanMakeMessageWithSalesReportIdentification()
     {
         $number = 197;
-        $type = SalesReportsDisplayDailyorSummarizedReportOptions::SALES_REPORT_IDENTIFICATION_TYPE_NUMBER;
+        $type = SalesReportsDisplayDailyOrSummarizedReportOptions::SALES_REPORT_IDENTIFICATION_TYPE_NUMBER;
 
-        $opt = new SalesReportsDisplayDailyorSummarizedReportOptions([
+        $opt = new SalesReportsDisplayDailyOrSummarizedReportOptions([
             'salesReportIdentificationNumber' => $number,
             'salesReportIdentificationType' => $type,
         ]);
 
-        $msg = new DisplayDailyorSummarizedReport($opt);
+        $msg = new DisplayDailyOrSummarizedReport($opt);
 
         $expectedSalesReportIdentificationOption = new ItemNumberDetails($number, $type);
         $this->assertArraySubset([$expectedSalesReportIdentificationOption], $msg->salesReportIdentification->itemNumberDetails);
@@ -54,15 +54,15 @@ class DisplayDailyorSummarizedReportTest extends BaseTestCase
 
     public function testCanMakeMessageWithCurrency()
     {
-        $type = SalesReportsDisplayDailyorSummarizedReportOptions::CURRENCY_TARGET;
+        $type = SalesReportsDisplayDailyOrSummarizedReportOptions::CURRENCY_TARGET;
         $currency = 'GBP';
 
-        $opt = new SalesReportsDisplayDailyorSummarizedReportOptions([
+        $opt = new SalesReportsDisplayDailyOrSummarizedReportOptions([
             'currencyType' => $type,
             'currency' => $currency,
         ]);
 
-        $msg = new DisplayDailyorSummarizedReport($opt);
+        $msg = new DisplayDailyOrSummarizedReport($opt);
 
         $this->assertInstanceOf('\Amadeus\Client\Struct\SalesReports\DisplayQueryReport\CurrencyInfo', $msg->currency);
         $this->assertEquals($type, $msg->currency->currencyDetails->currencyQualifier);

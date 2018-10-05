@@ -3739,19 +3739,19 @@ Request a sales report from a certain date to another date, issued in all office
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
 
 -------------------------
-SalesReports_DisplayDailyorSummarizedReport
+SalesReports_DisplayDailyOrSummarizedReport
 -------------------------
 
-SalesReports_DisplayDailyorSummarizedReport request options are exact the same as for SalesReports_DisplayQueryReport except
+SalesReports_DisplayDailyOrSummarizedReport request options are exact the same as for SalesReports_DisplayQueryReport except
 this have SalesReportIdentification options and request doesn't have scrolling options.
 
 .. code-block:: php
 
-    use Amadeus\Client\RequestOptions\SalesReportsDisplayDailyorSummarizedReportRequestOptions;
+    use Amadeus\Client\RequestOptions\SalesReportsDisplayDailyOrSummarizedReportRequestOptions;
 
-    $opt = new SalesReportsDisplayDailyorSummarizedReportRequestOptions([
+    $opt = new SalesReportsDisplayDailyOrSummarizedReportRequestOptions([
         'salesReportIdentificationNumber' => 197,
-        'salesReportIdentificationType' => SalesReportsDisplayDailyorSummarizedReportOptions::SALES_REPORT_IDENTIFICATION_TYPE_NUMBER
+        'salesReportIdentificationType' => SalesReportsDisplayDailyOrSummarizedReportOptions::SALES_REPORT_IDENTIFICATION_TYPE_NUMBER
     ]);
 
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);

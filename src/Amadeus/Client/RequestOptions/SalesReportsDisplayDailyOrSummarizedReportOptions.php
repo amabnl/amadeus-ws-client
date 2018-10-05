@@ -23,12 +23,12 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * SalesReports_DisplayDailyorSummarizedReport Request Options
+ * SalesReports_DisplayDailyOrSummarizedReport Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
-class SalesReportsDisplayDailyorSummarizedReportOptions extends Base
+class SalesReportsDisplayDailyOrSummarizedReportOptions extends Base
 {
     /**
      * All agents of the office

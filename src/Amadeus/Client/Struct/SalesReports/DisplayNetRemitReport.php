@@ -45,7 +45,7 @@ class DisplayNetRemitReport extends DisplayQueryReport
     public $documentInfo;
 
     /**
-     * DisplayDailyorSummarizedReport constructor.
+     * DisplayDailyOrSummarizedReport constructor.
      *
      * @param SalesReportsDisplayNetRemitReportOptions $options
      */

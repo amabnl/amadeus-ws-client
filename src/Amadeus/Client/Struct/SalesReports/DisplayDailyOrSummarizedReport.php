@@ -22,17 +22,17 @@
 
 namespace Amadeus\Client\Struct\SalesReports;
 
-use Amadeus\Client\RequestOptions\SalesReportsDisplayDailyorSummarizedReportOptions;
-use Amadeus\Client\Struct\SalesReports\DisplayDailyorSummarizedReport\SalesReportIdentification;
+use Amadeus\Client\RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions;
+use Amadeus\Client\Struct\SalesReports\DisplayDailyOrSummarizedReport\SalesReportIdentification;
 use Amadeus\Client\Struct\SalesReports\DisplayQueryReport\CurrencyInfo;
 
 /**
- * DisplayDailyorSummarizedReport
+ * DisplayDailyOrSummarizedReport
  *
  * @package Amadeus\Client\Struct\SalesReports
  * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
-class DisplayDailyorSummarizedReport extends DisplayQueryReport
+class DisplayDailyOrSummarizedReport extends DisplayQueryReport
 {
     /**
      * @var SalesReportIdentification
@@ -50,11 +50,11 @@ class DisplayDailyorSummarizedReport extends DisplayQueryReport
     public $dummy;
 
     /**
-     * DisplayDailyorSummarizedReport constructor.
+     * DisplayDailyOrSummarizedReport constructor.
      *
-     * @param SalesReportsDisplayDailyorSummarizedReportOptions $options
+     * @param SalesReportsDisplayDailyOrSummarizedReportOptions $options
      */
-    public function __construct(SalesReportsDisplayDailyorSummarizedReportOptions $options)
+    public function __construct(SalesReportsDisplayDailyOrSummarizedReportOptions $options)
     {
         $this->loadRequestOptions($options->requestOptions);
 

@@ -1567,15 +1567,15 @@ class Client extends Base
     /**
      * SalesReports_DisplayorSummarizedReport
      *
-     * @param RequestOptions\SalesReportsDisplayDailyorSummarizedReportOptions $options
+     * @param RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
      * @throws Client\InvalidMessageException
      * @throws Client\RequestCreator\MessageVersionUnsupportedException
      * @throws Exception
      */
-    public function salesReportsDisplayDailyorSummarizedReport(
-        RequestOptions\SalesReportsDisplayDailyorSummarizedReportOptions $options,
+    public function salesReportsDisplayDailyOrSummarizedReport(
+        RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions $options,
         $messageOptions = []
     ) {
         $msgName = 'SalesReports_DisplayorSummarizedReport';
