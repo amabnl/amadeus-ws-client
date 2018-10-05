@@ -1578,7 +1578,7 @@ class Client extends Base
         RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions $options,
         $messageOptions = []
     ) {
-        $msgName = 'SalesReports_DisplayorSummarizedReport';
+        $msgName = 'SalesReports_DisplayDailyOrSummarizedReport';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
