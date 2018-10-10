@@ -176,6 +176,16 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
             self::makeOverrideOptionsWithCriteria($options->overrideOptionsWithCriteria, $priceOptions)
         );
 
+        /*
+         $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadPaxDiscount($options->paxDiscountCodes, $options->paxDiscountCodeRefs)
+        );
+*/
+        if (!empty($options->priceOptions))
+            for ($i = 0; $i < count($options->priceOptions); $i++)
+                $priceOptions[] = $options->priceOptions[$i];
+
         // All options processed, no options found:
         if (empty($priceOptions)) {
             $priceOptions[] = new PricingOptionGroup(PricingOptionKey::OPTION_NO_OPTION);
