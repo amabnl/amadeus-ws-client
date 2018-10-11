@@ -65,7 +65,7 @@ class Client extends Base
      *
      * @var string
      */
-    const RECEIVED_FROM_IDENTIFIER = "amabnl-amadeus-ws-client";
+    const RECEIVED_FROM_IDENTIFIER = "";
 
     /**
      * @var string
