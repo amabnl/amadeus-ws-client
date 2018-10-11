@@ -3444,6 +3444,124 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendSalesReportsDisplayDailyOrSummarizedReport()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('SalesReportsDisplayDailyOrSummarizedReportReply.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\SalesReports\DisplayDailyOrSummarizedReport(
+            new Client\RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions([
+                'requestOptions' => [
+                    Client\RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions::SELECT_OFFICE_ALL_AGENTS
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('SalesReports_DisplayDailyOrSummarizedReport', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['SalesReports_DisplayDailyOrSummarizedReport' => ['version' => "12.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'SalesReports_DisplayDailyOrSummarizedReport')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->salesReportsDisplayDailyOrSummarizedReport(
+            new Client\RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions([
+                'requestOptions' => [
+                    Client\RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions::SELECT_OFFICE_ALL_AGENTS
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendSalesReportsDisplayNetRemitReport()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('SalesReportsDisplayNetRemitReportReply.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\SalesReports\DisplayNetRemitReport(
+            new Client\RequestOptions\SalesReportsDisplayNetRemitReportOptions([
+                'requestOptions' => [
+                    Client\RequestOptions\SalesReportsDisplayNetRemitReportOptions::SELECT_OFFICE_ALL_AGENTS
+                ]
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('SalesReports_DisplayNetRemitReport', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['SalesReports_DisplayNetRemitReport' => ['version' => "12.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'SalesReports_DisplayNetRemitReport')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->salesReportsDisplayNetRemitReport(
+            new Client\RequestOptions\SalesReportsDisplayNetRemitReportOptions([
+                'requestOptions' => [
+                    Client\RequestOptions\SalesReportsDisplayNetRemitReportOptions::SELECT_OFFICE_ALL_AGENTS
+                ]
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanFareGetFareRules()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
