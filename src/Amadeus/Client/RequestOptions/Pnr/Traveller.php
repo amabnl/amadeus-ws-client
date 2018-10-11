@@ -40,6 +40,8 @@ class Traveller extends LoadParamsFromArray
 
     const TRAV_TYPE_INFANT_WITH_SEAT = "INS";
 
+    const TRAV_TYPE_STUDENT = "STU";
+
     /**
      * Unique sequence number for traveller
      *
