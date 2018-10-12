@@ -3662,13 +3662,13 @@ Request a basic Extreme Search result:
 
     $extremeSearchResult = $client->priceXplorerExtremeSearch($opt);
 
-********
+************
 SalesReports
-********
+************
 
--------------------------
+-------------------------------
 SalesReports_DisplayQueryReport
--------------------------
+-------------------------------
 
 Request a sales report from a certain date to another date, issued in all offices sharing the same IATA number;
 
@@ -3688,9 +3688,9 @@ Request a sales report from a certain date to another date, issued in all office
 
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
 
--------------------------
+-------------------------------------------
 SalesReports_DisplayDailyOrSummarizedReport
--------------------------
+-------------------------------------------
 
 SalesReports_DisplayDailyOrSummarizedReport request options are exact the same as for SalesReports_DisplayQueryReport except
 this have SalesReportIdentification options and request doesn't have scrolling options.
@@ -3706,9 +3706,9 @@ this have SalesReportIdentification options and request doesn't have scrolling o
 
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
 
--------------------------
+----------------------------------
 SalesReports_DisplayNetRemitReport
--------------------------
+----------------------------------
 
 SalesReports_DisplayNetRemitReport request options are exactly the same as for SalesReports_DisplayQueryReport except
 that 'salesIndicator' option here named as 'documentInfo' and request doesn't have scrolling options:
