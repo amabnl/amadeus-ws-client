@@ -1773,4 +1773,24 @@ class Client extends Base
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
+
+    /**
+     * PNR_CreateTSM
+     *
+     * @param RequestOptions\PnrCreateTsmOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function createTasf(
+        RequestOptions\PnrCreateTsmOptions $options,
+        $messageOptions = []
+    )
+    {
+        $msgName = 'PNR_CreateTSM';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
 }
