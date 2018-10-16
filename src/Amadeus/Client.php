@@ -1603,6 +1603,24 @@ class Client extends Base
     }
 
     /**
+     * Service_StandaloneCatalogue
+     *
+     * @param RequestOptions\ServiceStandaloneCatalogueOptions $options
+     * @param array $messageOptions
+     *            (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function serviceStandaloneCatalogue(RequestOptions\ServiceStandaloneCatalogueOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Service_StandaloneCatalogue';
+        
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+    
+    /**
      * Call a message with the given parameters
      *
      * @param string $messageName
