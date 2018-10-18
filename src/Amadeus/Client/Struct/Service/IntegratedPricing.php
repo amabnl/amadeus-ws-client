@@ -138,12 +138,38 @@ class IntegratedPricing extends BasePricingMessage
         $priceOptions = self::mergeOptions($priceOptions, self::makeOverrideOptions($options->overrideOptions, $priceOptions)
         );
 
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::makeOverrideOptionsWithCriteria($options->overrideOptionsWithCriteria, $priceOptions)
+        );
         // All options processed, no options found:
         if (empty($priceOptions)) {
             $priceOptions[] = new PricingOption(PricingOptionKey::OVERRIDE_NO_OPTION);
         }
 
         return $priceOptions;
+    }
+
+    /**
+     * @param string[] $overrideOptionsWithCriteria
+     * @param PricingOptionGroup[] $priceOptions
+     * @return PricingOptionGroup[]
+     */
+    protected static function makeOverrideOptionsWithCriteria($overrideOptionsWithCriteria, $priceOptions)
+    {
+
+        $opt = [];
+        foreach ($overrideOptionsWithCriteria as $overrideOptionWithCriteria) {
+
+            if (!self::hasPricingGroup($overrideOptionWithCriteria["key"], $priceOptions)) {
+                $opt[] = new PricingOptionGroup($overrideOptionWithCriteria["key"], $overrideOptionWithCriteria["optionDetail"],
+                    isset($overrideOptionWithCriteria["attributeDescription"]) ? $overrideOptionWithCriteria["attributeDescription"] : null,
+                    isset($overrideOptionWithCriteria["references"]) ? $overrideOptionWithCriteria["references"] : null);
+
+            }
+        }
+
+        return $opt;
     }
 
     /**
