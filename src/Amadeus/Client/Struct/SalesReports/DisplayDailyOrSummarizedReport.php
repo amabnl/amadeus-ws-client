@@ -91,7 +91,7 @@ class DisplayDailyOrSummarizedReport extends DisplayQueryReport
 
     protected function loadSalesReportIdentification($number, $type)
     {
-        if ($this->checkAnyNotEmpty($number, $type)) {
+        if ($this->checkAllNotEmpty($number, $type)) {
             $this->salesReportIdentification = new SalesReportIdentification($number, $type);
         }
     }
