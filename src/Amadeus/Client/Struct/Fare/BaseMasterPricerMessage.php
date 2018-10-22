@@ -63,8 +63,13 @@ class BaseMasterPricerMessage extends BaseWsMessage
      */
     protected function loadPassenger($passenger, &$counter, &$infantCounter)
     {
-        $isInfant = ($passenger->type === 'INF');
-
+        if (!is_array($passenger->type))
+            $isInfant = ($passenger->type === 'INF');
+        else {
+            for ($i = 0; $i < count($passenger->type); $i++) {
+                $isInfant = ($passenger->type[$i] === 'INF' || $passenger->type[$i] === 'LIF' || $passenger->type[$i] === 'FNF');
+            }
+        }
         $paxRef = new MasterPricer\PaxReference(
             $isInfant ? $infantCounter : $counter,
             $isInfant,
