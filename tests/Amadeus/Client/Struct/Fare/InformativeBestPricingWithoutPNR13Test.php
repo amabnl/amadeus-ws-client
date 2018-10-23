@@ -90,6 +90,16 @@ class InformativeBestPricingWithoutPNR13Test extends BaseTestCase
                     PricingOptions::OVERRIDE_FARETYPE_PUB,
                     PricingOptions::OVERRIDE_FARETYPE_UNI
                 ],
+                'overrideOptionsWithCriteria' => [
+                    [
+                        'key'          => PricingOptionKey::OPTION_CABIN,
+                        'optionDetail' => [
+                            'attributeType' => 'FC',
+                            'attributeDescription' => 'M'
+
+                        ]
+                    ]
+                ],
                 'currencyOverride' => 'USD',
                 'paxDiscountCodes' => ['CH'],
                 'paxDiscountCodeRefs' => [
@@ -145,7 +155,7 @@ class InformativeBestPricingWithoutPNR13Test extends BaseTestCase
         $this->assertNull($msg->segmentGroup[1]->additionnalSegmentDetails);
         $this->assertNull($msg->segmentGroup[1]->inventory);
 
-        $this->assertCount(4, $msg->pricingOptionGroup);
+        $this->assertCount(5, $msg->pricingOptionGroup);
 
         $this->assertEquals(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
         $this->assertEquals('USD', $msg->pricingOptionGroup[0]->currency->firstCurrencyDetails->currencyIsoCode);
@@ -160,6 +170,10 @@ class InformativeBestPricingWithoutPNR13Test extends BaseTestCase
         $this->assertEquals(PricingOptionKey::OPTION_PUBLISHED_FARES, $msg->pricingOptionGroup[2]->pricingOptionKey->pricingOptionKey);
 
         $this->assertEquals(PricingOptionKey::OPTION_UNIFARES, $msg->pricingOptionGroup[3]->pricingOptionKey->pricingOptionKey);
+
+        $this->assertEquals(PricingOptionKey::OPTION_CABIN, $msg->pricingOptionGroup[4]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals('FC', $msg->pricingOptionGroup[4]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals('M', $msg->pricingOptionGroup[4]->optionDetail->criteriaDetails[0]->attributeDescription);
     }
 }
 
