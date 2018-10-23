@@ -41,6 +41,6 @@ class IgnoreTest extends BaseTestCase
             $options
         );
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\Ignore\ClearInformation', $message->clearInformation);
-        $this->assertEquals(Ignore\ClearInformation::CODE_IGNORE, $message->clearInformation->actionRequestCode);
+        $this->assertEquals(Ignore\ClearInformation::CODE_IGNORE, $message->clearInformation->actionRequest);
     }
 }

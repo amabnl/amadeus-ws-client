@@ -168,6 +168,10 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
         if (!empty($options->pricingLogic)) {
             throw new OptionNotSupportedException('Pricing Logic option not supported in version 12 or lower');
         }
+
+        if (!empty($options->overrideOptionsWithCriteria)) {
+            throw new OptionNotSupportedException('Override Options With Criteria are not supported in version 12 or lower');
+        }
     }
 
     /**
