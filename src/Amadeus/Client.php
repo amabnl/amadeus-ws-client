@@ -1565,6 +1565,44 @@ class Client extends Base
     }
 
     /**
+     * SalesReports_DisplayorSummarizedReport
+     *
+     * @param RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function salesReportsDisplayDailyOrSummarizedReport(
+        RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'SalesReports_DisplayDailyOrSummarizedReport';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * SalesReports_DisplayNetRemitReport
+     *
+     * @param RequestOptions\SalesReportsDisplayNetRemitReportOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function salesReportsDisplayNetRemitReport(
+        RequestOptions\SalesReportsDisplayNetRemitReportOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'SalesReports_DisplayNetRemitReport';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Call a message with the given parameters
      *
      * @param string $messageName
