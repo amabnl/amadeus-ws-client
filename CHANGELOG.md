@@ -4,9 +4,11 @@
 * Added support for OptionDetails when proving pricing options overrides in ``Fare_PricePNRWithBookingClass`` (v13+) and associated messages (https://github.com/amabnl/amadeus-ws-client/pull/217) - LeoTravel
 * Added support for providing a Company and date in combination with a Record Locator in ``Air_RetrieveSeatMap`` (https://github.com/amabnl/amadeus-ws-client/issues/219)
 * Added support for requesting Most Restrictive display ``Air_RetrieveSeatMap``
+* Fixed a bug with a double authentication when using ``Security_Authenticate`` on a SoapHeader 4 WSAP (https://github.com/amabnl/amadeus-ws-client/pull/234) - Artem Zakharchenko
 * Implemented ``Ticket_RetrieveListOfTSM`` (https://github.com/amabnl/amadeus-ws-client/pull/194) - Michal Hernas
 * Implemented ``Ticket_CreateTASF`` (https://github.com/amabnl/amadeus-ws-client/pull/197) - Artem Zakharchenko
 * Implemented ``PNR_Ignore`` (https://github.com/amabnl/amadeus-ws-client/pull/198) - Michael Mueller
+* Implemented ``SalesReports_DisplayDailyOrSummarizedReport`` and ``SalesReports_DisplayNetRemitReport`` (https://github.com/amabnl/amadeus-ws-client/pull/241) - Artem Zakharchenko
 
 # Release 1.7.1 (23 September 2018)
 * Fixed a bug with wrong date format in dateOfBirth for ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/pull/231) - Artem Zakharchenko
