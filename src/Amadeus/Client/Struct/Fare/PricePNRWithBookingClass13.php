@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Fare;
 
 use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
@@ -176,6 +177,11 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
             self::makeOverrideOptionsWithCriteria($options->overrideOptionsWithCriteria, $priceOptions)
         );
 
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadCabin($options->cabin)
+        );
+
         // All options processed, no options found:
         if (empty($priceOptions)) {
             $priceOptions[] = new PricingOptionGroup(PricingOptionKey::OPTION_NO_OPTION);
@@ -253,6 +259,21 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
             $po->currency = new Currency($currency);
 
             $opt[] = $po;
+        }
+
+        return $opt;
+    }
+
+    /**
+     * @param Cabin $cabin
+     * @return PricePnr13\PricingOptionGroup[]
+     */
+    protected static function loadCabin($cabin)
+    {
+        $opt = [];
+
+        if ($cabin instanceof Cabin) {
+            $opt[] = new PricingOptionGroup(PricingOptionKey::OPTION_CABIN, $cabin->criteriaDetails);
         }
 
         return $opt;

@@ -42,13 +42,15 @@ class OptionDetail
      */
     public function __construct($options = null)
     {
-        if (is_string($options)) {
+        if ($options instanceof CriteriaDetails) {
+            $this->criteriaDetails[] = $options;
+        } elseif (is_string($options)) {
             $this->criteriaDetails[] = new CriteriaDetails($options);
         } elseif (is_array($options)) {
-            if (isset($options['attributeType'], $options['attributeDescription'])) {
-                $this->criteriaDetails[] = new CriteriaDetails($options['attributeType'], $options['attributeDescription']);
-            } else {
-                foreach ($options as $option) {
+            foreach ($options as $option) {
+                if ($option instanceof CriteriaDetails) {
+                    $this->criteriaDetails[] = $option;
+                } else {
                     $this->criteriaDetails[] = new CriteriaDetails($option);
                 }
             }

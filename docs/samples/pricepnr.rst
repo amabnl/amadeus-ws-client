@@ -420,3 +420,24 @@ This option is used to specify the form of payment information to use.
         ])
     );
 
+
+Cabin Options
+=============
+
+Price with premium economy cabin class:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
+    use Amadeus\Client\Struct\Fare\PricePnr13\CriteriaDetails;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'cabin' => new Cabin(
+                [
+                    new CriteriaDetails(Cabin::TYPE_FIRST_CABIN, Cabin::CLASS_PREMIUM_ECONOMY)
+                ]
+            )
+        ])
+    );
+
