@@ -1811,4 +1811,23 @@ class Client extends Base
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
+
+    /**
+     * Service_BookPriceProduct
+     *
+     * @param RequestOptions\ServiceBookPriceProductOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function serviceBookPriceProduct(
+        RequestOptions\ServiceBookPriceProductOptions $options,
+        $messageOptions = []
+    )
+    {
+        $msgName = 'Service_BookPriceProduct';
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
 }

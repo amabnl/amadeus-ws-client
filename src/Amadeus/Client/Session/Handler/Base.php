@@ -376,7 +376,9 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
         $wsdlId = $this->getWsdlIdFor($msgName);
 
         if (!empty($msgName)) {
+
             if (!isset($this->soapClients[$wsdlId]) || !($this->soapClients[$wsdlId] instanceof \SoapClient)) {
+
                 $this->soapClients[$wsdlId] = $this->initSoapClient($wsdlId);
             }
 
@@ -394,8 +396,9 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      */
     protected function initSoapClient($wsdlId)
     {
+        //print_r($wsdlId);
         $wsdlPath = WsdlAnalyser::$wsdlIds[$wsdlId];
-
+        //print_r($wsdlPath);
         $client = new Client\SoapClient(
             $wsdlPath,
             $this->makeSoapClientOptions(),

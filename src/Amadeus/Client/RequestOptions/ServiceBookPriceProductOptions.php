@@ -2,26 +2,20 @@
 /**
  * Created by PhpStorm.
  * User: backend
- * Date: 12/09/2018
- * Time: 10:09
+ * Date: 29/10/2018
+ * Time: 15:35
  */
 
 namespace Amadeus\Client\RequestOptions;
 
 
-class ProfileCreateProfileOptions extends Base
+class ServiceBookPriceProductOptions extends Base
 {
     public $Version;
-    public $UniqueID;
-    public $Profile;
-    //public $CompanyInfo;
-    public $CompanyName;
+    public $Recommendation;
+    //public $ServiceMiscellaneous;
+    //public $Products;
 
-    /**
-     * Construct Update Profile with initialization array
-     *
-     * @param array $params Initialization parameters
-     */
     public function __construct($params = [])
     {
         foreach ($params as $propName => $propValue) {
