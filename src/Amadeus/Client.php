@@ -1564,8 +1564,7 @@ class Client extends Base
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 
-
-    /**
+    /***
      * Service_StandaloneCatalogue
      *
      * @param RequestOptions\ServiceStandaloneCatalogueOptions $options
@@ -1582,7 +1581,6 @@ class Client extends Base
         
         return $this->callMessage($msgName, $options, $messageOptions);
     }
-
     /**
      * SalesReports_DisplayorSummarizedReport
      *
