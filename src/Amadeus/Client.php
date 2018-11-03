@@ -1564,6 +1564,7 @@ class Client extends Base
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 
+
     /**
      * Service_StandaloneCatalogue
      *
