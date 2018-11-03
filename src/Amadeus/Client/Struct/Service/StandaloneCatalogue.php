@@ -22,11 +22,6 @@
 namespace Amadeus\Client\Struct\Service;
 
 use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\Passenger;
-use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
-use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\ServiceStandalonePricingOptions;
-use Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions;
-use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\PassengerInfoGroup;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\FlightInfo;
 use Amadeus\Client\Struct\Fare\PricePNRWithBookingClass13;
