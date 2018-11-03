@@ -1565,24 +1565,6 @@ class Client extends Base
     }
 
     /**
-     * Service_StandaloneCatalogue
-     *
-     * @param RequestOptions\ServiceStandaloneCatalogueOptions $options
-     * @param array $messageOptions
-     *            (OPTIONAL)
-     * @return Result
-     * @throws Client\InvalidMessageException
-     * @throws Client\RequestCreator\MessageVersionUnsupportedException
-     * @throws Exception
-     */
-    public function serviceStandaloneCatalogue(RequestOptions\ServiceStandaloneCatalogueOptions $options, $messageOptions = [])
-    {
-        $msgName = 'Service_StandaloneCatalogue';
-        
-        return $this->callMessage($msgName, $options, $messageOptions);
-    }
-
-    /**
      * SalesReports_DisplayorSummarizedReport
      *
      * @param RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions $options
@@ -1617,6 +1599,24 @@ class Client extends Base
     ) {
         $msgName = 'SalesReports_DisplayNetRemitReport';
 
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Service_StandaloneCatalogue
+     *
+     * @param RequestOptions\ServiceStandaloneCatalogueOptions $options
+     * @param array $messageOptions
+     *            (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function serviceStandaloneCatalogue(RequestOptions\ServiceStandaloneCatalogueOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Service_StandaloneCatalogue';
+        
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 
