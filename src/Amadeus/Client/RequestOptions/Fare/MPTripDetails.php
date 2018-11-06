@@ -20,24 +20,36 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\MasterPricer;
+namespace Amadeus\Client\RequestOptions\Fare;
 
-use Amadeus\Client\RequestOptions\Fare\MPTripDetails;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * TripDetails
+ * MPTripDetails
  *
- * @package Amadeus\Client\Struct\Fare\MasterPricer
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * Details of the trip duration
+ *
+ * @package Amadeus\Client\RequestOptions\Fare
+ * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
-class TripDetails
+class MPTripDetails extends LoadParamsFromArray
 {
+    const FLEXIBILITY_COMBINED = 'C';
+    const FLEXIBILITY_MINUS = 'M';
+    const FLEXIBILITY_PLUS = 'P';
+    const FLEXIBILITY_ARRIVAL_BY = 'TA';
+    const FLEXIBILITY_DEPART_FROM = 'TD';
+
     /**
+     * self::FLEXIBILITY_*
+     *
      * @var string
      */
     public $flexibilityQualifier;
 
     /**
+     * A date that applies to a means of transport or a traveller.
+     *
      * @var int
      */
     public $tripInterval;
@@ -46,16 +58,4 @@ class TripDetails
      * @var int
      */
     public $tripDuration;
-
-    /**
-     * TripDetails constructor.
-     *
-     * @param MPTripDetails $tripDetails
-     */
-    public function __construct(MPTripDetails $tripDetails)
-    {
-        $this->flexibilityQualifier = $tripDetails->flexibilityQualifier;
-        $this->tripInterval = $tripDetails->tripInterval;
-        $this->tripDuration = $tripDetails->tripDuration;
-    }
 }

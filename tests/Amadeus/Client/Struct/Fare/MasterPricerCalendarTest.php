@@ -26,6 +26,7 @@ use Amadeus\Client\RequestOptions\Fare\MPDate;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\Fare\MPLocation;
 use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+use Amadeus\Client\RequestOptions\Fare\MPTripDetails;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
 use Amadeus\Client\Struct\Fare\MasterPricer\RangeOfDate;
 use Amadeus\Client\Struct\Fare\MasterPricer\UnitNumberDetail;
@@ -105,5 +106,53 @@ class MasterPricerCalendarTest extends BaseTestCase
         $this->assertNull($message->ticketChangeInfo);
         $this->assertNull($message->travelFlightInfo);
         $this->assertEmpty($message->valueSearch);
+    }
+
+    /**
+     * Test creating itinerary/timeDetails/tripDetails.
+     */
+    public function testCanMakeRequestWithTripDetails()
+    {
+        $opt = new FareMasterPricerCalendarOptions([
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ])
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'KBP']),
+                    'arrivalLocation' => new MPLocation(['city' => 'JFK']),
+                    'date' => new MPDate([
+                        'tripDetails' => new MPTripDetails([
+                            'flexibilityQualifier' => MPTripDetails::FLEXIBILITY_COMBINED,
+                            'tripInterval' => 1,
+                            'tripDuration' => 7
+                        ])
+                    ])
+                ])
+            ]
+        ]);
+
+        $message = new MasterPricerCalendar($opt);
+
+        $this->assertCount(1, $message->numberOfUnit->unitNumberDetail);
+        $this->assertEquals(1, $message->numberOfUnit->unitNumberDetail[0]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_PASS, $message->numberOfUnit->unitNumberDetail[0]->typeOfUnit);
+
+        $this->assertCount(1, $message->paxReference);
+        $this->assertEquals(1, $message->paxReference[0]->traveller[0]->ref);
+        $this->assertEquals('ADT', $message->paxReference[0]->ptc[0]);
+
+        $this->assertCount(1, $message->itinerary);
+        $this->assertEquals(1, $message->itinerary[0]->requestedSegmentRef->segRef);
+        $this->assertEquals('KBP', $message->itinerary[0]->departureLocalization->departurePoint->locationId);
+        $this->assertEquals('JFK', $message->itinerary[0]->arrivalLocalization->arrivalPointDetails->locationId);
+
+        $this->assertEquals(MPTripDetails::FLEXIBILITY_COMBINED, $message->itinerary[0]->timeDetails->tripDetails->flexibilityQualifier);
+        $this->assertEquals(1, $message->itinerary[0]->timeDetails->tripDetails->tripInterval);
+        $this->assertEquals(7, $message->itinerary[0]->timeDetails->tripDetails->tripDuration);
     }
 }

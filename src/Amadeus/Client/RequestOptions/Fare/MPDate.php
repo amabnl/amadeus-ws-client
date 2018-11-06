@@ -101,4 +101,11 @@ class MPDate extends LoadParamsFromArray
      * @var int
      */
     public $range;
+
+    /**
+     * Details of the trip duration
+     *
+     * @var MPTripDetails
+     */
+    public $tripDetails;
 }
