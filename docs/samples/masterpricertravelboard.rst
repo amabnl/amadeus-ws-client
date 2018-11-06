@@ -59,9 +59,8 @@ Maximum 30 recommendations:
     ]);
 
 MasterPricerCalendar flexible trip details
-==============================================
+==========================================
 
-If you ara flexible with the outbound date, but want to travel exactly 7 days.
 Kiev - New York one way with 1 adult.
 Flexible with the outbound date, but want to travel exactly 7 days.
 
