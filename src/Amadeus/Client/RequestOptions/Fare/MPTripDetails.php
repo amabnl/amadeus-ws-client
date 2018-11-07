@@ -48,13 +48,15 @@ class MPTripDetails extends LoadParamsFromArray
     public $flexibilityQualifier;
 
     /**
-     * A date that applies to a means of transport or a traveller.
+     * Number of days added or/and retrieved to the trip duration.
      *
      * @var int
      */
     public $tripInterval;
 
     /**
+     * Period between date of departure and date of arrival.
+     *
      * @var int
      */
     public $tripDuration;

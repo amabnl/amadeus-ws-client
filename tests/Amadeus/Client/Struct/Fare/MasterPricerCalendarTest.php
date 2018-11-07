@@ -126,10 +126,11 @@ class MasterPricerCalendarTest extends BaseTestCase
                     'departureLocation' => new MPLocation(['city' => 'KBP']),
                     'arrivalLocation' => new MPLocation(['city' => 'JFK']),
                     'date' => new MPDate([
+                        'date' => new \DateTime('2018-11-16T00:00:00+0000', new \DateTimeZone('UTC')),
+                        'rangeMode' => MPDate::RANGEMODE_MINUS_PLUS,
+                        'range' => 3,
                         'tripDetails' => new MPTripDetails([
                             'flexibilityQualifier' => MPTripDetails::FLEXIBILITY_COMBINED,
-                            'tripInterval' => 1,
-                            'tripDuration' => 7
                         ])
                     ])
                 ])
@@ -151,8 +152,9 @@ class MasterPricerCalendarTest extends BaseTestCase
         $this->assertEquals('KBP', $message->itinerary[0]->departureLocalization->departurePoint->locationId);
         $this->assertEquals('JFK', $message->itinerary[0]->arrivalLocalization->arrivalPointDetails->locationId);
 
+        $this->assertEquals('161118', $message->itinerary[0]->timeDetails->firstDateTimeDetail->date);
+        $this->assertEquals(3, $message->itinerary[0]->timeDetails->rangeOfDate->dayInterval);
+        $this->assertEquals(RangeOfDate::RANGEMODE_MINUS_PLUS, $message->itinerary[0]->timeDetails->rangeOfDate->rangeQualifier);
         $this->assertEquals(MPTripDetails::FLEXIBILITY_COMBINED, $message->itinerary[0]->timeDetails->tripDetails->flexibilityQualifier);
-        $this->assertEquals(1, $message->itinerary[0]->timeDetails->tripDetails->tripInterval);
-        $this->assertEquals(7, $message->itinerary[0]->timeDetails->tripDetails->tripDuration);
     }
 }

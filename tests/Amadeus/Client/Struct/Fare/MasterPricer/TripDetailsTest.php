@@ -39,7 +39,7 @@ class TripDetailsTest extends BaseTestCase
         $requestOptions = new MPTripDetails([
             'flexibilityQualifier' => MPTripDetails::FLEXIBILITY_COMBINED,
             'tripInterval' => 1,
-            'tripDuration' => 7
+            'tripDuration' => 3
         ]);
 
         $tripDetails = new TripDetails($requestOptions);
