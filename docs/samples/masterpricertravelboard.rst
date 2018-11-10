@@ -20,7 +20,6 @@ Maximum 30 recommendations:
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
     use Amadeus\Client\RequestOptions\Fare\MPPassenger;
     use Amadeus\Client\RequestOptions\Fare\MPDate;
-    use Amadeus\Client\RequestOptions\Fare\MPTripDetails;
 
     $opt = new FareMasterPricerTbSearch([
         'nrOfRequestedResults' => 30,
@@ -53,10 +52,7 @@ Maximum 30 recommendations:
                     'dateTime' => new \DateTime('2017-03-12T18:00:00+0000', new \DateTimeZone('UTC')),
                     'timeWindow' => 5,
                     'rangeMode' => MPDate::RANGEMODE_PLUS,
-                    'range' => 1,
-                    'tripDetails' => new MPTripDetails([
-                        'flexibilityQualifier' => MPTripDetails::FLEXIBILITY_COMBINED
-                    ])
+                    'range' => 1
                 ])
             ])
         ]
