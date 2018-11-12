@@ -110,6 +110,8 @@ class MasterPricerCalendarTest extends BaseTestCase
 
     /**
      * Test creating itinerary/timeDetails/tripDetails.
+     *
+     * Amadeus currently not uses this node, but may be used in future versions.
      */
     public function testCanMakeRequestWithTripDetails()
     {

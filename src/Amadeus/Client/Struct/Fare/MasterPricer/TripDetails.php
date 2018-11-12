@@ -27,6 +27,8 @@ use Amadeus\Client\RequestOptions\Fare\MPTripDetails;
 /**
  * TripDetails
  *
+ * Amadeus currently not uses this node, but may be used in future versions.
+ *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
