@@ -29,6 +29,7 @@ use Amadeus\Client\RequestOptions\Fare\MPPassenger;
 use Amadeus\Client\RequestOptions\Fare\MPTripDetails;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
 use Amadeus\Client\Struct\Fare\MasterPricer\RangeOfDate;
+use Amadeus\Client\Struct\Fare\MasterPricer\TripDetails;
 use Amadeus\Client\Struct\Fare\MasterPricer\UnitNumberDetail;
 use Amadeus\Client\Struct\Fare\MasterPricerCalendar;
 use Test\Amadeus\BaseTestCase;
@@ -157,6 +158,6 @@ class MasterPricerCalendarTest extends BaseTestCase
         $this->assertEquals('161118', $message->itinerary[0]->timeDetails->firstDateTimeDetail->date);
         $this->assertEquals(3, $message->itinerary[0]->timeDetails->rangeOfDate->dayInterval);
         $this->assertEquals(RangeOfDate::RANGEMODE_MINUS_PLUS, $message->itinerary[0]->timeDetails->rangeOfDate->rangeQualifier);
-        $this->assertEquals(MPTripDetails::FLEXIBILITY_COMBINED, $message->itinerary[0]->timeDetails->tripDetails->flexibilityQualifier);
+        $this->assertEquals(TripDetails::FLEXIBILITY_COMBINED, $message->itinerary[0]->timeDetails->tripDetails->flexibilityQualifier);
     }
 }

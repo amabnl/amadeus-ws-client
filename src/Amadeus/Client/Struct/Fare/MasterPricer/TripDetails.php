@@ -34,6 +34,12 @@ use Amadeus\Client\RequestOptions\Fare\MPTripDetails;
  */
 class TripDetails
 {
+    const FLEXIBILITY_COMBINED = 'C';
+    const FLEXIBILITY_MINUS = 'M';
+    const FLEXIBILITY_PLUS = 'P';
+    const FLEXIBILITY_ARRIVAL_BY = 'TA';
+    const FLEXIBILITY_DEPART_FROM = 'TD';
+
     /**
      * @var string
      */
