@@ -22,6 +22,8 @@
 
 namespace Amadeus\Client\RequestOptions;
 
+use Amadeus\Client\RequestOptions\Fare\InformativeBestPricingWithoutPnr\Cabin;
+
 /**
  * Fare_InformativeBestPricingWithoutPNR request options
  *
@@ -30,4 +32,10 @@ namespace Amadeus\Client\RequestOptions;
  */
 class FareInformativeBestPricingWithoutPnrOptions extends FareInformativePricingWithoutPnrOptions
 {
+    /**
+     * Cabin class you want to get a pricing for.
+     *
+     * @var Cabin
+     */
+    public $cabin;
 }

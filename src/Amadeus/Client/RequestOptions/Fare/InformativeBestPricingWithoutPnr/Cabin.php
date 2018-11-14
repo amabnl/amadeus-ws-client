@@ -20,7 +20,7 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions\Fare\PricePnr;
+namespace Amadeus\Client\RequestOptions\Fare\InformativeBestPricingWithoutPnr;
 
 use Amadeus\Client\Struct\Fare\PricePnr13\CriteriaDetails;
 

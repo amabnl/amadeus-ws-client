@@ -22,10 +22,10 @@
 
 namespace Test\Amadeus\Client\Struct\Fare;
 
+use Amadeus\Client\RequestOptions\Fare\InformativeBestPricingWithoutPnr\Cabin;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
-use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions;
 use Amadeus\Client\Struct\Fare\InformativeBestPricingWithoutPNR13;
@@ -92,11 +92,6 @@ class InformativeBestPricingWithoutPNR13Test extends BaseTestCase
                     PricingOptions::OVERRIDE_FARETYPE_PUB,
                     PricingOptions::OVERRIDE_FARETYPE_UNI
                 ],
-                'cabin' => new Cabin(
-                    [
-                        new CriteriaDetails(Cabin::TYPE_FIRST_CABIN, Cabin::CLASS_PREMIUM_ECONOMY)
-                    ]
-                ),
                 'currencyOverride' => 'USD',
                 'paxDiscountCodes' => ['CH'],
                 'paxDiscountCodeRefs' => [
@@ -105,7 +100,12 @@ class InformativeBestPricingWithoutPNR13Test extends BaseTestCase
                         'reference' => 2
                     ])
                 ]
-            ])
+            ]),
+            'cabin' => new Cabin(
+                [
+                    new CriteriaDetails(Cabin::TYPE_FIRST_CABIN, Cabin::CLASS_PREMIUM_ECONOMY)
+                ]
+            )
         ]);
 
         $msg = new InformativeBestPricingWithoutPNR13($opt);

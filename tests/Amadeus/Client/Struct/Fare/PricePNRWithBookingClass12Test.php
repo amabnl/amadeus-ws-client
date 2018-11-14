@@ -166,27 +166,6 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
         new PricePNRWithBookingClass12($opt);
     }
 
-    public function testThrowsExceptionWhenDoPricePnrCallWithCabinOption()
-    {
-        $this->setExpectedException(
-            '\Amadeus\Client\Struct\OptionNotSupportedException',
-            'Cabin option is not supported in version 12 or lower'
-        );
-
-        $opt = new FarePricePnrWithBookingClassOptions(
-            [
-                'cabin' => [
-                    new Cabin(
-                        [
-                            new CriteriaDetails(Cabin::TYPE_DEFAULT)
-                        ]
-                    )
-                ]
-            ]);
-
-        new PricePNRWithBookingClass12($opt);
-    }
-
     public function testCanDoPricePnrCallWithCorpNegoFare()
     {
         $opt = new FarePricePnrWithBookingClassOptions([
