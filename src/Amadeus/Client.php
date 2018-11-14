@@ -1830,4 +1830,23 @@ class Client extends Base
         $msgName = 'Service_BookPriceProduct';
         return $this->callMessage($msgName, $options, $messageOptions);
     }
+
+    /**
+     * PNR_DeleteTSM
+     *
+     * @param RequestOptions\PnrDeleteTsmOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function deleteTsm(
+        RequestOptions\PnrDeleteTsmOptions $options,
+        $messageOptions = []
+    )
+    {
+        $msgName = 'PNR_DeleteTSM';
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
 }
