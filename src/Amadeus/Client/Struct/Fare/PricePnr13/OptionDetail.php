@@ -40,13 +40,13 @@ class OptionDetail
      *
      * @param string|array|null $options
      */
-    public function __construct($options = null)
+    public function __construct($options = null, $description = null)
     {
         if (is_string($options)) {
-            $this->criteriaDetails[] = new CriteriaDetails($options);
+            $this->criteriaDetails[] = new CriteriaDetails($options, $description);
         } elseif (is_array($options)) {
-            foreach ($options as $option) {
-                $this->criteriaDetails[] = new CriteriaDetails($option);
+            foreach ($options as $option => $description) {
+                $this->criteriaDetails[] = new CriteriaDetails($option, $description);
             }
         }
     }

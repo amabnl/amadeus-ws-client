@@ -44,9 +44,11 @@ class CriteriaDetails
      * CriteriaDetails constructor.
      *
      * @param string $type
+     * @param $description
      */
-    public function __construct($type)
+    public function __construct($type, $description)
     {
         $this->attributeType = $type;
+        $this->attributeDescription = $description;
     }
 }

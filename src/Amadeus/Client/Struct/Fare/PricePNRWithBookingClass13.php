@@ -104,6 +104,11 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
         $priceOptions = self::mergeOptions(
             $priceOptions,
+            self::makePricingOptionFareFamilyOverride($options->fareFamily)
+        );
+
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
             self::loadCorpNegoFare($options->corporateNegoFare)
         );
 
@@ -283,6 +288,25 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
                 $opt[] = $po;
             }
+        }
+
+        return $opt;
+    }
+
+    /**
+     * @param string $fareFamily
+     * @return PricePnr13\PricingOptionGroup[]
+     */
+    protected static function makePricingOptionFareFamilyOverride($fareFamily)
+    {
+        $opt = [];
+
+        if ($fareFamily !== null) {
+            $po = new PricingOptionGroup('PFF');
+
+            $po->optionDetail = new OptionDetail('FF', $fareFamily);
+
+            $opt[] = $po;
         }
 
         return $opt;
