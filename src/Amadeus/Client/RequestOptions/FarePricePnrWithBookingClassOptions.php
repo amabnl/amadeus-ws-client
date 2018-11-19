@@ -272,5 +272,10 @@ class FarePricePnrWithBookingClassOptions extends Base
      */
     public $references = [];
 
+    /**
+     * Fare family to be used in pricing (e.g. "CLASSIC").
+     *
+     * @var string
+     */
     public $fareFamily;
 }

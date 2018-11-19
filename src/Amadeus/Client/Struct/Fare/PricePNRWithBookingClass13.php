@@ -294,7 +294,9 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
     }
 
     /**
-     * @param string $fareFamily
+     * Load fare-family pricing option and return it.
+     *
+     * @param string $fareFamily input fare-family, e.g. "CLASSIC"
      * @return PricePnr13\PricingOptionGroup[]
      */
     protected static function makePricingOptionFareFamilyOverride($fareFamily)
