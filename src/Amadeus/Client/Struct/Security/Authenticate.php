@@ -77,8 +77,6 @@ class Authenticate extends BaseWsMessage
 
         $this->dutyCode = new DutyCode($params->dutyCode);
 
-        $this->systemDetails = new SystemDetails($params->organizationId);
-
         $this->passwordInfo = new PasswordInfo(
             $params->passwordData,
             $params->passwordLength

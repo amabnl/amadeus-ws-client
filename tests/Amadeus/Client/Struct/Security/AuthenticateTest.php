@@ -46,7 +46,6 @@ class AuthenticateTest extends BaseTestCase
             'passwordData' => base64_encode('TEST'),
             'passwordLength' => 4,
             'dutyCode' => 'SU',
-            'organizationId' => 'DUMMY-ORG',
         ]);
 
         $reqOpt = new SecurityAuthenticateOptions($authParams);
@@ -59,8 +58,6 @@ class AuthenticateTest extends BaseTestCase
 
         $this->assertEquals('DUT' , $msg->dutyCode->dutyCodeDetails->referenceQualifier);
         $this->assertEquals('SU' , $msg->dutyCode->dutyCodeDetails->referenceIdentifier);
-
-        $this->assertEquals('DUMMY-ORG' , $msg->systemDetails->organizationDetails->organizationId);
 
         $this->assertEquals(PasswordInfo::DATA_TYPE_EDIFACT , $msg->passwordInfo->dataType);
         $this->assertEquals(4 , $msg->passwordInfo->dataLength);

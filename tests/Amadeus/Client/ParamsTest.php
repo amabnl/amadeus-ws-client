@@ -44,7 +44,6 @@ class ParamsTest extends BaseTestCase
                     'officeId' => 'BRUXXXXXX',
                     'originatorTypeCode' => 'U',
                     'userId' => 'WSXXXXXX',
-                    'organizationId' => 'NMC-XXXXXX',
                     'passwordLength' => '4',
                     'passwordData' => base64_encode('TEST')
                 ]
@@ -71,7 +70,6 @@ class ParamsTest extends BaseTestCase
 
         $this->assertInstanceOf('Amadeus\Client\Params\AuthParams', $params->sessionHandlerParams->authParams);
         $this->assertEquals('BRUXXXXXX', $params->sessionHandlerParams->authParams->officeId);
-        $this->assertEquals('NMC-XXXXXX', $params->sessionHandlerParams->authParams->organizationId);
         $this->assertEquals('WSXXXXXX', $params->sessionHandlerParams->authParams->userId);
         $this->assertEquals('U', $params->sessionHandlerParams->authParams->originatorTypeCode);
         $this->assertEquals(base64_encode('TEST'), $params->sessionHandlerParams->authParams->passwordData);
@@ -96,7 +94,6 @@ class ParamsTest extends BaseTestCase
                 'officeId' => 'BRUXXXXXX',
                 'originatorTypeCode' => 'U',
                 'userId' => 'WSXXXXXX',
-                'organizationId' => 'NMC-XXXXXX',
                 'passwordLength' => '4',
                 'passwordData' => base64_encode('TEST')
             ],
@@ -121,7 +118,6 @@ class ParamsTest extends BaseTestCase
         //Auth Params on highest level:
         $this->assertInstanceOf('Amadeus\Client\Params\AuthParams', $params->authParams);
         $this->assertEquals('BRUXXXXXX', $params->authParams->officeId);
-        $this->assertEquals('NMC-XXXXXX', $params->authParams->organizationId);
         $this->assertEquals('WSXXXXXX', $params->authParams->userId);
         $this->assertEquals('U', $params->authParams->originatorTypeCode);
         $this->assertEquals(base64_encode('TEST'), $params->authParams->passwordData);
@@ -155,7 +151,6 @@ class ParamsTest extends BaseTestCase
                 'officeId' => 'BRUXXXXXX',
                 'originatorTypeCode' => 'U',
                 'userId' => 'WSXXXXXX',
-                'organizationId' => 'NMC-XXXXXX',
                 'passwordLength' => '4',
                 'passwordData' => base64_encode('TEST')
             ],
@@ -189,7 +184,6 @@ class ParamsTest extends BaseTestCase
         //Auth Params on highest level:
         $this->assertInstanceOf('Amadeus\Client\Params\AuthParams', $params->authParams);
         $this->assertEquals('BRUXXXXXX', $params->authParams->officeId);
-        $this->assertEquals('NMC-XXXXXX', $params->authParams->organizationId);
         $this->assertEquals('WSXXXXXX', $params->authParams->userId);
         $this->assertEquals('U', $params->authParams->originatorTypeCode);
         $this->assertEquals(base64_encode('TEST'), $params->authParams->passwordData);
@@ -215,7 +209,6 @@ class ParamsTest extends BaseTestCase
                     'officeId' => 'BRUXXXXXX',
                     'originatorTypeCode' => 'U',
                     'userId' => 'WSXXXXXX',
-                    'organizationId' => 'NMC-XXXXXX',
                     'passwordLength' => '4',
                     'passwordData' => base64_encode('TEST'),
                     'nonceBase' => 'abloobloo'
@@ -271,7 +264,6 @@ class ParamsTest extends BaseTestCase
             'officeId' => 'BRUXXXXXX',
             'originatorTypeCode' => 'U',
             'userId' => 'WSXXXXXX',
-            'organizationId' => 'NMC-XXXXXX',
             'passwordLength' => '4',
             'passwordData' => base64_encode('TEST')
         ]);

@@ -15,7 +15,7 @@ See `the Amadeus Web Services website <https://webservices.amadeus.com/>`_ for m
 The basic pieces of information you will need to use this library are:
 
 - **The WSDL file with all its includes**: You can just extract the ZIP file you received from Amadeus to a location on your filesystem where the client can access it.
-- **The authentication information required to start a session**: Office ID's, User Id (=Originator), Password, Duty Code. *For legacy WSAP's using Soap Header 1 or 2, you'll need: Office ID, Originator, Organization ID, Password Length, Password Data. Soap Header 1 is not yet implemented in this library*
+- **The authentication information required to start a session**: Office ID's, User Id (=Originator), Password, Duty Code. 
 
 You usually receive this information after the project kick-off has been done and a support person has been assigned to your project.
 
@@ -108,9 +108,8 @@ Soap Header 2 example:
             'officeId' => 'BRUXX1111', //The Amadeus Office Id you want to sign in to - must be open on your WSAP.
             'userId' => 'WSBENXXX', //Also known as 'Originator' for Soap Header 1 & 2 WSDL's
             'passwordData' => 'dGhlIHBhc3N3b3Jk', // **base 64 encoded** password
-            'passwordLength' => 12,
+            'passwordLength' => 12, // Length of the original password, that is decoded passwordData
             'dutyCode' => 'SU',
-            'organizationId' => 'DUMMY-ORG',
         ],
         'sessionHandlerParams' => [
             'soapHeaderVersion' => Client::HEADER_V2,

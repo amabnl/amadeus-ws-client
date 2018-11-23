@@ -61,13 +61,6 @@ class SecurityAuthenticateOptions extends Base
     public $dutyCode;
 
     /**
-     * Organization ID
-     *
-     * @var string
-     */
-    public $organizationId;
-
-    /**
      * Password Length of plain password.
      *
      * Only for SoapHeader < 4.
@@ -106,7 +99,6 @@ class SecurityAuthenticateOptions extends Base
     {
         $this->officeId = $authParams->officeId;
         $this->dutyCode = $authParams->dutyCode;
-        $this->organizationId = $authParams->organizationId;
         $this->originatorTypeCode = $authParams->originatorTypeCode;
         $this->userId = $authParams->userId;
         $this->passwordLength = $authParams->passwordLength;

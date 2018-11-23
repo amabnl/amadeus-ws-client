@@ -288,7 +288,6 @@ class SoapHeader2Test extends BaseTestCase
                 'officeId' => 'BRUXX0000',
                 'originatorTypeCode' => 'U',
                 'userId' => 'DUMMYORIG',
-                'organizationId' => 'DUMMYORG',
                 'passwordLength' => 12,
                 'passwordData' => 'dGhlIHBhc3N3b3Jk'
             ]

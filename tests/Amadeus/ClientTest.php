@@ -4379,7 +4379,6 @@ class ClientTest extends BaseTestCase
             'passwordData' => base64_encode('TEST'),
             'passwordLength' => 4,
             'dutyCode' => 'SU',
-            'organizationId' => 'DUMMY-ORG',
         ]);
 
         $mockedSendResult = new Client\Session\Handler\SendResult();
@@ -4453,7 +4452,6 @@ class ClientTest extends BaseTestCase
                 'passwordData' => base64_encode('TEST'),
                 'passwordLength' => 4,
                 'dutyCode' => 'SU',
-                'organizationId' => 'DUMMY-ORG',
             ]
         ]);
 
@@ -4464,7 +4462,6 @@ class ClientTest extends BaseTestCase
             'passwordData' => base64_encode('TEST'),
             'passwordLength' => 4,
             'dutyCode' => 'SU',
-            'organizationId' => 'DUMMY-ORG',
         ]);
 
         $mockedSendResult = new Client\Session\Handler\SendResult();

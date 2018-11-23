@@ -35,21 +35,8 @@ class SystemDetails
      */
     public $workstationId;
     /**
-     * @var OrganizationDetails
-     */
-    public $organizationDetails;
-    /**
      * @var string
      */
     public $idQualifier;
 
-    /**
-     * SystemDetails constructor.
-     *
-     * @param string $organizationId
-     */
-    public function __construct($organizationId)
-    {
-        $this->organizationDetails = new OrganizationDetails($organizationId);
-    }
 }

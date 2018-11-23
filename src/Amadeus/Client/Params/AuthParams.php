@@ -59,13 +59,6 @@ class AuthParams
     public $userId;
 
     /**
-     * Organization ID
-     *
-     * @var string
-     */
-    public $organizationId;
-
-    /**
      * Password Length of plain password.
      *
      * Only for SoapHeader < 4.
@@ -113,7 +106,6 @@ class AuthParams
             $this->originatorTypeCode = (isset($params['originatorTypeCode'])) ? $params['originatorTypeCode'] : "U";
             $this->dutyCode = (isset($params['dutyCode'])) ? $params['dutyCode'] : "SU";
             $this->userId = $params['userId'];
-            $this->organizationId = (isset($params['organizationId'])) ? $params['organizationId'] : null;
             $this->passwordLength = (isset($params['passwordLength'])) ? $params['passwordLength'] : null;
             $this->passwordData = $params['passwordData'];
 
