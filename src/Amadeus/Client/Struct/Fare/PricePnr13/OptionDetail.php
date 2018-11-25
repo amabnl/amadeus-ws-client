@@ -46,7 +46,13 @@ class OptionDetail
             $this->criteriaDetails[] = new CriteriaDetails($options);
         } elseif (is_array($options)) {
             foreach ($options as $option) {
-                $this->criteriaDetails[] = new CriteriaDetails($option);
+                if (is_array($option)) {
+                    foreach ($option as $optionType => $optionDescription) {
+                        $this->criteriaDetails[] = new CriteriaDetails($optionType, $optionDescription);
+                    }
+                } else {
+                    $this->criteriaDetails[] = new CriteriaDetails($option);
+                }
             }
         }
     }
