@@ -20,35 +20,26 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\ResponseHandler\SalesReports;
+
+use Amadeus\Client\ResponseHandler\StandardResponseHandler;
+use Amadeus\Client\Result;
+use Amadeus\Client\Session\Handler\SendResult;
 
 /**
- * CriteriaDetails
+ * HandlerDisplayDailyOrSummarizedReport
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @package Amadeus\Client\ResponseHandler\SalesReports
+ * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
-class CriteriaDetails
+class HandlerDisplayDailyOrSummarizedReport extends StandardResponseHandler
 {
     /**
-     * @var string
+     * @param SendResult $response
+     * @return Result
      */
-    public $attributeType;
-
-    /**
-     * @var string
-     */
-    public $attributeDescription;
-
-    /**
-     * CriteriaDetails constructor.
-     *
-     * @param string $type
-     * @param string $description
-     */
-    public function __construct($type, $description = null)
+    public function analyze(SendResult $response)
     {
-        $this->attributeType = $type;
-        $this->attributeDescription = $description;
+        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
     }
 }

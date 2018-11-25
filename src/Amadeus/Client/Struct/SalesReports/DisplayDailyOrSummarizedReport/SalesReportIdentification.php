@@ -20,35 +20,31 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\Struct\SalesReports\DisplayDailyOrSummarizedReport;
 
 /**
- * CriteriaDetails
+ * SalesReportIdentification
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @package Amadeus\Client\Struct\SalesReports\DisplayDailyOrSummarizedReport
+ * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
-class CriteriaDetails
+class SalesReportIdentification
 {
     /**
-     * @var string
-     */
-    public $attributeType;
-
-    /**
-     * @var string
-     */
-    public $attributeDescription;
-
-    /**
-     * CriteriaDetails constructor.
+     * A number allocated to a group or an item.
      *
-     * @param string $type
-     * @param string $description
+     * @var ItemNumberDetails[]
      */
-    public function __construct($type, $description = null)
+    public $itemNumberDetails;
+
+    /**
+     * SalesReportIdentification constructor.
+     *
+     * @param $number
+     * @param $type
+     */
+    public function __construct($number, $type)
     {
-        $this->attributeType = $type;
-        $this->attributeDescription = $description;
+        $this->itemNumberDetails[] = new ItemNumberDetails($number, $type);
     }
 }

@@ -50,6 +50,10 @@ class OptionDetail
             foreach ($options as $option) {
                 if ($option instanceof CriteriaDetails) {
                     $this->criteriaDetails[] = $option;
+                } elseif (is_array($option)) {
+                    foreach ($option as $optionType => $optionDescription) {
+                        $this->criteriaDetails[] = new CriteriaDetails($optionType, $optionDescription);
+                    }
                 } else {
                     $this->criteriaDetails[] = new CriteriaDetails($option);
                 }

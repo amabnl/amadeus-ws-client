@@ -3662,9 +3662,13 @@ Request a basic Extreme Search result:
 
     $extremeSearchResult = $client->priceXplorerExtremeSearch($opt);
 
-*******************************
+************
+SalesReports
+************
+
+-------------------------------
 SalesReports_DisplayQueryReport
-*******************************
+-------------------------------
 
 Request a sales report from a certain date to another date, issued in all offices sharing the same IATA number;
 
@@ -3680,6 +3684,41 @@ Request a sales report from a certain date to another date, issued in all office
         'agencyIataNumber' => '23491193',
         'startDate' => \DateTime::createFromFormat('Ymd', '20150101', new \DateTimeZone('UTC')),
         'endDate' => \DateTime::createFromFormat('Ymd', '20160331', new \DateTimeZone('UTC'))
+    ]);
+
+    $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
+
+-------------------------------------------
+SalesReports_DisplayDailyOrSummarizedReport
+-------------------------------------------
+
+SalesReports_DisplayDailyOrSummarizedReport request options are exact the same as for SalesReports_DisplayQueryReport except
+this have SalesReportIdentification options and request doesn't have scrolling options.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\SalesReportsDisplayDailyOrSummarizedReportRequestOptions;
+
+    $opt = new SalesReportsDisplayDailyOrSummarizedReportRequestOptions([
+        'salesReportIdentificationNumber' => 197,
+        'salesReportIdentificationType' => SalesReportsDisplayDailyOrSummarizedReportOptions::SALES_REPORT_IDENTIFICATION_TYPE_NUMBER
+    ]);
+
+    $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
+
+----------------------------------
+SalesReports_DisplayNetRemitReport
+----------------------------------
+
+SalesReports_DisplayNetRemitReport request options are exactly the same as for SalesReports_DisplayQueryReport except
+that 'salesIndicator' option here named as 'documentInfo' and request doesn't have scrolling options:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\SalesReportsDisplayNetRemitReportOptions;
+
+    $opt = new SalesReportsDisplayNetRemitReportOptions([
+        'documentInfo' => SalesReportsDisplayNetRemitReportOptions::SALESIND_DOMESTIC
     ]);
 
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);

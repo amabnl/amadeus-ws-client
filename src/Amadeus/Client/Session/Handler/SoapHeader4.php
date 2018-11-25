@@ -285,8 +285,8 @@ class SoapHeader4 extends Base
             );
         }
 
-        //Send authentication info
-        if ($this->isAuthenticated === false) {
+        //Send authentication info headers if not authenticated and not Security_Authenticate message call
+        if ($this->isAuthenticated === false && $this->isNotSecurityAuthenticateMessage($messageName)) {
             //Generate nonce, msg creation string & password digest:
             $password = base64_decode($params->authParams->passwordData);
             $creation = new \DateTime('now', new \DateTimeZone('UTC'));
@@ -412,11 +412,11 @@ class SoapHeader4 extends Base
         $charId = strtoupper(md5(uniqid(rand(), true)));
         $hyphen = chr(45); // "-"
 
-        $uuid = substr($charId, 0, 8).$hyphen
-            .substr($charId, 8, 4).$hyphen
-            .substr($charId, 12, 4).$hyphen
-            .substr($charId, 16, 4).$hyphen
-            .substr($charId, 20, 12);
+        $uuid = substr($charId, 0, 8) . $hyphen
+            . substr($charId, 8, 4) . $hyphen
+            . substr($charId, 12, 4) . $hyphen
+            . substr($charId, 16, 4) . $hyphen
+            . substr($charId, 20, 12);
 
         return $uuid;
     }
@@ -490,6 +490,7 @@ class SoapHeader4 extends Base
     protected function createDateTimeStringForAuth($creationDateTime, $micro)
     {
         $creationDateTime->setTimezone(new \DateTimeZone('UTC'));
+
         return $creationDateTime->format("Y-m-d\TH:i:s:") . $micro . 'Z';
     }
 
@@ -508,5 +509,16 @@ class SoapHeader4 extends Base
         }
 
         return $options;
+    }
+
+    /**
+     * Check is called message is not Security_Authenticate.
+     *
+     * @param $messageName
+     * @return bool
+     */
+    protected function isNotSecurityAuthenticateMessage($messageName)
+    {
+        return 'Security_Authenticate' !== $messageName;
     }
 }

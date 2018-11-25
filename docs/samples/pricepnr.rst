@@ -419,3 +419,18 @@ This option is used to specify the form of payment information to use.
             ]
         ])
     );
+
+Fare-family
+===========
+
+Price with given fare-family 'CLASSIC':
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'fareFamily' => 'CLASSIC'
+        ])
+    );

@@ -20,35 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\RequestCreator\Converter\SalesReports;
+
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\SalesReportsDisplayNetRemitReportOptions;
+use Amadeus\Client\Struct;
 
 /**
- * CriteriaDetails
+ * DisplayNetRemitReport Request converter
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @package Amadeus\Client\RequestCreator\Converter\SalesReports
+ * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
-class CriteriaDetails
+class DisplayNetRemitReportConv extends BaseConverter
 {
     /**
-     * @var string
+     * @param SalesReportsDisplayNetRemitReportOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\SalesReports\DisplayNetRemitReport
      */
-    public $attributeType;
-
-    /**
-     * @var string
-     */
-    public $attributeDescription;
-
-    /**
-     * CriteriaDetails constructor.
-     *
-     * @param string $type
-     * @param string $description
-     */
-    public function __construct($type, $description = null)
+    public function convert($requestOptions, $version)
     {
-        $this->attributeType = $type;
-        $this->attributeDescription = $description;
+        return new Struct\SalesReports\DisplayNetRemitReport($requestOptions);
     }
 }
