@@ -1849,4 +1849,23 @@ class Client extends Base
         $msgName = 'PNR_DeleteTSM';
         return $this->callMessage($msgName, $options, $messageOptions);
     }
+
+    /**
+     * Fare_GetFareFamilyDescription
+     *
+     * @param RequestOptions\PnrDeleteTsmOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function FareGetFareFamilyDescription(
+        RequestOptions\FareGetFareFamilyDescriptionOptions $options,
+        $messageOptions = []
+    )
+    {
+        $msgName = 'Fare_GetFareFamilyDescription';
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
 }
