@@ -370,6 +370,39 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertEquals('Start', $result[3]->data->TransactionStatusCode);
     }
 
+    /**
+     * Test for TransactionStatusCode in Soap-Headers for a PNR_Retrieve request with endSession set to *true*.
+     */
+    public function testCanMakeSoapHeadersWithStatefulPNRRetrieveEndSessionTrue()
+    {
+        $sessionData = [
+            'sessionId' => '01ZWHV5EMT',
+            'sequenceNumber' => '1',
+            'securityToken' => '3WY60GB9B0FX2SLIR756QZ4G2'
+        ];
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+        $sessionHandler->setStateful(true);
+        $sessionHandler->setSessionData($sessionData);
+
+        $meth = self::getMethod($sessionHandler, 'createSoapHeaders');
+
+        /** @var \SoapHeader[] $result */
+        $result = $meth->invoke(
+            $sessionHandler,
+            $sessionData,
+            $sessionHandlerParams,
+            'PNR_Retrieve',
+            ['endSession' => true]
+        );
+
+        // expect 4 Soap-Headers (being: MessageID, Action, To, Session)
+        $this->assertCount(4, $result);
+
+        $this->assertEquals('Session', $result[3]->name);
+        $this->assertEquals('End', $result[3]->data->TransactionStatusCode);
+    }
+
     public function dataProviderGenerateDigest()
     {
         return [
