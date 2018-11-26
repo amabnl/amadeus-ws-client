@@ -336,6 +336,32 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertEquals('http://xml.amadeus.com/2010/06/Security_v1', $result[5]->namespace);
     }
 
+    /**
+     * Test that the security soap header is present on Security_Authenticate requests.
+     */
+    public function testCanMakeSoapHeadersWithSecurityAuthenticate()
+    {
+        $sessionHandlerParams = $this->makeSessionHandlerParams(null, null, true);
+        $sessionHandler = new SoapHeader4($sessionHandlerParams);
+
+        $meth = self::getMethod($sessionHandler, 'createSoapHeaders');
+
+        /** @var \SoapHeader[] $result */
+        $result = $meth->invoke(
+            $sessionHandler,
+            ['sessionId' => null, 'sequenceNumber' => null, 'securityToken' => null],
+            $sessionHandlerParams,
+            'Security_Authenticate',
+            []
+        );
+
+        // expect 6 Soap-Headers (being: MessageID, Action, To, Security, Session, AMA_SecurityHostedUser)
+        $this->assertCount(6, $result);
+
+        // we assert existence of *Security* and *AMA_SecurityHostedUser*
+        $this->assertEquals('Security', $result[4]->name);
+        $this->assertEquals('AMA_SecurityHostedUser', $result[5]->name);
+    }
 
     public function dataProviderGenerateDigest()
     {
