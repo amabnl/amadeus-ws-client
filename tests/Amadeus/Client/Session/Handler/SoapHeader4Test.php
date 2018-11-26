@@ -337,12 +337,14 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
     }
 
     /**
-     * Test that the security soap header is present on Security_Authenticate requests.
+     * Test that the security soap header is not present on stateful Security_Authenticate requests,
+     * but because of them being stateful the Session.TransactionStatusCode has to be "Start".
      */
-    public function testCanMakeSoapHeadersWithSecurityAuthenticate()
+    public function testCanMakeSoapHeadersWithStatefulSecurityAuthenticate()
     {
-        $sessionHandlerParams = $this->makeSessionHandlerParams(null, null, true);
+        $sessionHandlerParams = $this->makeSessionHandlerParams();
         $sessionHandler = new SoapHeader4($sessionHandlerParams);
+        $sessionHandler->setStateful(true);
 
         $meth = self::getMethod($sessionHandler, 'createSoapHeaders');
 
@@ -355,12 +357,17 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
             []
         );
 
-        // expect 6 Soap-Headers (being: MessageID, Action, To, Security, Session, AMA_SecurityHostedUser)
-        $this->assertCount(6, $result);
+        // expect 4 Soap-Headers (being: MessageID, Action, To, Session)
+        $this->assertCount(4, $result);
 
-        // we assert existence of *Security* and *AMA_SecurityHostedUser*
-        $this->assertEquals('Security', $result[4]->name);
-        $this->assertEquals('AMA_SecurityHostedUser', $result[5]->name);
+        // we assert non-existence of *Security* and *AMA_SecurityHostedUser*
+        foreach ($result as $res) {
+            $this->assertNotEquals('Security', $res->name);
+            $this->assertNotEquals('AMA_SecurityHostedUser', $res->name);
+        }
+
+        $this->assertEquals('Session', $result[3]->name);
+        $this->assertEquals('Start', $result[3]->data->TransactionStatusCode);
     }
 
     public function dataProviderGenerateDigest()
@@ -835,12 +842,14 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
 
         $actual = $sessionHandler->getMessagesAndVersions();
 
-        $this->assertCount(2, $actual);
-        $this->assertEquals(['PNR_Retrieve', 'Security_SignOut'], array_keys($actual));
+        $this->assertCount(3, $actual);
+        $this->assertEquals(['PNR_Retrieve', 'Security_SignOut', 'Security_Authenticate'], array_keys($actual));
         $this->assertEquals('11.3', $actual['PNR_Retrieve']['version']);
         $this->assertInternalType('string', $actual['PNR_Retrieve']['wsdl']);
         $this->assertEquals('4.1', $actual['Security_SignOut']['version']);
         $this->assertInternalType('string', $actual['Security_SignOut']['wsdl']);
+        $this->assertEquals('6.1', $actual['Security_Authenticate']['version']);
+        $this->assertInternalType('string', $actual['Security_Authenticate']['wsdl']);
     }
 
     public function testCanHandleInvalidWsdlWhenLoadingMessagesAndVersions()
@@ -877,8 +886,8 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $actual = $sessionHandler->getMessagesAndVersions();
 
         $this->assertInternalType('array', $actual);
-        $this->assertCount(3, $actual);
-        $this->assertEquals(['PNR_Retrieve', 'Security_SignOut', 'Media_GetMedia'], array_keys($actual));
+        $this->assertCount(4, $actual);
+        $this->assertEquals(['PNR_Retrieve', 'Security_SignOut', 'Security_Authenticate', 'Media_GetMedia'], array_keys($actual));
         $this->assertEquals('11.3', $actual['PNR_Retrieve']['version']);
         $this->assertInternalType('string', $actual['PNR_Retrieve']['wsdl']);
         $this->assertEquals('4.1', $actual['Security_SignOut']['version']);
