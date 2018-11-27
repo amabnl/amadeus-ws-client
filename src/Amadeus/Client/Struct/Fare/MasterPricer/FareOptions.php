@@ -53,7 +53,9 @@ class FareOptions
      * @var ConversionRate
      */
     public $conversionRate;
-
+    /**
+     * @var FormOfPaymentDetails[]|array
+     */
     public $formOfPayment;
 
     public $frequentTravellerInfo;
@@ -73,6 +75,7 @@ class FareOptions
      * @param string|null Corporate qualifier for Corporate Unifares
      * @param $multiTicket
      * @param MPTicketingPriceScheme|null $ticketingPriceScheme
+     * @param array $formOfPayment
      */
     public function __construct(
         array $flightOptions,
@@ -82,7 +85,8 @@ class FareOptions
         $feeIds,
         $corporateQualifier,
         $multiTicket,
-        $ticketingPriceScheme
+        $ticketingPriceScheme,
+        array $formOfPayment
     ) {
         if ($tickPreCheck === true) {
             $this->addPriceType(PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK);
@@ -104,6 +108,9 @@ class FareOptions
         }
         if (!is_null($ticketingPriceScheme)) {
             $this->loadTicketingPriceScheme($ticketingPriceScheme);
+        }
+        if (!is_null($formOfPayment) && count($formOfPayment)) {
+            $this->loadFormOfPayment($formOfPayment);
         }
     }
 
@@ -173,5 +180,17 @@ class FareOptions
         $priceScheme->status = $ticketingPriceScheme->status;
         $priceScheme->description = $ticketingPriceScheme->description;
         $this->ticketingPriceScheme = $priceScheme;
+    }
+
+    protected function loadFormOfPayment(array $formOfPayment)
+    {
+        /** @var \Amadeus\Client\RequestOptions\Fare\MasterPricer\FormOfPaymentDetails $fop */
+        foreach ($formOfPayment as $fop) {
+            $this->formOfPayment[] = new FormOfPaymentDetails(
+                $fop->type,
+                $fop->creditCardNumber,
+                $fop->chargedAmount
+            );
+        }
     }
 }
