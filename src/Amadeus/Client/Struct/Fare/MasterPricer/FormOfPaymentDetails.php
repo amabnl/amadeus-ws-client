@@ -36,19 +36,19 @@ class FormOfPaymentDetails
     public $type;
 
     /**
-     * @var string
-     */
-    public $creditCardNumber;
-
-    /**
      * @var string|int|float|null
      */
     public $chargedAmount;
 
-    public function __construct($type, $creditCardNumber, $chargedAmount = null)
+    /**
+     * @var string|null
+     */
+    public $creditCardNumber;
+
+    public function __construct($type, $chargedAmount = null, $creditCardNumber = null)
     {
         $this->type = $type;
-        $this->creditCardNumber = $creditCardNumber;
         $this->chargedAmount = $chargedAmount;
+        $this->creditCardNumber = $creditCardNumber;
     }
 }

@@ -75,7 +75,7 @@ class FareOptions
      * @param string|null Corporate qualifier for Corporate Unifares
      * @param $multiTicket
      * @param MPTicketingPriceScheme|null $ticketingPriceScheme
-     * @param array $formOfPayment
+     * @param array|null $formOfPayment
      */
     public function __construct(
         array $flightOptions,
@@ -86,7 +86,7 @@ class FareOptions
         $corporateQualifier,
         $multiTicket,
         $ticketingPriceScheme,
-        array $formOfPayment
+        $formOfPayment
     ) {
         if ($tickPreCheck === true) {
             $this->addPriceType(PricingTicketing::PRICETYPE_TICKETABILITY_PRECHECK);
@@ -188,8 +188,8 @@ class FareOptions
         foreach ($formOfPayment as $fop) {
             $this->formOfPayment[] = new FormOfPaymentDetails(
                 $fop->type,
-                $fop->creditCardNumber,
-                $fop->chargedAmount
+                $fop->chargedAmount,
+                $fop->creditCardNumber
             );
         }
     }
