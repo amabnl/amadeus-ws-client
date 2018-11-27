@@ -46,6 +46,8 @@ class FormOfPaymentDetails extends LoadParamsFromArray
     /**
      * Identification of a form of payment type.
      *
+     * self::TYPE_*
+     *
      * @var string
      */
     public $type;

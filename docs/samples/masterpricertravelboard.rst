@@ -1232,7 +1232,7 @@ The following sample disallows airport changes for the outbound leg:
     ]);
 
 Ticketing Price Scheme
-==================================
+======================
 
 When needed to impose an additional Service Fee to the customer add PSR number (Price Scheme Reference):
 
@@ -1265,5 +1265,46 @@ When needed to impose an additional Service Fee to the customer add PSR number (
         'ticketingPriceScheme' => new MPTicketingPriceScheme([
             'referenceNumber' => '00012345'
         ])
+    ]);
+
+Form of Payment
+==================================
+
+The form of payment option may be combined with any other option. A maximum of 3 forms of payment may be specified in.
+See all available type codes in `Amadeus\Client\RequestOptions\Fare\MasterPricer\FormOfPaymentDetails` class or Amadeus Extranet docs.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MasterPricer\FormOfPaymentDetails;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'NYC']),
+                'arrivalLocation' => new MPLocation(['city' => 'LAX']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2018-07-05T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+            ]),
+        ],
+        'formOfPayment' => [
+            new FormOfPaymentDetails([
+                'type' => FormOfPaymentDetails::TYPE_CREDIT_CARD,
+                'chargedAmount' => 100,
+                'creditCardNumber' => '123456'
+            ])
+        ]
     ]);
 
