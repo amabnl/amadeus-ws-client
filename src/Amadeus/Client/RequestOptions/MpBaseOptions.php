@@ -134,7 +134,7 @@ class MpBaseOptions extends Base
      * @var Fare\MPFeeId[]
      */
     public $feeIds;
-    
+
     /**
      * Whether to perform a multi ticket search
      *
@@ -153,4 +153,11 @@ class MpBaseOptions extends Base
      * @var Fare\MasterPricer\MultiTicketWeights
      */
     public $multiTicketWeights;
+
+    /**
+     * A maximum of 3 forms of payment may be specified.
+     *
+     * @var Fare\MasterPricer\FormOfPaymentDetails[]|array
+     */
+    public $formOfPayment;
 }
