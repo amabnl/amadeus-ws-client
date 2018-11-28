@@ -45,6 +45,23 @@ class SoapHeader4 extends Base
      */
     const XPATH_ENDPOINT = 'string(/wsdl:definitions/wsdl:service/wsdl:port/soap:address/@location)';
 
+    /**
+     * SoapHeader - Session
+     * TransactionStatusCode for starting new sessions.
+     */
+    const TRANSACTION_STATUS_CODE_START = 'Start';
+
+    /**
+     * SoapHeader - Session
+     * TransactionStatusCode for active stateful sessions.
+     */
+    const TRANSACTION_STATUS_CODE_INSERIES = 'InSeries';
+
+    /**
+     * SoapHeader - Session
+     * TransactionStatusCode for ending sessions.
+     */
+    const TRANSACTION_STATUS_CODE_END = 'End';
 
     /**
      * Switch between stateful & stateless sessions. Default: stateful
@@ -323,7 +340,7 @@ class SoapHeader4 extends Base
                         'Session',
                         new Client\Struct\HeaderV4\Session(
                             null,
-                            "Start"
+                            self::TRANSACTION_STATUS_CODE_START
                         )
                     )
                 );
@@ -344,11 +361,6 @@ class SoapHeader4 extends Base
                 )
             );
         } elseif ($stateful === true) {
-            //We are authenticated and stateful: provide session header to continue or terminate session
-            $statusCode =
-                (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) ?
-                    "End" : "InSeries";
-
             array_push(
                 $headersToSet,
                 new \SoapHeader(
@@ -356,7 +368,7 @@ class SoapHeader4 extends Base
                     'Session',
                     new Client\Struct\HeaderV4\Session(
                         $sessionData,
-                        $statusCode
+                        $this->getStatefulStatusCode($messageName, $messageOptions)
                     )
                 )
             );
@@ -520,5 +532,28 @@ class SoapHeader4 extends Base
     protected function isNotSecurityAuthenticateMessage($messageName)
     {
         return 'Security_Authenticate' !== $messageName;
+    }
+
+    /**
+     * Return transaction code for stateful requests.
+     *
+     * @param string $messageName name of request message (e.g. Security_Authenticate)
+     * @param array $messageOptions
+     * @return string
+     */
+    private function getStatefulStatusCode($messageName, array $messageOptions)
+    {
+        // on security-auth this is always 'Start'
+        if ('Security_Authenticate' === $messageName) {
+            return self::TRANSACTION_STATUS_CODE_START;
+        }
+
+        // if endSession is set this will be (the) 'End'
+        if (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) {
+            return self::TRANSACTION_STATUS_CODE_END;
+        }
+
+        // on everything else we assume in-series
+        return self::TRANSACTION_STATUS_CODE_INSERIES;
     }
 }
