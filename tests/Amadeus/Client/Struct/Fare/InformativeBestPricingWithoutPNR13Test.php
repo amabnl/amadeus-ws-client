@@ -23,13 +23,13 @@
 namespace Test\Amadeus\Client\Struct\Fare;
 
 use Amadeus\Client\RequestOptions\Fare\InformativeBestPricingWithoutPnr\Cabin;
+use Amadeus\Client\RequestOptions\Fare\InformativeBestPricingWithoutPnr\CabinOptions;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions;
 use Amadeus\Client\Struct\Fare\InformativeBestPricingWithoutPNR13;
-use Amadeus\Client\Struct\Fare\PricePnr13\CriteriaDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\FirstCurrencyDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\PenDisInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionKey;
@@ -101,9 +101,9 @@ class InformativeBestPricingWithoutPNR13Test extends BaseTestCase
                     ])
                 ]
             ]),
-            'cabin' => new Cabin(
+            'cabin' => new CabinOptions(
                 [
-                    new CriteriaDetails(Cabin::TYPE_FIRST_CABIN, Cabin::CLASS_PREMIUM_ECONOMY)
+                    new Cabin(Cabin::TYPE_FIRST_CABIN, Cabin::CLASS_PREMIUM_ECONOMY)
                 ]
             )
         ]);

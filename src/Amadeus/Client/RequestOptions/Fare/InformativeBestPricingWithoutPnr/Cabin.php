@@ -22,19 +22,14 @@
 
 namespace Amadeus\Client\RequestOptions\Fare\InformativeBestPricingWithoutPnr;
 
-use Amadeus\Client\Struct\Fare\PricePnr13\CriteriaDetails;
-
 /**
  * Cabin
  *
  * new Cabin(
- *   [
- *     new CriteriaDetails(Cabin::TYPE_FIRST_CABIN, Cabin::CLASS_BUSINESS),
- *     new CriteriaDetails(Cabin::TYPE_SECOND_CABIN, Cabin::CLASS_PREMIUM_ECONOMY)
- *   ]
+ *   Cabin::TYPE_FIRST_CABIN, Cabin::CLASS_BUSINESS
  * )
  *
- * @package Amadeus\Client\RequestOptions\Fare\PricePnr
+ * @package Amadeus\Client\RequestOptions\Fare\InformativeBestPricingWithoutPnr
  * @author  tsari <tibor.sari@invia.de>
  */
 class Cabin
@@ -76,17 +71,40 @@ class Cabin
     const CLASS_PREMIUM_ECONOMY  = 'W';
 
     /**
-     * @var array|CriteriaDetails[]
+     * @var string
      */
-    public $criteriaDetails = [];
+    private $type;
+
+    /**
+     * @var string
+     */
+    private $class;
 
     /**
      * Cabin constructor.
      *
-     * @param CriteriaDetails[]|array $criteriaDetails
+     * @param string $type
+     * @param string $class
      */
-    public function __construct($criteriaDetails)
+    public function __construct($type, $class = null)
     {
-        $this->criteriaDetails = $criteriaDetails;
+        $this->type  = $type;
+        $this->class = $class;
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getClass()
+    {
+        return $this->class;
     }
 }

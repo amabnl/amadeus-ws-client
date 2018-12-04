@@ -6,13 +6,13 @@ Price with premium economy cabin class:
 .. code-block:: php
 
     use Amadeus\Client\RequestOptions\Fare\InformativeBestPricingWithoutPnr\Cabin;
-    use Amadeus\Client\Struct\Fare\PricePnr13\CriteriaDetails;
+    use Amadeus\Client\RequestOptions\Fare\InformativeBestPricingWithoutPnr\CabinOptions;
 
     $pricingResponse = $client->fareInformativeBestPricingWithoutPnr(
         new FareInformativeBestPricingWithoutPnrOptions([
-            'cabin' => new Cabin(
+            'cabin' => new CabinOptions(
                 [
-                    new CriteriaDetails(Cabin::TYPE_FIRST_CABIN, Cabin::CLASS_PREMIUM_ECONOMY)
+                    new Cabin(Cabin::TYPE_FIRST_CABIN, Cabin::CLASS_PREMIUM_ECONOMY)
                 ]
             )
         ])
