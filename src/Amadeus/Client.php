@@ -1868,4 +1868,21 @@ class Client extends Base
         $msgName = 'Fare_GetFareFamilyDescription';
         return $this->callMessage($msgName, $options, $messageOptions);
     }
+
+    /**
+     * Fare_GetFareFamilyDescription
+     *
+     * @param RequestOptions\PAYGetVirtualCreditCardOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function PayGetVirtualCreditCard(RequestOptions\PAYGetVirtualCreditCardOptions $options,
+                                            $messageOptions = [])
+    {
+        $msgName = 'PAY_GetVirtualCreditCard';
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
 }
