@@ -123,7 +123,6 @@ class FarePricePnrWithBookingClassOptions extends Base
      */
     public $overrideOptions = [];
 
-
     /**
      * @var array
      */

@@ -420,7 +420,6 @@ This option is used to specify the form of payment information to use.
         ])
     );
 
-
 Fare-family
 ===========
 
@@ -435,4 +434,3 @@ Price with given fare-family 'CLASSIC':
             'fareFamily' => 'CLASSIC'
         ])
     );
-

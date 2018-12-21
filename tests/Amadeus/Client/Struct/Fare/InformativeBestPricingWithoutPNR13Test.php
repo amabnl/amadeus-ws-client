@@ -22,6 +22,8 @@
 
 namespace Test\Amadeus\Client\Struct\Fare;
 
+use Amadeus\Client\RequestOptions\Fare\InformativeBestPricingWithoutPnr\Cabin;
+use Amadeus\Client\RequestOptions\Fare\InformativeBestPricingWithoutPnr\CabinOptions;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
@@ -98,7 +100,12 @@ class InformativeBestPricingWithoutPNR13Test extends BaseTestCase
                         'reference' => 2
                     ])
                 ]
-            ])
+            ]),
+            'cabin' => new CabinOptions(
+                [
+                    new Cabin(Cabin::TYPE_FIRST_CABIN, Cabin::CLASS_PREMIUM_ECONOMY)
+                ]
+            )
         ]);
 
         $msg = new InformativeBestPricingWithoutPNR13($opt);
@@ -145,7 +152,7 @@ class InformativeBestPricingWithoutPNR13Test extends BaseTestCase
         $this->assertNull($msg->segmentGroup[1]->additionnalSegmentDetails);
         $this->assertNull($msg->segmentGroup[1]->inventory);
 
-        $this->assertCount(4, $msg->pricingOptionGroup);
+        $this->assertCount(5, $msg->pricingOptionGroup);
 
         $this->assertEquals(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
         $this->assertEquals('USD', $msg->pricingOptionGroup[0]->currency->firstCurrencyDetails->currencyIsoCode);
@@ -160,6 +167,10 @@ class InformativeBestPricingWithoutPNR13Test extends BaseTestCase
         $this->assertEquals(PricingOptionKey::OPTION_PUBLISHED_FARES, $msg->pricingOptionGroup[2]->pricingOptionKey->pricingOptionKey);
 
         $this->assertEquals(PricingOptionKey::OPTION_UNIFARES, $msg->pricingOptionGroup[3]->pricingOptionKey->pricingOptionKey);
+
+        $this->assertEquals(PricingOptionKey::OPTION_CABIN, $msg->pricingOptionGroup[4]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(Cabin::TYPE_FIRST_CABIN, $msg->pricingOptionGroup[4]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals(Cabin::CLASS_PREMIUM_ECONOMY, $msg->pricingOptionGroup[4]->optionDetail->criteriaDetails[0]->attributeDescription);
     }
 }
 

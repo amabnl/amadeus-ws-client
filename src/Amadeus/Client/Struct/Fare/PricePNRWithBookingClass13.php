@@ -263,6 +263,7 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
         return $opt;
     }
 
+
     /**
      * @param FareBasis[] $pricingsFareBasis
      * @return PricePnr13\PricingOptionGroup[]
