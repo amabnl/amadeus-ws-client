@@ -40,6 +40,7 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
 {
     use Log\LoggerAwareTrait;
 
+
     const REMOVE_EMPTY_XSLT_LOCATION = 'SoapClient/removeempty.xslt';
 
     /**
