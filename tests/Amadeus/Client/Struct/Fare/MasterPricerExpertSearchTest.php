@@ -35,7 +35,7 @@ use Amadeus\Client\RequestOptions\Fare\MPLocation;
 use Amadeus\Client\RequestOptions\Fare\MPPassenger;
 use Amadeus\Client\RequestOptions\Fare\MPFeeId;
 use Amadeus\Client\RequestOptions\Fare\MPTicketingPriceScheme;
-use Amadeus\Client\RequestOptions\FareMasterPricerExSearch;
+use Amadeus\Client\RequestOptions\FareMasterPricerExSearchOptions;
 use Amadeus\Client\Struct\Fare\MasterPricer\BooleanExpression;
 use Amadeus\Client\Struct\Fare\MasterPricer\CabinId;
 use Amadeus\Client\Struct\Fare\MasterPricer\CompanyIdentity;
@@ -50,6 +50,7 @@ use Amadeus\Client\Struct\Fare\MasterPricer\PricingTicketing;
 use Amadeus\Client\Struct\Fare\MasterPricer\RangeOfDate;
 use Amadeus\Client\Struct\Fare\MasterPricer\UnitNumberDetail;
 use Amadeus\Client\Struct\Fare\MasterPricerExpertSearch;
+
 use Test\Amadeus\BaseTestCase;
 
 /**
@@ -62,7 +63,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 {
     public function testCanMakeBaseMasterPricerMessage()
     {
-        $opt = new FareMasterPricerExSearch();
+        $opt = new FareMasterPricerExSearchOptions();
         $opt->nrOfRequestedResults = 200;
         $opt->nrOfRequestedPassengers = 1;
         $opt->passengers[] = new MPPassenger([
@@ -130,7 +131,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeReturnRequest()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedResults' => 30,
             'nrOfRequestedPassengers' => 3,
             'passengers' => [
@@ -222,7 +223,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMasterPricerMessageWithDeprecatedDateAndTimeParams()
     {
-        $opt = new FareMasterPricerExSearch();
+        $opt = new FareMasterPricerExSearchOptions();
         $opt->nrOfRequestedResults = 200;
         $opt->nrOfRequestedPassengers = 1;
         $opt->passengers[] = new MPPassenger([
@@ -249,7 +250,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMasterPricerMessageWithEmptyDateParams()
     {
-        $opt = new FareMasterPricerExSearch();
+        $opt = new FareMasterPricerExSearchOptions();
         $opt->nrOfRequestedResults = 200;
         $opt->nrOfRequestedPassengers = 1;
         $opt->passengers[] = new MPPassenger([
@@ -273,7 +274,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMasterPricerMessageWithCabinClass()
     {
-        $opt = new FareMasterPricerExSearch();
+        $opt = new FareMasterPricerExSearchOptions();
         $opt->nrOfRequestedResults = 200;
         $opt->nrOfRequestedPassengers = 1;
         $opt->passengers[] = new MPPassenger([
@@ -285,18 +286,18 @@ class MasterPricerExpertSearchTest extends BaseTestCase
             'arrivalLocation' => new MPLocation(['city' => 'LON']),
             'date' => new MPDate(['dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))])
         ]);
-        $opt->cabinClass = FareMasterPricerExSearch::CABIN_ECONOMY_PREMIUM;
+        $opt->cabinClass = FareMasterPricerExSearchOptions::CABIN_ECONOMY_PREMIUM;
 
 
         $message = new MasterPricerExpertSearch($opt);
 
-        $this->assertEquals(FareMasterPricerExSearch::CABIN_ECONOMY_PREMIUM, $message->travelFlightInfo->cabinId->cabin);
+        $this->assertEquals(FareMasterPricerExSearchOptions::CABIN_ECONOMY_PREMIUM, $message->travelFlightInfo->cabinId->cabin);
         $this->assertNull($message->travelFlightInfo->cabinId->cabinQualifier);
     }
 
     public function testCanMakeMasterPricerMessageWithTicketabilityPreCheck()
     {
-        $opt = new FareMasterPricerExSearch();
+        $opt = new FareMasterPricerExSearchOptions();
         $opt->nrOfRequestedResults = 200;
         $opt->nrOfRequestedPassengers = 1;
         $opt->passengers[] = new MPPassenger([
@@ -317,7 +318,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMasterPricerMessageWithCurrencyOverride()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedResults' => 200,
             'nrOfRequestedPassengers' => 1,
             'passengers' => [
@@ -349,7 +350,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMasterPricerMessageWithFeeIds()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedResults' => 200,
             'nrOfRequestedPassengers' => 1,
             'passengers' => [
@@ -384,7 +385,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMasterPricerMessageWithCabinClassAndCod()
     {
-        $opt = new FareMasterPricerExSearch();
+        $opt = new FareMasterPricerExSearchOptions();
         $opt->nrOfRequestedResults = 200;
         $opt->nrOfRequestedPassengers = 1;
         $opt->passengers[] = new MPPassenger([
@@ -396,8 +397,8 @@ class MasterPricerExpertSearchTest extends BaseTestCase
             'arrivalLocation' => new MPLocation(['city' => 'LON']),
             'date' => new MPDate(['dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))])
         ]);
-        $opt->cabinClass = FareMasterPricerExSearch::CABIN_ECONOMY_PREMIUM;
-        $opt->cabinOption = FareMasterPricerExSearch::CABINOPT_RECOMMENDED;
+        $opt->cabinClass = FareMasterPricerExSearchOptions::CABIN_ECONOMY_PREMIUM;
+        $opt->cabinOption = FareMasterPricerExSearchOptions::CABINOPT_RECOMMENDED;
 
 
         $message = new MasterPricerExpertSearch($opt);
@@ -408,7 +409,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMasterPricerMessageWithMultiAdultAndInfant()
     {
-        $opt = new FareMasterPricerExSearch();
+        $opt = new FareMasterPricerExSearchOptions();
         $opt->nrOfRequestedResults = 200;
         $opt->nrOfRequestedPassengers = 4;
         $opt->passengers[] = new MPPassenger([
@@ -444,7 +445,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMasterPricerMessageWithCityLocationAndGeoCoordinatesAndRadius()
     {
-        $opt = new FareMasterPricerExSearch();
+        $opt = new FareMasterPricerExSearchOptions();
         $opt->nrOfRequestedResults = 200;
         $opt->nrOfRequestedPassengers = 1;
         $opt->passengers[] = new MPPassenger([
@@ -477,7 +478,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMasterPricerMessageWithDateAndTimeAndTimeWindow()
     {
-        $opt = new FareMasterPricerExSearch();
+        $opt = new FareMasterPricerExSearchOptions();
         $opt->nrOfRequestedResults = 200;
         $opt->nrOfRequestedPassengers = 1;
         $opt->passengers[] = new MPPassenger([
@@ -503,7 +504,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMasterPricerMessageWithMultiCity()
     {
-        $opt = new FareMasterPricerExSearch();
+        $opt = new FareMasterPricerExSearchOptions();
         $opt->nrOfRequestedResults = 200;
         $opt->nrOfRequestedPassengers = 1;
         $opt->passengers[] = new MPPassenger([
@@ -537,7 +538,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMasterPricerMessageWithFeeOption()
     {
-        $opt            = new FareMasterPricerExSearch();
+        $opt            = new FareMasterPricerExSearchOptions();
         $opt->feeOption = [
             new MPFeeOption([
                 'type'       => MPFeeOption::TYPE_TICKETING_FEES,
@@ -568,7 +569,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMessageWithFlightType()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedResults' => 200,
             'nrOfRequestedPassengers' => 1,
             'passengers' => [
@@ -585,7 +586,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
                 ])
             ],
             'requestedFlightTypes' => [
-                FareMasterPricerExSearch::FLIGHTTYPE_DIRECT
+                FareMasterPricerExSearchOptions::FLIGHTTYPE_DIRECT
             ]
         ]);
 
@@ -618,7 +619,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMessageWithDateTimeAndDateRange()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedResults' => 200,
             'nrOfRequestedPassengers' => 1,
             'passengers' => [
@@ -660,7 +661,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMessageWithPreferredAirlines()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedResults' => 200,
             'nrOfRequestedPassengers' => 1,
             'passengers' => [
@@ -679,7 +680,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
                 ])
             ],
             'airlineOptions' => [
-                FareMasterPricerExSearch::AIRLINEOPT_PREFERRED => ['BA', 'SN']
+                FareMasterPricerExSearchOptions::AIRLINEOPT_PREFERRED => ['BA', 'SN']
             ]
         ]);
 
@@ -703,7 +704,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanMakeMessageWithPublishedUnifaresCorporateUnifares()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedResults' => 30,
             'nrOfRequestedPassengers' => 1,
             'passengers' => [
@@ -722,12 +723,12 @@ class MasterPricerExpertSearchTest extends BaseTestCase
                 ])
             ],
             'flightOptions' => [
-                FareMasterPricerExSearch::FLIGHTOPT_PUBLISHED,
-                FareMasterPricerExSearch::FLIGHTOPT_UNIFARES,
-                FareMasterPricerExSearch::FLIGHTOPT_CORPORATE_UNIFARES,
+                FareMasterPricerExSearchOptions::FLIGHTOPT_PUBLISHED,
+                FareMasterPricerExSearchOptions::FLIGHTOPT_UNIFARES,
+                FareMasterPricerExSearchOptions::FLIGHTOPT_CORPORATE_UNIFARES,
             ],
             'corporateCodesUnifares' => ['123456'],
-            'corporateQualifier' => FareMasterPricerExSearch::CORPORATE_QUALIFIER_UNIFARE
+            'corporateQualifier' => FareMasterPricerExSearchOptions::CORPORATE_QUALIFIER_UNIFARE
         ]);
 
         $message = new MasterPricerExpertSearch($opt);
@@ -742,12 +743,12 @@ class MasterPricerExpertSearchTest extends BaseTestCase
             $message->fareOptions->pricingTickInfo->pricingTicketing->priceType
         );
         $this->assertEquals('123456', $message->fareOptions->corporate->corporateId[0]->identity[0]);
-        $this->assertEquals(FareMasterPricerExSearch::CORPORATE_QUALIFIER_UNIFARE, $message->fareOptions->corporate->corporateId[0]->corporateQualifier);
+        $this->assertEquals(FareMasterPricerExSearchOptions::CORPORATE_QUALIFIER_UNIFARE, $message->fareOptions->corporate->corporateId[0]->corporateQualifier);
     }
 
     public function testCanMakeMessageWithManyOfficeIDs()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedResults' => 30,
             'nrOfRequestedPassengers' => 1,
             'passengers' => [
@@ -766,9 +767,9 @@ class MasterPricerExpertSearchTest extends BaseTestCase
                 ])
             ],
             'flightOptions' => [
-                FareMasterPricerExSearch::FLIGHTOPT_PUBLISHED,
-                FareMasterPricerExSearch::FLIGHTOPT_UNIFARES,
-                FareMasterPricerExSearch::FLIGHTOPT_CORPORATE_UNIFARES,
+                FareMasterPricerExSearchOptions::FLIGHTOPT_PUBLISHED,
+                FareMasterPricerExSearchOptions::FLIGHTOPT_UNIFARES,
+                FareMasterPricerExSearchOptions::FLIGHTOPT_CORPORATE_UNIFARES,
             ],
             'officeIds' => ['A', 'B']
         ]);
@@ -789,7 +790,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
      */
     public function testCanMakeMessageWithPriceToBeat()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedResults' => 30,
             'nrOfRequestedPassengers' => 1,
             'passengers' => [
@@ -888,7 +889,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
      */
     public function testCanMakeMassageWithParametrizedFareFamilies()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedResults' => 200,
             'nrOfRequestedPassengers' => 1,
             'passengers' => [
@@ -910,9 +911,9 @@ class MasterPricerExpertSearchTest extends BaseTestCase
                 ])
             ],
             'flightOptions' => [
-                FareMasterPricerExSearch::FLIGHTOPT_PUBLISHED,
-                FareMasterPricerExSearch::FLIGHTOPT_UNIFARES,
-                FareMasterPricerExSearch::FLIGHTOPT_CORPORATE_UNIFARES,
+                FareMasterPricerExSearchOptions::FLIGHTOPT_PUBLISHED,
+                FareMasterPricerExSearchOptions::FLIGHTOPT_UNIFARES,
+                FareMasterPricerExSearchOptions::FLIGHTOPT_CORPORATE_UNIFARES,
             ],
             'corporateCodesUnifares' => ['000001'],
             'fareFamilies' => [
@@ -1153,7 +1154,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
      */
     public function testCanMakeMassageWithFareFamiliesAlternatePrice()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'fareFamilies' => [
                 new MPFareFamily([
                     'name' => 'FF1',
@@ -1214,7 +1215,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
      */
     public function testCanMakeMessageWithProgressiveLegs()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedPassengers' => 1,
             'passengers' => [
                 new MPPassenger([
@@ -1223,7 +1224,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
                 ])
             ],
             'flightOptions' => [
-                FareMasterPricerExSearch::FLIGHTOPT_PUBLISHED
+                FareMasterPricerExSearchOptions::FLIGHTOPT_PUBLISHED
             ],
             'itinerary' => [
                 new MPItinerary([
@@ -1284,7 +1285,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
      */
     public function testCanMakeMessageWithDkNumber()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedPassengers' => 1,
             'passengers' => [
                 new MPPassenger([
@@ -1323,7 +1324,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
      */
     public function testCanMakeBaseMasterPricerMessageWithMultiTicket()
     {
-        $opt = new FareMasterPricerExSearch();
+        $opt = new FareMasterPricerExSearchOptions();
         $opt->nrOfRequestedResults = 200;
         $opt->nrOfRequestedPassengers = 1;
         $opt->multiTicket = true;
@@ -1360,7 +1361,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
      */
     public function testCanMakeMessageWithLayoverPerConnectionOptions()
     {
-        $opt = new FareMasterPricerExSearch([
+        $opt = new FareMasterPricerExSearchOptions([
             'nrOfRequestedPassengers' => 1,
             'passengers' => [
                 new MPPassenger([
@@ -1401,7 +1402,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
     public function testCanMakeMessageWithItineraryNumberOfConnections()
     {
         $msg = new MasterPricerExpertSearch(
-            new FareMasterPricerExSearch([
+            new FareMasterPricerExSearchOptions([
                 'nrOfRequestedPassengers' => 1,
                 'passengers' => [
                     new MPPassenger([
@@ -1440,7 +1441,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
     public function testCanMakeMessageWithConnectionPoints()
     {
         $msg = new MasterPricerExpertSearch(
-            new FareMasterPricerExSearch([
+            new FareMasterPricerExSearchOptions([
                 'nrOfRequestedPassengers' => 1,
                 'nrOfRequestedResults' => 200,
                 'passengers' => [
@@ -1506,7 +1507,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
     public function testCanMakeMessageWithAirlinesIncludedExcludedSegmentLevel()
     {
         $msg = new MasterPricerExpertSearch(
-            new FareMasterPricerExSearch([
+            new FareMasterPricerExSearchOptions([
                 'nrOfRequestedPassengers' => 1,
                 'nrOfRequestedResults' => 200,
                 'passengers' => [
@@ -1516,7 +1517,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
                     ])
                 ],
                 'airlineOptions' => [
-                    FareMasterPricerExSearch::AIRLINEOPT_MANDATORY => [
+                    FareMasterPricerExSearchOptions::AIRLINEOPT_MANDATORY => [
                         'AF',
                         'YY',
                     ]
@@ -1584,7 +1585,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
     public function testCanMakeMessageWithFlightCategory()
     {
         $msg = new MasterPricerExpertSearch(
-            new FareMasterPricerExSearch([
+            new FareMasterPricerExSearchOptions([
                 'nrOfRequestedPassengers' => 1,
                 'nrOfRequestedResults' => 200,
                 'passengers' => [
@@ -1594,8 +1595,8 @@ class MasterPricerExpertSearchTest extends BaseTestCase
                     ])
                 ],
                 'requestedFlightTypes' => [
-                    FareMasterPricerExSearch::FLIGHTTYPE_NONSTOP,
-                    FareMasterPricerExSearch::FLIGHTTYPE_DIRECT
+                    FareMasterPricerExSearchOptions::FLIGHTTYPE_NONSTOP,
+                    FareMasterPricerExSearchOptions::FLIGHTTYPE_DIRECT
                 ],
                 'itinerary' => [
                     new MPItinerary([
@@ -1645,7 +1646,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 	public function testCanMakeMessageWithTicketingPriceScheme()
     {
         $msg = new MasterPricerExpertSearch(
-            new FareMasterPricerExSearch([
+            new FareMasterPricerExSearchOptions([
                 'nrOfRequestedPassengers' => 1,
                 'passengers' => [
                     new MPPassenger([
@@ -1674,7 +1675,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
 
     public function testCanSpecifyCabinPerItinerary()
     {
-        $opt = new FareMasterPricerExSearch();
+        $opt = new FareMasterPricerExSearchOptions();
         $opt->nrOfRequestedResults = 200;
         $opt->nrOfRequestedPassengers = 1;
         $opt->passengers[] = new MPPassenger([
@@ -1685,12 +1686,12 @@ class MasterPricerExpertSearchTest extends BaseTestCase
             'departureLocation' => new MPLocation(['city' => 'BRU']),
             'arrivalLocation' => new MPLocation(['city' => 'LON']),
             'date' => new MPDate(['dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))]),
-            'cabinClass' => FareMasterPricerExSearch::CABIN_ECONOMY_PREMIUM
+            'cabinClass' => FareMasterPricerExSearchOptions::CABIN_ECONOMY_PREMIUM
         ]);
 
         $message = new MasterPricerExpertSearch($opt);
 
-        $this->assertEquals(FareMasterPricerExSearch::CABIN_ECONOMY_PREMIUM, $message->itinerary[0]->flightInfo->cabinId->cabin);
+        $this->assertEquals(FareMasterPricerExSearchOptions::CABIN_ECONOMY_PREMIUM, $message->itinerary[0]->flightInfo->cabinId->cabin);
         $this->assertNull($message->itinerary[0]->flightInfo->cabinId->cabinQualifier);
     }
 

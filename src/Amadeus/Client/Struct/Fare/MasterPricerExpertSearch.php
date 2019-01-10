@@ -25,7 +25,7 @@ namespace Amadeus\Client\Struct\Fare;
 use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
-use Amadeus\Client\RequestOptions\FareMasterPricerExSearch;
+use Amadeus\Client\RequestOptions\FareMasterPricerExSearchOptions;
 use Amadeus\Client\RequestOptions\TicketAtcShopperMpTbSearchOptions;
 use Amadeus\Client\Struct\Fare\MasterPricer;
 
@@ -108,7 +108,7 @@ class MasterPricerExpertSearch extends BaseMasterPricerMessage
      */
     public function __construct($options = null)
     {
-        if ($options instanceof FareMasterPricerExSearch) {
+        if ($options instanceof FareMasterPricerExSearchOptions) {
             $this->loadOptions($options);
         }
     }
