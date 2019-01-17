@@ -370,6 +370,8 @@ class CreateFormOfPaymentTest extends BaseTestCase
                                 'dateOfBirth' => \DateTime::createFromFormat('dmY', '30101980'),
                                 'idDocumentNr' => '25208731592',
                                 'idDocumentType' => FraudScreeningOptions::ID_DOC_CPF__BRAZILIAN_SECURITY_NUMBER,
+                                'phone' => '(212) 664-7665',
+                                'email' => 'test@test.com'
                             ])
                         ])
                     ]
@@ -436,7 +438,11 @@ class CreateFormOfPaymentTest extends BaseTestCase
 
         $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->billingAddress);
         $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->merchantURL);
-        $this->assertEmpty($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->payerPhoneOrEmail);
+
+        $this->assertCount(2, $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->payerPhoneOrEmail);
+        $this->assertEquals('(212) 664-7665', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->payerPhoneOrEmail[0]->telephoneNumberDetails->telephoneNumber);
+        $this->assertEquals('test@test.com', $msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->payerPhoneOrEmail[1]->emailAddress);
+
         $this->assertEmpty($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->securityCode);
         $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->shopperDetails);
         $this->assertNull($msg->fopGroup[0]->mopDescription[0]->paymentModule->paymentData->fraudScreeningData->shopperSession);
