@@ -499,6 +499,8 @@ Query with fraud screening data.
                             'dateOfBirth' => \DateTime::createFromFormat('dmY', '30101980'),
                             'idDocumentNr' => '25208731592',
                             'idDocumentType' => FraudScreeningOptions::ID_DOC_CPF__BRAZILIAN_SECURITY_NUMBER,
+                            'phone' => '(212) 664-7665',
+                            'email' => 'test@test.com'
                         ])
                     ])
                 ]
