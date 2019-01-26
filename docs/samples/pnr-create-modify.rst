@@ -507,7 +507,7 @@ Create an ``FT`` element (Tour Code):
     $opt = new PnrAddMultiElementsOptions([
         'elements' => [
             new TourCode([
-                'passengerType' => TourCode::PAXTYPE_PASSENGER,
+                'passengerType' => TourCode::PAX_PASSENGER,
                 'freeText' => 'TOUR CODE'
             ])
         ]
