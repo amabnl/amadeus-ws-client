@@ -31,7 +31,7 @@ namespace Amadeus\Client\Struct\Pnr\NameChange;
 class TravellerNameInfo
 {
     /**
-     * @var string|string
+     * @var string|int
      */
     public $quantity;
 

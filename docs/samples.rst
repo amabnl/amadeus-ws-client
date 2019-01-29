@@ -3156,6 +3156,7 @@ Assign an account code to a passenger:
         ])
     );
 
+<<<<<<< HEAD
 Form of Payment:
 
 .. code-block:: php
@@ -3276,6 +3277,16 @@ Service_StandaloneCatalogue
         ])
     ])
 );
+=======
+*****
+Hotel
+*****
+----------
+Hotel_Sell
+----------
+
+*coming soon*
+>>>>>>> hotel
 
 ***
 FOP

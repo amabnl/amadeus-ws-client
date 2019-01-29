@@ -1,0 +1,6 @@
+<OTA_HotelAvailRS EchoToken="MultiSingle" PrimaryLangID="EN" Version="6.001" xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelAvailRS.xsd">
+    <Warnings>
+        <Warning Status="1AC.2" Tag="OK" Type="3"></Warning>
+        <Warning Code="175" Status="PRV.1" Tag="ERR" Type="3"></Warning>
+    </Warnings>
+</OTA_HotelAvailRS>

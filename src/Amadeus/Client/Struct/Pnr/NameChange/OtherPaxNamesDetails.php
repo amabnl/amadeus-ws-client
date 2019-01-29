@@ -22,13 +22,15 @@
 
 namespace Amadeus\Client\Struct\Pnr\NameChange;
 
+use Amadeus\Client\Struct\Hotel\Sell\OtherPaxNamesDetails as HotelSellPND;
+
 /**
  * OtherPaxNamesDetails
  *
  * @package Amadeus\Client\Struct\Pnr\NameChange
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class OtherPaxNamesDetails
+class OtherPaxNamesDetails extends HotelSellPND
 {
     /**
      * NN1 Romanizable Native Name
@@ -46,33 +48,4 @@ class OtherPaxNamesDetails
      * @var string
      */
     public $referenceName;
-
-    /**
-     * @var string
-     */
-    public $surname;
-
-    /**
-     * @var string
-     */
-    public $givenName;
-
-    /**
-     * @var string
-     */
-    public $title;
-
-    /**
-     * OtherPaxNamesDetails constructor.
-     *
-     * @param string $surname
-     * @param string $givenName
-     * @param string|null $title
-     */
-    public function __construct($surname, $givenName, $title = null)
-    {
-        $this->surname = $surname;
-        $this->givenName = $givenName;
-        $this->title = $title;
-    }
 }
