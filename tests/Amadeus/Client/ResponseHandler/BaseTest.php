@@ -772,6 +772,26 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(0, count($result->messages));
     }
 
+    public function testCanHandleHotelMultiSingleAvailabilityErr()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyHotelMultiSingleAvailabilityErrorResponse.txt');
+        $sendResult->messageVersion = '10.0';
+
+        $this->markTestIncomplete('Still need a proper example of an error response');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Hotel_MultiSingleAvailability');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertNull($result->messages[0]->text);
+        $this->assertEquals('', $result->messages[0]->level);
+        $this->assertEquals('367', $result->messages[0]->code);
+        $this->assertEquals('1A', $result->messages[0]->source);
+    }
+
     public function testCanHandleSoapFault()
     {
         $respHandler = new ResponseHandler\Base();

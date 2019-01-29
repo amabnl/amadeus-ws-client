@@ -1,0 +1,31 @@
+<Hotel_SellReply xmlns="http://xml.amadeus.com/HBKRCR_15_4_1A">
+    <bookingTypeIndicator>
+        <numberOfRooms>
+            <quantity>1</quantity>
+            <statusCode>HK</statusCode>
+        </numberOfRooms>
+    </bookingTypeIndicator>
+    <roomStayData>
+        <markerRoomStayData></markerRoomStayData>
+        <errorInformation>
+            <messageErrorInformation>
+                <errorDetails>
+                    <errorCode>00704</errorCode>
+                    <errorCategory>EC</errorCategory>
+                    <errorCodeOwner>PR</errorCodeOwner>
+                </errorDetails>
+            </messageErrorInformation>
+            <errorDescription>
+                <freeTextDetails>
+                    <textSubjectQualifier>3</textSubjectQualifier>
+                    <informationType>HERR</informationType>
+                    <language>EN</language>
+                    <source>S</source>
+                    <encoding>1</encoding>
+                </freeTextDetails>
+                <freeText>INVALID DATE RANGE</freeText>
+            </errorDescription>
+            <markerErrorInformation></markerErrorInformation>
+        </errorInformation>
+    </roomStayData>
+</Hotel_SellReply>

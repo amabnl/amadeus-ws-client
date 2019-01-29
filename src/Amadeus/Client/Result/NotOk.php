@@ -31,19 +31,32 @@ namespace Amadeus\Client\Result;
 class NotOk
 {
     /**
+     * Error/warning code
+     *
      * @var mixed
      */
     public $code;
 
     /**
+     * Message
+     *
      * @var string
      */
     public $text;
 
     /**
+     * Error/warning level
+     *
      * @var string
      */
     public $level;
+
+    /**
+     * Source of error/warning
+     *
+     * @var string
+     */
+    public $source;
 
     /**
      * NotOk constructor.
@@ -51,11 +64,13 @@ class NotOk
      * @param string|int|null $code
      * @param string|null $text
      * @param string|null $level
+     * @param string|null $source
      */
-    public function __construct($code = null, $text = null, $level = null)
+    public function __construct($code = null, $text = null, $level = null, $source = null)
     {
         $this->code = $code;
         $this->text = $text;
         $this->level = $level;
+        $this->source = $source;
     }
 }

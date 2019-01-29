@@ -25,6 +25,7 @@ namespace Amadeus\Client\Session\Handler;
 use Amadeus\Client;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Params\SessionHandlerParams;
+use Amadeus\Client\Session\MsgClassmap\Loader;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
@@ -74,6 +75,13 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
         'sequenceNumber' => null,
         'securityToken' => null
     ];
+
+    /**
+     * Specific classmap additions to be loaded when certain messages are active.
+     *
+     * @var array
+     */
+    protected $messageClassmap = [];
 
     /**
      * Status variable to know if the session is currently logged in
@@ -315,12 +323,14 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      *
      * Result is an associative array: keys are message names, values are versions.
      *
+     * @todo messageClassMap per WSDL separately!
      * @return array
      */
     public function getMessagesAndVersions()
     {
         if (empty($this->messagesAndVersions)) {
             $this->messagesAndVersions = WsdlAnalyser::loadMessagesAndVersions($this->params->wsdl);
+            $this->messageClassmap = Loader::loadMessagesSpecificClasses($this->messagesAndVersions);
         }
 
         return $this->messagesAndVersions;

@@ -1,0 +1,5 @@
+<OTA_HotelAvailRS EchoToken="MultiSingle" PrimaryLangID="EN" Version="6.001" xmlns:xsi="http://xml.amadeus.com/FLIRES_07_1_1A" xsi:schemaLocation="http://www.opentravel.org/OTA/2003/05 OTA_HotelAvailRS.xsd">
+    <Errors>
+        <Error Code="367" Status="1A" Type="1"></Error>
+    </Errors>
+</OTA_HotelAvailRS>

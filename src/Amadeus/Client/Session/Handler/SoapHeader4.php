@@ -502,7 +502,11 @@ class SoapHeader4 extends Base
     protected function makeSoapClientOptions()
     {
         $options = $this->soapClientOptions;
-        $options['classmap'] = array_merge(Classmap::$soapheader4map, Classmap::$map);
+        $options['classmap'] = array_merge(
+            Classmap::$soapheader4map,
+            Classmap::$map,
+            $this->messageClassmap
+        );
 
         if (!empty($this->params->soapClientOptions)) {
             $options = array_merge($options, $this->params->soapClientOptions);
