@@ -39,9 +39,11 @@ class ResControlInfo
      * ResControlInfo constructor.
      *
      * @param string $recordLocator
+     * @param string $companyId
+     * @param \DateTime|null $date
      */
-    public function __construct($recordLocator)
+    public function __construct($recordLocator, $companyId, $date = null)
     {
-        $this->reservation = new Reservation($recordLocator);
+        $this->reservation = new Reservation($recordLocator, $companyId, $date);
     }
 }

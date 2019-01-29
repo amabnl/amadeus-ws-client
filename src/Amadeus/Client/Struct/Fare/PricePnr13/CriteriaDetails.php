@@ -41,12 +41,23 @@ class CriteriaDetails
     public $attributeDescription;
 
     /**
+     * Passenger, Segment or TST references to partially price the PNR
+     *
+     * @var PaxSegRef[]
+     */
+    public $paxSegTstReference = [];
+
+    /**
      * CriteriaDetails constructor.
      *
      * @param string $type
      */
-    public function __construct($type)
+    public function __construct($type, $description = null, $references = null)
     {
         $this->attributeType = $type;
+        if (isset($description))
+            $this->attributeDescription = $description;
+        if (isset($references))
+            $this->paxSegTstReference = $references;
     }
 }

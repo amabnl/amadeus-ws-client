@@ -55,7 +55,13 @@ class PaxReference
             $this->ptc[] = 'STR';
             $this->ptc[1] = $passengerType;
         } else {
-            $this->ptc[] = $passengerType;
+            if (!is_array($passengerType))
+                $this->ptc[] = $passengerType;
+            else {
+                for ($i = 0; $i < count($passengerType); $i++) {
+                    $this->ptc[$i] = $passengerType[$i];
+                }
+            }
         }
     }
 }

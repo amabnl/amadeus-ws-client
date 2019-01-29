@@ -85,10 +85,10 @@ class Base implements RequestCreatorInterface
      */
     public function createRequest($messageName, RequestOptionsInterface $params)
     {
+
         $this->checkMessageIsInWsdl($messageName);
 
         $builder = $this->findBuilderForMessage($messageName);
-
         if ($builder instanceof ConvertInterface) {
             return $builder->convert($params, $this->getActiveVersionFor($messageName));
         } else {
@@ -150,16 +150,15 @@ class Base implements RequestCreatorInterface
         ) {
             $builder = $this->messageBuilders[$messageName];
         } else {
+
             $section = substr($messageName, 0, strpos($messageName, '_'));
             $message = substr($messageName, strpos($messageName, '_') + 1);
 
             $builderClass = __NAMESPACE__.'\\Converter\\'.$section.'\\'.$message."Conv";
-
             if (class_exists($builderClass)) {
                 /** @var ConvertInterface $builder */
                 $builder = new $builderClass();
                 $builder->setParams($this->params);
-
                 $this->messageBuilders[$messageName] = $builder;
             }
         }

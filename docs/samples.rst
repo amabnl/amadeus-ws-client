@@ -1536,6 +1536,33 @@ Complex example: Seat Map with Prices
         ])
     );
 
+Most restrictive Seat Map request:
+
+- Multiple passenger context
+- Requesting the most restrictive seat map display
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
+
+    $seatmapInfo = $client->airRetrieveSeatMap(
+        new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'departureDate' => \DateTime::createFromFormat('Ymd', '20150615'),
+                'departure' => 'CDG',
+                'arrival' => 'YUL',
+                'airline' => 'AF',
+                'flightNumber' => '0346',
+                'bookingClass' => 'Y'
+            ]),
+            'recordLocator' => '7BFHEJ',
+            'company' => '1A',
+            'date' =>  \DateTime::createFromFormat('Ymd', '20150610'),
+            'mostRestrictive' => true
+        ])
+    );
+
 --------------------
 Air_RebookAirSegment
 --------------------

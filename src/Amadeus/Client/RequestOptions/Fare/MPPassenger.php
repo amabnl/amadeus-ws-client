@@ -45,9 +45,9 @@ class MPPassenger extends LoadParamsFromArray
     /**
      * What type of passengers? self::TYPE_*
      *
-     * @var string
+     * @var Array
      */
-    public $type;
+    public $type=[];
 
     /**
      * If it's resident search*

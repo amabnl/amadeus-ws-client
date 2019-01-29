@@ -271,4 +271,6 @@ class FarePricePnrWithBookingClassOptions extends Base
      * @var PaxSegRef[]
      */
     public $references = [];
+
+    public $priceOptions = [];
 }

@@ -173,4 +173,6 @@ class ServiceIntegratedPricingOptions extends Base
      * @var PaxSegRef[]
      */
     public $references = [];
+
+    public $overrideOptionsWithCriteria=[];
 }

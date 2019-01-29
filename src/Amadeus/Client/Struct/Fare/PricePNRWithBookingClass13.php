@@ -176,6 +176,16 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
             self::makeOverrideOptionsWithCriteria($options->overrideOptionsWithCriteria, $priceOptions)
         );
 
+        /*
+         $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadPaxDiscount($options->paxDiscountCodes, $options->paxDiscountCodeRefs)
+        );
+*/
+        if (!empty($options->priceOptions))
+            for ($i = 0; $i < count($options->priceOptions); $i++)
+                $priceOptions[] = $options->priceOptions[$i];
+
         // All options processed, no options found:
         if (empty($priceOptions)) {
             $priceOptions[] = new PricingOptionGroup(PricingOptionKey::OPTION_NO_OPTION);
@@ -209,11 +219,15 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
      */
     protected static function makeOverrideOptionsWithCriteria($overrideOptionsWithCriteria, $priceOptions)
     {
-        $opt = [];
 
+        $opt = [];
         foreach ($overrideOptionsWithCriteria as $overrideOptionWithCriteria) {
+
             if (!self::hasPricingGroup($overrideOptionWithCriteria["key"], $priceOptions)) {
-                $opt[] = new PricingOptionGroup($overrideOptionWithCriteria["key"], $overrideOptionWithCriteria["optionDetail"]);
+                $opt[] = new PricingOptionGroup($overrideOptionWithCriteria["key"], $overrideOptionWithCriteria["optionDetail"],
+                    isset($overrideOptionWithCriteria["attributeDescription"]) ? $overrideOptionWithCriteria["attributeDescription"] : null,
+                    isset($overrideOptionWithCriteria["references"]) ? $overrideOptionWithCriteria["references"] : null);
+
             }
         }
 
@@ -272,7 +286,7 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
                 //Support for legacy fareBasisPrimaryCode to be removed when breaking BC:
                 $po->optionDetail = new OptionDetail(
-                    $pricingFareBasis->fareBasisPrimaryCode.$pricingFareBasis->fareBasisCode
+                    $pricingFareBasis->fareBasisPrimaryCode . $pricingFareBasis->fareBasisCode
                 );
 
                 //Support for legacy segmentReference to be removed when breaking BC:

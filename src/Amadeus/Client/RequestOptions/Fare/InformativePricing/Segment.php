@@ -129,4 +129,5 @@ class Segment extends LoadParamsFromArray
      * @var array
      */
     public $inventory = [];
+
 }

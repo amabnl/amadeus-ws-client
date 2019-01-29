@@ -65,6 +65,9 @@ class MsgBodyExtractor
             }
         }
 
+        if(empty($messageBody)){
+            $messageBody = $soapResponse;
+        }
         return $messageBody;
     }
 }

@@ -20,34 +20,28 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PricePnr13;
+namespace Amadeus\Client\Struct\Air\RetrieveSeatMap;
 
 /**
- * OptionDetail
+ * ProcessIndicators
  *
- * @package Amadeus\Client\Struct\Fare\PricePnr13
+ * @package Amadeus\Client\Struct\Air\RetrieveSeatMap
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class OptionDetail
+class ProcessIndicators
 {
     /**
-     * @var CriteriaDetails[]
+     * @var StatusInformation[]
      */
-    public $criteriaDetails = [];
+    public $statusInformation = [];
 
     /**
-     * OptionDetail constructor.
+     * ProcessIndicators constructor.
      *
-     * @param string|array|null $options
+     * @param string $action
      */
-    public function __construct($options = null, $attributeDescription = null, $references = null)
+    public function __construct($action)
     {
-        if (is_string($options)) {
-            $this->criteriaDetails[] = new CriteriaDetails($options, $attributeDescription, $references);
-        } elseif (is_array($options)) {
-            foreach ($options as $option) {
-                $this->criteriaDetails[] = new CriteriaDetails($options, $attributeDescription, $references);
-            }
-        }
+        $this->statusInformation[] = new StatusInformation($action);
     }
 }
