@@ -95,5 +95,6 @@ class Sell extends BaseWsMessage
     public function __construct(HotelSellOptions $options)
     {
         //TODO
+        $this->roomStayData = $options->roomStayData;
     }
 }

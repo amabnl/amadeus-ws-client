@@ -92,9 +92,9 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
     {
         $newRequest = null;
 
-        $xsltFile = dirname(__FILE__).DIRECTORY_SEPARATOR.self::REMOVE_EMPTY_XSLT_LOCATION;
+        $xsltFile = dirname(__FILE__) . DIRECTORY_SEPARATOR . self::REMOVE_EMPTY_XSLT_LOCATION;
         if (!is_readable($xsltFile)) {
-            throw new Exception('XSLT file "'.$xsltFile.'" is not readable!');
+            throw new Exception('XSLT file "' . $xsltFile . '" is not readable!');
         }
 
         $dom = new \DOMDocument('1.0', 'UTF-8');
@@ -110,20 +110,29 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
             //On transform error: usually when modifying the XSLT transformation incorrectly...
             $this->logger->log(
                 Log\LogLevel::ERROR,
-                __METHOD__."__doRequest(): XSLTProcessor::transformToXml "
+                __METHOD__ . "__doRequest(): XSLTProcessor::transformToXml "
                 . "returned FALSE: could not perform transformation!!"
             );
             $newRequest = $request;
         } else {
             $newDom = new \DOMDocument('1.0', 'UTF-8');
             $newDom->preserveWhiteSpace = false;
+            $transform = self::transformstring($transform);
             $newDom->loadXML($transform);
-
             $newRequest = $newDom->saveXML();
         }
-
         unset($processor, $xslt, $dom, $transform);
-
+        //print_r($newRequest);
         return $newRequest;
+    }
+
+    private function transformstring($transform)
+    {
+        $retVal = $transform;
+        $retVal = str_replace("ns1:", "", $transform);
+        $retVal = str_replace("<ns2:Action>http://webservices.amadeus.com/Hotel_DescriptiveInfo_7.1</ns2:Action>", "<ns2:Action>http://webservices.amadeus.com/OTA_HotelDescriptiveInfoRQ_07.1_1A2007A</ns2:Action>", $retVal);
+        $retVal = str_replace("<OTA_HotelDescriptiveInfoRQ EchoToken=\"WithParsing\" Version=\"7.1\" PrimaryLangID=\"it\">", "<OTA_HotelDescriptiveInfoRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" EchoToken=\"WithParsing\" Version=\"7.1\" PrimaryLangID=\"it\">", $retVal);
+        //print_r($retVal);
+        return $retVal;
     }
 }

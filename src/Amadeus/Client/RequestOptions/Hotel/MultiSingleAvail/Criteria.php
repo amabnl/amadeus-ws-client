@@ -70,4 +70,8 @@ class Criteria extends LoadParamsFromArray
      * @var string
      */
     public $alternateAvailability;
+
+    public $Radius;
+
+    public $Position;
 }

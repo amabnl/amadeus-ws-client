@@ -62,7 +62,6 @@ class Base implements ResponseHandlerInterface
         }
 
         $handler = $this->findHandlerForMessage($messageName);
-
         if ($handler instanceof MessageResponseHandler) {
             return $handler->analyze($sendResult);
         } else {

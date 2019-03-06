@@ -127,4 +127,6 @@ class HotelMultiSingleAvailOptions extends Base
      * @var string
      */
     public $searchCacheLevel;
+
+    public $xmlns;
 }

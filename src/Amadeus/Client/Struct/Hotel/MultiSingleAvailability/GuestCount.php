@@ -51,5 +51,6 @@ class GuestCount
     {
         $this->AgeQualifyingCode = $guest->occupantCode;
         $this->Count = $guest->amount;
+        $this->Age = $guest->Age;
     }
 }

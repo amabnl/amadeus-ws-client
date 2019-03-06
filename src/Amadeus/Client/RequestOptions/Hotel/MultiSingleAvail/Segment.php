@@ -57,4 +57,6 @@ class Segment extends LoadParamsFromArray
      * @var Criteria[]
      */
     public $criteria = [];
+
+    public $MoreDataEchoToken;
 }

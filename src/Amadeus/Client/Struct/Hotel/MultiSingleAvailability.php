@@ -112,6 +112,8 @@ class MultiSingleAvailability extends BaseWsMessage
      */
     public $SearchCacheLevel;
 
+    public $xmlns;
+
     /**
      * MultiSingleAvailability constructor.
      *
@@ -139,6 +141,7 @@ class MultiSingleAvailability extends BaseWsMessage
         $this->SortOrder = $options->sortOrder;
         $this->MaxResponses = $options->maxResponses;
         $this->SearchCacheLevel = $options->searchCacheLevel;
+        $this->xmlns = $options->xmlns;
     }
 
     /**

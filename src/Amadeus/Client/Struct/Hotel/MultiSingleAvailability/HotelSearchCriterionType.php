@@ -139,6 +139,7 @@ class HotelSearchCriterionType
 
     public $CodeRef;
 
+
     /**
      * @var HotelRef[]
      */
