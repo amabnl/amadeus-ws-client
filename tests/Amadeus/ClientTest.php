@@ -3135,7 +3135,7 @@ class ClientTest extends BaseTestCase
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
         $mockedSendResult = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml = 'dummyfarepricemasterpricerexpertsearchresponsemessage';
+		$mockedSendResult->responseXml = $this->getTestFile('fareMasterPricerExpertSearchReply-12.4.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
