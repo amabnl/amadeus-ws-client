@@ -40,10 +40,10 @@ class MsgBodyExtractor
     {
         $messageBody = null;
 
-        $messageBody = self::getStringBetween($soapResponse, '<SOAP-ENV:Body>', '</SOAP-ENV:Body>');
+        $messageBody = $this->getStringBetween($soapResponse, '<SOAP-ENV:Body>', '</SOAP-ENV:Body>');
 
         if (empty($messageBody) || false === $messageBody) {
-            $messageBody = self::getStringBetween($soapResponse, '<soap:Body>', '</soap:Body>');
+            $messageBody = $this->getStringBetween($soapResponse, '<soap:Body>', '</soap:Body>');
         }
 
         return $messageBody;
