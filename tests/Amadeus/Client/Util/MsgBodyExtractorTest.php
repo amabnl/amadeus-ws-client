@@ -39,7 +39,8 @@ class MsgBodyExtractorTest extends BaseTestCase
         $xml = $this->getTestFile("pnrResponseFullEnvelope.txt");
         $expectedResult = $this->getTestFile("pnrResponseFullEnvelopeOnlyPnrReply.txt");
 
-        $actual = MsgBodyExtractor::extract($xml);
+        $extractor = new MsgBodyExtractor();
+        $actual = $extractor->extract($xml);
 
         $this->assertEquals($expectedResult, $actual);
     }
@@ -49,7 +50,8 @@ class MsgBodyExtractorTest extends BaseTestCase
         $xml = $this->getTestFile("dummyPnrRetrieveWithNewLine.txt");
         $expectedResult = $this->getTestFile("dummyPnrRetrieveWithNewLineOnlyPnrReply.txt");
 
-        $actual = MsgBodyExtractor::extract($xml);
+        $extractor = new MsgBodyExtractor();
+        $actual = $extractor->extract($xml);
 
         $this->assertEquals($expectedResult, $actual);
     }

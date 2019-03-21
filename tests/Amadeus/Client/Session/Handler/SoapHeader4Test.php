@@ -761,7 +761,8 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
         $this->assertInstanceOf('\SoapFault', $sendResult->exception);
         $this->assertEquals('284|Application|SECURED PNR', $sendResult->exception->getMessage());
         $this->assertEquals('11.3', $sendResult->messageVersion);
-        $this->assertEquals(Client\Util\MsgBodyExtractor::extract($dummyPnrReply), $sendResult->responseXml);
+        $extractor = new Client\Util\MsgBodyExtractor();
+        $this->assertEquals($extractor->extract($dummyPnrReply), $sendResult->responseXml);
     }
 
     public function testCanHandleMessageThrowingNonSoapFaultException()
