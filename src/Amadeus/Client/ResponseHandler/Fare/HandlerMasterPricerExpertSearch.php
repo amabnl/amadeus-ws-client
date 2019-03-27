@@ -22,48 +22,12 @@
 
 namespace Amadeus\Client\ResponseHandler\Fare;
 
-use Amadeus\Client\ResponseHandler\StandardResponseHandler;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
-
 /**
  * HandlerMasterPricerExpertSearch
  *
  * @package Amadeus\Client\ResponseHandler\Fare
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class HandlerMasterPricerExpertSearch extends StandardResponseHandler
+class HandlerMasterPricerExpertSearch extends HandlerMasterPricerTravelBoardSearch
 {
-    /**
-     * @param SendResult $response
-     * @return Result
-     */
-    public function analyze(SendResult $response)
-    {
-        $analyzeResponse = new Result($response);
-
-        $domXpath = $this->makeDomXpath($response->responseXml);
-
-        $queryErrCode = "//m:applicationError//m:applicationErrorDetail/m:error";
-        $queryErrMsg = "//m:errorMessageText/m:description";
-
-        $codeNode = $domXpath->query($queryErrCode)->item(0);
-
-        if ($codeNode instanceof \DOMNode) {
-            $analyzeResponse->status = Result::STATUS_ERROR;
-
-            $errMsg = '';
-            $errMsgNode = $domXpath->query($queryErrMsg)->item(0);
-            if ($errMsgNode instanceof \DOMNode) {
-                $errMsg = $errMsgNode->nodeValue;
-            }
-
-            $analyzeResponse->messages[] = new Result\NotOk(
-                $codeNode->nodeValue,
-                $errMsg
-            );
-        }
-
-        return $analyzeResponse;
-    }
 }
