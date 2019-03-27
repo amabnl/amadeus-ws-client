@@ -3178,6 +3178,11 @@ class ClientTest extends BaseTestCase
             ->will($this->returnValue(['Fare_MasterPricerExpertSearch' => ['version' => "12.3", 'wsdl' => 'dc22e4ee']]));
 
         $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Fare_MasterPricerExpertSearch')
+            ->will($this->returnValue($messageResult));
 
         $par = new Params();
         $par->sessionHandler = $mockSessionHandler;
