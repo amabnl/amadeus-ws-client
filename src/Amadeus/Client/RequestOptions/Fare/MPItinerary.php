@@ -160,4 +160,8 @@ class MPItinerary extends LoadParamsFromArray
      * @var string
      */
     public $cabinOption;
+
+    public $flightInfoPNR;
+    public $requestedSegmentAction;
+
 }

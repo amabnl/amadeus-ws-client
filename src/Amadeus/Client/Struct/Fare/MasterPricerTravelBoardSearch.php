@@ -209,6 +209,12 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
 
         $tmpItinerary = new MasterPricer\Itinerary($segmentRef);
 
+        if (!empty($opt->flightInfoPNR)) {
+            $tmpItinerary->flightInfoPNR = $opt->flightInfoPNR;
+        }
+        if (!empty($opt->requestedSegmentAction)) {
+            $tmpItinerary->requestedSegmentAction = $opt->requestedSegmentAction;
+        }
         $tmpItinerary->departureLocalization = new MasterPricer\DepartureLocalization(
             $opt->departureLocation
         );
