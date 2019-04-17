@@ -48,5 +48,13 @@ class IssueCombined extends IssueTicket
                 )
             );
         }
+        foreach ($options->emds as $emd) {
+            $this->addSelectionItem(
+                new ReferenceDetails(
+                    $emd,
+                    ReferenceDetails::TYPE_TSM
+                )
+            );
+        }
     }
 }

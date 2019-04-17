@@ -23,33 +23,38 @@
 namespace Amadeus\Client\Struct\DocIssuance;
 
 use Amadeus\Client\RequestOptions\DocIssuanceIssueMiscDocOptions;
-
+use Amadeus\Client\Struct\BaseWsMessage;
 /**
  * DocIssuance_IssueMiscellaneousDocuments request structure
  *
  * @package Amadeus\Client\Struct\DocIssuance
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class IssueMiscellaneousDocuments extends DocIssuanceBaseMsg
+class IssueMiscellaneousDocuments extends BaseWsMessage
 {
     /**
      * IssueMiscellaneousDocuments constructor.
      *
      * @param DocIssuanceIssueMiscDocOptions $options
      */
+    public $selection;
+    public $optionGroup;
     public function __construct(DocIssuanceIssueMiscDocOptions $options)
     {
-        $this->addSelectionItems($options->tsmNumbers, ReferenceDetails::TYPE_TSM);
-        $this->addSelectionItems($options->tsmTattoos, ReferenceDetails::TYPE_TSM_TATTOO);
-        $this->addSelectionItems($options->lineNumbers, ReferenceDetails::TYPE_LINE_NUMBER);
-
-        $this->loadOptions($options->options, $options->compoundOptions);
-
-        $this->loadReferences($options);
-
-        $this->loadPassType($options->passengerType);
-
-        $this->loadStockReference($options->stockReference);
+//        $this->addSelectionItems($options->tsmNumbers, ReferenceDetails::TYPE_TSM);
+//        $this->addSelectionItems($options->tsmTattoos, ReferenceDetails::TYPE_TSM_TATTOO);
+//        $this->addSelectionItems($options->lineNumbers, ReferenceDetails::TYPE_LINE_NUMBER);
+//        $this->addSelectionItems($options->emdTattoos, ReferenceDetails::TYPE_TSM);
+//
+//        $this->loadOptions($options->options, $options->compoundOptions);
+//
+//        $this->loadReferences($options);
+//
+//        $this->loadPassType($options->passengerType);
+//
+//        $this->loadStockReference($options->stockReference);
+        $this->selection = $options->selection;
+        $this->optionGroup = $options->optionGroup;
     }
 
     /**

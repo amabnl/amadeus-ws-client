@@ -79,7 +79,7 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
         }
 
         $newRequest = $this->transformIncomingRequest($request);
-
+        //print_r($newRequest);
         return parent::__doRequest($newRequest, $location, $action, $version, $oneWay);
     }
 
@@ -117,7 +117,7 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
         } else {
             $newDom = new \DOMDocument('1.0', 'UTF-8');
             $newDom->preserveWhiteSpace = false;
-            $transform = self::transformstring($transform);
+            //$transform = self::transformstring($transform);
             $newDom->loadXML($transform);
             $newRequest = $newDom->saveXML();
         }
@@ -130,9 +130,9 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
     {
         $retVal = $transform;
         $retVal = str_replace("ns1:", "", $transform);
-        $retVal = str_replace("<ns2:Action>http://webservices.amadeus.com/Hotel_DescriptiveInfo_7.1</ns2:Action>", "<ns2:Action>http://webservices.amadeus.com/OTA_HotelDescriptiveInfoRQ_07.1_1A2007A</ns2:Action>", $retVal);
-        $retVal = str_replace("<OTA_HotelDescriptiveInfoRQ EchoToken=\"WithParsing\" Version=\"7.1\" PrimaryLangID=\"it\">", "<OTA_HotelDescriptiveInfoRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" EchoToken=\"WithParsing\" Version=\"7.1\" PrimaryLangID=\"it\">", $retVal);
-        //print_r($retVal);
+        //$retVal = str_replace("http://webservices.amadeus.com/Hotel_DescriptiveInfo_7.1", "http://webservices.amadeus.com/OTA_HotelDescriptiveInfoRQ_07.1_1A2007A", $retVal);
+        //$retVal = str_replace("https://nodeD1.test.webservices.amadeus.com/1ASIWLERLERU", "https://pilotd.test.webservices.amadeus.com/1ASIWLERLERU", $retVal);
+        //$retVal = str_replace("<OTA_HotelDescriptiveInfoRQ EchoToken=\"WithParsing\" Version=\"7.1\" PrimaryLangID=\"it\">", "<OTA_HotelDescriptiveInfoRQ xmlns=\"http://www.opentravel.org/OTA/2003/05\" EchoToken=\"WithParsing\" Version=\"7.1\" PrimaryLangID=\"it\">", $retVal);
         return $retVal;
     }
 }
