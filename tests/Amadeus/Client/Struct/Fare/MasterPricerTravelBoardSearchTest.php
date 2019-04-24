@@ -97,7 +97,7 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
 
         $this->assertNull($message->itinerary[0]->flightInfo);
         $this->assertNull($message->itinerary[0]->attributes);
-        $this->assertNull($message->itinerary[0]->flightInfoPNR[0]);
+        $this->assertNull($message->itinerary[0]->flightInfoPNR);
         $this->assertNull($message->itinerary[0]->requestedSegmentAction);
 
         $this->assertCount(2, $message->numberOfUnit->unitNumberDetail);
