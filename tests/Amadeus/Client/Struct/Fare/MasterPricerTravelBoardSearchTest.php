@@ -1883,9 +1883,9 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertNotNull($message->itinerary[0]->flightInfoPNR);
         $this->assertNull($message->itinerary[0]->requestedSegmentAction);
 
-        $this->assertEquals('150318', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->flightDate->departureDate);
+        $this->assertEquals('20180315', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->flightDate->departureDate);
         $this->assertEquals('1540', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->flightDate->departureTime);
-        $this->assertEquals('160318', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->flightDate->arrivalDate);
+        $this->assertEquals('20180316', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->flightDate->arrivalDate);
         $this->assertEquals('0010', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->flightDate->arrivalTime);
         $this->assertEquals('SFO', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->boardPointDetails->trueLocationId);
         $this->assertEquals('JFK', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->offpointDetails->trueLocationId);

@@ -22,7 +22,10 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
-use Amadeus\Client\Struct\Air\TravelProductInformation;
+use Amadeus\Client\Struct\Air\PointDetails;
+use Amadeus\Client\Struct\Air\CompanyDetails;
+use Amadeus\Client\Struct\Air\FlightIdentification;
+use Amadeus\Client\Struct\Air\FlightTypeDetails;
 
 /**
  * TravelResponseDetails
@@ -30,6 +33,67 @@ use Amadeus\Client\Struct\Air\TravelProductInformation;
  * @package Amadeus\Client\Struct\Fare\MasterPricer
  * @author Mike Hernas <mike@ahoy.io>
  */
-class TravelResponseDetails extends TravelProductInformation
+class TravelResponseDetails
 {
+
+    /**
+     * @var FlightDate
+     */
+    public $flightDate;
+    /**
+     * @var PointDetails
+     */
+    public $boardPointDetails;
+    /**
+     * @var PointDetails
+     */
+    public $offpointDetails;
+    /**
+     * @var CompanyDetails
+     */
+    public $companyDetails;
+    /**
+     * @var FlightIdentification
+     */
+    public $flightIdentification;
+    /**
+     * @var FlightTypeDetails
+     */
+    public $flightTypeDetails;
+
+    /**
+     * TravelProductInformation constructor.
+     *
+     * @param \DateTime $departureDate
+     * @param string $from
+     * @param string $to
+     * @param string $company
+     * @param string $flightNumber
+     * @param string $bookingClass
+     * @param \DateTime|null $arrivalDate
+     * @param string|\DateTime|null $arrivalTime
+     * @param int|null $dateVariation
+     * @param string|null $flightTypeDetails
+     */
+    public function __construct(
+        $departureDate,
+        $from,
+        $to,
+        $company,
+        $flightNumber,
+        $bookingClass,
+        $arrivalDate = null,
+        $arrivalTime = null,
+        $dateVariation = null,
+        $flightTypeDetails = null
+    ) {
+        $this->flightDate = new FlightDate($departureDate, $arrivalDate, $arrivalTime, $dateVariation);
+        $this->boardPointDetails = new PointDetails($from);
+        $this->offpointDetails = new PointDetails($to);
+        $this->companyDetails = new CompanyDetails($company);
+        $this->flightIdentification = new FlightIdentification($flightNumber, $bookingClass);
+        if (!is_null($flightTypeDetails)) {
+            $this->flightTypeDetails = new FlightTypeDetails($flightTypeDetails);
+        }
+    }
 }
