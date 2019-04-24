@@ -46,7 +46,7 @@ class FlightInfoPNR
     public function __construct(SegmentOptions $seg)
     {
       
-      $this->travelResponseDetails = new TravelResponseDetails(
+        $this->travelResponseDetails = new TravelResponseDetails(
         $seg->departureDate,
         $seg->from,
         $seg->to,

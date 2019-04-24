@@ -213,8 +213,8 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
             $opt->departureLocation
         );
         
-        if($opt->anchoredSegments) {
-            $tmpItinerary->flightInfoPNR = array_map(function($anchoredSegment) {
+        if ($opt->anchoredSegments) {
+            $tmpItinerary->flightInfoPNR = array_map(function ($anchoredSegment) {
                 return new MasterPricer\FlightInfoPNR(
                     $anchoredSegment
                 );
