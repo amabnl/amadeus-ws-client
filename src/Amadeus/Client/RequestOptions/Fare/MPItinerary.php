@@ -164,9 +164,9 @@ class MPItinerary extends LoadParamsFromArray
     public $travelDetails;
 
     /**
-     * Anchored Search segment
+     * Anchored Search segment (MPAnchoredSegment)
      *
-     * @var MPAnchoredSegment
+     * @var array[MPAnchoredSegment]
      */
-    public $anchoredSegment;
+    public $anchoredSegments;
 }

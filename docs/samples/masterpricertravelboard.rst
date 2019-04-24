@@ -208,6 +208,53 @@ Brussels - London with preferred airlines BA or SN:
 
     $message = new MasterPricerTravelBoardSearch($opt);
 
+Anchored segments
+==================
+
+Brussels - London with anchored segment:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPAnchoredSegment;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedResults' => 30,
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'BRU']),
+                'arrivalLocation' => new MPLocation(['city' => 'LON']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2017-01-15T14:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ])
+        ],
+        'anchoredSegments' => [
+            new MPAnchoredSegment([
+                'departureDate' => \DateTime::createFromFormat('Ymd Hi','20180315 1540', new \DateTimeZone('UTC')),
+                'arrivalDate' => \DateTime::createFromFormat('Ymd Hi','20180316 0010', new \DateTimeZone('UTC')),
+                'dateVariation' => '',
+                'from' => 'BRU',
+                'to' => 'LHR',
+                'companyCode' => 'BA',
+                'flightNumber' => '20'
+            ])
+        ]
+    ]);
+
+    $message = new MasterPricerTravelBoardSearch($opt);
+
 
 Multi-city & airline exclusion
 ==============================

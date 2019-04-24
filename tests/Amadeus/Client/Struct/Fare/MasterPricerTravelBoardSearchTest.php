@@ -97,7 +97,7 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
 
         $this->assertNull($message->itinerary[0]->flightInfo);
         $this->assertNull($message->itinerary[0]->attributes);
-        $this->assertNull($message->itinerary[0]->flightInfoPNR);
+        $this->assertNull($message->itinerary[0]->flightInfoPNR[0]);
         $this->assertNull($message->itinerary[0]->requestedSegmentAction);
 
         $this->assertCount(2, $message->numberOfUnit->unitNumberDetail);
@@ -1849,15 +1849,17 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
             'departureLocation' => new MPLocation(['city' => 'BRU']),
             'arrivalLocation' => new MPLocation(['city' => 'LON']),
             'date' => new MPDate(['dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))]),
-            'anchoredSegment' => new MPAnchoredSegment([
-                'departureDate' => \DateTime::createFromFormat('Ymd Hi','20180315 1540', new \DateTimeZone('UTC')),
-                'arrivalDate' => \DateTime::createFromFormat('Ymd Hi','20180316 0010', new \DateTimeZone('UTC')),
-                'dateVariation' => '',
-                'from' => 'SFO',
-                'to' => 'JFK',
-                'companyCode' => 'AA',
-                'flightNumber' => '20'
-            ])
+            'anchoredSegments' => [
+                    new MPAnchoredSegment([
+                    'departureDate' => \DateTime::createFromFormat('Ymd Hi','20180315 1540', new \DateTimeZone('UTC')),
+                    'arrivalDate' => \DateTime::createFromFormat('Ymd Hi','20180316 0010', new \DateTimeZone('UTC')),
+                    'dateVariation' => '',
+                    'from' => 'SFO',
+                    'to' => 'JFK',
+                    'companyCode' => 'AA',
+                    'flightNumber' => '20'
+                ])
+            ]
         ]);
 
         $message = new MasterPricerTravelBoardSearch($opt);
@@ -1880,18 +1882,18 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
 
         $this->assertNull($message->itinerary[0]->flightInfo);
         $this->assertNull($message->itinerary[0]->attributes);
-        $this->assertNotNull($message->itinerary[0]->flightInfoPNR);
         $this->assertNull($message->itinerary[0]->requestedSegmentAction);
 
-        $this->assertEquals('20180315', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->flightDate->departureDate);
-        $this->assertEquals('1540', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->flightDate->departureTime);
-        $this->assertEquals('20180316', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->flightDate->arrivalDate);
-        $this->assertEquals('0010', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->flightDate->arrivalTime);
-        $this->assertEquals('SFO', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->boardPointDetails->trueLocationId);
-        $this->assertEquals('JFK', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->offpointDetails->trueLocationId);
-        $this->assertEquals('20', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->flightIdentification->flightNumber);
-        $this->assertNull($message->itinerary[0]->flightInfoPNR->travelResponseDetails->flightIdentification->bookingClass);
-        $this->assertEquals('AA', $message->itinerary[0]->flightInfoPNR->travelResponseDetails->companyDetails->marketingCompany);
+        $this->assertCount(1, $message->itinerary[0]->flightInfoPNR);
+        $this->assertEquals('20180315', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightDate->departureDate);
+        $this->assertEquals('1540', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightDate->departureTime);
+        $this->assertEquals('20180316', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightDate->arrivalDate);
+        $this->assertEquals('0010', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightDate->arrivalTime);
+        $this->assertEquals('SFO', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->boardPointDetails->trueLocationId);
+        $this->assertEquals('JFK', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->offpointDetails->trueLocationId);
+        $this->assertEquals('20', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightIdentification->flightNumber);
+        $this->assertNull($message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightIdentification->bookingClass);
+        $this->assertEquals('AA', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->companyDetails->marketingCompany);
         
 
 
