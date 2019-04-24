@@ -160,4 +160,13 @@ class MPItinerary extends LoadParamsFromArray
      * @var string
      */
     public $cabinOption;
+
+    public $travelDetails;
+
+    /**
+     * Anchored Search segment
+     *
+     * @var MPAnchoredSegment
+     */
+    public $anchoredSegment;
 }
