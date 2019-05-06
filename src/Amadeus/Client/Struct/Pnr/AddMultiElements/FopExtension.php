@@ -60,12 +60,15 @@ class FopExtension extends WsMessageUtility
      * @param string|null $cvcCode
      * @param string|null $holderName
      */
-    public function __construct($fopSequenceNumber, $cvcCode = null, $holderName = null)
+    public function __construct($fopSequenceNumber, $cvcCode = null, $holderName = null, $passengerType = null)
     {
         if (is_numeric($fopSequenceNumber)) {
-            $this->fopSequenceNumber = (int) $fopSequenceNumber;
+            $this->fopSequenceNumber = (int)$fopSequenceNumber;
         }
 
+        if ($this->checkAnyNotEmpty($passengerType)) {
+            $this->passengerType=$passengerType;
+        }
         if ($this->checkAnyNotEmpty($cvcCode, $holderName)) {
             $this->newFopsDetails = new NewFopsDetails();
             $this->newFopsDetails->cvData = $cvcCode;

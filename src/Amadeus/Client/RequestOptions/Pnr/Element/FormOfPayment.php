@@ -109,4 +109,6 @@ class FormOfPayment extends Element
      * @var bool
      */
     public $isServiceFee = false;
+
+    public $fopExtension;
 }

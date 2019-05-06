@@ -190,6 +190,14 @@ class DataElementsIndiv extends WsMessageUtility
                     $this->formOfPayment->fop->freetext = $element->freeText;
                 } elseif ($element->type === Fop::IDENT_MISC && $element->freeText === "NONREF") {
                     $this->fopExtension[] = new FopExtension(1);
+                }elseif($element->type === Fop::IDENT_CASH && $element->fopExtension === "INF") {
+                    $this->fopExtension[] = new FopExtension(
+                        1,
+                        null,
+                        null,
+                        'INF'
+
+                    );
                 } elseif ($element->type === Fop::IDENT_CHECK) {
                     throw new \RuntimeException("FOP CHECK NOT YET IMPLEMENTED");
                 }
