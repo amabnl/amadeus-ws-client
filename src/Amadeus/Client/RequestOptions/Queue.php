@@ -65,8 +65,15 @@ class Queue
      * @var string
      */
     public $officeId;
-
-
+    
+    /**
+     * OPTIONAL
+     *
+     * @var string
+     */
+    public $timeMode;
+    
+    
     /**
      * Construct Queue with initialization array
      *
