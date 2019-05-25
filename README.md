@@ -25,7 +25,7 @@ This library makes it a lot easier for developers to integrate content from the 
 
 # Requirements
 
-* PHP 5.4+
+* PHP 5.4 or newer _(tested with 5.4 -> 7.3)_
 * SOAP, XSL and DOM extensions activated
 * A WSDL & authentication details from Amadeus _(SoapHeader 4 or SoapHeader 2)_
 
@@ -53,7 +53,7 @@ Once the client is installed, read the [About &amp; Get Started](docs/about-get-
 
 # Release history
 
-The current release is version 1.7.1. 
+The current release is version 1.8.0. 
 
 See the [Changelog](CHANGELOG.md).
 
