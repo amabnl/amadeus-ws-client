@@ -20,6 +20,7 @@ This is the list of messages that are at least partially supported at this time:
 - Queue_RemoveItem
 - Queue_MoveItem
 - Fare_MasterPricerTravelBoardSearch
+- Fare_MasterPricerExpertSearch
 - Fare_MasterPricerCalendar
 - Fare_PricePNRWithBookingClass
 - Fare_PricePNRWithLowerFares
@@ -79,6 +80,8 @@ This is the list of messages that are at least partially supported at this time:
 - Command_Cryptic
 - PriceXplorer_ExtremeSearch
 - SalesReports_DisplayQueryReport
+- SalesReports_DisplayDailyOrSummarizedReport
+- SalesReports_DisplayNetRemitReport
 
 **********
 To-do list

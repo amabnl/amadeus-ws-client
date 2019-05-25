@@ -297,4 +297,55 @@ class RetrieveSeatMapTest extends BaseTestCase
         $this->assertNull($message->seatRequestParameters->genericDetails->noSmokingIndicator);
         $this->assertNull($message->seatRequestParameters->genericDetails->seatCharacteristic);
     }
+
+    public function testCanMakeRequestMostRestrictive()
+    {
+        $par = new AirRetrieveSeatMapOptions([
+                'flight' => new FlightInfo([
+                    'departureDate' => \DateTime::createFromFormat('Ymd-His', '20150615-000000', new \DateTimeZone('UTC')),
+                    'departure' => 'CDG',
+                    'arrival' => 'YUL',
+                    'airline' => 'AF',
+                    'flightNumber' => '0346',
+                    'bookingClass' => 'Y'
+            ]),
+            'recordLocator' => '7BFHEJ',
+            'company' => '1A',
+            'date' =>  \DateTime::createFromFormat('Ymd-His', '20150610-000000', new \DateTimeZone('UTC')),
+            'mostRestrictive' => true
+        ]);
+
+         $message = new RetrieveSeatMap($par);
+
+        $this->assertEquals('7BFHEJ', $message->resControlInfo->reservation->controlNumber);
+        $this->assertNull($message->resControlInfo->reservation->controlType);
+        $this->assertEquals('1A', $message->resControlInfo->reservation->companyId);
+        $this->assertEquals('100615', $message->resControlInfo->reservation->date);
+        $this->assertNull($message->resControlInfo->reservation->time);
+
+        $this->assertEquals('MRE', $message->processIndicators->statusInformation[0]->action);
+    }
+
+    public function testCanMakeRequestWithAccurateTimeString()
+    {
+        $par = new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'departureDate' => \DateTime::createFromFormat('Ymd-His', '20150615-153500', new \DateTimeZone('UTC')),
+                'departure' => 'CDG',
+                'arrival' => 'YUL',
+                'airline' => 'AF',
+                'flightNumber' => '0346',
+                'bookingClass' => 'Y'
+            ]),
+            'recordLocator' => '7BFHEJ',
+            'company' => '1A',
+            'date' => \DateTime::createFromFormat('Ymd-His', '20150610-153500', new \DateTimeZone('UTC'))
+        ]);
+
+         $message = new RetrieveSeatMap($par);
+
+        $this->assertEquals('7BFHEJ', $message->resControlInfo->reservation->controlNumber);
+        $this->assertEquals('100615', $message->resControlInfo->reservation->date);
+        $this->assertEquals('1535', $message->resControlInfo->reservation->time);
+    }
 }

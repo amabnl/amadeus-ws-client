@@ -22,17 +22,48 @@
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
+use Amadeus\Client\RequestOptions\Fare\MPTripDetails;
+
 /**
  * TripDetails
+ *
+ * Amadeus currently not uses this node, but may be used in future versions.
  *
  * @package Amadeus\Client\Struct\Fare\MasterPricer
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TripDetails
 {
+    const FLEXIBILITY_COMBINED = 'C';
+    const FLEXIBILITY_MINUS = 'M';
+    const FLEXIBILITY_PLUS = 'P';
+    const FLEXIBILITY_ARRIVAL_BY = 'TA';
+    const FLEXIBILITY_DEPART_FROM = 'TD';
+
+    /**
+     * @var string
+     */
     public $flexibilityQualifier;
 
+    /**
+     * @var int
+     */
     public $tripInterval;
 
+    /**
+     * @var int
+     */
     public $tripDuration;
+
+    /**
+     * TripDetails constructor.
+     *
+     * @param MPTripDetails $tripDetails
+     */
+    public function __construct(MPTripDetails $tripDetails)
+    {
+        $this->flexibilityQualifier = $tripDetails->flexibilityQualifier;
+        $this->tripInterval = $tripDetails->tripInterval;
+        $this->tripDuration = $tripDetails->tripDuration;
+    }
 }

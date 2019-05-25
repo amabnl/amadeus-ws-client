@@ -25,6 +25,7 @@ namespace Test\Amadeus\Client\Struct\Fare;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FeeDetails;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFCriteria;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\FFOtherCriteria;
+use Amadeus\Client\RequestOptions\Fare\MasterPricer\FormOfPaymentDetails;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\MonetaryDetails;
 use Amadeus\Client\RequestOptions\Fare\MasterPricer\MultiTicketWeights;
 use Amadeus\Client\RequestOptions\Fare\MPDate;
@@ -1805,4 +1806,32 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertNull($message->itinerary[0]->flightInfo->cabinId->cabinQualifier);
     }
 
+    public function testCanSpecifyFormOfPayment()
+    {
+        $opt = new FareMasterPricerTbSearch();
+        $opt->nrOfRequestedResults = 200;
+        $opt->nrOfRequestedPassengers = 1;
+        $opt->passengers[] = new MPPassenger([
+            'type' => MPPassenger::TYPE_ADULT,
+            'count' => 1
+        ]);
+        $opt->itinerary[] = new MPItinerary([
+            'departureLocation' => new MPLocation(['city' => 'BRU']),
+            'arrivalLocation' => new MPLocation(['city' => 'LON']),
+            'date' => new MPDate(['dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))])
+        ]);
+        $opt->formOfPayment = [
+            new FormOfPaymentDetails([
+                'type' => FormOfPaymentDetails::TYPE_CREDIT_CARD,
+                'chargedAmount' => 100,
+                'creditCardNumber' => '123456'
+            ])
+        ];
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertEquals('CC', $message->fareOptions->formOfPayment[0]->type);
+        $this->assertEquals(100, $message->fareOptions->formOfPayment[0]->chargedAmount);
+        $this->assertEquals('123456', $message->fareOptions->formOfPayment[0]->creditCardNumber);
+    }
 }

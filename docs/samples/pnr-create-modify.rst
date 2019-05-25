@@ -507,7 +507,7 @@ Create an ``FT`` element (Tour Code):
     $opt = new PnrAddMultiElementsOptions([
         'elements' => [
             new TourCode([
-                'passengerType' => TourCode::PAXTYPE_PASSENGER,
+                'passengerType' => TourCode::PAX_PASSENGER,
                 'freeText' => 'TOUR CODE'
             ])
         ]
@@ -915,3 +915,37 @@ Here's an example how to stop the library from automatically adding an RF elemen
         ]
     ]);
 
+
+
+Other Service Information (OSI)
+===============================
+
+Creating an OSI with Mandatory Airline Code:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+    use Amadeus\Client\RequestOptions\Pnr\Element\OtherServiceInfo;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $createPnrOptions = new PnrAddMultiElementsOptions([
+        'travellers' => [
+            new Traveller([
+                'number' => 1,
+                'lastName' => 'Bowie'
+            ])
+        ],
+        'actionCode' => PnrAddMultiElementsOptions::ACTION_NO_PROCESSING,
+        'elements' => [
+            new OtherServiceInfo([
+                'airline' => 'AA',
+                'freeText' => 'free text',
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_REQUEST,
+                        'id' => 1
+                    ])
+            ])
+        ]
+    ]);

@@ -98,4 +98,18 @@ class FraudScreeningOptions extends LoadParamsFromArray
      * @var FraudScreeningAddress
      */
     public $billingAddress;
+
+    /**
+     * Payer telephone number
+     *
+     * @var string
+     */
+    public $phone;
+
+    /**
+     * Payer email address
+     *
+     * @var string
+     */
+    public $email;
 }

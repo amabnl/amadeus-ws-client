@@ -110,7 +110,7 @@ class TravellerInfo
 
         if ($traveller->dateOfBirth instanceof \DateTime) {
             $this->passengerData[0]->dateOfBirth = new DateOfBirth(
-                $traveller->dateOfBirth->format('dmY')
+                $this->formatDateOfBirth($traveller->dateOfBirth)
             );
         }
     }
@@ -155,7 +155,7 @@ class TravellerInfo
 
                 if ($traveller->infant->dateOfBirth instanceof \DateTime) {
                     $tmpInfant->dateOfBirth = new DateOfBirth(
-                        $traveller->infant->dateOfBirth->format('dmY')
+                        $this->formatDateOfBirth($traveller->infant->dateOfBirth)
                     );
                 }
 
@@ -174,5 +174,17 @@ class TravellerInfo
         if (count($this->passengerData[0]->travellerInformation->passenger) < 1) {
             $this->passengerData[0]->travellerInformation->passenger[0] = new Passenger(null, null);
         }
+    }
+
+    protected function formatDateOfBirth(\DateTime $dateOfBirth)
+    {
+        $day = (int) $dateOfBirth->format('d');
+        if ($day < 10) {
+            $day = "0$day";
+        }
+
+        $monthAndYear = strtoupper($dateOfBirth->format('My'));
+
+        return $day . $monthAndYear;
     }
 }

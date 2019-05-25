@@ -105,7 +105,7 @@ class FarePricePnrWithBookingClassOptions extends Base
      * RC  Corporate negociated fares
      * RLI Return LIst of fare
      * RLO Return LOwest possible fare
-     * RN  Negociated fare
+     * RN  Negotiated fare
      * RP  Published Fares
      * RU  Unifares
      * RW  Corporate Unifares
@@ -122,7 +122,6 @@ class FarePricePnrWithBookingClassOptions extends Base
      * @var string[]
      */
     public $overrideOptions = [];
-
 
     /**
      * @var array
@@ -271,4 +270,11 @@ class FarePricePnrWithBookingClassOptions extends Base
      * @var PaxSegRef[]
      */
     public $references = [];
+
+    /**
+     * Fare family to be used in pricing (e.g. "CLASSIC").
+     *
+     * @var string
+     */
+    public $fareFamily;
 }

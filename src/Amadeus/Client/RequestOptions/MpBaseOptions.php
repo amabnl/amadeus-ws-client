@@ -51,6 +51,9 @@ class MpBaseOptions extends Base
     const FLIGHTOPT_TICKET_AVAILABILITY_CHECK = 'TAC';
     const FLIGHTOPT_IN_FLIGHT_SERVICES = 'IFS';
     const FLIGHTOPT_ONLY_PTC = 'PTC';
+    const FLIGHTOPT_MINIRULES = 'MNR';
+    const FLIGHTOPT_ONLY_BUNDLED_FARES = 'BD';
+    const FLIGHTOPT_ONLY_UNBUNDLED_FARES = 'UBD';
 
     const CORPORATE_QUALIFIER_AMADEUS_NEGO = 'RC';
     const CORPORATE_QUALIFIER_UNIFARE = 'RW';
@@ -133,7 +136,7 @@ class MpBaseOptions extends Base
      * @var Fare\MPFeeId[]
      */
     public $feeIds;
-    
+
     /**
      * Whether to perform a multi ticket search
      *
@@ -152,4 +155,11 @@ class MpBaseOptions extends Base
      * @var Fare\MasterPricer\MultiTicketWeights
      */
     public $multiTicketWeights;
+
+    /**
+     * A maximum of 3 forms of payment may be specified.
+     *
+     * @var Fare\MasterPricer\FormOfPaymentDetails[]|array
+     */
+    public $formOfPayment;
 }

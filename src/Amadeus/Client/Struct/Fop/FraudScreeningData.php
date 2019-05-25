@@ -106,6 +106,14 @@ class FraudScreeningData extends WsMessageUtility
             $this->ipAdress = new IpAdress($options->ipAddress);
         }
 
+        if (!empty($options->phone)) {
+            $this->payerPhoneOrEmail[] = new PayerPhoneOrEmail(PayerPhoneOrEmail::TYPE_PHONE, $options->phone);
+        }
+
+        if (!empty($options->email)) {
+            $this->payerPhoneOrEmail[] = new PayerPhoneOrEmail(PayerPhoneOrEmail::TYPE_EMAIL, $options->email);
+        }
+
         if ($this->checkAnyNotEmpty($options->firstName, $options->lastName)) {
             $this->payerName = new PayerName($options->lastName, $options->firstName);
         }

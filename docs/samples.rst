@@ -695,11 +695,54 @@ Move a PNR from one queue to another:
 ****
 Fare
 ****
+
+----------------------------------
+Fare_MasterPricerExpertSearch
+----------------------------------
+
+The Expert Search is nearly identical to the Travelboard search, except it focus on business flights.
+
+It supports all features of the Travelboard Search, but not the options "noAirportChange" and "maxElapsedFlyingTime"
+
+Make a simple Masterpricer Expert availability & fare search:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerExSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+
+    $opt = new FareMasterPricerExSearch([
+        'nrOfRequestedResults' => 200,
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'BRU']),
+                'arrivalLocation' => new MPLocation(['city' => 'LON']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ])
+        ]
+    ]);
+
+    $recommendations = $client->fareMasterPricerExpertSearch($opt);
+
+Since the Expert Search is nearly similar to the Travelboard Search, check out the Travelboard Search examples too
+
 ----------------------------------
 Fare_MasterPricerTravelboardSearch
 ----------------------------------
 
-Make a simple Masterpricer availability & fare search:
+Make a simple Masterpricer Travelboard availability & fare search:
 
 .. code-block:: php
 
@@ -1533,6 +1576,33 @@ Complex example: Seat Map with Prices
                     ]),
                 ]),
             ]
+        ])
+    );
+
+Most restrictive Seat Map request:
+
+- Multiple passenger context
+- Requesting the most restrictive seat map display
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
+
+    $seatmapInfo = $client->airRetrieveSeatMap(
+        new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'departureDate' => \DateTime::createFromFormat('Ymd', '20150615'),
+                'departure' => 'CDG',
+                'arrival' => 'YUL',
+                'airline' => 'AF',
+                'flightNumber' => '0346',
+                'bookingClass' => 'Y'
+            ]),
+            'recordLocator' => '7BFHEJ',
+            'company' => '1A',
+            'date' =>  \DateTime::createFromFormat('Ymd', '20150610'),
+            'mostRestrictive' => true
         ])
     );
 
@@ -3689,9 +3759,13 @@ Request a basic Extreme Search result:
 
     $extremeSearchResult = $client->priceXplorerExtremeSearch($opt);
 
-*******************************
+************
+SalesReports
+************
+
+-------------------------------
 SalesReports_DisplayQueryReport
-*******************************
+-------------------------------
 
 Request a sales report from a certain date to another date, issued in all offices sharing the same IATA number;
 
@@ -3707,6 +3781,41 @@ Request a sales report from a certain date to another date, issued in all office
         'agencyIataNumber' => '23491193',
         'startDate' => \DateTime::createFromFormat('Ymd', '20150101', new \DateTimeZone('UTC')),
         'endDate' => \DateTime::createFromFormat('Ymd', '20160331', new \DateTimeZone('UTC'))
+    ]);
+
+    $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
+
+-------------------------------------------
+SalesReports_DisplayDailyOrSummarizedReport
+-------------------------------------------
+
+SalesReports_DisplayDailyOrSummarizedReport request options are exact the same as for SalesReports_DisplayQueryReport except
+this have SalesReportIdentification options and request doesn't have scrolling options.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\SalesReportsDisplayDailyOrSummarizedReportRequestOptions;
+
+    $opt = new SalesReportsDisplayDailyOrSummarizedReportRequestOptions([
+        'salesReportIdentificationNumber' => 197,
+        'salesReportIdentificationType' => SalesReportsDisplayDailyOrSummarizedReportOptions::SALES_REPORT_IDENTIFICATION_TYPE_NUMBER
+    ]);
+
+    $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
+
+----------------------------------
+SalesReports_DisplayNetRemitReport
+----------------------------------
+
+SalesReports_DisplayNetRemitReport request options are exactly the same as for SalesReports_DisplayQueryReport except
+that 'salesIndicator' option here named as 'documentInfo' and request doesn't have scrolling options:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\SalesReportsDisplayNetRemitReportOptions;
+
+    $opt = new SalesReportsDisplayNetRemitReportOptions([
+        'documentInfo' => SalesReportsDisplayNetRemitReportOptions::SALESIND_DOMESTIC
     ]);
 
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);

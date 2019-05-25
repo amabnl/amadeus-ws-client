@@ -23,6 +23,7 @@
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 use Amadeus\Client\RequestOptions\Fare\MPDate;
+use Amadeus\Client\RequestOptions\Fare\MPTripDetails;
 
 /**
  * TimeDetails
@@ -76,6 +77,10 @@ class TimeDetails
                 $theDate->rangeMode,
                 $theDate->range
             );
+        }
+
+        if (!is_null($theDate->tripDetails) && $theDate->tripDetails instanceof MPTripDetails) {
+            $this->tripDetails = new TripDetails($theDate->tripDetails);
         }
     }
 
