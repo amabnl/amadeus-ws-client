@@ -695,11 +695,54 @@ Move a PNR from one queue to another:
 ****
 Fare
 ****
+
+----------------------------------
+Fare_MasterPricerExpertSearch
+----------------------------------
+
+The Expert Search is nearly identical to the Travelboard search, except it focus on business flights.
+
+It supports all features of the Travelboard Search, but not the options "noAirportChange" and "maxElapsedFlyingTime"
+
+Make a simple Masterpricer Expert availability & fare search:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerExSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+
+    $opt = new FareMasterPricerExSearch([
+        'nrOfRequestedResults' => 200,
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'BRU']),
+                'arrivalLocation' => new MPLocation(['city' => 'LON']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ])
+        ]
+    ]);
+
+    $recommendations = $client->fareMasterPricerExpertSearch($opt);
+
+Since the Expert Search is nearly similar to the Travelboard Search, check out the Travelboard Search examples too
+
 ----------------------------------
 Fare_MasterPricerTravelboardSearch
 ----------------------------------
 
-Make a simple Masterpricer availability & fare search:
+Make a simple Masterpricer Travelboard availability & fare search:
 
 .. code-block:: php
 
