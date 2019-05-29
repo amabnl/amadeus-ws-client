@@ -53,7 +53,7 @@ Once the client is installed, read the [About &amp; Get Started](docs/about-get-
 
 # Release history
 
-The current release is version 1.8.0. 
+The current release is version 1.8.1. 
 
 See the [Changelog](CHANGELOG.md).
 
