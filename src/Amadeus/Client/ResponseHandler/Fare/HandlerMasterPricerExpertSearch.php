@@ -20,30 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
-
-use Amadeus\Client\RequestOptions\FareMasterPricerExSearchOptions as FareMasterPricerExSearchOptions;
+namespace Amadeus\Client\ResponseHandler\Fare;
 
 /**
- * Request Options for Fare_MasterPricerTravelboardSearch
+ * HandlerMasterPricerExpertSearch
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\ResponseHandler\Fare
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class FareMasterPricerTbSearch extends FareMasterPricerExSearchOptions
+class HandlerMasterPricerExpertSearch extends HandlerMasterPricerTravelBoardSearch
 {
-
-    /**
-     * Set to true to disallow connecting flight to change airports within a city.
-     *
-     * @var bool
-     */
-    public $noAirportChange = false;
-
-    /**
-     * Specify a maximum elapsed flying time (EFT): This is a percentage of the shortest EFT returned by the journey server
-     *
-     * @var int
-     */
-    public $maxElapsedFlyingTime;
 }
