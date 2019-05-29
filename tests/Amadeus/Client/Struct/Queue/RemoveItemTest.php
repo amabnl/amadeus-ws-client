@@ -60,5 +60,31 @@ class RemoveItemTest extends BaseTestCase
         $this->assertEquals(SubQueueInfoDetails::IDTYPE_CATEGORY, $msg->targetDetails[0]->categoryDetails->subQueueInfoDetails->identificationType);
         $this->assertEquals(0, $msg->targetDetails[0]->categoryDetails->subQueueInfoDetails->itemNumber);
     }
+    
+    
+    public function testCanMakeRemoveItemMessageWithTimeMode()
+    {
+        $opt = new QueueRemoveItemOptions([
+            'recordLocator' => 'ABC123',
+            'originatorOfficeId' => 'BRUXX0000',
+            'queue' => new Queue(['queue' => 50, 'category' => 0, 'timeMode' => 1])
+        ]);
+        
+        $msg = new RemoveItem(
+            $opt->queue,
+            $opt->recordLocator,
+            $opt->originatorOfficeId
+        );
+        
+        $this->assertEquals(SourceType::SOURCETYPE_SAME_AS_ORIGINATOR, $msg->targetDetails[0]->targetOffice->sourceType->sourceQualifier1);
+        $this->assertEquals('ABC123', $msg->targetDetails[0]->recordLocator[0]->reservation->controlNumber);
+        $this->assertEquals(1, count($msg->targetDetails));
+        $this->assertEquals('BRUXX0000', $msg->targetDetails[0]->targetOffice->originatorDetails->inHouseIdentification1);
+        $this->assertNotNull($msg->targetDetails[0]->placementDate);
+        $this->assertEquals(1, $msg->targetDetails[0]->placementDate->timeMode);
+        $this->assertEquals(50, $msg->targetDetails[0]->queueNumber->queueDetails->number);
+        $this->assertEquals(SubQueueInfoDetails::IDTYPE_CATEGORY, $msg->targetDetails[0]->categoryDetails->subQueueInfoDetails->identificationType);
+        $this->assertEquals(0, $msg->targetDetails[0]->categoryDetails->subQueueInfoDetails->itemNumber);
+    }
 
 }
