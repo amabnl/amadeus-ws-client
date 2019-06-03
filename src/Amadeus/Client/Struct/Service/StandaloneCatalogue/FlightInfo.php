@@ -36,14 +36,14 @@ use Amadeus\Client\Struct\Air\FlightTypeDetails;
 class FlightInfo extends SegmentGroup
 {
     /**
-     * @var flightDetails
+     * @var SegmentInformation
      */
     public $flightDetails;
 
     /**
      * FlightInfo constructor.
      *
-     * @param FlightInfo $options
+     * @param Segment $options
      */
     public function __construct($options)
     {

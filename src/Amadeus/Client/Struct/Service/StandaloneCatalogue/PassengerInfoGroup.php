@@ -22,7 +22,7 @@
 
 namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
 
-use Amadeus\Client\Struct\Service\StandaloneCatalogue\Passenger;
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
 
 /**
  * PassengersGroup

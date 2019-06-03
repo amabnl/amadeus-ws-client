@@ -21,6 +21,10 @@
  */
 namespace Amadeus\Client\Struct\Service;
 
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
+use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\PassengerInfoGroup;
 use Amadeus\Client\Struct\Service\StandaloneCatalogue\FlightInfo;
@@ -37,19 +41,19 @@ class StandaloneCatalogue extends BaseWsMessage
 
     /**
      *
-     * @var passengerInfoGroup[]
+     * @var PassengerInfoGroup[]
      */
     public $passengerInfoGroup = [];
 
     /**
      *
-     * @var flightInfo[]
+     * @var FlightInfo[]
      */
     public $flightInfo = [];
 
     /**
      *
-     * @var pricingOption[]
+     * @var PricingOptions[]
      */
     public $pricingOption = [];
 
@@ -63,7 +67,7 @@ class StandaloneCatalogue extends BaseWsMessage
         if (! is_null($options)) {
             $this->loadPassengers($options->passengers);
             
-            $this->loadflightDetails($options->segments);
+            $this->loadFlightDetails($options->segments);
             
             $this->loadPricingOptions($options->pricingOptions);
         }
@@ -86,7 +90,7 @@ class StandaloneCatalogue extends BaseWsMessage
      *
      * @param Segment[] $segments
      */
-    protected function loadflightDetails($segments)
+    protected function loadFlightDetails($segments)
     {
         foreach ($segments as $segment) {
             $this->flightInfo[] = new FlightInfo($segment);
