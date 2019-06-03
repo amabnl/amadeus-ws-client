@@ -3272,6 +3272,7 @@ Service_StandaloneCatalogue
 
 .. code-block:: php
 
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
     use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
     use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\ServiceStandalonePricingOptions;
     use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\ServicePassenger;
@@ -3287,7 +3288,7 @@ Service_StandaloneCatalogue
             ])
         ],
         'segments' => [
-            new fareSegment([
+            new Segment([
                 'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2018-07-31 12:55:00'),
                 'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2018-07-31 15:10:00'),
                 'from' => 'CAI',
@@ -3296,7 +3297,7 @@ Service_StandaloneCatalogue
                 'operatingCompany' => 'TU',
                 'flightNumber' => '814',
                 'bookingClass' => 'L',
-                'flightIndicator' => 'L',
+                'groupNumber' => 'L',
                 'segmentTattoo' => 1
             ])
         ],
