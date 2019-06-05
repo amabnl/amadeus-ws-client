@@ -32,6 +32,9 @@ class CabinOption
      */
     public function __construct($cabinCode)
     {
-        $this->cabinDesignation = new CabinDesignation($cabinCode);
+        if ($cabinCode != '702')
+            $this->cabinDesignation = new CabinDesignation($cabinCode);
+        else
+            $this->orderClassesByCabin = $cabinCode;
     }
 }
