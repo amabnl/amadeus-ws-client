@@ -20,27 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Queue;
+namespace Amadeus\Client\ResponseHandler\Fare;
 
 /**
- * Class QueueDate
+ * HandlerMasterPricerExpertSearch
  *
- * @package Amadeus\Client\Struct\Queue
+ * @package Amadeus\Client\ResponseHandler\Fare
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class QueueDate
+class HandlerMasterPricerExpertSearch extends HandlerMasterPricerTravelBoardSearch
 {
-    /**
-     * @var int
-     */
-    public $timeMode;
-    
-    /**
-     * QueueDate constructor.
-     *
-     * @param int timeMode
-     */
-    public function __construct($timeMode)
-    {
-        $this->timeMode = $timeMode;
-    }
 }

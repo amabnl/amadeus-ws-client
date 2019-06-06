@@ -30,3 +30,6 @@ build:
         php72:
             environment:
                 php: 7.2
+        php73:
+            environment:
+                php: 7.3

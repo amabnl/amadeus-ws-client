@@ -20,27 +20,24 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Queue;
+namespace Amadeus\Client\RequestOptions\Service\StandaloneCatalogue;
+
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
 
 /**
- * Class QueueDate
+ * Passenger
  *
- * @package Amadeus\Client\Struct\Queue
+ * @package Amadeus\Client\RequestOptions\Fare\InformativePricing
+ * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
-class QueueDate
+class ServicePassenger extends Passenger
 {
     /**
+     * Specifies the passenger index
+     *
+     * If you have 3 passengers of this type, you need to provide 3 unique passenger index.
+     *
      * @var int
      */
-    public $timeMode;
-    
-    /**
-     * QueueDate constructor.
-     *
-     * @param int timeMode
-     */
-    public function __construct($timeMode)
-    {
-        $this->timeMode = $timeMode;
-    }
+    public $reference;
 }

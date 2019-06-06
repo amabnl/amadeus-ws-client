@@ -19,28 +19,30 @@
  * @package Amadeus
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
-
-namespace Amadeus\Client\Struct\Queue;
+namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
 
 /**
- * Class QueueDate
+ * TravellerDetails
  *
- * @package Amadeus\Client\Struct\Queue
+ * @package Amadeus\Client\Struct\Service\StandaloneCatalogue
+ * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
-class QueueDate
+class TravellerDetails
 {
+
     /**
+     *
      * @var int
      */
-    public $timeMode;
-    
+    public $referenceNumber;
+
     /**
-     * QueueDate constructor.
+     * TravellerDetails constructor.
      *
-     * @param int timeMode
+     * @param int $referenceNumber
      */
-    public function __construct($timeMode)
+    public function __construct($referenceNumber)
     {
-        $this->timeMode = $timeMode;
+        $this->referenceNumber = $referenceNumber;
     }
 }

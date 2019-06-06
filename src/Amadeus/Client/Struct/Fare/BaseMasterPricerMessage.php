@@ -57,6 +57,12 @@ class BaseMasterPricerMessage extends BaseWsMessage
     public $fareOptions;
 
     /**
+     * @var array
+     */
+    public $buckets = [];
+ 
+
+    /**
      * @param MPPassenger $passenger
      * @param int $counter BYREF
      * @param int $infantCounter BYREF

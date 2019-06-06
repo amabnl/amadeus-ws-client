@@ -20,6 +20,7 @@ This is the list of messages that are at least partially supported at this time:
 - Queue_RemoveItem
 - Queue_MoveItem
 - Fare_MasterPricerTravelBoardSearch
+- Fare_MasterPricerExpertSearch
 - Fare_MasterPricerCalendar
 - Fare_PricePNRWithBookingClass
 - Fare_PricePNRWithLowerFares
@@ -65,6 +66,7 @@ This is the list of messages that are at least partially supported at this time:
 - DocRefund_IgnoreRefund
 - Service_IntegratedPricing
 - Service_IntegratedCatalogue
+- Service_StandaloneCatalogue
 - Offer_CreateOffer
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
@@ -105,7 +107,6 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Media_GetMedia
 - Service_PriceServiceViaCatalogue
 - Service_PriceIntegratedMode
-- Service_StandaloneCatalogue
 - Service_StandalonePricing
 - Hotel_MultiSingleAvailability (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)
 - Hotel_DescriptiveInfo (see `issue 70 <https://github.com/amabnl/amadeus-ws-client/issues/70>`_)

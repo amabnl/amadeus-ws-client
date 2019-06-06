@@ -22,24 +22,22 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
-use Amadeus\Client\RequestOptions\Fare\MPTicketingPriceScheme;
 use Amadeus\Client\RequestOptions\Fare\MPFareFamily;
 use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
-use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+use Amadeus\Client\RequestOptions\FareMasterPricerExSearchOptions;
 use Amadeus\Client\RequestOptions\TicketAtcShopperMpTbSearchOptions;
 use Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
- * Fare_MasterPricerTravelBoardSearch message structure
- *
- * Also used for Fare_MasterPricerCalendar and Ticket_ATCShopperMasterPricerTravelBoardSearch
+ * Fare_MasterPricerExpertSearch message structure
  *
  * @package Amadeus\Client\Struct\Fare
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
+class MasterPricerExpertSearch extends BaseMasterPricerMessage
 {
+
     /**
      * @var mixed
      */
@@ -87,10 +85,6 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
      */
     public $itinerary = [];
     /**
-     * @var MPTicketingPriceScheme
-     */
-    public $ticketingPriceScheme;
-    /**
      * @var mixed
      */
     public $ticketChangeInfo;
@@ -108,19 +102,19 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
     public $officeIdDetails;
 
     /**
-     * MasterPricerTravelBoardSearch constructor.
+     * MasterPricerExpertSearch constructor.
      *
-     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpTbSearchOptions|null $options
+     * @param FareMasterPricerExSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpExSearchOptions|null $options
      */
     public function __construct($options = null)
     {
-        if ($options instanceof FareMasterPricerTbSearch) {
+        if ($options instanceof FareMasterPricerExSearchOptions) {
             $this->loadOptions($options);
         }
     }
 
     /**
-     * @param FareMasterPricerTbSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpTbSearchOptions $options
+     * @param FareMasterPricerExSearch|FareMasterPricerCalendarOptions|TicketAtcShopperMpExSearchOptions $options
      */
     protected function loadOptions($options)
     {
@@ -151,25 +145,21 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
             $options->progressiveLegsMin,
             $options->progressiveLegsMax,
             $options->maxLayoverPerConnectionHours,
-            $options->maxLayoverPerConnectionMinutes,
-            $options->noAirportChange,
-            $options->maxElapsedFlyingTime
+            $options->maxLayoverPerConnectionMinutes
         )) {
             $this->travelFlightInfo = new MasterPricer\TravelFlightInfo(
-                $options->cabinClass,
-                $options->cabinOption,
-                $options->requestedFlightTypes,
-                $options->airlineOptions,
-                $options->progressiveLegsMin,
-                $options->progressiveLegsMax,
-                $options->maxLayoverPerConnectionHours,
-                $options->maxLayoverPerConnectionMinutes,
-                $options->noAirportChange,
-                $options->maxElapsedFlyingTime
-            );
+            $options->cabinClass,
+            $options->cabinOption,
+            $options->requestedFlightTypes,
+            $options->airlineOptions,
+            $options->progressiveLegsMin,
+            $options->progressiveLegsMax,
+            $options->maxLayoverPerConnectionHours,
+            $options->maxLayoverPerConnectionMinutes
+        );
         }
 
-        if (!is_null($options->priceToBeat)) {
+        if (!empty($options->priceToBeat)) {
             $this->priceToBeat = new MasterPricer\PriceToBeat(
                 $options->priceToBeat,
                 $options->priceToBeatCurrency
@@ -219,7 +209,6 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
             $opt->includedConnections,
             $opt->excludedConnections,
             $opt->nrOfConnections,
-            $opt->noAirportChange,
             $opt->cabinClass,
             $opt->cabinOption
         )) {
@@ -229,7 +218,7 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
                 $opt->includedConnections,
                 $opt->excludedConnections,
                 $opt->nrOfConnections,
-                $opt->noAirportChange,
+                null,
                 $opt->cabinClass,
                 $opt->cabinOption
             );

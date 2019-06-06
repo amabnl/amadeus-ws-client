@@ -20,27 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Queue;
+namespace Amadeus\Client\RequestCreator\Converter\Service;
+
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
+use Amadeus\Client\Struct;
 
 /**
- * Class QueueDate
+ * Service_StandaloneCatalogue Request converter
  *
- * @package Amadeus\Client\Struct\Queue
+ * @package Amadeus\Client\RequestCreator\Converter\Service
+ * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
-class QueueDate
+class StandaloneCatalogueConv extends BaseConverter
 {
     /**
-     * @var int
+     * @param ServiceIntegratedCatalogueOptions $requestOptions
+     * @param int|string $version
+     * @return Struct\Service\StandaloneCatalogue
      */
-    public $timeMode;
-    
-    /**
-     * QueueDate constructor.
-     *
-     * @param int timeMode
-     */
-    public function __construct($timeMode)
+    public function convert($requestOptions, $version)
     {
-        $this->timeMode = $timeMode;
+        return new Struct\Service\StandaloneCatalogue($requestOptions);
     }
 }

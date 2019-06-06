@@ -19,28 +19,18 @@
  * @package Amadeus
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
+namespace Amadeus\Client\RequestOptions\Service\StandaloneCatalogue;
 
-namespace Amadeus\Client\Struct\Queue;
+use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
 
 /**
- * Class QueueDate
+ * Pricing Options for the Service_StandaloneCatalogue message
  *
- * @package Amadeus\Client\Struct\Queue
+ * @package Amadeus\Client\RequestOptions\ServiceIntegratedPricingOptions
+ * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
-class QueueDate
+class ServiceStandalonePricingOptions extends PricingOptions
 {
-    /**
-     * @var int
-     */
-    public $timeMode;
-    
-    /**
-     * QueueDate constructor.
-     *
-     * @param int timeMode
-     */
-    public function __construct($timeMode)
-    {
-        $this->timeMode = $timeMode;
-    }
+    const OVERRIDE_MANUAL_INPUT_FORMATTED = 'MIF';
+    const OVERRIDE_COMMERCIAL_DESCRIPTION = 'SCD';
 }

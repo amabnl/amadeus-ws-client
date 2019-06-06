@@ -20,27 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Queue;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * Class QueueDate
+ * ServiceStandaloneCatalogueOptions Request Options
  *
- * @package Amadeus\Client\Struct\Queue
+ * @package Amadeus\Client\RequestOptions
+ * @author Arvind Pandey <arvindpandey87@gmail.com>
  */
-class QueueDate
+class ServiceStandaloneCatalogueOptions extends FareInformativePricingWithoutPnrOptions
 {
-    /**
-     * @var int
-     */
-    public $timeMode;
-    
-    /**
-     * QueueDate constructor.
-     *
-     * @param int timeMode
-     */
-    public function __construct($timeMode)
-    {
-        $this->timeMode = $timeMode;
-    }
 }

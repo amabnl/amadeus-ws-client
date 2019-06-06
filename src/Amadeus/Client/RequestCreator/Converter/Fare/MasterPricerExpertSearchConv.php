@@ -20,27 +20,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Queue;
+namespace Amadeus\Client\RequestCreator\Converter\Fare;
+
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\FareMasterPricerExSearchOptions;
+use Amadeus\Client\Struct;
 
 /**
- * Class QueueDate
+ * Fare_MasterPricerExpertSearch Request converter
  *
- * @package Amadeus\Client\Struct\Queue
+ * @package Amadeus\Client\RequestCreator\Converter\Fare
+ * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-class QueueDate
+class MasterPricerExpertSearchConv extends BaseConverter
 {
     /**
-     * @var int
+     * @param FareMasterPricerExSearch $requestOptions
+     * @param int|string $version
+     * @return Struct\Fare\MasterPricerExpertSearch
      */
-    public $timeMode;
-    
-    /**
-     * QueueDate constructor.
-     *
-     * @param int timeMode
-     */
-    public function __construct($timeMode)
+    public function convert($requestOptions, $version)
     {
-        $this->timeMode = $timeMode;
+        return new Struct\Fare\MasterPricerExpertSearch($requestOptions);
     }
 }

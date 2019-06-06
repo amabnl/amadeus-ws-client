@@ -19,28 +19,25 @@
  * @package Amadeus
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
-
-namespace Amadeus\Client\Struct\Queue;
+namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
 
 /**
- * Class QueueDate
+ * FareInfo
  *
- * @package Amadeus\Client\Struct\Queue
+ * @package Amadeus\Client\Struct\Service\StandaloneCatalogue
+ * @author Arvind PAndey <arvindpandey87@gmail.com>
  */
-class QueueDate
+class FareInfo
 {
+
     /**
-     * @var int
-     */
-    public $timeMode;
-    
-    /**
-     * QueueDate constructor.
      *
-     * @param int timeMode
+     * @var string
      */
-    public function __construct($timeMode)
+    public $valueQualifier;
+
+    public function __construct($paxType)
     {
-        $this->timeMode = $timeMode;
+        $this->valueQualifier = $paxType;
     }
 }
