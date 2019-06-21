@@ -30,6 +30,7 @@ use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\ZapOff;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions as LowerFareOpt;
 use Amadeus\Client\RequestOptions\FarePricePnrWithLowestFareOptions as LowestFareOpt;
@@ -179,6 +180,11 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::makeOverrideOptionsWithCriteria($options->overrideOptionsWithCriteria, $priceOptions)
+        );
+
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadObFees($options->zapOff, $options->zapOffRefs)
         );
 
         // All options processed, no options found:
@@ -609,6 +615,35 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
             $po = new PricingOptionGroup(PricingOptionKey::OPTION_PAX_SEGMENT_TST_SELECTION);
 
             $po->paxSegTstReference = new PaxSegTstReference($references);
+
+            $opt[] = $po;
+        }
+
+        return $opt;
+    }
+
+    /**
+     * Load ZAP-Off
+     *
+     * @param ZapOff[] $zapOffs
+     * @param PaxSegRef[] $zapOffRefs
+     * @return PricingOptionGroup[]
+     */
+    protected static function loadZapOffs($zapOffs, $zapOffRefs)
+    {
+        $opt = [];
+
+        if (!empty($zapOffs)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_ZAP_OFF);
+
+            $po->penDisInformation = new PenDisInformation(
+                PenDisInformation::QUAL_ZAPOFF_DISCOUNT,
+                $zapOffs
+            );
+
+            if (!empty($zapOffRefs)) {
+                $po->paxSegTstReference = new PaxSegTstReference($zapOffRefs);
+            }
 
             $opt[] = $po;
         }

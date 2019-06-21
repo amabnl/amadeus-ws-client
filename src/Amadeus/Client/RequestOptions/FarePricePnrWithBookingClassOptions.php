@@ -29,6 +29,7 @@ use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\ZapOff;
 
 /**
  * Fare_PricePnrWithBookingClass Request Options
@@ -277,4 +278,18 @@ class FarePricePnrWithBookingClassOptions extends Base
      * @var string
      */
     public $fareFamily;
+
+    /**
+     * Zap-Off to be applied
+     *
+     * @var ZapOff[]
+     */
+    public $zapOff;
+
+    /**
+     * Segments segments for which Zap-Off is applie for which Zap-Off is applied
+     *
+     * @var PaxSegRef
+     */
+    public $zapOffRefs;
 }
