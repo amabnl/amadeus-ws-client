@@ -434,3 +434,40 @@ Price with given fare-family 'CLASSIC':
             'fareFamily' => 'CLASSIC'
         ])
     );
+
+
+Zap-Off
+=======
+
+Price a PNR Zap-Off:
+
+**Example:** apply a Zap-Off with amount 120 on the total fare and apply ticket designator "CH50" for segments
+1 and 2.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\ZapOff;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+         new FarePricePnrWithBookingClassOptions([
+            'zapOff' => [
+                new ZapOff([
+                    'applyTo' => ZapOff::FUNCTION_TOTAL_FARE,
+                    'rate' => 'CH50',
+                    'amount' => 120,
+                ])
+            ],
+            'zapOffRefs' => [
+                new PaxSegRef([
+                    'type' => PaxSegRef::TYPE_SEGMENT,
+                    'reference' => 1
+                ]),
+                new PaxSegRef([
+                    'type' => PaxSegRef::TYPE_SEGMENT,
+                    'reference' => 2
+                ])
+            ]
+        ])
+    );
