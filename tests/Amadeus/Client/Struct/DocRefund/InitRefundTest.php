@@ -63,6 +63,70 @@ class InitRefundTest extends BaseTestCase
         $this->assertNull($msg->targetOfficeDetails);
         $this->assertNull($msg->transactionContext);
     }
+    
+    /**
+     * 5.1 Operation: ATC refund on a ticket paid with certificates
+     */
+    public function testCanMakeMessageAtcRefundWithStockProvider()
+    {
+        $opt = new DocRefundInitRefundOptions([
+            'ticketNumber' => '5272404450587',
+            'actionCodes' => [
+                DocRefundInitRefundOptions::ACTION_ATC_REFUND
+            ],
+            'stockProvider' => 'AZ9',
+        ]);
+        
+        $msg = new InitRefund($opt);
+        
+        $this->assertEquals('5272404450587', $msg->ticketNumberGroup->documentNumberDetails->documentDetails->number);
+        $this->assertNull($msg->ticketNumberGroup->documentNumberDetails->status);
+        $this->assertEmpty($msg->ticketNumberGroup->paperCouponOfDocNumber);
+        
+        $this->assertEquals(StatusDetails::INDICATOR_ATC_REFUND, $msg->actionDetails->statusDetails->indicator);
+        $this->assertEmpty($msg->actionDetails->otherDetails);
+        
+        $this->assertNull($msg->itemNumberGroup);
+        $this->assertNull($msg->currencyOverride);
+        
+        $this->assertEquals('AZ9', $msg->stockProviderDetails->stockProvider);
+        $this->assertEmpty($msg->stockProviderDetails->stockTypeCode);
+        
+        $this->assertNull($msg->targetOfficeDetails);
+        $this->assertNull($msg->transactionContext);
+    }
+    
+    /**
+     * 5.1 Operation: ATC refund on a ticket paid with certificates
+     */
+    public function testCanMakeMessageAtcRefundWithStockTypeCode()
+    {
+        $opt = new DocRefundInitRefundOptions([
+            'ticketNumber' => '5272404450587',
+            'actionCodes' => [
+                DocRefundInitRefundOptions::ACTION_ATC_REFUND
+            ],
+            'stockTypeCode' => 'A',
+        ]);
+        
+        $msg = new InitRefund($opt);
+        
+        $this->assertEquals('5272404450587', $msg->ticketNumberGroup->documentNumberDetails->documentDetails->number);
+        $this->assertNull($msg->ticketNumberGroup->documentNumberDetails->status);
+        $this->assertEmpty($msg->ticketNumberGroup->paperCouponOfDocNumber);
+        
+        $this->assertEquals(StatusDetails::INDICATOR_ATC_REFUND, $msg->actionDetails->statusDetails->indicator);
+        $this->assertEmpty($msg->actionDetails->otherDetails);
+        
+        $this->assertNull($msg->itemNumberGroup);
+        $this->assertNull($msg->currencyOverride);
+    
+        $this->assertEquals('A', $msg->stockProviderDetails->stockTypeCode);
+        $this->assertEmpty($msg->stockProviderDetails->stockProvider);
+    
+        $this->assertNull($msg->targetOfficeDetails);
+        $this->assertNull($msg->transactionContext);
+    }
 
     /**
      * 5.1 Operation: ATC refund on a ticket paid with certificates
