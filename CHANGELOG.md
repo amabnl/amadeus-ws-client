@@ -1,3 +1,6 @@
+# Release 1.8.1 (29 May 2019)
+* Support for Queue TimeMode in ``Queue_RemoveItem`` (https://github.com/amabnl/amadeus-ws-client/pull/333) - Ruslan Poltayev
+
 # Release 1.8.0 (25 May 2019)
 * Added support for Ticketing Price Scheme option in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/193) - Artem Zakharchenko
 * Added support for cabin options on itinerary-level in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/202) - Michal Hernas
