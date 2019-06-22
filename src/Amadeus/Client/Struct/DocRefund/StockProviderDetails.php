@@ -8,7 +8,6 @@
 
 namespace Amadeus\Client\Struct\DocRefund;
 
-
 class StockProviderDetails
 {
     /**
@@ -32,4 +31,5 @@ class StockProviderDetails
         $this->stockTypeCode = $stockTypeCode;
         $this->stockProvider = $stockProvider;
     }
+    
 }
