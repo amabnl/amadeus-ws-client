@@ -439,7 +439,7 @@ Price with given fare-family 'CLASSIC':
 Zap-Off
 =======
 
-Price a PNR Zap-Off:
+Price a PNR with Zap-Off:
 
 **Example:** apply a Zap-Off with amount 120 on the total fare and apply ticket designator "CH50" for segments
 1 and 2.
