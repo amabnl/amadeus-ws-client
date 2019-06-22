@@ -31,5 +31,4 @@ class StockProviderDetails
         $this->stockTypeCode = $stockTypeCode;
         $this->stockProvider = $stockProvider;
     }
-    
 }
