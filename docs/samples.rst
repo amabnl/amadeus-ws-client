@@ -3265,6 +3265,61 @@ All the examples for ``Service_IntegratedPricing`` (see above) should also work 
             ]
         ])
     );
+    
+---------------------------
+Service_StandaloneCatalogue
+---------------------------
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
+    use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
+    use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\ServiceStandalonePricingOptions;
+    use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\ServicePassenger;
+    use Amadeus\Client\RequestOptions\Service\PaxSegRef;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+    
+    $standaloneCatalogueResponse = $client->serviceStandaloneCatalogue(
+    new ServiceStandaloneCatalogueOptions([
+        'passengers' => [
+            new ServicePassenger([
+                'reference' => 1,
+                'type' => ServicePassenger::TYPE_ADULT
+            ])
+        ],
+        'segments' => [
+            new Segment([
+                'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2018-07-31 12:55:00'),
+                'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2018-07-31 15:10:00'),
+                'from' => 'CAI',
+                'to' => 'TUN',
+                'marketingCompany' => 'TU',
+                'operatingCompany' => 'TU',
+                'flightNumber' => '814',
+                'bookingClass' => 'L',
+                'groupNumber' => 'L',
+                'segmentTattoo' => 1
+            ])
+        ],
+        'pricingOptions' => new ServiceStandalonePricingOptions([
+            'pricingsFareBasis' => [
+                new FareBasis([
+                    'fareBasisCode' => 'LOXOW',
+                ])
+            ],
+            'references' => [
+                new PaxSegRef([
+                    'reference' => 1,
+                    'type' => 'S'
+                ]),
+                new PaxSegRef([
+                    'reference' => 1,
+                    'type' => 'P'
+                ])
+            ]
+        ])
+    ])
+);
 
 ***
 FOP
