@@ -76,7 +76,7 @@ class SeatRequest extends Element
     /**
      * Seat Number
      *
-     * @var string
+     * @var string|array
      */
     public $seatNumber;
 }
