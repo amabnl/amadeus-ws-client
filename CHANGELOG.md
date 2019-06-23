@@ -1,3 +1,8 @@
+# Release 1.9.0 (23 Jun 2019)
+* Added support for multiple seat request in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/pull/335) - Artem Zakharchenko
+* Added `stockProviderDetails` to ``DocRefund_InitRefund `` (https://github.com/amabnl/amadeus-ws-client/pull/341) - Ruslan Poltayev
+* Implemented ``Service_StandaloneCatalogue`` - (https://github.com/amabnl/amadeus-ws-client/pull/220) - arvind-pandey & Artem Zakharchenko
+
 # Release 1.8.1 (29 May 2019)
 * Support for Queue TimeMode in ``Queue_RemoveItem`` (https://github.com/amabnl/amadeus-ws-client/pull/333) - Ruslan Poltayev
 
