@@ -643,6 +643,8 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
                 if (!empty($zapOff->paxSegRefs)) {
                     $po->paxSegTstReference = new PaxSegTstReference($zapOff->paxSegRefs);
                 }
+
+                $opt[] = $po;
             }
         }
 
