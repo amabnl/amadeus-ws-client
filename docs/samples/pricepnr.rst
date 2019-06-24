@@ -520,4 +520,4 @@ Price a PNR with Zap-Off:
         ])
     );
 
-*Note: The global references (like in * **Example 1:** *) are ignored if there exists at least one local references (like in* **Example 2:** * ).*
+*Note: The global references (like in _Example 1_ ) are ignored if there exists at least one local references (like in _Example 2_ ).*
