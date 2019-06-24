@@ -393,6 +393,7 @@ This option is used to price an itinerary applying an award program for a given 
     );
 
 
+
 Form of Payment override
 ========================
 
@@ -471,3 +472,51 @@ Price a PNR with Zap-Off:
             ]
         ])
     );
+
+**Example:** apply a Zap-Off with amount 120 on the total fare and apply ticket designator "CH50" for segments
+1 and 2 and apply a Zap-Off with amount 80 on the total fare and apply ticket designator "CH70" for segments
+3 and 4.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\ZapOff;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+         new FarePricePnrWithBookingClassOptions([
+            'zapOff' => [
+                new ZapOff([
+                    'applyTo' => ZapOff::FUNCTION_TOTAL_FARE,
+                    'rate' => 'CH50',
+                    'amount' => 120,
+                    'references' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 1
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 2
+                        ])
+                    ]
+                ]),
+                new ZapOff([
+                    'applyTo' => ZapOff::FUNCTION_TOTAL_FARE,
+                    'rate' => 'CH70',
+                    'amount' => 80,
+                    'references' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 3
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 4
+                        ])
+                    ]
+                ])
+            ]
+        ])
+    );
+

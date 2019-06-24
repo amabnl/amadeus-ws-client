@@ -66,4 +66,12 @@ class ZapOff extends LoadParamsFromArray
      * @var string
      */
     public $rate;
+
+    /**
+     * Segments segments for which Zap-Off is applies
+     *
+     * @var PaxSegRef[]
+     */
+    public $references;
+
 }

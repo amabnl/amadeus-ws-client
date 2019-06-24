@@ -23,6 +23,7 @@
 namespace Amadeus\Client\Struct\Fare\PricePnr13;
 
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\ZapOff;
 
 /**
  * PenDisInformation
@@ -66,6 +67,9 @@ class PenDisInformation
             case PenDisInformation::QUAL_DISCOUNT:
                 $this->loadPaxDiscounts($data);
                 break;
+            case PenDisInformation::QUAL_ZAPOFF_DISCOUNT:
+                $this->loadZappOffDiscounts($data);
+                break;
         }
     }
 
@@ -97,6 +101,26 @@ class PenDisInformation
     {
         foreach ($discounts as $discount) {
             $this->discountPenaltyDetails[] = new DiscountPenaltyDetails($discount);
+        }
+    }
+
+    /**
+     * @param $zapOffs ZapOff[]
+     */
+    protected function loadZapOffDiscounts($zapOffs)
+    {
+        foreach ($zapOffs as $zapOff) {
+            $amountType = (!empty($zapOff->amount)) ?
+                DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT : DiscountPenaltyDetails::AMOUNTTYPE_PERCENTAGE;
+
+            $rate = (!empty($zapOff->amount)) ? $zapOff->amount : $zapOff->percentage;
+
+            $this->discountPenaltyDetails[] = new DiscountPenaltyDetails(
+                $zapOff->rate,
+                $zapOff->applyTo,
+                $amountType,
+                $rate
+            );
         }
     }
 
