@@ -184,7 +184,7 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
         $priceOptions = self::mergeOptions(
             $priceOptions,
-            self::loadZapOffs($options->zapOff, $options->zapOffRefs)
+            self::loadZapOffs($options->zapOff)
         );
 
         // All options processed, no options found:
@@ -628,7 +628,7 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
      * @param ZapOff[] $zapOffs
      * @return PricingOptionGroup[]
      */
-    protected static function loadZapOffs($zapOffs, $zapOffRefs)
+    protected static function loadZapOffs($zapOffs)
     {
         $opt = [];
         if (!empty($zapOffs)) {
