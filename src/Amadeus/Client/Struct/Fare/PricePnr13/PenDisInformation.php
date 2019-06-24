@@ -110,7 +110,8 @@ class PenDisInformation
     protected function loadZapOffDiscounts($zapOffs)
     {
         foreach ($zapOffs as $zapOff) {
-            $amountType = (!empty($zapOff->amount)) ?
+
+            $amountType = (isset($zapOff->amount)) ?    
                 DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT : DiscountPenaltyDetails::AMOUNTTYPE_PERCENTAGE;
 
             $rate = (!empty($zapOff->amount)) ? $zapOff->amount : $zapOff->percentage;
