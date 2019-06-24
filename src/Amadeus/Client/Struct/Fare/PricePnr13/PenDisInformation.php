@@ -111,10 +111,10 @@ class PenDisInformation
     {
         foreach ($zapOffs as $zapOff) {
 
-            $amountType = (isset($zapOff->amount)) ?    
+            $amountType = (isset($zapOff->amount)) ?
                 DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT : DiscountPenaltyDetails::AMOUNTTYPE_PERCENTAGE;
 
-            $rate = (!empty($zapOff->amount)) ? $zapOff->amount : $zapOff->percentage;
+            $rate = (isset($zapOff->amount)) ? $zapOff->amount : $zapOff->percentage;
 
             $this->discountPenaltyDetails[] = new DiscountPenaltyDetails(
                 $zapOff->rate,
