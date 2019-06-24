@@ -184,7 +184,7 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
         $priceOptions = self::mergeOptions(
             $priceOptions,
-            self::loadObFees($options->zapOff, $options->zapOffRefs)
+            self::loadZapOffs($options->zapOff, $options->zapOffRefs)
         );
 
         // All options processed, no options found:
