@@ -286,10 +286,4 @@ class FarePricePnrWithBookingClassOptions extends Base
      */
     public $zapOff;
 
-    /**
-     * Segments segments for which Zap-Off is applie for which Zap-Off is applied
-     *
-     * @var PaxSegRef
-     */
-    public $zapOffRefs;
 }

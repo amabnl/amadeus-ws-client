@@ -631,27 +631,17 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
     protected static function loadZapOffs($zapOffs, $zapOffRefs)
     {
         $opt = [];
-        $applyGlobalRefs = true;
         if (!empty($zapOffs)) {
             foreach ($zapOffs as $zapOff) {
                 $po = new PricingOptionGroup(PricingOptionKey::OPTION_ZAP_OFF);
 
                 $po->penDisInformation = new PenDisInformation(
                     PenDisInformation::QUAL_ZAPOFF_DISCOUNT,
-                    $zapOff
+                    [$zapOff]
                 );
 
-                if (!empty($zapOff->references)) {
-                    $applyGlobalRefs = false;
-                    $po->paxSegTstReference = new PaxSegTstReference($zapOff->references);
-                }
-            }
-
-            // apply global zapOffRefs
-            if($applyGlobalRefs && !empty($zapOffs)){
-                foreach ($opt as $idx => $po){
-                    $po->paxSegTstReference = new PaxSegTstReference($zapOffRefs);
-                    $opt[$idx] = $po;
+                if (!empty($zapOff->paxSegRefs)) {
+                    $po->paxSegTstReference = new PaxSegTstReference($zapOff->paxSegRefs);
                 }
             }
         }
