@@ -442,7 +442,7 @@ Zap-Off
 
 Price a PNR with Zap-Off:
 
-**Example:** apply a Zap-Off with amount 120 on the total fare and apply ticket designator "CH50" for segments
+**Example 1:** apply a Zap-Off with amount 120 on the total fare and apply ticket designator "CH50" for segments
 1 and 2.
 
 .. code-block:: php
@@ -473,7 +473,7 @@ Price a PNR with Zap-Off:
         ])
     );
 
-**Example:** apply a Zap-Off with amount 120 on the total fare and apply ticket designator "CH50" for segments
+**Example 2:** apply a Zap-Off with amount 120 on the total fare and apply ticket designator "CH50" for segments
 1 and 2 and apply a Zap-Off with amount 80 on the total fare and apply ticket designator "CH70" for segments
 3 and 4.
 
@@ -520,3 +520,4 @@ Price a PNR with Zap-Off:
         ])
     );
 
+*Note: The global references (like in **Example 1:**) are ignored if there exists at least one local references (like in **Example 2:** ).*
