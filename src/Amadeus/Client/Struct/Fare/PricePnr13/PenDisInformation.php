@@ -68,7 +68,7 @@ class PenDisInformation
                 $this->loadPaxDiscounts($data);
                 break;
             case PenDisInformation::QUAL_ZAPOFF_DISCOUNT:
-                $this->loadZappOffDiscounts($data);
+                $this->loadZapOffDiscounts($data);
                 break;
         }
     }
