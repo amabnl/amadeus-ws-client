@@ -612,4 +612,39 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $this->assertEquals('FF', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
         $this->assertEquals('FLEX', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeDescription);
     }
+
+    public function testCanDoPricePnrCallWithZapOff()
+    {
+        $opt =  new FarePricePnrWithBookingClassOptions([
+            'zapOff' => [
+                new ZapOff([
+                    'applyTo' => ZapOff::FUNCTION_TOTAL_FARE,
+                    'rate' => 'CH50',
+                    'amount' => 120,
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 1
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 2
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new PricePNRWithBookingClass13($opt);
+
+        $this->assertCount(1, $msg->pricingOptionGroup);
+
+        $this->assertEquals(PricingOptionKey::OPTION_ZAP_OFF, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(PenDisInformation::QUAL_ZAPOFF_DISCOUNT, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyQualifier);
+        $this->assertCount(1, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails);
+        $this->assertEquals(DiscountPenaltyDetails::FUNCTION_TOTAL_FARE, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->function);
+        $this->assertEquals(120, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->amount);
+        $this->assertEquals(DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->amountType);
+        $this->assertEquals('CH50', $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->rate);
+    }
 }

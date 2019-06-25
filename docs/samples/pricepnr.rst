@@ -459,7 +459,7 @@ Price a PNR with Zap-Off:
                     'applyTo' => ZapOff::FUNCTION_TOTAL_FARE,
                     'rate' => 'CH50',
                     'amount' => 120,
-                    'references' => [
+                    'paxSegRefs' => [
                         new PaxSegRef([
                             'type' => PaxSegRef::TYPE_SEGMENT,
                             'reference' => 1
@@ -474,7 +474,7 @@ Price a PNR with Zap-Off:
                     'applyTo' => ZapOff::FUNCTION_TOTAL_FARE,
                     'rate' => 'CH70',
                     'amount' => 80,
-                    'references' => [
+                    'paxSegRefs' => [
                         new PaxSegRef([
                             'type' => PaxSegRef::TYPE_SEGMENT,
                             'reference' => 3
