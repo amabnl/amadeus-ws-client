@@ -44,6 +44,7 @@ use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionKey;
 use Amadeus\Client\Struct\Fare\PricePnr13\ReferenceDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\TaxData;
 use Amadeus\Client\Struct\Fare\PricePnr13\TaxInformation;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\ZapOff;
 use Amadeus\Client\Struct\Fare\PricePNRWithBookingClass13;
 use Test\Amadeus\BaseTestCase;
 
