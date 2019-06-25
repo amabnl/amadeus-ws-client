@@ -68,7 +68,7 @@ class PenDisInformation
                 $this->loadPaxDiscounts($data);
                 break;
             case PenDisInformation::QUAL_ZAPOFF_DISCOUNT:
-                $this->loadZappOffDiscounts($data);
+                $this->loadZapOffDiscounts($data);
                 break;
         }
     }
@@ -110,10 +110,11 @@ class PenDisInformation
     protected function loadZapOffDiscounts($zapOffs)
     {
         foreach ($zapOffs as $zapOff) {
-            $amountType = (!empty($zapOff->amount)) ?
+
+            $amountType = (isset($zapOff->amount)) ?
                 DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT : DiscountPenaltyDetails::AMOUNTTYPE_PERCENTAGE;
 
-            $rate = (!empty($zapOff->amount)) ? $zapOff->amount : $zapOff->percentage;
+            $rate = (isset($zapOff->amount)) ? $zapOff->amount : $zapOff->percentage;
 
             $this->discountPenaltyDetails[] = new DiscountPenaltyDetails(
                 $zapOff->rate,

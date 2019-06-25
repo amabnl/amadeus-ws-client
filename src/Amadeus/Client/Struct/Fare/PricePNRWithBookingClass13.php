@@ -184,7 +184,7 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
         $priceOptions = self::mergeOptions(
             $priceOptions,
-            self::loadObFees($options->zapOff, $options->zapOffRefs)
+            self::loadZapOffs($options->zapOff)
         );
 
         // All options processed, no options found:
@@ -628,31 +628,23 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
      * @param ZapOff[] $zapOffs
      * @return PricingOptionGroup[]
      */
-    protected static function loadZapOffs($zapOffs, $zapOffRefs)
+    protected static function loadZapOffs($zapOffs)
     {
         $opt = [];
-        $applyGlobalRefs = true;
         if (!empty($zapOffs)) {
             foreach ($zapOffs as $zapOff) {
                 $po = new PricingOptionGroup(PricingOptionKey::OPTION_ZAP_OFF);
 
                 $po->penDisInformation = new PenDisInformation(
                     PenDisInformation::QUAL_ZAPOFF_DISCOUNT,
-                    $zapOff
+                    [$zapOff]
                 );
 
-                if (!empty($zapOff->references)) {
-                    $applyGlobalRefs = false;
-                    $po->paxSegTstReference = new PaxSegTstReference($zapOff->references);
+                if (!empty($zapOff->paxSegRefs)) {
+                    $po->paxSegTstReference = new PaxSegTstReference($zapOff->paxSegRefs);
                 }
-            }
 
-            // apply global zapOffRefs
-            if($applyGlobalRefs && !empty($zapOffs)){
-                foreach ($opt as $idx => $po){
-                    $po->paxSegTstReference = new PaxSegTstReference($zapOffRefs);
-                    $opt[$idx] = $po;
-                }
+                $opt[] = $po;
             }
         }
 
