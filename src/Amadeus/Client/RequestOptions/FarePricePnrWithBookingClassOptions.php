@@ -285,5 +285,4 @@ class FarePricePnrWithBookingClassOptions extends Base
      * @var ZapOff[]
      */
     public $zapOff;
-
 }
