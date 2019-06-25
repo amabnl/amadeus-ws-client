@@ -73,5 +73,4 @@ class ZapOff extends LoadParamsFromArray
      * @var PaxSegRef[]
      */
     public $paxSegRefs;
-
 }
