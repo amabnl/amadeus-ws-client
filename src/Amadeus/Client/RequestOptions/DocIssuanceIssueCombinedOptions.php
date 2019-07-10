@@ -40,4 +40,6 @@ class DocIssuanceIssueCombinedOptions extends DocIssuanceIssueTicketOptions
     public $tsmTattoos = [];
 
     public $emds=[];
+
+    public $svcs=[];
 }

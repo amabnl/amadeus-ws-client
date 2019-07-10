@@ -56,5 +56,13 @@ class IssueCombined extends IssueTicket
                 )
             );
         }
+        foreach ($options->svcs as $svc) {
+            $this->addSelectionItem(
+                new ReferenceDetails(
+                    $svc,
+                    ReferenceDetails::TYPE_LINE_NUMBER
+                )
+            );
+        }
     }
 }
