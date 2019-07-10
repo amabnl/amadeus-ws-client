@@ -42,4 +42,8 @@ class DocIssuanceIssueCombinedOptions extends DocIssuanceIssueTicketOptions
     public $emds=[];
 
     public $svcs=[];
+
+    public $cup=[];
+
+    public $segs=[];
 }

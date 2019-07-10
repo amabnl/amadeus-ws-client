@@ -64,5 +64,21 @@ class IssueCombined extends IssueTicket
                 )
             );
         }
+        foreach ($options->cup as $cup) {
+            $this->addSelectionItem(
+                new ReferenceDetails(
+                    $cup,
+                    ReferenceDetails::TYPE_COUPON_NUMBER
+                )
+            );
+        }
+        foreach ($options->segs as $seg) {
+            $this->addSelectionItem(
+                new ReferenceDetails(
+                    $seg,
+                    ReferenceDetails::TYPE_SEGMENT_TATTOO
+                )
+            );
+        }
     }
 }

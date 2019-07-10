@@ -35,7 +35,7 @@ class MopInfo extends LoadParamsFromArray
     const STATUS_NEW = "N";
     const STATUS_OLD = "O";
 
-    const ENCODING_MUTUAL = "ZZZ";
+    const ENCODING_MUTUAL = "1";
 
     const FOPTYPE_AUTHORIZATION_ONLY = "AO";
     const FOPTYPE_FC_ELEMENT = "FC";

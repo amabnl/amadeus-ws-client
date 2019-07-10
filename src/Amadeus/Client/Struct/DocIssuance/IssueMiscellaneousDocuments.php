@@ -39,6 +39,7 @@ class IssueMiscellaneousDocuments extends BaseWsMessage
      */
     public $selection;
     public $optionGroup;
+    public $options = [];
     public function __construct(DocIssuanceIssueMiscDocOptions $options)
     {
 //        $this->addSelectionItems($options->tsmNumbers, ReferenceDetails::TYPE_TSM);
@@ -55,6 +56,7 @@ class IssueMiscellaneousDocuments extends BaseWsMessage
 //        $this->loadStockReference($options->stockReference);
         $this->selection = $options->selection;
         $this->optionGroup = $options->optionGroup;
+        $this->options = $options->options;
     }
 
     /**

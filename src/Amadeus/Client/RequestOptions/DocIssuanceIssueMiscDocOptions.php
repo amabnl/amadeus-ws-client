@@ -39,7 +39,7 @@ class DocIssuanceIssueMiscDocOptions extends Base
 //
 //    const OPTION_TEMPLATE_DISPLAY = 'TMD';
 //    const OPTION_TEMPLATE_OVERRIDE = 'TMO';
-//    const OPTION_EMD_ISSUANCE = 'ED';
+    const OPTION_EMD_ISSUANCE = 'ED';
 //    const OPTION_RETRIEVE_PNR = 'RT';
 //    const OPTION_BASIC_INVOICE = 'INV';
 //    const OPTION_BASIC_JOINT_INVOICE_ALL_PAX = 'IVJ';
@@ -105,7 +105,7 @@ class DocIssuanceIssueMiscDocOptions extends Base
      *
      * @var string[]
      */
-//    public $options = [];
+    public $options = [];
 //
 //    /**
 //     * The list of TSM numbers to be ticketed
