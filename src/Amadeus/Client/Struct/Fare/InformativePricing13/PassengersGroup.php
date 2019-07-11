@@ -62,8 +62,10 @@ class PassengersGroup
 
         $this->travellersID = new TravellersId();
 
-        foreach ($passenger->tattoos as $tattoo) {
-            $this->travellersID->travellerDetails[] = new TravellerDetails($tattoo);
+        if (is_array($passenger->tattoos) || is_object($passenger->tattoos)) {
+            foreach ($passenger->tattoos as $tattoo) {
+                $this->travellersID->travellerDetails[] = new TravellerDetails($tattoo);
+            }
         }
 
         if (!empty($passenger->type)) {
