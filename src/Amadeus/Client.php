@@ -58,7 +58,7 @@ class Client extends Base
      *
      * @var string
      */
-    const VERSION = "1.8.0-dev";
+    const VERSION = "1.9.0";
 
     /**
      * An identifier string for the library (to be used in Received From entries)
@@ -569,6 +569,26 @@ class Client extends Base
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
+
+    /**
+     * Fare_MasterPricerExpertSearch
+     *
+     * @param RequestOptions\FareMasterPricerExSearchOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function fareMasterPricerExpertSearch(
+        RequestOptions\FareMasterPricerExSearchOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_MasterPricerExpertSearch';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
 
     /**
      * Fare_MasterPricerTravelBoardSearch
@@ -1599,6 +1619,24 @@ class Client extends Base
     ) {
         $msgName = 'SalesReports_DisplayNetRemitReport';
 
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Service_StandaloneCatalogue
+     *
+     * @param RequestOptions\ServiceStandaloneCatalogueOptions $options
+     * @param array $messageOptions
+     *            (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function serviceStandaloneCatalogue(RequestOptions\ServiceStandaloneCatalogueOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Service_StandaloneCatalogue';
+        
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 

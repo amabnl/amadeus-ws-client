@@ -20,27 +20,29 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Queue;
+namespace Amadeus\Client\Struct\DocRefund;
 
-/**
- * Class QueueDate
- *
- * @package Amadeus\Client\Struct\Queue
- */
-class QueueDate
+class StockProviderDetails
 {
     /**
-     * @var int
+     * @var string
      */
-    public $timeMode;
+    public $stockTypeCode;
     
     /**
-     * QueueDate constructor.
-     *
-     * @param int timeMode
+     * @var string
      */
-    public function __construct($timeMode)
+    public $stockProvider;
+    
+    /**
+     * StockProviderDetails constructor.
+     *
+     * @param string|null $stockTypeCode
+     * @param string|null $stockProvider
+     */
+    public function __construct($stockTypeCode, $stockProvider)
     {
-        $this->timeMode = $timeMode;
+        $this->stockTypeCode = $stockTypeCode;
+        $this->stockProvider = $stockProvider;
     }
 }

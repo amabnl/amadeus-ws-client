@@ -20,27 +20,14 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Queue;
+namespace Amadeus\Client\ResponseHandler\Service;
 
 /**
- * Class QueueDate
+ * Response handler for Service_StandaloneCatalogue
  *
- * @package Amadeus\Client\Struct\Queue
+ * @package Amadeus\Client\ResponseHandler\Service
+ * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
-class QueueDate
+class HandlerStandaloneCatalogue extends HandlerIntegratedPricing
 {
-    /**
-     * @var int
-     */
-    public $timeMode;
-    
-    /**
-     * QueueDate constructor.
-     *
-     * @param int timeMode
-     */
-    public function __construct($timeMode)
-    {
-        $this->timeMode = $timeMode;
-    }
 }
