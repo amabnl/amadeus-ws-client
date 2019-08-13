@@ -97,7 +97,8 @@ class ProcessEDoc extends BaseWsMessage
     protected function loadOptions($ticketNumber)
     {
         if (!empty($ticketNumber)) {
-            $this->infoGroup[] = new InfoGroup($ticketNumber);
+            for ($i = 0; $i < count($ticketNumber); $i++)
+                $this->infoGroup[] = new InfoGroup($ticketNumber[$i]);
         }
     }
 

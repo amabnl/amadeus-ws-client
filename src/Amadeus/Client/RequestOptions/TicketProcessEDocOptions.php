@@ -53,7 +53,7 @@ class TicketProcessEDocOptions extends Base
      *
      * @var string
      */
-    public $ticketNumber;
+    public $ticketNumber=[];
 
 
     /**
