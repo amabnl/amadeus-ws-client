@@ -91,10 +91,10 @@ class DocIssuanceBaseMsg extends BaseWsMessage
     protected function addSelectionItem(ReferenceDetails $ref)
     {
         if (is_null($this->selection) || empty($this->selection)) {
-            $this->selection[] = new Selection();
+            $this->selection = new Selection();
         }
 
-        $this->selection[0]->referenceDetails[] = $ref;
+        $this->selection->referenceDetails[] = $ref;
     }
 
     /**
