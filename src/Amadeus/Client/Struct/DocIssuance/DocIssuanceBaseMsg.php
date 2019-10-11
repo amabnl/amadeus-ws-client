@@ -37,9 +37,9 @@ use Amadeus\Client\Struct\BaseWsMessage;
 class DocIssuanceBaseMsg extends BaseWsMessage
 {
     /**
-     * @var Selection[]
+     * @var Selection
      */
-    public $selection = [];
+    public $selection;
 
     /**
      * @var PaxSelection[]

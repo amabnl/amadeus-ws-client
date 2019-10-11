@@ -72,15 +72,14 @@ class IssueCombinedTest extends BaseTestCase
                 'tsmTattoos' => [5, 8]
             ])
         );
-        
-        $this->assertCount(1, $msg->selection);
-        $this->assertEquals(1, $msg->selection[0]->referenceDetails[0]->value);
-        $this->assertEquals("TS", $msg->selection[0]->referenceDetails[0]->type);
-        $this->assertEquals(2, $msg->selection[0]->referenceDetails[1]->value);
-        $this->assertEquals("TS", $msg->selection[0]->referenceDetails[1]->type);
-        $this->assertEquals(5, $msg->selection[0]->referenceDetails[2]->value);
-        $this->assertEquals("TMT", $msg->selection[0]->referenceDetails[2]->type);
-        $this->assertEquals(8, $msg->selection[0]->referenceDetails[3]->value);
-        $this->assertEquals("TMT", $msg->selection[0]->referenceDetails[3]->type);
+
+        $this->assertEquals(1, $msg->selection->referenceDetails[0]->value);
+        $this->assertEquals("TS", $msg->selection->referenceDetails[0]->type);
+        $this->assertEquals(2, $msg->selection->referenceDetails[1]->value);
+        $this->assertEquals("TS", $msg->selection->referenceDetails[1]->type);
+        $this->assertEquals(5, $msg->selection->referenceDetails[2]->value);
+        $this->assertEquals("TMT", $msg->selection->referenceDetails[2]->type);
+        $this->assertEquals(8, $msg->selection->referenceDetails[3]->value);
+        $this->assertEquals("TMT", $msg->selection->referenceDetails[3]->type);
     }
 }
