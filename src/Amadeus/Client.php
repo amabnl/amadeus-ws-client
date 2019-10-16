@@ -1641,6 +1641,23 @@ class Client extends Base
     }
 
     /**
+     * PAY_ListVirtualCards
+     *
+     * @param RequestOptions\PayListVirtualCardsOptions $options
+     * @param array                                     $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function payListVirtualCards(RequestOptions\PayListVirtualCardsOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PAY_ListVirtualCards';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Call a message with the given parameters
      *
      * @param string $messageName

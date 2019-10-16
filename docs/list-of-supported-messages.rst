@@ -82,6 +82,7 @@ This is the list of messages that are at least partially supported at this time:
 - SalesReports_DisplayQueryReport
 - SalesReports_DisplayDailyOrSummarizedReport
 - SalesReports_DisplayNetRemitReport
+- PAY_ListVirtualCards
 
 **********
 To-do list
