@@ -28,12 +28,12 @@ use Amadeus\Client\RequestOptions\PayVirtualCardReferenceOptions;
 use Amadeus\Client\Struct;
 
 /**
- * GetVirtualCardDetailsConv
+ * DeleteVirtualCardConv
  *
  * @package Amadeus\Client\RequestCreator\Converter\PAY
  * @author Konstantin Bogomolov <bog.konstantin@gmail.com>
  */
-class GetVirtualCardDetailsConv extends BaseConverter
+class DeleteVirtualCardConv extends BaseConverter
 {
     /**
      * @param PayVirtualCardReferenceOptions $requestOptions

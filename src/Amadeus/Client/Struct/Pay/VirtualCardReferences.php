@@ -28,26 +28,26 @@ use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\InvalidArgumentException;
 
 /**
- * GetVirtualCardDetails
+ * VirtualCardReferences
  *
  * @package Amadeus\Client\Struct\Pay
  * @author Konstantin Bogomolov <bog.konstantin@gmail.com>
  */
-class GetVirtualCardDetails extends BaseWsMessage
+class VirtualCardReferences extends BaseWsMessage
 {
     public $Version = '2.0';
 
     public $References;
 
     /**
-     * GetVirtualCardDetails constructor.
+     * VirtualCardReferences constructor.
      * @param PayVirtualCardReferenceOptions $params
      * @param string|int                     $version
      */
     public function __construct(PayVirtualCardReferenceOptions $params, $version)
     {
         if ($params->amadeusReference === null || $params->externalReference === null) {
-            throw new InvalidArgumentException('All GetVirtualCardDetails options are mandatory');
+            throw new InvalidArgumentException('All VirtualCardReferences options are mandatory');
         }
 
         $this->References[] = new Reference(Reference::TYPE_AMADEUS, $params->amadeusReference);
