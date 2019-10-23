@@ -23,39 +23,30 @@
 
 namespace Amadeus\Client\Struct\Pay;
 
-use Amadeus\Client\RequestOptions\PayListVirtualCardsOptions;
+use Amadeus\Client\RequestOptions\PayGenerateVirtualCardOptions;
 
 /**
- * Reservation
+ * ValidityPeriod
  *
  * @package Amadeus\Client\Struct\Pay
  * @author Konstantin Bogomolov <bog.konstantin@gmail.com>
  */
-class Reservation
+class ValidityPeriod
 {
     /**
-     * @var string
-     */
-    public $ID;
-
-    /**
-     * @var string
-     */
-    public $ExternalID;
-
-    /**
-     * Reservation constructor.
+     * Date YYYY-MM-DD
      *
-     * @param PayListVirtualCardsOptions $params
+     * @var string
      */
-    public function __construct(PayListVirtualCardsOptions $params)
-    {
-        if ($params->Reservation->id !== null) {
-            $this->ID = $params->Reservation->id;
-        }
+    public $EndDate;
 
-        if ($params->Reservation->externalId !== null) {
-            $this->ExternalID = $params->Reservation->externalId;
-        }
+    /**
+     * AllowedTransactions constructor.
+     *
+     * @param PayGenerateVirtualCardOptions $params
+     */
+    public function __construct(PayGenerateVirtualCardOptions $params)
+    {
+        $this->EndDate = $params->endValidityPeriod;
     }
 }

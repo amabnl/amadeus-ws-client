@@ -23,39 +23,34 @@
 
 namespace Amadeus\Client\Struct\Pay;
 
-use Amadeus\Client\RequestOptions\PayListVirtualCardsOptions;
+use Amadeus\Client\RequestOptions\PayGetVirtualCardDetailsOptions;
+use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\InvalidArgumentException;
 
 /**
- * Reservation
+ * GetVirtualCardDetails
  *
  * @package Amadeus\Client\Struct\Pay
  * @author Konstantin Bogomolov <bog.konstantin@gmail.com>
  */
-class Reservation
+class GetVirtualCardDetails extends BaseWsMessage
 {
-    /**
-     * @var string
-     */
-    public $ID;
+    public $Version = '2.0';
+
+    public $References;
 
     /**
-     * @var string
+     * GetVirtualCardDetails constructor.
+     * @param PayGetVirtualCardDetailsOptions $params
+     * @param string|int                      $version
      */
-    public $ExternalID;
-
-    /**
-     * Reservation constructor.
-     *
-     * @param PayListVirtualCardsOptions $params
-     */
-    public function __construct(PayListVirtualCardsOptions $params)
+    public function __construct(PayGetVirtualCardDetailsOptions $params, $version)
     {
-        if ($params->Reservation->id !== null) {
-            $this->ID = $params->Reservation->id;
+        if ($params->amadeusReference === null || $params->externalReference === null) {
+            throw new InvalidArgumentException('All GetVirtualCardDetails options are mandatory');
         }
 
-        if ($params->Reservation->externalId !== null) {
-            $this->ExternalID = $params->Reservation->externalId;
-        }
+        $this->References[] = new Reference(Reference::TYPE_AMADEUS, $params->amadeusReference);
+        $this->References[] = new Reference(Reference::TYPE_EXTERNAL, $params->externalReference);
     }
 }

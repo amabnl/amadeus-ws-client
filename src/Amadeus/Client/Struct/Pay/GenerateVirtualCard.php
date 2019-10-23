@@ -23,39 +23,27 @@
 
 namespace Amadeus\Client\Struct\Pay;
 
-use Amadeus\Client\RequestOptions\PayListVirtualCardsOptions;
+use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\RequestOptions\PayGenerateVirtualCardOptions;
 
 /**
- * Reservation
+ * GenerateVirtualCard
  *
  * @package Amadeus\Client\Struct\Pay
  * @author Konstantin Bogomolov <bog.konstantin@gmail.com>
  */
-class Reservation
+class GenerateVirtualCard extends BaseWsMessage
 {
-    /**
-     * @var string
-     */
-    public $ID;
+    public $Version = '2.0';
 
+    public $VirtualCard;
     /**
-     * @var string
+     * GenerateVirtualCard constructor.
+     * @param PayGenerateVirtualCardOptions $params
+     * @param string|int                    $version
      */
-    public $ExternalID;
-
-    /**
-     * Reservation constructor.
-     *
-     * @param PayListVirtualCardsOptions $params
-     */
-    public function __construct(PayListVirtualCardsOptions $params)
+    public function __construct(PayGenerateVirtualCardOptions $params, $version)
     {
-        if ($params->Reservation->id !== null) {
-            $this->ID = $params->Reservation->id;
-        }
-
-        if ($params->Reservation->externalId !== null) {
-            $this->ExternalID = $params->Reservation->externalId;
-        }
+        $this->VirtualCard = new VirtualCard($params);
     }
 }

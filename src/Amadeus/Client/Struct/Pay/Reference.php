@@ -23,39 +23,39 @@
 
 namespace Amadeus\Client\Struct\Pay;
 
-use Amadeus\Client\RequestOptions\PayListVirtualCardsOptions;
+use Amadeus\Client\RequestOptions\PayGetVirtualCardDetailsOptions;
 
 /**
- * Reservation
+ * Reference
  *
  * @package Amadeus\Client\Struct\Pay
  * @author Konstantin Bogomolov <bog.konstantin@gmail.com>
  */
-class Reservation
+class Reference
 {
-    /**
-     * @var string
-     */
-    public $ID;
+    const TYPE_EXTERNAL = 'External';
+    const TYPE_AMADEUS = 'Amadeus';
 
     /**
-     * @var string
-     */
-    public $ExternalID;
-
-    /**
-     * Reservation constructor.
+     * self:: TYPE_*
      *
-     * @param PayListVirtualCardsOptions $params
+     * @var string
      */
-    public function __construct(PayListVirtualCardsOptions $params)
-    {
-        if ($params->Reservation->id !== null) {
-            $this->ID = $params->Reservation->id;
-        }
+    public $Type;
 
-        if ($params->Reservation->externalId !== null) {
-            $this->ExternalID = $params->Reservation->externalId;
-        }
+    /**
+     * @var string
+     */
+    public $_;
+
+    /**
+     * Reference constructor.
+     * @param string $type
+     * @param string $value
+     */
+    public function __construct($type, $value)
+    {
+        $this->Type = $type;
+        $this->_ = $value;
     }
 }

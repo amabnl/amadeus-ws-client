@@ -21,41 +21,17 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pay;
-
-use Amadeus\Client\RequestOptions\PayListVirtualCardsOptions;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * Reservation
+ * PayGetVirtualCardDetailsOptions Request Options
  *
- * @package Amadeus\Client\Struct\Pay
+ * @package Amadeus\Client\RequestOptions
  * @author Konstantin Bogomolov <bog.konstantin@gmail.com>
  */
-class Reservation
+class PayGetVirtualCardDetailsOptions extends Base
 {
-    /**
-     * @var string
-     */
-    public $ID;
+    public $amadeusReference;
 
-    /**
-     * @var string
-     */
-    public $ExternalID;
-
-    /**
-     * Reservation constructor.
-     *
-     * @param PayListVirtualCardsOptions $params
-     */
-    public function __construct(PayListVirtualCardsOptions $params)
-    {
-        if ($params->Reservation->id !== null) {
-            $this->ID = $params->Reservation->id;
-        }
-
-        if ($params->Reservation->externalId !== null) {
-            $this->ExternalID = $params->Reservation->externalId;
-        }
-    }
+    public $externalReference;
 }

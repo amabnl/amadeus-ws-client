@@ -21,41 +21,27 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Pay;
+namespace Amadeus\Client\RequestCreator\Converter\PAY;
 
-use Amadeus\Client\RequestOptions\PayListVirtualCardsOptions;
+use Amadeus\Client\RequestCreator\Converter\BaseConverter;
+use Amadeus\Client\RequestOptions\PayGenerateVirtualCardOptions;
+use Amadeus\Client\Struct;
 
 /**
- * Reservation
+ * GenerateVirtualCardConv
  *
- * @package Amadeus\Client\Struct\Pay
+ * @package Amadeus\Client\RequestCreator\Converter\PAY
  * @author Konstantin Bogomolov <bog.konstantin@gmail.com>
  */
-class Reservation
+class GenerateVirtualCardConv extends BaseConverter
 {
     /**
-     * @var string
+     * @param PayGenerateVirtualCardOptions $requestOptions
+     * @param int|string                 $version
+     * @return Struct\Pay\GenerateVirtualCard
      */
-    public $ID;
-
-    /**
-     * @var string
-     */
-    public $ExternalID;
-
-    /**
-     * Reservation constructor.
-     *
-     * @param PayListVirtualCardsOptions $params
-     */
-    public function __construct(PayListVirtualCardsOptions $params)
+    public function convert($requestOptions, $version)
     {
-        if ($params->Reservation->id !== null) {
-            $this->ID = $params->Reservation->id;
-        }
-
-        if ($params->Reservation->externalId !== null) {
-            $this->ExternalID = $params->Reservation->externalId;
-        }
+        return new Struct\Pay\GenerateVirtualCard($requestOptions, $version);
     }
 }
