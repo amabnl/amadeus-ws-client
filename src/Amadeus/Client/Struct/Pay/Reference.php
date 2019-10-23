@@ -23,8 +23,6 @@
 
 namespace Amadeus\Client\Struct\Pay;
 
-use Amadeus\Client\RequestOptions\PayGetVirtualCardDetailsOptions;
-
 /**
  * Reference
  *

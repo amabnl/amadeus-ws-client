@@ -24,7 +24,7 @@
 namespace Amadeus\Client\RequestCreator\Converter\PAY;
 
 use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\PayGetVirtualCardDetailsOptions;
+use Amadeus\Client\RequestOptions\PayVirtualCardReferenceOptions;
 use Amadeus\Client\Struct;
 
 /**
@@ -36,8 +36,8 @@ use Amadeus\Client\Struct;
 class GetVirtualCardDetailsConv extends BaseConverter
 {
     /**
-     * @param PayGetVirtualCardDetailsOptions $requestOptions
-     * @param int|string                      $version
+     * @param PayVirtualCardReferenceOptions $requestOptions
+     * @param int|string                     $version
      * @return Struct\Pay\GetVirtualCardDetails
      */
     public function convert($requestOptions, $version)

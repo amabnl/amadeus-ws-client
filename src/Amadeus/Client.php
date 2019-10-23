@@ -1643,14 +1643,14 @@ class Client extends Base
     /**
      * PAY_GetVirtualCardDetails
      *
-     * @param RequestOptions\PayGetVirtualCardDetailsOptions $options
-     * @param array                                          $messageOptions (OPTIONAL)
+     * @param RequestOptions\PayVirtualCardReferenceOptions $options
+     * @param array                                         $messageOptions (OPTIONAL)
      * @return Result
      * @throws Client\InvalidMessageException
      * @throws Client\RequestCreator\MessageVersionUnsupportedException
      * @throws Exception
      */
-    public function payGetVirtualCardDetails(RequestOptions\PayGetVirtualCardDetailsOptions $options, $messageOptions = [])
+    public function payGetVirtualCardDetails(RequestOptions\PayVirtualCardReferenceOptions $options, $messageOptions = [])
     {
         $msgName = 'PAY_GetVirtualCardDetails';
 
@@ -1687,6 +1687,13 @@ class Client extends Base
     public function payGenerateVirtualCard(RequestOptions\PayGenerateVirtualCardOptions $options, $messageOptions = [])
     {
         $msgName = 'PAY_GenerateVirtualCard';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    public function payDeleteVirtualCard(RequestOptions\PayVirtualCardReferenceOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PAY_DeleteVirtualCard';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }

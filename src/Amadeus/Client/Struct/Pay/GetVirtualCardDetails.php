@@ -23,7 +23,7 @@
 
 namespace Amadeus\Client\Struct\Pay;
 
-use Amadeus\Client\RequestOptions\PayGetVirtualCardDetailsOptions;
+use Amadeus\Client\RequestOptions\PayVirtualCardReferenceOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\InvalidArgumentException;
 
@@ -41,10 +41,10 @@ class GetVirtualCardDetails extends BaseWsMessage
 
     /**
      * GetVirtualCardDetails constructor.
-     * @param PayGetVirtualCardDetailsOptions $params
-     * @param string|int                      $version
+     * @param PayVirtualCardReferenceOptions $params
+     * @param string|int                     $version
      */
-    public function __construct(PayGetVirtualCardDetailsOptions $params, $version)
+    public function __construct(PayVirtualCardReferenceOptions $params, $version)
     {
         if ($params->amadeusReference === null || $params->externalReference === null) {
             throw new InvalidArgumentException('All GetVirtualCardDetails options are mandatory');
