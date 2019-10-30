@@ -24,7 +24,7 @@
 namespace Amadeus\Client\RequestCreator\Converter\PAY;
 
 use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\PayVirtualCardReferenceOptions;
+use Amadeus\Client\RequestOptions\PayDeleteVirtualCardOptions;
 use Amadeus\Client\Struct;
 
 /**
@@ -36,12 +36,12 @@ use Amadeus\Client\Struct;
 class DeleteVirtualCardConv extends BaseConverter
 {
     /**
-     * @param PayVirtualCardReferenceOptions $requestOptions
+     * @param PayDeleteVirtualCardOptions $requestOptions
      * @param int|string                     $version
-     * @return Struct\Pay\VirtualCardReferences
+     * @return Struct\Pay\DeleteVirtualCard
      */
     public function convert($requestOptions, $version)
     {
-        return new Struct\Pay\VirtualCardReferences($requestOptions, $version);
+        return new Struct\Pay\DeleteVirtualCard($requestOptions, $version);
     }
 }

@@ -1643,14 +1643,14 @@ class Client extends Base
     /**
      * PAY_GetVirtualCardDetails
      *
-     * @param RequestOptions\PayVirtualCardReferenceOptions $options
-     * @param array                                         $messageOptions (OPTIONAL)
+     * @param RequestOptions\PayGetVirtualCardDetailsOptions $options
+     * @param array                                          $messageOptions (OPTIONAL)
      * @return Result
      * @throws Client\InvalidMessageException
      * @throws Client\RequestCreator\MessageVersionUnsupportedException
      * @throws Exception
      */
-    public function payGetVirtualCardDetails(RequestOptions\PayVirtualCardReferenceOptions $options, $messageOptions = [])
+    public function payGetVirtualCardDetails(RequestOptions\PayGetVirtualCardDetailsOptions $options, $messageOptions = [])
     {
         $msgName = 'PAY_GetVirtualCardDetails';
 
@@ -1678,7 +1678,7 @@ class Client extends Base
      * PAY_GenerateVirtualCard
      *
      * @param RequestOptions\PayGenerateVirtualCardOptions $options
-     * @param array                                     $messageOptions (OPTIONAL)
+     * @param array                                        $messageOptions (OPTIONAL)
      * @return Result
      * @throws Client\InvalidMessageException
      * @throws Client\RequestCreator\MessageVersionUnsupportedException
@@ -1691,7 +1691,17 @@ class Client extends Base
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 
-    public function payDeleteVirtualCard(RequestOptions\PayVirtualCardReferenceOptions $options, $messageOptions = [])
+    /**
+     * PAY_DeleteVirtualCard
+     *
+     * @param RequestOptions\PayDeleteVirtualCardOptions $options
+     * @param array                                      $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function payDeleteVirtualCard(RequestOptions\PayDeleteVirtualCardOptions $options, $messageOptions = [])
     {
         $msgName = 'PAY_DeleteVirtualCard';
 

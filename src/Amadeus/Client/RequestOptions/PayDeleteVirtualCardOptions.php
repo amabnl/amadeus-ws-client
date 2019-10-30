@@ -21,27 +21,17 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestCreator\Converter\PAY;
-
-use Amadeus\Client\RequestCreator\Converter\BaseConverter;
-use Amadeus\Client\RequestOptions\PayGetVirtualCardDetailsOptions;
-use Amadeus\Client\Struct;
+namespace Amadeus\Client\RequestOptions;
 
 /**
- * GetVirtualCardDetailsConv
+ * PayDeleteVirtualCardOptions Request Options
  *
- * @package Amadeus\Client\RequestCreator\Converter\PAY
+ * @package Amadeus\Client\RequestOptions
  * @author Konstantin Bogomolov <bog.konstantin@gmail.com>
  */
-class GetVirtualCardDetailsConv extends BaseConverter
+class PayDeleteVirtualCardOptions extends Base
 {
-    /**
-     * @param PayGetVirtualCardDetailsOptions $requestOptions
-     * @param int|string                      $version
-     * @return Struct\Pay\GetVirtualCardDetails
-     */
-    public function convert($requestOptions, $version)
-    {
-        return new Struct\Pay\GetVirtualCardDetails($requestOptions, $version);
-    }
+    public $amadeusReference;
+
+    public $externalReference;
 }

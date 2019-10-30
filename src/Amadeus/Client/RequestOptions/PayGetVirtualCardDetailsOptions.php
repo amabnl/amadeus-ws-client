@@ -24,14 +24,16 @@
 namespace Amadeus\Client\RequestOptions;
 
 /**
- * PayVirtualCardReferenceOptions Request Options
+ * PayGetVirtualCardDetailsOptions Request Options
  *
  * @package Amadeus\Client\RequestOptions
  * @author Konstantin Bogomolov <bog.konstantin@gmail.com>
  */
-class PayVirtualCardReferenceOptions extends Base
+class PayGetVirtualCardDetailsOptions extends Base
 {
     public $amadeusReference;
 
     public $externalReference;
+
+    public $displayFilter;
 }

@@ -23,31 +23,31 @@
 
 namespace Amadeus\Client\Struct\Pay;
 
-use Amadeus\Client\RequestOptions\PayVirtualCardReferenceOptions;
+use Amadeus\Client\RequestOptions\PayGetVirtualCardDetailsOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\InvalidArgumentException;
 
 /**
- * VirtualCardReferences
+ * GetVirtualCardDetails
  *
  * @package Amadeus\Client\Struct\Pay
  * @author Konstantin Bogomolov <bog.konstantin@gmail.com>
  */
-class VirtualCardReferences extends BaseWsMessage
+class GetVirtualCardDetails extends BaseWsMessage
 {
     public $Version = '2.0';
 
     public $References;
 
     /**
-     * VirtualCardReferences constructor.
-     * @param PayVirtualCardReferenceOptions $params
+     * GetVirtualCardDetails constructor.
+     * @param PayGetVirtualCardDetailsOptions $params
      * @param string|int                     $version
      */
-    public function __construct(PayVirtualCardReferenceOptions $params, $version)
+    public function __construct(PayGetVirtualCardDetailsOptions $params, $version)
     {
         if ($params->amadeusReference === null || $params->externalReference === null) {
-            throw new InvalidArgumentException('All VirtualCardReferences options are mandatory');
+            throw new InvalidArgumentException('Both References in DeleteVirtualCard options are mandatory');
         }
 
         $this->References[] = new Reference(Reference::TYPE_AMADEUS, $params->amadeusReference);
