@@ -35,6 +35,9 @@ class PayGenerateVirtualCardOptions extends Base
     const SUBTYPE_CREDIT = 'CREDIT';
     const SUBTYPE_PREPAID = 'PREPAID';
 
+    const VENDOR_VISA = 'VI';
+    const VENDOR_MASTERCARD = 'CA';
+
     /**
      * Friendly name of the card. Should be unique. Can be used for reporting purpose to uniquely identify a card.
      * @var string
