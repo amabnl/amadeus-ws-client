@@ -40,7 +40,7 @@ class Service
   /**
    * @var Identifier
    */
-  public $Identifier;
+  public $identifier;
   
   /**
    * @var ServiceProvider
@@ -55,7 +55,7 @@ class Service
     public function __construct($options)
     {
         $this->TID = $options->TID;
-        $this->Identifier = new Identifier($options->identifier);
+        $this->identifier = new Identifier($options->identifier);
         $this->serviceProvider = new ServiceProvider($options->serviceProvider);
     }
 }
