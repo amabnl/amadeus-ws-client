@@ -21,8 +21,6 @@
  */
 namespace Amadeus\Client\Struct\Service\BookPriceService;
 
-use Amadeus\Client\RequestOptions\Service\BookPriceService\Identifier;
-
 /**
  * Identifier
  *
