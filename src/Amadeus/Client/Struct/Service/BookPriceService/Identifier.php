@@ -19,7 +19,7 @@
  * @package Amadeus
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
-namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
+namespace Amadeus\Client\Struct\Service\BookPriceService;
 
 use Amadeus\Client\RequestOptions\Service\BookPriceService\Identifier;
 
@@ -59,7 +59,7 @@ class Identifier
     public function __construct($identifierOptions)
     {
         $this->bookingMethod = $identifierOptions->bookingMethod;
-        
+
         if($identifierOptions->code) {
           $this->Code = $identifierOptions->code;
         }
