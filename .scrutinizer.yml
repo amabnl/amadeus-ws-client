@@ -9,16 +9,10 @@ coding_style:
             general:
                 size: 1
 build:
-    dependencies:
-        before:
-            - composer require --dev phpunit/phpunit
     tests:
         override:
             -
-                command: 'phpunit --coverage-clover=build/logs/clover.xml'
-                coverage:
-                    file: 'build/logs/clover.xml'
-                    format: 'clover'
+                command: 'phpunit'
     nodes:
         php54:
             environment:
