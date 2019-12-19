@@ -9,6 +9,9 @@ coding_style:
             general:
                 size: 1
 build:
+    dependencies:
+        before:
+            - composer require --dev phpunit/phpunit
     tests:
         override:
             -
