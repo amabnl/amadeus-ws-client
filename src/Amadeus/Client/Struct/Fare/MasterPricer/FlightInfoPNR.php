@@ -21,6 +21,7 @@
  */
 
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
+
 use Amadeus\Client\RequestOptions\Air\SellFromRecommendation\Segment as SegmentOptions;
 
 /**
@@ -45,18 +46,17 @@ class FlightInfoPNR
      */
     public function __construct(SegmentOptions $seg)
     {
-      
         $this->travelResponseDetails = new TravelResponseDetails(
-        $seg->departureDate,
-        $seg->from,
-        $seg->to,
-        $seg->companyCode,
-        $seg->flightNumber,
-        $seg->bookingClass,
-        $seg->arrivalDate,
-        $seg->arrivalTime,
-        $seg->dateVariation,
-        $seg->flightTypeDetails
-    );
+            $seg->departureDate,
+            $seg->from,
+            $seg->to,
+            $seg->companyCode,
+            $seg->flightNumber,
+            $seg->bookingClass,
+            $seg->arrivalDate,
+            $seg->arrivalTime,
+            $seg->dateVariation,
+            $seg->flightTypeDetails
+        );
     }
 }
