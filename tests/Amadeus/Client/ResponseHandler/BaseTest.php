@@ -1562,6 +1562,18 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("SHOPPING BOX REJECT", $result->messages[1]->text);
     }
 
+    public function testCanHandleServiceBookPriceServiceUnknownStatus()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('serviceBookPriceServiceErrorUnknown.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Service_BookPriceService');
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
+    }
+
     public function testCanHandleServiceIntegratedPricing()
     {
         $respHandler = new ResponseHandler\Base();

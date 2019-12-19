@@ -1,0 +1,2 @@
+<AMA_ServiceBookPriceServiceRS xmlns="http://xml.amadeus.com/2010/06/ServiceBookAndPrice_v1" xmlns:ama="http://xml.amadeus.com/2010/06/Types_v2" xmlns:foxns2="http://www.opentravel.org/OTA/2003/05/OTA2010B" xmlns:iata="http://www.iata.org/IATA/2007/00/IATA2010.1" Version="1.001">
+</AMA_ServiceBookPriceServiceRS>
