@@ -1,4 +1,5 @@
 <?php
+
 /**
  * amadeus-ws-client
  *
@@ -22,10 +23,9 @@
 
 namespace Test\Amadeus\Client\Struct\Service;
 
-use Amadeus\Client\Struct\Service\BookPriceService;
-use Amadeus\Client\RequestOptions\Service\BookPriceService\Identifier;
 use Amadeus\Client\RequestOptions\ServiceBookPriceServiceOptions;
-use Amadeus\Client\Struct\Service\StandaloneCatalogue;
+use Amadeus\Client\RequestOptions\Service\BookPriceService\Identifier;
+use Amadeus\Client\Struct\Service\BookPriceService;
 use Test\Amadeus\BaseTestCase;
 
 /**
@@ -42,10 +42,10 @@ class BookPriceServiceTest extends BaseTestCase
             'TID' => 'R1',
             'serviceProvider' => 'LH',
             'identifier' => new Identifier([
-              'bookingMethod' => 1,
-              'RFIC' => 'F',
-              'RFISC' => '040'
-            ])
+                'bookingMethod' => 1,
+                'RFIC' => 'F',
+                'RFISC' => '040',
+            ]),
         ]);
 
         $msg = new BookPriceService($opt);
@@ -63,9 +63,9 @@ class BookPriceServiceTest extends BaseTestCase
             'TID' => 'R1',
             'serviceProvider' => 'LH',
             'identifier' => new Identifier([
-              'bookingMethod' => 1,
-              'code' => 'OXY',
-            ])
+                'bookingMethod' => 1,
+                'code' => 'OXY',
+            ]),
         ]);
 
         $msg = new BookPriceService($opt);

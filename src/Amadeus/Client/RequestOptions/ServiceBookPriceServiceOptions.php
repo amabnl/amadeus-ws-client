@@ -22,9 +22,6 @@
 
 namespace Amadeus\Client\RequestOptions;
 
-use Amadeus\Client\RequestOptions\Service\FormOfPayment;
-use Amadeus\Client\RequestOptions\Service\FrequentFlyer;
-use Amadeus\Client\RequestOptions\Service\PaxSegRef;
 use Amadeus\Client\RequestOptions\Service\BookPriceService\Identifier;
 
 /**

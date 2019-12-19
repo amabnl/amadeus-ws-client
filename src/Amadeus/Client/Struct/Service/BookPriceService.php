@@ -23,8 +23,8 @@
 namespace Amadeus\Client\Struct\Service;
 
 use Amadeus\Client\RequestOptions\ServiceBookPriceServiceOptions;
-use Amadeus\Client\Struct\Service\BookPriceService\Product;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\Service\BookPriceService\Product;
 
 /**
  * Service_BookPriceService request structure

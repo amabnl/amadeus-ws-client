@@ -22,10 +22,10 @@
 
 namespace Test\Amadeus\Client\ResponseHandler;
 
+use Amadeus\Client\ResponseHandler;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
 use Test\Amadeus\BaseTestCase;
-use Amadeus\Client\ResponseHandler;
 
 /**
  * BaseTest
@@ -838,8 +838,6 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("Past date/time not allowed", $result->messages[0]->text);
     }
 
-
-
     public function testCanHandleFareMasterPricerCalendarError()
     {
         $respHandler = new ResponseHandler\Base();
@@ -959,7 +957,6 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('0', $result->messages[0]->code);
         $this->assertEquals("ENTRY REQUIRES PREVIOUS PRICING/FARE DISPLAY REQUEST", $result->messages[0]->text);
     }
-
 
     public function testCanHandleFareGetFareRulesError()
     {
@@ -1095,7 +1092,6 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('25677', $result->messages[0]->code);
         $this->assertEquals("ATC REFUND NOT AUTHORIZED", $result->messages[0]->text);
     }
-
 
     public function testCanHandleDocRefundUpdateRefundErrorResponse()
     {
@@ -1428,7 +1424,6 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("RESTRICTED", $result->messages[0]->text);
     }
 
-
     public function testCanHandleMiniRuleGetFromETicketErrorResponse()
     {
         $respHandler = new ResponseHandler\Base();
@@ -1559,7 +1554,7 @@ class BaseTest extends BaseTestCase
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
         $this->assertEquals(2, count($result->messages));
-        
+
         $this->assertEquals('1', $result->messages[0]->code);
         $this->assertEquals("CHECK FORMAT", $result->messages[0]->text);
 

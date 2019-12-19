@@ -58,16 +58,16 @@ class Identifier
     {
         $this->bookingMethod = $identifierOptions->bookingMethod;
 
-        if($identifierOptions->code) {
-          $this->Code = $identifierOptions->code;
+        if ($identifierOptions->code) {
+            $this->Code = $identifierOptions->code;
         }
 
-        if($identifierOptions->RFISC) {
-          $this->RFISC = $identifierOptions->RFISC;
+        if ($identifierOptions->RFISC) {
+            $this->RFISC = $identifierOptions->RFISC;
         }
 
-        if($identifierOptions->RFIC) {
-          $this->RFIC = $identifierOptions->RFIC;
+        if ($identifierOptions->RFIC) {
+            $this->RFIC = $identifierOptions->RFIC;
         }
     }
 }

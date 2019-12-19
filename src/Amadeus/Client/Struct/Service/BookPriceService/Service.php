@@ -32,20 +32,20 @@ use Amadeus\Client\Struct\Service\BookPriceService\ServiceProvider;
  */
 class Service
 {
-  /**
-   * @var string
-   */
-  public $TID;
-  
-  /**
-   * @var Identifier
-   */
-  public $identifier;
-  
-  /**
-   * @var ServiceProvider
-   */
-  public $serviceProvider;
+    /**
+     * @var string
+     */
+    public $TID;
+
+    /**
+     * @var Identifier
+     */
+    public $identifier;
+
+    /**
+     * @var ServiceProvider
+     */
+    public $serviceProvider;
 
     /**
      * Service constructor.

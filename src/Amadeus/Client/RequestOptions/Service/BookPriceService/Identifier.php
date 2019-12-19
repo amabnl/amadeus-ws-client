@@ -34,7 +34,7 @@ class Identifier extends LoadParamsFromArray
 {
     const BOOKING_METHOD_SSR = 1;
     const BOOKING_METHOD_SVC = 2;
-  
+
     /**
      * self::BOOKING_METHOD_*
      *
