@@ -23,6 +23,7 @@ namespace Amadeus\Client\Struct\Service\BookPriceService;
 
 use Amadeus\Client\Struct\Service\BookPriceService\Identifier;
 use Amadeus\Client\Struct\Service\BookPriceService\ServiceProvider;
+use Amadeus\Client\RequestOptions\ServiceBookPriceServiceOptions;
 
 /**
  * Service

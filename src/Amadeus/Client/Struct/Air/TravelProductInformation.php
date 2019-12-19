@@ -148,7 +148,7 @@ class TravelProductInformation
         $dateVariation = null,
         $flightTypeDetails = null
     ) {
-        $this->flightDate = new FlightDate($departureDate, $arrivalDate, $arrivalTime, $dateVariation);
+        $this->flightDate = $this->parseFlightDate($departureDate, $arrivalDate, $arrivalTime, $dateVariation);
         $this->boardPointDetails = new PointDetails($from);
         $this->offpointDetails = new PointDetails($to);
         $this->companyDetails = new CompanyDetails($company);
@@ -156,5 +156,9 @@ class TravelProductInformation
         if (!is_null($flightTypeDetails)) {
             $this->flightTypeDetails = new FlightTypeDetails($flightTypeDetails);
         }
+    }
+
+    protected function parseFlightDate($departureDate, $arrivalDate, $arrivalTime, $dateVariation) {
+        return new FlightDate($departureDate, $arrivalDate, $arrivalTime, $dateVariation);
     }
 }

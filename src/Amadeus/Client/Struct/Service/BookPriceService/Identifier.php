@@ -21,6 +21,8 @@
  */
 namespace Amadeus\Client\Struct\Service\BookPriceService;
 
+use Amadeus\Client\RequestOptions\Service\BookPriceService\Identifier as IdentifierOptions;
+
 /**
  * Identifier
  *
@@ -52,21 +54,21 @@ class Identifier
     /**
      * Identifier constructor.
      *
-     * @param Identifier $identifierOptions
+     * @param IdentifierOptions $identifierOptions
      */
     public function __construct($identifierOptions)
     {
         $this->bookingMethod = $identifierOptions->bookingMethod;
 
-        if ($identifierOptions->code) {
+        if (!empty($identifierOptions->code)) {
             $this->Code = $identifierOptions->code;
         }
 
-        if ($identifierOptions->RFISC) {
+        if (!empty($identifierOptions->RFISC)) {
             $this->RFISC = $identifierOptions->RFISC;
         }
 
-        if ($identifierOptions->RFIC) {
+        if (!empty($identifierOptions->RFIC)) {
             $this->RFIC = $identifierOptions->RFIC;
         }
     }

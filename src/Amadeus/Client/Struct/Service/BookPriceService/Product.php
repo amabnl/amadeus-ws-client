@@ -22,6 +22,7 @@
 namespace Amadeus\Client\Struct\Service\BookPriceService;
 
 use Amadeus\Client\Struct\Service\BookPriceService\Service;
+use Amadeus\Client\RequestOptions\ServiceBookPriceServiceOptions;
 
 /**
  * Product
