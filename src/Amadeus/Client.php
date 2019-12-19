@@ -1585,6 +1585,25 @@ class Client extends Base
     }
 
     /**
+     * Service_BookPriceService
+     *
+     * @param RequestOptions\ServiceBookPriceServiceOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function serviceBookPriceService(
+        RequestOptions\ServiceBookPriceServiceOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Service_BookPriceService';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * SalesReports_DisplayorSummarizedReport
      *
      * @param RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions $options

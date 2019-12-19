@@ -4319,6 +4319,56 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendServiceBookPriceService()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('serviceBookPriceServiceReply.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+        
+        $opts = new Client\RequestOptions\ServiceBookPriceServiceOptions([
+            'TID' => 1,
+            'serviceProvider' => 'LH',
+            'identifier' => new Client\RequestOptions\Service\BookPriceService\Identifier([
+              'bookingMethod' => 1,
+              'RFIC' => 'F',
+              'RFISC' => '040'
+            ])
+        ]);
+        $expectedMessageResult = new Client\Struct\Service\BookPriceService($opts);
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Service_BookPriceService', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));;
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Service_BookPriceService' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+
+        $response = $client->serviceBookPriceService(
+            new Client\RequestOptions\ServiceBookPriceServiceOptions($opts)
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanSendServiceStandaloneCatalogue()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
