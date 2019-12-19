@@ -1548,6 +1548,25 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("NO DATA FOUND", $result->messages[0]->text);
     }
 
+    public function testCanHandleServiceBookPriceServiceError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('serviceBookPriceServiceErrorReply.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Service_BookPriceService');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(2, count($result->messages));
+        
+        $this->assertEquals('1', $result->messages[0]->code);
+        $this->assertEquals("CHECK FORMAT", $result->messages[0]->text);
+
+        $this->assertEquals('33017', $result->messages[1]->code);
+        $this->assertEquals("SHOPPING BOX REJECT", $result->messages[1]->text);
+    }
+
     public function testCanHandleServiceIntegratedPricing()
     {
         $respHandler = new ResponseHandler\Base();
