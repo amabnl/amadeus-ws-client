@@ -23,6 +23,7 @@
 namespace Amadeus\Client\Struct\Fare\MasterPricer;
 
 use Amadeus\Client\Struct\Air;
+
 /**
  * TravelResponseDetails
  *
@@ -32,9 +33,10 @@ use Amadeus\Client\Struct\Air;
 class TravelResponseDetails extends Air\TravelProductInformation
 {
 
-    protected function parseFlightDate($departureDate, $arrivalDate, $arrivalTime, $dateVariation) {
+    protected function parseFlightDate($departureDate, $arrivalDate, $arrivalTime, $dateVariation)
+    {
         // We are using Amadeus\Client\Struct\Fare\MasterPricer\FlightDate
         return new FlightDate($departureDate, $arrivalDate, $arrivalTime, $dateVariation);
     }
-    
+
 }

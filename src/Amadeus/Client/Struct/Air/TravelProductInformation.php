@@ -158,7 +158,8 @@ class TravelProductInformation
         }
     }
 
-    protected function parseFlightDate($departureDate, $arrivalDate, $arrivalTime, $dateVariation) {
+    protected function parseFlightDate($departureDate, $arrivalDate, $arrivalTime, $dateVariation)
+    {
         return new FlightDate($departureDate, $arrivalDate, $arrivalTime, $dateVariation);
     }
 }
