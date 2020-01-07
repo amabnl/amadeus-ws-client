@@ -32,8 +32,8 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class Identifier extends LoadParamsFromArray
 {
-    const BOOKING_METHOD_SSR = 1;
-    const BOOKING_METHOD_SVC = 2;
+    const BOOKING_METHOD_SSR = "01";
+    const BOOKING_METHOD_SVC = "02";
 
     /**
      * self::BOOKING_METHOD_*

@@ -4332,7 +4332,7 @@ class ClientTest extends BaseTestCase
             'TID' => 1,
             'serviceProvider' => 'LH',
             'identifier' => new Client\RequestOptions\Service\BookPriceService\Identifier([
-              'bookingMethod' => 1,
+              'bookingMethod' => '01',
               'RFIC' => 'F',
               'RFISC' => '040'
             ])

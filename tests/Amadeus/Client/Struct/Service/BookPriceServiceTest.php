@@ -42,7 +42,7 @@ class BookPriceServiceTest extends BaseTestCase
             'TID' => 'R1',
             'serviceProvider' => 'LH',
             'identifier' => new Identifier([
-                'bookingMethod' => 1,
+                'bookingMethod' => '01',
                 'RFIC' => 'F',
                 'RFISC' => '040',
             ]),
@@ -50,7 +50,7 @@ class BookPriceServiceTest extends BaseTestCase
 
         $msg = new BookPriceService($opt);
 
-        $this->assertEquals('1', $msg->Product->Service->identifier->bookingMethod);
+        $this->assertEquals('01', $msg->Product->Service->identifier->bookingMethod);
         $this->assertEquals('F', $msg->Product->Service->identifier->RFIC);
         $this->assertEquals('040', $msg->Product->Service->identifier->RFISC);
         $this->assertEmpty($msg->Product->Service->identifier->Code);
@@ -63,14 +63,14 @@ class BookPriceServiceTest extends BaseTestCase
             'TID' => 'R1',
             'serviceProvider' => 'LH',
             'identifier' => new Identifier([
-                'bookingMethod' => 1,
+                'bookingMethod' => '02',
                 'code' => 'OXY',
             ]),
         ]);
 
         $msg = new BookPriceService($opt);
 
-        $this->assertEquals('1', $msg->Product->Service->identifier->bookingMethod);
+        $this->assertEquals('02', $msg->Product->Service->identifier->bookingMethod);
         $this->assertEmpty($msg->Product->Service->identifier->RFIC);
         $this->assertEmpty($msg->Product->Service->identifier->RFISC);
         $this->assertEquals('OXY', $msg->Product->Service->identifier->Code);
