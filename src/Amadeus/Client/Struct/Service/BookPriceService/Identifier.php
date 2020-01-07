@@ -32,7 +32,7 @@ use Amadeus\Client\RequestOptions\Service\BookPriceService\Identifier as Identif
 class Identifier
 {
     /**
-     * @var int
+     * @var string
      */
     public $bookingMethod;
 
