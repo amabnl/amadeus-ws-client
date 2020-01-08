@@ -4329,13 +4329,15 @@ class ClientTest extends BaseTestCase
         $messageResult = new Client\Result($mockedSendResult);
         
         $opts = new Client\RequestOptions\ServiceBookPriceServiceOptions([
-            'TID' => 1,
-            'serviceProvider' => 'LH',
-            'identifier' => new Client\RequestOptions\Service\BookPriceService\Identifier([
-              'bookingMethod' => '01',
-              'RFIC' => 'F',
-              'RFISC' => '040'
-            ])
+            'services' => [new Client\RequestOptions\Service\BookPriceService\Service([
+                'TID' => 1,
+                'serviceProvider' => 'LH',
+                'identifier' => new Client\RequestOptions\Service\BookPriceService\Identifier([
+                'bookingMethod' => '01',
+                'RFIC' => 'F',
+                'RFISC' => '040'
+                ])
+            ])]
         ]);
         $expectedMessageResult = new Client\Struct\Service\BookPriceService($opts);
 

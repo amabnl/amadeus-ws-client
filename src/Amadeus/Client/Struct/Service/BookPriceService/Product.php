@@ -22,7 +22,7 @@
 namespace Amadeus\Client\Struct\Service\BookPriceService;
 
 use Amadeus\Client\Struct\Service\BookPriceService\Service;
-use Amadeus\Client\RequestOptions\ServiceBookPriceServiceOptions;
+use Amadeus\Client\RequestOptions\Service\BookPriceService\Service as ServiceOptions;
 
 /**
  * Product
@@ -40,7 +40,7 @@ class Product
     /**
      * Product constructor.
      *
-     * @param ServiceBookPriceServiceOptions $options
+     * @param ServiceOptions $options
      */
     public function __construct($options)
     {

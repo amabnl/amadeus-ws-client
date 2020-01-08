@@ -20,22 +20,46 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\RequestOptions\Service\BookPriceService;
 
-use Amadeus\Client\RequestOptions\Service\BookPriceService\Identifier;
-use Amadeus\Client\RequestOptions\Service\BookPriceService\Service;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * Service_BookPriceService Request Options
+ * Service
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\RequestOptions\Service\BookPriceService
  * @author Mike Hernas <mike@ahoy.io>
  */
-class ServiceBookPriceServiceOptions extends Base
+class Service extends LoadParamsFromArray
 {
-    /**
-     *
-     * @var Service[]
-     */
-    public $services;
+  /**
+   * Booking carrier of the service
+   *
+   * @var string
+   */
+  public $serviceProvider;
+
+  /**
+   *
+   * @var Identifier
+   */
+  public $identifier;
+
+  /**
+   * Request ID
+   * @var string
+   */
+  public $TID;
+
+  /**
+   * Tatoo of the passenger to whom the service applies
+   * @var string|null
+   */
+  public $passengerTattoo;
+
+  /**
+   * Tatoo of the passenger to whom the service applies
+   * @var string|null
+   */
+  public $segmentTattoo;
 }

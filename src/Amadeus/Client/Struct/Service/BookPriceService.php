@@ -35,7 +35,7 @@ use Amadeus\Client\Struct\Service\BookPriceService\Product;
 class BookPriceService extends BaseWsMessage
 {
     /**
-     * @var Product
+     * @var Product[]
      */
     public $Product;
 
@@ -46,6 +46,9 @@ class BookPriceService extends BaseWsMessage
      */
     public function __construct($options)
     {
-        $this->Product = new Product($options);
+        foreach ($options->services as $service) {
+            $this->Product[] = new Product($service);
+        }
+
     }
 }

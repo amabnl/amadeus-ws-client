@@ -23,7 +23,7 @@ namespace Amadeus\Client\Struct\Service\BookPriceService;
 
 use Amadeus\Client\Struct\Service\BookPriceService\Identifier;
 use Amadeus\Client\Struct\Service\BookPriceService\ServiceProvider;
-use Amadeus\Client\RequestOptions\ServiceBookPriceServiceOptions;
+use Amadeus\Client\RequestOptions\Service\BookPriceService\Service as ServiceOptions;
 
 /**
  * Service
@@ -49,14 +49,26 @@ class Service
     public $serviceProvider;
 
     /**
+     * @var string|null
+     */
+    public $customerRefIDs;
+
+    /**
+     * @var string|null
+     */
+    public $segmentRefIDs;
+
+    /**
      * Service constructor.
      *
-     * @param ServiceBookPriceServiceOptions $options
+     * @param ServiceOptions $options
      */
     public function __construct($options)
     {
         $this->TID = $options->TID;
         $this->identifier = new Identifier($options->identifier);
         $this->serviceProvider = new ServiceProvider($options->serviceProvider);
+        $this->customerRefIDs = $options->passengerTattoo;
+        $this->segmentRefIDs = $options->segmentTattoo;
     }
 }
