@@ -38,6 +38,11 @@ class BookPriceService extends BaseWsMessage
      * @var Product[]
      */
     public $Product;
+    
+    /**
+     * @var int
+     */
+    public $Version = 0;
 
     /**
      * BookPriceService constructor.

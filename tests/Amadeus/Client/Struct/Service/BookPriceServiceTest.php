@@ -63,6 +63,7 @@ class BookPriceServiceTest extends BaseTestCase
         $this->assertEquals('R1', $msg->Product[0]->Service->TID);
         $this->assertEquals('1', $msg->Product[0]->Service->customerRefIDs);
         $this->assertEquals('2', $msg->Product[0]->Service->segmentRefIDs);
+        $this->assertEquals(0, $msg->Version);
     }
     public function testCanMakeMessageCode()
     {
