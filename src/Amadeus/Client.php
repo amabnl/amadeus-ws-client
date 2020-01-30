@@ -705,6 +705,25 @@ class Client extends Base
     }
 
     /**
+     * Fare_PriceUpsellWithoutPNR
+     *
+     * @param RequestOptions\FareInformativePricingWithoutPnrOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function farePriceUpsellWithoutPnr(
+        RequestOptions\FareInformativePricingWithoutPnrOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_PriceUpsellWithoutPNR';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Fare_InformativeBestPricingWithoutPNR
      *
      * @param RequestOptions\FareInformativeBestPricingWithoutPnrOptions $options
