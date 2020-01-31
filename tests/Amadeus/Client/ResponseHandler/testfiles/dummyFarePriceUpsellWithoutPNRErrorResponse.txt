@@ -1,0 +1,14 @@
+<Fare_PriceUpsellWithoutPNRReply xmlns="http://xml.amadeus.com/TIUNRR_18_1_1A">
+    <applicationError>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>5436</errorCode>
+                <errorCategory>EC</errorCategory>
+                <errorCodeOwner>1A</errorCodeOwner>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeText>UNABLE TO FARE - NO INVENTORY FOR FLIGHT REQUESTED -TK 57</freeText>
+        </errorWarningDescription>
+    </applicationError>
+</Fare_PriceUpsellWithoutPNRReply>
