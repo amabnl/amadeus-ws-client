@@ -707,7 +707,7 @@ class Client extends Base
     /**
      * Fare_PriceUpsellWithoutPNR
      *
-     * @param RequestOptions\FareInformativePricingWithoutPnrOptions $options
+     * @param RequestOptions\FarePriceUpsellWithoutPnrOptions $options
      * @param array $messageOptions (OPTIONAL)
      * @return Result
      * @throws Client\InvalidMessageException
@@ -715,7 +715,7 @@ class Client extends Base
      * @throws Exception
      */
     public function farePriceUpsellWithoutPnr(
-        RequestOptions\FareInformativePricingWithoutPnrOptions $options,
+        RequestOptions\FarePriceUpsellWithoutPnrOptions $options,
         $messageOptions = []
     ) {
         $msgName = 'Fare_PriceUpsellWithoutPNR';
