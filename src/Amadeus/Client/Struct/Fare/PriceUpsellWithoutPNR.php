@@ -98,6 +98,10 @@ class PriceUpsellWithoutPNR extends BaseWsMessage
      */
     protected function loadPricingOptions($pricingOptions)
     {
+        if (!($pricingOptions instanceof PricingOptions)) {
+            $pricingOptions = new PricingOptions();
+        }
+
         $this->pricingOptionGroup = PricePNRWithBookingClass13::loadPricingOptionsFromRequestOptions($pricingOptions);
     }
 }
