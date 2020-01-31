@@ -22,25 +22,12 @@
 
 namespace Amadeus\Client\ResponseHandler\Fare;
 
-use Amadeus\Client\ResponseHandler\StandardResponseHandler;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
-
 /**
  * HandlerPriceUpsellWithoutPNR
  *
  * @package Amadeus\Client\ResponseHandler\Fare
  * @author Valerii Nezhurov <valeriy.nezhuriov@gmail.com>
  */
-class HandlerPriceUpsellWithoutPNR extends StandardResponseHandler
+class HandlerPriceUpsellWithoutPNR extends HandlerPricePNRWithBookingClass
 {
-    /**
-     * @param SendResult $response
-     * @return Result
-     * @throws \Amadeus\Client\Exception
-     */
-    public function analyze(SendResult $response)
-    {
-        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
-    }
 }
