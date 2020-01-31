@@ -2,7 +2,7 @@
 /**
  * amadeus-ws-client
  *
- * Copyright 2015 Amadeus Benelux NV
+ * Copyright 2020 Amadeus Benelux NV
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +20,9 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\Struct\Fare\PriceUpsellWithoutPNR;
+namespace Amadeus\Client\Struct\Fare;
 
-use Amadeus\Client\RequestOptions\FareInformativePricingWithoutPnrOptions;
+use Amadeus\Client\RequestOptions\FarePriceUpsellWithoutPnrOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
 use Amadeus\Client\Struct\Fare\InformativePricing13\PassengersGroup;
 use Amadeus\Client\Struct\Fare\InformativePricing13\SegmentGroup;
@@ -30,13 +30,12 @@ use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionGroup;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions;
-use Amadeus\Client\Struct\Fare\PricePNRWithBookingClass13;
 
 /**
  * PriceUpsellWithoutPNR
  *
- * @package Amadeus\Client\Struct\Fare\PriceUpsellWithoutPNR
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @package Amadeus\Client\Struct\Fare
+ * @author Valerii Nezhurov <valeriy.nezhuriov@gmail.com>
  */
 class PriceUpsellWithoutPNR extends BaseWsMessage
 {
@@ -56,9 +55,9 @@ class PriceUpsellWithoutPNR extends BaseWsMessage
     public $pricingOptionGroup = [];
 
     /**
-     * InformativePricingWithoutPNR13 constructor.
+     * PriceUpsellWithoutPNR constructor.
      *
-     * @param FareInformativePricingWithoutPnrOptions|null $options
+     * @param FarePriceUpsellWithoutPnrOptions|null $options
      */
     public function __construct($options)
     {
@@ -99,10 +98,6 @@ class PriceUpsellWithoutPNR extends BaseWsMessage
      */
     protected function loadPricingOptions($pricingOptions)
     {
-        if (!($pricingOptions instanceof PricingOptions)) {
-            $pricingOptions = new PricingOptions();
-        }
-
         $this->pricingOptionGroup = PricePNRWithBookingClass13::loadPricingOptionsFromRequestOptions($pricingOptions);
     }
 }

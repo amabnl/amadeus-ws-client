@@ -30,7 +30,7 @@ use Amadeus\Client\Session\Handler\SendResult;
  * HandlerPriceUpsellWithoutPNR
  *
  * @package Amadeus\Client\ResponseHandler\Fare
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @author Valerii Nezhurov <valeriy.nezhuriov@gmail.com>
  */
 class HandlerPriceUpsellWithoutPNR extends StandardResponseHandler
 {
