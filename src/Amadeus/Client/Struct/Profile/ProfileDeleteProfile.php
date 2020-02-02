@@ -2,11 +2,8 @@
 
 namespace Amadeus\Client\Struct\Profile;
 
-use Amadeus\Client\Struct\BaseWsMessage;
-
-class ProfileDeleteProfile extends BaseWsMessage
+class ProfileDeleteProfile extends BaseProfileMessage
 {
-    public $Version;
     public $UniqueID;
     public $DeleteRequests;
 

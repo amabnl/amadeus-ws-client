@@ -2,14 +2,11 @@
 
 namespace Amadeus\Client\Struct\Profile;
 
-use Amadeus\Client\Struct\BaseWsMessage;
-
-class ProfileUpdateProfile extends BaseWsMessage
+class ProfileUpdateProfile extends BaseProfileMessage
 {
     public $Position;
     //public $Root;
-    public $UniqueID=[];
-    public $Version;
+    public $UniqueID = [];
 
     public function __construct($options)
     {

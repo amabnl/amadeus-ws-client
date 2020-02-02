@@ -2,16 +2,10 @@
 
 namespace Amadeus\Client\Struct\Profile;
 
-use Amadeus\Client\Struct\BaseWsMessage;
-
-class ProfileReadProfile extends BaseWsMessage
+class ProfileReadProfile extends BaseProfileMessage
 {
-    public $Version;
-
     public $UniqueID;
-
     public $ReadRequests;
-
 
     public function __construct($options)
     {
