@@ -1,9 +1,11 @@
 <?php
 
 namespace Amadeus\Client\RequestCreator\Converter\Profile;
+
 use Amadeus\Client\RequestCreator\Converter\BaseConverter;
 use Amadeus\Client\RequestOptions\ProfileReadProfileOptions;
 use Amadeus\Client\Struct;
+
 class ReadProfileConv extends BaseConverter
 {
     /**

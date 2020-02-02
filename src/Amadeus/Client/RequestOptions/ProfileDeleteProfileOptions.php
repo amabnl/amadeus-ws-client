@@ -7,5 +7,4 @@ class ProfileDeleteProfileOptions extends Base
     public $Version;
     public $UniqueID;
     public $DeleteRequests;
-
 }

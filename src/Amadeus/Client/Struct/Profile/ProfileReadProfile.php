@@ -1,7 +1,9 @@
 <?php
 
 namespace Amadeus\Client\Struct\Profile;
+
 use Amadeus\Client\Struct\BaseWsMessage;
+
 class ProfileReadProfile extends BaseWsMessage
 {
     public $Version;

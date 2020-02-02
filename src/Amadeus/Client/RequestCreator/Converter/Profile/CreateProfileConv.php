@@ -1,6 +1,7 @@
 <?php
 
 namespace Amadeus\Client\RequestCreator\Converter\Profile;
+
 use Amadeus\Client\RequestCreator\Converter\BaseConverter;
 use Amadeus\Client\RequestOptions\ProfileCreateProfileOptions;
 use Amadeus\Client\Struct;

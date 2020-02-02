@@ -7,5 +7,4 @@ class ProfileReadProfileOptions extends Base
     public $Version;
     public $UniqueID;
     public $ReadRequests;
-
 }

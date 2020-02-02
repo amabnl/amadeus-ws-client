@@ -8,5 +8,4 @@ class ProfileCreateProfileOptions extends Base
     public $UniqueID;
     public $Profile;
     public $CompanyName;
-
 }

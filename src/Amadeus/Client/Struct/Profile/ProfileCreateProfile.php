@@ -1,6 +1,7 @@
 <?php
 
 namespace Amadeus\Client\Struct\Profile;
+
 use Amadeus\Client\Struct\BaseWsMessage;
 
 class ProfileCreateProfile extends BaseWsMessage
