@@ -74,6 +74,10 @@ class TargetDetails
 
         $this->queueNumber = new QueueNumber($targetQueue->queue);
         $this->categoryDetails = new CategoryDetails($targetQueue->category);
+        
+        if (!empty($targetQueue->timeMode)) {
+            $this->placementDate = new QueueDate($targetQueue->timeMode);
+        }
 
         foreach ($recordLocators as $recLoc) {
             $this->recordLocator[] = new RecordLocator($recLoc);

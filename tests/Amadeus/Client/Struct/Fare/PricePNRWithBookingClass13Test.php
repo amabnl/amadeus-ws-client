@@ -135,6 +135,36 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $negofarePo));
     }
 
+    public function testCanDoPricePnrCallWithOverrideOptionWithCriteriaParams()
+    {
+        $opt = new FarePricePnrWithBookingClassOptions([
+            'validatingCarrier' => 'BA',
+            'currencyOverride' => 'EUR',
+            'overrideOptionsWithCriteria' => [
+                [
+                    'key' => 'SBF',
+                    'optionDetail' => '1'
+                ]
+            ]
+        ]);
+
+        $msg = new PricePNRWithBookingClass13($opt);
+
+        $validatingCarrierPo = new PricingOptionGroup(PricingOptionKey::OPTION_VALIDATING_CARRIER);
+        $validatingCarrierPo->carrierInformation = new CarrierInformation('BA');
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $validatingCarrierPo));
+
+        $currencyOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE);
+        $currencyOverridePo->currency = new Currency('EUR');
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $currencyOverridePo));
+
+        $negofarePo = new PricingOptionGroup('SBF','1');
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $negofarePo));
+    }
+
     public function testCanDoPricePnrCallWithNoOptions()
     {
         $opt = new FarePricePnrWithBookingClassOptions();
@@ -269,7 +299,6 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $this->assertEquals('012345', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
     }
 
-
     public function testCanDoPricePnrCallWithCorpUniFares()
     {
         $opt = new FarePricePnrWithBookingClassOptions([
@@ -283,7 +312,6 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $this->assertCount(2, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails);
         $this->assertEquals('012345', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
         $this->assertEquals('AMADEUS', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[1]->attributeType);
-
     }
 
     public function testCanDoPricePnrCallWithPaxDiscountCodes()
@@ -562,5 +590,26 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $this->assertEquals(\Amadeus\Client\Struct\Fare\PricePnr13\FormOfPayment::TYPE_CASH, $msg->pricingOptionGroup[0]->formOfPaymentInformation->otherFormOfPayment[0]->type);
         $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->otherFormOfPayment[0]->amount);
         $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->otherFormOfPayment[0]->creditCardNumber);
+    }
+
+    /**
+     * Test FarePricePnrWithBookingClassOptions with *fareFamily* specified,
+     * the value *FLEX* should be transferred to the attributeDescription value.
+     *
+     * @throws \Amadeus\Client\RequestCreator\MessageVersionUnsupportedException
+     */
+    public function testPricePnrCallWithFareFamily()
+    {
+        $opt = new FarePricePnrWithBookingClassOptions([
+            'fareFamily' => 'FLEX'
+        ]);
+
+        $msg = new PricePNRWithBookingClass13($opt);
+
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_FARE_FAMILY, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertCount(1, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails);
+        $this->assertEquals('FF', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals('FLEX', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeDescription);
     }
 }

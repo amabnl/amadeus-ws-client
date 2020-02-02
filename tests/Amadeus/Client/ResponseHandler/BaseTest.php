@@ -823,6 +823,23 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("Past date/time not allowed", $result->messages[0]->text);
     }
 
+    public function testCanHandleFareMasterPricerExpertSearchError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareMasterPricerExpertSearchErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_MasterPricerTravelBoardSearch');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('920', $result->messages[0]->code);
+        $this->assertEquals("Past date/time not allowed", $result->messages[0]->text);
+    }
+
+
+
     public function testCanHandleFareMasterPricerCalendarError()
     {
         $respHandler = new ResponseHandler\Base();
@@ -1494,6 +1511,36 @@ class BaseTest extends BaseTestCase
         $sendResult->responseXml = $this->getTestFile('dummySalesReportsDisplayQueryReportErrorResponse.txt');
 
         $result = $respHandler->analyzeResponse($sendResult, 'SalesReports_DisplayQueryReport');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('6466', $result->messages[0]->code);
+        $this->assertEquals("NO DATA FOUND", $result->messages[0]->text);
+    }
+
+    public function testCanHandleSalesReportsDisplayDailyOrSummarizedReport()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummySalesReportsDisplayDailyOrSummarizedReportErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'SalesReports_DisplayDailyOrSummarizedReport');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('6466', $result->messages[0]->code);
+        $this->assertEquals("NO DATA FOUND", $result->messages[0]->text);
+    }
+
+    public function testCanHandleSalesReportsDisplayNetRemitReport()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummySalesReportsDisplayNetRemitReportErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'SalesReports_DisplayNetRemitReport');
 
         $this->assertEquals(Result::STATUS_ERROR, $result->status);
         $this->assertEquals(1, count($result->messages));

@@ -122,13 +122,14 @@ class SoapHeader2Test extends BaseTestCase
         $dummyRequest = $this->getTestFile('soapheader2' . DIRECTORY_SEPARATOR . 'dummySecurityAuth.txt');
         $dummyReply = $this->getTestFile('soapheader2' . DIRECTORY_SEPARATOR . 'dummySecurityAuthReply.txt');
 
+        $extractor = new Client\Util\MsgBodyExtractor();
         $wsResponse = new \stdClass();
         $wsResponse->processStatus = new \stdClass();
         $wsResponse->processStatus->statusCode = 'P';
 
         $messageResult = new SendResult();
         $messageResult->responseObject = $wsResponse;
-        $messageResult->responseXml = Client\Util\MsgBodyExtractor::extract($dummyReply);
+        $messageResult->responseXml = $extractor->extract($dummyReply);
         $messageResult->messageVersion = '6.1';
 
 

@@ -51,4 +51,21 @@ class PayerPhoneOrEmail
      * @var string
      */
     public $emailAddress;
+
+    /**
+     * PayerPhoneOrEmail constructor.
+     *
+     * @param $type
+     * @param $value
+     */
+    public function __construct($type, $value)
+    {
+        $this->phoneOrEmailType = $type;
+
+        if ($type === self::TYPE_PHONE) {
+            $this->telephoneNumberDetails = new TelephoneNumberDetails($value);
+        } elseif ($type === self::TYPE_EMAIL) {
+            $this->emailAddress = $value;
+        }
+    }
 }

@@ -82,6 +82,10 @@ class QueueList extends BaseWsMessage
 
         $this->categoryDetails = new CategoryDetails($options->queue->category);
 
+        if (!empty($options->queue->timeMode)) {
+            $this->date = new QueueDate($options->queue->timeMode);
+        }
+        
         if (!empty($options->queue->officeId)) {
             $this->targetOffice = new TargetOffice(
                 SourceType::SOURCETYPE_OFFICE_SPECIFIED,

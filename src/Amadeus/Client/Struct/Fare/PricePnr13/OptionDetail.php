@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fare\PricePnr13;
  * OptionDetail
  *
  * @package Amadeus\Client\Struct\Fare\PricePnr13
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @author  Dieter Devlieghere <dermikagh@gmail.com>
  */
 class OptionDetail
 {
@@ -42,11 +42,21 @@ class OptionDetail
      */
     public function __construct($options = null)
     {
-        if (is_string($options)) {
+        if ($options instanceof CriteriaDetails) {
+            $this->criteriaDetails[] = $options;
+        } elseif (is_string($options)) {
             $this->criteriaDetails[] = new CriteriaDetails($options);
         } elseif (is_array($options)) {
             foreach ($options as $option) {
-                $this->criteriaDetails[] = new CriteriaDetails($option);
+                if ($option instanceof CriteriaDetails) {
+                    $this->criteriaDetails[] = $option;
+                } elseif (is_array($option)) {
+                    foreach ($option as $optionType => $optionDescription) {
+                        $this->criteriaDetails[] = new CriteriaDetails($optionType, $optionDescription);
+                    }
+                } else {
+                    $this->criteriaDetails[] = new CriteriaDetails($option);
+                }
             }
         }
     }

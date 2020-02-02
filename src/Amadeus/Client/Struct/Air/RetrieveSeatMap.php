@@ -12,9 +12,11 @@ use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FrequentFlyer;
 use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
 use Amadeus\Client\Struct\Air\RetrieveSeatMap\ConversionRate;
 use Amadeus\Client\Struct\Air\RetrieveSeatMap\FrequentTravelerInfo;
+use Amadeus\Client\Struct\Air\RetrieveSeatMap\ProcessIndicators;
 use Amadeus\Client\Struct\Air\RetrieveSeatMap\ProductInformation;
 use Amadeus\Client\Struct\Air\RetrieveSeatMap\ResControlInfo;
 use Amadeus\Client\Struct\Air\RetrieveSeatMap\SeatRequestParameters;
+use Amadeus\Client\Struct\Air\RetrieveSeatMap\StatusInformation;
 use Amadeus\Client\Struct\Air\RetrieveSeatMap\Traveller;
 use Amadeus\Client\Struct\Air\RetrieveSeatMap\TravelProductIdent;
 use Amadeus\Client\Struct\BaseWsMessage;
@@ -68,6 +70,9 @@ class RetrieveSeatMap extends BaseWsMessage
 
     public $suitablePassenger;
 
+    /**
+     * @var ProcessIndicators
+     */
     public $processIndicators;
 
 
@@ -96,6 +101,10 @@ class RetrieveSeatMap extends BaseWsMessage
         $this->loadProductInformation($options);
 
         $this->loadPassengers($options);
+
+        if ($options->mostRestrictive) {
+            $this->processIndicators = new ProcessIndicators(StatusInformation::ACTION_MOST_RESTRICTIVE);
+        }
     }
 
     /**
@@ -117,7 +126,11 @@ class RetrieveSeatMap extends BaseWsMessage
     protected function loadRecordLocator($options)
     {
         if (!empty($options->recordLocator)) {
-            $this->resControlInfo = new ResControlInfo($options->recordLocator);
+            $this->resControlInfo = new ResControlInfo(
+                $options->recordLocator,
+                $options->company,
+                $options->date
+            );
         }
     }
 

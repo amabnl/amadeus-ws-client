@@ -23,6 +23,7 @@
 namespace Test\Amadeus\Client\Struct\Fare;
 
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
@@ -37,6 +38,7 @@ use Amadeus\Client\Struct\Fare\PricePnr12\PenDisInformation;
 use Amadeus\Client\Struct\Fare\PricePnr12\RefDetails;
 use Amadeus\Client\Struct\Fare\PricePnr12\TaxDetails;
 use Amadeus\Client\Struct\Fare\PricePnr12\TaxIdentification;
+use Amadeus\Client\Struct\Fare\PricePnr13\CriteriaDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\TaxData;
 use Amadeus\Client\Struct\Fare\PricePNRWithBookingClass12;
 use Test\Amadeus\BaseTestCase;
@@ -113,7 +115,7 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
         $this->assertEquals(FarePricePnrWithBookingClassOptions::OVERRIDE_NO_OPTION, $message->overrideInformation->attributeDetails[0]->attributeType);
     }
 
-    public function testCanThrowExceptioWhenDoPricePnrCallWithObFees()
+    public function testCanThrowExceptionWhenDoPricePnrCallWithObFees()
     {
         $this->setExpectedException(
             '\Amadeus\Client\Struct\OptionNotSupportedException',
@@ -131,7 +133,7 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
         new PricePNRWithBookingClass12($opt);
     }
 
-    public function testCanThrowExceptioWhenDoPricePnrCallWithPricingLogic()
+    public function testCanThrowExceptionWhenDoPricePnrCallWithPricingLogic()
     {
         $this->setExpectedException(
             '\Amadeus\Client\Struct\OptionNotSupportedException',
@@ -140,6 +142,25 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
 
         $opt = new FarePricePnrWithBookingClassOptions([
             'pricingLogic' => FarePricePnrWithBookingClassOptions::PRICING_LOGIC_IATA
+        ]);
+
+        new PricePNRWithBookingClass12($opt);
+    }
+
+    public function testCanThrowExceptionWhenDoPricePnrCallWithOverrideOptionsWithCriteria()
+    {
+        $this->setExpectedException(
+            '\Amadeus\Client\Struct\OptionNotSupportedException',
+            'Override Options With Criteria are not supported in version 12 or lower'
+        );
+
+        $opt = new FarePricePnrWithBookingClassOptions([
+            'overrideOptionsWithCriteria' => [
+                [
+                    'key' => 'SBF',
+                    'optionDetail' => '1'
+                ]
+            ]
         ]);
 
         new PricePNRWithBookingClass12($opt);

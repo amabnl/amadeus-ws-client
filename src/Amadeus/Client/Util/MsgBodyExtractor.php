@@ -31,40 +31,38 @@ namespace Amadeus\Client\Util;
 class MsgBodyExtractor
 {
     /**
-     * Regular expression for extracting the Soap Envelope Body's content.
-     *
-     * @var string
-     */
-    const REGEXP_SOAP_ENVELOPE_CONTENTS = "|\\<SOAP-ENV:Body\\>(.*?)\\<\\/SOAP-ENV:Body\\>|s";
-
-    /**
-     * Regular expression for extracting the Soap Envelope Body's content - legacy format for Soap Header v2 and older
-     *
-     * @var string
-     */
-    const REGEXP_SOAP_ENVELOPE_CONTENTS_LEGACY = "|\\<soap:Body\\>(.*?)\\<\\/soap:Body\\>|s";
-
-    /**
      * Extracts the message content from the soap envelope (i.e. everything under the soap body)
      *
      * @param string $soapResponse
      * @return string|null
      */
-    public static function extract($soapResponse)
+    public function extract($soapResponse)
     {
         $messageBody = null;
-        $matches = [];
 
-        if (preg_match(self::REGEXP_SOAP_ENVELOPE_CONTENTS, $soapResponse, $matches) === 1) {
-            $messageBody = $matches[1];
-        }
+        $messageBody = $this->getStringBetween($soapResponse, '<SOAP-ENV:Body>', '</SOAP-ENV:Body>');
 
-        if (empty($messageBody)) {
-            if (preg_match(self::REGEXP_SOAP_ENVELOPE_CONTENTS_LEGACY, $soapResponse, $matches) === 1) {
-                $messageBody = $matches[1];
-            }
+        if (empty($messageBody) || false === $messageBody) {
+            $messageBody = $this->getStringBetween($soapResponse, '<soap:Body>', '</soap:Body>');
         }
 
         return $messageBody;
+    }
+
+    /**
+     * Get substring between two strings
+     *
+     * @param $string
+     * @param $start
+     * @param $end
+     * @return bool|string
+     */
+    private function getStringBetween($string, $start, $end)
+    {
+        $startPos = strpos($string, $start) + strlen($start);
+
+        $endPos = strlen($string) - strpos($string, $end);
+
+        return substr($string, $startPos, -$endPos);
     }
 }

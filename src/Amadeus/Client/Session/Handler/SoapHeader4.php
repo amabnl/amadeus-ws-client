@@ -45,6 +45,23 @@ class SoapHeader4 extends Base
      */
     const XPATH_ENDPOINT = 'string(/wsdl:definitions/wsdl:service/wsdl:port/soap:address/@location)';
 
+    /**
+     * SoapHeader - Session
+     * TransactionStatusCode for starting new sessions.
+     */
+    const TRANSACTION_STATUS_CODE_START = 'Start';
+
+    /**
+     * SoapHeader - Session
+     * TransactionStatusCode for active stateful sessions.
+     */
+    const TRANSACTION_STATUS_CODE_INSERIES = 'InSeries';
+
+    /**
+     * SoapHeader - Session
+     * TransactionStatusCode for ending sessions.
+     */
+    const TRANSACTION_STATUS_CODE_END = 'End';
 
     /**
      * Switch between stateful & stateless sessions. Default: stateful
@@ -285,8 +302,8 @@ class SoapHeader4 extends Base
             );
         }
 
-        //Send authentication info
-        if ($this->isAuthenticated === false) {
+        //Send authentication info headers if not authenticated and not Security_Authenticate message call
+        if ($this->isAuthenticated === false && $this->isNotSecurityAuthenticateMessage($messageName)) {
             //Generate nonce, msg creation string & password digest:
             $password = base64_decode($params->authParams->passwordData);
             $creation = new \DateTime('now', new \DateTimeZone('UTC'));
@@ -323,7 +340,7 @@ class SoapHeader4 extends Base
                         'Session',
                         new Client\Struct\HeaderV4\Session(
                             null,
-                            "Start"
+                            self::TRANSACTION_STATUS_CODE_START
                         )
                     )
                 );
@@ -344,11 +361,6 @@ class SoapHeader4 extends Base
                 )
             );
         } elseif ($stateful === true) {
-            //We are authenticated and stateful: provide session header to continue or terminate session
-            $statusCode =
-                (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) ?
-                    "End" : "InSeries";
-
             array_push(
                 $headersToSet,
                 new \SoapHeader(
@@ -356,7 +368,7 @@ class SoapHeader4 extends Base
                     'Session',
                     new Client\Struct\HeaderV4\Session(
                         $sessionData,
-                        $statusCode
+                        $this->getStatefulStatusCode($messageName, $messageOptions)
                     )
                 )
             );
@@ -412,11 +424,11 @@ class SoapHeader4 extends Base
         $charId = strtoupper(md5(uniqid(rand(), true)));
         $hyphen = chr(45); // "-"
 
-        $uuid = substr($charId, 0, 8).$hyphen
-            .substr($charId, 8, 4).$hyphen
-            .substr($charId, 12, 4).$hyphen
-            .substr($charId, 16, 4).$hyphen
-            .substr($charId, 20, 12);
+        $uuid = substr($charId, 0, 8) . $hyphen
+            . substr($charId, 8, 4) . $hyphen
+            . substr($charId, 12, 4) . $hyphen
+            . substr($charId, 16, 4) . $hyphen
+            . substr($charId, 20, 12);
 
         return $uuid;
     }
@@ -490,6 +502,7 @@ class SoapHeader4 extends Base
     protected function createDateTimeStringForAuth($creationDateTime, $micro)
     {
         $creationDateTime->setTimezone(new \DateTimeZone('UTC'));
+
         return $creationDateTime->format("Y-m-d\TH:i:s:") . $micro . 'Z';
     }
 
@@ -508,5 +521,39 @@ class SoapHeader4 extends Base
         }
 
         return $options;
+    }
+
+    /**
+     * Check is called message is not Security_Authenticate.
+     *
+     * @param $messageName
+     * @return bool
+     */
+    protected function isNotSecurityAuthenticateMessage($messageName)
+    {
+        return 'Security_Authenticate' !== $messageName;
+    }
+
+    /**
+     * Return transaction code for stateful requests.
+     *
+     * @param string $messageName name of request message (e.g. Security_Authenticate)
+     * @param array $messageOptions
+     * @return string
+     */
+    private function getStatefulStatusCode($messageName, array $messageOptions)
+    {
+        // on security-auth this is always 'Start'
+        if ('Security_Authenticate' === $messageName) {
+            return self::TRANSACTION_STATUS_CODE_START;
+        }
+
+        // if endSession is set this will be (the) 'End'
+        if (isset($messageOptions['endSession']) && $messageOptions['endSession'] === true) {
+            return self::TRANSACTION_STATUS_CODE_END;
+        }
+
+        // on everything else we assume in-series
+        return self::TRANSACTION_STATUS_CODE_INSERIES;
     }
 }

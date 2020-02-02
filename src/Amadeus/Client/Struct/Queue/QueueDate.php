@@ -33,4 +33,14 @@ class QueueDate
      * @var int
      */
     public $timeMode;
+    
+    /**
+     * QueueDate constructor.
+     *
+     * @param int timeMode
+     */
+    public function __construct($timeMode)
+    {
+        $this->timeMode = $timeMode;
+    }
 }

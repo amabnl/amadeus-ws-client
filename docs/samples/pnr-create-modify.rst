@@ -507,7 +507,7 @@ Create an ``FT`` element (Tour Code):
     $opt = new PnrAddMultiElementsOptions([
         'elements' => [
             new TourCode([
-                'passengerType' => TourCode::PAXTYPE_PASSENGER,
+                'passengerType' => TourCode::PAX_PASSENGER,
                 'freeText' => 'TOUR CODE'
             ])
         ]
@@ -619,6 +619,35 @@ Request seat 13f for passenger with tattoo 1 and segment with tattoo 1.
         'elements' => [
             new SeatRequest([
                 'seatNumber' => '13f',
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_TATTOO,
+                        'id' => 1
+                    ]),
+                    new Reference([
+                        'type' => Reference::TYPE_SEGMENT_TATTOO,
+                        'id' => 1
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+Request multiple seats within one SeatRequest (e.g. 5a and 5b)
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\SeatRequest;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $opt = new PnrAddMultiElementsOptions([
+        'elements' => [
+            new SeatRequest([
+                'seatNumber' => [
+                    '5a',
+                    '5b'
+                ],
                 'references' => [
                     new Reference([
                         'type' => Reference::TYPE_PASSENGER_TATTOO,
@@ -915,3 +944,37 @@ Here's an example how to stop the library from automatically adding an RF elemen
         ]
     ]);
 
+
+
+Other Service Information (OSI)
+===============================
+
+Creating an OSI with Mandatory Airline Code:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Traveller;
+    use Amadeus\Client\RequestOptions\Pnr\Element\OtherServiceInfo;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $createPnrOptions = new PnrAddMultiElementsOptions([
+        'travellers' => [
+            new Traveller([
+                'number' => 1,
+                'lastName' => 'Bowie'
+            ])
+        ],
+        'actionCode' => PnrAddMultiElementsOptions::ACTION_NO_PROCESSING,
+        'elements' => [
+            new OtherServiceInfo([
+                'airline' => 'AA',
+                'freeText' => 'free text',
+                'references' => [
+                    new Reference([
+                        'type' => Reference::TYPE_PASSENGER_REQUEST,
+                        'id' => 1
+                    ])
+            ])
+        ]
+    ]);

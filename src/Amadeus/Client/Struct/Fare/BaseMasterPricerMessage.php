@@ -57,6 +57,12 @@ class BaseMasterPricerMessage extends BaseWsMessage
     public $fareOptions;
 
     /**
+     * @var array
+     */
+    public $buckets = [];
+ 
+
+    /**
      * @param MPPassenger $passenger
      * @param int $counter BYREF
      * @param int $infantCounter BYREF
@@ -99,7 +105,10 @@ class BaseMasterPricerMessage extends BaseWsMessage
      */
     protected function loadNumberOfUnits($options)
     {
-        if (is_int($options->nrOfRequestedPassengers) || is_int($options->nrOfRequestedResults) || $options->multiTicketWeights instanceof MultiTicketWeights) {
+        if (is_int($options->nrOfRequestedPassengers) ||
+            is_int($options->nrOfRequestedResults) ||
+            $options->multiTicketWeights instanceof MultiTicketWeights
+        ) {
             $this->numberOfUnit = new MasterPricer\NumberOfUnit(
                 $options->nrOfRequestedPassengers,
                 $options->nrOfRequestedResults,
@@ -120,7 +129,8 @@ class BaseMasterPricerMessage extends BaseWsMessage
                 $options->currencyOverride,
                 $options->feeIds,
                 $options->multiTicket,
-                $options->ticketingPriceScheme
+                $options->ticketingPriceScheme,
+                $options->formOfPayment
             )
         ) {
             $this->fareOptions = new MasterPricer\FareOptions(
@@ -131,7 +141,8 @@ class BaseMasterPricerMessage extends BaseWsMessage
                 $options->feeIds,
                 $options->corporateQualifier,
                 $options->multiTicket,
-                $options->ticketingPriceScheme
+                $options->ticketingPriceScheme,
+                $options->formOfPayment
             );
         }
     }
