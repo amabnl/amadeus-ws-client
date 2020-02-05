@@ -724,6 +724,25 @@ class Client extends Base
     }
 
     /**
+     * Fare_GetFareFamilyDescription
+     *
+     * @param RequestOptions\FareGetFareFamilyDescriptionOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function fareGetFareFamilyDescription(
+        RequestOptions\FareGetFareFamilyDescriptionOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_GetFareFamilyDescription';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Fare_InformativeBestPricingWithoutPNR
      *
      * @param RequestOptions\FareInformativeBestPricingWithoutPnrOptions $options
