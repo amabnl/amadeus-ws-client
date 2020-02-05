@@ -54,6 +54,5 @@ class BookPriceService extends BaseWsMessage
         foreach ($options->services as $service) {
             $this->Product[] = new Product($service);
         }
-
     }
 }

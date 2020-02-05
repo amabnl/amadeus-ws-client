@@ -32,34 +32,34 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class Service extends LoadParamsFromArray
 {
-  /**
-   * Booking carrier of the service
-   *
-   * @var string
-   */
-  public $serviceProvider;
+    /**
+     * Booking carrier of the service
+     *
+     * @var string
+     */
+    public $serviceProvider;
 
-  /**
-   *
-   * @var Identifier
-   */
-  public $identifier;
+    /**
+     *
+     * @var Identifier
+     */
+    public $identifier;
 
-  /**
-   * Request ID
-   * @var string
-   */
-  public $TID;
+    /**
+     * Request ID
+     * @var string
+     */
+    public $TID;
 
-  /**
-   * Tatoo of the passenger to whom the service applies
-   * @var string|null
-   */
-  public $passengerTattoo;
+    /**
+     * Tatoo of the passenger to whom the service applies
+     * @var string|null
+     */
+    public $passengerTattoo;
 
-  /**
-   * Tatoo of the passenger to whom the service applies
-   * @var string|null
-   */
-  public $segmentTattoo;
+    /**
+     * Tatoo of the passenger to whom the service applies
+     * @var string|null
+     */
+    public $segmentTattoo;
 }
