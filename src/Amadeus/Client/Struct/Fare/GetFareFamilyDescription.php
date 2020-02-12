@@ -2,11 +2,13 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
-use Amadeus\Client\RequestOptions\DocRefund\Reference;
+use Amadeus\Client\RequestOptions\DocRefund\Reference as OtherReference;
 use Amadeus\Client\RequestOptions\FareGetFareFamilyDescriptionOptions;
+use Amadeus\Client\RequestOptions\Reference;
 use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\DocRefund\UpdateRefund\ReferenceInformation;
-use Amadeus\Client\Struct\Fare\GetFareFamilyDescription\BookingDateInformation;
+use Amadeus\Client\Struct\DocRefund\UpdateRefund\ReferenceInformation as OtherReferenceInformation;
+use Amadeus\Client\Struct\Fare\GetFareFamilyDescription\ReferenceDetails;
+use Amadeus\Client\Struct\Fare\GetFareFamilyDescription\ReferenceInformation;
 
 /**
  * Class GetFareFamilyDescription
@@ -15,14 +17,9 @@ use Amadeus\Client\Struct\Fare\GetFareFamilyDescription\BookingDateInformation;
 class GetFareFamilyDescription extends BaseWsMessage
 {
     /**
-     * @var ReferenceInformation
+     * @var ReferenceInformation[]|array
      */
-    private $referenceInformation;
-
-    /**
-     * @var BookingDateInformation
-     */
-    private $bookingDateInformation;
+    public $referenceInformation;
 
     /**
      * GetFareFamilyDescription constructor.
@@ -31,15 +28,29 @@ class GetFareFamilyDescription extends BaseWsMessage
      */
     public function __construct($options)
     {
-        $this->referenceInformation = new ReferenceInformation(
-            [
-                new Reference([
-                    'type' => 'FC',
-                    'value' => 1
-                ])
-            ]
-        );
-//        $this->bookingDateInformation = new BookingDateInformation(new DateTime(new \DateTime()));
+        foreach ($options->referenceGroups as $referenceGroup) {
+            $references = array_map(function(Reference $reference) {
+                return new ReferenceDetails(
+                    $reference->getType(),
+                    $reference->getValue()
+                );
+            }, $referenceGroup->getReferences());
+
+            $this->referenceInformation[] = new ReferenceInformation($references);
+        }
+
+//        $this->referenceInformation[] = new OtherReferenceInformation(
+//            [
+//                new OtherReference([
+//                    'type' => 'REC',
+//                    'value' => 1
+//                ]),
+//                new OtherReference([
+//                    'type' => 'FC',
+//                    'value' => 2
+//                ])
+//            ]
+//        );
     }
 
 }
