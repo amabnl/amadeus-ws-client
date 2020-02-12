@@ -11,5 +11,5 @@ class FareGetFareFamilyDescriptionOptions extends Base
     /**
      * @var ReferenceGroup[]|array
      */
-    public $referenceGroups;
+    public $referenceGroups = [];
 }
