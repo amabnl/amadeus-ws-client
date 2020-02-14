@@ -36,6 +36,7 @@ use Amadeus\Client\RequestOptions\Fare\MPLocation;
 use Amadeus\Client\RequestOptions\Fare\MPPassenger;
 use Amadeus\Client\RequestOptions\Fare\MPFeeId;
 use Amadeus\Client\RequestOptions\Fare\MPTicketingPriceScheme;
+use Amadeus\Client\RequestOptions\Fare\MPAnchoredSegment;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\Struct\Fare\MasterPricer\BooleanExpression;
 use Amadeus\Client\Struct\Fare\MasterPricer\CabinId;
@@ -1833,5 +1834,96 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertEquals('CC', $message->fareOptions->formOfPayment[0]->type);
         $this->assertEquals(100, $message->fareOptions->formOfPayment[0]->chargedAmount);
         $this->assertEquals('123456', $message->fareOptions->formOfPayment[0]->creditCardNumber);
+    }
+
+    public function testCanMakeAnchoredSearch()
+    {
+        $opt = new FareMasterPricerTbSearch();
+        $opt->nrOfRequestedResults = 200;
+        $opt->nrOfRequestedPassengers = 1;
+        $opt->passengers[] = new MPPassenger([
+            'type' => MPPassenger::TYPE_ADULT,
+            'count' => 1
+        ]);
+        $opt->itinerary[] = new MPItinerary([
+            'departureLocation' => new MPLocation(['city' => 'BRU']),
+            'arrivalLocation' => new MPLocation(['city' => 'LON']),
+            'date' => new MPDate(['dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))]),
+            'anchoredSegments' => [
+                    new MPAnchoredSegment([
+                    'departureDate' => \DateTime::createFromFormat('Ymd Hi','20180315 1540', new \DateTimeZone('UTC')),
+                    'arrivalDate' => \DateTime::createFromFormat('Ymd Hi','20180316 0010', new \DateTimeZone('UTC')),
+                    'dateVariation' => '',
+                    'from' => 'SFO',
+                    'to' => 'JFK',
+                    'companyCode' => 'AA',
+                    'flightNumber' => '20'
+                ])
+            ]
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        $this->assertInternalType('array', $message->itinerary);
+        $this->assertCount(1, $message->itinerary);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Fare\MasterPricer\Itinerary', $message->itinerary[0]);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Fare\MasterPricer\TimeDetails', $message->itinerary[0]->timeDetails);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Fare\MasterPricer\FirstDateTimeDetail', $message->itinerary[0]->timeDetails->firstDateTimeDetail);
+        $this->assertEquals('150117', $message->itinerary[0]->timeDetails->firstDateTimeDetail->date);
+        $this->assertNull($message->itinerary[0]->timeDetails->firstDateTimeDetail->time);
+        $this->assertNull($message->itinerary[0]->timeDetails->firstDateTimeDetail->timeQualifier);
+        $this->assertEquals('BRU', $message->itinerary[0]->departureLocalization->departurePoint->locationId);
+        $this->assertEquals('C', $message->itinerary[0]->departureLocalization->departurePoint->airportCityQualifier);
+        $this->assertEquals('LON', $message->itinerary[0]->arrivalLocalization->arrivalPointDetails->locationId);
+        $this->assertEquals('C', $message->itinerary[0]->arrivalLocalization->arrivalPointDetails->airportCityQualifier);
+
+        $this->assertEquals(1, $message->itinerary[0]->requestedSegmentRef->segRef);
+        $this->assertNull($message->itinerary[0]->requestedSegmentRef->locationForcing);
+
+        $this->assertNull($message->itinerary[0]->flightInfo);
+        $this->assertNull($message->itinerary[0]->attributes);
+        $this->assertNull($message->itinerary[0]->requestedSegmentAction);
+
+        $this->assertCount(1, $message->itinerary[0]->flightInfoPNR);
+        $this->assertEquals('20180315', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightDate->departureDate);
+        $this->assertEquals('1540', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightDate->departureTime);
+        $this->assertEquals('20180316', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightDate->arrivalDate);
+        $this->assertEquals('0010', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightDate->arrivalTime);
+        $this->assertEquals('SFO', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->boardPointDetails->trueLocationId);
+        $this->assertEquals('JFK', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->offpointDetails->trueLocationId);
+        $this->assertEquals('20', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightIdentification->flightNumber);
+        $this->assertNull($message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightIdentification->bookingClass);
+        $this->assertEquals('AA', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->companyDetails->marketingCompany);
+        
+
+
+        $this->assertCount(2, $message->numberOfUnit->unitNumberDetail);
+        $this->assertEquals(1, $message->numberOfUnit->unitNumberDetail[0]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_PASS, $message->numberOfUnit->unitNumberDetail[0]->typeOfUnit);
+        $this->assertEquals(200, $message->numberOfUnit->unitNumberDetail[1]->numberOfUnits);
+        $this->assertEquals(UnitNumberDetail::TYPE_RESULTS, $message->numberOfUnit->unitNumberDetail[1]->typeOfUnit);
+
+        $this->assertCount(1, $message->paxReference);
+        $this->assertCount(1, $message->paxReference[0]->ptc);
+        $this->assertEquals('ADT', $message->paxReference[0]->ptc[0]);
+        $this->assertCount(1, $message->paxReference[0]->traveller);
+        $this->assertEquals(1, $message->paxReference[0]->traveller[0]->ref);
+        $this->assertNull($message->paxReference[0]->traveller[0]->infantIndicator);
+
+        $this->assertEmpty($message->buckets);
+        $this->assertNull($message->combinationFareFamilies);
+        $this->assertNull($message->customerRef);
+        $this->assertEmpty($message->fareFamilies);
+        $this->assertNull($message->feeOption);
+        $this->assertNull($message->formOfPaymentByPassenger);
+        $this->assertNull($message->globalOptions);
+        $this->assertNull($message->officeIdDetails);
+        $this->assertEmpty($message->passengerInfoGrp);
+        $this->assertNull($message->priceToBeat);
+        $this->assertNull($message->solutionFamily);
+        $this->assertNull($message->taxInfo);
+        $this->assertNull($message->ticketChangeInfo);
+        $this->assertEmpty($message->valueSearch);
+        $this->assertNull($message->travelFlightInfo);
     }
 }

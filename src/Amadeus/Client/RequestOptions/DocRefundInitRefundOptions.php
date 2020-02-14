@@ -84,4 +84,18 @@ class DocRefundInitRefundOptions extends Base
      * @var int|string
      */
     public $couponNumber;
+    
+    /**
+     * Stock Type Code
+     *
+     * @var int|string
+     */
+    public $stockTypeCode;
+    
+    /**
+     * Stock Provider
+     *
+     * @var int|string
+     */
+    public $stockProvider;
 }

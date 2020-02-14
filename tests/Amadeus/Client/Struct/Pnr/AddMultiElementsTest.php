@@ -940,6 +940,48 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\Reference::QUAL_SEGTAT, $msg->dataElementsMaster->dataElementsIndiv[0]->referenceForDataElement->reference[1]->qualifier);
     }
 
+    public function testCanCreateSeatRequestWithMultipleSeatNum()
+    {
+        $opt = new PnrAddMultiElementsOptions([
+            'actionCode' => PnrAddMultiElementsOptions::ACTION_NO_PROCESSING,
+            'travellers' => [
+                new Traveller([
+                    'number' => 1,
+                    'firstName' => 'John',
+                    'lastName' => 'Doe'
+                ])
+            ],
+            'elements' => [
+                new SeatRequest([
+                    'seatNumber' => [
+                        '5a',
+                        '5b'
+                    ],
+                    'references' => [
+                        new Reference([
+                            'type' => Reference::TYPE_PASSENGER_REQUEST,
+                            'id' => 1
+                        ]),
+                        new Reference([
+                            'type' => Reference::TYPE_SEGMENT_TATTOO,
+                            'id' => 1
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new AddMultiElements($opt);
+
+        $this->assertCount(1, $msg->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(AddMultiElements\ElementManagementData::SEGNAME_SEAT_REQUEST, $msg->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->freetextData);
+        $this->assertNull($msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->seat);
+        $this->assertCount(2, $msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->special);
+        $this->assertEquals('5a', $msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->special[0]->data);
+        $this->assertEquals('5b', $msg->dataElementsMaster->dataElementsIndiv[0]->seatGroup->seatRequest->special[1]->data);
+    }
+
     /**
      * Special Seat Type
      */

@@ -4319,6 +4319,207 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendServiceBookPriceService()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('serviceBookPriceServiceReply.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+        
+        $opts = new Client\RequestOptions\ServiceBookPriceServiceOptions([
+            'services' => [new Client\RequestOptions\Service\BookPriceService\Service([
+                'TID' => 1,
+                'serviceProvider' => 'LH',
+                'identifier' => new Client\RequestOptions\Service\BookPriceService\Identifier([
+                'bookingMethod' => '01',
+                'RFIC' => 'F',
+                'RFISC' => '040'
+                ])
+            ])]
+        ]);
+        $expectedMessageResult = new Client\Struct\Service\BookPriceService($opts);
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Service_BookPriceService', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));;
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Service_BookPriceService' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+
+        $response = $client->serviceBookPriceService(
+            new Client\RequestOptions\ServiceBookPriceServiceOptions($opts)
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendServiceStandaloneCatalogue()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('serviceStandaloneCatalogueReply.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Service\StandaloneCatalogue(
+            new Client\RequestOptions\ServiceStandaloneCatalogueOptions([
+                'passengers' => [
+                    new Client\RequestOptions\Service\StandaloneCatalogue\ServicePassenger([
+                        'reference' => 1,
+                        'type' => Client\RequestOptions\Service\StandaloneCatalogue\ServicePassenger::TYPE_ADULT
+                    ])
+                ],
+                'segments' => [
+                    new Client\RequestOptions\Fare\InformativePricing\Segment([
+                        'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2019-06-13 10:10:00'),
+                        'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2019-06-13 13:40:00'),
+                        'from' => 'BOM',
+                        'to' => 'DXB',
+                        'marketingCompany' => 'EK',
+                        'operatingCompany' => 'EK',
+                        'flightNumber' => '505',
+                        'bookingClass' => 'K',
+                        'groupNumber' => 'V',
+                        'segmentTattoo' => 1
+                    ]),
+                    new Client\RequestOptions\Fare\InformativePricing\Segment([
+                        'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2019-06-27 21:55:00'),
+                        'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2019-06-28 02:30:00'),
+                        'from' => 'DXB',
+                        'to' => 'BOM',
+                        'marketingCompany' => 'EK',
+                        'operatingCompany' => 'EK',
+                        'flightNumber' => '500',
+                        'bookingClass' => 'B',
+                        'groupNumber' => 'V',
+                        'segmentTattoo' => 2
+                    ])
+                ],
+                'pricingOptions' => new Client\RequestOptions\Service\StandaloneCatalogue\ServiceStandalonePricingOptions([
+                    'pricingsFareBasis' => [
+                        new Client\RequestOptions\Fare\PricePnr\FareBasis([
+                            'fareBasisCode' => 'KEXESIN1',
+                        ])
+                    ],
+                    'references' => [
+                        new Client\RequestOptions\Service\PaxSegRef([
+                            'reference' => 1,
+                            'type' => 'S'
+                        ]),
+                        new Client\RequestOptions\Service\PaxSegRef([
+                            'reference' => 2,
+                            'type' => 'S'
+                        ]),
+                        new Client\RequestOptions\Service\PaxSegRef([
+                            'reference' => 1,
+                            'type' => 'P'
+                        ])
+                    ]
+                ])
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Service_StandaloneCatalogue', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));;
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Service_StandaloneCatalogue' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->serviceStandaloneCatalogue(
+            new Client\RequestOptions\ServiceStandaloneCatalogueOptions([
+                'passengers' => [
+                    new Client\RequestOptions\Service\StandaloneCatalogue\ServicePassenger([
+                        'reference' => 1,
+                        'type' => Client\RequestOptions\Service\StandaloneCatalogue\ServicePassenger::TYPE_ADULT
+                    ])
+                ],
+                'segments' => [
+                    new Client\RequestOptions\Fare\InformativePricing\Segment([
+                        'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2019-06-13 10:10:00'),
+                        'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2019-06-13 13:40:00'),
+                        'from' => 'BOM',
+                        'to' => 'DXB',
+                        'marketingCompany' => 'EK',
+                        'operatingCompany' => 'EK',
+                        'flightNumber' => '505',
+                        'bookingClass' => 'K',
+                        'groupNumber' => 'V',
+                        'segmentTattoo' => 1
+                    ]),
+                    new Client\RequestOptions\Fare\InformativePricing\Segment([
+                        'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2019-06-27 21:55:00'),
+                        'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2019-06-28 02:30:00'),
+                        'from' => 'DXB',
+                        'to' => 'BOM',
+                        'marketingCompany' => 'EK',
+                        'operatingCompany' => 'EK',
+                        'flightNumber' => '500',
+                        'bookingClass' => 'B',
+                        'groupNumber' => 'V',
+                        'segmentTattoo' => 2
+                    ])
+                ],
+                'pricingOptions' => new Client\RequestOptions\Service\StandaloneCatalogue\ServiceStandalonePricingOptions([
+                    'pricingsFareBasis' => [
+                        new Client\RequestOptions\Fare\PricePnr\FareBasis([
+                            'fareBasisCode' => 'KEXESIN1',
+                        ])
+                    ],
+                    'references' => [
+                        new Client\RequestOptions\Service\PaxSegRef([
+                            'reference' => 1,
+                            'type' => 'S'
+                        ]),
+                        new Client\RequestOptions\Service\PaxSegRef([
+                            'reference' => 2,
+                            'type' => 'S'
+                        ]),
+                        new Client\RequestOptions\Service\PaxSegRef([
+                            'reference' => 1,
+                            'type' => 'P'
+                        ])
+                    ]
+                ])
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
 
     public function testCanSendFopCreateFormOfPayment()
     {
