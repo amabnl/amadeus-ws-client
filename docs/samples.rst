@@ -533,6 +533,23 @@ Get a list of all PNR's on a given queue on a different office:
         ])
     );
 
+Get a list of all PNR's on a given queue for specific account number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\QueueListOptions;
+    use Amadeus\Client\RequestOptions\Queue;
+
+    $queueContent = $client->queueList(
+        new QueueListOptions([
+            'queue' => new Queue([
+                'queue' => 50,
+                'category' => 0,
+                'accountNumber' => 'TESTACC99'
+            ])
+        ])
+    );
+
 Get a list of PNR's on a queue, provide a filter on Ticketing & Departure date:
 
 This example will display a List of the queue 12C0 in the office NCE1A0950 and search with ticketing date between 20 APR and 21 APR and departure date between 3 May and 4 May.
