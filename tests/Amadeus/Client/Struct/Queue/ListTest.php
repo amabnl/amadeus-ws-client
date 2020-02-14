@@ -259,7 +259,6 @@ class ListTest extends BaseTestCase
         $this->assertNull($struct->categoryDetails->subQueueInfoDetails->itemDescription);
 
         $this->assertEquals('USAEUR', $struct->accountNumber->account->number);
-        $this->assertEquals(SourceType::SOURCETYPE_OFFICE_SPECIFIED, $struct->targetOffice->sourceType->sourceQualifier1);
 
         $this->assertNull($struct->date);
         $this->assertNull($struct->scanRange);
