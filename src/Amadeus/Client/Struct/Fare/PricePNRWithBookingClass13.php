@@ -320,7 +320,8 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
                     $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_FAMILY);
                     $po->optionDetail = new OptionDetail([['FF' => $item->fareFamily]]);
-                    $po->paxSegTstReference = $item->paxSegRefs;
+                    $po->paxSegTstReference =  new PaxSegTstReference($item->paxSegRefs);
+
 
                     $opt[] =$po;
                 }
@@ -357,7 +358,7 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
         return $opt;
     }
-    
+
     /**
      * Load corporate unifares
      *
