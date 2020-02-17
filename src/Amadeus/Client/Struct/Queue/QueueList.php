@@ -108,7 +108,7 @@ class QueueList extends BaseWsMessage
             $this->scanRange = new ScanRange($options->firstItemNr, $options->lastItemNr);
         }
 
-        if(!empty($options->queue->accountNumber)) {
+        if (!empty($options->queue->accountNumber)) {
             $this->accountNumber = new AccountNumber($options->queue->accountNumber);
         }
     }
