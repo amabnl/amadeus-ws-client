@@ -234,4 +234,35 @@ class ListTest extends BaseTestCase
         $this->assertNull($struct->scroll);
         $this->assertEmpty($struct->searchCriteria);
     }
+
+    /**
+     * Display Queue Using AccountNumber
+     *
+     */
+    public function testCanConstructQueueListMessageWithAccountNumber()
+    {
+
+        $struct = new QueueList(new QueueListOptions([
+            'queue' => new Queue([
+                'queue' => 50,
+                'category' => 3,
+                'accountNumber' => 'USAEUR'
+            ])
+        ]));
+
+        $this->assertCount(1, $struct->sortCriteria->sortOption);
+        $this->assertEquals(SelectionDetails::LIST_OPTION_SORT_CREATION, $struct->sortCriteria->sortOption[0]->selectionDetails->option);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Queue\Dumbo', $struct->sortCriteria->dumbo);
+        $this->assertEquals(50, $struct->queueNumber->queueDetails->number);
+        $this->assertEquals(SubQueueInfoDetails::IDTYPE_CATEGORY, $struct->categoryDetails->subQueueInfoDetails->identificationType);
+        $this->assertEquals(3, $struct->categoryDetails->subQueueInfoDetails->itemNumber);
+        $this->assertNull($struct->categoryDetails->subQueueInfoDetails->itemDescription);
+
+        $this->assertEquals('USAEUR', $struct->accountNumber->account->number);
+
+        $this->assertNull($struct->date);
+        $this->assertNull($struct->scanRange);
+        $this->assertNull($struct->scroll);
+        $this->assertEmpty($struct->searchCriteria);
+    }
 }
