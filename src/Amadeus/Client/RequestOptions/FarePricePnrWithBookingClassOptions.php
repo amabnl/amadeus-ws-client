@@ -25,6 +25,7 @@ namespace Amadeus\Client\RequestOptions;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareFamily;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
@@ -275,7 +276,7 @@ class FarePricePnrWithBookingClassOptions extends Base
     /**
      * Fare family to be used in pricing (e.g. "CLASSIC").
      *
-     * @var string
+     * @var string|FareFamily[]
      */
     public $fareFamily;
 

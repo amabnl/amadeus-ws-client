@@ -311,10 +311,15 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
         $opt = [];
 
         if ($fareFamily !== null) {
-            $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_FAMILY);
-            $po->optionDetail = new OptionDetail([['FF' => $fareFamily]]);
+            if (is_array($fareFamily)) {
 
-            $opt[] = $po;
+            } else {
+                $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_FAMILY);
+                $po->optionDetail = new OptionDetail([['FF' => $fareFamily]]);
+
+                $opt[] = $po;
+            }
+
         }
 
         return $opt;
