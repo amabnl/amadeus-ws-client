@@ -26,6 +26,7 @@ use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareFamily;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
@@ -312,6 +313,17 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
         if ($fareFamily !== null) {
             if (is_array($fareFamily)) {
+                /**
+                 * @var FareFamily $item
+                 */
+                foreach ($fareFamily as $item){
+
+                    $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_FAMILY);
+                    $po->optionDetail = new OptionDetail([['FF' => $item->fareFamily]]);
+                    $po->paxSegTstReference = $item->paxSegRefs;
+
+                    $opt[] =$po;
+                }
 
             } else {
                 $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_FAMILY);
@@ -345,7 +357,7 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
         return $opt;
     }
-
+    
     /**
      * Load corporate unifares
      *
