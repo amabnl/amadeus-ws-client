@@ -26,6 +26,7 @@ use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareFamily;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
@@ -311,10 +312,27 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
         $opt = [];
 
         if ($fareFamily !== null) {
-            $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_FAMILY);
-            $po->optionDetail = new OptionDetail([['FF' => $fareFamily]]);
+            if (is_array($fareFamily)) {
+                /**
+                 * @var FareFamily $item
+                 */
+                foreach ($fareFamily as $item){
 
-            $opt[] = $po;
+                    $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_FAMILY);
+                    $po->optionDetail = new OptionDetail([['FF' => $item->fareFamily]]);
+                    $po->paxSegTstReference =  new PaxSegTstReference($item->paxSegRefs);
+
+
+                    $opt[] =$po;
+                }
+
+            } else {
+                $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_FAMILY);
+                $po->optionDetail = new OptionDetail([['FF' => $fareFamily]]);
+
+                $opt[] = $po;
+            }
+
         }
 
         return $opt;
