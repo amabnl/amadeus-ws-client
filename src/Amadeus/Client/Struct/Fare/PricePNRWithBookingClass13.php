@@ -316,14 +316,12 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
                 /**
                  * @var FareFamily $item
                  */
-                foreach ($fareFamily as $item){
-
+                foreach ($fareFamily as $item) {
                     $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_FAMILY);
                     $po->optionDetail = new OptionDetail([['FF' => $item->fareFamily]]);
-                    $po->paxSegTstReference =  new PaxSegTstReference($item->paxSegRefs);
-
-
-                    $opt[] =$po;
+                    $po->paxSegTstReference = new PaxSegTstReference($item->paxSegRefs);
+                    
+                    $opt[] = $po;
                 }
 
             } else {
