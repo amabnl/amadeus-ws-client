@@ -437,6 +437,47 @@ Price with given fare-family 'CLASSIC':
     );
 
 
+Price with given fare-family 'FLEX' for segment 1 and 2, and 'ECOFLEX' for segment 3 and 4:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'fareFamily' => [
+                new FareFamily([
+                    'fareFamily' => 'FLEX',
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 1
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 2
+                        ])
+                    ]
+                ]),
+                new FareFamily([
+                    'fareFamily' => 'ECOFLEX',
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 3
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 4
+                        ])
+                    ]
+                ])
+                ]
+        ]);
+    );
+
+
 Zap-Off
 =======
 

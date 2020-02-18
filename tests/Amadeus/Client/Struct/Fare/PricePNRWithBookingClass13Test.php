@@ -25,6 +25,7 @@ namespace Test\Amadeus\Client\Struct\Fare;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareFamily;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
@@ -603,6 +604,55 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
     {
         $opt = new FarePricePnrWithBookingClassOptions([
             'fareFamily' => 'FLEX'
+        ]);
+
+        $msg = new PricePNRWithBookingClass13($opt);
+
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_FARE_FAMILY, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertCount(1, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails);
+        $this->assertEquals('FF', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals('FLEX', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeDescription);
+    }
+
+    /**
+     * Test FarePricePnrWithBookingClassOptions with *fareFamily* specified per segments,
+     * the value *FLEX* should be transferred to the attributeDescription value for segments 1 and 2,
+     * the value *ECO* should be transferred to the attributeDescription value for segments 3 and 4.
+     *
+     * @throws \Amadeus\Client\RequestCreator\MessageVersionUnsupportedException
+     */
+    public function testPricePnrCallWithMultipleFareFamily()
+    {
+        $opt = new FarePricePnrWithBookingClassOptions([
+            'fareFamily' => [
+                new FareFamily([
+                    'fareFamily' => 'FLEX',
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 1
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 2
+                        ])
+                    ]
+                ]),
+                new FareFamily([
+                    'fareFamily' => 'ECOFLEX',
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 3
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 4
+                        ])
+                    ]
+                ])
+                ]
         ]);
 
         $msg = new PricePNRWithBookingClass13($opt);
