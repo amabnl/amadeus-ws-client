@@ -423,8 +423,9 @@ This option is used to specify the form of payment information to use.
 
 Fare-family
 ===========
+This option is used to price with given fare-family(ies)
 
-Price with given fare-family 'CLASSIC':
+**Example:** Price with given fare-family 'CLASSIC':
 
 .. code-block:: php
 
@@ -437,7 +438,7 @@ Price with given fare-family 'CLASSIC':
     );
 
 
-Price with given fare-family 'FLEX' for segment 1 and 2, and 'ECOFLEX' for segment 3 and 4:
+**Example:** Price with given fare-family 'FLEX' for segment 1 and 2, and 'ECOFLEX' for segment 3 and 4:
 
 .. code-block:: php
 
