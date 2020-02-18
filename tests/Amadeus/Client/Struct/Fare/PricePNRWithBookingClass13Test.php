@@ -657,11 +657,14 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
 
         $msg = new PricePNRWithBookingClass13($opt);
 
-        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertCount(2, $msg->pricingOptionGroup);
         $this->assertEquals(PricingOptionKey::OPTION_FARE_FAMILY, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
         $this->assertCount(1, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails);
         $this->assertEquals('FF', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
         $this->assertEquals('FLEX', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeDescription);
+        $this->assertCount(1, $msg->pricingOptionGroup[1]->optionDetail->criteriaDetails);
+        $this->assertEquals('FF', $msg->pricingOptionGroup[1]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals('ECOFLEX', $msg->pricingOptionGroup[1]->optionDetail->criteriaDetails[0]->attributeDescription);
     }
 
     public function testCanDoPricePnrCallWithZapOff()
