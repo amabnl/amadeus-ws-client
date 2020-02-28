@@ -940,6 +940,24 @@ An example of pricing, with options listed below:
 
 `More examples of Pricing messages <samples/pricepnr.rst>`_
 
+---------------------------
+Fare_PriceUpsellWithoutPNR
+---------------------------
+
+**Fare_PriceUpsellWithoutPNR allows an user to get a list of upsell proposition without having to create corresponding Passenger Name Record (PNR).**
+
+This request similar to Fare_PricePNRWithBookingClass:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'validatingCarrier' => 'SN'
+        ])
+    );
+
 ---------------------------------
 Fare_InformativePricingWithoutPNR
 ---------------------------------
@@ -1198,6 +1216,28 @@ Get fare rules providing corporate number and departure date:
             'origin' => 'DFW',
             'destination' => 'MKC',
             'travelDate' => \DateTime::createFromFormat('dmY', '25032011')
+        ])
+    );
+
+-----------------
+Fare_GetFareFamilyDescription
+-----------------
+
+Basic request to get Fare Families in stateful mode (after pricing):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareGetFareFamilyDescriptionOptions;
+
+    $fareFamiliesResponse = $client->fareGetFareFamilyDescription(
+        new FareGetFareFamilyDescriptionOptions([
+            'referenceGroups' => [
+                new ReferenceGroup([
+                    new Reference('REC', 1),
+                    new Reference('FC', 1),
+                    new Reference('FC', 2),
+                ])
+            ]
         ])
     );
 
