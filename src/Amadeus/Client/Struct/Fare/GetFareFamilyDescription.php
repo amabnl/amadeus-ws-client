@@ -27,7 +27,7 @@ class GetFareFamilyDescription extends BaseWsMessage
     public function __construct($options)
     {
         foreach ($options->referenceGroups as $referenceGroup) {
-            $references = array_map(function(Reference $reference) {
+            $references = array_map(function (Reference $reference) {
                 return new ReferenceDetails(
                     $reference->getType(),
                     $reference->getValue()
