@@ -37,5 +37,4 @@ class GetFareFamilyDescription extends BaseWsMessage
             $this->referenceInformation[] = new ReferenceInformation($references);
         }
     }
-
 }
