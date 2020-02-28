@@ -34,6 +34,7 @@ class PayGenerateVirtualCardOptions extends Base
     const SUBTYPE_DEBIT = 'DEBIT';
     const SUBTYPE_CREDIT = 'CREDIT';
     const SUBTYPE_PREPAID = 'PREPAID';
+    const SUBTYPE_FALLBACK = 'FALLBACK';
 
     const VENDOR_VISA = 'VI';
     const VENDOR_MASTERCARD = 'CA';
