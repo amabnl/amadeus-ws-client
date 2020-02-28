@@ -2,11 +2,9 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
-use Amadeus\Client\RequestOptions\DocRefund\Reference as OtherReference;
 use Amadeus\Client\RequestOptions\FareGetFareFamilyDescriptionOptions;
 use Amadeus\Client\RequestOptions\Reference;
 use Amadeus\Client\Struct\BaseWsMessage;
-use Amadeus\Client\Struct\DocRefund\UpdateRefund\ReferenceInformation as OtherReferenceInformation;
 use Amadeus\Client\Struct\Fare\GetFareFamilyDescription\ReferenceDetails;
 use Amadeus\Client\Struct\Fare\GetFareFamilyDescription\ReferenceInformation;
 
@@ -38,19 +36,6 @@ class GetFareFamilyDescription extends BaseWsMessage
 
             $this->referenceInformation[] = new ReferenceInformation($references);
         }
-
-//        $this->referenceInformation[] = new OtherReferenceInformation(
-//            [
-//                new OtherReference([
-//                    'type' => 'REC',
-//                    'value' => 1
-//                ]),
-//                new OtherReference([
-//                    'type' => 'FC',
-//                    'value' => 2
-//                ])
-//            ]
-//        );
     }
 
 }

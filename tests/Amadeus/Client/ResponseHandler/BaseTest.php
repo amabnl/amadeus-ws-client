@@ -1021,6 +1021,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('UNABLE TO FARE - NO INVENTORY FOR FLIGHT REQUESTED -TK 57', $result->messages[0]->text);
     }
 
+    public function testCanHandleFareGetFamilyDescriptionError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareGetFareFamilyDescriptionErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_GetFareFamilyDescription');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertCount(1, $result->messages);
+        $this->assertEquals('33116', $result->messages[0]->code);
+        $this->assertEquals('CHECK FARE COMPONENT NUMBER', $result->messages[0]->text);
+    }
+
     public function testCanHandleFareInformativeBestPricingWithoutPNRError()
     {
         $respHandler = new ResponseHandler\Base();
