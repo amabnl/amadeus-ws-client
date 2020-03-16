@@ -74,12 +74,12 @@ class IssueCombinedTest extends BaseTestCase
         );
 
         $this->assertEquals(1, $msg->selection->referenceDetails[0]->value);
-        $this->assertEquals("TS", $msg->selection->referenceDetails[0]->type);
+        $this->assertEquals('TS', $msg->selection->referenceDetails[0]->type);
         $this->assertEquals(2, $msg->selection->referenceDetails[1]->value);
-        $this->assertEquals("TS", $msg->selection->referenceDetails[1]->type);
+        $this->assertEquals('TS', $msg->selection->referenceDetails[1]->type);
         $this->assertEquals(5, $msg->selection->referenceDetails[2]->value);
-        $this->assertEquals("TMT", $msg->selection->referenceDetails[2]->type);
+        $this->assertEquals('TMT', $msg->selection->referenceDetails[2]->type);
         $this->assertEquals(8, $msg->selection->referenceDetails[3]->value);
-        $this->assertEquals("TMT", $msg->selection->referenceDetails[3]->type);
+        $this->assertEquals('TMT', $msg->selection->referenceDetails[3]->type);
     }
 }
