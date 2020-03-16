@@ -117,4 +117,13 @@ class PriceUpsellWithoutPNRTest extends BaseTestCase
             $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey
         );
     }
+
+    public function testCanMakeMessageFromNull()
+    {
+        $message = new PriceUpsellWithoutPNR(null);
+
+        self::assertNull($message->passengersGroup);
+        self::assertNull($message->pricingOptionGroup);
+        self::assertNull($message->segmentGroup);
+    }
 }
