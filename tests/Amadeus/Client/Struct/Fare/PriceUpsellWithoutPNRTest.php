@@ -122,8 +122,8 @@ class PriceUpsellWithoutPNRTest extends BaseTestCase
     {
         $message = new PriceUpsellWithoutPNR(null);
 
-        self::assertNull($message->passengersGroup);
-        self::assertNull($message->pricingOptionGroup);
-        self::assertNull($message->segmentGroup);
+        self::assertEmpty($message->passengersGroup);
+        self::assertEmpty($message->pricingOptionGroup);
+        self::assertEmpty($message->segmentGroup);
     }
 }
