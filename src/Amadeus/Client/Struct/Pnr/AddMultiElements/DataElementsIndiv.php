@@ -189,6 +189,8 @@ class DataElementsIndiv extends WsMessageUtility
                             $element->creditCardHolder
                         );
                     }
+                } elseif ($element->type === Fop::IDENT_CASH && $element->freeText != "") {
+                    $this->formOfPayment->fop->freetext = $element->freeText;
                 } elseif ($element->type === Fop::IDENT_MISC && $element->freeText != "NONREF") {
                     $this->formOfPayment->fop->freetext = $element->freeText;
                 } elseif ($element->type === Fop::IDENT_MISC && $element->freeText === "NONREF") {
