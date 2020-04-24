@@ -281,6 +281,13 @@ class DataElementsIndiv extends WsMessageUtility
                     $element->ticketNumber
                 );
                 break;
+            case 'ScheduleChange':
+                /** @var Element\ScheduleChange $element */
+                $this->freetextData = new FreetextData(
+                    'SCHGTOOL',
+                    FreetextDetail::TYPE_RECEIVE_FROM
+                );
+                break;
             default:
                 throw new InvalidArgumentException('Element type '.$elementType.' is not supported');
         }
@@ -311,7 +318,8 @@ class DataElementsIndiv extends WsMessageUtility
             'ManualCommission' => ElementManagementData::SEGNAME_COMMISSION,
             'SeatRequest' => ElementManagementData::SEGNAME_SEAT_REQUEST,
             'TourCode' => ElementManagementData::SEGNAME_TOUR_CODE,
-            'ManualIssuedTicket' => ElementManagementData::SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER
+            'ManualIssuedTicket' => ElementManagementData::SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER,
+            'ScheduleChange' => ElementManagementData::SEGNAME_RECEIVE_FROM,
         ];
 
         if (array_key_exists($elementType, $sourceArray)) {
