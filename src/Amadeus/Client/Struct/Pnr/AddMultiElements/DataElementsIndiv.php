@@ -179,7 +179,7 @@ class DataElementsIndiv extends WsMessageUtility
                     $this->formOfPayment->fop->creditCardCode = $element->creditCardType;
                     $this->formOfPayment->fop->accountNumber = $element->creditCardNumber;
                     $this->formOfPayment->fop->expiryDate = $element->creditCardExpiry;
-                    if($element->freeText && $element->freeText != ""){
+                    if ($element->freeText && $element->freeText != "") {
                         $this->formOfPayment->fop->freetext = $element->freeText;
                     }
                     if ($this->checkAnyNotEmpty($element->creditCardCvcCode, $element->creditCardHolder)) {
