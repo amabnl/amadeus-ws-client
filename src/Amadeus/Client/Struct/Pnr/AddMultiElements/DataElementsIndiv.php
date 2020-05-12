@@ -288,6 +288,10 @@ class DataElementsIndiv extends WsMessageUtility
                     FreetextDetail::TYPE_RECEIVE_FROM
                 );
                 break;
+            case 'FareMiscellaneousInformation':
+                /** @var Element\FareMiscellaneousInformation $element */
+                $this->fareElement = new FareElement($element->indicator,$element->passengerType,$element->freeText,$element->officeId);
+                break;
             default:
                 throw new InvalidArgumentException('Element type '.$elementType.' is not supported');
         }
@@ -320,6 +324,7 @@ class DataElementsIndiv extends WsMessageUtility
             'TourCode' => ElementManagementData::SEGNAME_TOUR_CODE,
             'ManualIssuedTicket' => ElementManagementData::SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER,
             'ScheduleChange' => ElementManagementData::SEGNAME_RECEIVE_FROM,
+            'FareMiscellaneousInformation' => null, // Special case - the type is a parameter.
         ];
 
         if (array_key_exists($elementType, $sourceArray)) {
@@ -327,6 +332,11 @@ class DataElementsIndiv extends WsMessageUtility
 
             if ($elementType === 'Address') {
                 /** @var Element\Address $element */
+                $elementName = $element->type;
+            }
+
+            if ($elementType === 'FareMiscellaneousInformation') {
+                /** @var Element\FareMiscellaneousInformation $element */
                 $elementName = $element->type;
             }
         }
