@@ -49,13 +49,13 @@ class FareElement
     /**
      * @var string
      */
-    public $freeTextLong;
+    public $freetextLong;
 
     public function __construct($generalIndicator, $passengerType, $freeTextLong, $officeId = null)
     {
         $this->generalIndicator = $generalIndicator;
         $this->passengerType = $passengerType;
-        $this->freeTextLong = $freeTextLong;
+        $this->freetextLong = $freeTextLong;
         if ($officeId) {
             $this->officeId = $officeId;
         }
