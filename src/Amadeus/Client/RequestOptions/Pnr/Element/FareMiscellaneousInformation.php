@@ -30,8 +30,6 @@ use Amadeus\Client\RequestOptions\Pnr\Element;
  * @package Amadeus\Client\RequestOptions\Pnr\Element
  * @author Dieter Devlieghere <dermikagh@gmail.com>
  */
-
-
 class FareMiscellaneousInformation extends Element
 {
     const PAXTYPE_INFANT_WITHOUT_SEAT = 766;
@@ -72,4 +70,5 @@ class FareMiscellaneousInformation extends Element
      * @var string
      */
     public $freeText;
+
 }
