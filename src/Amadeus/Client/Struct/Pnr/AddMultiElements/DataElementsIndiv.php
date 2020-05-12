@@ -337,7 +337,21 @@ class DataElementsIndiv extends WsMessageUtility
 
             if ($elementType === 'FareMiscellaneousInformation') {
                 /** @var Element\FareMiscellaneousInformation $element */
-                $elementName = $element->type;
+
+                switch ($element->indicator) {
+                    case Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FS:
+                        $elementName = ElementManagementData::SEGNAME_MISC_TICKET_INFO;
+                        break;
+                    case Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FE:
+                        $elementName = ElementManagementData::SEGNAME_ENDORSEMENT;
+                        break;
+                    case Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FK:
+                        $elementName = ElementManagementData::SEGNAME_AIR_OFFICE_ID;
+                        break;
+                    case Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FZ:
+                        $elementName = ElementManagementData::SEGNAME_MISC_INFO;
+                        break;
+                }
             }
         }
 

@@ -138,6 +138,28 @@ class ElementManagementData
      * @var string
      */
     const SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER = "FHE";
+
+    /**
+     * FS - Miscellaneous Ticketing Information element
+     *
+     * @var string
+     */
+    const SEGNAME_MISC_TICKET_INFO = 'FS';
+
+    /**
+     * FE - Endorsements / Restrictions element
+     */
+    const SEGNAME_ENDORSEMENT = 'FE';
+
+    /**
+     * FZ - Miscellaneous Information element
+     */
+    const SEGNAME_MISC_INFO = 'FZ';
+
+    /**
+     * FK - shadow AIR office ID element
+     */
+    const SEGNAME_AIR_OFFICE_ID = 'FK';
     
     /**
      * @var Reference
