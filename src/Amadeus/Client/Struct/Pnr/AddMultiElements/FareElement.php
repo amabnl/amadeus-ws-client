@@ -60,5 +60,4 @@ class FareElement
             $this->officeId = $officeId;
         }
     }
-
 }

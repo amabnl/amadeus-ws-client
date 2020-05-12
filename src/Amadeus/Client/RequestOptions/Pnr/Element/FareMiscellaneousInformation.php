@@ -70,5 +70,4 @@ class FareMiscellaneousInformation extends Element
      * @var string
      */
     public $freeText;
-
 }
