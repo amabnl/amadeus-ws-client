@@ -26,3 +26,7 @@ script:
 
 after_success:
  - travis_retry php vendor/bin/coveralls
+ -
+jobs:
+  allow_failures:
+    - php: '7.4'
