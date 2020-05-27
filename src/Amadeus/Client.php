@@ -1193,6 +1193,25 @@ class Client extends Base
     }
 
     /**
+     * Ticket_ATCShopperMasterPricerCalendar
+     *
+     * @param RequestOptions\TicketAtcShopperMpCalendarOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketAtcShopperMasterPricerCalendar(
+        RequestOptions\TicketAtcShopperMpCalendarOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_ATCShopperMasterPricerCalendar';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Ticket_RepricePNRWithBookingClass
      *
      * @param RequestOptions\TicketRepricePnrWithBookingClassOptions $options
