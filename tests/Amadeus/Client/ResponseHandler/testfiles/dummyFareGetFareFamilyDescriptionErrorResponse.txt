@@ -1,0 +1,19 @@
+<Fare_GetFareFamilyDescriptionReply xmlns="http://xml.amadeus.com/TFQFRR_18_1_1A">
+  <errorGroup>
+    <errorOrWarningCodeDetails>
+      <errorDetails>
+        <errorCode>33116</errorCode>
+        <errorCategory>EC</errorCategory>
+        <errorCodeOwner>1A</errorCodeOwner>
+      </errorDetails>
+    </errorOrWarningCodeDetails>
+    <errorWarningDescription>
+      <freeTextDetails>
+        <textSubjectQualifier>3</textSubjectQualifier>
+        <source>S</source>
+        <encoding>ZZZ</encoding>
+      </freeTextDetails>
+      <freeText>CHECK FARE COMPONENT NUMBER</freeText>
+    </errorWarningDescription>
+  </errorGroup>
+</Fare_GetFareFamilyDescriptionReply>
