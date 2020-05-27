@@ -1,3 +1,9 @@
+# Release 1.10.0 (27 May 2020)
+* Bugfix for a SOAP-ERROR in ``DocIssuance_IssueMiscellaneousDocuments`` (https://github.com/amabnl/amadeus-ws-client/pull/359) - Artem Zakharchenko
+* Add Anchored Segment in ``Fare_MasterPricerTravelBoardSearch`` and implemented ``Service_BookPriceService`` (https://github.com/amabnl/amadeus-ws-client/pull/324) - Michal Hernas
+* Implemented ``Fare_PriceUpsellWithoutPNR`` and ``Fare_GetFareFamilyDescription`` (https://github.com/amabnl/amadeus-ws-client/pull/388) - Valeriy
+* Implemented ``Ticket_ATCShopperMasterPricerCalendar`` (https://github.com/amabnl/amadeus-ws-client/pull/398) - Artem Zakharchenko
+
 # Release 1.9.0 (23 Jun 2019)
 * Added support for multiple seat request in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/pull/335) - Artem Zakharchenko
 * Added `stockProviderDetails` to ``DocRefund_InitRefund `` (https://github.com/amabnl/amadeus-ws-client/pull/341) - Ruslan Poltayev
