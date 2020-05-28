@@ -1950,7 +1950,7 @@ class AddMultiElementsTest extends BaseTestCase
 
         $requestStruct = new AddMultiElements($createPnrOptions);
 
-        $this->assertEquals(1, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
         $this->assertEquals('OT', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->qualifier);
         $this->assertEquals('S', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->generalIndicator);
         $this->assertEquals('PAX', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->passengerType);
