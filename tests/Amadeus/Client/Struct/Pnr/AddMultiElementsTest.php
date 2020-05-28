@@ -2086,7 +2086,7 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(1, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->fopSequenceNumber);
         $this->assertEquals(123, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->newFopsDetails->cvData);
         $this->assertEquals('BERNDMUELLER', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->newFopsDetails->chdData);
-        $this->assertEquals('TYPE CASH FREE TEXT', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->freetext);
+        $this->assertEquals('CREDIT CARD FREE TEXT', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->freetext);
     }
 }
 
