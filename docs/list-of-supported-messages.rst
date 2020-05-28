@@ -69,6 +69,7 @@ This is the list of messages that are at least partially supported at this time:
 - Service_IntegratedPricing
 - Service_IntegratedCatalogue
 - Service_StandaloneCatalogue
+- Service_BookPriceService
 - Offer_CreateOffer
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
