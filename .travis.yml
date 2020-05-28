@@ -25,7 +25,7 @@ script:
 - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_success:
- - travis_retry php vendor/bin/php-coveralls -v
+ - travis_retry php vendor/bin/coveralls -v
 jobs:
   allow_failures:
     - php: '7.4'
