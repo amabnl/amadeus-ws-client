@@ -1944,6 +1944,7 @@ class AddMultiElementsTest extends BaseTestCase
         $createPnrOptions->receivedFrom = "unittest";
         $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
         $createPnrOptions->elements[] = new Element\FareMiscellaneousInformation([
+            'passengerType' => Element\FareMiscellaneousInformation::PAXTYPE_PASSENGER,
             'indicator' => Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FS,
             'freeText'  => 'MISC TICKETING INFORMATION'
         ]);
