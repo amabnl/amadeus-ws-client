@@ -1925,5 +1925,36 @@ class AddMultiElementsTest extends BaseTestCase
 
         $this->assertCount(2, $msg->dataElementsMaster->dataElementsIndiv);
     }
+
+    public function testFixScheduleChange(){
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_NO_PROCESSING;
+        $createPnrOptions->elements[] = new Element\ScheduleChange([
+            'receivedFrom' => 'SCHGTOOL'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+    }
+
+    public function testFareMiscellaneousInformation(){
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->elements[] = new Element\FareMiscellaneousInformation([
+            'indicator' => Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FS,
+            'freeText'  => 'MISC TICKETING INFORMATION'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(1, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals('OT', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->qualifier);
+        $this->assertEquals('S', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->generalIndicator);
+        $this->assertEquals('PAX', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->passengerType);
+        $this->assertEquals('MISC TICKETING INFORMATION', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->freetextLong);
+    }
 }
 
