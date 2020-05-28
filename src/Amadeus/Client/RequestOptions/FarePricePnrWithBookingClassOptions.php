@@ -25,10 +25,12 @@ namespace Amadeus\Client\RequestOptions;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareFamily;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\ZapOff;
 
 /**
  * Fare_PricePnrWithBookingClass Request Options
@@ -274,7 +276,14 @@ class FarePricePnrWithBookingClassOptions extends Base
     /**
      * Fare family to be used in pricing (e.g. "CLASSIC").
      *
-     * @var string
+     * @var string|FareFamily[]
      */
     public $fareFamily;
+
+    /**
+     * Zap-Off to be applied
+     *
+     * @var ZapOff[]
+     */
+    public $zapOff;
 }

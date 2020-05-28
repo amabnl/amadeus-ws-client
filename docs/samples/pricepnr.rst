@@ -393,6 +393,7 @@ This option is used to price an itinerary applying an award program for a given 
     );
 
 
+
 Form of Payment override
 ========================
 
@@ -422,8 +423,9 @@ This option is used to specify the form of payment information to use.
 
 Fare-family
 ===========
+This option is used to price with given fare-family(ies)
 
-Price with given fare-family 'CLASSIC':
+**Example:** Price with given fare-family 'CLASSIC':
 
 .. code-block:: php
 
@@ -434,3 +436,98 @@ Price with given fare-family 'CLASSIC':
             'fareFamily' => 'CLASSIC'
         ])
     );
+
+
+**Example:** Price with given fare-family 'FLEX' for segment 1 and 2, and 'ECOFLEX' for segment 3 and 4:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'fareFamily' => [
+                new FareFamily([
+                    'fareFamily' => 'FLEX',
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 1
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 2
+                        ])
+                    ]
+                ]),
+                new FareFamily([
+                    'fareFamily' => 'ECOFLEX',
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 3
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 4
+                        ])
+                    ]
+                ])
+                ]
+        ]);
+    );
+
+
+Zap-Off
+=======
+
+Price a PNR with Zap-Off:
+
+**Example :** apply a Zap-Off with amount 120 on the total fare and apply ticket designator "CH50" for segments
+1 and 2 and apply a Zap-Off with amount 80 on the total fare and apply ticket designator "CH70" for segments
+3 and 4.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\ZapOff;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+         new FarePricePnrWithBookingClassOptions([
+            'zapOff' => [
+                new ZapOff([
+                    'applyTo' => ZapOff::FUNCTION_TOTAL_FARE,
+                    'rate' => 'CH50',
+                    'amount' => 120,
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 1
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 2
+                        ])
+                    ]
+                ]),
+                new ZapOff([
+                    'applyTo' => ZapOff::FUNCTION_TOTAL_FARE,
+                    'rate' => 'CH70',
+                    'amount' => 80,
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 3
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 4
+                        ])
+                    ]
+                ])
+            ]
+        ])
+    );
+
