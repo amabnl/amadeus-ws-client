@@ -1957,5 +1957,37 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals('PAX', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->passengerType);
         $this->assertEquals('MISC TICKETING INFORMATION', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->freetextLong);
     }
+
+    public function testMakePnrWithFormOfPaymentCashAndFreeTextNotEmpty()
+    {
+
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'company' => '1A'
+        ]);
+        $createPnrOptions->elements[] = new FormOfPayment([
+            'type' => FormOfPayment::TYPE_CASH,
+            'freeText' => 'TYPE CASH FREE TEXT'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+
+        $this->assertEquals('FP', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals(AddMultiElements\Fop::IDENT_CASH, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->identification);
+        $this->assertEquals('TYPE CASH FREE TEXT', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->freetext);
+    }
 }
 
