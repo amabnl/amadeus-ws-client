@@ -1,3 +1,6 @@
+## Release 1.11.0 (Unreleased)
+
+
 # Release 1.10.0 (27 May 2020)
 * Bugfix for a SOAP-ERROR in ``DocIssuance_IssueMiscellaneousDocuments`` (https://github.com/amabnl/amadeus-ws-client/pull/359) - Artem Zakharchenko
 * Add Anchored Segment in ``Fare_MasterPricerTravelBoardSearch`` and implemented ``Service_BookPriceService`` (https://github.com/amabnl/amadeus-ws-client/pull/324) - Michal Hernas
