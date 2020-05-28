@@ -65,10 +65,9 @@ class IssueTicketTest extends BaseTestCase
         $message = new IssueTicket($opt);
 
         $this->assertCount(0, $message->optionGroup);
-        $this->assertCount(1, $message->selection);
-        $this->assertCount(1, $message->selection[0]->referenceDetails);
-        $this->assertEquals(1, $message->selection[0]->referenceDetails[0]->value);
-        $this->assertEquals(ReferenceDetails::TYPE_SEGMENT_TATTOO, $message->selection[0]->referenceDetails[0]->type);
+        $this->assertCount(1, $message->selection->referenceDetails);
+        $this->assertEquals(1, $message->selection->referenceDetails[0]->value);
+        $this->assertEquals(ReferenceDetails::TYPE_SEGMENT_TATTOO, $message->selection->referenceDetails[0]->type);
         $this->assertCount(2, $message->paxSelection);
         $this->assertEquals(2, $message->paxSelection[0]->passengerReference->value);
         $this->assertEquals(PassengerReference::TYPE_PAX_TATTOO, $message->paxSelection[1]->passengerReference->type);
@@ -85,10 +84,9 @@ class IssueTicketTest extends BaseTestCase
         $message = new IssueTicket($opt);
 
         $this->assertCount(0, $message->optionGroup);
-        $this->assertCount(1, $message->selection);
-        $this->assertCount(1, $message->selection[0]->referenceDetails);
-        $this->assertEquals(1, $message->selection[0]->referenceDetails[0]->value);
-        $this->assertEquals(ReferenceDetails::TYPE_TST, $message->selection[0]->referenceDetails[0]->type);
+        $this->assertCount(1, $message->selection->referenceDetails);
+        $this->assertEquals(1, $message->selection->referenceDetails[0]->value);
+        $this->assertEquals(ReferenceDetails::TYPE_TST, $message->selection->referenceDetails[0]->type);
     }
 
     public function testCanMakeIssueTicketRequestWithAlternateDateVal()
@@ -203,16 +201,15 @@ class IssueTicketTest extends BaseTestCase
             $message->optionGroup[0]->switches->statusDetails->indicator
         );
 
-        $this->assertCount(1, $message->selection);
-        $this->assertCount(3, $message->selection[0]->referenceDetails);
+        $this->assertCount(3, $message->selection->referenceDetails);
 
-        $this->assertEquals(1, $message->selection[0]->referenceDetails[0]->value);
-        $this->assertEquals(ReferenceDetails::TYPE_SEGMENT_TATTOO, $message->selection[0]->referenceDetails[0]->type);
+        $this->assertEquals(1, $message->selection->referenceDetails[0]->value);
+        $this->assertEquals(ReferenceDetails::TYPE_SEGMENT_TATTOO, $message->selection->referenceDetails[0]->type);
 
-        $this->assertEquals(14, $message->selection[0]->referenceDetails[1]->value);
-        $this->assertEquals(ReferenceDetails::TYPE_LINE_NUMBER, $message->selection[0]->referenceDetails[1]->type);
+        $this->assertEquals(14, $message->selection->referenceDetails[1]->value);
+        $this->assertEquals(ReferenceDetails::TYPE_LINE_NUMBER, $message->selection->referenceDetails[1]->type);
 
-        $this->assertEquals(3, $message->selection[0]->referenceDetails[2]->value);
-        $this->assertEquals(ReferenceDetails::TYPE_COUPON_NUMBER, $message->selection[0]->referenceDetails[2]->type);
+        $this->assertEquals(3, $message->selection->referenceDetails[2]->value);
+        $this->assertEquals(ReferenceDetails::TYPE_COUPON_NUMBER, $message->selection->referenceDetails[2]->type);
     }
 }

@@ -10,9 +10,10 @@ php:
   - '7.1'
   - '7.2'
   - '7.3'
+  - '7.4'
 
 install:
- - composer require satooshi/php-coveralls:~1.0@stable
+ - composer require --dev php-coveralls/php-coveralls '^1.1.0'
  - composer update
  - curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar
 
@@ -24,4 +25,7 @@ script:
 - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
 
 after_success:
- - travis_retry php vendor/bin/coveralls
+ - travis_retry php vendor/bin/coveralls -v
+jobs:
+  allow_failures:
+    - php: '7.4'

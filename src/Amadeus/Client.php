@@ -58,7 +58,7 @@ class Client extends Base
      *
      * @var string
      */
-    const VERSION = "1.9.0";
+    const VERSION = "1.11.0-dev";
 
     /**
      * An identifier string for the library (to be used in Received From entries)
@@ -705,6 +705,44 @@ class Client extends Base
     }
 
     /**
+     * Fare_PriceUpsellWithoutPNR
+     *
+     * @param RequestOptions\FarePriceUpsellWithoutPnrOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function farePriceUpsellWithoutPnr(
+        RequestOptions\FarePriceUpsellWithoutPnrOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_PriceUpsellWithoutPNR';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Fare_GetFareFamilyDescription
+     *
+     * @param RequestOptions\FareGetFareFamilyDescriptionOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function fareGetFareFamilyDescription(
+        RequestOptions\FareGetFareFamilyDescriptionOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_GetFareFamilyDescription';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Fare_InformativeBestPricingWithoutPNR
      *
      * @param RequestOptions\FareInformativeBestPricingWithoutPnrOptions $options
@@ -1193,6 +1231,25 @@ class Client extends Base
     }
 
     /**
+     * Ticket_ATCShopperMasterPricerCalendar
+     *
+     * @param RequestOptions\TicketAtcShopperMpCalendarOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketAtcShopperMasterPricerCalendar(
+        RequestOptions\TicketAtcShopperMpCalendarOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_ATCShopperMasterPricerCalendar';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Ticket_RepricePNRWithBookingClass
      *
      * @param RequestOptions\TicketRepricePnrWithBookingClassOptions $options
@@ -1655,7 +1712,7 @@ class Client extends Base
     public function serviceStandaloneCatalogue(RequestOptions\ServiceStandaloneCatalogueOptions $options, $messageOptions = [])
     {
         $msgName = 'Service_StandaloneCatalogue';
-        
+
         return $this->callMessage($msgName, $options, $messageOptions);
     }
 

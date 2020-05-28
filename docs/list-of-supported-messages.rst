@@ -25,11 +25,13 @@ This is the list of messages that are at least partially supported at this time:
 - Fare_PricePNRWithBookingClass
 - Fare_PricePNRWithLowerFares
 - Fare_PricePNRWithLowestFare
+- Fare_PriceUpsellWithoutPNR
 - Fare_InformativePricingWithoutPNR
 - Fare_InformativeBestPricingWithoutPNR
 - Fare_ConvertCurrency
 - Fare_CheckRules
 - Fare_GetFareRules
+- Fare_GetFareFamilyDescription
 - Air_MultiAvailability
 - Air_SellFromRecommendation
 - Air_FlightInfo
@@ -92,9 +94,7 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Fare_DisplayFaresForCityPair
 - Fare_DisplayBookingCodeInformation
 - Fare_CalculateMileage
-- Fare_PriceUpsellWithoutPNR
 - Fare_PriceUpsellPNR
-- Fare_GetFareFamilyDescription
 - Fare_RebookAndCreateTST
 - Air_TLAGetAvailability
 - PNR_CreateAuxiliarySegment

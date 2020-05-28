@@ -957,6 +957,24 @@ An example of pricing, with options listed below:
 
 `More examples of Pricing messages <samples/pricepnr.rst>`_
 
+---------------------------
+Fare_PriceUpsellWithoutPNR
+---------------------------
+
+**Fare_PriceUpsellWithoutPNR allows an user to get a list of upsell proposition without having to create corresponding Passenger Name Record (PNR).**
+
+This request similar to Fare_PricePNRWithBookingClass:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'validatingCarrier' => 'SN'
+        ])
+    );
+
 ---------------------------------
 Fare_InformativePricingWithoutPNR
 ---------------------------------
@@ -1215,6 +1233,28 @@ Get fare rules providing corporate number and departure date:
             'origin' => 'DFW',
             'destination' => 'MKC',
             'travelDate' => \DateTime::createFromFormat('dmY', '25032011')
+        ])
+    );
+
+-----------------
+Fare_GetFareFamilyDescription
+-----------------
+
+Basic request to get Fare Families in stateful mode (after pricing):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareGetFareFamilyDescriptionOptions;
+
+    $fareFamiliesResponse = $client->fareGetFareFamilyDescription(
+        new FareGetFareFamilyDescriptionOptions([
+            'referenceGroups' => [
+                new ReferenceGroup([
+                    new Reference('REC', 1),
+                    new Reference('FC', 1),
+                    new Reference('FC', 2),
+                ])
+            ]
         ])
     );
 
@@ -2194,6 +2234,84 @@ Basic Search With Mandatory Elements:
                     'arrivalLocation' => new MPLocation(['city' => 'MAD']),
                     'date' => new MPDate([
                         'date' => new \DateTime('2013-12-12T00:00:00+0000', new \DateTimeZone('UTC'))
+                    ])
+                ])
+            ],
+            'ticketNumbers' => [
+                '0572187777498',
+                '0572187777499'
+            ],
+            'requestedSegments' => [
+                new ReqSegOptions([
+                    'requestCode' => ReqSegOptions::REQUEST_CODE_KEEP_FLIGHTS_AND_FARES,
+                    'connectionLocations' => [
+                        'MAD',
+                        'LHR'
+                    ]
+                ]),
+                new ReqSegOptions([
+                    'requestCode' => ReqSegOptions::REQUEST_CODE_CHANGE_REQUESTED_SEGMENT,
+                    'connectionLocations' => [
+                        'LHR',
+                        'MAD'
+                    ]
+                ])
+            ]
+        ])
+    );
+
+----------------------------------------------
+Ticket_ATCShopperMasterPricerCalendar
+----------------------------------------------
+
+Basic Search with 3 plus/minus days range:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketAtcShopperMpTbSearchOptions;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Ticket\ReqSegOptions;
+
+    $response = $client->ticketAtcShopperMasterPricerTravelBoardSearch(
+        new TicketAtcShopperMpTbSearchOptions([
+            'nrOfRequestedPassengers' => 2,
+            'nrOfRequestedResults' => 2,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ]),
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_CHILD,
+                    'count' => 1
+                ])
+            ],
+            'flightOptions' => [
+                TicketAtcShopperMpTbSearchOptions::FLIGHTOPT_PUBLISHED,
+                TicketAtcShopperMpTbSearchOptions::FLIGHTOPT_UNIFARES
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'segmentReference' => 1,
+                    'departureLocation' => new MPLocation(['city' => 'MAD']),
+                    'arrivalLocation' => new MPLocation(['city' => 'LHR']),
+                    'date' => new MPDate([
+                        'date' => new \DateTime('2013-08-12T00:00:00+0000', new \DateTimeZone('UTC')),
+                        'rangeMode' => MPDate::RANGEMODE_MINUS_PLUS,
+                        'range' => 3,
+                    ])
+                ]),
+                new MPItinerary([
+                    'segmentReference' => 2,
+                    'departureLocation' => new MPLocation(['city' => 'LHR']),
+                    'arrivalLocation' => new MPLocation(['city' => 'MAD']),
+                    'date' => new MPDate([
+                        'date' => new \DateTime('2013-12-12T00:00:00+0000', new \DateTimeZone('UTC')),
+                        'rangeMode' => MPDate::RANGEMODE_MINUS_PLUS,
+                        'range' => 3,
                     ])
                 ])
             ],
