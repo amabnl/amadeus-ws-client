@@ -1,3 +1,8 @@
+* Added support to add accountNumber in ``Queue_List``
+* Added support to add freeText for payment type Cash and CC in ``Pnr_AddMultiElements``
+* Added support for "ZapOff" in ``Fare_PricePnrWithBookingClass``
+* Added support for "Fare Misc TKT Information", "Fare Endorsement", "Fare Endorsement" , "Fare Misc Information" in ``Pnr_AddMultiElements``
+
 # Release 1.9.0 (23 Jun 2019)
 * Added support for multiple seat request in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/pull/335) - Artem Zakharchenko
 * Added `stockProviderDetails` to ``DocRefund_InitRefund `` (https://github.com/amabnl/amadeus-ws-client/pull/341) - Ruslan Poltayev
