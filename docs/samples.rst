@@ -2580,6 +2580,22 @@ Initiate Automated Refund:
         ])
     );
 
+---------------------------
+Ticket_UpdateRefund
+---------------------------
+
+Apply waiver code (for now only waiver codes are supported):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketUpdateRefundOptions;
+
+    $response = $client->ticketUpdateRefund(
+        new TicketUpdateRefundOptions([
+            'waiverCode' => 'TESTWAIVER11',
+            'contractBundleId' => 1,
+        ])
+    );
 
 ---------------------------
 Ticket_IgnoreRefund

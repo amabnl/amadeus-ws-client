@@ -57,6 +57,7 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_ProcessEDoc
 - Ticket_ProcessETicket
 - Ticket_InitRefund
+- Ticket_UpdateRefund
 - Ticket_IgnoreRefund
 - Ticket_ProcessRefund
 - DocIssuance_IssueTicket
