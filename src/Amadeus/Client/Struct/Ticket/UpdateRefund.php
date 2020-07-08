@@ -37,7 +37,8 @@ class UpdateRefund extends BaseWsMessage
     /** @var ContractBundle $ContractBundle */
     public $ContractBundle;
 
-    public $Version = "3.000";
+    /** @var string */
+    public $Version;
 
     /**
      * UpdateRefund constructor.
@@ -47,5 +48,6 @@ class UpdateRefund extends BaseWsMessage
     public function __construct($options)
     {
         $this->ContractBundle = new ContractBundle($options->contractBundleId, $options->waiverCode);
+        $this->Version = $options->version;
     }
 }

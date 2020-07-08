@@ -35,4 +35,7 @@ class TicketUpdateRefundOptions extends Base
 
     /** @var string */
     public $waiverCode;
+
+    /** @var string */
+    public $version = '3.000';
 }
