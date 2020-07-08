@@ -1531,6 +1531,25 @@ class Client extends Base
     }
 
     /**
+     * Ticket_UpdateRefund
+     *
+     * @param RequestOptions\TicketUpdateRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketUpdateRefund(
+        RequestOptions\TicketUpdateRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_UpdateRefund';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * FOP_CreateFormOfPayment
      *
      * @param RequestOptions\FopCreateFopOptions $options

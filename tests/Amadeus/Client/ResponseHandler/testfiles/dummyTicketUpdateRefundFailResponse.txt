@@ -1,0 +1,14 @@
+<AMA_TicketUpdateRefundRS xmlns="http://xml.amadeus.com/2010/06/TicketGTP_v3"
+                          xmlns:ama="http://xml.amadeus.com/2010/06/Types_v2"
+                          xmlns:att="http://xml.amadeus.com/2010/06/TicketTypes_v2"
+                          xmlns:iata="http://www.iata.org/IATA/2007/00/IATA2010.1"
+                          xmlns:ota="http://www.opentravel.org/OTA/2003/05/OTA2010B"
+                          xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="3.000">
+    <GeneralReply>
+        <Errors>
+            <ama:Errors>
+                <ama:Error Type="000" Code="11004">NEED REFUND RECORD</ama:Error>
+            </ama:Errors>
+        </Errors>
+    </GeneralReply>
+</AMA_TicketUpdateRefundRS>
