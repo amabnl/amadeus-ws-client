@@ -1,4 +1,4 @@
-## Release 1.11.0 (Unreleased)
+## Release 1.11.0 (9 July 2020)
 https://github.com/amabnl/amadeus-ws-client/pull/344: 
 * Added support to add accountNumber in ``Queue_List``
 * Added support to add freeText for payment type Cash and CC in ``Pnr_AddMultiElements``
