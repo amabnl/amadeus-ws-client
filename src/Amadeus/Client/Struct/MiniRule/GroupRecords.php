@@ -35,9 +35,8 @@ class GroupRecords
      * @var RecordId
      */
     public $recordId;
-
-    public function __construct($recordId)
-    {
-        $this->recordId = $recordId;
-    }
+    /**
+     * @var FilteringSelection
+     */
+    public $filteringSelection;
 }

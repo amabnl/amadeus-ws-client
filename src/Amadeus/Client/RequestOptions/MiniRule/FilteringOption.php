@@ -31,7 +31,7 @@ use Amadeus\Client\LoadParamsFromArray;
  * @package Amadeus\Client\RequestOptions\MiniRule
  * @author Aleksandr Kalugin <xkalugin@gmail.com>
  */
-class FilteringSelection extends LoadParamsFromArray
+class FilteringOption extends LoadParamsFromArray
 {
     const TYPE_PAX = 'P';
 

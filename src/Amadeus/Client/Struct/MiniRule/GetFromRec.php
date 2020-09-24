@@ -47,16 +47,20 @@ class GetFromRec
      */
     public function __construct(MiniRuleGetFromRecOptions $options)
     {
-        $this->groupRecords[] = new GroupRecords(new RecordId($options->pricing->id, $options->pricing->type));
-
         if (isset($options->language)) {
             $this->language = new Language($options->language->qualifier, $options->language->code);
         }
 
-        if (isset($options->filteringSelections)) {
-            foreach ($options->filteringSelections as $filteringSelection) {
-                $this->groupRecords['filteringSelection']['referenceDetails'][] = new ReferenceDetails($filteringSelection->type, $filteringSelection->value);
+        $obj = new GroupRecords();
+        $obj->recordId = new RecordId($options->pricing->id, $options->pricing->type);
+
+        if (isset($options->filteringOptions)) {
+            $obj->filteringSelection = new FilteringSelection();
+            foreach ($options->filteringOptions as $option) {
+                $obj->filteringSelection->referenceDetails[] = new ReferenceDetails($option->type, $option->value);
             }
         }
+
+        $this->groupRecords[] = $obj;
     }
 }

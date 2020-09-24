@@ -20,29 +20,19 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
 
-use Amadeus\Client\RequestOptions\MiniRule\Language;
+namespace Amadeus\Client\Struct\MiniRule;
 
 /**
- * MiniRule_GetFromRec Request Options
+ * MiniRule FilteringSelection
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\Struct\MiniRule
  * @author Aleksandr Kalugin <xkalugin@gmail.com>
  */
-class MiniRuleGetFromRecOptions extends Base
+class FilteringSelection
 {
     /**
-     * @var null|Language
+     * @var array|ReferenceDetails[]
      */
-    public $language = null;
-    /**
-     * @var MiniRule\Pricing
-     */
-    public $pricing = null;
-
-    /**
-     * @var MiniRule\FilteringOption[]
-     */
-    public $filteringOptions = [];
+    public $referenceDetails = [];
 }

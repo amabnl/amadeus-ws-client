@@ -3852,7 +3852,7 @@ Get MiniRules for specific PNR, and specific passenger
                 'qualifier' => Language::LQ_LANGUAGE_NORMALLY_USED,
                 'code' => "UA"
             ]),
-            'filteringSelections' => [
+            'filteringOptions' => [
                 new FilteringSelection([
                     'type' => FilteringSelection::TYPE_PAX,
                     'value' => 1

@@ -22,7 +22,7 @@
 
 namespace Test\Amadeus\Client\Struct\MiniRule;
 
-use Amadeus\Client\RequestOptions\MiniRule\FilteringSelection;
+use Amadeus\Client\RequestOptions\MiniRule\FilteringOption;
 use Amadeus\Client\RequestOptions\MiniRule\Language;
 use Amadeus\Client\RequestOptions\MiniRule\Pricing;
 use Amadeus\Client\RequestOptions\MiniRuleGetFromRecOptions;
@@ -158,9 +158,9 @@ class GetFromRecTest extends BaseTestCase
                 'id' => "RECLOCNUM123",
                 'type' => Pricing::TYPE_RECORD_LOCATOR
             ]),
-            'filteringSelections' => [
-                new FilteringSelection([
-                    'type' => FilteringSelection::TYPE_PAX,
+            'filteringOptions' => [
+                new FilteringOption([
+                    'type' => FilteringOption::TYPE_PAX,
                     'value' => 1
                 ])
             ]
@@ -183,9 +183,9 @@ class GetFromRecTest extends BaseTestCase
                 'id' => "RECLOCNUM123",
                 'type' => Pricing::TYPE_RECORD_LOCATOR
             ]),
-            'filteringSelections' => [
-                new FilteringSelection([
-                    'type' => FilteringSelection::TYPE_SEGMENT,
+            'filteringOptions' => [
+                new FilteringOption([
+                    'type' => FilteringOption::TYPE_SEGMENT,
                     'value' => 2
                 ])
             ]
