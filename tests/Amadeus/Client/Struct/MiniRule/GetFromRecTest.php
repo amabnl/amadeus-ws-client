@@ -42,7 +42,7 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForAllOffers()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricings' => [
+            'pricing' => [
                 new Pricing([
                     'id' => Pricing::ALL_PRICINGS,
                     'type' => Pricing::TYPE_OFFER
@@ -60,7 +60,7 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForSpecificOffer()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricings' => [
+            'pricing' => [
                 new Pricing([
                     'id' => 2,
                     'type' => Pricing::TYPE_OFFER
@@ -78,7 +78,7 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForAllPqrs()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricings' => [
+            'pricing' => [
                 new Pricing([
                     'id' => Pricing::ALL_PRICINGS,
                     'type' => Pricing::TYPE_PROD_QUOTATION
@@ -96,7 +96,7 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForSpecificTst()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricings' => [
+            'pricing' => [
                 new Pricing([
                     'id' => 1,
                     'type' => Pricing::TYPE_TST
@@ -110,14 +110,14 @@ class GetFromRecTest extends BaseTestCase
         $this->assertEquals(RecordId::REFERENCE_TYPE_TST, $message->groupRecords[0]->recordID->referenceType);
         $this->assertEquals(1, $message->groupRecords[0]->recordID->uniqueReference);
     }
-    
+
     public function testCanMakeMiniRulesRequestForAllFRN()
     {
         $opt = new MiniRuleGetFromRecOptions([
             'pricing' => new Pricing([
-                    'id' => Pricing::ALL_PRICINGS,
-                    'type' => Pricing::TYPE_FARE_RECOMMENDATION_NUMBER
-                ])
+                'id' => Pricing::ALL_PRICINGS,
+                'type' => Pricing::TYPE_FARE_RECOMMENDATION_NUMBER
+            ])
         ]);
 
         $message = new GetFromRec($opt);
@@ -131,9 +131,9 @@ class GetFromRecTest extends BaseTestCase
     {
         $opt = new MiniRuleGetFromRecOptions([
             'pricing' => new Pricing([
-                    'id' => Pricing::ALL_PRICINGS,
-                    'type' => Pricing::TYPE_FARE_UPSELL_RECOMMENDATION_NUMBER
-                ])
+                'id' => Pricing::ALL_PRICINGS,
+                'type' => Pricing::TYPE_FARE_UPSELL_RECOMMENDATION_NUMBER
+            ])
         ]);
 
         $message = new GetFromRec($opt);
@@ -147,9 +147,9 @@ class GetFromRecTest extends BaseTestCase
     {
         $opt = new MiniRuleGetFromRecOptions([
             'pricing' => new Pricing([
-                    'id' => "RECLOCNUM123",
-                    'type' => Pricing::TYPE_RECORD_LOCATOR
-                ])
+                'id' => "RECLOCNUM123",
+                'type' => Pricing::TYPE_RECORD_LOCATOR
+            ])
         ]);
 
         $message = new GetFromRec($opt);
@@ -163,9 +163,9 @@ class GetFromRecTest extends BaseTestCase
     {
         $opt = new MiniRuleGetFromRecOptions([
             'pricing' => new Pricing([
-                    'id' => "RECLOCNUM123",
-                    'type' => Pricing::TYPE_RECORD_LOCATOR
-                ]),
+                'id' => "RECLOCNUM123",
+                'type' => Pricing::TYPE_RECORD_LOCATOR
+            ]),
             'filteringSelections' => [
                 new FilteringSelection([
                     'type' => FilteringSelection::TYPE_PAX,
@@ -188,9 +188,9 @@ class GetFromRecTest extends BaseTestCase
     {
         $opt = new MiniRuleGetFromRecOptions([
             'pricing' => new Pricing([
-                    'id' => "RECLOCNUM123",
-                    'type' => Pricing::TYPE_RECORD_LOCATOR
-                ]),
+                'id' => "RECLOCNUM123",
+                'type' => Pricing::TYPE_RECORD_LOCATOR
+            ]),
             'filteringSelections' => [
                 new FilteringSelection([
                     'type' => FilteringSelection::TYPE_SEGMENT,
