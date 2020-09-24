@@ -22,7 +22,6 @@
 
 namespace Amadeus\Client\RequestOptions\MiniRule;
 
-
 use Amadeus\Client\LoadParamsFromArray;
 
 /**
