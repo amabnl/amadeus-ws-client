@@ -42,12 +42,10 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForAllOffers()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => [
-                new Pricing([
-                    'id' => Pricing::ALL_PRICINGS,
-                    'type' => Pricing::TYPE_OFFER
-                ])
-            ]
+            'pricing' => new Pricing([
+                'id' => Pricing::ALL_PRICINGS,
+                'type' => Pricing::TYPE_OFFER
+            ])
         ]);
 
         $message = new GetFromRec($opt);
@@ -60,12 +58,10 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForSpecificOffer()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => [
-                new Pricing([
-                    'id' => 2,
-                    'type' => Pricing::TYPE_OFFER
-                ])
-            ]
+            'pricing' => new Pricing([
+                'id' => 2,
+                'type' => Pricing::TYPE_OFFER
+            ])
         ]);
 
         $message = new GetFromRec($opt);
@@ -78,12 +74,10 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForAllPqrs()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => [
-                new Pricing([
-                    'id' => Pricing::ALL_PRICINGS,
-                    'type' => Pricing::TYPE_PROD_QUOTATION
-                ])
-            ]
+            'pricing' => new Pricing([
+                'id' => Pricing::ALL_PRICINGS,
+                'type' => Pricing::TYPE_PROD_QUOTATION
+            ])
         ]);
 
         $message = new GetFromRec($opt);
@@ -96,12 +90,10 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForSpecificTst()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => [
-                new Pricing([
-                    'id' => 1,
-                    'type' => Pricing::TYPE_TST
-                ])
-            ]
+            'pricing' => new Pricing([
+                'id' => 1,
+                'type' => Pricing::TYPE_TST
+            ])
         ]);
 
         $message = new GetFromRec($opt);
