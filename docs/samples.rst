@@ -3853,8 +3853,8 @@ Get MiniRules for specific PNR, and specific passenger
                 'code' => "UA"
             ]),
             'filteringOptions' => [
-                new FilteringSelection([
-                    'type' => FilteringSelection::TYPE_PAX,
+                new FilteringOption([
+                    'type' => FilteringOption::TYPE_PAX,
                     'value' => 1
                 ])
             ]
