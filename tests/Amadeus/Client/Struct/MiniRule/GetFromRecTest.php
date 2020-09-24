@@ -171,9 +171,9 @@ class GetFromRecTest extends BaseTestCase
         $this->assertCount(1, $message->groupRecords);
         $this->assertEquals(RecordId::REFERENCE_TYPE_RECORD_LOCATOR, $message->groupRecords[0]->recordId->referenceType);
         $this->assertEquals("RECLOCNUM123", $message->groupRecords[0]->recordId->uniqueReference);
-        $this->assertCount(1, $message->groupRecords[0]->filteringSelections->referenceDetails);
-        $this->assertEquals(ReferenceDetails::REFERENCE_TYPE_PAX, $message->groupRecords[0]->filteringSelections->referenceDetails[0]->type);
-        $this->assertEquals(1, $message->groupRecords[0]->filteringSelections->referenceDetails[0]->value);
+        $this->assertCount(1, $message->groupRecords[0]->filteringSelection->referenceDetails);
+        $this->assertEquals(ReferenceDetails::REFERENCE_TYPE_PAX, $message->groupRecords[0]->filteringSelection->referenceDetails[0]->type);
+        $this->assertEquals(1, $message->groupRecords[0]->filteringSelection->referenceDetails[0]->value);
     }
 
     public function testCanMakeMiniRulesRequestForPNRWithSpecificSegment()
@@ -196,9 +196,9 @@ class GetFromRecTest extends BaseTestCase
         $this->assertCount(1, $message->groupRecords);
         $this->assertEquals(RecordId::REFERENCE_TYPE_RECORD_LOCATOR, $message->groupRecords[0]->recordId->referenceType);
         $this->assertEquals("RECLOCNUM123", $message->groupRecords[0]->recordId->uniqueReference);
-        $this->assertCount(1, $message->groupRecords[0]->filteringSelections->referenceDetails);
-        $this->assertEquals(ReferenceDetails::REFERENCE_TYPE_SEGMENT, $message->groupRecords[0]->filteringSelections->referenceDetails[0]->type);
-        $this->assertEquals(2, $message->groupRecords[0]->filteringSelections->referenceDetails[0]->value);
+        $this->assertCount(1, $message->groupRecords[0]->filteringSelection->referenceDetails);
+        $this->assertEquals(ReferenceDetails::REFERENCE_TYPE_SEGMENT, $message->groupRecords[0]->filteringSelection->referenceDetails[0]->type);
+        $this->assertEquals(2, $message->groupRecords[0]->filteringSelection->referenceDetails[0]->value);
     }
 
 
