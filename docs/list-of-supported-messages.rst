@@ -76,6 +76,7 @@ This is the list of messages that are at least partially supported at this time:
 - Offer_ConfirmAirOffer
 - Offer_ConfirmHotelOffer
 - Offer_ConfirmCarOffer
+- MiniRule_GetFromRec
 - MiniRule_GetFromPricingRec
 - MiniRule_GetFromPricing
 - MiniRule_GetFromETicket
