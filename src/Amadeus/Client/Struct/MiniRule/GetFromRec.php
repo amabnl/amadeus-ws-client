@@ -52,7 +52,7 @@ class GetFromRec
         }
 
         $obj = new GroupRecords();
-        $obj->recordId = new RecordId($options->pricing->id, $options->pricing->type);
+        $obj->recordID = new RecordId($options->pricing->id, $options->pricing->type);
 
         if (isset($options->filteringOptions)) {
             $obj->filteringSelection = new FilteringSelection();

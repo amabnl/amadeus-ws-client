@@ -34,7 +34,7 @@ class GroupRecords
     /**
      * @var RecordId
      */
-    public $recordId;
+    public $recordID;
     /**
      * @var FilteringSelection
      */
