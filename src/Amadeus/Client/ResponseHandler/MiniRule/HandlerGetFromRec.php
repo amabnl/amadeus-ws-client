@@ -23,7 +23,6 @@
 
 namespace Amadeus\Client\ResponseHandler\MiniRule;
 
-
 /**
  * HandlerGetFromRec
  *
@@ -32,5 +31,4 @@ namespace Amadeus\Client\ResponseHandler\MiniRule;
  */
 class HandlerGetFromRec extends HandlerGetFromPricingRec
 {
-
 }

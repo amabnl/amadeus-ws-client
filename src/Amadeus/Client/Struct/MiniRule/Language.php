@@ -23,7 +23,6 @@
 
 namespace Amadeus\Client\Struct\MiniRule;
 
-
 /**
  * Class Language
  * @package Amadeus\Client\Struct\MiniRule

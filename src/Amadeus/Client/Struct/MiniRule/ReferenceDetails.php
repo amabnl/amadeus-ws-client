@@ -23,7 +23,6 @@
 
 namespace Amadeus\Client\Struct\MiniRule;
 
-
 /**
  * MiniRule ReferenceDetails
  *
