@@ -37,7 +37,7 @@ class GetFromRec
      */
     public $language = null;
     /**
-     * @var array
+     * @var array|GroupRecords[]
      */
     public $groupRecords = [];
 
@@ -47,12 +47,16 @@ class GetFromRec
      */
     public function __construct(MiniRuleGetFromRecOptions $options)
     {
-        $this->language = new Language($options->language->qualifier, $options->language->code);
+        $this->groupRecords[] = new GroupRecords(new RecordId($options->pricing->id, $options->pricing->type));
 
-        $this->groupRecords['recordID'] = new RecordId($options->pricing->id, $options->pricing->type);
+        if (isset($options->language)) {
+            $this->language = new Language($options->language->qualifier, $options->language->code);
+        }
 
-        foreach ($options->filteringSelections as $filteringSelection) {
-            $this->groupRecords['filteringSelection']['referenceDetails'][] = new ReferenceDetails($filteringSelection->type, $filteringSelection->value);
+        if (isset($options->filteringSelections)) {
+            foreach ($options->filteringSelections as $filteringSelection) {
+                $this->groupRecords['filteringSelection']['referenceDetails'][] = new ReferenceDetails($filteringSelection->type, $filteringSelection->value);
+            }
         }
     }
 }

@@ -53,8 +53,8 @@ class GetFromRecTest extends BaseTestCase
         $message = new GetFromRec($opt);
 
         $this->assertCount(1, $message->groupRecords);
-        $this->assertEquals(RecordId::REFERENCE_TYPE_OFFER, $message->groupRecords[0]->recordID->referenceType);
-        $this->assertEquals(RecordId::PRICING_ID_ALL, $message->groupRecords[0]->recordID->uniqueReference);
+        $this->assertEquals(RecordId::REFERENCE_TYPE_OFFER, $message->groupRecords[0]->recordId->referenceType);
+        $this->assertEquals(RecordId::PRICING_ID_ALL, $message->groupRecords[0]->recordId->uniqueReference);
     }
 
     public function testCanMakeMiniRulesRequestForSpecificOffer()
@@ -71,8 +71,8 @@ class GetFromRecTest extends BaseTestCase
         $message = new GetFromRec($opt);
 
         $this->assertCount(1, $message->groupRecords);
-        $this->assertEquals(RecordId::REFERENCE_TYPE_OFFER, $message->groupRecords[0]->recordID->referenceType);
-        $this->assertEquals(2, $message->groupRecords[0]->recordID->uniqueReference);
+        $this->assertEquals(RecordId::REFERENCE_TYPE_OFFER, $message->groupRecords[0]->recordId->referenceType);
+        $this->assertEquals(2, $message->groupRecords[0]->recordId->uniqueReference);
     }
 
     public function testCanMakeMiniRulesRequestForAllPqrs()
@@ -89,8 +89,8 @@ class GetFromRecTest extends BaseTestCase
         $message = new GetFromRec($opt);
 
         $this->assertCount(1, $message->groupRecords);
-        $this->assertEquals(RecordId::REFERENCE_TYPE_PROD_QUOTATION, $message->groupRecords[0]->recordID->referenceType);
-        $this->assertEquals(RecordId::PRICING_ID_ALL, $message->groupRecords[0]->recordID->uniqueReference);
+        $this->assertEquals(RecordId::REFERENCE_TYPE_PROD_QUOTATION, $message->groupRecords[0]->recordId->referenceType);
+        $this->assertEquals(RecordId::PRICING_ID_ALL, $message->groupRecords[0]->recordId->uniqueReference);
     }
 
     public function testCanMakeMiniRulesRequestForSpecificTst()
@@ -107,8 +107,8 @@ class GetFromRecTest extends BaseTestCase
         $message = new GetFromRec($opt);
 
         $this->assertCount(1, $message->groupRecords);
-        $this->assertEquals(RecordId::REFERENCE_TYPE_TST, $message->groupRecords[0]->recordID->referenceType);
-        $this->assertEquals(1, $message->groupRecords[0]->recordID->uniqueReference);
+        $this->assertEquals(RecordId::REFERENCE_TYPE_TST, $message->groupRecords[0]->recordId->referenceType);
+        $this->assertEquals(1, $message->groupRecords[0]->recordId->uniqueReference);
     }
 
     public function testCanMakeMiniRulesRequestForAllFRN()
@@ -123,8 +123,8 @@ class GetFromRecTest extends BaseTestCase
         $message = new GetFromRec($opt);
 
         $this->assertCount(1, $message->groupRecords);
-        $this->assertEquals(RecordId::REFERENCE_TYPE_FARE_RECOMMENDATION_NUMBER, $message->groupRecords[0]->recordID->referenceType);
-        $this->assertEquals(RecordId::PRICING_ID_ALL, $message->groupRecords[0]->recordID->uniqueReference);
+        $this->assertEquals(RecordId::REFERENCE_TYPE_FARE_RECOMMENDATION_NUMBER, $message->groupRecords[0]->recordId->referenceType);
+        $this->assertEquals(RecordId::PRICING_ID_ALL, $message->groupRecords[0]->recordId->uniqueReference);
     }
 
     public function testCanMakeMiniRulesRequestForAllFUN()
@@ -139,8 +139,8 @@ class GetFromRecTest extends BaseTestCase
         $message = new GetFromRec($opt);
 
         $this->assertCount(1, $message->groupRecords);
-        $this->assertEquals(RecordId::REFERENCE_TYPE_FARE_UPSELL_RECOMMENDATION_NUMBER, $message->groupRecords[0]->recordID->referenceType);
-        $this->assertEquals(RecordId::PRICING_ID_ALL, $message->groupRecords[0]->recordID->uniqueReference);
+        $this->assertEquals(RecordId::REFERENCE_TYPE_FARE_UPSELL_RECOMMENDATION_NUMBER, $message->groupRecords[0]->recordId->referenceType);
+        $this->assertEquals(RecordId::PRICING_ID_ALL, $message->groupRecords[0]->recordId->uniqueReference);
     }
 
     public function testCanMakeMiniRulesRequestForPNR()
@@ -155,8 +155,8 @@ class GetFromRecTest extends BaseTestCase
         $message = new GetFromRec($opt);
 
         $this->assertCount(1, $message->groupRecords);
-        $this->assertEquals(RecordId::REFERENCE_TYPE_RECORD_LOCATOR, $message->groupRecords[0]->recordID->referenceType);
-        $this->assertEquals("RECLOCNUM123", $message->groupRecords[0]->recordID->uniqueReference);
+        $this->assertEquals(RecordId::REFERENCE_TYPE_RECORD_LOCATOR, $message->groupRecords[0]->recordId->referenceType);
+        $this->assertEquals("RECLOCNUM123", $message->groupRecords[0]->recordId->uniqueReference);
     }
 
     public function testCanMakeMiniRulesRequestForPNRWithSpecificPassenger()
@@ -177,8 +177,8 @@ class GetFromRecTest extends BaseTestCase
         $message = new GetFromRec($opt);
 
         $this->assertCount(1, $message->groupRecords);
-        $this->assertEquals(RecordId::REFERENCE_TYPE_RECORD_LOCATOR, $message->groupRecords[0]->recordID->referenceType);
-        $this->assertEquals("RECLOCNUM123", $message->groupRecords[0]->recordID->uniqueReference);
+        $this->assertEquals(RecordId::REFERENCE_TYPE_RECORD_LOCATOR, $message->groupRecords[0]->recordId->referenceType);
+        $this->assertEquals("RECLOCNUM123", $message->groupRecords[0]->recordId->uniqueReference);
         $this->assertCount(1, $message->groupRecords[0]->filteringSelections->referenceDetails);
         $this->assertEquals(ReferenceDetails::REFERENCE_TYPE_PAX, $message->groupRecords[0]->filteringSelections->referenceDetails[0]->type);
         $this->assertEquals(1, $message->groupRecords[0]->filteringSelections->referenceDetails[0]->value);
@@ -202,8 +202,8 @@ class GetFromRecTest extends BaseTestCase
         $message = new GetFromRec($opt);
 
         $this->assertCount(1, $message->groupRecords);
-        $this->assertEquals(RecordId::REFERENCE_TYPE_RECORD_LOCATOR, $message->groupRecords[0]->recordID->referenceType);
-        $this->assertEquals("RECLOCNUM123", $message->groupRecords[0]->recordID->uniqueReference);
+        $this->assertEquals(RecordId::REFERENCE_TYPE_RECORD_LOCATOR, $message->groupRecords[0]->recordId->referenceType);
+        $this->assertEquals("RECLOCNUM123", $message->groupRecords[0]->recordId->uniqueReference);
         $this->assertCount(1, $message->groupRecords[0]->filteringSelections->referenceDetails);
         $this->assertEquals(ReferenceDetails::REFERENCE_TYPE_SEGMENT, $message->groupRecords[0]->filteringSelections->referenceDetails[0]->type);
         $this->assertEquals(2, $message->groupRecords[0]->filteringSelections->referenceDetails[0]->value);
@@ -228,8 +228,8 @@ class GetFromRecTest extends BaseTestCase
         $this->assertEquals(\Amadeus\Client\Struct\MiniRule\Language::LQ_LANGUAGE_NORMALLY_USED, $message->language->languageQualifier);
         $this->assertEquals("UA", $message->language->languageDetails->languageCode);
         $this->assertCount(1, $message->groupRecords);
-        $this->assertEquals(RecordId::REFERENCE_TYPE_RECORD_LOCATOR, $message->groupRecords[0]->recordID->referenceType);
-        $this->assertEquals("RECLOCNUM123", $message->groupRecords[0]->recordID->uniqueReference);
+        $this->assertEquals(RecordId::REFERENCE_TYPE_RECORD_LOCATOR, $message->groupRecords[0]->recordId->referenceType);
+        $this->assertEquals("RECLOCNUM123", $message->groupRecords[0]->recordId->uniqueReference);
     }
 
 }
