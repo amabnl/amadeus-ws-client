@@ -919,6 +919,23 @@ class Client extends Base
     }
 
     /**
+     * MiniRule_GetFromRec
+     *
+     * @param RequestOptions\MiniRuleGetFromRecOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function miniRuleGetFromRec(RequestOptions\MiniRuleGetFromRecOptions $options, $messageOptions = [])
+    {
+        $msgName = 'MiniRule_GetFromRec';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * MiniRule_GetFromPricingRec
      *
      * @param RequestOptions\MiniRuleGetFromPricingRecOptions $options
