@@ -24,13 +24,14 @@
 namespace Amadeus\Client\Struct\MiniRule;
 
 use Amadeus\Client\RequestOptions\MiniRuleGetFromRecOptions;
+use Amadeus\Client\Struct\BaseWsMessage;
 
 /**
  * MiniRule GetFromRec
  * @package Amadeus\Client\Struct\MiniRule
  * @author Aleksandr Kalugin <xkalugin@gmail.com>
  */
-class GetFromRec
+class GetFromRec extends BaseWsMessage
 {
     /**
      * @var Language|null
