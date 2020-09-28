@@ -33,16 +33,16 @@ use Amadeus\Client\RequestOptions\MiniRule\Language;
 class MiniRuleGetFromRecOptions extends Base
 {
     /**
-     * @var null|Language
+     * @var Language
      */
-    public $language = null;
+    public $language;
     /**
      * @var MiniRule\Pricing
      */
-    public $pricing = null;
+    public $pricing;
 
     /**
      * @var MiniRule\FilteringOption[]
      */
-    public $filteringOptions = [];
+    public $filteringOptions;
 }
