@@ -1424,6 +1424,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("SYSTEM UNABLE TO PROCESS", $result->messages[0]->text);
     }
 
+    public function testCanHandleMiniRuleGetFromRecErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyMiniRuleGetFromRecErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'MiniRule_GetFromPricingRec');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('32660', $result->messages[0]->code);
+        $this->assertEquals("INVALID CONTEXT - PNRRELOC MISMATCH", $result->messages[0]->text);
+    }
+
     public function testCanHandleMiniRuleGetFromPricingRecErrResponse()
     {
         $respHandler = new ResponseHandler\Base();

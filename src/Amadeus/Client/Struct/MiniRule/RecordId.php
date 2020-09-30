@@ -46,6 +46,22 @@ class RecordId
      * Product Quotation Record Reference
      */
     const REFERENCE_TYPE_PROD_QUOTATION = "PQR";
+    /**
+     * Fare Recommendation Number
+     */
+    const REFERENCE_TYPE_FARE_RECOMMENDATION_NUMBER = "FRN";
+    /**
+     * Fare Upsell reco. Number
+     */
+    const REFERENCE_TYPE_FARE_UPSELL_RECOMMENDATION_NUMBER = "FUN";
+    /**
+     * Record Locator
+     */
+    const REFERENCE_TYPE_RECORD_LOCATOR = "PNR";
+    /**
+     * Ticket Number
+     */
+    const REFERENCE_TYPE_TICKET_NUMBER = "TKT";
 
     /**
      * self::REFERENCE_TYPE_*
