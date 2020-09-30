@@ -3843,21 +3843,24 @@ Get MiniRules for specific PNR, and specific passenger
     $miniRulesResponse = $client->miniRuleGetFromRec(
         new MiniRuleGetFromRecOptions([
             // mandatory
-            'pricing' => new Pricing([
-                'id' => "RECLOCNUM123",
-                'type' => Pricing::TYPE_RECORD_LOCATOR
-            ]),
+            'pricings' => [
+                new Pricing([
+                    'type' => Pricing::TYPE_RECORD_LOCATOR,
+                    'id' => "RECLOCNUM123",
+                    // optional
+                    'filteringOptions' => [
+                        new FilteringOption([
+                            'type' => FilteringOption::TYPE_PAX,
+                            'value' => 1
+                        ])
+                    ]
+                ])
+            ],
             // optional
             'language' => new Language([
                 'qualifier' => Language::LQ_LANGUAGE_NORMALLY_USED,
                 'code' => "UA"
-            ]),
-            'filteringOptions' => [
-                new FilteringOption([
-                    'type' => FilteringOption::TYPE_PAX,
-                    'value' => 1
-                ])
-            ]
+            ])
         ])
     );
 

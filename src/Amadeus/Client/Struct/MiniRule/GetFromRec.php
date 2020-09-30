@@ -52,16 +52,18 @@ class GetFromRec extends BaseWsMessage
             $this->language = new Language($options->language->qualifier, $options->language->code);
         }
 
-        $obj = new GroupRecords();
-        $obj->recordID = new RecordId($options->pricing->id, $options->pricing->type);
+        foreach ($options->pricings as $pricing) {
+            $obj = new GroupRecords();
+            $obj->recordID = new RecordId($pricing->id, $pricing->type);
 
-        if (isset($options->filteringOptions)) {
-            $obj->filteringSelection = new FilteringSelection();
-            foreach ($options->filteringOptions as $option) {
-                $obj->filteringSelection->referenceDetails[] = new ReferenceDetails($option->type, $option->value);
+            if (!empty($pricing->filteringOptions)) {
+                $obj->filteringSelection = new FilteringSelection();
+                foreach ($pricing->filteringOptions as $option) {
+                    $obj->filteringSelection->referenceDetails[] = new ReferenceDetails($option->type, $option->value);
+                }
             }
-        }
 
-        $this->groupRecords[] = $obj;
+            $this->groupRecords[] = $obj;
+        }
     }
 }

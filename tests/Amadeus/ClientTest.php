@@ -1035,10 +1035,12 @@ class ClientTest extends BaseTestCase
 
         $expectedMessageResult = new Client\Struct\MiniRule\GetFromRec(
             new Client\RequestOptions\MiniRuleGetFromRecOptions([
-                    'pricing' => new Client\RequestOptions\MiniRule\Pricing([
-                        'type' => Client\RequestOptions\MiniRule\Pricing::TYPE_RECORD_LOCATOR,
-                        'id' => 'XXXXXX'
-                    ])
+                    'pricings' => [
+                        new Client\RequestOptions\MiniRule\Pricing([
+                            'type' => Client\RequestOptions\MiniRule\Pricing::TYPE_RECORD_LOCATOR,
+                            'id' => 'XXXXXX'
+                        ])
+                    ]
                 ]
             )
         );
@@ -1079,10 +1081,12 @@ class ClientTest extends BaseTestCase
 
         $response = $client->miniRuleGetFromRec(
             new Client\RequestOptions\MiniRuleGetFromRecOptions([
-                'pricing' => new Client\RequestOptions\MiniRule\Pricing([
-                    'type' => Client\RequestOptions\MiniRule\Pricing::TYPE_RECORD_LOCATOR,
-                    'id' => "XXXXXX"
-                ])
+                'pricings' => [
+                    new Client\RequestOptions\MiniRule\Pricing([
+                        'type' => Client\RequestOptions\MiniRule\Pricing::TYPE_RECORD_LOCATOR,
+                        'id' => "XXXXXX"
+                    ])
+                ]
             ])
         );
 

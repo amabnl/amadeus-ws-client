@@ -20,24 +20,36 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
 
-use Amadeus\Client\RequestOptions\MiniRule\Language;
+namespace Amadeus\Client\RequestOptions\MiniRule\Pricing;
+
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * MiniRule_GetFromRec Request Options
+ * MiniRule FilteringSelection
  *
- * @package Amadeus\Client\RequestOptions
+ * @package Amadeus\Client\RequestOptions\MiniRule
  * @author Aleksandr Kalugin <xkalugin@gmail.com>
  */
-class MiniRuleGetFromRecOptions extends Base
+class FilteringOption extends LoadParamsFromArray
 {
+    const TYPE_PAX = 'P';
+
+    const TYPE_ADULT_PASSENGER = "PA";
+
+    const TYPE_INFANT_PASSENGER = "PI";
+
+    const TYPE_SEGMENT = 'S';
+
     /**
-     * @var null|Language
+     * self::TYPE_*
+     *
+     * @var string
      */
-    public $language;
+    public $type;
+
     /**
-     * @var MiniRule\Pricing[]
+     * @var string|int
      */
-    public $pricings;
+    public $value;
 }

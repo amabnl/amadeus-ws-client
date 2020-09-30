@@ -22,7 +22,7 @@
 
 namespace Test\Amadeus\Client\Struct\MiniRule;
 
-use Amadeus\Client\RequestOptions\MiniRule\FilteringOption;
+use Amadeus\Client\RequestOptions\MiniRule\Pricing\FilteringOption;
 use Amadeus\Client\RequestOptions\MiniRule\Language;
 use Amadeus\Client\RequestOptions\MiniRule\Pricing;
 use Amadeus\Client\RequestOptions\MiniRuleGetFromRecOptions;
@@ -42,10 +42,12 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForAllOffers()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => new Pricing([
-                'id' => Pricing::ALL_PRICINGS,
-                'type' => Pricing::TYPE_OFFER
-            ])
+            'pricings' => [
+                new Pricing([
+                    'id' => Pricing::ALL_PRICINGS,
+                    'type' => Pricing::TYPE_OFFER
+                ])
+            ]
         ]);
 
         $message = new GetFromRec($opt);
@@ -58,10 +60,12 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForSpecificOffer()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => new Pricing([
-                'id' => 2,
-                'type' => Pricing::TYPE_OFFER
-            ])
+            'pricings' => [
+                new Pricing([
+                    'id' => 2,
+                    'type' => Pricing::TYPE_OFFER
+                ])
+            ]
         ]);
 
         $message = new GetFromRec($opt);
@@ -74,10 +78,12 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForAllPqrs()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => new Pricing([
-                'id' => Pricing::ALL_PRICINGS,
-                'type' => Pricing::TYPE_PROD_QUOTATION
-            ])
+            'pricings' => [
+                new Pricing([
+                    'id' => Pricing::ALL_PRICINGS,
+                    'type' => Pricing::TYPE_PROD_QUOTATION
+                ])
+            ]
         ]);
 
         $message = new GetFromRec($opt);
@@ -90,10 +96,12 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForSpecificTst()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => new Pricing([
-                'id' => 1,
-                'type' => Pricing::TYPE_TST
-            ])
+            'pricings' => [
+                new Pricing([
+                    'id' => 1,
+                    'type' => Pricing::TYPE_TST
+                ])
+            ]
         ]);
 
         $message = new GetFromRec($opt);
@@ -106,10 +114,12 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForAllFRN()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => new Pricing([
-                'id' => Pricing::ALL_PRICINGS,
-                'type' => Pricing::TYPE_FARE_RECOMMENDATION_NUMBER
-            ])
+            'pricings' => [
+                new Pricing([
+                    'id' => Pricing::ALL_PRICINGS,
+                    'type' => Pricing::TYPE_FARE_RECOMMENDATION_NUMBER
+                ])
+            ]
         ]);
 
         $message = new GetFromRec($opt);
@@ -122,10 +132,12 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForAllFUN()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => new Pricing([
-                'id' => Pricing::ALL_PRICINGS,
-                'type' => Pricing::TYPE_FARE_UPSELL_RECOMMENDATION_NUMBER
-            ])
+            'pricings' => [
+                new Pricing([
+                    'id' => Pricing::ALL_PRICINGS,
+                    'type' => Pricing::TYPE_FARE_UPSELL_RECOMMENDATION_NUMBER
+                ])
+            ]
         ]);
 
         $message = new GetFromRec($opt);
@@ -138,10 +150,12 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForPNR()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => new Pricing([
-                'id' => "RECLOCNUM123",
-                'type' => Pricing::TYPE_RECORD_LOCATOR
-            ])
+            'pricings' => [
+                new Pricing([
+                    'id' => "RECLOCNUM123",
+                    'type' => Pricing::TYPE_RECORD_LOCATOR
+                ])
+            ]
         ]);
 
         $message = new GetFromRec($opt);
@@ -154,14 +168,16 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForPNRWithSpecificPassenger()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => new Pricing([
-                'id' => "RECLOCNUM123",
-                'type' => Pricing::TYPE_RECORD_LOCATOR
-            ]),
-            'filteringOptions' => [
-                new FilteringOption([
-                    'type' => FilteringOption::TYPE_PAX,
-                    'value' => 1
+            'pricings' => [
+                new Pricing([
+                    'id' => "RECLOCNUM123",
+                    'type' => Pricing::TYPE_RECORD_LOCATOR,
+                    'filteringOptions' => [
+                        new FilteringOption([
+                            'type' => FilteringOption::TYPE_PAX,
+                            'value' => 1
+                        ])
+                    ]
                 ])
             ]
         ]);
@@ -179,14 +195,16 @@ class GetFromRecTest extends BaseTestCase
     public function testCanMakeMiniRulesRequestForPNRWithSpecificSegment()
     {
         $opt = new MiniRuleGetFromRecOptions([
-            'pricing' => new Pricing([
-                'id' => "RECLOCNUM123",
-                'type' => Pricing::TYPE_RECORD_LOCATOR
-            ]),
-            'filteringOptions' => [
-                new FilteringOption([
-                    'type' => FilteringOption::TYPE_SEGMENT,
-                    'value' => 2
+            'pricings' => [
+                new Pricing([
+                    'id' => "RECLOCNUM123",
+                    'type' => Pricing::TYPE_RECORD_LOCATOR,
+                    'filteringOptions' => [
+                        new FilteringOption([
+                            'type' => FilteringOption::TYPE_SEGMENT,
+                            'value' => 2
+                        ])
+                    ]
                 ])
             ]
         ]);
@@ -209,10 +227,12 @@ class GetFromRecTest extends BaseTestCase
                 'qualifier' => Language::LQ_LANGUAGE_NORMALLY_USED,
                 'code' => "UA"
             ]),
-            'pricing' => new Pricing([
-                'id' => "RECLOCNUM123",
-                'type' => Pricing::TYPE_RECORD_LOCATOR
-            ])
+            'pricings' => [
+                new Pricing([
+                    'id' => "RECLOCNUM123",
+                    'type' => Pricing::TYPE_RECORD_LOCATOR
+                ])
+            ]
         ]);
 
         $message = new GetFromRec($opt);

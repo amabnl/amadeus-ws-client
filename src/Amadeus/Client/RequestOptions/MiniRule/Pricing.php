@@ -23,6 +23,7 @@
 namespace Amadeus\Client\RequestOptions\MiniRule;
 
 use Amadeus\Client\LoadParamsFromArray;
+use Amadeus\Client\RequestOptions\MiniRule\Pricing\FilteringOption;
 
 /**
  * MiniRule Pricing
@@ -104,4 +105,11 @@ class Pricing extends LoadParamsFromArray
      * @var string
      */
     public $type;
+
+
+    /**
+     * Only to be used with MiniRule_GetFromRec
+     * @var FilteringOption[]
+     */
+    public $filteringOptions;
 }
