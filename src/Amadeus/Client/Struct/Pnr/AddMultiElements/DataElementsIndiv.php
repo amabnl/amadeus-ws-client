@@ -42,6 +42,9 @@ class DataElementsIndiv extends WsMessageUtility
      * @var ElementManagementData
      */
     public $elementManagementData;
+    /**
+     * @var PnrSecurity
+     */
     public $pnrSecurity;
     /**
      * @var Accounting
@@ -292,6 +295,10 @@ class DataElementsIndiv extends WsMessageUtility
                 /** @var Element\FareMiscellaneousInformation $element */
                 $this->fareElement = new FareElement($element->indicator, $element->passengerType, $element->freeText, $element->officeId);
                 break;
+            case 'Security':
+                /** @var Element\Security $element */
+                $this->pnrSecurity = new PnrSecurity($element);
+                break;
             default:
                 throw new InvalidArgumentException('Element type '.$elementType.' is not supported');
         }
@@ -325,6 +332,7 @@ class DataElementsIndiv extends WsMessageUtility
             'ManualIssuedTicket' => ElementManagementData::SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER,
             'ScheduleChange' => ElementManagementData::SEGNAME_RECEIVE_FROM,
             'FareMiscellaneousInformation' => null, // Special case - the type is a parameter.
+            'Security' => ElementManagementData::SEGNAME_INDIVIDUAL_SECURITY,
         ];
 
         if (array_key_exists($elementType, $sourceArray)) {
