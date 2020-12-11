@@ -45,5 +45,4 @@ class Security
         $this->identification = $identification;
         $this->accessMode = $accessMode;
     }
-    
 }

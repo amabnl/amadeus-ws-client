@@ -125,5 +125,4 @@ class PnrSecurity extends Element
      * @var string
      */
     public $indicator;
-
 }
