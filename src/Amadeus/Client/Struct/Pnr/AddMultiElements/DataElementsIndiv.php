@@ -295,8 +295,8 @@ class DataElementsIndiv extends WsMessageUtility
                 /** @var Element\FareMiscellaneousInformation $element */
                 $this->fareElement = new FareElement($element->indicator, $element->passengerType, $element->freeText, $element->officeId);
                 break;
-            case 'Security':
-                /** @var Element\Security $element */
+            case 'PnrSecurity':
+                /** @var Element\PnrSecurity $element */
                 $this->pnrSecurity = new PnrSecurity($element);
                 break;
             default:
@@ -332,7 +332,7 @@ class DataElementsIndiv extends WsMessageUtility
             'ManualIssuedTicket' => ElementManagementData::SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER,
             'ScheduleChange' => ElementManagementData::SEGNAME_RECEIVE_FROM,
             'FareMiscellaneousInformation' => null, // Special case - the type is a parameter.
-            'Security' => ElementManagementData::SEGNAME_INDIVIDUAL_SECURITY,
+            'PnrSecurity' => ElementManagementData::SEGNAME_INDIVIDUAL_SECURITY,
         ];
 
         if (array_key_exists($elementType, $sourceArray)) {

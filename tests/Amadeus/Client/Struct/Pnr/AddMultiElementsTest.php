@@ -2088,5 +2088,26 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals('BERNDMUELLER', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->newFopsDetails->chdData);
         $this->assertEquals('CREDIT CARD FREE TEXT', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->freetext);
     }
+
+    public function testPnrSecurityES(){
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->elements[] = new Element\PnrSecurity(
+            [
+                'identification' => 'WGFD00321',
+                'accessMode' => Element\PnrSecurity::ACCESS_MODE_BOTH,
+                'indicator' => Element\PnrSecurity::INDICATOR_GLOBAL
+            ]
+        );
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals('ES', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals('WGFD00321', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->pnrSecurity->security[0]->identification);
+        $this->assertEquals('B', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->pnrSecurity->security[0]->accessMode);
+        $this->assertEquals('G', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->pnrSecurity->indicator);
+    }
 }
 

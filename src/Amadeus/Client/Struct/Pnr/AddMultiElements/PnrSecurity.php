@@ -22,7 +22,7 @@
 
 namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
-use Amadeus\Client\RequestOptions\Pnr\Element\Security as SecurityReOpts;
+use Amadeus\Client\RequestOptions\Pnr\Element\PnrSecurity as SecurityReOpts;
 
 /**
  * PnrSecurity
@@ -32,42 +32,6 @@ use Amadeus\Client\RequestOptions\Pnr\Element\Security as SecurityReOpts;
  */
 class PnrSecurity
 {
-
-    /**
-     * Amadeus global core office identification
-     *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [Codeset for General indicator, coded (Ref: 107P 1A 98.1.13)]
-     *
-     * @var string
-     */
-    const INDICATOR_GLOBAL = 'G';
-
-    /**
-     * IATA number
-     *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [Codeset for General indicator, coded (Ref: 107P 1A 98.1.13)]
-     *
-     * @var string
-     */
-    const INDICATOR_IATA_NUMBER = 'I';
-
-    /**
-     * Pseudo-office identification
-     *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [Codeset for General indicator, coded (Ref: 107P 1A 98.1.13)]
-     *
-     * @var string
-     */
-    const INDICATOR_PSEUDO_OFFICE = 'P';
-
-
-
     /**
      * @var Security[]
      */

@@ -31,61 +31,6 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 class Security
 {
     /**
-     * Access Mode  "Both read and write"
-     *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [PNR segment or element name, coded codeset: 001C_1A_98.1.2]
-     *
-     * @var string
-     */
-    const ACCESS_MODE_BOTH = "B";
-
-    /**
-     * Access Mode  "No Access"
-     *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [PNR segment or element name, coded codeset: 001C_1A_98.1.2]
-     *
-     * @var string
-     */
-    const ACCESS_MODE_NO_ACCESS = "N";
-
-    /**
-     * Access Mode  "Read only"
-     *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [PNR segment or element name, coded codeset: 001C_1A_98.1.2]
-     *
-     * @var string
-     */
-    const ACCESS_MODE_READ_ONLY = "R";
-
-    /**
-     * Access Mode  "Write only"
-     *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [PNR segment or element name, coded codeset: 001C_1A_98.1.2]
-     *
-     * @var string
-     */
-    const ACCESS_MODE_WRITE_ONLY = "W";
-
-    /**
-     * Access Mode  "No access mode defined"
-     *
-     * See documentation Amadeus Core webservices
-     * Functional documentation PNR_AddMultiElements
-     * [PNR segment or element name, coded codeset: 001C_1A_98.1.2]
-     *
-     * @var string
-     */
-    const ACCESS_MODE_UNDEFINED = "X";
-
-    /**
      * @var string
      */
     public $identification;
