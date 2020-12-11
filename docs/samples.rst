@@ -491,7 +491,7 @@ Split passengers 1 and 2 from PNR ABC123:
     $pnrContent = $client->pnrSplit(
         new PnrSplitOptions(['recordLocator' => 'ABC123', 'passengerTattoos' => [1, 2]])
     );
-    
+
 
 *****
 Queue
@@ -2580,6 +2580,22 @@ Initiate Automated Refund:
         ])
     );
 
+---------------------------
+Ticket_UpdateRefund
+---------------------------
+
+Apply waiver code (for now only waiver codes are supported):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketUpdateRefundOptions;
+
+    $response = $client->ticketUpdateRefund(
+        new TicketUpdateRefundOptions([
+            'waiverCode' => 'TESTWAIVER11',
+            'contractBundleId' => 1,
+        ])
+    );
 
 ---------------------------
 Ticket_IgnoreRefund
@@ -3400,7 +3416,7 @@ All the examples for ``Service_IntegratedPricing`` (see above) should also work 
             ]
         ])
     );
-    
+
 ---------------------------
 Service_StandaloneCatalogue
 ---------------------------
@@ -3413,7 +3429,7 @@ Service_StandaloneCatalogue
     use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\ServicePassenger;
     use Amadeus\Client\RequestOptions\Service\PaxSegRef;
     use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
-    
+
     $standaloneCatalogueResponse = $client->serviceStandaloneCatalogue(
     new ServiceStandaloneCatalogueOptions([
         'passengers' => [
@@ -3455,6 +3471,13 @@ Service_StandaloneCatalogue
         ])
     ])
 );
+
+------------------------
+Service_BookPriceService
+------------------------
+
+*docs missing*
+
 
 ***
 FOP

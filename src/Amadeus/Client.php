@@ -58,7 +58,7 @@ class Client extends Base
      *
      * @var string
      */
-    const VERSION = "1.11.0-dev";
+    const VERSION = "1.11.0";
 
     /**
      * An identifier string for the library (to be used in Received From entries)
@@ -1526,6 +1526,25 @@ class Client extends Base
         $messageOptions = []
     ) {
         $msgName = 'Ticket_ProcessRefund';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Ticket_UpdateRefund
+     *
+     * @param RequestOptions\TicketUpdateRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketUpdateRefund(
+        RequestOptions\TicketUpdateRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_UpdateRefund';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }

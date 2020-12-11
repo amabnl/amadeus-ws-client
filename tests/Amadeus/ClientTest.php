@@ -2288,6 +2288,69 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoTicketAtcShopperMasterPricerCalendar()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketAtcShopperMasterPricerCalendarMessage';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\AtcShopperMasterPricerCalendar(
+            new Client\RequestOptions\TicketAtcShopperMpCalendarOptions([
+
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with(
+                'Ticket_ATCShopperMasterPricerCalendar',
+                $expectedMessageResult,
+                ['endSession' => false, 'returnXml' => true]
+            )
+            ->willReturn($mockedSendResult);
+
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn([
+                'Ticket_ATCShopperMasterPricerCalendar' => ['version' => '18.2', 'wsdl' => 'dc22e4ee']
+            ]);
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_ATCShopperMasterPricerCalendar')
+            ->willReturn($messageResult);
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'NYCXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketAtcShopperMasterPricerCalendar(
+            new Client\RequestOptions\TicketAtcShopperMpCalendarOptions([
+
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanDoTicketRepricePNRWithBookingClass()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
@@ -5841,6 +5904,62 @@ class ClientTest extends BaseTestCase
 
         $response = $client->ticketInitRefund(
             new Client\RequestOptions\TicketInitRefundOptions([])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTicketUpdateRefund()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyTicketUpdateRefundResponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Ticket\UpdateRefund(
+            new Client\RequestOptions\TicketUpdateRefundOptions([
+
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Ticket_UpdateRefund', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(['Ticket_UpdateRefund' => ['version' => '3.0', 'wsdl' => 'dc22e4ee']]);
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')
+            ->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Ticket_UpdateRefund')
+            ->willReturn($messageResult);
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'NYCXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->ticketUpdateRefund(
+            new Client\RequestOptions\TicketUpdateRefundOptions([
+
+            ])
         );
 
         $this->assertEquals($messageResult, $response);

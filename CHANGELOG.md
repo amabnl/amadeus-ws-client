@@ -1,9 +1,10 @@
-## Release 1.11.0 (Unreleased)
+## Release 1.11.0 (9 July 2020)
 https://github.com/amabnl/amadeus-ws-client/pull/344: 
 * Added support to add accountNumber in ``Queue_List``
 * Added support to add freeText for payment type Cash and CC in ``Pnr_AddMultiElements``
 * Added support for "ZapOff" in ``Fare_PricePnrWithBookingClass``
 * Added support for "Fare Misc TKT Information", "Fare Endorsement", "Fare Endorsement" , "Fare Misc Information" in ``Pnr_AddMultiElements``
+* Implemented ``Ticket_UpdateRefund`` (https://github.com/amabnl/amadeus-ws-client/pull/407) - Vladimir Kikot
 
 # Release 1.10.0 (27 May 2020)
 * Bugfix for a SOAP-ERROR in ``DocIssuance_IssueMiscellaneousDocuments`` (https://github.com/amabnl/amadeus-ws-client/pull/359) - Artem Zakharchenko
