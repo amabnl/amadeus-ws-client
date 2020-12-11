@@ -40,7 +40,7 @@ class Security
      */
     public $accessMode;
 
-    public function __construct(string $identification, string $accessMode)
+    public function __construct($identification, $accessMode)
     {
         $this->identification = $identification;
         $this->accessMode = $accessMode;
