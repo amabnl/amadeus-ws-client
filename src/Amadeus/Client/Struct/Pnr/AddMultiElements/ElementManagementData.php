@@ -160,6 +160,13 @@ class ElementManagementData
      * FK - shadow AIR office ID element
      */
     const SEGNAME_AIR_OFFICE_ID = 'FK';
+
+    /**
+     * Segment name "Individual Security"
+     *
+     * @var string
+     */
+    const SEGNAME_INDIVIDUAL_SECURITY = "ES";
     
     /**
      * @var Reference
