@@ -3813,8 +3813,64 @@ Confirm a given CAR offer:
 MiniRule
 ********
 --------------------------
+MiniRule_GetFromRec
+--------------------------
+Mini Rules provides a short and easy to read summary of the most important rules and restrictions in a structured output so that they can be clearly understood by end-users and customers. This service is used to retrieve the Mini Rules data from: - PNR Record Locator - Offer Notice - Offer ID - TST (Transitional Stored Ticket) - PQR (Quotation Record for Amadeus Offer). - Pricing context - Upsell Context - TKT (eTicket) - Cart (Shopping cart)
+
+MiniRules_GetFromRec function provides possibility to retrieve those mini-rules
+
+ - from an e-ticket
+ - from a PNR (with possible  passengers and segments selection )
+ - from a list of TST returned by pricing/re-pricing
+ - from all TSTs returned by pricing/re-pricing
+ - from a list of PQRs
+ - from all PQR
+ - from all PQR associated to a list of air Offer
+ - from all PQR associated to all air Offer
+ - from a list of fare recommendation returned by pricing/re-pricing
+ - from all fare recommendations returned by pricing/re-pricing
+ - from a list of upsell returned by upsell transaction
+ - from all upsell returned by upsell transaction
+
+
+Get MiniRules for specific PNR, and specific passenger
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\MiniRuleGetFromRecOptions;
+    use Amadeus\Client\RequestOptions\MiniRule\Pricing;
+
+    $miniRulesResponse = $client->miniRuleGetFromRec(
+        new MiniRuleGetFromRecOptions([
+            // mandatory
+            'pricings' => [
+                new Pricing([
+                    'type' => Pricing::TYPE_RECORD_LOCATOR,
+                    'id' => "RECLOCNUM123",
+                    // optional
+                    'filteringOptions' => [
+                        new FilteringOption([
+                            'type' => FilteringOption::TYPE_PAX,
+                            'value' => 1
+                        ])
+                    ]
+                ])
+            ],
+            // optional
+            'language' => new Language([
+                'qualifier' => Language::LQ_LANGUAGE_NORMALLY_USED,
+                'code' => "UA"
+            ])
+        ])
+    );
+
+
+--------------------------
 MiniRule_GetFromPricingRec
 --------------------------
+
+*This web service will not profit of latest Mini Rules enhancements.
+Please use MiniRule_GetFromRec (TMRXRQ) instead.*
 
 Get MiniRules for a pricing in context (either a TST pricing, Offers or a pricing quotation):
 
@@ -3837,6 +3893,9 @@ Get MiniRules for a pricing in context (either a TST pricing, Offers or a pricin
 -----------------------
 MiniRule_GetFromPricing
 -----------------------
+
+*This web service will not profit of latest Mini Rules enhancements.
+Please use MiniRule_GetFromRec (TMRXRQ) instead.*
 
 Get MiniRules for a pricing in context *(After a Fare_PricePNRWithBookingClass, Fare_PricePNRWithLowerFares, FarePricePNRWithLowestFare, Fare_InformativePricingWithoutPNR or Fare_InformativeBestPricingWithoutPNR message)*:
 
@@ -3866,6 +3925,9 @@ Get Minirules for specific recommendations *(recommendations nr 1 & 2 in this ex
 -----------------------
 MiniRule_GetFromETicket
 -----------------------
+
+*This web service will not profit of latest Mini Rules enhancements.
+Please use MiniRule_GetFromRec (TMRXRQ) instead.*
 
 Display Mini Rules corresponding to the e-ticket number 1234567891987:
 
