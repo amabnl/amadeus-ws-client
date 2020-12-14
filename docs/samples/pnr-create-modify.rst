@@ -1001,3 +1001,24 @@ Central System reporting database.
             ]);
         ]
     ]);
+
+Security Element (ES)
+===============================
+
+Adding an Individual Security Element (ES) to a PNR
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\PnrSecurity;
+
+    $createPnrOptions = new PnrAddMultiElementsOptions([
+        'actionCode' => PnrAddMultiElementsOptions::ACTION_END_TRANSACT_RETRIEVE,
+        'elements' => [
+            new PnrSecurity([
+                'identification' => 'WGFD00321',
+                'accessMode' => PnrSecurity::ACCESS_MODE_BOTH,
+                'indicator' => PnrSecurity::INDICATOR_GLOBAL
+            ]);
+        ]
+    ]);

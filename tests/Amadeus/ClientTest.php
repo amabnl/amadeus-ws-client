@@ -207,7 +207,7 @@ class ClientTest extends BaseTestCase
 
         $client = new Client($par);
 
-        $response = $client->pnrRetrieve(new Client\RequestOptions\PnrRetrieveOptions(['recordLocator'=>'ABC123']));
+        $response = $client->pnrRetrieve(new Client\RequestOptions\PnrRetrieveOptions(['recordLocator' => 'ABC123']));
 
         $this->assertEquals($messageResult, $response);
     }
@@ -254,7 +254,7 @@ class ClientTest extends BaseTestCase
 
         $client = new Client($par);
 
-        $response = $client->pnrRetrieveAndDisplay(new Client\RequestOptions\PnrRetrieveAndDisplayOptions(['recordLocator'=>'ABC123']));
+        $response = $client->pnrRetrieveAndDisplay(new Client\RequestOptions\PnrRetrieveAndDisplayOptions(['recordLocator' => 'ABC123']));
 
         $this->assertEquals($messageResult, $response);
     }
@@ -296,7 +296,7 @@ class ClientTest extends BaseTestCase
             'type' => Client\RequestOptions\Pnr\Element\Contact::TYPE_PHONE_MOBILE,
             'value' => '+3222222222'
         ]);
-        $options->defaultReceivedFrom = 'some RF string amabnl-amadeus-ws-client-'.Client::VERSION;
+        $options->defaultReceivedFrom = 'some RF string amabnl-amadeus-ws-client-' . Client::VERSION;
         $options->autoAddReceivedFrom = true;
 
         $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($options);
@@ -353,7 +353,7 @@ class ClientTest extends BaseTestCase
 
         /** @var Client\RequestOptions\PnrAddMultiElementsOptions $expectedResultOpt */
         $expectedResultOpt = clone $options;
-        $expectedResultOpt->receivedFrom = 'some RF string '.Client::RECEIVED_FROM_IDENTIFIER.'-'.Client::VERSION;
+        $expectedResultOpt->receivedFrom = 'some RF string ' . Client::RECEIVED_FROM_IDENTIFIER . '-' . Client::VERSION;
 
         $expectedPnrResult = new Client\Struct\Pnr\AddMultiElements($expectedResultOpt);
 
@@ -818,7 +818,7 @@ class ClientTest extends BaseTestCase
             'ABC123',
             'BRUXX0000',
             new Client\RequestOptions\Queue([
-                'queue'=> 50,
+                'queue' => 50,
                 'category' => 0
             ])
         );
@@ -874,7 +874,7 @@ class ClientTest extends BaseTestCase
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $expectedMessageResult = new Client\Struct\Queue\RemoveItem(new Client\RequestOptions\Queue(['queue'=> 50, 'category' => 0]), 'ABC123', 'BRUXX0000');
+        $expectedMessageResult = new Client\Struct\Queue\RemoveItem(new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0]), 'ABC123', 'BRUXX0000');
 
         $mockSessionHandler
             ->expects($this->once())
@@ -927,7 +927,7 @@ class ClientTest extends BaseTestCase
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $expectedMessageResult = new Client\Struct\Queue\MoveItem('ABC123', 'BRUXX0000', new Client\RequestOptions\Queue(['queue'=> 50, 'category' => 0]), new Client\RequestOptions\Queue(['queue'=> 60, 'category' => 5]));
+        $expectedMessageResult = new Client\Struct\Queue\MoveItem('ABC123', 'BRUXX0000', new Client\RequestOptions\Queue(['queue' => 50, 'category' => 0]), new Client\RequestOptions\Queue(['queue' => 60, 'category' => 5]));
 
         $mockSessionHandler
             ->expects($this->once())
@@ -1019,6 +1019,74 @@ class ClientTest extends BaseTestCase
         $response = $client->commandCryptic(
             new Client\RequestOptions\CommandCrypticOptions([
                 'entry' => 'DAC BRU'
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendMiniRuleGetFromRec()
+    {
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('miniRuleGetFromRecReply18.1.txt');
+        $mockedSendResult->responseObject = new \stdClass();
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\MiniRule\GetFromRec(
+            new Client\RequestOptions\MiniRuleGetFromRecOptions([
+                    'pricings' => [
+                        new Client\RequestOptions\MiniRule\Pricing([
+                            'type' => Client\RequestOptions\MiniRule\Pricing::TYPE_RECORD_LOCATOR,
+                            'id' => 'XXXXXX'
+                        ])
+                    ]
+                ]
+            )
+        );
+
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('MiniRule_GetFromRec', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['MiniRule_GetFromRec' => ['version' => "18.1", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'MiniRule_GetFromRec')
+            ->will($this->returnValue($messageResult));
+
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->miniRuleGetFromRec(
+            new Client\RequestOptions\MiniRuleGetFromRecOptions([
+                'pricings' => [
+                    new Client\RequestOptions\MiniRule\Pricing([
+                        'type' => Client\RequestOptions\MiniRule\Pricing::TYPE_RECORD_LOCATOR,
+                        'id' => "XXXXXX"
+                    ])
+                ]
             ])
         );
 
@@ -2791,7 +2859,7 @@ class ClientTest extends BaseTestCase
                         'to' => 'LON',
                         'segments' => [
                             new Client\RequestOptions\Air\SellFromRecommendation\Segment([
-                                'departureDate' => \DateTime::createFromFormat('YmdHis','20170120000000', new \DateTimeZone('UTC')),
+                                'departureDate' => \DateTime::createFromFormat('YmdHis', '20170120000000', new \DateTimeZone('UTC')),
                                 'from' => 'BRU',
                                 'to' => 'LGW',
                                 'companyCode' => 'SN',
@@ -2845,7 +2913,7 @@ class ClientTest extends BaseTestCase
                         'to' => 'LON',
                         'segments' => [
                             new Client\RequestOptions\Air\SellFromRecommendation\Segment([
-                                'departureDate' => \DateTime::createFromFormat('YmdHis','20170120000000', new \DateTimeZone('UTC')),
+                                'departureDate' => \DateTime::createFromFormat('YmdHis', '20170120000000', new \DateTimeZone('UTC')),
                                 'from' => 'BRU',
                                 'to' => 'LGW',
                                 'companyCode' => 'SN',
@@ -2881,8 +2949,8 @@ class ClientTest extends BaseTestCase
                         'to' => 'BKK',
                         'segments' => [
                             new Client\RequestOptions\Air\SellFromRecommendation\Segment([
-                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
-                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                                'departureDate' => \DateTime::createFromFormat('YmdHis', '20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' => \DateTime::createFromFormat('YmdHis', '20040309141000', new \DateTimeZone('UTC')),
                                 'dateVariation' => 1,
                                 'from' => 'FRA',
                                 'to' => 'BKK',
@@ -2899,8 +2967,8 @@ class ClientTest extends BaseTestCase
                         'to' => 'BKK',
                         'segments' => [
                             new Client\RequestOptions\Air\SellFromRecommendation\Segment([
-                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
-                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','00000000141000', new \DateTimeZone('UTC')),
+                                'departureDate' => \DateTime::createFromFormat('YmdHis', '20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' => \DateTime::createFromFormat('YmdHis', '00000000141000', new \DateTimeZone('UTC')),
                                 'from' => 'FRA',
                                 'to' => 'BKK',
                                 'companyCode' => 'LH',
@@ -2955,8 +3023,8 @@ class ClientTest extends BaseTestCase
                         'to' => 'BKK',
                         'segments' => [
                             new Client\RequestOptions\Air\SellFromRecommendation\Segment([
-                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
-                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','20040309141000', new \DateTimeZone('UTC')),
+                                'departureDate' => \DateTime::createFromFormat('YmdHis', '20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' => \DateTime::createFromFormat('YmdHis', '20040309141000', new \DateTimeZone('UTC')),
                                 'dateVariation' => 1,
                                 'from' => 'FRA',
                                 'to' => 'BKK',
@@ -2973,8 +3041,8 @@ class ClientTest extends BaseTestCase
                         'to' => 'BKK',
                         'segments' => [
                             new Client\RequestOptions\Air\SellFromRecommendation\Segment([
-                                'departureDate' => \DateTime::createFromFormat('YmdHis','20040308220000', new \DateTimeZone('UTC')),
-                                'arrivalDate' =>  \DateTime::createFromFormat('YmdHis','00000000141000', new \DateTimeZone('UTC')),
+                                'departureDate' => \DateTime::createFromFormat('YmdHis', '20040308220000', new \DateTimeZone('UTC')),
+                                'arrivalDate' => \DateTime::createFromFormat('YmdHis', '00000000141000', new \DateTimeZone('UTC')),
                                 'from' => 'FRA',
                                 'to' => 'BKK',
                                 'companyCode' => 'LH',
@@ -3193,12 +3261,12 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
-	public function testCanSendFareMasterPricerExpertSearch()
-	{
+    public function testCanSendFareMasterPricerExpertSearch()
+    {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
 
         $mockedSendResult = new Client\Session\Handler\SendResult();
-		$mockedSendResult->responseXml = $this->getTestFile('fareMasterPricerExpertSearchReply-12.4.txt');
+        $mockedSendResult->responseXml = $this->getTestFile('fareMasterPricerExpertSearchReply-12.4.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
 
@@ -3280,10 +3348,10 @@ class ClientTest extends BaseTestCase
                     Client\RequestOptions\FareMasterPricerExSearchOptions::FLIGHTTYPE_DIRECT
                 ]
             ])
-		);
+        );
 
         $this->assertEquals($messageResult, $response);
-	}
+    }
 
     public function testCanSendFareMasterPricerTravelBoardSearch()
     {
@@ -3489,8 +3557,8 @@ class ClientTest extends BaseTestCase
                 'resultAggregationOption' => Client\RequestOptions\PriceXplorerExtremeSearchOptions::AGGR_COUNTRY,
                 'origin' => 'BRU',
                 'destinations' => ['SYD', 'CBR'],
-                'earliestDepartureDate' => \DateTime::createFromFormat('Y-m-d','2016-08-25', new \DateTimeZone('UTC')),
-                'latestDepartureDate' => \DateTime::createFromFormat('Y-m-d','2016-09-28', new \DateTimeZone('UTC')),
+                'earliestDepartureDate' => \DateTime::createFromFormat('Y-m-d', '2016-08-25', new \DateTimeZone('UTC')),
+                'latestDepartureDate' => \DateTime::createFromFormat('Y-m-d', '2016-09-28', new \DateTimeZone('UTC')),
                 'searchOffice' => 'LONBG2222'
             ])
         );
@@ -3531,8 +3599,8 @@ class ClientTest extends BaseTestCase
                 'resultAggregationOption' => Client\RequestOptions\PriceXplorerExtremeSearchOptions::AGGR_COUNTRY,
                 'origin' => 'BRU',
                 'destinations' => ['SYD', 'CBR'],
-                'earliestDepartureDate' => \DateTime::createFromFormat('Y-m-d','2016-08-25', new \DateTimeZone('UTC')),
-                'latestDepartureDate' => \DateTime::createFromFormat('Y-m-d','2016-09-28', new \DateTimeZone('UTC')),
+                'earliestDepartureDate' => \DateTime::createFromFormat('Y-m-d', '2016-08-25', new \DateTimeZone('UTC')),
+                'latestDepartureDate' => \DateTime::createFromFormat('Y-m-d', '2016-09-28', new \DateTimeZone('UTC')),
                 'searchOffice' => 'LONBG2222'
             ])
         );
@@ -4475,15 +4543,15 @@ class ClientTest extends BaseTestCase
         $mockedSendResult->responseXml = $this->getTestFile('serviceBookPriceServiceReply.txt');
 
         $messageResult = new Client\Result($mockedSendResult);
-        
+
         $opts = new Client\RequestOptions\ServiceBookPriceServiceOptions([
             'services' => [new Client\RequestOptions\Service\BookPriceService\Service([
                 'TID' => 1,
                 'serviceProvider' => 'LH',
                 'identifier' => new Client\RequestOptions\Service\BookPriceService\Identifier([
-                'bookingMethod' => '01',
-                'RFIC' => 'F',
-                'RFISC' => '040'
+                    'bookingMethod' => '01',
+                    'RFIC' => 'F',
+                    'RFISC' => '040'
                 ])
             ])]
         ]);
@@ -6287,8 +6355,8 @@ class ClientTest extends BaseTestCase
     protected function makePathToDummyWSDL()
     {
         return realpath(
-            dirname(__FILE__).DIRECTORY_SEPARATOR."Client".
-            DIRECTORY_SEPARATOR."testfiles".DIRECTORY_SEPARATOR."dummywsdl.wsdl"
+            dirname(__FILE__) . DIRECTORY_SEPARATOR . "Client" .
+            DIRECTORY_SEPARATOR . "testfiles" . DIRECTORY_SEPARATOR . "dummywsdl.wsdl"
         );
     }
 }

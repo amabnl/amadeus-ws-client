@@ -1,3 +1,6 @@
+## Unreleased
+* Implemented `MiniRule_GetFromRec` (Amadeus docs emphasize to use `MiniRule_GetFromRec` instead of `MiniRule_GetFromETicket`, `MiniRule_GetFromPricing`, `MiniRule_GetFromPricingRec`) - Aleksandr Kalugin
+
 ## Release 1.11.0 (9 July 2020)
 https://github.com/amabnl/amadeus-ws-client/pull/344: 
 * Added support to add accountNumber in ``Queue_List``

@@ -23,6 +23,7 @@
 namespace Amadeus\Client\RequestOptions\MiniRule;
 
 use Amadeus\Client\LoadParamsFromArray;
+use Amadeus\Client\RequestOptions\MiniRule\Pricing\FilteringOption;
 
 /**
  * MiniRule Pricing
@@ -47,26 +48,49 @@ class Pricing extends LoadParamsFromArray
     /**
      * Transitional Stored Ticket
      *
-     * Only to be used with MiniRule_GetFromPricingRec
+     * Only to be used with MiniRule_GetFromPricingRec, MiniRule_GetFromRec
      */
     const TYPE_TST = "TST";
 
     /**
+     * Ticket Number
+     *
+     * Only to be used with MiniRule_GetFromRec
+     */
+    const TYPE_TKT = "TKT";
+
+    /**
+     * Record Locator
+     *
+     * Only to be used with MiniRule_GetFromRec
+     */
+    const TYPE_RECORD_LOCATOR = "PNR";
+
+    /**
      * Product Quotation Record Reference
      *
-     * Only to be used with MiniRule_GetFromPricingRec
+     * Only to be used with MiniRule_GetFromPricingRec, MiniRule_GetFromRec
      */
     const TYPE_PROD_QUOTATION = "PQR";
 
     /**
      * Fare Recommendation Number
      *
-     * Only to be used with MiniRule_GetFromPricing
+     * Only to be used with MiniRule_GetFromPricing, MiniRule_GetFromRec
      */
     const TYPE_FARE_RECOMMENDATION_NUMBER = "FRN";
 
     /**
+     * Fare Upsell reco. Number
+     *
+     * Only to be used with MiniRule_GetFromRec
+     */
+    const TYPE_FARE_UPSELL_RECOMMENDATION_NUMBER = "FUN";
+
+    /**
      * self::ALL_PRICINGS to indicate ALL or a number indicating a specific pricing
+     *
+     *  Contains TST tatoo, ticket number, PNR recloc, fare recommendation, PQR Offer Id, fare upsell recommendation or the keyword 'ALL', when used with MiniRule_GetFromRec
      *
      * @var int|string
      */
@@ -75,10 +99,17 @@ class Pricing extends LoadParamsFromArray
     /**
      * self::TYPE_*
      *
-     * Only necessary for MiniRule_GetFromPricingRec:
+     * Only necessary for MiniRule_GetFromPricingRec, MiniRule_GetFromRec:
      * For MiniRule_GetFromPricing, "FRN" is assumed.
      *
      * @var string
      */
     public $type;
+
+
+    /**
+     * Only to be used with MiniRule_GetFromRec
+     * @var FilteringOption[]
+     */
+    public $filteringOptions;
 }
