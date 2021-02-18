@@ -212,6 +212,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
                 ": \n".$ex->getTraceAsString()
             );
             $this->logRequestAndResponse($messageName);
+            $this->handlePostMessage($messageName, $this->getLastResponse($messageName), $messageOptions, $result);
             $result->exception = $ex;
         } catch (\Exception $ex) {
             // We should only come here when the XSL extension is not enabled
