@@ -1894,8 +1894,6 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertEquals('20', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightIdentification->flightNumber);
         $this->assertNull($message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->flightIdentification->bookingClass);
         $this->assertEquals('AA', $message->itinerary[0]->flightInfoPNR[0]->travelResponseDetails->companyDetails->marketingCompany);
-        
-
 
         $this->assertCount(2, $message->numberOfUnit->unitNumberDetail);
         $this->assertEquals(1, $message->numberOfUnit->unitNumberDetail[0]->numberOfUnits);
@@ -1925,5 +1923,34 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertNull($message->ticketChangeInfo);
         $this->assertEmpty($message->valueSearch);
         $this->assertNull($message->travelFlightInfo);
+    }
+
+    public function testUseMultiplePassengerType()
+    {
+        $opt = new FareMasterPricerTbSearch();
+        $opt->nrOfRequestedResults = 200;
+        $opt->nrOfRequestedPassengers = 1;
+        $opt->passengers[] = new MPPassenger([
+            'type' => [
+                MPPassenger::TYPE_ADULT,
+                MPPassenger::TYPE_INDIVIDUAL_INCLUSIVE_TOUR,
+            ],
+            'count' => 1
+        ]);
+        $opt->itinerary[] = new MPItinerary([
+            'departureLocation' => new MPLocation(['city' => 'JFK']),
+            'arrivalLocation' => new MPLocation(['city' => 'KEF']),
+            'date' => new MPDate(['dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))]),
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+        $this->assertInternalType('array', $message->paxReference);
+
+        $this->assertCount(1, $message->paxReference);
+        $this->assertCount(2, $message->paxReference[0]->ptc);
+        $this->assertEquals('ADT', $message->paxReference[0]->ptc[0]);
+        $this->assertEquals('IIT', $message->paxReference[0]->ptc[1]);
+        $this->assertCount(1, $message->paxReference[0]->traveller);
+        $this->assertEquals(1, $message->paxReference[0]->traveller[0]->ref);
     }
 }
