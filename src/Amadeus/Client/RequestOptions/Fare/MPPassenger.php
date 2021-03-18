@@ -42,10 +42,12 @@ class MPPassenger extends LoadParamsFromArray
 
     const TYPE_STUDENT = "ST";
 
+    const TYPE_INDIVIDUAL_INCLUSIVE_TOUR = 'IIT';
+
     /**
      * What type of passengers? self::TYPE_*
      *
-     * @var string
+     * @var string|array
      */
     public $type;
 

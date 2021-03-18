@@ -58,7 +58,7 @@ class Client extends Base
      *
      * @var string
      */
-    const VERSION = "1.11.0";
+    const VERSION = "1.13.0-dev";
 
     /**
      * An identifier string for the library (to be used in Received From entries)

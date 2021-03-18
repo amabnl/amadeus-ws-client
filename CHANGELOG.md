@@ -1,5 +1,10 @@
 ## Unreleased
+
+
+## Release 1.12.0 (18 Feb 2021)
 * Implemented `MiniRule_GetFromRec` (Amadeus docs emphasize to use `MiniRule_GetFromRec` instead of `MiniRule_GetFromETicket`, `MiniRule_GetFromPricing`, `MiniRule_GetFromPricingRec`) - Aleksandr Kalugin
+* Added support for `ES` (Security Elements) to `PNR_*` messages - suiram2010
+* Fixed a bug where Session information was not loaded if a SOAPFault was returned.
 
 ## Release 1.11.0 (9 July 2020)
 https://github.com/amabnl/amadeus-ws-client/pull/344: 
