@@ -911,9 +911,9 @@ Multi-Ticket
 ============
 
 The Multi-Ticket option allows you to get inbound, outbound and complete flights in one response.
-Works only on return trip search. 
+Works only on return trip search.
 
-`multiTicketWeights` is optional. If passed the sum of each weight has to sum up to 100. 
+`multiTicketWeights` is optional. If passed the sum of each weight has to sum up to 100.
 
 .. code-block:: php
 
@@ -1355,3 +1355,41 @@ See all available type codes in `Amadeus\Client\RequestOptions\Fare\MasterPricer
         ]
     ]);
 
+Multiple passenger types
+========================
+
+In case you need to combine passenger types to get some specific private fares in union with ADT private fares.
+It will returned both ADT and IIT fares for one passenger.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => [
+                    MPPassenger::TYPE_ADULT,
+                    MPPassenger::TYPE_INDIVIDUAL_INCLUSIVE_TOUR,
+                ],
+                'count' => 1,
+            ]),
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['airport' => 'JFK']),
+                'arrivalLocation' => new MPLocation(['airport' => 'KEF']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2021-11-01T00:00:00+0000', new \DateTimeZone('UTC'))
+                ]),
+            ]),
+        ],
+        'flightOptions' => [
+            FareMasterPricerTbSearch::FLIGHTOPT_UNIFARES,
+        ],
+    ]);

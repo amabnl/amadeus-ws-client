@@ -69,7 +69,8 @@ class RetrievalFacts extends WsMessageUtility
     {
         $this->retrieve = new Retrieve(
             $options->retrievalType,
-            $options->officeId, $options->options
+            $options->officeId,
+            $options->options
         );
 
         if ($this->checkAnyNotEmpty($options->accountNumber)) {
