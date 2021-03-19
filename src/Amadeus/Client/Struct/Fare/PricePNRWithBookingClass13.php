@@ -24,6 +24,7 @@ namespace Amadeus\Client\Struct\Fare;
 
 use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareFamily;
@@ -37,6 +38,7 @@ use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions as LowerFare
 use Amadeus\Client\RequestOptions\FarePricePnrWithLowestFareOptions as LowestFareOpt;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions as InformativePriceOpt;
 use Amadeus\Client\Struct\Fare\PricePnr13\CarrierInformation;
+use Amadeus\Client\Struct\Fare\PricePnr13\CriteriaDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\Currency;
 use Amadeus\Client\Struct\Fare\PricePnr13\DateInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\FormOfPaymentInformation;
@@ -186,6 +188,11 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
         $priceOptions = self::mergeOptions(
             $priceOptions,
             self::loadZapOffs($options->zapOff)
+        );
+
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadCabins($options->cabins)
         );
 
         // All options processed, no options found:
@@ -660,6 +667,28 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
                 $opt[] = $po;
             }
+        }
+
+        return $opt;
+    }
+
+    /**
+     * Load Cabins
+     *
+     * @param Cabin[] $cabins
+     * @return array
+     */
+    protected static function loadCabins($cabins)
+    {
+        $opt = [];
+        if (!empty($cabins)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_CABIN);
+            $criteriaDetails = [];
+            foreach ($cabins as $cabin) {
+                $criteriaDetails[] = new CriteriaDetails($cabin->cabinType,$cabin->cabinCode);
+            }
+            $po->optionDetail = new OptionDetail($criteriaDetails);
+            $opt[] = $po;
         }
 
         return $opt;

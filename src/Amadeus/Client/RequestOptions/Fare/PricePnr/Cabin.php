@@ -20,22 +20,38 @@
  * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
  */
 
-namespace Amadeus\Client\RequestOptions;
+namespace Amadeus\Client\RequestOptions\Fare\PricePnr;
 
-use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
+use Amadeus\Client\LoadParamsFromArray;
 
 /**
- * Fare_PricePnrWithLowerFares Request Options
- *
- * @package Amadeus\Client\RequestOptions
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * Class Cabin
+ * @package Amadeus\Client\RequestOptions\Fare\PricePnr
+ * @author  Dieter Devlieghere <dermikagh@gmail.com>
  */
-class FarePricePnrWithLowerFaresOptions extends FarePricePnrWithBookingClassOptions
+class Cabin extends LoadParamsFromArray
 {
+    const CABIN_TYPE_FIRST = 'FC';
+    const CABIN_TYPE_SECOND = 'SC';
+    const CABIN_TYPE_THIRD = 'TC';
+    const CABIN_TYPE_ORIGINAL_CABIN = 'K';
+    const CABIN_TYPE_ANY_CABIN = 'P';
+
+
     /**
-     * Zap-Off to be applied
+     * Cabin type to search for
      *
-     * @var Cabin[]
+     * self::CABIN_TYPE_*
+     *
+     * @var string
      */
-    public $cabins;
+    public $cabinType;
+
+
+    /**
+     * Cabin code to search for
+     *
+     * @var string
+     */
+    public $cabinCode;
 }
