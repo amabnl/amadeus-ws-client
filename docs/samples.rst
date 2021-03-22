@@ -936,14 +936,6 @@ An example of pricing, with options listed below:
                 FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_PUB,
                 FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_UNI
             ],
-            'currencyOverride' => 'USD',
-            'paxDiscountCodes' => ['CH'],
-            'paxDiscountCodeRefs' => [
-                new PaxSegRef([
-                    'type' => PaxSegRef::TYPE_PASSENGER,
-                    'reference' => 2
-                ])
-            ],
             'cabins' => [
                 new Cabin([
                     'cabinType' => Cabin::CABIN_TYPE_ORIGINAL_CABIN
@@ -969,14 +961,6 @@ An example of pricing, with options listed below:
             'overrideOptions' => [
                 FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_PUB,
                 FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_UNI
-            ],
-            'currencyOverride' => 'USD',
-            'paxDiscountCodes' => ['CH'],
-            'paxDiscountCodeRefs' => [
-                new PaxSegRef([
-                    'type' => PaxSegRef::TYPE_PASSENGER,
-                    'reference' => 2
-                ])
             ],
             'cabins' => [
                 new Cabin([
