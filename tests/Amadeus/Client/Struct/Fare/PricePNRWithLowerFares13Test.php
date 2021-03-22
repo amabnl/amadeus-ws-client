@@ -113,14 +113,14 @@ class PricePNRWithLowerFares13Test extends BaseTestCase
 
         $message = new PricePNRWithLowerFares13($options);
 
-        $this->assertCount(2, $message->pricingOptionGroup);
+        $this->assertCount(3, $message->pricingOptionGroup);
 
         $this->assertEquals(PricingOptionKey::OPTION_PUBLISHED_FARES, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
 
         $this->assertEquals(PricingOptionKey::OPTION_UNIFARES, $message->pricingOptionGroup[1]->pricingOptionKey->pricingOptionKey);
 
         $this->assertEquals(PricingOptionKey::OPTION_CABIN, $message->pricingOptionGroup[2]->pricingOptionKey->pricingOptionKey);
-        $this->assertEquals(Cabin::CABIN_TYPE_ORIGINAL_CABIN, $message->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals(Cabin::CABIN_TYPE_ORIGINAL_CABIN, $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[0]->attributeType);
     }
 
     /**
@@ -158,13 +158,17 @@ class PricePNRWithLowerFares13Test extends BaseTestCase
 
         $message = new PricePNRWithLowerFares13($options);
 
-        $this->assertCount(2, $message->pricingOptionGroup);
+        $this->assertCount(3, $message->pricingOptionGroup);
 
         $this->assertEquals(PricingOptionKey::OPTION_PUBLISHED_FARES, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
 
         $this->assertEquals(PricingOptionKey::OPTION_UNIFARES, $message->pricingOptionGroup[1]->pricingOptionKey->pricingOptionKey);
 
         $this->assertEquals(PricingOptionKey::OPTION_CABIN, $message->pricingOptionGroup[2]->pricingOptionKey->pricingOptionKey);
-        $this->assertEquals(Cabin::CABIN_TYPE_ORIGINAL_CABIN, $message->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals(Cabin::CABIN_TYPE_FIRST, $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals('F', $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[0]->attributeDescription);
+        $this->assertEquals(Cabin::CABIN_TYPE_SECOND, $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[1]->attributeType);
+        $this->assertEquals('C', $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[1]->attributeDescription);
+        $this->assertEquals(Cabin::CABIN_TYPE_ANY_CABIN, $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[3]->attributeType);
     }
 }
