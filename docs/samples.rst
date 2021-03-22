@@ -981,11 +981,11 @@ An example of pricing, with options listed below:
             'cabins' => [
                 new Cabin([
                     'cabinType' => Cabin::CABIN_TYPE_FIRST,
-                    'cabinCode  => 'F'
+                    'cabinCode'  => 'F'
                 ]),
                 new Cabin([
                     'cabinType' => Cabin::CABIN_TYPE_SECOND,
-                    'cabinCode  => 'C'
+                    'cabinCode'  => 'C'
                 ]),
                 new Cabin([
                     'cabinType' => Cabin::CABIN_TYPE_ANY_CABIN
