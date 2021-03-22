@@ -22,8 +22,6 @@
 
 namespace Amadeus\Client\RequestOptions;
 
-use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
-
 /**
  * Fare_PricePnrWithLowerFares Request Options
  *
@@ -32,10 +30,4 @@ use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
  */
 class FarePricePnrWithLowerFaresOptions extends FarePricePnrWithBookingClassOptions
 {
-    /**
-     * Zap-Off to be applied
-     *
-     * @var Cabin[]
-     */
-    public $cabins;
 }

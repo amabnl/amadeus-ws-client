@@ -918,6 +918,82 @@ An example of pricing, with options listed below:
         ])
     );
 
+An example of pricing, with options listed below:
+
+- take published fares into account (RP)
+- take Unifares into account (RU)
+- Search only in the original cabin (the one from the segment)
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
+
+    $pricingResponse = $client->farePricePnrWithLowerFares(
+        new FarePricePnrWithLowerFaresOptions([
+            'overrideOptions' => [
+                FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_PUB,
+                FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_UNI
+            ],
+            'currencyOverride' => 'USD',
+            'paxDiscountCodes' => ['CH'],
+            'paxDiscountCodeRefs' => [
+                new PaxSegRef([
+                    'type' => PaxSegRef::TYPE_PASSENGER,
+                    'reference' => 2
+                ])
+            ],
+            'cabins' => [
+                new Cabin([
+                    'cabinType' => Cabin::CABIN_TYPE_ORIGINAL_CABIN
+                ])
+            ]
+        ])
+    );
+
+An example of pricing, with options listed below:
+
+- take published fares into account (RP)
+- take Unifares into account (RU)
+- Search in cabin F first, then in cabin C and finally in any cabin
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
+
+    $pricingResponse = $client->farePricePnrWithLowerFares(
+        new FarePricePnrWithLowerFaresOptions([
+            'overrideOptions' => [
+                FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_PUB,
+                FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_UNI
+            ],
+            'currencyOverride' => 'USD',
+            'paxDiscountCodes' => ['CH'],
+            'paxDiscountCodeRefs' => [
+                new PaxSegRef([
+                    'type' => PaxSegRef::TYPE_PASSENGER,
+                    'reference' => 2
+                ])
+            ],
+            'cabins' => [
+                new Cabin([
+                    'cabinType' => Cabin::CABIN_TYPE_FIRST,
+                    'cabinCode  => 'F'
+                ]),
+                new Cabin([
+                    'cabinType' => Cabin::CABIN_TYPE_SECOND,
+                    'cabinCode  => 'C'
+                ]),
+                new Cabin([
+                    'cabinType' => Cabin::CABIN_TYPE_ANY_CABIN
+                ])
+            ]
+        ])
+    );
+
 `More examples of Pricing messages <samples/pricepnr.rst>`_
 
 ---------------------------

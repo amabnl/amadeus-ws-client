@@ -23,6 +23,7 @@
 namespace Amadeus\Client\RequestOptions;
 
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareFamily;
@@ -286,4 +287,11 @@ class FarePricePnrWithBookingClassOptions extends Base
      * @var ZapOff[]
      */
     public $zapOff;
+
+    /**
+     * Cabins to be applied
+     *
+     * @var Cabin[]
+     */
+    public $cabins;
 }

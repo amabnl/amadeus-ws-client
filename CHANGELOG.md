@@ -1,5 +1,5 @@
 ## Unreleased
-
+* Added support for ``CAB`` Elements in Fare_PricePnrWithLowerFares - suiram2010
 
 ## Release 1.12.0 (18 Feb 2021)
 * Implemented `MiniRule_GetFromRec` (Amadeus docs emphasize to use `MiniRule_GetFromRec` instead of `MiniRule_GetFromETicket`, `MiniRule_GetFromPricing`, `MiniRule_GetFromPricingRec`) - Aleksandr Kalugin
