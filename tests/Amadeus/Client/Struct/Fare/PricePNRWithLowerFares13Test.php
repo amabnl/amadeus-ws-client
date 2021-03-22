@@ -169,6 +169,6 @@ class PricePNRWithLowerFares13Test extends BaseTestCase
         $this->assertEquals('F', $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[0]->attributeDescription);
         $this->assertEquals(Cabin::CABIN_TYPE_SECOND, $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[1]->attributeType);
         $this->assertEquals('C', $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[1]->attributeDescription);
-        $this->assertEquals(Cabin::CABIN_TYPE_ANY_CABIN, $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[3]->attributeType);
+        $this->assertEquals(Cabin::CABIN_TYPE_ANY_CABIN, $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[2]->attributeType);
     }
 }

@@ -685,7 +685,7 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
             $po = new PricingOptionGroup(PricingOptionKey::OPTION_CABIN);
             $criteriaDetails = [];
             foreach ($cabins as $cabin) {
-                $criteriaDetails[] = new CriteriaDetails($cabin->cabinType,$cabin->cabinCode);
+                $criteriaDetails[] = new CriteriaDetails($cabin->cabinType, $cabin->cabinCode);
             }
             $po->optionDetail = new OptionDetail($criteriaDetails);
             $opt[] = $po;
