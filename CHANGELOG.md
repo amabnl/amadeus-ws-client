@@ -1,5 +1,8 @@
 ## Unreleased
-* Added support for ``CAB`` Elements in Fare_PricePnrWithLowerFares - suiram2010
+
+## Release 1.13.0 (5 Apr 2021)
+* Add support for multiple pax types in Fare_MasterPricerTravelBoardSearch (https://github.com/amabnl/amadeus-ws-client/pull/432)  - Artem Zakharchenko
+* Added support for ``CAB`` Elements in Fare_PricePnrWithLowerFares (https://github.com/amabnl/amadeus-ws-client/pull/433) - suiram2010
 
 ## Release 1.12.0 (18 Feb 2021)
 * Implemented `MiniRule_GetFromRec` (Amadeus docs emphasize to use `MiniRule_GetFromRec` instead of `MiniRule_GetFromETicket`, `MiniRule_GetFromPricing`, `MiniRule_GetFromPricingRec`) - Aleksandr Kalugin
