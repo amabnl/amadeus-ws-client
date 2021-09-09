@@ -29,6 +29,7 @@ use Amadeus\Client\Struct\Fare\PricePnr13\PenDisInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionKey;
 use Amadeus\Client\Struct\Fare\PricePnr13\ReferenceDetails;
 use Amadeus\Client\Struct\Fare\PricePNRWithLowerFares13;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
 use Test\Amadeus\BaseTestCase;
 
 /**
@@ -83,5 +84,91 @@ class PricePNRWithLowerFares13Test extends BaseTestCase
         $this->assertEquals(PricingOptionKey::OPTION_PUBLISHED_FARES, $message->pricingOptionGroup[2]->pricingOptionKey->pricingOptionKey);
 
         $this->assertEquals(PricingOptionKey::OPTION_UNIFARES, $message->pricingOptionGroup[3]->pricingOptionKey->pricingOptionKey);
+    }
+
+    /**
+     * 2.8 Operation: Pricing options with cabin options
+     * 2.8.1 Original Cabin
+     * Here is a complete example of pricing, with options listed below:
+     *
+     * - take published fares into account (RP)
+     * - take Unifares into account (RU)
+     * - search only in the original cabin (the one from the segment)
+     */
+    public function test281OperationPricingOptions()
+    {
+        $options = new FarePricePnrWithLowerFaresOptions(
+            [
+                'overrideOptions' => [
+                    FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_PUB,
+                    FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_UNI
+                ],
+                'cabins' => [
+                    new Cabin([
+                        'cabinType' => Cabin::CABIN_TYPE_ORIGINAL_CABIN
+                    ])
+                ]
+            ]
+        );
+
+        $message = new PricePNRWithLowerFares13($options);
+
+        $this->assertCount(3, $message->pricingOptionGroup);
+
+        $this->assertEquals(PricingOptionKey::OPTION_PUBLISHED_FARES, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+
+        $this->assertEquals(PricingOptionKey::OPTION_UNIFARES, $message->pricingOptionGroup[1]->pricingOptionKey->pricingOptionKey);
+
+        $this->assertEquals(PricingOptionKey::OPTION_CABIN, $message->pricingOptionGroup[2]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(Cabin::CABIN_TYPE_ORIGINAL_CABIN, $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[0]->attributeType);
+    }
+
+    /**
+     * 2.8 Operation: Pricing options with cabin options
+     * 2.8.2
+     * Here is a complete example of pricing, with options listed below:
+     *
+     * - take published fares into account (RP)
+     * - take Unifares into account (RU)
+     * - Search in cabin F first, then in cabin C and finally in any cabin
+     */
+    public function test282OperationPricingOptions()
+    {
+        $options = new FarePricePnrWithLowerFaresOptions(
+            [
+                'overrideOptions' => [
+                    FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_PUB,
+                    FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_UNI
+                ],
+                'cabins' => [
+                    new Cabin([
+                        'cabinType' => Cabin::CABIN_TYPE_FIRST,
+                        'cabinCode'  => 'F'
+                    ]),
+                    new Cabin([
+                        'cabinType' => Cabin::CABIN_TYPE_SECOND,
+                        'cabinCode'  => 'C'
+                    ]),
+                    new Cabin([
+                        'cabinType' => Cabin::CABIN_TYPE_ANY_CABIN
+                    ])
+                ]
+            ]
+        );
+
+        $message = new PricePNRWithLowerFares13($options);
+
+        $this->assertCount(3, $message->pricingOptionGroup);
+
+        $this->assertEquals(PricingOptionKey::OPTION_PUBLISHED_FARES, $message->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+
+        $this->assertEquals(PricingOptionKey::OPTION_UNIFARES, $message->pricingOptionGroup[1]->pricingOptionKey->pricingOptionKey);
+
+        $this->assertEquals(PricingOptionKey::OPTION_CABIN, $message->pricingOptionGroup[2]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(Cabin::CABIN_TYPE_FIRST, $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals('F', $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[0]->attributeDescription);
+        $this->assertEquals(Cabin::CABIN_TYPE_SECOND, $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[1]->attributeType);
+        $this->assertEquals('C', $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[1]->attributeDescription);
+        $this->assertEquals(Cabin::CABIN_TYPE_ANY_CABIN, $message->pricingOptionGroup[2]->optionDetail->criteriaDetails[2]->attributeType);
     }
 }
