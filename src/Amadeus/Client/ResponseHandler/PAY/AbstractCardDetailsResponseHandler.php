@@ -42,7 +42,7 @@ abstract class AbstractCardDetailsResponseHandler extends StandardResponseHandle
         }
 
         $cvvNumber = $domXpath->query('//fop:CVV');
-        if ($cardNumber->length > 0) {
+        if ($cvvNumber->length > 0) {
             $analyzeResponse->response->Success->VirtualCard->Card->CVV =
                 $cvvNumber->item(0)->nodeValue;
         }
