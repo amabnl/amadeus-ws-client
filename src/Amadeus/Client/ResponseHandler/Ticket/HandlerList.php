@@ -18,9 +18,8 @@ class HandlerList extends \Amadeus\Client\ResponseHandler\Queue\HandlerList
      * This function is necessary because the core only responds
      * with errorcode but does not send an errortext.
      *
-     * The errorcodes for all Queue_*Reply messages are the same.
+     * The errorcodes for all Queue_*Ticket_ProcessETicketReply messages are the same.
      *
-     * @link https://webservices.amadeus.com/extranet/viewArea.do?id=10
      * @param string $errorCode
      * @return string the errortext for this errorcode.
      */
@@ -31,7 +30,7 @@ class HandlerList extends \Amadeus\Client\ResponseHandler\Queue\HandlerList
             '107' => 'Invalid Airline Designator/Vendor Supplier',
             '109' => 'Invalid Country Code',
             '111' => 'Invalid Agent\'s Code',
-            '112' => ' Requestor Identification Required',
+            '112' => 'Requestor Identification Required',
             '113' => 'Invalid Period of Operation',
             '114' => 'Invalid Flight Number',
             '115' => 'Invalid Arrival Date',
