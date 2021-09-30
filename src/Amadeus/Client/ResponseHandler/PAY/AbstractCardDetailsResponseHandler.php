@@ -49,6 +49,9 @@ abstract class AbstractCardDetailsResponseHandler extends StandardResponseHandle
 
         $address = $domXpath->query('//fop:AddressVerificationSystemValue');
         if ($address->length > 0) {
+            if (empty($analyzeResponse->response->Success->VirtualCard->Card->AddressVerificationSystemValue)) {
+                $analyzeResponse->response->Success->VirtualCard->Card->AddressVerificationSystemValue = new \stdClass();
+            }
             $analyzeResponse->response->Success->VirtualCard->Card->AddressVerificationSystemValue->Line =
                 $address->item(0)->nodeValue;
             $analyzeResponse->response->Success->VirtualCard->Card->AddressVerificationSystemValue->CityName =
