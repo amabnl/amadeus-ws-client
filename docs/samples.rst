@@ -1296,9 +1296,9 @@ Get fare rules providing corporate number and departure date:
         ])
     );
 
------------------
+-----------------------------
 Fare_GetFareFamilyDescription
------------------
+-----------------------------
 
 Basic request to get Fare Families in stateful mode (after pricing):
 
@@ -1317,6 +1317,50 @@ Basic request to get Fare Families in stateful mode (after pricing):
             ]
         ])
     );
+
+Requesting an Airline Fare Family (AFF) description in standalone mode:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareGetFareFamilyDescriptionOptions;
+    use Amadeus\Client\RequestOptions\Fare\GetFareFamilyDescription;
+
+    $fareFamiliesResponse = $client->fareGetFareFamilyDescription(
+        new FareGetFareFamilyDescriptionOptions([
+            'bookingDateInformation' => new \DateTime('2021-10-08'),
+            'standaloneDescriptionRequest' => new GetFareFamilyDescription\StandaloneDescriptionRequest([
+                'items' => [
+                    new GetFareFamilyDescription\StandaloneDescriptionRequestOption([
+                        'fareInfo' => new GetFareFamilyDescription\FareInfo([
+                            'fareQualifier' => 'FF',
+                            'rateCategory' => 'BASICECON',
+                        ]),
+                        'itineraryInfo' => new GetFareFamilyDescription\ItineraryInfo([
+                            'origin' => 'JFK',
+                            'destination' => 'DUB',
+                        ]),
+                        'carrierInfo' => new GetFareFamilyDescription\CarrierInfo([
+                            'airline' => 'DL',
+                        ]),
+                    ]),
+                    new GetFareFamilyDescription\StandaloneDescriptionRequestOption([
+                        'fareInfo' => new GetFareFamilyDescription\FareInfo([
+                            'fareQualifier' => 'FF',
+                            'rateCategory' => 'BASIC',
+                        ]),
+                        'itineraryInfo' => new GetFareFamilyDescription\ItineraryInfo([
+                            'origin' => 'MIA',
+                            'destination' => 'AUA',
+                        ]),
+                        'carrierInfo' => new GetFareFamilyDescription\CarrierInfo([
+                            'airline' => 'AA',
+                        ]),
+                    ]),
+                ],
+            ]),
+        ]),
+    );
+
 
 --------------------
 Fare_ConvertCurrency
