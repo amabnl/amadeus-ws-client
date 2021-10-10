@@ -23,9 +23,11 @@
 namespace Test\Amadeus\Client\Struct\Fare;
 
 use Amadeus\Client\RequestOptions\FareGetFareFamilyDescriptionOptions;
+use Amadeus\Client\RequestOptions\Fare\GetFareFamilyDescription as GetFareFamilyDescriptionRequest;
 use Amadeus\Client\RequestOptions\Reference;
 use Amadeus\Client\RequestOptions\ReferenceGroup;
 use Amadeus\Client\Struct\Fare\GetFareFamilyDescription;
+use DateTime;
 use Test\Amadeus\BaseTestCase;
 use Amadeus\Client\Struct\Fare\GetFareFamilyDescription\ReferenceDetails;
 use Amadeus\Client\Struct\Fare\GetFareFamilyDescription\ReferenceInformation;
@@ -72,5 +74,61 @@ class GetFareFamilyDescriptionTest extends BaseTestCase
                 )
             ]),
         ], $message->referenceInformation);
+    }
+
+    public function testCanMakeStandaloneDescriptionMessage()
+    {
+        $options = new FareGetFareFamilyDescriptionOptions([
+            'bookingDateInformation' => new DateTime('2021-10-08'),
+            'standaloneDescriptionRequest' => new GetFareFamilyDescriptionRequest\StandaloneDescriptionRequest([
+                'items' => [
+                    new GetFareFamilyDescriptionRequest\StandaloneDescriptionRequestOption([
+                        'fareInfo' => new GetFareFamilyDescriptionRequest\FareInfo([
+                            'fareQualifier' => 'FF',
+                            'rateCategory' => 'BASICECON',
+                        ]),
+                        'itineraryInfo' => new GetFareFamilyDescriptionRequest\ItineraryInfo([
+                            'origin' => 'JFK',
+                            'destination' => 'DUB',
+                        ]),
+                        'carrierInfo' => new GetFareFamilyDescriptionRequest\CarrierInfo([
+                            'airline' => 'DL',
+                        ]),
+                    ]),
+                    new GetFareFamilyDescriptionRequest\StandaloneDescriptionRequestOption([
+                        'fareInfo' => new GetFareFamilyDescriptionRequest\FareInfo([
+                            'fareQualifier' => 'FF',
+                            'rateCategory' => 'BASIC',
+                        ]),
+                        'itineraryInfo' => new GetFareFamilyDescriptionRequest\ItineraryInfo([
+                            'origin' => 'MIA',
+                            'destination' => 'AUA',
+                        ]),
+                        'carrierInfo' => new GetFareFamilyDescriptionRequest\CarrierInfo([
+                            'airline' => 'AA',
+                        ]),
+                    ]),
+                ],
+            ]),
+        ]);
+
+        $message = new GetFareFamilyDescription($options);
+
+        self::assertEquals(2021, $message->bookingDateInformation->dateTime->year);
+        self::assertEquals(10, $message->bookingDateInformation->dateTime->month);
+        self::assertEquals(8, $message->bookingDateInformation->dateTime->day);
+
+        self::assertCount(2, $message->standaloneDescriptionRequest);
+        self::assertEquals('FF', $message->standaloneDescriptionRequest[0]->fareInformation->discountDetails->fareQualifier);
+        self::assertEquals('BASICECON', $message->standaloneDescriptionRequest[0]->fareInformation->discountDetails->rateCategory);
+        self::assertEquals('JFK', $message->standaloneDescriptionRequest[0]->itineraryInformation->origin);
+        self::assertEquals('DUB', $message->standaloneDescriptionRequest[0]->itineraryInformation->destination);
+        self::assertEquals('DL', $message->standaloneDescriptionRequest[0]->carrierInformation->companyIdentification->otherCompany);
+
+        self::assertEquals('FF', $message->standaloneDescriptionRequest[1]->fareInformation->discountDetails->fareQualifier);
+        self::assertEquals('BASIC', $message->standaloneDescriptionRequest[1]->fareInformation->discountDetails->rateCategory);
+        self::assertEquals('MIA', $message->standaloneDescriptionRequest[1]->itineraryInformation->origin);
+        self::assertEquals('AUA', $message->standaloneDescriptionRequest[1]->itineraryInformation->destination);
+        self::assertEquals('AA', $message->standaloneDescriptionRequest[1]->carrierInformation->companyIdentification->otherCompany);
     }
 }
