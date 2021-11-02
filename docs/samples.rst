@@ -289,6 +289,44 @@ Remove passenger with passenger reference 2 from the PNR:
         ])
     );
 
+
+-----------------
+PNR_ChangeElement
+-----------------
+
+Modification for the AP element at line 5:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrChangeElementOptions;
+
+    $changeElementReply = $client->pnrChangeElement(new PnrChangeElementOptions([
+        'entry' => '5/modified ap',
+    ]);
+
+
+Passenger association modification for the TK element at line 6:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrChangeElementOptions;
+
+    $changeElementReply = $client->pnrChangeElement(new PnrChangeElementOptions([
+        'entry' => '6/P2',
+    ]);
+
+Segment status code modification from HK to HX for the segment at line 3:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrChangeElementOptions;
+
+    $changeElementReply = $client->pnrChangeElement(new PnrChangeElementOptions([
+        'entry' => '3/HX',
+    ]);
+
+See more examples on Amadeus developers portal at PNR Change element -> User guide
+
 ------------------
 PNR_DisplayHistory
 ------------------
