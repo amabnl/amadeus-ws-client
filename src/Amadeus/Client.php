@@ -345,7 +345,7 @@ class Client extends Base
     }
 
     /**
-     * PNR_Cancel
+     * PNR_ChangeElement
      *
      * @param RequestOptions\PnrChangeElementOptions $options
      * @param array $messageOptions (OPTIONAL)
