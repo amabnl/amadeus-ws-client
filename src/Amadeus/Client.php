@@ -345,6 +345,23 @@ class Client extends Base
     }
 
     /**
+     * PNR_ChangeElement
+     *
+     * @param RequestOptions\PnrChangeElementOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function pnrChangeElement(RequestOptions\PnrChangeElementOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PNR_ChangeElement';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * PNR_DisplayHistory
      *
      * @param RequestOptions\PnrDisplayHistoryOptions $options

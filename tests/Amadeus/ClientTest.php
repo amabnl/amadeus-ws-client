@@ -668,6 +668,61 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendPnrChangeElement()
+    {
+        $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseObject = new \stdClass();
+        $mockedSendResult->responseObject->dummyProp = 'A dummy message result'; // Not an actual Soap reply.
+        $mockedSendResult->responseXml = $this->getTestFile('pnrChangeElementReply.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedOptions = new Client\Struct\Pnr\ChangeElement(
+            new Client\RequestOptions\PnrChangeElementOptions([
+                'entry' => '8/TR/01DEC',
+            ])
+        );
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_ChangeElement', $expectedOptions, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(['PNR_ChangeElement' => ['version' => '17.2', 'wsdl' => 'dc22e4ee']]);
+
+        $mockResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'PNR_ChangeElement')
+            ->willReturn($messageResult);
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->pnrChangeElement(
+            new Client\RequestOptions\PnrChangeElementOptions([
+                'entry' => '8/TR/01DEC',
+            ])
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanSendPnrNameChange()
     {
         $mockSessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
