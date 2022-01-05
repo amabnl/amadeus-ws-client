@@ -67,8 +67,6 @@ class TicketElement
      */
     public function __construct($ticketOptions)
     {
-        $this->passengerType = self::PASSTYPE_PAX;
-
         $this->ticket = new Ticket(
             $ticketOptions->ticketMode,
             $ticketOptions->date,

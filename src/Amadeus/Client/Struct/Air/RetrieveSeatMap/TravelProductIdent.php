@@ -1,46 +1,46 @@
 <?php
 /**
- * Amadeus
- *
- * Copyright 2015 Amadeus Benelux NV
+ * A fix solution for amadeus seatmap
  */
 
 namespace Amadeus\Client\Struct\Air\RetrieveSeatMap;
 
 use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
-use Amadeus\Client\Struct\Air\CompanyDetails;
 use Amadeus\Client\Struct\Air\FlightDate;
 use Amadeus\Client\Struct\Air\FlightIdentification;
 use Amadeus\Client\Struct\Air\FlightTypeDetails;
 use Amadeus\Client\Struct\Air\PointDetails;
+use Amadeus\Client\RequestOptions\BoardingpointDetail;
+use Amadeus\Client\RequestOptions\CompanyIdentification;
+use Amadeus\Client\RequestOptions\OffPointDetail;
 
 /**
  * TravelProductIdent
  *
  * @package Amadeus\Client\Struct\Air\RetrieveSeatMap
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @author  Dieter Devlieghere <dermikagh@gmail.com>
  */
 class TravelProductIdent
 {
     /**
      * @var FlightDate
      */
-    public $flightDate;
+    public $productDetails;
 
     /**
      * @var PointDetails
      */
-    public $boardPointDetails;
+    public $boardpointDetail;
 
     /**
      * @var PointDetails
      */
-    public $offpointDetails;
+    public $offPointDetail;
 
     /**
-     * @var CompanyDetails
+     * @var CompanyIdentification
      */
-    public $companyDetails;
+    public $companyIdentification;
 
     /**
      * @var FlightIdentification
@@ -59,10 +59,10 @@ class TravelProductIdent
      */
     public function __construct(FlightInfo $flightInfo)
     {
-        $this->flightDate = new FlightDate($flightInfo->departureDate);
-        $this->boardPointDetails = new PointDetails($flightInfo->departure);
-        $this->offpointDetails = new PointDetails($flightInfo->arrival);
-        $this->companyDetails = new CompanyDetails($flightInfo->airline);
+        $this->productDetails = new FlightDate($flightInfo->departureDate);
+        $this->boardpointDetail = new BoardingpointDetail($flightInfo->departure);
+        $this->offPointDetail = new OffPointDetail($flightInfo->arrival);
+        $this->companyIdentification = new CompanyIdentification($flightInfo->airline);
         $this->flightIdentification = new FlightIdentification(
             $flightInfo->flightNumber,
             $flightInfo->bookingClass
