@@ -51,12 +51,17 @@ class GetVirtualCardDetails extends BaseWsMessage
      */
     public function __construct(PayGetVirtualCardDetailsOptions $params, $version)
     {
-        if ($params->amadeusReference === null || $params->externalReference === null) {
-            throw new InvalidArgumentException('Both References in DeleteVirtualCard options are mandatory');
+        if ($params->amadeusReference !== null) {
+            $this->References[] = new Reference(Reference::TYPE_AMADEUS, $params->amadeusReference);
         }
 
-        $this->References[] = new Reference(Reference::TYPE_AMADEUS, $params->amadeusReference);
-        $this->References[] = new Reference(Reference::TYPE_EXTERNAL, $params->externalReference);
+        if ($params->externalReference !== null) {
+            $this->References[] = new Reference(Reference::TYPE_EXTERNAL, $params->externalReference);
+        }
+
+        if (empty($this->References)) {
+            throw new InvalidArgumentException('At least one Reference in GetVirtualCardDetails options is mandatory');
+        }
 
         if (null !== $params->displayFilter) {
             $this->DisplayFilter = $params->displayFilter;
