@@ -1770,6 +1770,74 @@ class Client extends Base
     }
 
     /**
+     * PAY_GetVirtualCardDetails
+     *
+     * @param RequestOptions\PayGetVirtualCardDetailsOptions $options
+     * @param array                                          $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function payGetVirtualCardDetails(RequestOptions\PayGetVirtualCardDetailsOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PAY_GetVirtualCardDetails';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * PAY_ListVirtualCards
+     *
+     * @param RequestOptions\PayListVirtualCardsOptions $options
+     * @param array                                     $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function payListVirtualCards(RequestOptions\PayListVirtualCardsOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PAY_ListVirtualCards';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * PAY_GenerateVirtualCard
+     *
+     * @param RequestOptions\PayGenerateVirtualCardOptions $options
+     * @param array                                        $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function payGenerateVirtualCard(RequestOptions\PayGenerateVirtualCardOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PAY_GenerateVirtualCard';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * PAY_DeleteVirtualCard
+     *
+     * @param RequestOptions\PayDeleteVirtualCardOptions $options
+     * @param array                                      $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function payDeleteVirtualCard(RequestOptions\PayDeleteVirtualCardOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PAY_DeleteVirtualCard';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Call a message with the given parameters
      *
      * @param string $messageName
