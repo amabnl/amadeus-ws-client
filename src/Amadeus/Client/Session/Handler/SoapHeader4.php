@@ -408,7 +408,7 @@ class SoapHeader4 extends Base
      */
     protected function generateGuid()
     {
-        mt_srand((double) microtime() * 10000);
+        mt_srand((int) microtime() * 10000);
         $charId = strtoupper(md5(uniqid(rand(), true)));
         $hyphen = chr(45); // "-"
 
