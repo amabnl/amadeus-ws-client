@@ -32,6 +32,7 @@ This is the list of messages that are at least partially supported at this time:
 - Fare_CheckRules
 - Fare_GetFareRules
 - Fare_GetFareFamilyDescription
+- Fare_TLAGetFareRules
 - Air_MultiAvailability
 - Air_SellFromRecommendation
 - Air_FlightInfo

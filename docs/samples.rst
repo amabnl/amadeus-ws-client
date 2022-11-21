@@ -1435,6 +1435,23 @@ Convert 200 Euro to US Dollars in the exchange rate of 25th December 2015 *(this
         ])
     );
 
+--------------------
+Fare_TLAGetFareRules
+--------------------
+
+Get fare rules for TLA carriers:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareTLAGetFareRulesOptions;
+
+    $rulesResponse = $client->fareTLAGetFareRules(
+        new FareTLAGetFareRulesOptions([
+            'airlineCode' => '2U',
+            'tariffClassId' => 'OB'
+        ])
+    );
+
 ***
 Air
 ***
@@ -4182,5 +4199,3 @@ that 'salesIndicator' option here named as 'documentInfo' and request doesn't ha
     ]);
 
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
-
-
