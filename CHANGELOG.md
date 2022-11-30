@@ -1,4 +1,6 @@
 ## Unreleased
+* Implemented ``Fare_TLAGetFareRules``
+* Added ``Dockerfile`` for local development
 
 ## Release 1.13.0 (5 Apr 2021)
 * Add support for multiple pax types in Fare_MasterPricerTravelBoardSearch (https://github.com/amabnl/amadeus-ws-client/pull/432)  - Artem Zakharchenko

@@ -1,0 +1,139 @@
+<TLAccess_GetFareRulesReply xmlns="http://xml.amadeus.com/TFRURR_05_1_1A">
+<messageFunctionInfo>
+<messageFunctionDetails>
+<messageFunction>712</messageFunction>
+</messageFunctionDetails>
+</messageFunctionInfo>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> TAX INCREASES AND REDUCTIONS</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> Sterling cannot accept responsibility for increases in ticket prices</freeText>
+<freeText>as a consequence of increased taxes. In the event of a tax increase yo</freeText>
+<freeText>u will be charged an extra amount, corresponding to the increase. In t</freeText>
+<freeText>he event of a tax reduction after the purchase of your ticket, Sterlin</freeText>
+<freeText>g will not refund the amount corresponding to the decrease.</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> CHANGES</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> Change of date, time or name\ Possible against a fee of DKK (Denmark)</freeText>
+<freeText>\ 299 / NOK (Norway)\ 332 / SEK (Sweden)\ 374 / EUR\ (outside Scandina</freeText>
+<freeText>via) 40 per one-way per passenger.</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> If you change your form of payment, from one creditcard to another, a</freeText>
+<freeText> fee of DKK (Denmark) 149/SEK (Sweden) 179/NOK (Norway) 159/EUR (outsi</freeText>
+<freeText>de Scandinavia) 19 will be charged.</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> Changes may take place via Sterling\s Call Centre no later than two h</freeText>
+<freeText>ours before the planned departure. Please note that changes made via t</freeText>
+<freeText>he Internet can take place no later than 24 hours before the planned d</freeText>
+<freeText>eparture.</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> Changes can be made free of charge until 2 hours after purchase.</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> If you change your ticket to a more expensive fare, the difference be</freeText>
+<freeText>tween the two fares will be added to the above fee.</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> The ticket cannot be changed to a cheaper ticket.</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> If you wish to change to an earlier departure date, the change must b</freeText>
+<freeText>e made at least 2 hours prior to such departure.</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> GENERAL INFORMATION</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> Please note that there may be several price categories for a given ty</freeText>
+<freeText>pe of ticket.</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> The original departure country of your reservation, determines the cu</freeText>
+<freeText>rrency which will be added to the customer account.</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> Due to currency fluctuations fees for changes and cancellations are s</freeText>
+<freeText>ubject to change without notice</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> CANCELLATION</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> Cancellation of ticket\ Possible against a fee of DKK (Denmark)\ 299</freeText>
+<freeText>/ NOK (Norway)\ 332 / SEK (Sweden)\ 374 / EUR\ (outside Scandinavia) 4</freeText>
+<freeText>0 per one-way per passenger. The remaining amount will be refunded to</freeText>
+<freeText>a customer credit account, which can be used to purchase Sterling tick</freeText>
+<freeText>ets in the future. The amount will be stored in the account for 12 mon</freeText>
+<freeText>ths, hereafter the amount will be annulled.</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> Cancellation may take place via Sterling\s Call Centre no later than</freeText>
+<freeText>two hours before the planned departure. Please note that cancellation</freeText>
+<freeText>made via the Internet can take place no later than 24 hours before the</freeText>
+<freeText> planned departure.</freeText>
+</fareRulesDetails>
+<fareRulesDetails>
+<freeTextQualification>
+<textSubjectQualifier>3</textSubjectQualifier>
+</freeTextQualification>
+<freeText> CHILD DISCO</freeText>
+</fareRulesDetails>
+</TLAccess_GetFareRulesReply>

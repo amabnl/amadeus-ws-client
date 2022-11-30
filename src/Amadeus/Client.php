@@ -813,6 +813,23 @@ class Client extends Base
     }
 
     /**
+     * Fare_TLAGetFareRules
+     *
+     * @param RequestOptions\FareTLAGetFareRulesOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function fareTLAGetFareRules(RequestOptions\FareTLAGetFareRulesOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Fare_TLAGetFareRules';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Fare_ConvertCurrency
      *
      * @param RequestOptions\FareConvertCurrencyOptions $options
