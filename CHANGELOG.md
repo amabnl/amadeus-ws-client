@@ -1,9 +1,53 @@
-# Release 1.8.0 (UNRELEASED)
+## Unreleased
+
+## Release 1.13.0 (5 Apr 2021)
+* Add support for multiple pax types in Fare_MasterPricerTravelBoardSearch (https://github.com/amabnl/amadeus-ws-client/pull/432)  - Artem Zakharchenko
+* Added support for ``CAB`` Elements in Fare_PricePnrWithLowerFares (https://github.com/amabnl/amadeus-ws-client/pull/433) - suiram2010
+
+## Release 1.12.0 (18 Feb 2021)
+* Implemented `MiniRule_GetFromRec` (Amadeus docs emphasize to use `MiniRule_GetFromRec` instead of `MiniRule_GetFromETicket`, `MiniRule_GetFromPricing`, `MiniRule_GetFromPricingRec`) - Aleksandr Kalugin
+* Added support for `ES` (Security Elements) to `PNR_*` messages - suiram2010
+* Fixed a bug where Session information was not loaded if a SOAPFault was returned.
+
+## Release 1.11.0 (9 July 2020)
+https://github.com/amabnl/amadeus-ws-client/pull/344: 
+* Added support to add accountNumber in ``Queue_List``
+* Added support to add freeText for payment type Cash and CC in ``Pnr_AddMultiElements``
+* Added support for "ZapOff" in ``Fare_PricePnrWithBookingClass``
+* Added support for "Fare Misc TKT Information", "Fare Endorsement", "Fare Endorsement" , "Fare Misc Information" in ``Pnr_AddMultiElements``
+* Implemented ``Ticket_UpdateRefund`` (https://github.com/amabnl/amadeus-ws-client/pull/407) - Vladimir Kikot
+
+# Release 1.10.0 (27 May 2020)
+* Bugfix for a SOAP-ERROR in ``DocIssuance_IssueMiscellaneousDocuments`` (https://github.com/amabnl/amadeus-ws-client/pull/359) - Artem Zakharchenko
+* Add Anchored Segment in ``Fare_MasterPricerTravelBoardSearch`` and implemented ``Service_BookPriceService`` (https://github.com/amabnl/amadeus-ws-client/pull/324) - Michal Hernas
+* Implemented ``Fare_PriceUpsellWithoutPNR`` and ``Fare_GetFareFamilyDescription`` (https://github.com/amabnl/amadeus-ws-client/pull/388) - Valeriy
+* Implemented ``Ticket_ATCShopperMasterPricerCalendar`` (https://github.com/amabnl/amadeus-ws-client/pull/398) - Artem Zakharchenko
+
+# Release 1.9.0 (23 Jun 2019)
+* Added support for multiple seat request in ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/pull/335) - Artem Zakharchenko
+* Added `stockProviderDetails` to ``DocRefund_InitRefund `` (https://github.com/amabnl/amadeus-ws-client/pull/341) - Ruslan Poltayev
+* Implemented ``Service_StandaloneCatalogue`` - (https://github.com/amabnl/amadeus-ws-client/pull/220) - arvind-pandey & Artem Zakharchenko
+
+# Release 1.8.1 (29 May 2019)
+* Support for Queue TimeMode in ``Queue_RemoveItem`` (https://github.com/amabnl/amadeus-ws-client/pull/333) - Ruslan Poltayev
+
+# Release 1.8.0 (25 May 2019)
 * Added support for Ticketing Price Scheme option in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/193) - Artem Zakharchenko
 * Added support for cabin options on itinerary-level in ``Fare_MasterPricerTravelBoardSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/202) - Michal Hernas
+* Added support for OptionDetails when proving pricing options overrides in ``Fare_PricePNRWithBookingClass`` (v13+) and associated messages (https://github.com/amabnl/amadeus-ws-client/pull/217) - LeoTravel
+* Added support for providing a Company and date in combination with a Record Locator in ``Air_RetrieveSeatMap`` (https://github.com/amabnl/amadeus-ws-client/issues/219)
+* Added support for requesting Most Restrictive display ``Air_RetrieveSeatMap``
+* Fixed a bug with a double authentication when using ``Security_Authenticate`` on a SoapHeader 4 WSAP (https://github.com/amabnl/amadeus-ws-client/pull/234) - Artem Zakharchenko
+* Add support for Time Mode in ``Queue_*`` messages (https://github.com/amabnl/amadeus-ws-client/issues/326) - Ruslan Poltayev
+* Add support for Fare Families in ``Fare_PricePNRWithBookingClass`` and associates messages (https://github.com/amabnl/amadeus-ws-client/pull/264) - Marcel Lamm
 * Implemented ``Ticket_RetrieveListOfTSM`` (https://github.com/amabnl/amadeus-ws-client/pull/194) - Michal Hernas
 * Implemented ``Ticket_CreateTASF`` (https://github.com/amabnl/amadeus-ws-client/pull/197) - Artem Zakharchenko
 * Implemented ``PNR_Ignore`` (https://github.com/amabnl/amadeus-ws-client/pull/198) - Michael Mueller
+* Implemented ``SalesReports_DisplayDailyOrSummarizedReport`` and ``SalesReports_DisplayNetRemitReport`` (https://github.com/amabnl/amadeus-ws-client/pull/241) - Artem Zakharchenko
+* Implemented ``Fare_MasterPricerExpertSearch`` (https://github.com/amabnl/amadeus-ws-client/pull/170) - Patrick Kilter
+
+# Release 1.7.1 (23 September 2018)
+* Fixed a bug with wrong date format in dateOfBirth for ``PNR_AddMultiElements`` (https://github.com/amabnl/amadeus-ws-client/pull/231) - Artem Zakharchenko
 
 # Release 1.7.0 (30 April 2018)
 * Implemented support for ``TransactionFlowLink`` SOAP header (https://github.com/amabnl/amadeus-ws-client/issues/146)

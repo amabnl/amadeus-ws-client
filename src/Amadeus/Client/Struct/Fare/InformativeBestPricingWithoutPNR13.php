@@ -22,7 +22,10 @@
 
 namespace Amadeus\Client\Struct\Fare;
 
+use Amadeus\Client\RequestOptions\Fare\InformativeBestPricingWithoutPnr\CabinOptions;
 use Amadeus\Client\RequestOptions\FareInformativeBestPricingWithoutPnrOptions;
+use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionGroup;
+use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionKey;
 
 /**
  * InformativeBestPricingWithoutPNR13
@@ -40,5 +43,36 @@ class InformativeBestPricingWithoutPNR13 extends InformativePricingWithoutPNR13
     public function __construct(FareInformativeBestPricingWithoutPnrOptions $options = null)
     {
         parent::__construct($options);
+
+        if (!empty($options->cabin)) {
+            $this->loadCabin($options->cabin);
+        }
+    }
+
+    /**
+     * @param CabinOptions $cabinOptions
+     *
+     * @return InformativeBestPricingWithoutPNR13
+     */
+    protected function loadCabin($cabinOptions)
+    {
+        if ($cabinOptions instanceof CabinOptions) {
+            $optionDetails = [];
+            foreach ($cabinOptions->getOptions() as $cabinOption) {
+                $optionDetails[] = [$cabinOption->getType() =>$cabinOption->getClass()];
+            }
+
+            $this->pricingOptionGroup = array_merge(
+                $this->pricingOptionGroup,
+                [
+                    new PricingOptionGroup(
+                        PricingOptionKey::OPTION_CABIN,
+                        $optionDetails
+                    )
+                ]
+            );
+        }
+
+        return $this;
     }
 }

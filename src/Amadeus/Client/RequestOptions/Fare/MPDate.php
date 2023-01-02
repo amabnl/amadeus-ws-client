@@ -101,4 +101,13 @@ class MPDate extends LoadParamsFromArray
      * @var int
      */
     public $range;
+
+    /**
+     * Details of the trip duration.
+     *
+     * Amadeus currently not uses this node, but may be used in future versions.
+     *
+     * @var MPTripDetails
+     */
+    public $tripDetails;
 }

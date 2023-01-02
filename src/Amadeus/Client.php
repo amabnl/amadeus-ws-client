@@ -58,7 +58,7 @@ class Client extends Base
      *
      * @var string
      */
-    const VERSION = "1.8.0-dev";
+    const VERSION = "1.14.0-dev";
 
     /**
      * An identifier string for the library (to be used in Received From entries)
@@ -345,6 +345,23 @@ class Client extends Base
     }
 
     /**
+     * PNR_ChangeElement
+     *
+     * @param RequestOptions\PnrChangeElementOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function pnrChangeElement(RequestOptions\PnrChangeElementOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PNR_ChangeElement';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * PNR_DisplayHistory
      *
      * @param RequestOptions\PnrDisplayHistoryOptions $options
@@ -571,6 +588,26 @@ class Client extends Base
     }
 
     /**
+     * Fare_MasterPricerExpertSearch
+     *
+     * @param RequestOptions\FareMasterPricerExSearchOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function fareMasterPricerExpertSearch(
+        RequestOptions\FareMasterPricerExSearchOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_MasterPricerExpertSearch';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+
+    /**
      * Fare_MasterPricerTravelBoardSearch
      *
      * @param RequestOptions\FareMasterPricerTbSearch $options
@@ -680,6 +717,44 @@ class Client extends Base
         $messageOptions = []
     ) {
         $msgName = 'Fare_InformativePricingWithoutPNR';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Fare_PriceUpsellWithoutPNR
+     *
+     * @param RequestOptions\FarePriceUpsellWithoutPnrOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function farePriceUpsellWithoutPnr(
+        RequestOptions\FarePriceUpsellWithoutPnrOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_PriceUpsellWithoutPNR';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Fare_GetFareFamilyDescription
+     *
+     * @param RequestOptions\FareGetFareFamilyDescriptionOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function fareGetFareFamilyDescription(
+        RequestOptions\FareGetFareFamilyDescriptionOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_GetFareFamilyDescription';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
@@ -856,6 +931,23 @@ class Client extends Base
     public function commandCryptic(RequestOptions\CommandCrypticOptions $options, $messageOptions = [])
     {
         $msgName = 'Command_Cryptic';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * MiniRule_GetFromRec
+     *
+     * @param RequestOptions\MiniRuleGetFromRecOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function miniRuleGetFromRec(RequestOptions\MiniRuleGetFromRecOptions $options, $messageOptions = [])
+    {
+        $msgName = 'MiniRule_GetFromRec';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
@@ -1173,6 +1265,25 @@ class Client extends Base
     }
 
     /**
+     * Ticket_ATCShopperMasterPricerCalendar
+     *
+     * @param RequestOptions\TicketAtcShopperMpCalendarOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketAtcShopperMasterPricerCalendar(
+        RequestOptions\TicketAtcShopperMpCalendarOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_ATCShopperMasterPricerCalendar';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Ticket_RepricePNRWithBookingClass
      *
      * @param RequestOptions\TicketRepricePnrWithBookingClassOptions $options
@@ -1454,6 +1565,25 @@ class Client extends Base
     }
 
     /**
+     * Ticket_UpdateRefund
+     *
+     * @param RequestOptions\TicketUpdateRefundOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function ticketUpdateRefund(
+        RequestOptions\TicketUpdateRefundOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Ticket_UpdateRefund';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * FOP_CreateFormOfPayment
      *
      * @param RequestOptions\FopCreateFopOptions $options
@@ -1560,6 +1690,81 @@ class Client extends Base
         $messageOptions = []
     ) {
         $msgName = 'Service_IntegratedCatalogue';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Service_BookPriceService
+     *
+     * @param RequestOptions\ServiceBookPriceServiceOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function serviceBookPriceService(
+        RequestOptions\ServiceBookPriceServiceOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Service_BookPriceService';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * SalesReports_DisplayorSummarizedReport
+     *
+     * @param RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function salesReportsDisplayDailyOrSummarizedReport(
+        RequestOptions\SalesReportsDisplayDailyOrSummarizedReportOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'SalesReports_DisplayDailyOrSummarizedReport';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * SalesReports_DisplayNetRemitReport
+     *
+     * @param RequestOptions\SalesReportsDisplayNetRemitReportOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function salesReportsDisplayNetRemitReport(
+        RequestOptions\SalesReportsDisplayNetRemitReportOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'SalesReports_DisplayNetRemitReport';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Service_StandaloneCatalogue
+     *
+     * @param RequestOptions\ServiceStandaloneCatalogueOptions $options
+     * @param array $messageOptions
+     *            (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function serviceStandaloneCatalogue(RequestOptions\ServiceStandaloneCatalogueOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Service_StandaloneCatalogue';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }

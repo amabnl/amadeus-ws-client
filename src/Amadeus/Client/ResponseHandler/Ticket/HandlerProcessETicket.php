@@ -33,15 +33,6 @@ use Amadeus\Client\Session\Handler\SendResult;
  * @package Amadeus\Client\ResponseHandler\Ticket
  * @author Mike Hernas <m@hern.as>
  */
-class HandlerProcessETicket extends StandardResponseHandler
+class HandlerProcessETicket extends HandlerList
 {
-    /**
-     * @param SendResult $response
-     * @return Result
-     * @throws Exception
-     */
-    public function analyze(SendResult $response)
-    {
-        return $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
-    }
 }

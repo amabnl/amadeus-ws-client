@@ -289,6 +289,44 @@ Remove passenger with passenger reference 2 from the PNR:
         ])
     );
 
+
+-----------------
+PNR_ChangeElement
+-----------------
+
+Modification for the AP element at line 5:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrChangeElementOptions;
+
+    $changeElementReply = $client->pnrChangeElement(new PnrChangeElementOptions([
+        'entry' => '5/modified ap',
+    ]);
+
+
+Passenger association modification for the TK element at line 6:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrChangeElementOptions;
+
+    $changeElementReply = $client->pnrChangeElement(new PnrChangeElementOptions([
+        'entry' => '6/P2',
+    ]);
+
+Segment status code modification from HK to HX for the segment at line 3:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrChangeElementOptions;
+
+    $changeElementReply = $client->pnrChangeElement(new PnrChangeElementOptions([
+        'entry' => '3/HX',
+    ]);
+
+See more examples on Amadeus developers portal at PNR Change element -> User guide
+
 ------------------
 PNR_DisplayHistory
 ------------------
@@ -491,7 +529,7 @@ Split passengers 1 and 2 from PNR ABC123:
     $pnrContent = $client->pnrSplit(
         new PnrSplitOptions(['recordLocator' => 'ABC123', 'passengerTattoos' => [1, 2]])
     );
-    
+
 
 *****
 Queue
@@ -529,6 +567,23 @@ Get a list of all PNR's on a given queue on a different office:
                 'queue' => 50,
                 'category' => 0,
                 'officeId' => 'NCE1A0950'
+            ])
+        ])
+    );
+
+Get a list of all PNR's on a given queue for specific account number:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\QueueListOptions;
+    use Amadeus\Client\RequestOptions\Queue;
+
+    $queueContent = $client->queueList(
+        new QueueListOptions([
+            'queue' => new Queue([
+                'queue' => 50,
+                'category' => 0,
+                'accountNumber' => 'TESTACC99'
             ])
         ])
     );
@@ -695,11 +750,54 @@ Move a PNR from one queue to another:
 ****
 Fare
 ****
+
+----------------------------------
+Fare_MasterPricerExpertSearch
+----------------------------------
+
+The Expert Search is nearly identical to the Travelboard search, except it focus on business flights.
+
+It supports all features of the Travelboard Search, but not the options "noAirportChange" and "maxElapsedFlyingTime"
+
+Make a simple Masterpricer Expert availability & fare search:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerExSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+
+    $opt = new FareMasterPricerExSearch([
+        'nrOfRequestedResults' => 200,
+        'nrOfRequestedPassengers' => 1,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 1
+            ])
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'BRU']),
+                'arrivalLocation' => new MPLocation(['city' => 'LON']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))
+                ])
+            ])
+        ]
+    ]);
+
+    $recommendations = $client->fareMasterPricerExpertSearch($opt);
+
+Since the Expert Search is nearly similar to the Travelboard Search, check out the Travelboard Search examples too
+
 ----------------------------------
 Fare_MasterPricerTravelboardSearch
 ----------------------------------
 
-Make a simple Masterpricer availability & fare search:
+Make a simple Masterpricer Travelboard availability & fare search:
 
 .. code-block:: php
 
@@ -858,6 +956,66 @@ An example of pricing, with options listed below:
         ])
     );
 
+An example of pricing, with options listed below:
+
+- take published fares into account (RP)
+- take Unifares into account (RU)
+- Search only in the original cabin (the one from the segment)
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
+
+    $pricingResponse = $client->farePricePnrWithLowerFares(
+        new FarePricePnrWithLowerFaresOptions([
+            'overrideOptions' => [
+                FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_PUB,
+                FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_UNI
+            ],
+            'cabins' => [
+                new Cabin([
+                    'cabinType' => Cabin::CABIN_TYPE_ORIGINAL_CABIN
+                ])
+            ]
+        ])
+    );
+
+An example of pricing, with options listed below:
+
+- take published fares into account (RP)
+- take Unifares into account (RU)
+- Search in cabin F first, then in cabin C and finally in any cabin
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
+
+    $pricingResponse = $client->farePricePnrWithLowerFares(
+        new FarePricePnrWithLowerFaresOptions([
+            'overrideOptions' => [
+                FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_PUB,
+                FarePricePnrWithLowerFaresOptions::OVERRIDE_FARETYPE_UNI
+            ],
+            'cabins' => [
+                new Cabin([
+                    'cabinType' => Cabin::CABIN_TYPE_FIRST,
+                    'cabinCode'  => 'F'
+                ]),
+                new Cabin([
+                    'cabinType' => Cabin::CABIN_TYPE_SECOND,
+                    'cabinCode'  => 'C'
+                ]),
+                new Cabin([
+                    'cabinType' => Cabin::CABIN_TYPE_ANY_CABIN
+                ])
+            ]
+        ])
+    );
+
 `More examples of Pricing messages <samples/pricepnr.rst>`_
 
 ---------------------------
@@ -896,6 +1054,24 @@ An example of pricing, with options listed below:
     );
 
 `More examples of Pricing messages <samples/pricepnr.rst>`_
+
+---------------------------
+Fare_PriceUpsellWithoutPNR
+---------------------------
+
+**Fare_PriceUpsellWithoutPNR allows an user to get a list of upsell proposition without having to create corresponding Passenger Name Record (PNR).**
+
+This request similar to Fare_PricePNRWithBookingClass:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'validatingCarrier' => 'SN'
+        ])
+    );
 
 ---------------------------------
 Fare_InformativePricingWithoutPNR
@@ -1157,6 +1333,72 @@ Get fare rules providing corporate number and departure date:
             'travelDate' => \DateTime::createFromFormat('dmY', '25032011')
         ])
     );
+
+-----------------------------
+Fare_GetFareFamilyDescription
+-----------------------------
+
+Basic request to get Fare Families in stateful mode (after pricing):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareGetFareFamilyDescriptionOptions;
+
+    $fareFamiliesResponse = $client->fareGetFareFamilyDescription(
+        new FareGetFareFamilyDescriptionOptions([
+            'referenceGroups' => [
+                new ReferenceGroup([
+                    new Reference('REC', 1),
+                    new Reference('FC', 1),
+                    new Reference('FC', 2),
+                ])
+            ]
+        ])
+    );
+
+Requesting an Airline Fare Family (AFF) description in standalone mode:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareGetFareFamilyDescriptionOptions;
+    use Amadeus\Client\RequestOptions\Fare\GetFareFamilyDescription;
+
+    $fareFamiliesResponse = $client->fareGetFareFamilyDescription(
+        new FareGetFareFamilyDescriptionOptions([
+            'bookingDateInformation' => new \DateTime('2021-10-08'),
+            'standaloneDescriptionRequest' => new GetFareFamilyDescription\StandaloneDescriptionRequest([
+                'items' => [
+                    new GetFareFamilyDescription\StandaloneDescriptionRequestOption([
+                        'fareInfo' => new GetFareFamilyDescription\FareInfo([
+                            'fareQualifier' => 'FF',
+                            'rateCategory' => 'BASICECON',
+                        ]),
+                        'itineraryInfo' => new GetFareFamilyDescription\ItineraryInfo([
+                            'origin' => 'JFK',
+                            'destination' => 'DUB',
+                        ]),
+                        'carrierInfo' => new GetFareFamilyDescription\CarrierInfo([
+                            'airline' => 'DL',
+                        ]),
+                    ]),
+                    new GetFareFamilyDescription\StandaloneDescriptionRequestOption([
+                        'fareInfo' => new GetFareFamilyDescription\FareInfo([
+                            'fareQualifier' => 'FF',
+                            'rateCategory' => 'BASIC',
+                        ]),
+                        'itineraryInfo' => new GetFareFamilyDescription\ItineraryInfo([
+                            'origin' => 'MIA',
+                            'destination' => 'AUA',
+                        ]),
+                        'carrierInfo' => new GetFareFamilyDescription\CarrierInfo([
+                            'airline' => 'AA',
+                        ]),
+                    ]),
+                ],
+            ]),
+        ]),
+    );
+
 
 --------------------
 Fare_ConvertCurrency
@@ -1533,6 +1775,33 @@ Complex example: Seat Map with Prices
                     ]),
                 ]),
             ]
+        ])
+    );
+
+Most restrictive Seat Map request:
+
+- Multiple passenger context
+- Requesting the most restrictive seat map display
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\AirRetrieveSeatMapOptions;
+    use Amadeus\Client\RequestOptions\Air\RetrieveSeatMap\FlightInfo;
+
+    $seatmapInfo = $client->airRetrieveSeatMap(
+        new AirRetrieveSeatMapOptions([
+            'flight' => new FlightInfo([
+                'departureDate' => \DateTime::createFromFormat('Ymd', '20150615'),
+                'departure' => 'CDG',
+                'arrival' => 'YUL',
+                'airline' => 'AF',
+                'flightNumber' => '0346',
+                'bookingClass' => 'Y'
+            ]),
+            'recordLocator' => '7BFHEJ',
+            'company' => '1A',
+            'date' =>  \DateTime::createFromFormat('Ymd', '20150610'),
+            'mostRestrictive' => true
         ])
     );
 
@@ -2133,6 +2402,84 @@ Basic Search With Mandatory Elements:
         ])
     );
 
+----------------------------------------------
+Ticket_ATCShopperMasterPricerCalendar
+----------------------------------------------
+
+Basic Search with 3 plus/minus days range:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketAtcShopperMpTbSearchOptions;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Ticket\ReqSegOptions;
+
+    $response = $client->ticketAtcShopperMasterPricerTravelBoardSearch(
+        new TicketAtcShopperMpTbSearchOptions([
+            'nrOfRequestedPassengers' => 2,
+            'nrOfRequestedResults' => 2,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ]),
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_CHILD,
+                    'count' => 1
+                ])
+            ],
+            'flightOptions' => [
+                TicketAtcShopperMpTbSearchOptions::FLIGHTOPT_PUBLISHED,
+                TicketAtcShopperMpTbSearchOptions::FLIGHTOPT_UNIFARES
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'segmentReference' => 1,
+                    'departureLocation' => new MPLocation(['city' => 'MAD']),
+                    'arrivalLocation' => new MPLocation(['city' => 'LHR']),
+                    'date' => new MPDate([
+                        'date' => new \DateTime('2013-08-12T00:00:00+0000', new \DateTimeZone('UTC')),
+                        'rangeMode' => MPDate::RANGEMODE_MINUS_PLUS,
+                        'range' => 3,
+                    ])
+                ]),
+                new MPItinerary([
+                    'segmentReference' => 2,
+                    'departureLocation' => new MPLocation(['city' => 'LHR']),
+                    'arrivalLocation' => new MPLocation(['city' => 'MAD']),
+                    'date' => new MPDate([
+                        'date' => new \DateTime('2013-12-12T00:00:00+0000', new \DateTimeZone('UTC')),
+                        'rangeMode' => MPDate::RANGEMODE_MINUS_PLUS,
+                        'range' => 3,
+                    ])
+                ])
+            ],
+            'ticketNumbers' => [
+                '0572187777498',
+                '0572187777499'
+            ],
+            'requestedSegments' => [
+                new ReqSegOptions([
+                    'requestCode' => ReqSegOptions::REQUEST_CODE_KEEP_FLIGHTS_AND_FARES,
+                    'connectionLocations' => [
+                        'MAD',
+                        'LHR'
+                    ]
+                ]),
+                new ReqSegOptions([
+                    'requestCode' => ReqSegOptions::REQUEST_CODE_CHANGE_REQUESTED_SEGMENT,
+                    'connectionLocations' => [
+                        'LHR',
+                        'MAD'
+                    ]
+                ])
+            ]
+        ])
+    );
+
 ---------------------------------
 Ticket_RepricePNRWithBookingClass
 ---------------------------------
@@ -2375,6 +2722,22 @@ Initiate Automated Refund:
         ])
     );
 
+---------------------------
+Ticket_UpdateRefund
+---------------------------
+
+Apply waiver code (for now only waiver codes are supported):
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TicketUpdateRefundOptions;
+
+    $response = $client->ticketUpdateRefund(
+        new TicketUpdateRefundOptions([
+            'waiverCode' => 'TESTWAIVER11',
+            'contractBundleId' => 1,
+        ])
+    );
 
 ---------------------------
 Ticket_IgnoreRefund
@@ -3196,6 +3559,68 @@ All the examples for ``Service_IntegratedPricing`` (see above) should also work 
         ])
     );
 
+---------------------------
+Service_StandaloneCatalogue
+---------------------------
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\Fare\InformativePricing\Segment;
+    use Amadeus\Client\RequestOptions\ServiceStandaloneCatalogueOptions;
+    use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\ServiceStandalonePricingOptions;
+    use Amadeus\Client\RequestOptions\Service\StandaloneCatalogue\ServicePassenger;
+    use Amadeus\Client\RequestOptions\Service\PaxSegRef;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+
+    $standaloneCatalogueResponse = $client->serviceStandaloneCatalogue(
+    new ServiceStandaloneCatalogueOptions([
+        'passengers' => [
+            new ServicePassenger([
+                'reference' => 1,
+                'type' => ServicePassenger::TYPE_ADULT
+            ])
+        ],
+        'segments' => [
+            new Segment([
+                'departureDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2018-07-31 12:55:00'),
+                'arrivalDate' => \DateTime::createFromFormat('Y-m-d H:i:s', '2018-07-31 15:10:00'),
+                'from' => 'CAI',
+                'to' => 'TUN',
+                'marketingCompany' => 'TU',
+                'operatingCompany' => 'TU',
+                'flightNumber' => '814',
+                'bookingClass' => 'L',
+                'groupNumber' => 'L',
+                'segmentTattoo' => 1
+            ])
+        ],
+        'pricingOptions' => new ServiceStandalonePricingOptions([
+            'pricingsFareBasis' => [
+                new FareBasis([
+                    'fareBasisCode' => 'LOXOW',
+                ])
+            ],
+            'references' => [
+                new PaxSegRef([
+                    'reference' => 1,
+                    'type' => 'S'
+                ]),
+                new PaxSegRef([
+                    'reference' => 1,
+                    'type' => 'P'
+                ])
+            ]
+        ])
+    ])
+);
+
+------------------------
+Service_BookPriceService
+------------------------
+
+*docs missing*
+
+
 ***
 FOP
 ***
@@ -3530,8 +3955,64 @@ Confirm a given CAR offer:
 MiniRule
 ********
 --------------------------
+MiniRule_GetFromRec
+--------------------------
+Mini Rules provides a short and easy to read summary of the most important rules and restrictions in a structured output so that they can be clearly understood by end-users and customers. This service is used to retrieve the Mini Rules data from: - PNR Record Locator - Offer Notice - Offer ID - TST (Transitional Stored Ticket) - PQR (Quotation Record for Amadeus Offer). - Pricing context - Upsell Context - TKT (eTicket) - Cart (Shopping cart)
+
+MiniRules_GetFromRec function provides possibility to retrieve those mini-rules
+
+ - from an e-ticket
+ - from a PNR (with possible  passengers and segments selection )
+ - from a list of TST returned by pricing/re-pricing
+ - from all TSTs returned by pricing/re-pricing
+ - from a list of PQRs
+ - from all PQR
+ - from all PQR associated to a list of air Offer
+ - from all PQR associated to all air Offer
+ - from a list of fare recommendation returned by pricing/re-pricing
+ - from all fare recommendations returned by pricing/re-pricing
+ - from a list of upsell returned by upsell transaction
+ - from all upsell returned by upsell transaction
+
+
+Get MiniRules for specific PNR, and specific passenger
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\MiniRuleGetFromRecOptions;
+    use Amadeus\Client\RequestOptions\MiniRule\Pricing;
+
+    $miniRulesResponse = $client->miniRuleGetFromRec(
+        new MiniRuleGetFromRecOptions([
+            // mandatory
+            'pricings' => [
+                new Pricing([
+                    'type' => Pricing::TYPE_RECORD_LOCATOR,
+                    'id' => "RECLOCNUM123",
+                    // optional
+                    'filteringOptions' => [
+                        new FilteringOption([
+                            'type' => FilteringOption::TYPE_PAX,
+                            'value' => 1
+                        ])
+                    ]
+                ])
+            ],
+            // optional
+            'language' => new Language([
+                'qualifier' => Language::LQ_LANGUAGE_NORMALLY_USED,
+                'code' => "UA"
+            ])
+        ])
+    );
+
+
+--------------------------
 MiniRule_GetFromPricingRec
 --------------------------
+
+*This web service will not profit of latest Mini Rules enhancements.
+Please use MiniRule_GetFromRec (TMRXRQ) instead.*
 
 Get MiniRules for a pricing in context (either a TST pricing, Offers or a pricing quotation):
 
@@ -3554,6 +4035,9 @@ Get MiniRules for a pricing in context (either a TST pricing, Offers or a pricin
 -----------------------
 MiniRule_GetFromPricing
 -----------------------
+
+*This web service will not profit of latest Mini Rules enhancements.
+Please use MiniRule_GetFromRec (TMRXRQ) instead.*
 
 Get MiniRules for a pricing in context *(After a Fare_PricePNRWithBookingClass, Fare_PricePNRWithLowerFares, FarePricePNRWithLowestFare, Fare_InformativePricingWithoutPNR or Fare_InformativeBestPricingWithoutPNR message)*:
 
@@ -3583,6 +4067,9 @@ Get Minirules for specific recommendations *(recommendations nr 1 & 2 in this ex
 -----------------------
 MiniRule_GetFromETicket
 -----------------------
+
+*This web service will not profit of latest Mini Rules enhancements.
+Please use MiniRule_GetFromRec (TMRXRQ) instead.*
 
 Display Mini Rules corresponding to the e-ticket number 1234567891987:
 
@@ -3635,9 +4122,13 @@ Request a basic Extreme Search result:
 
     $extremeSearchResult = $client->priceXplorerExtremeSearch($opt);
 
-*******************************
+************
+SalesReports
+************
+
+-------------------------------
 SalesReports_DisplayQueryReport
-*******************************
+-------------------------------
 
 Request a sales report from a certain date to another date, issued in all offices sharing the same IATA number;
 
@@ -3653,6 +4144,41 @@ Request a sales report from a certain date to another date, issued in all office
         'agencyIataNumber' => '23491193',
         'startDate' => \DateTime::createFromFormat('Ymd', '20150101', new \DateTimeZone('UTC')),
         'endDate' => \DateTime::createFromFormat('Ymd', '20160331', new \DateTimeZone('UTC'))
+    ]);
+
+    $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
+
+-------------------------------------------
+SalesReports_DisplayDailyOrSummarizedReport
+-------------------------------------------
+
+SalesReports_DisplayDailyOrSummarizedReport request options are exact the same as for SalesReports_DisplayQueryReport except
+this have SalesReportIdentification options and request doesn't have scrolling options.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\SalesReportsDisplayDailyOrSummarizedReportRequestOptions;
+
+    $opt = new SalesReportsDisplayDailyOrSummarizedReportRequestOptions([
+        'salesReportIdentificationNumber' => 197,
+        'salesReportIdentificationType' => SalesReportsDisplayDailyOrSummarizedReportOptions::SALES_REPORT_IDENTIFICATION_TYPE_NUMBER
+    ]);
+
+    $salesReportResult = $client->salesReportsDisplayQueryReport($opt);
+
+----------------------------------
+SalesReports_DisplayNetRemitReport
+----------------------------------
+
+SalesReports_DisplayNetRemitReport request options are exactly the same as for SalesReports_DisplayQueryReport except
+that 'salesIndicator' option here named as 'documentInfo' and request doesn't have scrolling options:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\SalesReportsDisplayNetRemitReportOptions;
+
+    $opt = new SalesReportsDisplayNetRemitReportOptions([
+        'documentInfo' => SalesReportsDisplayNetRemitReportOptions::SALESIND_DOMESTIC
     ]);
 
     $salesReportResult = $client->salesReportsDisplayQueryReport($opt);

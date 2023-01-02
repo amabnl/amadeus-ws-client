@@ -126,6 +126,11 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     protected $messagesAndVersions = [];
 
     /**
+     * @var Client\Util\MsgBodyExtractor
+     */
+    protected $extractor;
+
+    /**
      * Get the session parameters of the active session
      *
      * @return array|null
@@ -172,6 +177,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
         $this->setStateful($params->stateful);
         $this->setTransactionFlowLink($params->enableTransactionFlowLink);
         $this->setConsumerId($params->consumerId);
+        $this->extractor = new Client\Util\MsgBodyExtractor();
     }
 
 
@@ -206,6 +212,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
                 ": \n".$ex->getTraceAsString()
             );
             $this->logRequestAndResponse($messageName);
+            $this->handlePostMessage($messageName, $this->getLastResponse($messageName), $messageOptions, $result);
             $result->exception = $ex;
         } catch (\Exception $ex) {
             // We should only come here when the XSL extension is not enabled
@@ -219,7 +226,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
             throw new Client\Exception($ex->getMessage(), $ex->getCode(), $ex);
         }
 
-        $result->responseXml = Client\Util\MsgBodyExtractor::extract($this->getLastResponse($messageName));
+        $result->responseXml = $this->extractor->extract($this->getLastResponse($messageName));
 
         return $result;
     }

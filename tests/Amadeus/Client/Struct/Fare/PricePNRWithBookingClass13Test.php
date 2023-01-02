@@ -25,6 +25,7 @@ namespace Test\Amadeus\Client\Struct\Fare;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareFamily;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
@@ -44,6 +45,7 @@ use Amadeus\Client\Struct\Fare\PricePnr13\PricingOptionKey;
 use Amadeus\Client\Struct\Fare\PricePnr13\ReferenceDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\TaxData;
 use Amadeus\Client\Struct\Fare\PricePnr13\TaxInformation;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\ZapOff;
 use Amadeus\Client\Struct\Fare\PricePNRWithBookingClass13;
 use Test\Amadeus\BaseTestCase;
 
@@ -131,6 +133,36 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $fareBasisOverridePo));
 
         $negofarePo = new PricingOptionGroup(PricingOptionKey::OPTION_NEGOTIATED_FARES);
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $negofarePo));
+    }
+
+    public function testCanDoPricePnrCallWithOverrideOptionWithCriteriaParams()
+    {
+        $opt = new FarePricePnrWithBookingClassOptions([
+            'validatingCarrier' => 'BA',
+            'currencyOverride' => 'EUR',
+            'overrideOptionsWithCriteria' => [
+                [
+                    'key' => 'SBF',
+                    'optionDetail' => '1'
+                ]
+            ]
+        ]);
+
+        $msg = new PricePNRWithBookingClass13($opt);
+
+        $validatingCarrierPo = new PricingOptionGroup(PricingOptionKey::OPTION_VALIDATING_CARRIER);
+        $validatingCarrierPo->carrierInformation = new CarrierInformation('BA');
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $validatingCarrierPo));
+
+        $currencyOverridePo = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_CURRENCY_OVERRIDE);
+        $currencyOverridePo->currency = new Currency('EUR');
+
+        $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $currencyOverridePo));
+
+        $negofarePo = new PricingOptionGroup('SBF','1');
 
         $this->assertTrue($this->assertArrayContainsSameObject($msg->pricingOptionGroup, $negofarePo));
     }
@@ -269,7 +301,6 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $this->assertEquals('012345', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
     }
 
-
     public function testCanDoPricePnrCallWithCorpUniFares()
     {
         $opt = new FarePricePnrWithBookingClassOptions([
@@ -283,7 +314,6 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $this->assertCount(2, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails);
         $this->assertEquals('012345', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
         $this->assertEquals('AMADEUS', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[1]->attributeType);
-
     }
 
     public function testCanDoPricePnrCallWithPaxDiscountCodes()
@@ -562,5 +592,113 @@ class PricePNRWithBookingClass13Test extends BaseTestCase
         $this->assertEquals(\Amadeus\Client\Struct\Fare\PricePnr13\FormOfPayment::TYPE_CASH, $msg->pricingOptionGroup[0]->formOfPaymentInformation->otherFormOfPayment[0]->type);
         $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->otherFormOfPayment[0]->amount);
         $this->assertNull($msg->pricingOptionGroup[0]->formOfPaymentInformation->otherFormOfPayment[0]->creditCardNumber);
+    }
+
+    /**
+     * Test FarePricePnrWithBookingClassOptions with *fareFamily* specified,
+     * the value *FLEX* should be transferred to the attributeDescription value.
+     *
+     * @throws \Amadeus\Client\RequestCreator\MessageVersionUnsupportedException
+     */
+    public function testPricePnrCallWithFareFamily()
+    {
+        $opt = new FarePricePnrWithBookingClassOptions([
+            'fareFamily' => 'FLEX'
+        ]);
+
+        $msg = new PricePNRWithBookingClass13($opt);
+
+        $this->assertCount(1, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_FARE_FAMILY, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertCount(1, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails);
+        $this->assertEquals('FF', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals('FLEX', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeDescription);
+    }
+
+    /**
+     * Test FarePricePnrWithBookingClassOptions with *fareFamily* specified per segments,
+     * the value *FLEX* should be transferred to the attributeDescription value for segments 1 and 2,
+     * the value *ECO* should be transferred to the attributeDescription value for segments 3 and 4.
+     *
+     * @throws \Amadeus\Client\RequestCreator\MessageVersionUnsupportedException
+     */
+    public function testPricePnrCallWithMultipleFareFamily()
+    {
+        $opt = new FarePricePnrWithBookingClassOptions([
+            'fareFamily' => [
+                new FareFamily([
+                    'fareFamily' => 'FLEX',
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 1
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 2
+                        ])
+                    ]
+                ]),
+                new FareFamily([
+                    'fareFamily' => 'ECOFLEX',
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 3
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 4
+                        ])
+                    ]
+                ])
+                ]
+        ]);
+
+        $msg = new PricePNRWithBookingClass13($opt);
+
+        $this->assertCount(2, $msg->pricingOptionGroup);
+        $this->assertEquals(PricingOptionKey::OPTION_FARE_FAMILY, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertCount(1, $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails);
+        $this->assertEquals('FF', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals('FLEX', $msg->pricingOptionGroup[0]->optionDetail->criteriaDetails[0]->attributeDescription);
+        $this->assertCount(1, $msg->pricingOptionGroup[1]->optionDetail->criteriaDetails);
+        $this->assertEquals('FF', $msg->pricingOptionGroup[1]->optionDetail->criteriaDetails[0]->attributeType);
+        $this->assertEquals('ECOFLEX', $msg->pricingOptionGroup[1]->optionDetail->criteriaDetails[0]->attributeDescription);
+    }
+
+    public function testCanDoPricePnrCallWithZapOff()
+    {
+        $opt =  new FarePricePnrWithBookingClassOptions([
+            'zapOff' => [
+                new ZapOff([
+                    'applyTo' => ZapOff::FUNCTION_TOTAL_FARE,
+                    'rate' => 'CH50',
+                    'amount' => 120,
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 1
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 2
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new PricePNRWithBookingClass13($opt);
+
+        $this->assertCount(1, $msg->pricingOptionGroup);
+
+        $this->assertEquals(PricingOptionKey::OPTION_ZAP_OFF, $msg->pricingOptionGroup[0]->pricingOptionKey->pricingOptionKey);
+        $this->assertEquals(PenDisInformation::QUAL_ZAPOFF_DISCOUNT, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyQualifier);
+        $this->assertCount(1, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails);
+        $this->assertEquals(DiscountPenaltyDetails::FUNCTION_TOTAL_FARE, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->function);
+        $this->assertEquals(120, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->amount);
+        $this->assertEquals(DiscountPenaltyDetails::AMOUNTTYPE_FIXED_WHOLE_AMOUNT, $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->amountType);
+        $this->assertEquals('CH50', $msg->pricingOptionGroup[0]->penDisInformation->discountPenaltyDetails[0]->rate);
     }
 }

@@ -58,7 +58,18 @@ class SeatRequest
         }
 
         if (!empty($seatReq->seatNumber)) {
-            $this->special[] = new Special($seatReq->seatNumber);
+            if (is_array($seatReq->seatNumber)) {
+                foreach ($seatReq->seatNumber as $seatNumber) {
+                    $this->addSpecial($seatNumber);
+                }
+            } else {
+                $this->addSpecial($seatReq->seatNumber);
+            }
         }
+    }
+
+    protected function addSpecial($seatNumber)
+    {
+        $this->special[] = new Special($seatNumber);
     }
 }

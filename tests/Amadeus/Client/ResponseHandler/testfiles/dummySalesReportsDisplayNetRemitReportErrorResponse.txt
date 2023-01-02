@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SalesReports_DisplayNetRemitReportReply xmlns="http://xml.amadeus.com/TSRNRQ_10_1_1A"><errorGroup><errorOrWarningCodeDetails><errorDetails><errorCode>6466</errorCode><errorCategory>EC</errorCategory><errorCodeOwner>3</errorCodeOwner></errorDetails></errorOrWarningCodeDetails><errorWarningDescription><freeTextDetails><textSubjectQualifier>1</textSubjectQualifier><source>M</source><encoding>1</encoding></freeTextDetails><freeText>NO DATA FOUND</freeText></errorWarningDescription></errorGroup></SalesReports_DisplayNetRemitReportReply>

@@ -23,12 +23,15 @@
 namespace Amadeus\Client\RequestOptions;
 
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareFamily;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\ZapOff;
 
 /**
  * Fare_PricePnrWithBookingClass Request Options
@@ -105,7 +108,7 @@ class FarePricePnrWithBookingClassOptions extends Base
      * RC  Corporate negociated fares
      * RLI Return LIst of fare
      * RLO Return LOwest possible fare
-     * RN  Negociated fare
+     * RN  Negotiated fare
      * RP  Published Fares
      * RU  Unifares
      * RW  Corporate Unifares
@@ -122,6 +125,11 @@ class FarePricePnrWithBookingClassOptions extends Base
      * @var string[]
      */
     public $overrideOptions = [];
+
+    /**
+     * @var array
+     */
+    public $overrideOptionsWithCriteria = [];
 
     /**
      * Specify the validating carrier
@@ -265,4 +273,25 @@ class FarePricePnrWithBookingClassOptions extends Base
      * @var PaxSegRef[]
      */
     public $references = [];
+
+    /**
+     * Fare family to be used in pricing (e.g. "CLASSIC").
+     *
+     * @var string|FareFamily[]
+     */
+    public $fareFamily;
+
+    /**
+     * Zap-Off to be applied
+     *
+     * @var ZapOff[]
+     */
+    public $zapOff;
+
+    /**
+     * Cabins to be applied
+     *
+     * @var Cabin[]
+     */
+    public $cabins;
 }

@@ -22,10 +22,10 @@
 
 namespace Test\Amadeus\Client\ResponseHandler;
 
+use Amadeus\Client\ResponseHandler;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
 use Test\Amadeus\BaseTestCase;
-use Amadeus\Client\ResponseHandler;
 
 /**
  * BaseTest
@@ -823,6 +823,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("Past date/time not allowed", $result->messages[0]->text);
     }
 
+    public function testCanHandleFareMasterPricerExpertSearchError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareMasterPricerExpertSearchErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_MasterPricerTravelBoardSearch');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('920', $result->messages[0]->code);
+        $this->assertEquals("Past date/time not allowed", $result->messages[0]->text);
+    }
+
     public function testCanHandleFareMasterPricerCalendarError()
     {
         $respHandler = new ResponseHandler\Base();
@@ -943,7 +958,6 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("ENTRY REQUIRES PREVIOUS PRICING/FARE DISPLAY REQUEST", $result->messages[0]->text);
     }
 
-
     public function testCanHandleFareGetFareRulesError()
     {
         $respHandler = new ResponseHandler\Base();
@@ -987,6 +1001,36 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
         $this->assertEquals('00477', $result->messages[0]->code);
         $this->assertEquals("INVALID FORMAT", $result->messages[0]->text);
+    }
+
+    public function testCanHandleFarePriceUpsellWithoutPNRError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFarePriceUpsellWithoutPNRErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_PriceUpsellWithoutPNR');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertCount(1, $result->messages);
+        $this->assertEquals('5436', $result->messages[0]->code);
+        $this->assertEquals('UNABLE TO FARE - NO INVENTORY FOR FLIGHT REQUESTED -TK 57', $result->messages[0]->text);
+    }
+
+    public function testCanHandleFareGetFamilyDescriptionError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareGetFareFamilyDescriptionErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_GetFareFamilyDescription');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertCount(1, $result->messages);
+        $this->assertEquals('33116', $result->messages[0]->code);
+        $this->assertEquals('CHECK FARE COMPONENT NUMBER', $result->messages[0]->text);
     }
 
     public function testCanHandleFareInformativeBestPricingWithoutPNRError()
@@ -1078,7 +1122,6 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('25677', $result->messages[0]->code);
         $this->assertEquals("ATC REFUND NOT AUTHORIZED", $result->messages[0]->text);
     }
-
 
     public function testCanHandleDocRefundUpdateRefundErrorResponse()
     {
@@ -1381,6 +1424,21 @@ class BaseTest extends BaseTestCase
         $this->assertEquals("SYSTEM UNABLE TO PROCESS", $result->messages[0]->text);
     }
 
+    public function testCanHandleMiniRuleGetFromRecErrResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyMiniRuleGetFromRecErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'MiniRule_GetFromPricingRec');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('32660', $result->messages[0]->code);
+        $this->assertEquals("INVALID CONTEXT - PNRRELOC MISMATCH", $result->messages[0]->text);
+    }
+
     public function testCanHandleMiniRuleGetFromPricingRecErrResponse()
     {
         $respHandler = new ResponseHandler\Base();
@@ -1410,7 +1468,6 @@ class BaseTest extends BaseTestCase
         $this->assertEquals('20', $result->messages[0]->code);
         $this->assertEquals("RESTRICTED", $result->messages[0]->text);
     }
-
 
     public function testCanHandleMiniRuleGetFromETicketErrorResponse()
     {
@@ -1499,6 +1556,67 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(1, count($result->messages));
         $this->assertEquals('6466', $result->messages[0]->code);
         $this->assertEquals("NO DATA FOUND", $result->messages[0]->text);
+    }
+
+    public function testCanHandleSalesReportsDisplayDailyOrSummarizedReport()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummySalesReportsDisplayDailyOrSummarizedReportErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'SalesReports_DisplayDailyOrSummarizedReport');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('6466', $result->messages[0]->code);
+        $this->assertEquals("NO DATA FOUND", $result->messages[0]->text);
+    }
+
+    public function testCanHandleSalesReportsDisplayNetRemitReport()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummySalesReportsDisplayNetRemitReportErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'SalesReports_DisplayNetRemitReport');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(1, count($result->messages));
+        $this->assertEquals('6466', $result->messages[0]->code);
+        $this->assertEquals("NO DATA FOUND", $result->messages[0]->text);
+    }
+
+    public function testCanHandleServiceBookPriceServiceError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('serviceBookPriceServiceErrorReply.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Service_BookPriceService');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(2, count($result->messages));
+
+        $this->assertEquals('1', $result->messages[0]->code);
+        $this->assertEquals("CHECK FORMAT", $result->messages[0]->text);
+
+        $this->assertEquals('33017', $result->messages[1]->code);
+        $this->assertEquals("SHOPPING BOX REJECT", $result->messages[1]->text);
+    }
+
+    public function testCanHandleServiceBookPriceServiceUnknownStatus()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('serviceBookPriceServiceErrorUnknown.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Service_BookPriceService');
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
     }
 
     public function testCanHandleServiceIntegratedPricing()
@@ -1695,6 +1813,44 @@ class BaseTest extends BaseTestCase
 
         $sendResult = new SendResult();
         $sendResult->responseXml = $this->getTestFile('dummyTicketInitRefundUnknownResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_InitRefund');
+
+        $this->assertEquals(Result::STATUS_UNKNOWN, $result->status);
+    }
+
+    public function testCanHandleOkTicketUpdateRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketUpdateRefundResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_UpdateRefund');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertCount(0, $result->messages);
+    }
+
+    public function testCanHandleFailTicketUpdateRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketUpdateRefundFailResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Ticket_InitRefund');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertCount(1, $result->messages);
+    }
+
+    public function testCanHandleUnknownTicketUpdateRefund()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTicketUpdateRefundUnknownResponse.txt');
 
         $result = $respHandler->analyzeResponse($sendResult, 'Ticket_InitRefund');
 

@@ -12,10 +12,7 @@ build:
     tests:
         override:
             -
-                command: 'phpunit --coverage-clover=build/logs/clover.xml'
-                coverage:
-                    file: 'build/logs/clover.xml'
-                    format: 'clover'
+                command: 'phpunit'
     nodes:
         php54:
             environment:
@@ -30,3 +27,6 @@ build:
         php72:
             environment:
                 php: 7.2
+        php73:
+            environment:
+                php: 7.3

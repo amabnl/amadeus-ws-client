@@ -71,6 +71,26 @@ Fare types: Take into account Published Fares, Unifares, Negotiated fares:
         ])
     );
 
+Overrides with Option Details
+=============================
+
+Show Baggage Fares - include 1 free item of baggage when pricing:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'overrideOptionsWithCriteria' => [
+                [
+                    'key' => 'SBF',
+                    'optionDetail' => '1'
+                ]
+            ]
+        ])
+    );
+
 Currency override
 =================
 
@@ -360,7 +380,7 @@ This option is used to price an itinerary applying an award program for a given 
 .. code-block:: php
 
     use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
-    user Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
 
     $pricingResponse = $client->farePricePnrWithBookingClass(
         new FarePricePnrWithBookingClassOptions([
@@ -373,6 +393,7 @@ This option is used to price an itinerary applying an award program for a given 
     );
 
 
+
 Form of Payment override
 ========================
 
@@ -383,7 +404,7 @@ This option is used to specify the form of payment information to use.
 .. code-block:: php
 
     use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
-    user Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 
     $pricingResponse = $client->farePricePnrWithBookingClass(
         new FarePricePnrWithBookingClassOptions([
@@ -396,6 +417,116 @@ This option is used to specify the form of payment information to use.
                 new FormOfPayment([
                     'type' => FormOfPayment::TYPE_CASH
                 ]),
+            ]
+        ])
+    );
+
+Fare-family
+===========
+This option is used to price with given fare-family(ies)
+
+**Example:** Price with given fare-family 'CLASSIC':
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'fareFamily' => 'CLASSIC'
+        ])
+    );
+
+
+**Example:** Price with given fare-family 'FLEX' for segment 1 and 2, and 'ECOFLEX' for segment 3 and 4:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+        new FarePricePnrWithBookingClassOptions([
+            'fareFamily' => [
+                new FareFamily([
+                    'fareFamily' => 'FLEX',
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 1
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 2
+                        ])
+                    ]
+                ]),
+                new FareFamily([
+                    'fareFamily' => 'ECOFLEX',
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 3
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 4
+                        ])
+                    ]
+                ])
+                ]
+        ]);
+    );
+
+
+Zap-Off
+=======
+
+Price a PNR with Zap-Off:
+
+**Example :** apply a Zap-Off with amount 120 on the total fare and apply ticket designator "CH50" for segments
+1 and 2 and apply a Zap-Off with amount 80 on the total fare and apply ticket designator "CH70" for segments
+3 and 4.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\ZapOff;
+    use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
+
+    $pricingResponse = $client->farePricePnrWithBookingClass(
+         new FarePricePnrWithBookingClassOptions([
+            'zapOff' => [
+                new ZapOff([
+                    'applyTo' => ZapOff::FUNCTION_TOTAL_FARE,
+                    'rate' => 'CH50',
+                    'amount' => 120,
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 1
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 2
+                        ])
+                    ]
+                ]),
+                new ZapOff([
+                    'applyTo' => ZapOff::FUNCTION_TOTAL_FARE,
+                    'rate' => 'CH70',
+                    'amount' => 80,
+                    'paxSegRefs' => [
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 3
+                        ]),
+                        new PaxSegRef([
+                            'type' => PaxSegRef::TYPE_SEGMENT,
+                            'reference' => 4
+                        ])
+                    ]
+                ])
             ]
         ])
     );

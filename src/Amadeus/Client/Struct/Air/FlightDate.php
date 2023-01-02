@@ -30,6 +30,8 @@ namespace Amadeus\Client\Struct\Air;
  */
 class FlightDate
 {
+    protected $dateFormat = 'dmy';
+
     /**
      * DDMMYY
      *
@@ -84,7 +86,7 @@ class FlightDate
     protected function loadDepartureDate($departureDate)
     {
         if ($departureDate instanceof \DateTime) {
-            $this->departureDate = ($departureDate->format('dmy') !== '000000') ? $departureDate->format('dmy') : null;
+            $this->departureDate = ($departureDate->format('dmy') !== '000000') ? $departureDate->format($this->dateFormat) : null;
             $time = $departureDate->format('Hi');
             if ($time !== '0000') {
                 $this->departureTime = $time;
@@ -119,7 +121,7 @@ class FlightDate
      */
     public function setArrivalDate(\DateTime $arrivalDate)
     {
-        $this->arrivalDate = ($arrivalDate->format('dmy') !== '000000') ? $arrivalDate->format('dmy') : null;
+        $this->arrivalDate = ($arrivalDate->format('dmy') !== '000000') ? $arrivalDate->format($this->dateFormat) : null;
         $time = $arrivalDate->format('Hi');
         if ($time !== '0000') {
             $this->arrivalTime = $time;

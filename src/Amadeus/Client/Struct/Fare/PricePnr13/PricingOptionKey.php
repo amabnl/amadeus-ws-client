@@ -56,6 +56,9 @@ class PricingOptionKey
     const OPTION_RETURN_ALL = "RLI";
     const OPTION_PTC_ONLY = "PTC";
     const OPTION_FORM_OF_PAYMENT = "FOP";
+    const OPTION_CABIN = "CAB";
+    const OPTION_FARE_FAMILY = "PFF";
+    const OPTION_ZAP_OFF = "ZAP";
 
     /**
      * AC Add Country taxes
@@ -63,6 +66,7 @@ class PricingOptionKey
      * AWD AWarD
      * BK Booking class override
      * BND Bound Input
+     * CAB CABin option
      * CC Controlling Carrier Override
      * CMP Companions
      * CON Connection

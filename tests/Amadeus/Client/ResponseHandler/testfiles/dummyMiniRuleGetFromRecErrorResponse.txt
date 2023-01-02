@@ -1,0 +1,22 @@
+<MiniRule_GetFromRecReply xmlns="http://xml.amadeus.com/TMRXRR_18_1_1A">
+    <responseDetails>
+        <statusCode>N</statusCode>
+    </responseDetails>
+    <errorWarningGroup>
+        <errorOrWarningCodeDetails>
+            <errorDetails>
+                <errorCode>32660</errorCode>
+                <errorCategory>EC</errorCategory>
+            </errorDetails>
+        </errorOrWarningCodeDetails>
+        <errorWarningDescription>
+            <freeTextDetails>
+                <textSubjectQualifier>3</textSubjectQualifier>
+                <language>EN</language>
+                <source>S</source>
+                <encoding>1</encoding>
+            </freeTextDetails>
+            <freeText>INVALID CONTEXT - PNRRELOC MISMATCH</freeText>
+        </errorWarningDescription>
+    </errorWarningGroup>
+</MiniRule_GetFromRecReply>

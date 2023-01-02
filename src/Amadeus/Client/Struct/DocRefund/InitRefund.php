@@ -82,6 +82,10 @@ class InitRefund extends BaseWsMessage
         if (!empty($options->actionCodes)) {
             $this->actionDetails = new ActionDetails($options->actionCodes);
         }
+        
+        if ($this->checkAnyNotEmpty($options->stockTypeCode, $options->stockProvider)) {
+            $this->stockProviderDetails = new StockProviderDetails($options->stockTypeCode, $options->stockProvider);
+        }
 
         if ($this->checkAnyNotEmpty($options->itemNumber, $options->itemNumberType, $options->couponNumber)) {
             $this->itemNumberGroup = new ItemNumberGroup(
