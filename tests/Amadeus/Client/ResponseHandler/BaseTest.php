@@ -1971,4 +1971,17 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(Result::STATUS_OK, $result->status);
         $this->assertEquals(0, count($result->messages));
     }
+
+    public function testCanHandleServiceBookPriceProductOkResponse()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyServiceBookPriceProductOkResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Service_BookPriceProduct');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
 }

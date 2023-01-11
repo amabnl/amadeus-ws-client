@@ -24,8 +24,11 @@ namespace Amadeus;
 
 use Amadeus\Client\Base;
 use Amadeus\Client\Exception;
+use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params;
+use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
 use Amadeus\Client\RequestOptions;
+use Amadeus\Client\RequestOptions\ServiceBookPriceProductOptions;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\UnsupportedOperationException;
 
@@ -1690,6 +1693,26 @@ class Client extends Base
         $messageOptions = []
     ) {
         $msgName = 'Service_IntegratedCatalogue';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Service_BookPriceProduct
+     *
+     * @param ServiceBookPriceProductOptions $options
+     * @param array                          $messageOptions  (OPTIONAL)
+     *
+     * @return Result
+     * @throws Exception
+     * @throws InvalidMessageException
+     * @throws MessageVersionUnsupportedException
+     */
+    public function serviceBookPriceProduct(
+        RequestOptions\ServiceBookPriceProductOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Service_BookPriceProduct';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
