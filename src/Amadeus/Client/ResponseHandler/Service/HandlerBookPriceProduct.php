@@ -22,26 +22,11 @@
 
 namespace Amadeus\Client\ResponseHandler\Service;
 
-use Amadeus\Client\Exception;
-use Amadeus\Client\ResponseHandler\StandardResponseHandler;
-use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\SendResult;
-
 /**
  * HandlerBookPriceService
  *
  * @package Amadeus\Client\ResponseHandler\Service
  */
-class HandlerBookPriceProduct extends StandardResponseHandler
+class HandlerBookPriceProduct extends HandlerBookPriceService
 {
-    /**
-     * @param SendResult $response
-     *
-     * @return Result
-     * @throws Exception
-     */
-    public function analyze(SendResult $response)
-    {
-        return $this->analyzeSimpleResponseErrorCodeAndMessage($response);
-    }
 }

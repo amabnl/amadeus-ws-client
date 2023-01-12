@@ -1984,4 +1984,23 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(Result::STATUS_OK, $result->status);
         $this->assertEquals(0, count($result->messages));
     }
+
+    public function testCanHandleServiceBookPriceProductError()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyServiceBookPriceProductErrorResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Service_BookPriceProduct');
+
+        $this->assertEquals(Result::STATUS_ERROR, $result->status);
+        $this->assertEquals(2, count($result->messages));
+
+        $this->assertEquals('4845', $result->messages[0]->code);
+        $this->assertEquals("INVALID PASSENGER SELECTION", $result->messages[0]->text);
+
+        $this->assertEquals('31746', $result->messages[1]->code);
+        $this->assertEquals("RESERVATION REJECT ON PNR", $result->messages[1]->text);
+    }
 }
