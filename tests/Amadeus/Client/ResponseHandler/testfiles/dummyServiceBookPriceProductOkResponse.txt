@@ -1,0 +1,13 @@
+<AMA_Service_BookPriceProductRS Version="1.001" xmlns="http://xml.amadeus.com/2010/06/ServiceBookAndPrice_v1" xmlns:ama="http://xml.amadeus.com/2010/06/Types_v2" xmlns:foxns2="http://www.opentravel.org/OTA/2003/05/OTA2010B" xmlns:iata="http://www.iata.org/IATA/2007/00/IATA2010.1">
+	<Success>
+		<Booking RecoID="1">
+			<Products>
+				<Product ID="14" Code="FBAG" ProviderCode="6X" Chargeable="Yes" CustomerRefId="2" SegmentRefId="1"/>
+				<Product ID="15" Code="FBAG" ProviderCode="6X" Chargeable="Yes" CustomerRefId="2" SegmentRefId="2"/>
+			</Products>
+			<Quotations>
+				<Quotation ID="16" CurrencyCode="PLN" DecimalPlaces="2" Amount="13000" PricingRecordType="TSM" ProductRefIds="14 15"/>
+			</Quotations>
+		</Booking>
+	</Success>
+</AMA_Service_BookPriceProductRS>

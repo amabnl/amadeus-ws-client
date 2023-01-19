@@ -3615,6 +3615,32 @@ Service_StandaloneCatalogue
 );
 
 ------------------------
+Service_BookPriceProduct
+------------------------
+
+Book ancillary with service reference 14 for pax with reference 2 and 3.
+
+You'll get the service references from the ``Service_IntegratedCatalogue`` response.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\Service\BookPriceProduct\Recommendation;
+    use Amadeus\Client\RequestOptions\ServiceBookPriceProductOptions;
+
+    $bookPriceProductResult = $client->serviceBookPriceProduct(
+        new ServiceBookPriceProductOptions([
+            'recommendations' => [
+                new Recommendation(
+                    [
+                        'id'             => 14,
+                        'customerRefIds' => [2, 3]
+                    ]
+                )
+            ]
+        ])
+    );
+
+------------------------
 Service_BookPriceService
 ------------------------
 
