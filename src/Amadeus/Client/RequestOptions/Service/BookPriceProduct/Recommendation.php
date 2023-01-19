@@ -6,10 +6,13 @@ use Amadeus\Client\LoadParamsFromArray;
 
 class Recommendation extends LoadParamsFromArray
 {
+    /**
+     * @var string|int
+     */
     public $id;
 
     /**
-     * @var string[] One or more travelers to whom this service applies
+     * @var string[]|int[] One or more travelers to whom this service applies
      */
     public $customerRefIds = [];
 }

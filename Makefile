@@ -27,7 +27,7 @@ phpunit:
 	docker run --rm -ti -v $(shell pwd):/var/www -w /var/www -u $(shell id -u) $(image_name) vendor/bin/phpunit tests/
 
 test:
-	make build-once
+	make build-docker-image-once
 	make composer-install
 	make phpunit
 
