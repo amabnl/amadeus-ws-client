@@ -60,6 +60,68 @@ Query and response for handling 3DS data.
     $fopResponse = $client->fopCreateFormOfPayment($options);
 
 
+3D-Secure payment version 2.x with external authentication
+=================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
+    use Amadeus\Client\RequestOptions\Fop\CreditCardSupplementaryData;
+    use Amadeus\Client\RequestOptions\Fop\Group;
+    use Amadeus\Client\RequestOptions\Fop\MopInfo;
+    use Amadeus\Client\RequestOptions\Fop\ThreeDSecureInfo;
+    use Amadeus\Client\RequestOptions\FopCreateFopOptions;
+    use Amadeus\Client\Struct\Fop\AttributeDetails;
+
+    $options = new FopCreateFopOptions([
+        'transactionCode' => FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+        'fopGroup' => [
+            new Group([
+                'mopInfo' => [
+                    new MopInfo([
+                        'fopType' => 'CC',
+                        'attributeType' => AttributeDetails::TYPE_FP_ELEMENT,
+                        'payMerchant' => 'EW',
+                        'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                        'creditCardInfo' => new CreditCardInfo([
+                            'name' => 'Name Surname',
+                            'cardNumber' => 'XXXXXXXXXXXX0003',
+                            'vendorCode' => 'VI',
+                            'expiryDate' => '1020',
+                            'securityId' => '999',
+                            'threeDSecure' => new ThreeDSecureInfo([
+                                'transactionsStatus' => ThreeDSecureInfo::PARES_AUTHENTICATION_SUCCESSFUL,
+                                'tdsVersion' => '2.0.1',
+                                'creditCardCompany' => ThreeDSecureInfo::CC_COMP_VISA_DIRECTORY_SERVER,
+                                'authenticationIndicator' => '05',
+                                'tdsServerTransactionId' => 'U0RTRzNTRUczNEdTR1NFUldXRkNXRkRXRUZFRw==',
+                                'tdsServerTransactionIdLength' => 28,
+                                'directoryServerTransactionId' => 'Q2pENDJ0Tll0WlZ6VFcwSEVvdDVIRGt4TXpFPQ',
+                                'directoryServerTransactionIdLength' => 28,
+                                'tdsAuthenticationVerificationCode' => 'QUFBQkJYbGprUUFBQUFBRUFXT1JBQUFBQUFBPQ',
+                                'tdsAuthenticationVerificationCodeLength' => 28,
+                                'tdsAuthenticationVerificationCodeReference' => ThreeDSecureInfo::AUTHENTICATION_VERIFICATION_CODE_VISA
+                            ]),
+                            'supplementaryData' => [
+                                new CreditCardSupplementaryData([
+                                    'setType' => CreditCardSupplementaryData::SET_TYPE_3DS,
+                                    'attributeType' => CreditCardSupplementaryData::ATTRIBUTE_TYPE_EXTERNAL_AUTHENTICATION,
+                                    'attributeDescription' => CreditCardSupplementaryData::ATTRIBUTE_DESCRIPTION_Y,
+                                ])
+                            ]
+                        ]),
+                        'sequenceNr' => 1,
+                        'fopCode' => CC,
+                        'fopStatus' => MopInfo::STATUS_NEW,
+                    ])
+                ]
+            ])
+        ]
+    ]);
+
+    $fopResponse = $client->fopCreateFormOfPayment($options);
+
+
 Best Effort
 ===========
 

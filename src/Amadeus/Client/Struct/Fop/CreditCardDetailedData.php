@@ -22,6 +22,7 @@
 
 namespace Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\RequestOptions\Fop\CreditCardSupplementaryData;
 use Amadeus\Client\RequestOptions\Fop\ThreeDSecureInfo;
 use Amadeus\Client\Struct\WsMessageUtility;
 
@@ -79,8 +80,9 @@ class CreditCardDetailedData extends WsMessageUtility
      * @param string $approvalCode
      * @param string $approvalSource
      * @param ThreeDSecureInfo|null $threeDSecure
+     * @param CreditCardSupplementaryData[] $cardSupplementaryData
      */
-    public function __construct($approvalCode, $approvalSource, $threeDSecure = null)
+    public function __construct($approvalCode, $approvalSource, $threeDSecure = null, $cardSupplementaryData = null)
     {
         if (!empty($approvalCode)) {
             $this->approvalDetails = new ApprovalDetails($approvalCode, $approvalSource);
@@ -88,6 +90,16 @@ class CreditCardDetailedData extends WsMessageUtility
 
         if ($threeDSecure instanceof ThreeDSecureInfo) {
             $this->tdsInformation = new TdsInformation($threeDSecure);
+        }
+
+        if (is_array($cardSupplementaryData)) {
+            foreach ($cardSupplementaryData as $cardSupplementaryDatum) {
+                $this->cardSupplementaryData[] = new CardSupplementaryData(
+                    $cardSupplementaryDatum->setType,
+                    $cardSupplementaryDatum->attributeType,
+                    $cardSupplementaryDatum->attributeDescription
+                );
+            }
         }
     }
 }

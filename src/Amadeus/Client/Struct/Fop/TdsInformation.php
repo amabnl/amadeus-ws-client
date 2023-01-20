@@ -59,11 +59,14 @@ class TdsInformation extends WsMessageUtility
             $this->acsURL = new AcsUrl($options->acsUrl);
         }
 
-        if ($this->checkAnyNotEmpty($options->veresStatus, $options->paresStatus, $options->creditCardCompany)) {
+        if ($this->checkAnyNotEmpty($options->veresStatus, $options->paresStatus, $options->creditCardCompany, $options->transactionsStatus, $options->authenticationIndicator, $options->tdsVersion)) {
             $this->authenticationData = new AuthenticationData(
                 $options->veresStatus,
                 $options->paresStatus,
-                $options->creditCardCompany
+                $options->creditCardCompany,
+                $options->transactionsStatus,
+                $options->authenticationIndicator,
+                $options->tdsVersion
             );
         }
 
@@ -73,6 +76,33 @@ class TdsInformation extends WsMessageUtility
                 $options->transactionIdentifier,
                 $options->transactionIdentifierDataType,
                 $options->transactionIdentifierLength
+            );
+        }
+
+        if (!empty($options->tdsServerTransactionId)) {
+            $this->tdsBlobData[] = new TdsBlobData(
+                TdsReferenceDetails::REG_THREEDS_SERVER_TRANSACTION_ID,
+                $options->tdsServerTransactionId,
+                $options->tdsServerTransactionIdDataType,
+                $options->tdsServerTransactionIdLength
+            );
+        }
+
+        if (!empty($options->tdsAuthenticationVerificationCode)) {
+            $this->tdsBlobData[] = new TdsBlobData(
+                $options->tdsAuthenticationVerificationCodeReference,
+                $options->tdsAuthenticationVerificationCode,
+                $options->tdsAuthenticationVerificationCodeDataType,
+                $options->tdsAuthenticationVerificationCodeLength
+            );
+        }
+
+        if (!empty($options->directoryServerTransactionId)) {
+            $this->tdsBlobData[] = new TdsBlobData(
+                TdsReferenceDetails::REG_DIRECTORY_SERVER_TRANSACTION_ID,
+                $options->directoryServerTransactionId,
+                $options->directoryServerTransactionIdDataType,
+                $options->directoryServerTransactionIdLength
             );
         }
 

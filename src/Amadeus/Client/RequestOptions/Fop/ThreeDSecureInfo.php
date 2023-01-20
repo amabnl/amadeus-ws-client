@@ -42,11 +42,26 @@ class ThreeDSecureInfo extends LoadParamsFromArray
     const PARES_AUTHENTICATION_UNABLE = "U";
     const PARES_AUTHENTICATION_SUCCESSFUL = "Y";
 
+    const TRANSACTION_STATUS_ATTEMPTED_AUTHENTICATION = "A";
+    const TRANSACTION_STATUS_AUTHENTICATION_FAILED = "N";
+    const TRANSACTION_STATUS_AUTHENTICATION_UNABLE = "U";
+    const TRANSACTION_STATUS_AUTHENTICATION_SUCCESSFUL = "Y";
+
     const CC_COMP_MASTERCARD_DIRECTORY_SERVER = "CADS";
     const CC_COMP_VISA_DIRECTORY_SERVER = "VIDS";
 
     const DATATYPE_BINARY = "B";
     const DATATYPE_EDIFACT = "E";
+
+    const CREDIT_CARD_COMPANY_VISA = 'VIDS';
+    const CREDIT_CARD_COMPANY_MASTER_CARD = 'CADS';
+    const CREDIT_CARD_COMPANY_AMERICAN_EXPRESS = 'AXDS';
+    const CREDIT_CARD_COMPANY_DINERS = 'DCDS';
+    const CREDIT_CARD_COMPANY_JCB = 'JCDS';
+
+    const AUTHENTICATION_VERIFICATION_CODE_VISA = 'CAVV';
+    const AUTHENTICATION_VERIFICATION_CODE_AMERICAN_EXPRESS  = 'AEVV';
+    const AUTHENTICATION_VERIFICATION_CODE_MASTERCARD  = 'AAV';
 
     /**
      * VERES status
@@ -67,11 +82,26 @@ class ThreeDSecureInfo extends LoadParamsFromArray
     public $paresStatus;
 
     /**
+     * Transaction status
+     *
+     * self::TRANSACTION_STATUS_*
+     *
+     * @var string
+     */
+    public $transactionsStatus;
+    /**
      * self::CC_COMP_*
      *
      * @var string
      */
     public $creditCardCompany;
+
+    /**
+     * Indicates the status of the enrolment and authentication phases
+     *
+     * @var string
+     */
+    public $authenticationIndicator;
 
     /**
      * Access Control Server URL
@@ -100,6 +130,79 @@ class ThreeDSecureInfo extends LoadParamsFromArray
      * @var int
      */
     public $transactionIdentifierLength;
+
+    /**
+     * 3DS protocol version
+     *
+     * @var string
+     */
+    public $tdsVersion;
+
+    /**
+     * 3DS 2.0 partner transaction identifier
+     *
+     * @var string
+     */
+    public $tdsServerTransactionId;
+
+    /**
+     * @var string
+     */
+    public $tdsServerTransactionIdDataType = self::DATATYPE_BINARY;
+
+    /**
+     * Length of 3DS 2.0 partner transaction identifier
+     *
+     * @var string
+     */
+    public $tdsServerTransactionIdLength;
+
+    /**
+     * 3DS authentication verification code
+     *
+     * @var string
+     */
+    public $tdsAuthenticationVerificationCode;
+
+    /**
+     * 3DS authentication verification code reference (CAVV : Visa, Diners, JCB AEVV : American Express AAV : Mastercard)
+     *
+     * @var string
+     */
+    public $tdsAuthenticationVerificationCodeReference;
+
+    /**
+     * @var string
+     */
+    public $tdsAuthenticationVerificationCodeDataType =  self::DATATYPE_BINARY;
+
+    /**
+     * 3DS authentication verification code
+     *
+     * @var int
+     */
+    public $tdsAuthenticationVerificationCodeLength;
+
+    /**
+     * Transaction identifier related to the Directory Server
+     *
+     * @package Amadeus\Client\RequestOptions\Fop
+     *
+     * @var string
+     */
+    public $directoryServerTransactionId;
+
+    /**
+     * @var string
+     */
+    public $directoryServerTransactionIdDataType = self::DATATYPE_BINARY;
+
+    /**
+     * Length of Directory Server Transaction Identifier string
+     *
+     * @var int
+     */
+    public $directoryServerTransactionIdLength;
 
     /**
      * PARES Authentication response

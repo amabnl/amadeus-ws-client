@@ -23,32 +23,30 @@
 namespace Amadeus\Client\Struct\Fop;
 
 /**
- * TdsReferenceDetails
+ * CardSupplementaryCriteriaDetails
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @author Friedemann Schmuhl <friedemann.schmuhl@invia.de>
  */
-class TdsReferenceDetails
+class CardSupplementaryCriteriaDetails
 {
-    const REF_PARES = 'PARES';
-    const REF_VISA_CARD = 'CAVV';
-    const REF_MASTERCARD = 'AVVV';
-    const REF_THREEDS_TRANSACTION_IDENTIFIER = 'XID';
-    const REG_THREEDS_SERVER_TRANSACTION_ID = '3DS_SERVER_TRANSACTIONID';
-    const REG_DIRECTORY_SERVER_TRANSACTION_ID = 'DS_TRANSACTIONID';
+    /**
+     * @var string
+     */
+    public $attributeType;
 
     /**
      * @var string
      */
-    public $value;
+    public $attributeDescription;
 
     /**
-     * TdsReferenceDetails constructor.
-     *
-     * @param string $value self::REF_*
+     * @param string $attributeType
+     * @param string $attributeDescription
      */
-    public function __construct($value)
+    public function __construct($attributeType, $attributeDescription)
     {
-        $this->value = $value;
+        $this->attributeType        = $attributeType;
+        $this->attributeDescription = $attributeDescription;
     }
 }

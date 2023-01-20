@@ -22,8 +22,12 @@
 
 namespace Test\Amadeus\Client\Struct\Fop;
 
+use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
+use Amadeus\Client\RequestOptions\Fop\CreditCardSupplementaryData;
 use Amadeus\Client\RequestOptions\Fop\DataOrSwitch;
 use Amadeus\Client\RequestOptions\Fop\MopInfo;
+use Amadeus\Client\RequestOptions\Fop\ThreeDSecureInfo;
+use Amadeus\Client\Struct\Fop\AttributeDetails;
 use Amadeus\Client\Struct\Fop\MopDescription;
 use Test\Amadeus\BaseTestCase;
 
@@ -69,5 +73,40 @@ class MopDescriptionTest extends BaseTestCase
         $this->assertEquals('1', $obj->mopDetails->pnrSupplementaryData[0]->dataAndSwitchMap->criteriaDetails[1]->attributeDescription);
         $this->assertEquals('APM', $obj->mopDetails->pnrSupplementaryData[0]->dataAndSwitchMap->criteriaDetails[2]->attributeType);
         $this->assertEquals('1', $obj->mopDetails->pnrSupplementaryData[0]->dataAndSwitchMap->criteriaDetails[2]->attributeDescription);
+    }
+
+    public function testCanConstructWithThreeDSecureVersionTwo()
+    {
+        $mopInfo = new MopInfo([
+            'sequenceNr' => 1,
+            'fopCode' => 'CCVI',
+            'fopType' => 'CC',
+            'fopStatus' => MopInfo::STATUS_NEW,
+            'attributeType' => AttributeDetails::TYPE_FP_ELEMENT,
+            'payMerchant' => 'EW',
+            'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+            'creditCardInfo' => new CreditCardInfo([
+                'name' => 'Name Surname',
+                'cardNumber' => 'XXXXXXXXXXXX0003',
+                'vendorCode' => 'VI',
+                'expiryDate' => '1020',
+                'securityId' => '999',
+                'supplementaryData' => [
+                    new CreditCardSupplementaryData([
+                        'setType' => CreditCardSupplementaryData::SET_TYPE_3DS,
+                        'attributeType' => CreditCardSupplementaryData::ATTRIBUTE_TYPE_EXTERNAL_AUTHENTICATION,
+                        'attributeDescription' => CreditCardSupplementaryData::ATTRIBUTE_DESCRIPTION_Y,
+                    ])
+                ],
+                'threeDSecure' => new ThreeDSecureInfo([
+                    'transactionsStatus' => ThreeDSecureInfo::PARES_AUTHENTICATION_SUCCESSFUL
+                ])
+            ])
+        ]);
+
+        $obj = new MopDescription($mopInfo);
+
+        $this->assertSame(AttributeDetails::TYPE_FP_ELEMENT, $obj->paymentModule->groupUsage->attributeDetails[0]->attributeType);
+        $this->assertSame(CreditCardSupplementaryData::SET_TYPE_3DS, $obj->paymentModule->mopDetailedData->creditCardDetailedData->cardSupplementaryData[0]->criteriaSetType);
     }
 }
