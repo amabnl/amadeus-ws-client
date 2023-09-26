@@ -41,7 +41,7 @@ class Request extends AbstractOfferRequest
             array_map(static function (TravelRequest\SelectedOfferItem $selectedOfferItem) {
                 return new SelectedOfferItem(
                     $selectedOfferItem->offerItemRefId,
-                    $selectedOfferItem->paxRefId,
+                    $selectedOfferItem->paxRefId
                 );
             }, $selectedOffer->selectedOfferItems),
             $selectedOffer->offerRefID

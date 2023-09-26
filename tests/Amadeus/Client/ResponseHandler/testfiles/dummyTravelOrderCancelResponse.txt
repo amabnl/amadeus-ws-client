@@ -1,0 +1,5 @@
+<AMA_TravelOrderCancelRS xmlns="http://xml.amadeus.com/2010/06/Travel_OrderCancelRS_v1">
+  <Response>
+    <OrderRefID>UA016HD4461A5</OrderRefID>
+  </Response>
+</AMA_TravelOrderCancelRS>

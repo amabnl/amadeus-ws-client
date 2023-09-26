@@ -39,11 +39,13 @@ class HandlerTravel extends StandardResponseHandler
     {
         $result = $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
 
-        $error = $response->responseObject->Error ?? null;
+        $error = isset($response->responseObject->Error) ? $response->responseObject->Error : null;
         $rawErrors = [];
 
         if ($error === null) {
-            $rawErrors = $response->responseObject->Errors->Error ?? [];
+            $rawErrors = isset($response->responseObject->Errors->Error)
+                ? $response->responseObject->Errors->Error
+                : [];
             if (!is_array($rawErrors)) {
                 $rawErrors = [$rawErrors];
             }
@@ -58,12 +60,12 @@ class HandlerTravel extends StandardResponseHandler
         foreach ($rawErrors as $rawError) {
             $result->setStatus(Result::STATUS_ERROR);
             $result->messages[] = new NotOk(
-                $rawError->Code ?? '',
-                $rawError->DescText ?? '',
+                isset($rawError->Code) ? $rawError->Code : '',
+                isset($rawError->DescText) ? $rawError->DescText : ''
             );
         }
 
-        if ($response = $result->response->Response ?? null) {
+        if ($response = isset($result->response->Response) ? $result->response->Response : null) {
             $result->response = $response;
         }
 

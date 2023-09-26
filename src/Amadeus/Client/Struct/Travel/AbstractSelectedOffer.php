@@ -21,7 +21,7 @@ abstract class AbstractSelectedOffer
     public $ShoppingResponseRefID;
 
     /**
-     * @var SelectedOfferItem[]
+     * @var OfferPrice\SelectedOfferItem[]|OrderCreate\SelectedOfferItem[]
      */
     public $SelectedOfferItem;
 

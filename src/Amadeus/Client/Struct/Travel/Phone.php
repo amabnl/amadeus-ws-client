@@ -13,7 +13,7 @@ class Phone
     /**
      * @var string
      */
-    private $PhoneNumber;
+    public $PhoneNumber;
 
     /**
      * @param string $phoneNumber

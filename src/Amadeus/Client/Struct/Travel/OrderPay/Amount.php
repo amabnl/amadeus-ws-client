@@ -3,7 +3,7 @@
 namespace Amadeus\Client\Struct\Travel\OrderPay;
 
 /**
- * PaymentInfo
+ * Amount
  *
  * @package Amadeus\Client\Struct\Travel\OrderPay
  * @author Artem Zakharchenko <artz.relax@gmail.com>
@@ -13,9 +13,12 @@ class Amount
     /**
      * @var float
      */
-    public $_ = 100;
+    public $_;
 
-    public $CurCode = 'USD';
+    /**
+     * @var string
+     */
+    public $CurCode;
 
     public function __construct($amount, $currencyCode)
     {

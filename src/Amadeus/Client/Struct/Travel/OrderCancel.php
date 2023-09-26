@@ -4,6 +4,7 @@ namespace Amadeus\Client\Struct\Travel;
 
 use Amadeus\Client\RequestOptions\TravelOrderCancelOptions;
 use Amadeus\Client\Struct\BaseWsMessage;
+use Amadeus\Client\Struct\Travel\OrderCancel\Request;
 
 /**
  * Travel_OrderCancel message structure
@@ -19,7 +20,7 @@ class OrderCancel extends BaseWsMessage
     public $Party;
 
     /**
-     * @var OrderRetrieve\Request
+     * @var Request
      */
     public $Request;
 

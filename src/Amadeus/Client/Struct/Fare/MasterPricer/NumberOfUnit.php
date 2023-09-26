@@ -60,8 +60,8 @@ class NumberOfUnit
 
         if ($ndcOnly) {
             $this->unitNumberDetail[] = new UnitNumberDetail(
-                100, // 100% only allowed
-                UnitNumberDetail::TYPE_NDC_RESULT,
+                100, // allowed only 100%
+                UnitNumberDetail::TYPE_NDC_RESULT
             );
         }
 
