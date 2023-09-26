@@ -162,4 +162,11 @@ class MpBaseOptions extends Base
      * @var Fare\MasterPricer\FormOfPaymentDetails[]|array
      */
     public $formOfPayment;
+
+    /**
+     * Request for NDC offers only.
+     *
+     * @var bool
+     */
+    public $ndcOnly;
 }

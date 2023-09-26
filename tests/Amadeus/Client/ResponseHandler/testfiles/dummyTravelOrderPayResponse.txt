@@ -1,0 +1,1548 @@
+<AMA_TravelOrderViewRS xmlns="http://xml.amadeus.com/2010/06/Travel_OrderViewRS_v1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xml.amadeus.com/2010/06/Travel_OrderViewRS_v1 file://X:/it2rail/NDCX/FLX/xsd/AMA_TravelOrderViewRS.xsd">
+  <Party>
+    <Sender>
+      <Aggregator>
+        <AggregatorID>F1</AggregatorID>
+      </Aggregator>
+    </Sender>
+  </Party>
+  <Response>
+    <DataLists>
+      <BaggageAllowanceList>
+        <BaggageAllowance>
+          <BaggageAllowanceID>BA3D6E4258-CO</BaggageAllowanceID>
+          <TypeCode>CarryOn</TypeCode>
+          <ApplicablePartyText>Traveler</ApplicablePartyText>
+          <DescText>CARRY ON ALLOWANCE</DescText>
+          <BDC>
+            <CarrierDesigCode>AA</CarrierDesigCode>
+          </BDC>
+          <DimensionAllowance/>
+          <PieceAllowance>
+            <ApplicablePartyText>Traveler</ApplicablePartyText>
+            <TotalQty>1</TotalQty>
+            <ApplicableBagText>CARRY ON UP TO 45 LI 115 LCM</ApplicableBagText>
+            <PieceDimensionAllowance/>
+          </PieceAllowance>
+          <PieceAllowance>
+            <ApplicablePartyText>Traveler</ApplicablePartyText>
+            <TotalQty>1</TotalQty>
+            <ApplicableBagText>PERSONAL ITEM UP TO 40 LI</ApplicableBagText>
+            <PieceDimensionAllowance/>
+          </PieceAllowance>
+        </BaggageAllowance>
+        <BaggageAllowance>
+          <BaggageAllowanceID>BA84D5829F-CO</BaggageAllowanceID>
+          <TypeCode>CarryOn</TypeCode>
+          <ApplicablePartyText>Traveler</ApplicablePartyText>
+          <DescText>CARRY ON ALLOWANCE</DescText>
+          <BDC>
+            <CarrierDesigCode>EI</CarrierDesigCode>
+          </BDC>
+          <DimensionAllowance/>
+          <PieceAllowance>
+            <ApplicablePartyText>Traveler</ApplicablePartyText>
+            <TotalQty>1</TotalQty>
+            <ApplicableBagText>CARRY10KG 22LBUPTO 45LI 115LCM</ApplicableBagText>
+            <PieceDimensionAllowance/>
+            <PieceWeightAllowance>
+              <MaximumWeightMeasure UnitCode="KG">10</MaximumWeightMeasure>
+            </PieceWeightAllowance>
+          </PieceAllowance>
+        </BaggageAllowance>
+        <BaggageAllowance>
+          <BaggageAllowanceID>BAE1FC1C69-CO</BaggageAllowanceID>
+          <TypeCode>CarryOn</TypeCode>
+          <ApplicablePartyText>Traveler</ApplicablePartyText>
+          <DescText>CARRY ON ALLOWANCE</DescText>
+          <BDC>
+            <CarrierDesigCode>AA</CarrierDesigCode>
+          </BDC>
+          <DimensionAllowance/>
+          <PieceAllowance>
+            <ApplicablePartyText>Traveler</ApplicablePartyText>
+            <TotalQty>1</TotalQty>
+            <ApplicableBagText>CARRY ON UP TO 45 LI 115 LCM</ApplicableBagText>
+            <PieceDimensionAllowance/>
+          </PieceAllowance>
+          <PieceAllowance>
+            <ApplicablePartyText>Traveler</ApplicablePartyText>
+            <TotalQty>1</TotalQty>
+            <ApplicableBagText>PERSONAL ITEM UP TO 40 LI</ApplicableBagText>
+            <PieceDimensionAllowance/>
+          </PieceAllowance>
+        </BaggageAllowance>
+        <BaggageAllowance>
+          <BaggageAllowanceID>BA44218BC6</BaggageAllowanceID>
+          <TypeCode>Checked</TypeCode>
+          <ApplicablePartyText>Traveler</ApplicablePartyText>
+          <DescText>CHECKED ALLOWANCE</DescText>
+          <BDC>
+            <CarrierDesigCode>AA</CarrierDesigCode>
+          </BDC>
+          <PieceAllowance>
+            <ApplicablePartyText>Traveler</ApplicablePartyText>
+            <TotalQty>0</TotalQty>
+          </PieceAllowance>
+          <PieceAllowance>
+            <ApplicablePartyText>Traveler</ApplicablePartyText>
+            <TotalQty>0</TotalQty>
+            <ApplicableBagText>UPTO50LB 23KG AND62LI 158LCM</ApplicableBagText>
+            <PieceDimensionAllowance/>
+            <PieceWeightAllowance>
+              <MaximumWeightMeasure UnitCode="KG">23</MaximumWeightMeasure>
+            </PieceWeightAllowance>
+          </PieceAllowance>
+        </BaggageAllowance>
+        <BaggageAllowance>
+          <BaggageAllowanceID>BAFF26B47F</BaggageAllowanceID>
+          <TypeCode>Checked</TypeCode>
+          <ApplicablePartyText>Traveler</ApplicablePartyText>
+          <DescText>CHECKED ALLOWANCE</DescText>
+          <BDC>
+            <CarrierDesigCode>AA</CarrierDesigCode>
+          </BDC>
+          <PieceAllowance>
+            <ApplicablePartyText>Traveler</ApplicablePartyText>
+            <TotalQty>0</TotalQty>
+          </PieceAllowance>
+          <PieceAllowance>
+            <ApplicablePartyText>Traveler</ApplicablePartyText>
+            <TotalQty>0</TotalQty>
+            <ApplicableBagText>UPTO50LB 23KG AND62LI 158LCM</ApplicableBagText>
+            <PieceDimensionAllowance/>
+            <PieceWeightAllowance>
+              <MaximumWeightMeasure UnitCode="KG">23</MaximumWeightMeasure>
+            </PieceWeightAllowance>
+          </PieceAllowance>
+        </BaggageAllowance>
+      </BaggageAllowanceList>
+      <ContactInfoList>
+        <ContactInfo>
+          <ContactInfoID>CI1</ContactInfoID>
+          <ContactRefusedInd>true</ContactRefusedInd>
+        </ContactInfo>
+      </ContactInfoList>
+      <FareList>
+        <FareGroup refs="FRK4F39A1A2" ListKey="FG1">
+          <Fare>
+            <FareCode>70J</FareCode>
+          </Fare>
+          <FareBasisCode>
+            <Code>OKX9T7B5</Code>
+          </FareBasisCode>
+        </FareGroup>
+        <FareGroup refs="FRK873E0549" ListKey="FG2">
+          <Fare>
+            <FareCode>70J</FareCode>
+          </Fare>
+          <FareBasisCode>
+            <Code>OKN4C1B5</Code>
+          </FareBasisCode>
+        </FareGroup>
+      </FareList>
+      <InstructionsList>
+        <Instruction ListKey="I3">
+          <FreeFormTextInstruction refs="S3">
+            <Remark>010 AY 4159 B6 4322 G3 6143 QR 9416</Remark>
+            <Remark>011 ONEWORLD</Remark>
+            <Remark>503 4 12 15 18 22 23 26 27 28 31</Remark>
+          </FreeFormTextInstruction>
+        </Instruction>
+        <Instruction ListKey="I4">
+          <FreeFormTextInstruction refs="S4">
+            <Remark>010 AY 4261 BA 1581 EI 7114 IB 4974</Remark>
+            <Remark>011 ONEWORLD</Remark>
+            <Remark>503 4 15 18 20</Remark>
+          </FreeFormTextInstruction>
+        </Instruction>
+        <Instruction ListKey="I5">
+          <FreeFormTextInstruction refs="S5">
+            <Remark>050 EI 380</Remark>
+            <Remark>299 AER LINGUS</Remark>
+          </FreeFormTextInstruction>
+        </Instruction>
+        <Instruction ListKey="I6">
+          <FreeFormTextInstruction refs="S6">
+            <Remark>010 AY 4015 B6 4465 BA 1506 GF 6680 IB 4221 LY 8054 QR 22</Remark>
+            <Remark>1</Remark>
+            <Remark>011 ONEWORLD</Remark>
+            <Remark>503 4 15 18 20</Remark>
+          </FreeFormTextInstruction>
+        </Instruction>
+      </InstructionsList>
+      <OriginDestList>
+        <OriginDest>
+          <OriginDestID>O1</OriginDestID>
+          <OriginCode>JFK</OriginCode>
+          <DestCode>DUB</DestCode>
+          <PaxJourneyRefID>F1</PaxJourneyRefID>
+        </OriginDest>
+        <OriginDest>
+          <OriginDestID>O2</OriginDestID>
+          <OriginCode>SNN</OriginCode>
+          <DestCode>JFK</DestCode>
+          <PaxJourneyRefID>F2</PaxJourneyRefID>
+        </OriginDest>
+      </OriginDestList>
+      <PaxJourneyList>
+        <PaxJourney>
+          <PaxJourneyID>F1</PaxJourneyID>
+          <Duration>PT13H55M</Duration>
+          <PaxSegmentRefID>S3</PaxSegmentRefID>
+          <PaxSegmentRefID>S4</PaxSegmentRefID>
+        </PaxJourney>
+        <PaxJourney>
+          <PaxJourneyID>F2</PaxJourneyID>
+          <Duration>PT12H50M</Duration>
+          <PaxSegmentRefID>S5</PaxSegmentRefID>
+          <PaxSegmentRefID>S6</PaxSegmentRefID>
+        </PaxJourney>
+      </PaxJourneyList>
+      <PaxList>
+        <Pax>
+          <PaxID>T1</PaxID>
+          <PTC>ADT</PTC>
+          <Birthdate>1981-10-12</Birthdate>
+          <ContactInfoRefID>CI1</ContactInfoRefID>
+          <Individual>
+            <IndividualID>ID1</IndividualID>
+            <Birthdate>1981-10-12</Birthdate>
+            <GenderCode>F</GenderCode>
+            <GivenName>TOM</GivenName>
+            <Surname>SEAVER</Surname>
+          </Individual>
+        </Pax>
+        <Pax>
+          <PaxID>T2</PaxID>
+          <PTC>ADT</PTC>
+          <Birthdate>1994-10-03</Birthdate>
+          <Individual>
+            <IndividualID>ID2</IndividualID>
+            <Birthdate>1994-10-03</Birthdate>
+            <GenderCode>F</GenderCode>
+            <GivenName>TIM</GivenName>
+            <Surname>SEAVER</Surname>
+          </Individual>
+        </Pax>
+      </PaxList>
+      <PaxSegmentList>
+        <PaxSegment>
+          <PaxSegmentID>S3</PaxSegmentID>
+          <SecureFlightInd>true</SecureFlightInd>
+          <Duration>PT2H0M</Duration>
+          <CabinType>
+            <CabinTypeCode>B</CabinTypeCode>
+          </CabinType>
+          <Dep>
+            <IATA_LocationCode>JFK</IATA_LocationCode>
+            <StationName>New York J F Kennedy International Apt, US</StationName>
+            <TerminalName>8</TerminalName>
+            <AircraftScheduledDateTime>2023-10-18T10:25:00</AircraftScheduledDateTime>
+          </Dep>
+          <Arrival>
+            <IATA_LocationCode>CLT</IATA_LocationCode>
+            <StationName>Charlotte, US</StationName>
+            <AircraftScheduledDateTime>2023-10-18T12:25:00</AircraftScheduledDateTime>
+          </Arrival>
+          <MarketingCarrierInfo>
+            <CarrierDesigCode>AA</CarrierDesigCode>
+            <CarrierName>American Airlines</CarrierName>
+            <MarketingCarrierFlightNumberText>2643</MarketingCarrierFlightNumberText>
+          </MarketingCarrierInfo>
+          <DatedOperatingLeg>
+            <DatedOperatingLegID>LEG1</DatedOperatingLegID>
+            <CarrierAircraftType>
+              <CarrierAircraftTypeCode>319</CarrierAircraftTypeCode>
+              <CarrierAircraftTypeName>Airbus A319</CarrierAircraftTypeName>
+            </CarrierAircraftType>
+            <Dep>
+              <IATA_LocationCode>JFK</IATA_LocationCode>
+              <AircraftScheduledDateTime>2023-10-18T10:25:00</AircraftScheduledDateTime>
+            </Dep>
+            <Arrival>
+              <IATA_LocationCode>CLT</IATA_LocationCode>
+              <AircraftScheduledDateTime>2023-10-18T12:25:00</AircraftScheduledDateTime>
+            </Arrival>
+          </DatedOperatingLeg>
+        </PaxSegment>
+        <PaxSegment>
+          <PaxSegmentID>S4</PaxSegmentID>
+          <SecureFlightInd>true</SecureFlightInd>
+          <Duration>PT7H30M</Duration>
+          <CabinType>
+            <CabinTypeCode>B</CabinTypeCode>
+          </CabinType>
+          <Dep>
+            <IATA_LocationCode>CLT</IATA_LocationCode>
+            <StationName>Charlotte, US</StationName>
+            <AircraftScheduledDateTime>2023-10-18T16:50:00</AircraftScheduledDateTime>
+          </Dep>
+          <Arrival>
+            <IATA_LocationCode>DUB</IATA_LocationCode>
+            <StationName>Dublin, IE</StationName>
+            <TerminalName>2</TerminalName>
+            <AircraftScheduledDateTime>2023-10-19T05:20:00</AircraftScheduledDateTime>
+          </Arrival>
+          <MarketingCarrierInfo>
+            <CarrierDesigCode>AA</CarrierDesigCode>
+            <CarrierName>American Airlines</CarrierName>
+            <MarketingCarrierFlightNumberText>724</MarketingCarrierFlightNumberText>
+          </MarketingCarrierInfo>
+          <DatedOperatingLeg>
+            <DatedOperatingLegID>LEG1</DatedOperatingLegID>
+            <CarrierAircraftType>
+              <CarrierAircraftTypeCode>772</CarrierAircraftTypeCode>
+              <CarrierAircraftTypeName>Boeing 777-200-200ER Passenger</CarrierAircraftTypeName>
+            </CarrierAircraftType>
+            <Dep>
+              <IATA_LocationCode>CLT</IATA_LocationCode>
+              <AircraftScheduledDateTime>2023-10-18T16:50:00</AircraftScheduledDateTime>
+            </Dep>
+            <Arrival>
+              <IATA_LocationCode>DUB</IATA_LocationCode>
+              <AircraftScheduledDateTime>2023-10-19T05:20:00</AircraftScheduledDateTime>
+            </Arrival>
+          </DatedOperatingLeg>
+        </PaxSegment>
+        <PaxSegment>
+          <PaxSegmentID>S5</PaxSegmentID>
+          <SecureFlightInd>true</SecureFlightInd>
+          <Duration>PT1H25M</Duration>
+          <CabinType>
+            <CabinTypeCode>O</CabinTypeCode>
+          </CabinType>
+          <Dep>
+            <IATA_LocationCode>SNN</IATA_LocationCode>
+            <StationName>Shannon, IE</StationName>
+            <AircraftScheduledDateTime>2023-10-25T07:40:00</AircraftScheduledDateTime>
+          </Dep>
+          <Arrival>
+            <IATA_LocationCode>LHR</IATA_LocationCode>
+            <StationName>London Heathrow Apt, GB</StationName>
+            <TerminalName>2</TerminalName>
+            <AircraftScheduledDateTime>2023-10-25T09:05:00</AircraftScheduledDateTime>
+          </Arrival>
+          <MarketingCarrierInfo>
+            <CarrierDesigCode>AA</CarrierDesigCode>
+            <CarrierName>American Airlines</CarrierName>
+            <MarketingCarrierFlightNumberText>8060</MarketingCarrierFlightNumberText>
+          </MarketingCarrierInfo>
+          <OperatingCarrierInfo>
+            <CarrierDesigCode>EI</CarrierDesigCode>
+            <CarrierName>Aer Lingus</CarrierName>
+            <OperatingCarrierFlightNumberText>0380</OperatingCarrierFlightNumberText>
+          </OperatingCarrierInfo>
+          <DatedOperatingLeg>
+            <DatedOperatingLegID>LEG1</DatedOperatingLegID>
+            <CarrierAircraftType>
+              <CarrierAircraftTypeCode>32Q</CarrierAircraftTypeCode>
+              <CarrierAircraftTypeName>Airbus A321neo</CarrierAircraftTypeName>
+            </CarrierAircraftType>
+            <Dep>
+              <IATA_LocationCode>SNN</IATA_LocationCode>
+              <AircraftScheduledDateTime>2023-10-25T07:40:00</AircraftScheduledDateTime>
+            </Dep>
+            <Arrival>
+              <IATA_LocationCode>LHR</IATA_LocationCode>
+              <AircraftScheduledDateTime>2023-10-25T09:05:00</AircraftScheduledDateTime>
+            </Arrival>
+          </DatedOperatingLeg>
+        </PaxSegment>
+        <PaxSegment>
+          <PaxSegmentID>S6</PaxSegmentID>
+          <SecureFlightInd>true</SecureFlightInd>
+          <Duration>PT8H10M</Duration>
+          <CabinType>
+            <CabinTypeCode>B</CabinTypeCode>
+          </CabinType>
+          <Dep>
+            <IATA_LocationCode>LHR</IATA_LocationCode>
+            <StationName>London Heathrow Apt, GB</StationName>
+            <TerminalName>3</TerminalName>
+            <AircraftScheduledDateTime>2023-10-25T12:20:00</AircraftScheduledDateTime>
+          </Dep>
+          <Arrival>
+            <IATA_LocationCode>JFK</IATA_LocationCode>
+            <StationName>New York J F Kennedy International Apt, US</StationName>
+            <TerminalName>8</TerminalName>
+            <AircraftScheduledDateTime>2023-10-25T15:30:00</AircraftScheduledDateTime>
+          </Arrival>
+          <MarketingCarrierInfo>
+            <CarrierDesigCode>AA</CarrierDesigCode>
+            <CarrierName>American Airlines</CarrierName>
+            <MarketingCarrierFlightNumberText>105</MarketingCarrierFlightNumberText>
+          </MarketingCarrierInfo>
+          <DatedOperatingLeg>
+            <DatedOperatingLegID>LEG1</DatedOperatingLegID>
+            <CarrierAircraftType>
+              <CarrierAircraftTypeCode>77W</CarrierAircraftTypeCode>
+              <CarrierAircraftTypeName>Boeing 777-300ER Passenger</CarrierAircraftTypeName>
+            </CarrierAircraftType>
+            <Dep>
+              <IATA_LocationCode>LHR</IATA_LocationCode>
+              <AircraftScheduledDateTime>2023-10-25T12:20:00</AircraftScheduledDateTime>
+            </Dep>
+            <Arrival>
+              <IATA_LocationCode>JFK</IATA_LocationCode>
+              <AircraftScheduledDateTime>2023-10-25T15:30:00</AircraftScheduledDateTime>
+            </Arrival>
+          </DatedOperatingLeg>
+        </PaxSegment>
+      </PaxSegmentList>
+      <PriceClassList>
+        <PriceClass>
+          <PriceClassID>BasicEconomy-1</PriceClassID>
+          <Code>AAAT-BASIC</Code>
+          <Name>Basic Economy</Name>
+        </PriceClass>
+      </PriceClassList>
+      <ServiceDefinitionList>
+        <ServiceDefinition>
+          <ServiceDefinitionID>BASRV5CE7A2A9-CO</ServiceDefinitionID>
+          <Name>Carry On Bag Allowance</Name>
+          <Description>
+            <DescID>SerDescID</DescID>
+            <DescText>Carry On Bag Allowance</DescText>
+          </Description>
+          <ServiceDefinitionAssociation>
+            <BaggageAllowanceRefID>BA3D6E4258-CO</BaggageAllowanceRefID>
+          </ServiceDefinitionAssociation>
+        </ServiceDefinition>
+        <ServiceDefinition>
+          <ServiceDefinitionID>BASRV78ED2F48-CO</ServiceDefinitionID>
+          <Name>Carry On Bag Allowance</Name>
+          <Description>
+            <DescID>SerDescID</DescID>
+            <DescText>Carry On Bag Allowance</DescText>
+          </Description>
+          <ServiceDefinitionAssociation>
+            <BaggageAllowanceRefID>BA84D5829F-CO</BaggageAllowanceRefID>
+          </ServiceDefinitionAssociation>
+        </ServiceDefinition>
+        <ServiceDefinition>
+          <ServiceDefinitionID>BASRVA8CA7B71-CO</ServiceDefinitionID>
+          <Name>Carry On Bag Allowance</Name>
+          <Description>
+            <DescID>SerDescID</DescID>
+            <DescText>Carry On Bag Allowance</DescText>
+          </Description>
+          <ServiceDefinitionAssociation>
+            <BaggageAllowanceRefID>BAE1FC1C69-CO</BaggageAllowanceRefID>
+          </ServiceDefinitionAssociation>
+        </ServiceDefinition>
+        <ServiceDefinition>
+          <ServiceDefinitionID>BASRV5233E5CD</ServiceDefinitionID>
+          <Name>Checked Bag Allowance</Name>
+          <Description>
+            <DescID>SerDescID</DescID>
+            <DescText>Checked Bag Allowance</DescText>
+          </Description>
+          <ServiceDefinitionAssociation>
+            <BaggageAllowanceRefID>BA44218BC6</BaggageAllowanceRefID>
+          </ServiceDefinitionAssociation>
+        </ServiceDefinition>
+        <ServiceDefinition>
+          <ServiceDefinitionID>BASRVC4ED45A1</ServiceDefinitionID>
+          <Name>Checked Bag Allowance</Name>
+          <Description>
+            <DescID>SerDescID</DescID>
+            <DescText>Checked Bag Allowance</DescText>
+          </Description>
+          <ServiceDefinitionAssociation>
+            <BaggageAllowanceRefID>BAFF26B47F</BaggageAllowanceRefID>
+          </ServiceDefinitionAssociation>
+        </ServiceDefinition>
+      </ServiceDefinitionList>
+      <DisclosureList>
+        <Disclosure>
+          <DisclosureID>GDPR</DisclosureID>
+          <Desc>
+            <DescID>D1</DescID>
+            <DescText>Data Protection Notice: Your personal data will be processed in accordance with the applicable carriers privacy policy and, if your booking is made via a reservation system provider ("GDS" ), with its privacy policy. These are available at http://www.iatatravelcenter.com/privacy or from the carrier, GDS or TSP directly. You should read this documentation, which applies to your booking and specifies, for example, how your personal data is collected, stored, used, disclosed and transferred.</DescText>
+            <URL>http://www.iatatravelcenter.com/privacy</URL>
+          </Desc>
+        </Disclosure>
+      </DisclosureList>
+    </DataLists>
+    <Metadata>
+      <PassengerMetadata MetadataKey="M10"/>
+      <PassengerMetadata MetadataKey="M9"/>
+      <PassengerMetadata MetadataKey="M8"/>
+      <PassengerMetadata MetadataKey="M7"/>
+      <PassengerMetadata MetadataKey="M6"/>
+      <PassengerMetadata MetadataKey="M5"/>
+      <PassengerMetadata MetadataKey="M4"/>
+      <PassengerMetadata MetadataKey="M3"/>
+      <PassengerMetadata MetadataKey="M2"/>
+      <PassengerMetadata MetadataKey="M1"/>
+      <PassengerMetadata MetadataKey="M0"/>
+      <Other>
+        <OtherMetadata>
+          <CurrencyMetadatas>
+            <CurrencyMetadata MetadataKey="USD">
+              <Decimals>2</Decimals>
+            </CurrencyMetadata>
+            <CurrencyMetadata MetadataKey="EUR">
+              <Decimals>2</Decimals>
+            </CurrencyMetadata>
+            <CurrencyMetadata MetadataKey="GBP">
+              <Decimals>2</Decimals>
+            </CurrencyMetadata>
+            <CurrencyMetadata MetadataKey="NUC">
+              <Decimals>2</Decimals>
+            </CurrencyMetadata>
+          </CurrencyMetadatas>
+        </OtherMetadata>
+        <OtherMetadata>
+          <PriceMetadatas>
+            <PriceMetadata MetadataKey="FRK4F39A1A2"/>
+            <PriceMetadata MetadataKey="FRK873E0549"/>
+          </PriceMetadatas>
+        </OtherMetadata>
+        <OtherMetadata>
+          <RuleMetadatas>
+            <RuleMetadata MetadataKey="RM710E7A86">
+              <RuleID>Change</RuleID>
+              <Values>
+                <Value>
+                  <Instruction>Not Allowed</Instruction>
+                </Value>
+              </Values>
+            </RuleMetadata>
+            <RuleMetadata MetadataKey="RME6B8FEBB">
+              <RuleID>Cancel</RuleID>
+              <Values>
+                <Value>
+                  <Instruction>Not Allowed</Instruction>
+                </Value>
+              </Values>
+            </RuleMetadata>
+          </RuleMetadatas>
+        </OtherMetadata>
+      </Other>
+    </Metadata>
+    <Order>
+      <OrderID>AA001HT5T9XA2</OrderID>
+      <OwnerCode>AA</OwnerCode>
+      <BookingRef>
+        <BookingID>LT5T9X</BookingID>
+        <BookingEntity>
+          <Org OrgID="F1">
+            <Name>Farelogix</Name>
+          </Org>
+        </BookingEntity>
+      </BookingRef>
+      <BookingRef>
+        <BookingID>ITXKMM</BookingID>
+        <BookingEntity>
+          <Carrier>
+            <AirlineDesigCode>AA</AirlineDesigCode>
+            <Name>American</Name>
+          </Carrier>
+        </BookingEntity>
+      </BookingRef>
+      <BookingRef>
+        <BookingID>2BGYR2</BookingID>
+        <BookingEntity>
+          <Org OrgID="1A">
+            <Name>Amadeus</Name>
+          </Org>
+        </BookingEntity>
+      </BookingRef>
+      <OrderItem>
+        <OrderItemID>PoIPD5E91AE6-6E90-437E-A7AA-1-1_1APAX_T1</OrderItemID>
+        <CreationDateTime>2023-04-27T10:01:00</CreationDateTime>
+        <PaymentTimeLimitDateTime>2023-04-30T23:59:00</PaymentTimeLimitDateTime>
+        <TicketingTimeLimitDateTime>2023-04-30T23:59:00</TicketingTimeLimitDateTime>
+        <FareDetail>
+          <FareIndicatorCode>0</FareIndicatorCode>
+          <PassengerRefs>T1</PassengerRefs>
+          <Price>
+            <TotalAmount>
+              <DetailCurrencyPrice>
+                <Total Code="USD">73905</Total>
+              </DetailCurrencyPrice>
+            </TotalAmount>
+            <BaseAmount Code="USD">20000</BaseAmount>
+            <Taxes>
+              <Total Code="USD">53905</Total>
+              <Breakdown>
+                <Tax>
+                  <Amount Code="USD">652</Amount>
+                  <Nation>US</Nation>
+                  <TaxCode>YC</TaxCode>
+                  <Description>United States Customs User Fee</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">700</Amount>
+                  <Nation>US</Nation>
+                  <TaxCode>XY</TaxCode>
+                  <Description>United States Immigration User Fee</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">383</Amount>
+                  <Nation>US</Nation>
+                  <TaxCode>XA</TaxCode>
+                  <Description>United States APHIS Passenger Fee Passengers</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">4220</Amount>
+                  <Nation>US</Nation>
+                  <TaxCode>US</TaxCode>
+                  <Description>U.S.A Transportation Tax</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">560</Amount>
+                  <Nation>US</Nation>
+                  <TaxCode>AY</TaxCode>
+                  <Description>United States Passenger Civil Aviation Security Service Fee</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">750</Amount>
+                  <Nation>US</Nation>
+                  <TaxCode>XF</TaxCode>
+                  <CollectionPoint>
+                    <CurrCode NumberOfDecimals="2">USD</CurrCode>
+                    <AirportAmount>450</AirportAmount>
+                    <AirportCode>JFK</AirportCode>
+                  </CollectionPoint>
+                  <Description>US Passenger Facility Charge</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">610</Amount>
+                  <Nation>IE</Nation>
+                  <TaxCode>BC</TaxCode>
+                  <LocalAmount Code="EUR">550</LocalAmount>
+                  <Description>Ireland Airport Security Charge</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">790</Amount>
+                  <Nation>IE</Nation>
+                  <TaxCode>UP</TaxCode>
+                  <LocalAmount Code="EUR">715</LocalAmount>
+                  <Description>Ireland Passenger Charge</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">5240</Amount>
+                  <Nation>GB</Nation>
+                  <TaxCode>UB</TaxCode>
+                  <LocalAmount Code="GBP">4214</LocalAmount>
+                  <Description>United Kingdom Passenger Service Charge Departures</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">40000</Amount>
+                  <TaxCode>YR</TaxCode>
+                  <Description>AA YR surcharge</Description>
+                </Tax>
+              </Breakdown>
+            </Taxes>
+          </Price>
+          <FareComponent>
+            <Price>
+              <TotalAmount>
+                <DetailCurrencyPrice>
+                  <Total Code="USD">33420</Total>
+                </DetailCurrencyPrice>
+              </TotalAmount>
+              <BaseAmount Code="NUC">10000</BaseAmount>
+              <Taxes>
+                <Total Code="USD">23420</Total>
+                <Breakdown>
+                  <Tax>
+                    <Amount Code="USD">20000</Amount>
+                    <TaxCode>YR</TaxCode>
+                    <Description>AA YR surcharge</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">2110</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>US</TaxCode>
+                    <Description>US International Departure Tax</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">560</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>AY</TaxCode>
+                    <Description>United States Passenger Civil Aviation Security Service Fee</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">450</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>XF</TaxCode>
+                    <Description>US Passenger Facility Charge</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">300</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>XF</TaxCode>
+                    <Description>US Passenger Facility Charge</Description>
+                  </Tax>
+                </Breakdown>
+              </Taxes>
+            </Price>
+            <FareBasis>
+              <FareBasisCode refs="FG1">
+                <Code>OKX9T7B5</Code>
+              </FareBasisCode>
+              <RBD>B B</RBD>
+              <CabinType>
+                <CabinTypeCode>Y Y</CabinTypeCode>
+                <CabinTypeName>Economy Economy</CabinTypeName>
+              </CabinType>
+            </FareBasis>
+            <FareRules>
+              <Penalty CancelFeeInd="false" ChangeFeeInd="false" RefundableInd="false">
+                <Details>
+                  <Detail refs="RM710E7A86">
+                    <Type>Change</Type>
+                  </Detail>
+                  <Detail refs="RME6B8FEBB">
+                    <Type>Cancel</Type>
+                  </Detail>
+                </Details>
+              </Penalty>
+              <Ticketing>
+                <Endorsements>
+                  <Endorsement>NONREF/NOCHG/BASIC</Endorsement>
+                </Endorsements>
+              </Ticketing>
+            </FareRules>
+            <PriceClassRef>BasicEconomy-1</PriceClassRef>
+            <SegmentRefs>S3</SegmentRefs>
+            <SegmentRefs>S4</SegmentRefs>
+          </FareComponent>
+          <FareComponent>
+            <Price>
+              <TotalAmount>
+                <DetailCurrencyPrice>
+                  <Total Code="USD">40485</Total>
+                </DetailCurrencyPrice>
+              </TotalAmount>
+              <BaseAmount Code="NUC">10000</BaseAmount>
+              <Taxes>
+                <Total Code="USD">30485</Total>
+                <Breakdown>
+                  <Tax>
+                    <Amount Code="USD">383</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>XA</TaxCode>
+                    <Description>United States APHIS Passenger Fee Passengers</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">5240</Amount>
+                    <Nation>GB</Nation>
+                    <TaxCode>UB</TaxCode>
+                    <LocalAmount Code="GBP">4214</LocalAmount>
+                    <Description>United Kingdom Passenger Service Charge Departures</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">652</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>YC</TaxCode>
+                    <Description>United States Customs User Fee</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">700</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>XY</TaxCode>
+                    <Description>United States Immigration User Fee</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">20000</Amount>
+                    <TaxCode>YR</TaxCode>
+                    <Description>AA YR surcharge</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">2110</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>US</TaxCode>
+                    <Description>US International Departure Tax</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">610</Amount>
+                    <Nation>IE</Nation>
+                    <TaxCode>BC</TaxCode>
+                    <LocalAmount Code="EUR">550</LocalAmount>
+                    <Description>Ireland Airport Security Charge</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">790</Amount>
+                    <Nation>IE</Nation>
+                    <TaxCode>UP</TaxCode>
+                    <LocalAmount Code="EUR">715</LocalAmount>
+                    <Description>Ireland Passenger Charge</Description>
+                  </Tax>
+                </Breakdown>
+              </Taxes>
+            </Price>
+            <FareBasis>
+              <FareBasisCode refs="FG2">
+                <Code>OKN4C1B5</Code>
+              </FareBasisCode>
+              <RBD>O B</RBD>
+              <CabinType>
+                <CabinTypeCode>Y Y</CabinTypeCode>
+                <CabinTypeName>Economy Economy</CabinTypeName>
+              </CabinType>
+            </FareBasis>
+            <FareRules>
+              <Penalty CancelFeeInd="false" ChangeFeeInd="false" RefundableInd="false">
+                <Details>
+                  <Detail refs="RM710E7A86">
+                    <Type>Change</Type>
+                  </Detail>
+                  <Detail refs="RME6B8FEBB">
+                    <Type>Cancel</Type>
+                  </Detail>
+                </Details>
+              </Penalty>
+              <Ticketing>
+                <Endorsements>
+                  <Endorsement>NONREF/NOCHG/BASIC</Endorsement>
+                </Endorsements>
+              </Ticketing>
+            </FareRules>
+            <PriceClassRef>BasicEconomy-1</PriceClassRef>
+            <SegmentRefs>S5</SegmentRefs>
+            <SegmentRefs>S6</SegmentRefs>
+          </FareComponent>
+        </FareDetail>
+        <Price>
+          <TotalAmount CurCode="USD">73905</TotalAmount>
+          <BaseAmount CurCode="USD">20000</BaseAmount>
+          <TaxSummary>
+            <TotalTaxAmount CurCode="USD">53905</TotalTaxAmount>
+          </TaxSummary>
+        </Price>
+        <Service>
+          <ServiceID>BAGGAGESRV1-T1</ServiceID>
+          <PaxRefID>T1</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRV78ED2F48-CO</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S5</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV2-T1</ServiceID>
+          <PaxRefID>T1</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRVA8CA7B71-CO</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S6</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV3-T1</ServiceID>
+          <PaxRefID>T1</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRV5233E5CD</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S3</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV4-T1</ServiceID>
+          <PaxRefID>T1</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRV5233E5CD</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S4</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV5-T1</ServiceID>
+          <PaxRefID>T1</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRVC4ED45A1</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S5</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV6-T1</ServiceID>
+          <PaxRefID>T1</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRVC4ED45A1</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S6</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV7-T1</ServiceID>
+          <PaxRefID>T1</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRV5CE7A2A9-CO</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S3</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV8-T1</ServiceID>
+          <PaxRefID>T1</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRV5CE7A2A9-CO</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S4</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>SRV1-T1-S3</ServiceID>
+          <StatusCode>HK</StatusCode>
+          <PaxRefID>T1</PaxRefID>
+          <ServiceAssociations>
+            <PaxSegmentRefID>S3</PaxSegmentRefID>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>SRV1-T1-S4</ServiceID>
+          <StatusCode>HK</StatusCode>
+          <PaxRefID>T1</PaxRefID>
+          <ServiceAssociations>
+            <PaxSegmentRefID>S4</PaxSegmentRefID>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>SRV1-T1-S5</ServiceID>
+          <StatusCode>HK</StatusCode>
+          <PaxRefID>T1</PaxRefID>
+          <ServiceAssociations>
+            <PaxSegmentRefID>S5</PaxSegmentRefID>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>SRV1-T1-S6</ServiceID>
+          <StatusCode>HK</StatusCode>
+          <PaxRefID>T1</PaxRefID>
+          <ServiceAssociations>
+            <PaxSegmentRefID>S6</PaxSegmentRefID>
+          </ServiceAssociations>
+        </Service>
+      </OrderItem>
+      <OrderItem>
+        <OrderItemID>PoIPD5E91AE6-6E90-437E-A7AA-1-1_1APAX_T2</OrderItemID>
+        <CreationDateTime>2023-04-27T10:01:00</CreationDateTime>
+        <PaymentTimeLimitDateTime>2023-04-30T23:59:00</PaymentTimeLimitDateTime>
+        <TicketingTimeLimitDateTime>2023-04-30T23:59:00</TicketingTimeLimitDateTime>
+        <FareDetail>
+          <FareIndicatorCode>0</FareIndicatorCode>
+          <PassengerRefs>T2</PassengerRefs>
+          <Price>
+            <TotalAmount>
+              <DetailCurrencyPrice>
+                <Total Code="USD">73905</Total>
+              </DetailCurrencyPrice>
+            </TotalAmount>
+            <BaseAmount Code="USD">20000</BaseAmount>
+            <Taxes>
+              <Total Code="USD">53905</Total>
+              <Breakdown>
+                <Tax>
+                  <Amount Code="USD">652</Amount>
+                  <Nation>US</Nation>
+                  <TaxCode>YC</TaxCode>
+                  <Description>United States Customs User Fee</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">700</Amount>
+                  <Nation>US</Nation>
+                  <TaxCode>XY</TaxCode>
+                  <Description>United States Immigration User Fee</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">383</Amount>
+                  <Nation>US</Nation>
+                  <TaxCode>XA</TaxCode>
+                  <Description>United States APHIS Passenger Fee Passengers</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">4220</Amount>
+                  <Nation>US</Nation>
+                  <TaxCode>US</TaxCode>
+                  <Description>U.S.A Transportation Tax</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">560</Amount>
+                  <Nation>US</Nation>
+                  <TaxCode>AY</TaxCode>
+                  <Description>United States Passenger Civil Aviation Security Service Fee</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">750</Amount>
+                  <Nation>US</Nation>
+                  <TaxCode>XF</TaxCode>
+                  <CollectionPoint>
+                    <CurrCode NumberOfDecimals="2">USD</CurrCode>
+                    <AirportAmount>450</AirportAmount>
+                    <AirportCode>JFK</AirportCode>
+                  </CollectionPoint>
+                  <Description>US Passenger Facility Charge</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">610</Amount>
+                  <Nation>IE</Nation>
+                  <TaxCode>BC</TaxCode>
+                  <LocalAmount Code="EUR">550</LocalAmount>
+                  <Description>Ireland Airport Security Charge</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">790</Amount>
+                  <Nation>IE</Nation>
+                  <TaxCode>UP</TaxCode>
+                  <LocalAmount Code="EUR">715</LocalAmount>
+                  <Description>Ireland Passenger Charge</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">5240</Amount>
+                  <Nation>GB</Nation>
+                  <TaxCode>UB</TaxCode>
+                  <LocalAmount Code="GBP">4214</LocalAmount>
+                  <Description>United Kingdom Passenger Service Charge Departures</Description>
+                </Tax>
+                <Tax>
+                  <Amount Code="USD">40000</Amount>
+                  <TaxCode>YR</TaxCode>
+                  <Description>AA YR surcharge</Description>
+                </Tax>
+              </Breakdown>
+            </Taxes>
+          </Price>
+          <FareComponent>
+            <Price>
+              <TotalAmount>
+                <DetailCurrencyPrice>
+                  <Total Code="USD">33420</Total>
+                </DetailCurrencyPrice>
+              </TotalAmount>
+              <BaseAmount Code="NUC">10000</BaseAmount>
+              <Taxes>
+                <Total Code="USD">23420</Total>
+                <Breakdown>
+                  <Tax>
+                    <Amount Code="USD">20000</Amount>
+                    <TaxCode>YR</TaxCode>
+                    <Description>AA YR surcharge</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">2110</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>US</TaxCode>
+                    <Description>US International Departure Tax</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">560</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>AY</TaxCode>
+                    <Description>United States Passenger Civil Aviation Security Service Fee</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">450</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>XF</TaxCode>
+                    <Description>US Passenger Facility Charge</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">300</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>XF</TaxCode>
+                    <Description>US Passenger Facility Charge</Description>
+                  </Tax>
+                </Breakdown>
+              </Taxes>
+            </Price>
+            <FareBasis>
+              <FareBasisCode refs="FG1">
+                <Code>OKX9T7B5</Code>
+              </FareBasisCode>
+              <RBD>B B</RBD>
+              <CabinType>
+                <CabinTypeCode>Y Y</CabinTypeCode>
+                <CabinTypeName>Economy Economy</CabinTypeName>
+              </CabinType>
+            </FareBasis>
+            <FareRules>
+              <Penalty CancelFeeInd="false" ChangeFeeInd="false" RefundableInd="false">
+                <Details>
+                  <Detail refs="RM710E7A86">
+                    <Type>Change</Type>
+                  </Detail>
+                  <Detail refs="RME6B8FEBB">
+                    <Type>Cancel</Type>
+                  </Detail>
+                </Details>
+              </Penalty>
+              <Ticketing>
+                <Endorsements>
+                  <Endorsement>NONREF/NOCHG/BASIC</Endorsement>
+                </Endorsements>
+              </Ticketing>
+            </FareRules>
+            <PriceClassRef>BasicEconomy-1</PriceClassRef>
+            <SegmentRefs>S3</SegmentRefs>
+            <SegmentRefs>S4</SegmentRefs>
+          </FareComponent>
+          <FareComponent>
+            <Price>
+              <TotalAmount>
+                <DetailCurrencyPrice>
+                  <Total Code="USD">40485</Total>
+                </DetailCurrencyPrice>
+              </TotalAmount>
+              <BaseAmount Code="NUC">10000</BaseAmount>
+              <Taxes>
+                <Total Code="USD">30485</Total>
+                <Breakdown>
+                  <Tax>
+                    <Amount Code="USD">383</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>XA</TaxCode>
+                    <Description>United States APHIS Passenger Fee Passengers</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">5240</Amount>
+                    <Nation>GB</Nation>
+                    <TaxCode>UB</TaxCode>
+                    <LocalAmount Code="GBP">4214</LocalAmount>
+                    <Description>United Kingdom Passenger Service Charge Departures</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">652</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>YC</TaxCode>
+                    <Description>United States Customs User Fee</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">700</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>XY</TaxCode>
+                    <Description>United States Immigration User Fee</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">20000</Amount>
+                    <TaxCode>YR</TaxCode>
+                    <Description>AA YR surcharge</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">2110</Amount>
+                    <Nation>US</Nation>
+                    <TaxCode>US</TaxCode>
+                    <Description>US International Departure Tax</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">610</Amount>
+                    <Nation>IE</Nation>
+                    <TaxCode>BC</TaxCode>
+                    <LocalAmount Code="EUR">550</LocalAmount>
+                    <Description>Ireland Airport Security Charge</Description>
+                  </Tax>
+                  <Tax>
+                    <Amount Code="USD">790</Amount>
+                    <Nation>IE</Nation>
+                    <TaxCode>UP</TaxCode>
+                    <LocalAmount Code="EUR">715</LocalAmount>
+                    <Description>Ireland Passenger Charge</Description>
+                  </Tax>
+                </Breakdown>
+              </Taxes>
+            </Price>
+            <FareBasis>
+              <FareBasisCode refs="FG2">
+                <Code>OKN4C1B5</Code>
+              </FareBasisCode>
+              <RBD>O B</RBD>
+              <CabinType>
+                <CabinTypeCode>Y Y</CabinTypeCode>
+                <CabinTypeName>Economy Economy</CabinTypeName>
+              </CabinType>
+            </FareBasis>
+            <FareRules>
+              <Penalty CancelFeeInd="false" ChangeFeeInd="false" RefundableInd="false">
+                <Details>
+                  <Detail refs="RM710E7A86">
+                    <Type>Change</Type>
+                  </Detail>
+                  <Detail refs="RME6B8FEBB">
+                    <Type>Cancel</Type>
+                  </Detail>
+                </Details>
+              </Penalty>
+              <Ticketing>
+                <Endorsements>
+                  <Endorsement>NONREF/NOCHG/BASIC</Endorsement>
+                </Endorsements>
+              </Ticketing>
+            </FareRules>
+            <PriceClassRef>BasicEconomy-1</PriceClassRef>
+            <SegmentRefs>S5</SegmentRefs>
+            <SegmentRefs>S6</SegmentRefs>
+          </FareComponent>
+        </FareDetail>
+        <Price>
+          <TotalAmount CurCode="USD">73905</TotalAmount>
+          <BaseAmount CurCode="USD">20000</BaseAmount>
+          <TaxSummary>
+            <TotalTaxAmount CurCode="USD">53905</TotalTaxAmount>
+          </TaxSummary>
+        </Price>
+        <Service>
+          <ServiceID>BAGGAGESRV9-T2</ServiceID>
+          <PaxRefID>T2</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRVA8CA7B71-CO</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S6</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV10-T2</ServiceID>
+          <PaxRefID>T2</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRVC4ED45A1</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S5</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV11-T2</ServiceID>
+          <PaxRefID>T2</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRVC4ED45A1</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S6</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV12-T2</ServiceID>
+          <PaxRefID>T2</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRV5233E5CD</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S3</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV13-T2</ServiceID>
+          <PaxRefID>T2</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRV5233E5CD</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S4</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV14-T2</ServiceID>
+          <PaxRefID>T2</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRV78ED2F48-CO</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S5</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV15-T2</ServiceID>
+          <PaxRefID>T2</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRV5CE7A2A9-CO</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S3</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>BAGGAGESRV16-T2</ServiceID>
+          <PaxRefID>T2</PaxRefID>
+          <ServiceAssociations>
+            <ServiceDefinitionRef>
+              <ServiceDefinitionRefID>BASRV5CE7A2A9-CO</ServiceDefinitionRefID>
+              <PaxSegmentRefID>S4</PaxSegmentRefID>
+            </ServiceDefinitionRef>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>SRV1-T2-S3</ServiceID>
+          <StatusCode>HK</StatusCode>
+          <PaxRefID>T2</PaxRefID>
+          <ServiceAssociations>
+            <PaxSegmentRefID>S3</PaxSegmentRefID>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>SRV1-T2-S4</ServiceID>
+          <StatusCode>HK</StatusCode>
+          <PaxRefID>T2</PaxRefID>
+          <ServiceAssociations>
+            <PaxSegmentRefID>S4</PaxSegmentRefID>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>SRV1-T2-S5</ServiceID>
+          <StatusCode>HK</StatusCode>
+          <PaxRefID>T2</PaxRefID>
+          <ServiceAssociations>
+            <PaxSegmentRefID>S5</PaxSegmentRefID>
+          </ServiceAssociations>
+        </Service>
+        <Service>
+          <ServiceID>SRV1-T2-S6</ServiceID>
+          <StatusCode>HK</StatusCode>
+          <PaxRefID>T2</PaxRefID>
+          <ServiceAssociations>
+            <PaxSegmentRefID>S6</PaxSegmentRefID>
+          </ServiceAssociations>
+        </Service>
+      </OrderItem>
+      <PaymentInfo>
+        <Amount CurCode="USD">147810</Amount>
+        <TypeCode>CA</TypeCode>
+        <PaymentStatusCode>COMMITTED</PaymentStatusCode>
+        <PaymentMethod>
+          <Cash/>
+        </PaymentMethod>
+      </PaymentInfo>
+      <TotalPrice>
+        <TotalAmount CurCode="USD">147810</TotalAmount>
+      </TotalPrice>
+    </Order>
+    <TicketDocInfos>
+      <TicketDocInfo>
+        <AgentIDs>
+          <AgentID>
+            <Type>706</Type>
+            <ID>33630763</ID>
+          </AgentID>
+        </AgentIDs>
+        <IssuingAirlineInfo>
+          <AirlineName>American Airlines</AirlineName>
+          <Place>New York, NY, US</Place>
+        </IssuingAirlineInfo>
+        <TicketDocument PrimaryDocInd="true">
+          <TicketDocNbr>0015744843107</TicketDocNbr>
+          <Type>T</Type>
+          <NumberofBooklets>2</NumberofBooklets>
+          <DateOfIssue>2023-04-28</DateOfIssue>
+          <TimeOfIssue>06:30</TimeOfIssue>
+          <CouponInfo>
+            <CouponNumber>1</CouponNumber>
+            <CouponReference>S3</CouponReference>
+            <Status>T</Status>
+          </CouponInfo>
+          <CouponInfo>
+            <CouponNumber>2</CouponNumber>
+            <CouponReference>S4</CouponReference>
+            <Status>T</Status>
+          </CouponInfo>
+          <CouponInfo>
+            <CouponNumber>4</CouponNumber>
+            <CouponReference>S5</CouponReference>
+            <Status>T</Status>
+          </CouponInfo>
+          <ReportingType>ARC</ReportingType>
+        </TicketDocument>
+        <TicketDocument>
+          <TicketDocNbr>0015744843108</TicketDocNbr>
+          <Type>T</Type>
+          <NumberofBooklets>2</NumberofBooklets>
+          <DateOfIssue>2023-04-28</DateOfIssue>
+          <TimeOfIssue>06:30</TimeOfIssue>
+          <CouponInfo>
+            <CouponNumber>1</CouponNumber>
+            <CouponReference>S6</CouponReference>
+            <Status>T</Status>
+          </CouponInfo>
+          <ReportingType>ARC</ReportingType>
+        </TicketDocument>
+        <Price>
+          <Total Code="USD">73905</Total>
+          <Details>
+            <Detail>
+              <Amount Code="USD">20000</Amount>
+            </Detail>
+          </Details>
+          <Taxes>
+            <Total Code="USD">53905</Total>
+            <Breakdown>
+              <Tax>
+                <Amount Code="USD">652</Amount>
+                <TaxCode>YC</TaxCode>
+                <Description>United States Customs User Fee</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">700</Amount>
+                <TaxCode>XY</TaxCode>
+                <Description>United States Immigration User Fee</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">383</Amount>
+                <TaxCode>XA</TaxCode>
+                <Description>United States APHIS Passenger Fee Passengers</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">4220</Amount>
+                <TaxCode>US</TaxCode>
+                <Description>U.S.A Transportation Tax</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">560</Amount>
+                <TaxCode>AY</TaxCode>
+                <Description>United States Passenger Civil Aviation Security Service Fee</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">750</Amount>
+                <TaxCode>XF</TaxCode>
+                <Description>US Passenger Facility Charge</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">610</Amount>
+                <TaxCode>BC</TaxCode>
+                <Description>Ireland Airport Security Charge</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">790</Amount>
+                <TaxCode>UP</TaxCode>
+                <Description>Ireland Passenger Charge</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">5240</Amount>
+                <TaxCode>UB</TaxCode>
+                <Description>United Kingdom Passenger Service Charge Departures</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">40000</Amount>
+                <TaxCode>YR</TaxCode>
+                <Description>AA YR surcharge</Description>
+              </Tax>
+            </Breakdown>
+          </Taxes>
+        </Price>
+        <PassengerReference>T1</PassengerReference>
+      </TicketDocInfo>
+      <TicketDocInfo>
+        <AgentIDs>
+          <AgentID>
+            <Type>706</Type>
+            <ID>33630763</ID>
+          </AgentID>
+        </AgentIDs>
+        <IssuingAirlineInfo>
+          <AirlineName>American Airlines</AirlineName>
+          <Place>New York, NY, US</Place>
+        </IssuingAirlineInfo>
+        <TicketDocument PrimaryDocInd="true">
+          <TicketDocNbr>0015744843109</TicketDocNbr>
+          <Type>T</Type>
+          <NumberofBooklets>2</NumberofBooklets>
+          <DateOfIssue>2023-04-28</DateOfIssue>
+          <TimeOfIssue>06:30</TimeOfIssue>
+          <CouponInfo>
+            <CouponNumber>1</CouponNumber>
+            <CouponReference>S3</CouponReference>
+            <Status>T</Status>
+          </CouponInfo>
+          <CouponInfo>
+            <CouponNumber>2</CouponNumber>
+            <CouponReference>S4</CouponReference>
+            <Status>T</Status>
+          </CouponInfo>
+          <CouponInfo>
+            <CouponNumber>4</CouponNumber>
+            <CouponReference>S5</CouponReference>
+            <Status>T</Status>
+          </CouponInfo>
+          <ReportingType>ARC</ReportingType>
+        </TicketDocument>
+        <TicketDocument>
+          <TicketDocNbr>0015744843110</TicketDocNbr>
+          <Type>T</Type>
+          <NumberofBooklets>2</NumberofBooklets>
+          <DateOfIssue>2023-04-28</DateOfIssue>
+          <TimeOfIssue>06:30</TimeOfIssue>
+          <CouponInfo>
+            <CouponNumber>1</CouponNumber>
+            <CouponReference>S6</CouponReference>
+            <Status>T</Status>
+          </CouponInfo>
+          <ReportingType>ARC</ReportingType>
+        </TicketDocument>
+        <Price>
+          <Total Code="USD">73905</Total>
+          <Details>
+            <Detail>
+              <Amount Code="USD">20000</Amount>
+            </Detail>
+          </Details>
+          <Taxes>
+            <Total Code="USD">53905</Total>
+            <Breakdown>
+              <Tax>
+                <Amount Code="USD">652</Amount>
+                <TaxCode>YC</TaxCode>
+                <Description>United States Customs User Fee</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">700</Amount>
+                <TaxCode>XY</TaxCode>
+                <Description>United States Immigration User Fee</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">383</Amount>
+                <TaxCode>XA</TaxCode>
+                <Description>United States APHIS Passenger Fee Passengers</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">4220</Amount>
+                <TaxCode>US</TaxCode>
+                <Description>U.S.A Transportation Tax</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">560</Amount>
+                <TaxCode>AY</TaxCode>
+                <Description>United States Passenger Civil Aviation Security Service Fee</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">750</Amount>
+                <TaxCode>XF</TaxCode>
+                <Description>US Passenger Facility Charge</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">610</Amount>
+                <TaxCode>BC</TaxCode>
+                <Description>Ireland Airport Security Charge</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">790</Amount>
+                <TaxCode>UP</TaxCode>
+                <Description>Ireland Passenger Charge</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">5240</Amount>
+                <TaxCode>UB</TaxCode>
+                <Description>United Kingdom Passenger Service Charge Departures</Description>
+              </Tax>
+              <Tax>
+                <Amount Code="USD">40000</Amount>
+                <TaxCode>YR</TaxCode>
+                <Description>AA YR surcharge</Description>
+              </Tax>
+            </Breakdown>
+          </Taxes>
+        </Price>
+        <PassengerReference>T2</PassengerReference>
+      </TicketDocInfo>
+    </TicketDocInfos>
+  </Response>
+</AMA_TravelOrderViewRS>

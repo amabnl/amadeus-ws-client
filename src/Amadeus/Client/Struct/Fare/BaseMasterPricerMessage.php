@@ -60,7 +60,7 @@ class BaseMasterPricerMessage extends BaseWsMessage
      * @var array
      */
     public $buckets = [];
- 
+
 
     /**
      * @param MPPassenger $passenger
@@ -112,7 +112,8 @@ class BaseMasterPricerMessage extends BaseWsMessage
             $this->numberOfUnit = new MasterPricer\NumberOfUnit(
                 $options->nrOfRequestedPassengers,
                 $options->nrOfRequestedResults,
-                $options->multiTicketWeights
+                $options->multiTicketWeights,
+                $options->ndcOnly
             );
         }
     }

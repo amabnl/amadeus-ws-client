@@ -47,6 +47,7 @@ class UnitNumberDetail
     const TYPE_OUTBOUND_RECOMMENDATION = 'OWO';
     const TYPE_INBOUND_RECOMMENDATION = 'OWI';
     const TYPE_COMPLETE_RECOMMENDATION = 'RT';
+    const TYPE_NDC_RESULT = 'NDC';
 
     /**
      * @var int
