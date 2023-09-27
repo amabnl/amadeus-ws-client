@@ -1860,6 +1860,24 @@ class Client extends Base
     }
 
     /**
+     * Travel_OrderChange
+     *
+     * @param RequestOptions\TravelOrderChangeOptions $options
+     * @param array $messageOptions
+     *            (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function travelOrderChange(RequestOptions\TravelOrderChangeOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Travel_OrderChange';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * Call a message with the given parameters
      *
      * @param string $messageName
