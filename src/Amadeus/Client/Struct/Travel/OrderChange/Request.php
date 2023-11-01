@@ -31,18 +31,56 @@ class Request
     public $Order;
 
     /**
-     * @param RequestOptions\Travel\OrderChange\AcceptChange $acceptChange
+     * @param RequestOptions\Travel\OrderChange\AcceptChange|null $acceptChange
+     * @param RequestOptions\Travel\OrderChange\UpdateOrderItem|null $updateOrderItem
      * @param RequestOptions\Travel\DataList[] $dataLists
      * @param Order $order
      */
     public function __construct(
-        RequestOptions\Travel\OrderChange\AcceptChange $acceptChange,
+        $acceptChange,
+        $updateOrderItem,
         array $dataLists,
         Order $order
     ) {
-        $this->ChangeOrder = new ChangeOrder(
-            new AcceptChange($acceptChange->orderItemRefIds)
-        );
+        $this->ChangeOrder = new ChangeOrder();
+
+        if ($acceptChange) {
+            $this->ChangeOrder->setAcceptChange(new AcceptChange($acceptChange->orderItemRefIds));
+        }
+
+        if ($updateOrderItem) {
+            $selectedOfferItems = array_map(
+                static function (RequestOptions\Travel\SelectedOfferItem $item) {
+                    $selectedOfferItem = new SelectedOfferItem(
+                        $item->offerItemRefId,
+                        $item->paxRefId[0]
+                    );
+
+                    if ($selectedSeat = $item->selectedSeat) {
+                        $selectedOfferItem->setSelectedSeat(
+                            new SelectedSeat($selectedSeat->rowNumber, $selectedSeat->column)
+                        );
+                    }
+
+                    return $selectedOfferItem;
+                },
+                $updateOrderItem->offer->selectedOfferItems
+            );
+
+            $this->ChangeOrder->setUpdateOrderItem(
+                new UpdateOrderItem(
+                    new AcceptOffer(
+                        new SelectedOffer(
+                            $updateOrderItem->offer->offerRefID,
+                            $updateOrderItem->offer->ownerCode,
+                            $updateOrderItem->offer->shoppingResponseRefID,
+                            $selectedOfferItems
+                        )
+                    )
+                )
+            );
+        }
+
         $this->loadDataLists($dataLists);
         $this->Order = $order;
     }

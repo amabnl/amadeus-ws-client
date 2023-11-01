@@ -15,8 +15,18 @@ class ChangeOrder
      */
     public $AcceptChange;
 
-    public function __construct(AcceptChange $acceptChange)
+    /**
+     * @var UpdateOrderItem
+     */
+    public $UpdateOrderItem;
+
+    public function setAcceptChange(AcceptChange $acceptChange)
     {
         $this->AcceptChange = $acceptChange;
+    }
+
+    public function setUpdateOrderItem(UpdateOrderItem $updateOrderItem)
+    {
+        $this->UpdateOrderItem = $updateOrderItem;
     }
 }

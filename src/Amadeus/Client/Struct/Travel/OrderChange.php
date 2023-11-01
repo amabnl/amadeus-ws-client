@@ -28,6 +28,7 @@ class OrderChange extends BaseWsMessage
         $this->Party = new Party($options->party);
         $this->Request = new OrderChange\Request(
             $options->acceptChange,
+            $options->updateOrderItem,
             $options->dataLists,
             new Order(
                 $options->orderId,

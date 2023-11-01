@@ -1,6 +1,6 @@
-===========================================================
+==================================
 Samples for NDC methods (Travel_*)
-===========================================================
+==================================
 
 .. contents::
 
@@ -143,4 +143,88 @@ Travel_OrderCancel
     ]);
 
     $response = $client->travelOrderCancel($opt);
+
+-----------------------
+Travel_SeatAvailability
+-----------------------
+
+After pricing
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TravelSeatAvailabilityOptions;
+
+    $opt = new TravelSeatAvailabilityOptions([
+        'ownerCode' => 'Pr_ResponseID_00-1',
+        'offerItemId' => 'AA',
+        'shoppingResponseId' => 'Pr_Re-sponseID_00',
+    ]);
+
+    $response = $client->travelSeatAvailability($opt);
+
+After booking
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TravelSeatAvailabilityOptions;
+
+    $opt = new TravelSeatAvailabilityOptions([
+        'orderId' => 'AA12345',
+        'ownerCode' => 'AA',
+    ]);
+
+    $response = $client->travelSeatAvailability($opt);
+
+------------------
+Travel_ServiceList
+------------------
+
+After pricing
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TravelServiceListOptions;
+
+    $opt = new TravelServiceListOptions([
+        'ownerCode' => 'AA,
+        'offerId' => '1A_TPID_CiESG1NQMUYtMTQxOAI=',
+        'offerItemId' => '1A_TPID_CAESH-VNQMUYS0x',
+        'shoppingResponseId' => 'SP1F-14193187327050054900',
+        'serviceId' => 1
+    ]);
+
+    $response = $client->travelServiceList($opt);
+
+After booking
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TravelServiceListOptions;
+
+    $opt = new TravelServiceListOptions([
+        'orderId' => 'AA12345',
+        'ownerCode' => 'AA',
+    ]);
+
+    $response = $client->travelServiceList($opt);
+
+------------------
+Travel_OrderChange
+------------------
+
+Seat Request
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TravelServiceListOptions;
+
+    $opt = new TravelServiceListOptions([
+        'ownerCode' => 'AA,
+        'offerId' => '1A_TPID_CiESG1NQMUYtMTQxOAI=',
+        'offerItemId' => '1A_TPID_CAESH-VNQMUYS0x',
+        'shoppingResponseId' => 'SP1F-14193187327050054900',
+        'serviceId' => 1
+    ]);
+
+    $response = $client->travelServiceList($opt);
 

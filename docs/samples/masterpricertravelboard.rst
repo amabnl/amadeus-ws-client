@@ -1398,7 +1398,7 @@ It will returned both ADT and IIT fares for one passenger.
 Return NDC recommendations only
 ===============================
 
-If need to get only NDC recommendations enought to add only one flag to the request options:
+If need to get only NDC recommendations is enough to add only one flag to the request options:
 
 .. code-block:: php
 

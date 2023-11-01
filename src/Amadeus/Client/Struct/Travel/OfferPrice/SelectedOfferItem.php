@@ -21,6 +21,16 @@ class SelectedOfferItem
     public $PaxRefID;
 
     /**
+     * @var SelectedAlaCarteOfferItem|null
+     */
+    public $SelectedAlaCarteOfferItem = null;
+
+    /**
+     * @var SelectedSeat|null
+     */
+    public $SelectedSeat = null;
+
+    /**
      * @param string $offerItemRefID
      * @param string[] $paxRefID
      */
@@ -28,5 +38,15 @@ class SelectedOfferItem
     {
         $this->OfferItemRefID = $offerItemRefID;
         $this->PaxRefID = $paxRefID;
+    }
+
+    public function setSelectedAlaCarteOfferItem(SelectedAlaCarteOfferItem $SelectedAlaCarteOfferItem)
+    {
+        $this->SelectedAlaCarteOfferItem = $SelectedAlaCarteOfferItem;
+    }
+
+    public function setSelectedSeat(SelectedSeat $SelectedSeat)
+    {
+        $this->SelectedSeat = $SelectedSeat;
     }
 }

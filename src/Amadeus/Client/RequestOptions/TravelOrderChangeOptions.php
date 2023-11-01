@@ -4,6 +4,7 @@ namespace Amadeus\Client\RequestOptions;
 
 use Amadeus\Client\RequestOptions\Travel\DataList;
 use Amadeus\Client\RequestOptions\Travel\OrderChange\AcceptChange;
+use Amadeus\Client\RequestOptions\Travel\OrderChange\UpdateOrderItem;
 
 /**
  * Travel_OrderChange Request Options
@@ -14,9 +15,14 @@ use Amadeus\Client\RequestOptions\Travel\OrderChange\AcceptChange;
 class TravelOrderChangeOptions extends AbstractTravelOptions
 {
     /**
-     * @var AcceptChange
+     * @var AcceptChange|null
      */
-    public $acceptChange;
+    public $acceptChange = null;
+
+    /**
+     * @var UpdateOrderItem|null
+     */
+    public $updateOrderItem = null;
 
     /**
      * @var DataList[]
