@@ -23,6 +23,7 @@
 namespace Test\Amadeus\Client\Struct\Fop;
 
 use Amadeus\Client\RequestOptions\Fop\CreditCardInfo;
+use Amadeus\Client\RequestOptions\Fop\CreditCardSupplementaryData;
 use Amadeus\Client\RequestOptions\Fop\DataOrSwitch;
 use Amadeus\Client\RequestOptions\Fop\ElementRef;
 use Amadeus\Client\RequestOptions\Fop\FraudScreeningOptions;
@@ -780,7 +781,7 @@ class CreateFormOfPaymentTest extends BaseTestCase
 
         $msg = new CreateFormOfPayment($opt);
 
-        $this->assertEmpty( $msg->fopGroup[0]->pnrElementAssociation);
+        $this->assertEmpty($msg->fopGroup[0]->pnrElementAssociation);
 
         $this->assertCount(1, $msg->fopGroup[0]->passengerAssociation);
         $this->assertEquals(PassengerReference::TYPE_ADULT, $msg->fopGroup[0]->passengerAssociation[0]->passengerReference->type);
@@ -1089,7 +1090,7 @@ class CreateFormOfPaymentTest extends BaseTestCase
         $this->assertEquals(TransactionDetails::TRANS_AUTH_ON_TICKET_MCO_EMD, $msg->transactionContext->transactionDetails->code);
         $this->assertEquals('O', $msg->transactionContext->transactionDetails->issueIndicator);
 
-        $this->assertEmpty( $msg->fopGroup[0]->pnrElementAssociation);
+        $this->assertEmpty($msg->fopGroup[0]->pnrElementAssociation);
         $this->assertEmpty($msg->fopGroup[0]->passengerAssociation);
 
         $this->assertEquals('NCE', $msg->fopGroup[0]->pricingTicketingDetails->locationDetails->city);
@@ -1245,6 +1246,70 @@ EOT;
         $this->assertEquals($pares, $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->tdsInformation->tdsBlobData[1]->tdsBlbData->binaryData);
         $this->assertEquals(TdsBlbData::DATATYPE_BINARY, $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->tdsInformation->tdsBlobData[1]->tdsBlbData->dataType);
         $this->assertEquals(2996, $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->tdsInformation->tdsBlobData[1]->tdsBlbData->dataLength);
+    }
+
+
+    public function testCanMakeMessageWithExternalAuthentication()
+    {
+        $opt = new FopCreateFopOptions([
+            'transactionCode' => FopCreateFopOptions::TRANS_CREATE_FORM_OF_PAYMENT,
+            'fopGroup' => [
+                new Group([
+                    'mopInfo' => [
+                        new MopInfo([
+                            'fopType' => 'CC',
+                            'attributeType' => AttributeDetails::TYPE_FP_ELEMENT,
+                            'payMerchant' => 'EW',
+                            'mopPaymentType' => MopInfo::MOP_PAY_TYPE_CREDIT_CARD,
+                            'creditCardInfo' => new CreditCardInfo([
+                                'name' => 'Name Surname',
+                                'cardNumber' => 'XXXXXXXXXXXX0003',
+                                'vendorCode' => 'VI',
+                                'expiryDate' => '1020',
+                                'securityId' => '999',
+                                'threeDSecure' => new ThreeDSecureInfo([
+                                    'transactionsStatus' => ThreeDSecureInfo::PARES_AUTHENTICATION_SUCCESSFUL,
+                                    'tdsVersion' => '2.0.1',
+                                    'creditCardCompany' => ThreeDSecureInfo::CC_COMP_VISA_DIRECTORY_SERVER,
+                                    'authenticationIndicator' => '05',
+                                    'tdsServerTransactionId' => 'U0RTRzNTRUczNEdTR1NFUldXRkNXRkRXRUZFRw==',
+                                    'tdsServerTransactionIdLength' => 28,
+                                    'directoryServerTransactionId' => 'Q2pENDJ0Tll0WlZ6VFcwSEVvdDVIRGt4TXpFPQ',
+                                    'directoryServerTransactionIdLength' => 28,
+                                    'tdsAuthenticationVerificationCode' => 'QUFBQkJYbGprUUFBQUFBRUFXT1JBQUFBQUFBPQ',
+                                    'tdsAuthenticationVerificationCodeLength' => 28,
+                                    'tdsAuthenticationVerificationCodeReference' => ThreeDSecureInfo::AUTHENTICATION_VERIFICATION_CODE_VISA
+                                ]),
+                                'supplementaryData' => [
+                                    new CreditCardSupplementaryData([
+                                        'setType' => CreditCardSupplementaryData::SET_TYPE_3DS,
+                                        'attributeType' => CreditCardSupplementaryData::ATTRIBUTE_TYPE_EXTERNAL_AUTHENTICATION,
+                                        'attributeDescription' => CreditCardSupplementaryData::ATTRIBUTE_DESCRIPTION_Y,
+                                    ])
+                                ]
+                            ]),
+                            'sequenceNr' => 1,
+                            'fopCode' => 'CCVI',
+                            'fopStatus' => MopInfo::STATUS_NEW,
+                        ])
+                    ]
+                ])
+            ]
+        ]);
+
+        $msg = new CreateFormOfPayment($opt);
+
+        $this->assertInstanceOf('\Amadeus\Client\Struct\Fop\CardSupplementaryData', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->cardSupplementaryData[0]);
+        $this->assertInstanceOf('\Amadeus\Client\Struct\Fop\CardSupplementaryCriteriaDetails', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->cardSupplementaryData[0]->criteriaDetails);
+        $this->assertSame(CreditCardSupplementaryData::SET_TYPE_3DS, $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->cardSupplementaryData[0]->criteriaSetType);
+        $this->assertSame(CreditCardSupplementaryData::ATTRIBUTE_TYPE_EXTERNAL_AUTHENTICATION, $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->cardSupplementaryData[0]->criteriaDetails->attributeType);
+        $this->assertSame(CreditCardSupplementaryData::ATTRIBUTE_DESCRIPTION_Y, $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->cardSupplementaryData[0]->criteriaDetails->attributeDescription);
+
+        $this->assertSame(AttributeDetails::TYPE_FP_ELEMENT, $msg->fopGroup[0]->mopDescription[0]->paymentModule->groupUsage->attributeDetails[0]->attributeType);
+        $this->assertSame('2.0.1', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->tdsInformation->authenticationData->tdsVersion);
+        $this->assertSame(ThreeDSecureInfo::PARES_AUTHENTICATION_SUCCESSFUL, $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->tdsInformation->authenticationData->authenticationDataDetails->transStatus);
+        $this->assertSame('05', $msg->fopGroup[0]->mopDescription[0]->paymentModule->mopDetailedData->creditCardDetailedData->tdsInformation->authenticationData->authenticationDataDetails->authenticationIndicator);
+
     }
 
     public function testCreateFopMessageGithubIssue163()

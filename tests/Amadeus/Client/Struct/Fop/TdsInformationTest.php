@@ -55,4 +55,29 @@ EOT;
         $this->assertEquals('http://dummy.acs.url', $obj->acsURL->communication->internetAddress);
         $this->assertEquals(Communication::QUAL_WWW, $obj->acsURL->communication->adressQualifier);
     }
+
+    public function testCanConstructWithThreeDSecureVersionTwo()
+    {
+        $options = new ThreeDSecureInfo([
+            'transactionsStatus' => ThreeDSecureInfo::PARES_AUTHENTICATION_SUCCESSFUL,
+            'tdsVersion' => '2.0.1',
+            'creditCardCompany' => ThreeDSecureInfo::CC_COMP_VISA_DIRECTORY_SERVER,
+            'authenticationIndicator' => '05',
+            'tdsServerTransactionId' => 'U0RTRzNTRUczNEdTR1NFUldXRkNXRkRXRUZFRw==',
+            'tdsServerTransactionIdLength' => 28,
+            'directoryServerTransactionId' => 'Q2pENDJ0Tll0WlZ6VFcwSEVvdDVIRGt4TXpFPQ',
+            'directoryServerTransactionIdLength' => 28,
+            'tdsAuthenticationVerificationCode' => 'QUFBQkJYbGprUUFBQUFBRUFXT1JBQUFBQUFBPQ',
+            'tdsAuthenticationVerificationCodeLength' => 28,
+            'tdsAuthenticationVerificationCodeReference' => ThreeDSecureInfo::AUTHENTICATION_VERIFICATION_CODE_VISA
+        ]);
+
+        $obj = new TdsInformation($options);
+
+        $this->assertEquals(ThreeDSecureInfo::PARES_AUTHENTICATION_SUCCESSFUL, $obj->authenticationData->authenticationDataDetails->transStatus);
+        $this->assertEquals('2.0.1', $obj->authenticationData->tdsVersion);
+        $this->assertEquals('U0RTRzNTRUczNEdTR1NFUldXRkNXRkRXRUZFRw==', $obj->tdsBlobData[0]->tdsBlbData->binaryData);
+        $this->assertEquals('QUFBQkJYbGprUUFBQUFBRUFXT1JBQUFBQUFBPQ', $obj->tdsBlobData[1]->tdsBlbData->binaryData);
+        $this->assertEquals('Q2pENDJ0Tll0WlZ6VFcwSEVvdDVIRGt4TXpFPQ', $obj->tdsBlobData[2]->tdsBlbData->binaryData);
+    }
 }

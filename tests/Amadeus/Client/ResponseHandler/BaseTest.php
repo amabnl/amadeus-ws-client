@@ -1971,4 +1971,69 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(Result::STATUS_OK, $result->status);
         $this->assertEquals(0, count($result->messages));
     }
+
+    public function testCanHandleTravelOfferPrice()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTravelOfferPriceResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Travel_OfferPrice');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleTravelOrderCreate()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTravelOrderCreateResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Travel_OrderCreate');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleTravelOrderRetrieve()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTravelOrderRetrieveResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Travel_OrderRetrieve');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleTravelOrderPay()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTravelOrderPayResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Travel_OrderPay');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleTravelOrderCancel()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTravelOrderCancelResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Travel_OrderCancel');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
 }

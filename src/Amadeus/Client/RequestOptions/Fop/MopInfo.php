@@ -122,6 +122,15 @@ class MopInfo extends LoadParamsFromArray
     public $fopType;
 
     /**
+     * Describe one processing option at FOP level
+     *
+     * AttributeDetails::TYPE_*
+     *
+     * @var string
+     */
+    public $attributeType;
+
+    /**
      * The Merchant company
      *
      * @var string
