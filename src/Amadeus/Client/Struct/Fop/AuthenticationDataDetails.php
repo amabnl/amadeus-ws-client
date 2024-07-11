@@ -26,7 +26,7 @@ namespace Amadeus\Client\Struct\Fop;
  * AuthenticationDataDetails
  *
  * @package Amadeus\Client\Struct\Fop
- * @author Dieter Devlieghere <dermikagh@gmail.com>
+ * @author  Dieter Devlieghere <dermikagh@gmail.com>
  */
 class AuthenticationDataDetails
 {
@@ -50,6 +50,16 @@ class AuthenticationDataDetails
      * @var string
      */
     public $pares;
+
+    /**
+     * A : attempt processing performed
+     * N : authentication failed
+     * U : unable to authenticate
+     * Y : authentication successful
+     *
+     * @var string
+     */
+    public $transStatus;
 
     /**
      * CADS MasterCard Directory Server
@@ -92,10 +102,12 @@ class AuthenticationDataDetails
      * @param string|null $paresStatus
      * @param string|null $company
      */
-    public function __construct($veresStatus, $paresStatus, $company)
+    public function __construct($veresStatus, $paresStatus, $company, $transactionsStatus, $authenticationIndicator)
     {
-        $this->veres = $veresStatus;
-        $this->pares = $paresStatus;
-        $this->creditCardCompany = $company;
+        $this->veres                   = $veresStatus;
+        $this->pares                   = $paresStatus;
+        $this->creditCardCompany       = $company;
+        $this->transStatus             = $transactionsStatus;
+        $this->authenticationIndicator = $authenticationIndicator;
     }
 }

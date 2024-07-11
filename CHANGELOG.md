@@ -1,4 +1,5 @@
 ## Unreleased
+* Added Support for 3DS v2.0 with external Authentication in FOP_CreateFormOfPayment
 
 ## Release 1.13.0 (5 Apr 2021)
 * Add support for multiple pax types in Fare_MasterPricerTravelBoardSearch (https://github.com/amabnl/amadeus-ws-client/pull/432)  - Artem Zakharchenko

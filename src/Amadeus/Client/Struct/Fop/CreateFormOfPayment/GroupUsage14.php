@@ -41,10 +41,10 @@ class GroupUsage14 extends GroupUsage
     /**
      * GroupUsage constructor.
      *
-     * @param string $fopType AttributeDetails::TYPE_*
+     * @param string $attributeType AttributeDetails::TYPE_*
      */
-    public function __construct($fopType)
+    public function __construct($attributeType)
     {
-        $this->attributeDetails = new AttributeDetails($fopType);
+        $this->attributeDetails = new AttributeDetails($attributeType);
     }
 }

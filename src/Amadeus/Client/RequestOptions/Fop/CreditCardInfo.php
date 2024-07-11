@@ -107,4 +107,9 @@ class CreditCardInfo extends LoadParamsFromArray
      * @var ThreeDSecureInfo
      */
     public $threeDSecure;
+
+    /**
+     * @var CreditCardSupplementaryData[]
+     */
+    public $supplementaryData = [];
 }
