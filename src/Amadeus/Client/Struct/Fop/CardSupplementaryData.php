@@ -30,4 +30,16 @@ namespace Amadeus\Client\Struct\Fop;
  */
 class CardSupplementaryData
 {
+    public $criteriaSetType;
+
+    /**
+     * @var CardSupplementaryCriteriaDetails
+     */
+    public $criteriaDetails;
+
+    public function __construct($setType, $attributeType, $attributeDescription)
+    {
+        $this->criteriaSetType = $setType;
+        $this->criteriaDetails = new CardSupplementaryCriteriaDetails($attributeType, $attributeDescription);
+    }
 }

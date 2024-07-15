@@ -24,17 +24,21 @@ namespace Amadeus\Client\Struct\Fare;
 
 use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\AwardPricing;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\Cabin;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ExemptTax;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FareBasis;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\FareFamily;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\FormOfPayment;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\ObFee;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\PaxSegRef;
 use Amadeus\Client\RequestOptions\Fare\PricePnr\Tax;
+use Amadeus\Client\RequestOptions\Fare\PricePnr\ZapOff;
 use Amadeus\Client\RequestOptions\FarePricePnrWithBookingClassOptions;
 use Amadeus\Client\RequestOptions\FarePricePnrWithLowerFaresOptions as LowerFareOpt;
 use Amadeus\Client\RequestOptions\FarePricePnrWithLowestFareOptions as LowestFareOpt;
 use Amadeus\Client\RequestOptions\Fare\InformativePricing\PricingOptions as InformativePriceOpt;
 use Amadeus\Client\Struct\Fare\PricePnr13\CarrierInformation;
+use Amadeus\Client\Struct\Fare\PricePnr13\CriteriaDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\Currency;
 use Amadeus\Client\Struct\Fare\PricePnr13\DateInformation;
 use Amadeus\Client\Struct\Fare\PricePnr13\FormOfPaymentInformation;
@@ -181,6 +185,16 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
             self::makeOverrideOptionsWithCriteria($options->overrideOptionsWithCriteria, $priceOptions)
         );
 
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadZapOffs($options->zapOff)
+        );
+
+        $priceOptions = self::mergeOptions(
+            $priceOptions,
+            self::loadCabins($options->cabins)
+        );
+
         // All options processed, no options found:
         if (empty($priceOptions)) {
             $priceOptions[] = new PricingOptionGroup(PricingOptionKey::OPTION_NO_OPTION);
@@ -305,10 +319,23 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
         $opt = [];
 
         if ($fareFamily !== null) {
-            $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_FAMILY);
-            $po->optionDetail = new OptionDetail([['FF' => $fareFamily]]);
+            if (is_array($fareFamily)) {
+                /**
+                 * @var FareFamily $item
+                 */
+                foreach ($fareFamily as $item) {
+                    $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_FAMILY);
+                    $po->optionDetail = new OptionDetail([['FF' => $item->fareFamily]]);
+                    $po->paxSegTstReference = new PaxSegTstReference($item->paxSegRefs);
 
-            $opt[] = $po;
+                    $opt[] = $po;
+                }
+            } else {
+                $po = new PricingOptionGroup(PricingOptionKey::OPTION_FARE_FAMILY);
+                $po->optionDetail = new OptionDetail([['FF' => $fareFamily]]);
+
+                $opt[] = $po;
+            }
         }
 
         return $opt;
@@ -610,6 +637,57 @@ class PricePNRWithBookingClass13 extends BasePricingMessage
 
             $po->paxSegTstReference = new PaxSegTstReference($references);
 
+            $opt[] = $po;
+        }
+
+        return $opt;
+    }
+
+    /**
+     * Load ZAP-Off
+     *
+     * @param ZapOff[] $zapOffs
+     * @return PricingOptionGroup[]
+     */
+    protected static function loadZapOffs($zapOffs)
+    {
+        $opt = [];
+        if (!empty($zapOffs)) {
+            foreach ($zapOffs as $zapOff) {
+                $po = new PricingOptionGroup(PricingOptionKey::OPTION_ZAP_OFF);
+
+                $po->penDisInformation = new PenDisInformation(
+                    PenDisInformation::QUAL_ZAPOFF_DISCOUNT,
+                    [$zapOff]
+                );
+
+                if (!empty($zapOff->paxSegRefs)) {
+                    $po->paxSegTstReference = new PaxSegTstReference($zapOff->paxSegRefs);
+                }
+
+                $opt[] = $po;
+            }
+        }
+
+        return $opt;
+    }
+
+    /**
+     * Load Cabins
+     *
+     * @param Cabin[] $cabins
+     * @return array
+     */
+    protected static function loadCabins($cabins)
+    {
+        $opt = [];
+        if (!empty($cabins)) {
+            $po = new PricingOptionGroup(PricingOptionKey::OPTION_CABIN);
+            $criteriaDetails = [];
+            foreach ($cabins as $cabin) {
+                $criteriaDetails[] = new CriteriaDetails($cabin->cabinType, $cabin->cabinCode);
+            }
+            $po->optionDetail = new OptionDetail($criteriaDetails);
             $opt[] = $po;
         }
 

@@ -48,7 +48,7 @@ class RetrieveListOfTSM extends BaseWsMessage
     public function __construct(TicketRetrieveListOfTSMOptions $params)
     {
         $this->deadIndicator = new DeadIndicator(
-          new StatusDetails(StatusDetails::IND_DEAD, 0)
+            new StatusDetails(StatusDetails::IND_DEAD, 0)
         );
     }
 }

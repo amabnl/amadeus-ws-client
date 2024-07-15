@@ -74,6 +74,11 @@ class QueueList extends BaseWsMessage
     public $sortCriteria;
 
     /**
+     * @var AccountNumber
+     */
+    public $accountNumber;
+
+    /**
      * @param QueueListOptions $options
      */
     public function __construct(QueueListOptions $options)
@@ -101,6 +106,10 @@ class QueueList extends BaseWsMessage
 
         if (is_int($options->firstItemNr) && is_int($options->lastItemNr)) {
             $this->scanRange = new ScanRange($options->firstItemNr, $options->lastItemNr);
+        }
+
+        if (!empty($options->queue->accountNumber)) {
+            $this->accountNumber = new AccountNumber($options->queue->accountNumber);
         }
     }
 }

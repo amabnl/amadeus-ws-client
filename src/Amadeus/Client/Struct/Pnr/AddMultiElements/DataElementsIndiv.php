@@ -42,6 +42,9 @@ class DataElementsIndiv extends WsMessageUtility
      * @var ElementManagementData
      */
     public $elementManagementData;
+    /**
+     * @var PnrSecurity
+     */
     public $pnrSecurity;
     /**
      * @var Accounting
@@ -179,6 +182,9 @@ class DataElementsIndiv extends WsMessageUtility
                     $this->formOfPayment->fop->creditCardCode = $element->creditCardType;
                     $this->formOfPayment->fop->accountNumber = $element->creditCardNumber;
                     $this->formOfPayment->fop->expiryDate = $element->creditCardExpiry;
+                    if ($element->freeText && $element->freeText != "") {
+                        $this->formOfPayment->fop->freetext = $element->freeText;
+                    }
                     if ($this->checkAnyNotEmpty($element->creditCardCvcCode, $element->creditCardHolder)) {
                         $this->fopExtension[] = new FopExtension(
                             1,
@@ -186,6 +192,8 @@ class DataElementsIndiv extends WsMessageUtility
                             $element->creditCardHolder
                         );
                     }
+                } elseif ($element->type === Fop::IDENT_CASH && $element->freeText != "") {
+                    $this->formOfPayment->fop->freetext = $element->freeText;
                 } elseif ($element->type === Fop::IDENT_MISC && $element->freeText != "NONREF") {
                     $this->formOfPayment->fop->freetext = $element->freeText;
                 } elseif ($element->type === Fop::IDENT_MISC && $element->freeText === "NONREF") {
@@ -276,6 +284,21 @@ class DataElementsIndiv extends WsMessageUtility
                     $element->ticketNumber
                 );
                 break;
+            case 'ScheduleChange':
+                /** @var Element\ScheduleChange $element */
+                $this->freetextData = new FreetextData(
+                    'SCHGTOOL',
+                    FreetextDetail::TYPE_RECEIVE_FROM
+                );
+                break;
+            case 'FareMiscellaneousInformation':
+                /** @var Element\FareMiscellaneousInformation $element */
+                $this->fareElement = new FareElement($element->indicator, $element->passengerType, $element->freeText, $element->officeId);
+                break;
+            case 'PnrSecurity':
+                /** @var Element\PnrSecurity $element */
+                $this->pnrSecurity = new PnrSecurity($element);
+                break;
             default:
                 throw new InvalidArgumentException('Element type '.$elementType.' is not supported');
         }
@@ -306,7 +329,10 @@ class DataElementsIndiv extends WsMessageUtility
             'ManualCommission' => ElementManagementData::SEGNAME_COMMISSION,
             'SeatRequest' => ElementManagementData::SEGNAME_SEAT_REQUEST,
             'TourCode' => ElementManagementData::SEGNAME_TOUR_CODE,
-            'ManualIssuedTicket' => ElementManagementData::SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER
+            'ManualIssuedTicket' => ElementManagementData::SEGNAME_MANUAL_DOCUMENT_REGISTRATION_WITH_ET_NUMBER,
+            'ScheduleChange' => ElementManagementData::SEGNAME_RECEIVE_FROM,
+            'FareMiscellaneousInformation' => null, // Special case - the type is a parameter.
+            'PnrSecurity' => ElementManagementData::SEGNAME_INDIVIDUAL_SECURITY,
         ];
 
         if (array_key_exists($elementType, $sourceArray)) {
@@ -315,6 +341,25 @@ class DataElementsIndiv extends WsMessageUtility
             if ($elementType === 'Address') {
                 /** @var Element\Address $element */
                 $elementName = $element->type;
+            }
+
+            if ($elementType === 'FareMiscellaneousInformation') {
+                /** @var Element\FareMiscellaneousInformation $element */
+
+                switch ($element->indicator) {
+                    case Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FS:
+                        $elementName = ElementManagementData::SEGNAME_MISC_TICKET_INFO;
+                        break;
+                    case Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FE:
+                        $elementName = ElementManagementData::SEGNAME_ENDORSEMENT;
+                        break;
+                    case Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FK:
+                        $elementName = ElementManagementData::SEGNAME_AIR_OFFICE_ID;
+                        break;
+                    case Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FZ:
+                        $elementName = ElementManagementData::SEGNAME_MISC_INFO;
+                        break;
+                }
             }
         }
 

@@ -148,15 +148,15 @@ class MasterPricerExpertSearch extends BaseMasterPricerMessage
             $options->maxLayoverPerConnectionMinutes
         )) {
             $this->travelFlightInfo = new MasterPricer\TravelFlightInfo(
-            $options->cabinClass,
-            $options->cabinOption,
-            $options->requestedFlightTypes,
-            $options->airlineOptions,
-            $options->progressiveLegsMin,
-            $options->progressiveLegsMax,
-            $options->maxLayoverPerConnectionHours,
-            $options->maxLayoverPerConnectionMinutes
-        );
+                $options->cabinClass,
+                $options->cabinOption,
+                $options->requestedFlightTypes,
+                $options->airlineOptions,
+                $options->progressiveLegsMin,
+                $options->progressiveLegsMax,
+                $options->maxLayoverPerConnectionHours,
+                $options->maxLayoverPerConnectionMinutes
+            );
         }
 
         if (!empty($options->priceToBeat)) {

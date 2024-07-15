@@ -72,7 +72,11 @@ class Queue
      * @var string
      */
     public $timeMode;
-    
+
+    /**
+     * @var string
+     */
+    public $accountNumber;
     
     /**
      * Construct Queue with initialization array

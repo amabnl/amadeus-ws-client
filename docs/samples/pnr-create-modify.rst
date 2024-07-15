@@ -978,3 +978,47 @@ Creating an OSI with Mandatory Airline Code:
             ])
         ]
     ]);
+
+Fare Misc TKT Information
+===============================
+
+Fare Element used to specify some miscellaneous fare information.
+This field is usually used to record data for accounting purposes in the National Systems and the AMADEUS
+Central System reporting database.
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\FareMiscellaneousInformation;
+    use Amadeus\Client\RequestOptions\Pnr\Reference;
+
+    $createPnrOptions = new PnrAddMultiElementsOptions([
+        'actionCode' => PnrAddMultiElementsOptions::ACTION_END_TRANSACT_RETRIEVE,
+        'elements' => [
+            new FareMiscellaneousInformation([
+                'indicator' => FareMiscellaneousInformation::GENERAL_INDICATOR_FS,
+                'freeText'  => 'MISC TICKETING INFORMATION'
+            ]);
+        ]
+    ]);
+
+Security Element (ES)
+===============================
+
+Adding an Individual Security Element (ES) to a PNR
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
+    use Amadeus\Client\RequestOptions\Pnr\Element\PnrSecurity;
+
+    $createPnrOptions = new PnrAddMultiElementsOptions([
+        'actionCode' => PnrAddMultiElementsOptions::ACTION_END_TRANSACT_RETRIEVE,
+        'elements' => [
+            new PnrSecurity([
+                'identification' => 'WGFD00321',
+                'accessMode' => PnrSecurity::ACCESS_MODE_BOTH,
+                'indicator' => PnrSecurity::INDICATOR_GLOBAL
+            ]);
+        ]
+    ]);

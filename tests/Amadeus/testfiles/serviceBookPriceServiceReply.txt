@@ -1,0 +1,12 @@
+<AMA_ServiceBookPriceServiceRS xmlns="http://xml.amadeus.com/2010/06/ServiceBookAndPrice_v1" xmlns:ama="http://xml.amadeus.com/2010/06/Types_v2" xmlns:foxns2="http://www.opentravel.org/OTA/2003/05/OTA2010B" xmlns:iata="http://www.iata.org/IATA/2007/00/IATA2010.1" Version="1.001">
+  <Success>
+    <Services>
+      <Service RequestID="R1" ID="22" Code="ABAG" ProviderCode="6X" Chargeable="Yes" CustomerRefId="2" SegmentRefId="7" />
+      <Service RequestID="R1" ID="23" Code="ABAG" ProviderCode="6X" Chargeable="Yes" CustomerRefId="1" SegmentRefId="8" />
+    </Services>
+    <Quotations>
+      <Quotation ID="27" CurrencyCode="GBP" DecimalPlaces="2" Amount="2230" PricingRecordType="TSM" ServiceRefIds="22" />
+      <Quotation ID="24" CurrencyCode="GBP" DecimalPlaces="2" Amount="2230" PricingRecordType="TSM" ServiceRefIds="23" />
+    </Quotations>
+  </Success>
+</AMA_ServiceBookPriceServiceRS>

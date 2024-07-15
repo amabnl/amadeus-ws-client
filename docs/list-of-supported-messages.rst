@@ -25,11 +25,13 @@ This is the list of messages that are at least partially supported at this time:
 - Fare_PricePNRWithBookingClass
 - Fare_PricePNRWithLowerFares
 - Fare_PricePNRWithLowestFare
+- Fare_PriceUpsellWithoutPNR
 - Fare_InformativePricingWithoutPNR
 - Fare_InformativeBestPricingWithoutPNR
 - Fare_ConvertCurrency
 - Fare_CheckRules
 - Fare_GetFareRules
+- Fare_GetFareFamilyDescription
 - Air_MultiAvailability
 - Air_SellFromRecommendation
 - Air_FlightInfo
@@ -55,6 +57,7 @@ This is the list of messages that are at least partially supported at this time:
 - Ticket_ProcessEDoc
 - Ticket_ProcessETicket
 - Ticket_InitRefund
+- Ticket_UpdateRefund
 - Ticket_IgnoreRefund
 - Ticket_ProcessRefund
 - DocIssuance_IssueTicket
@@ -67,11 +70,13 @@ This is the list of messages that are at least partially supported at this time:
 - Service_IntegratedPricing
 - Service_IntegratedCatalogue
 - Service_StandaloneCatalogue
+- Service_BookPriceService
 - Offer_CreateOffer
 - Offer_VerifyOffer
 - Offer_ConfirmAirOffer
 - Offer_ConfirmHotelOffer
 - Offer_ConfirmCarOffer
+- MiniRule_GetFromRec
 - MiniRule_GetFromPricingRec
 - MiniRule_GetFromPricing
 - MiniRule_GetFromETicket
@@ -86,6 +91,11 @@ This is the list of messages that are at least partially supported at this time:
 - PAY_GetVirtualCardDetails
 - PAY_GenerateVirtualCard (partially)
 - PAY_DeleteVirtualCard
+- Travel_OfferPrice
+- Travel_OrderCreate
+- Travel_OrderRetrieve
+- Travel_OrderPay
+- Travel_OrderCancel
 
 **********
 To-do list
@@ -96,9 +106,7 @@ These messages will be implemented at some point in the future. *Pull requests a
 - Fare_DisplayFaresForCityPair
 - Fare_DisplayBookingCodeInformation
 - Fare_CalculateMileage
-- Fare_PriceUpsellWithoutPNR
 - Fare_PriceUpsellPNR
-- Fare_GetFareFamilyDescription
 - Fare_RebookAndCreateTST
 - Air_TLAGetAvailability
 - PNR_CreateAuxiliarySegment

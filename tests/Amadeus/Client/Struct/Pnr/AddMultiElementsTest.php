@@ -1925,5 +1925,189 @@ class AddMultiElementsTest extends BaseTestCase
 
         $this->assertCount(2, $msg->dataElementsMaster->dataElementsIndiv);
     }
+
+    public function testFixScheduleChange(){
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_NO_PROCESSING;
+        $createPnrOptions->elements[] = new Element\ScheduleChange([
+            'receivedFrom' => 'SCHGTOOL'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+    }
+
+    public function testFareMiscellaneousInformationFS(){
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->elements[] = new Element\FareMiscellaneousInformation([
+            'passengerType' => Element\FareMiscellaneousInformation::PAXTYPE_PASSENGER,
+            'indicator' => Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FS,
+            'freeText'  => 'MISC TICKETING INFORMATION'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals('OT', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->qualifier);
+        $this->assertEquals('S', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->generalIndicator);
+        $this->assertEquals('PAX', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->passengerType);
+        $this->assertEquals('MISC TICKETING INFORMATION', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->freetextLong);
+    }
+
+    public function testMakePnrWithFormOfPaymentCashAndFreeTextNotEmpty()
+    {
+
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'company' => '1A'
+        ]);
+        $createPnrOptions->elements[] = new FormOfPayment([
+            'type' => FormOfPayment::TYPE_CASH,
+            'freeText' => 'TYPE CASH FREE TEXT'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+
+        $this->assertEquals('FP', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals(AddMultiElements\Fop::IDENT_CASH, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->identification);
+        $this->assertEquals('TYPE CASH FREE TEXT', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->freetext);
+    }
+
+    public function testFareMiscellaneousInformationFE(){
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->elements[] = new Element\FareMiscellaneousInformation([
+            'passengerType' => Element\FareMiscellaneousInformation::PAXTYPE_PASSENGER,
+            'indicator' => Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FE,
+            'freeText'  => 'MISC TICKETING INFORMATION'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals('OT', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->qualifier);
+        $this->assertEquals('E', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->generalIndicator);
+        $this->assertEquals('PAX', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->passengerType);
+        $this->assertEquals('MISC TICKETING INFORMATION', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->freetextLong);
+    }
+
+    public function testFareMiscellaneousInformationFK(){
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->elements[] = new Element\FareMiscellaneousInformation([
+            'passengerType' => Element\FareMiscellaneousInformation::PAXTYPE_PASSENGER,
+            'indicator' => Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FK,
+            'freeText'  => 'MISC TICKETING INFORMATION'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals('OT', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->qualifier);
+        $this->assertEquals('K', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->generalIndicator);
+        $this->assertEquals('PAX', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->passengerType);
+        $this->assertEquals('MISC TICKETING INFORMATION', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->freetextLong);
+    }
+
+    public function testFareMiscellaneousInformationFZ(){
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->elements[] = new Element\FareMiscellaneousInformation([
+            'passengerType' => Element\FareMiscellaneousInformation::PAXTYPE_PASSENGER,
+            'indicator' => Element\FareMiscellaneousInformation::GENERAL_INDICATOR_FZ,
+            'freeText'  => 'MISC TICKETING INFORMATION'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals('OT', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->reference->qualifier);
+        $this->assertEquals('Z', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->generalIndicator);
+        $this->assertEquals('PAX', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->passengerType);
+        $this->assertEquals('MISC TICKETING INFORMATION', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fareElement->freetextLong);
+    }
+
+    public function testMakePnrWithFormOfPaymentCreditCardWithFreeText()
+    {
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->travellers[] = new Traveller([
+            'number' => 1,
+            'lastName' => 'Bowie',
+            'firstName' => 'David'
+        ]);
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->tripSegments[] = new Miscellaneous([
+            'date' => \DateTime::createFromFormat('Y-m-d', "2016-10-02", new \DateTimeZone('UTC')),
+            'cityCode' => 'BRU',
+            'freeText' => 'GENERIC TRAVEL REQUEST',
+            'company' => '1A'
+        ]);
+        $createPnrOptions->elements[] = new FormOfPayment([
+            'type' => FormOfPayment::TYPE_CREDITCARD,
+            'creditCardType' => 'VI',
+            'creditCardNumber' => '4444333322221111',
+            'creditCardExpiry' => '1017',
+            'creditCardCvcCode' => 123,
+            'creditCardHolder' => 'BERNDMUELLER',
+            'freeText' => 'CREDIT CARD FREE TEXT'
+        ]);
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+
+        $this->assertEquals('FP', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals(AddMultiElements\Fop::IDENT_CREDITCARD, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->identification);
+        $this->assertEquals('4444333322221111', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->accountNumber);
+        $this->assertEquals('VI', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->creditCardCode);
+        $this->assertEquals('1017', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->expiryDate);
+        $this->assertEquals(1, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->fopSequenceNumber);
+        $this->assertEquals(123, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->newFopsDetails->cvData);
+        $this->assertEquals('BERNDMUELLER', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->fopExtension[0]->newFopsDetails->chdData);
+        $this->assertEquals('CREDIT CARD FREE TEXT', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->formOfPayment->fop->freetext);
+    }
+
+    public function testPnrSecurityES(){
+        $createPnrOptions = new PnrCreatePnrOptions();
+        $createPnrOptions->receivedFrom = "unittest";
+        $createPnrOptions->actionCode = PnrCreatePnrOptions::ACTION_END_TRANSACT_RETRIEVE;
+        $createPnrOptions->elements[] = new Element\PnrSecurity(
+            [
+                'identification' => 'WGFD00321',
+                'accessMode' => Element\PnrSecurity::ACCESS_MODE_BOTH,
+                'indicator' => Element\PnrSecurity::INDICATOR_GLOBAL
+            ]
+        );
+
+        $requestStruct = new AddMultiElements($createPnrOptions);
+
+        $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
+        $this->assertEquals('ES', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
+        $this->assertEquals('WGFD00321', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->pnrSecurity->security[0]->identification);
+        $this->assertEquals('B', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->pnrSecurity->security[0]->accessMode);
+        $this->assertEquals('G', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->pnrSecurity->indicator);
+    }
 }
 
