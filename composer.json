@@ -33,10 +33,5 @@
     "psr-4": {
       "Test\\Amadeus\\": "tests/Amadeus"
     }
-  },
-  "config": {
-    "platform": {
-      "php": "5.4"
-    }
   }
 }
