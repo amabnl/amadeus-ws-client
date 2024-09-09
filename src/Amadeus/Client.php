@@ -24,7 +24,9 @@ namespace Amadeus;
 
 use Amadeus\Client\Base;
 use Amadeus\Client\Exception;
+use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params;
+use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
 use Amadeus\Client\RequestOptions;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\UnsupportedOperationException;
@@ -602,6 +604,18 @@ class Client extends Base
         $messageOptions = []
     ) {
         $msgName = 'Fare_MasterPricerExpertSearch';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Fare_InstantTravelBoardSearch
+     */
+    public function fareInstantTravelBoardSearch(
+        RequestOptions\FareInstantTravelTBSearch $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Fare_InstantTravelBoardSearch';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }

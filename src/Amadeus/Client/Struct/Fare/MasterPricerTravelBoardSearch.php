@@ -28,7 +28,6 @@ use Amadeus\Client\RequestOptions\Fare\MPItinerary;
 use Amadeus\Client\RequestOptions\FareMasterPricerCalendarOptions;
 use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
 use Amadeus\Client\RequestOptions\TicketAtcShopperMpTbSearchOptions;
-use Amadeus\Client\Struct\Fare\MasterPricer;
 
 /**
  * Fare_MasterPricerTravelBoardSearch message structure
@@ -208,7 +207,7 @@ class MasterPricerTravelBoardSearch extends BaseMasterPricerMessage
         $tmpItinerary->departureLocalization = new MasterPricer\DepartureLocalization(
             $opt->departureLocation
         );
-        
+
         if ($opt->anchoredSegments) {
             $tmpItinerary->flightInfoPNR = array_map(function ($anchoredSegment) {
                 return new MasterPricer\FlightInfoPNR(

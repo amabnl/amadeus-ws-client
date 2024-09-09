@@ -28,6 +28,7 @@ This is the list of messages that are at least partially supported at this time:
 - Fare_PriceUpsellWithoutPNR
 - Fare_InformativePricingWithoutPNR
 - Fare_InformativeBestPricingWithoutPNR
+- Fare_InstantTravelBoardSearch
 - Fare_ConvertCurrency
 - Fare_CheckRules
 - Fare_GetFareRules
