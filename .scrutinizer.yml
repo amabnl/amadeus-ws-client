@@ -32,12 +32,12 @@ build:
   nodes:
     php81:
       environment:
-        php: 8.1
+        php: 8.1.13
 
     php82:
       environment:
-        php: 8.2
+        php: 8.2.24
 
     php83:
       environment:
-        php: 8.3
+        php: 8.3.12
