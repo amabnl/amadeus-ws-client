@@ -257,12 +257,12 @@ abstract class StandardResponseHandler implements MessageResponseHandler
     protected function loadDomDocument($response)
     {
         $domDoc = new \DOMDocument('1.0', 'UTF-8');
-        $loadResult = false;
 
         try {
             $loadResult = $domDoc->loadXML($response);
         } catch (\Throwable) {
             // swallow to throw exception below
+            $loadResult = false;
         }
 
         if ($loadResult === false) {

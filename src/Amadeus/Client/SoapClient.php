@@ -90,9 +90,7 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
      */
     protected function transformIncomingRequest($request)
     {
-        $newRequest = null;
-
-        $xsltFile = dirname(__FILE__).DIRECTORY_SEPARATOR.self::REMOVE_EMPTY_XSLT_LOCATION;
+        $xsltFile = __DIR__ .DIRECTORY_SEPARATOR.self::REMOVE_EMPTY_XSLT_LOCATION;
         if (!is_readable($xsltFile)) {
             throw new Exception('XSLT file "'.$xsltFile.'" is not readable!');
         }
@@ -108,7 +106,7 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
         $transform = $processor->transformToXml($dom);
         if ($transform === false) {
             //On transform error: usually when modifying the XSLT transformation incorrectly...
-            $this->logger->log(
+            $this->logger?->log(
                 Log\LogLevel::ERROR,
                 __METHOD__."__doRequest(): XSLTProcessor::transformToXml "
                 . "returned FALSE: could not perform transformation!!"

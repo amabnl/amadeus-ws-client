@@ -46,7 +46,7 @@ class TdsBlobData
      * @param string $id
      * @param string $data
      * @param string $dataType
-     * @param int|null $length
+     * @param int|string|null $length
      */
     public function __construct($id, $data, $dataType, $length)
     {

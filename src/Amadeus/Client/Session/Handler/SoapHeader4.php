@@ -307,7 +307,7 @@ class SoapHeader4 extends Base
             //Generate nonce, msg creation string & password digest:
             $password = base64_decode($params->authParams->passwordData);
             $creation = new \DateTime('now', new \DateTimeZone('UTC'));
-            $t = microtime(true);
+            $t = (float)microtime(true);
             $micro = sprintf("%03d", ($t - floor($t)) * 1000);
             $creationString = $this->createDateTimeStringForAuth($creation, $micro);
             $messageNonce = $this->generateUniqueNonce($params->authParams->nonceBase, $creationString);
@@ -442,7 +442,7 @@ class SoapHeader4 extends Base
      */
     protected function generateSecurityHeaderRawXml($originator, $nonce, $pwDigest, $creationTimeString)
     {
-        return $xml = '<oas:Security xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+        return '<oas:Security xmlns:oas="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
 	<oas:UsernameToken xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" oas1:Id="UsernameToken-1">
 		<oas:Username>' . $originator . '</oas:Username>
 		<oas:Nonce EncodingType="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-soap-message-security-1.0#Base64Binary">' . $nonce . '</oas:Nonce>
