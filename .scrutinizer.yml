@@ -1,32 +1,43 @@
 filter:
-    excluded_paths:
-          - tests/*
-checks:
-    php: true
-coding_style:
-    php:
-        indentation:
-            general:
-                size: 1
-build:
-    tests:
-        override:
-            -
-                command: 'phpunit'
-    nodes:
-        php54:
-            environment:
-                php: 5.4
+  excluded_paths:
+    - 'tests/*'
 
-        php56:
-            environment:
-                php: 5.6
-        php71:
-            environment:
-                php: 7.1
-        php72:
-            environment:
-                php: 7.2
-        php73:
-            environment:
-                php: 7.3
+checks:
+  php:
+    use_self_instead_of_fqcn: true
+    return_doc_comments: true
+    phpunit_assertions: true
+    parameter_doc_comments: true
+    fix_use_statements:
+      remove_unused: true
+      preserve_multiple: false
+      preserve_blanklines: false
+      order_alphabetically: false
+    line_length:
+      max_length: '120'
+    no_goto: true
+    fix_line_ending: true
+
+coding_style:
+  php:
+    indentation:
+      general:
+        size: 1
+
+build:
+  tests:
+    override:
+      - vendor/bin/phpunit
+
+  nodes:
+    php81:
+      environment:
+        php: 8.1
+
+    php82:
+      environment:
+        php: 8.2
+
+    php83:
+      environment:
+        php: 8.3
