@@ -68,7 +68,10 @@ class DisplayNetRemitReportTest extends BaseTestCase
         $msg = new DisplayNetRemitReport($opt);
 
         $expectedTransactionTypeCodeInfo = new TransactionData($type, $code, $issueIndicator);
-        $this->assertArraySubset([$expectedTransactionTypeCodeInfo], $msg->transactionTypeCodeInfo);
+        self::assertEquals(
+            $expectedTransactionTypeCodeInfo->transactionDetails,
+            $msg->transactionTypeCodeInfo[0]->transactionDetails,
+        );
     }
 
     public function testCanMakeMessageWithDocumentInfo()

@@ -22,6 +22,7 @@
 
 namespace Test\Amadeus\Client\ResponseHandler;
 
+use Amadeus\Client\Exception;
 use Amadeus\Client\ResponseHandler;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
@@ -1720,19 +1721,14 @@ class BaseTest extends BaseTestCase
 
     public function testCanHandleInvalidXmlDocument()
     {
-        $this->setExpectedException('Amadeus\Client\Exception');
+        $this->expectException(Exception::class);
 
         $respHandler = new ResponseHandler\Base();
 
         $sendResult = new SendResult();
         $sendResult->responseXml = $this->getTestFile('dummyInvalidXmlDocument.txt');
 
-        $warningEnabledOrig = \PHPUnit_Framework_Error_Warning::$enabled;
-        \PHPUnit_Framework_Error_Warning::$enabled = false;
-
         $respHandler->analyzeResponse($sendResult, 'Fare_PricePnrWithBookingClass');
-
-        \PHPUnit_Framework_Error_Warning::$enabled = $warningEnabledOrig;
     }
 
     public function testCanHandleCommandCryptic()

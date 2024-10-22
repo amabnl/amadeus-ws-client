@@ -170,7 +170,13 @@ class WsdlAnalyser
         $domXpath = null;
 
         $importPath = realpath(dirname($wsdlPath)).DIRECTORY_SEPARATOR.$import;
-        $wsdlContent = file_get_contents($importPath);
+        $wsdlContent = false;
+
+        try {
+            $wsdlContent = file_get_contents($importPath);
+        } catch (\Throwable) {
+            // swallow to throw exception below
+        }
 
         if ($wsdlContent !== false) {
             $domDoc = new \DOMDocument('1.0', 'UTF-8');
@@ -220,7 +226,13 @@ class WsdlAnalyser
     public static function loadWsdlXpath($wsdlFilePath, $wsdlId)
     {
         if (!isset(self::$wsdlDomXpath[$wsdlId]) || is_null(self::$wsdlDomXpath[$wsdlId])) {
-            $wsdlContent = file_get_contents($wsdlFilePath);
+            $wsdlContent = false;
+
+            try {
+                $wsdlContent = file_get_contents($wsdlFilePath);
+            } catch (\Throwable) {
+                // swallow to throw exception below
+            }
 
             if ($wsdlContent !== false) {
                 self::$wsdlDomDoc[$wsdlId] = new \DOMDocument('1.0', 'UTF-8');

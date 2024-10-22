@@ -7,3 +7,4 @@ composer.phar
 !conf/.gitkeep
 phpunit.xml
 launch.json
+.phpunit.result.cache

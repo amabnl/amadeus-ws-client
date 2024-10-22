@@ -49,6 +49,7 @@ use Amadeus\Client\RequestOptions\Pnr\TravellerGroup;
 use Amadeus\Client\RequestOptions\PnrAddMultiElementsOptions;
 use Amadeus\Client\RequestOptions\PnrCreatePnrOptions;
 use Amadeus\Client\RequestOptions\Queue;
+use Amadeus\Client\Struct\InvalidArgumentException;
 use Amadeus\Client\Struct\Pnr\AddMultiElements;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\PnrActions;
 use Test\Amadeus\BaseTestCase;
@@ -97,28 +98,28 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertCount(1, $requestStruct->pnrActions->optionCode);
         $this->assertEquals(PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE, $requestStruct->pnrActions->optionCode[0]);
 
-        $this->assertInternalType('array', $requestStruct->travellerInfo);
+        $this->assertIsArray($requestStruct->travellerInfo);
         $this->assertEquals(1, count($requestStruct->travellerInfo));
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInfo', $requestStruct->travellerInfo[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementPassenger', $requestStruct->travellerInfo[0]->elementManagementPassenger);
         $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[0]->elementManagementPassenger->segmentName);
         $this->assertEquals(1, $requestStruct->travellerInfo[0]->elementManagementPassenger->reference->number);
         $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $requestStruct->travellerInfo[0]->elementManagementPassenger->reference->qualifier);
-        $this->assertInternalType('array', $requestStruct->travellerInfo[0]->passengerData);
+        $this->assertIsArray($requestStruct->travellerInfo[0]->passengerData);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\PassengerData', $requestStruct->travellerInfo[0]->passengerData[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInformation', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\Traveller', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller);
         $this->assertEquals('Bowie', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->surname);
-        $this->assertInternalType('array', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger);
+        $this->assertIsArray($requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\Passenger', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]);
         $this->assertEquals('David', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->firstName);
         $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->type);
 
-        $this->assertInternalType('array', $requestStruct->originDestinationDetails);
+        $this->assertIsArray($requestStruct->originDestinationDetails);
         $this->assertEquals(1, count($requestStruct->originDestinationDetails));
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails', $requestStruct->originDestinationDetails[0]);
         $this->assertNull($requestStruct->originDestinationDetails[0]->originDestination);
-        $this->assertInternalType('array', $requestStruct->originDestinationDetails[0]->itineraryInfo);
+        $this->assertIsArray($requestStruct->originDestinationDetails[0]->itineraryInfo);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\ItineraryInfo', $requestStruct->originDestinationDetails[0]->itineraryInfo[0]);
         $this->assertEquals(AddMultiElements\ElementManagementItinerary::SEGMENT_MISCELLANEOUS, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->segmentName);
         $this->assertEquals(AddMultiElements\Reference::QUAL_OTHER, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->reference->qualifier);
@@ -126,7 +127,7 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_CONFIRMED, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
 
 
-        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertIsArray($requestStruct->dataElementsMaster->dataElementsIndiv);
         $this->assertEquals(3, count($requestStruct->dataElementsMaster->dataElementsIndiv));
         $this->assertEquals('TK', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
         $this->assertEquals(AddMultiElements\TicketElement::PASSTYPE_PAX, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->ticketElement->passengerType);
@@ -187,7 +188,7 @@ class AddMultiElementsTest extends BaseTestCase
 
         $message = new AddMultiElements($createPnrOptions);
 
-        $this->assertInternalType('array', $message->pnrActions->optionCode);
+        $this->assertIsArray($message->pnrActions->optionCode);
         $this->assertCount(3, $message->pnrActions->optionCode);
         $this->assertEquals(PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE, $message->pnrActions->optionCode[0]);
         $this->assertEquals(PnrActions::ACTIONOPTION_WARNING_AT_EOT, $message->pnrActions->optionCode[1]);
@@ -211,7 +212,7 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals('GENERIC TRAVEL REQUEST', $message->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->freetextItinerary->longFreetext);
         $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_CONFIRMED, $message->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
 
-        $this->assertInternalType('array', $message->dataElementsMaster->dataElementsIndiv);
+        $this->assertIsArray($message->dataElementsMaster->dataElementsIndiv);
         $this->assertCount(3, $message->dataElementsMaster->dataElementsIndiv);
         $this->assertEquals('TK', $message->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
         $this->assertEquals(AddMultiElements\TicketElement::PASSTYPE_PAX, $message->dataElementsMaster->dataElementsIndiv[0]->ticketElement->passengerType);
@@ -278,28 +279,28 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertCount(1, $requestStruct->pnrActions->optionCode);
         $this->assertEquals(PnrActions::ACTIONOPTION_END_TRANSACT_W_RETRIEVE, $requestStruct->pnrActions->optionCode[0]);
 
-        $this->assertInternalType('array', $requestStruct->travellerInfo);
+        $this->assertIsArray($requestStruct->travellerInfo);
         $this->assertEquals(1, count($requestStruct->travellerInfo));
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInfo', $requestStruct->travellerInfo[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\ElementManagementPassenger', $requestStruct->travellerInfo[0]->elementManagementPassenger);
         $this->assertEquals(AddMultiElements\ElementManagementPassenger::SEG_NAME, $requestStruct->travellerInfo[0]->elementManagementPassenger->segmentName);
         $this->assertEquals(1, $requestStruct->travellerInfo[0]->elementManagementPassenger->reference->number);
         $this->assertEquals(AddMultiElements\Reference::QUAL_PASSENGER, $requestStruct->travellerInfo[0]->elementManagementPassenger->reference->qualifier);
-        $this->assertInternalType('array', $requestStruct->travellerInfo[0]->passengerData);
+        $this->assertIsArray($requestStruct->travellerInfo[0]->passengerData);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\PassengerData', $requestStruct->travellerInfo[0]->passengerData[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInformation', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\Traveller', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller);
         $this->assertEquals('Bowie', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->traveller->surname);
-        $this->assertInternalType('array', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger);
+        $this->assertIsArray($requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\Passenger', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]);
         $this->assertEquals('David', $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->firstName);
         $this->assertEquals(AddMultiElements\Passenger::PASST_ADULT, $requestStruct->travellerInfo[0]->passengerData[0]->travellerInformation->passenger[0]->type);
 
-        $this->assertInternalType('array', $requestStruct->originDestinationDetails);
+        $this->assertIsArray($requestStruct->originDestinationDetails);
         $this->assertEquals(1, count($requestStruct->originDestinationDetails));
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails', $requestStruct->originDestinationDetails[0]);
         $this->assertNull($requestStruct->originDestinationDetails[0]->originDestination);
-        $this->assertInternalType('array', $requestStruct->originDestinationDetails[0]->itineraryInfo);
+        $this->assertIsArray($requestStruct->originDestinationDetails[0]->itineraryInfo);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\ItineraryInfo', $requestStruct->originDestinationDetails[0]->itineraryInfo[0]);
         $this->assertEquals(AddMultiElements\ElementManagementItinerary::SEGMENT_MISCELLANEOUS, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->segmentName);
         $this->assertEquals(AddMultiElements\Reference::QUAL_OTHER, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->reference->qualifier);
@@ -307,7 +308,7 @@ class AddMultiElementsTest extends BaseTestCase
         $this->assertEquals(AddMultiElements\RelatedProduct::STATUS_CONFIRMED, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->airAuxItinerary->relatedProduct->status);
 
 
-        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertIsArray($requestStruct->dataElementsMaster->dataElementsIndiv);
         $this->assertEquals(4, count($requestStruct->dataElementsMaster->dataElementsIndiv));
         $this->assertEquals('TK', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
         $this->assertEquals(AddMultiElements\TicketElement::PASSTYPE_PAX, $requestStruct->dataElementsMaster->dataElementsIndiv[0]->ticketElement->passengerType);
@@ -359,7 +360,7 @@ class AddMultiElementsTest extends BaseTestCase
 
         $requestStruct = new AddMultiElements($createPnrOptions);
 
-        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertIsArray($requestStruct->dataElementsMaster->dataElementsIndiv);
         $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
 
         $this->assertEquals('FP', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
@@ -390,7 +391,7 @@ class AddMultiElementsTest extends BaseTestCase
 
         $requestStruct = new AddMultiElements($createPnrOptions);
 
-        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertIsArray($requestStruct->dataElementsMaster->dataElementsIndiv);
         $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
 
         $this->assertEquals('FP', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
@@ -422,7 +423,7 @@ class AddMultiElementsTest extends BaseTestCase
 
         $requestStruct = new AddMultiElements($createPnrOptions);
 
-        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertIsArray($requestStruct->dataElementsMaster->dataElementsIndiv);
         $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
 
         $this->assertEquals('FP', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
@@ -458,7 +459,7 @@ class AddMultiElementsTest extends BaseTestCase
 
         $requestStruct = new AddMultiElements($createPnrOptions);
 
-        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertIsArray($requestStruct->dataElementsMaster->dataElementsIndiv);
         $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
 
         $this->assertEquals('FP', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
@@ -498,7 +499,7 @@ class AddMultiElementsTest extends BaseTestCase
 
         $requestStruct = new AddMultiElements($createPnrOptions);
 
-        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertIsArray($requestStruct->dataElementsMaster->dataElementsIndiv);
         $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
 
         $this->assertEquals('FP', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
@@ -515,7 +516,8 @@ class AddMultiElementsTest extends BaseTestCase
 
     public function testMakePnrWithFormOfPaymentCheckWillThrowException()
     {
-        $this->setExpectedException('\RuntimeException', 'FOP CHECK NOT YET IMPLEMENTED');
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('FOP CHECK NOT YET IMPLEMENTED');
         $createPnrOptions = new PnrCreatePnrOptions();
         $createPnrOptions->receivedFrom = "unittest";
         $createPnrOptions->travellers[] = new Traveller([
@@ -1267,11 +1269,11 @@ class AddMultiElementsTest extends BaseTestCase
 
         $requestStruct = new AddMultiElements($options);
 
-        $this->assertInternalType('array', $requestStruct->originDestinationDetails);
+        $this->assertIsArray($requestStruct->originDestinationDetails);
         $this->assertEquals(1, count($requestStruct->originDestinationDetails));
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\OriginDestinationDetails', $requestStruct->originDestinationDetails[0]);
         $this->assertNull($requestStruct->originDestinationDetails[0]->originDestination);
-        $this->assertInternalType('array', $requestStruct->originDestinationDetails[0]->itineraryInfo);
+        $this->assertIsArray($requestStruct->originDestinationDetails[0]->itineraryInfo);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\AddMultiElements\ItineraryInfo', $requestStruct->originDestinationDetails[0]->itineraryInfo[0]);
         $this->assertEquals(AddMultiElements\ElementManagementItinerary::SEGMENT_MISCELLANEOUS, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->segmentName);
         $this->assertEquals(AddMultiElements\Reference::QUAL_OTHER, $requestStruct->originDestinationDetails[0]->itineraryInfo[0]->elementManagementItinerary->reference->qualifier);
@@ -1470,7 +1472,8 @@ class AddMultiElementsTest extends BaseTestCase
 
     public function testCreateGhostSegmentWillThrowException()
     {
-        $this->setExpectedException('\RuntimeException', 'NOT YET IMPLEMENTED');
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('NOT YET IMPLEMENTED');
 
         $createPnrOptions = new PnrCreatePnrOptions();
         $createPnrOptions->receivedFrom = "unittest";
@@ -1488,10 +1491,8 @@ class AddMultiElementsTest extends BaseTestCase
 
     public function testCreateHotelSegmentWillThrowException()
     {
-        $this->setExpectedException(
-            'Amadeus\Client\Struct\InvalidArgumentException',
-            'Segment type Hotel is not supported'
-        );
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('Segment type Hotel is not supported');
 
         $createPnrOptions = new PnrCreatePnrOptions();
         $createPnrOptions->receivedFrom = "unittest";
@@ -1509,10 +1510,8 @@ class AddMultiElementsTest extends BaseTestCase
 
     public function testCreateUnsupportedElementWillThrowException()
     {
-        $this->setExpectedException(
-            'Amadeus\Client\Struct\InvalidArgumentException',
-            'Element type UnsupportedElement is not supported'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Element type UnsupportedElement is not supported');
 
         $createPnrOptions = new PnrCreatePnrOptions();
         $createPnrOptions->receivedFrom = "unittest";
@@ -1982,7 +1981,7 @@ class AddMultiElementsTest extends BaseTestCase
 
         $requestStruct = new AddMultiElements($createPnrOptions);
 
-        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertIsArray($requestStruct->dataElementsMaster->dataElementsIndiv);
         $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
 
         $this->assertEquals('FP', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
@@ -2075,7 +2074,7 @@ class AddMultiElementsTest extends BaseTestCase
 
         $requestStruct = new AddMultiElements($createPnrOptions);
 
-        $this->assertInternalType('array', $requestStruct->dataElementsMaster->dataElementsIndiv);
+        $this->assertIsArray($requestStruct->dataElementsMaster->dataElementsIndiv);
         $this->assertEquals(2, count($requestStruct->dataElementsMaster->dataElementsIndiv));
 
         $this->assertEquals('FP', $requestStruct->dataElementsMaster->dataElementsIndiv[0]->elementManagementData->segmentName);
