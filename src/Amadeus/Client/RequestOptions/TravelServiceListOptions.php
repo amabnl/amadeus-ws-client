@@ -34,4 +34,6 @@ class TravelServiceListOptions extends AbstractTravelOptions
      * @var int
      */
     public $serviceId;
+
+    public string $shoppingResponseId = '';
 }

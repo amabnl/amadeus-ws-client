@@ -28,14 +28,14 @@ use Amadeus\Client\Struct\Travel\OfferPrice;
 use Test\Amadeus\BaseTestCase;
 
 /**
- * OrderCreateTest
+ * OfferPriceTest
  *
  * @package Test\Amadeus\Client\Struct\Travel
  * @author Artem Zakharchenko <artz.relax@gmail.com>
  */
 class OfferPriceTest extends BaseTestCase
 {
-    public function testCanMakeOfferPrice()
+    public function testCanMakeOfferPrice(): void
     {
         $opt = new TravelOfferPriceOptions([
             'dataLists' => [
@@ -61,6 +61,13 @@ class OfferPriceTest extends BaseTestCase
                             'paxRefId' => [
                                 'T1',
                             ],
+                            'selectedAlaCarteOfferItem' => new RequestOptions\SelectedAlaCarteOfferItem([
+                                'quantity' => 1,
+                            ]),
+                            'selectedSeat' => new RequestOptions\SelectedSeat([
+                                'column' => 'A',
+                                'rowNumber' => 12,
+                            ])
                         ]),
                     ],
                 ]),
@@ -76,11 +83,17 @@ class OfferPriceTest extends BaseTestCase
         $this->assertEquals('T1', $message->Request->DataLists->PaxList->Pax[0]->PaxID);
         $this->assertEquals('ADT', $message->Request->DataLists->PaxList->Pax[0]->PTC);
 
-        $this->assertEquals('ShopRef1', $message->Request->PricedOffer->SelectedOffer->ShoppingResponseRefID);
-        $this->assertEquals('AA', $message->Request->PricedOffer->SelectedOffer->OwnerCode);
-        $this->assertCount(1, $message->Request->PricedOffer->SelectedOffer->SelectedOfferItem);
-        $this->assertEquals('OfferRef1', $message->Request->PricedOffer->SelectedOffer->OfferRefID);
-        $this->assertEquals('ItemRef1', $message->Request->PricedOffer->SelectedOffer->SelectedOfferItem[0]->OfferItemRefID);
-        $this->assertEquals(['T1'], $message->Request->PricedOffer->SelectedOffer->SelectedOfferItem[0]->PaxRefID);
+        $pricedOffer = $message->Request->PricedOffer;
+
+        $this->assertEquals('ShopRef1', $pricedOffer->SelectedOffer->ShoppingResponseRefID);
+        $this->assertEquals('AA', $pricedOffer->SelectedOffer->OwnerCode);
+        $this->assertCount(1, $pricedOffer->SelectedOffer->SelectedOfferItem);
+        $this->assertEquals('OfferRef1', $pricedOffer->SelectedOffer->OfferRefID);
+        $this->assertEquals('ItemRef1', $pricedOffer->SelectedOffer->SelectedOfferItem[0]->OfferItemRefID);
+        $this->assertEquals(['T1'], $pricedOffer->SelectedOffer->SelectedOfferItem[0]->PaxRefID);
+
+        $this->assertEquals(1, $pricedOffer->SelectedOffer->SelectedOfferItem[0]->SelectedAlaCarteOfferItem->Qty);
+        $this->assertEquals('A', $pricedOffer->SelectedOffer->SelectedOfferItem[0]->SelectedSeat->ColumnID);
+        $this->assertEquals(12, $pricedOffer->SelectedOffer->SelectedOfferItem[0]->SelectedSeat->SeatRowNumber);
     }
 }

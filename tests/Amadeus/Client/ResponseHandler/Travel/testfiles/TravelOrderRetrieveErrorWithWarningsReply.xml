@@ -1,0 +1,30 @@
+<AMA_TravelOrderViewRS xmlns="http://xml.amadeus.com/2010/06/Travel_OrderViewRS_v1"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                       xsi:schemaLocation="http://xml.amadeus.com/2010/06/Travel_OrderViewRS_v1 file://X:/it2rail/NDCX/FLX/xsd/AMA_TravelOrderViewRS.xsd">
+    <Party>
+        <Sender>
+            <Aggregator/>
+        </Sender>
+    </Party>
+    <Errors>
+        <Error>
+            <DescText>No matching NDC order ID found</DescText>
+            <OwnerName>AA</OwnerName>
+        </Error>
+        <Error>
+            <Code>39004</Code>
+            <DescText>Invalid OrderID</DescText>
+            <OwnerName>1A</OwnerName>
+        </Error>
+    </Errors>
+    <Response>
+        <Warning>
+            <Code>39149</Code>
+            <DescText>RECORD NOT SYNCHRONISED WITH ORDER</DescText>
+        </Warning>
+        <Warning>
+            <Code>41550</Code>
+            <DescText>INVOLUNTARY CHANGE OCCURRED. PLEASE ACCEPT, ELSE REBOOK OR CANCEL</DescText>
+        </Warning>
+    </Response>
+</AMA_TravelOrderViewRS>

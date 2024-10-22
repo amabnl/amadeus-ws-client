@@ -1,0 +1,9 @@
+<AMA_TravelOfferPriceRS xmlns="http://xml.amadeus.com/2010/06/Travel_OfferPriceRQ_v1"
+                        xmlns:ns2="http://xml.amadeus.com/2010/06/Travel_OfferPriceRS_v1">
+    <Errors>
+        <Error>
+            <Code>38658</Code>
+            <DescText>Technical Error - Please contact your helpdesk</DescText>
+        </Error>
+    </Errors>
+</AMA_TravelOfferPriceRS>

@@ -1,0 +1,487 @@
+<ns2:AMA_TravelOfferPriceRS xmlns="http://xml.amadeus.com/2010/06/Travel_OfferPriceRQ_v1"
+                            xmlns:ns2="http://xml.amadeus.com/2010/06/Travel_OfferPriceRS_v1">
+    <ns2:Response>
+        <ns2:DataLists>
+            <ns2:BaggageAllowanceList>
+                <ns2:BaggageAllowance>
+                    <ns2:BaggageAllowanceID>Pbgaiq3jcty0f3po2</ns2:BaggageAllowanceID>
+                    <ns2:TypeCode>CheckedBag</ns2:TypeCode>
+                    <ns2:ApplicablePartyText>Traveler</ns2:ApplicablePartyText>
+                    <ns2:DescText>CHECKED ALLOWANCE</ns2:DescText>
+                    <ns2:PieceAllowance>
+                        <ns2:ApplicablePartyText>Traveler</ns2:ApplicablePartyText>
+                        <ns2:TotalQty>1</ns2:TotalQty>
+                        <ns2:PieceDimensionAllowance>
+                            <ns2:Qty>1</ns2:Qty>
+                        </ns2:PieceDimensionAllowance>
+                    </ns2:PieceAllowance>
+                </ns2:BaggageAllowance>
+            </ns2:BaggageAllowanceList>
+            <ns2:FareList>
+                <ns2:FareGroup refs="Pfrk0wliqzjlkhsrx" ListKey="Pfcp0wliqzjlkhsrx">
+                    <ns2:Fare>
+                        <ns2:FareCode>70J</ns2:FareCode>
+                    </ns2:Fare>
+                    <ns2:FareBasisCode>
+                        <ns2:Code>NLN8A4M5</ns2:Code>
+                    </ns2:FareBasisCode>
+                </ns2:FareGroup>
+            </ns2:FareList>
+            <ns2:OriginDestList>
+                <ns2:OriginDest>
+                    <ns2:OriginDestID>OD1</ns2:OriginDestID>
+                    <ns2:OriginCode>JFK</ns2:OriginCode>
+                    <ns2:DestCode>LHR</ns2:DestCode>
+                    <ns2:PaxJourneyRefID>Pfltfdks9w3459ikj</ns2:PaxJourneyRefID>
+                </ns2:OriginDest>
+            </ns2:OriginDestList>
+            <ns2:PaxJourneyList>
+                <ns2:PaxJourney>
+                    <ns2:PaxJourneyID>Pfltfdks9w3459ikj</ns2:PaxJourneyID>
+                    <ns2:Duration>PT12H15M</ns2:Duration>
+                    <ns2:PaxSegmentRefID>Isgma800cc7e42729</ns2:PaxSegmentRefID>
+                    <ns2:PaxSegmentRefID>Isgmb000cc7e42729</ns2:PaxSegmentRefID>
+                </ns2:PaxJourney>
+            </ns2:PaxJourneyList>
+            <ns2:PaxList>
+                <ns2:Pax>
+                    <ns2:PaxID>T1</ns2:PaxID>
+                    <ns2:PTC>ADT</ns2:PTC>
+                </ns2:Pax>
+                <ns2:Pax>
+                    <ns2:PaxID>T2</ns2:PaxID>
+                    <ns2:PTC>ADT</ns2:PTC>
+                </ns2:Pax>
+            </ns2:PaxList>
+            <ns2:PaxSegmentList>
+                <ns2:PaxSegment>
+                    <ns2:PaxSegmentID>Isgma800cc7e42729</ns2:PaxSegmentID>
+                    <ns2:SecureFlightInd>true</ns2:SecureFlightInd>
+                    <ns2:Duration>PT6H15M</ns2:Duration>
+                    <ns2:Dep>
+                        <ns2:IATA_LocationCode>JFK</ns2:IATA_LocationCode>
+                        <ns2:AircraftScheduledDateTime>2025-02-11T17:00:00</ns2:AircraftScheduledDateTime>
+                        <ns2:TerminalName>7</ns2:TerminalName>
+                        <ns2:StationName>New York John F Kennedy International</ns2:StationName>
+                    </ns2:Dep>
+                    <ns2:Arrival>
+                        <ns2:IATA_LocationCode>DUB</ns2:IATA_LocationCode>
+                        <ns2:AircraftScheduledDateTime>2025-02-12T04:15:00</ns2:AircraftScheduledDateTime>
+                        <ns2:TerminalName>2</ns2:TerminalName>
+                        <ns2:StationName>Dublin International</ns2:StationName>
+                    </ns2:Arrival>
+                    <ns2:MarketingCarrierInfo>
+                        <ns2:CarrierDesigCode>AA</ns2:CarrierDesigCode>
+                        <ns2:CarrierName>American Airlines</ns2:CarrierName>
+                        <ns2:MarketingCarrierFlightNumberText>8330</ns2:MarketingCarrierFlightNumberText>
+                    </ns2:MarketingCarrierInfo>
+                    <ns2:OperatingCarrierInfo>
+                        <ns2:CarrierDesigCode>EI</ns2:CarrierDesigCode>
+                        <ns2:CarrierName>Aer Lingus</ns2:CarrierName>
+                        <ns2:OperatingCarrierFlightNumberText>104</ns2:OperatingCarrierFlightNumberText>
+                        <ns2:Disclosure>
+                            <ns2:Desc>
+                                <ns2:DescText>American Airlines</ns2:DescText>
+                            </ns2:Desc>
+                        </ns2:Disclosure>
+                    </ns2:OperatingCarrierInfo>
+                    <ns2:DatedOperatingLeg>
+                        <ns2:DatedOperatingLegID>S1</ns2:DatedOperatingLegID>
+                        <ns2:CarrierAircraftType>
+                            <ns2:CarrierAircraftTypeCode>330</ns2:CarrierAircraftTypeCode>
+                            <ns2:CarrierAircraftTypeName>Airbus A330</ns2:CarrierAircraftTypeName>
+                        </ns2:CarrierAircraftType>
+                        <ns2:Dep>
+                            <ns2:IATA_LocationCode>JFK</ns2:IATA_LocationCode>
+                            <ns2:AircraftScheduledDateTime>2025-02-11T17:00:00</ns2:AircraftScheduledDateTime>
+                            <ns2:TerminalName>7</ns2:TerminalName>
+                            <ns2:StationName>New York John F Kennedy International</ns2:StationName>
+                        </ns2:Dep>
+                        <ns2:Arrival>
+                            <ns2:IATA_LocationCode>DUB</ns2:IATA_LocationCode>
+                            <ns2:AircraftScheduledDateTime>2025-02-12T04:15:00</ns2:AircraftScheduledDateTime>
+                            <ns2:TerminalName>2</ns2:TerminalName>
+                            <ns2:StationName>Dublin International</ns2:StationName>
+                        </ns2:Arrival>
+                    </ns2:DatedOperatingLeg>
+                </ns2:PaxSegment>
+                <ns2:PaxSegment>
+                    <ns2:PaxSegmentID>Isgmb000cc7e42729</ns2:PaxSegmentID>
+                    <ns2:SecureFlightInd>true</ns2:SecureFlightInd>
+                    <ns2:Duration>PT1H35M</ns2:Duration>
+                    <ns2:Dep>
+                        <ns2:IATA_LocationCode>DUB</ns2:IATA_LocationCode>
+                        <ns2:AircraftScheduledDateTime>2025-02-12T08:40:00</ns2:AircraftScheduledDateTime>
+                        <ns2:TerminalName>2</ns2:TerminalName>
+                        <ns2:StationName>Dublin International</ns2:StationName>
+                    </ns2:Dep>
+                    <ns2:Arrival>
+                        <ns2:IATA_LocationCode>LHR</ns2:IATA_LocationCode>
+                        <ns2:AircraftScheduledDateTime>2025-02-12T10:15:00</ns2:AircraftScheduledDateTime>
+                        <ns2:TerminalName>5</ns2:TerminalName>
+                        <ns2:StationName>London Heathrow</ns2:StationName>
+                    </ns2:Arrival>
+                    <ns2:MarketingCarrierInfo>
+                        <ns2:CarrierDesigCode>AA</ns2:CarrierDesigCode>
+                        <ns2:CarrierName>American Airlines</ns2:CarrierName>
+                        <ns2:MarketingCarrierFlightNumberText>6767</ns2:MarketingCarrierFlightNumberText>
+                    </ns2:MarketingCarrierInfo>
+                    <ns2:OperatingCarrierInfo>
+                        <ns2:CarrierDesigCode>BA</ns2:CarrierDesigCode>
+                        <ns2:CarrierName>British Airways</ns2:CarrierName>
+                        <ns2:OperatingCarrierFlightNumberText>833</ns2:OperatingCarrierFlightNumberText>
+                        <ns2:Disclosure>
+                            <ns2:Desc>
+                                <ns2:DescText>American Airlines</ns2:DescText>
+                            </ns2:Desc>
+                        </ns2:Disclosure>
+                    </ns2:OperatingCarrierInfo>
+                    <ns2:DatedOperatingLeg>
+                        <ns2:DatedOperatingLegID>S2</ns2:DatedOperatingLegID>
+                        <ns2:CarrierAircraftType>
+                            <ns2:CarrierAircraftTypeCode>320</ns2:CarrierAircraftTypeCode>
+                            <ns2:CarrierAircraftTypeName>Airbus A320</ns2:CarrierAircraftTypeName>
+                        </ns2:CarrierAircraftType>
+                        <ns2:Dep>
+                            <ns2:IATA_LocationCode>DUB</ns2:IATA_LocationCode>
+                            <ns2:AircraftScheduledDateTime>2025-02-12T08:40:00</ns2:AircraftScheduledDateTime>
+                            <ns2:TerminalName>2</ns2:TerminalName>
+                            <ns2:StationName>Dublin International</ns2:StationName>
+                        </ns2:Dep>
+                        <ns2:Arrival>
+                            <ns2:IATA_LocationCode>LHR</ns2:IATA_LocationCode>
+                            <ns2:AircraftScheduledDateTime>2025-02-12T10:15:00</ns2:AircraftScheduledDateTime>
+                            <ns2:TerminalName>5</ns2:TerminalName>
+                            <ns2:StationName>London Heathrow</ns2:StationName>
+                        </ns2:Arrival>
+                    </ns2:DatedOperatingLeg>
+                </ns2:PaxSegment>
+            </ns2:PaxSegmentList>
+            <ns2:PriceClassList>
+                <ns2:PriceClass>
+                    <ns2:PriceClassID>Ppckhh52b9wgphkg</ns2:PriceClassID>
+                    <ns2:Code>AAAT-MAIN</ns2:Code>
+                    <ns2:Name>Main Cabin</ns2:Name>
+                    <ns2:DisplayOrderText>3</ns2:DisplayOrderText>
+                    <ns2:Desc>
+                        <ns2:DescID>FFM1-DESC1</ns2:DescID>
+                        <ns2:DescText>Check 1 free bag</ns2:DescText>
+                    </ns2:Desc>
+                    <ns2:Desc>
+                        <ns2:DescID>FFM1-DESC2</ns2:DescID>
+                        <ns2:DescText>Choose a Main Cabin seat</ns2:DescText>
+                    </ns2:Desc>
+                    <ns2:Desc>
+                        <ns2:DescID>FFM1-DESC3</ns2:DescID>
+                        <ns2:DescText>Pay for an extra legroom seat</ns2:DescText>
+                    </ns2:Desc>
+                    <ns2:Desc>
+                        <ns2:DescID>FFM1-DESC4</ns2:DescID>
+                        <ns2:DescText>Board in general group (6-8)</ns2:DescText>
+                    </ns2:Desc>
+                    <ns2:Desc>
+                        <ns2:DescID>FFM1-DESC5</ns2:DescID>
+                        <ns2:DescText>Changes allowed</ns2:DescText>
+                    </ns2:Desc>
+                    <ns2:Desc>
+                        <ns2:DescID>FFM1-DESC6</ns2:DescID>
+                        <ns2:DescText>Full refund to travel credit</ns2:DescText>
+                    </ns2:Desc>
+                    <ns2:Desc>
+                        <ns2:DescID>FFM1-DESC7</ns2:DescID>
+                        <ns2:DescText>If you\'re an AAdvantage\302\256 status member or AAdvantage\302\256 credit
+                            cardholder, your bag benefit and boarding group applies if higher based on status. Benefits
+                            may not apply on partner airlines.
+                        </ns2:DescText>
+                    </ns2:Desc>
+                    <ns2:Desc>
+                        <ns2:DescID>FFM1-DESC8</ns2:DescID>
+                        <ns2:DescText>If you\'re an AAdvantage\302\256 credit cardholder, your bag benefit applies only
+                            on domestic American Airlines marketed and operated trips.
+                        </ns2:DescText>
+                    </ns2:Desc>
+                    <ns2:Desc>
+                        <ns2:DescID>FFM1-DESC9</ns2:DescID>
+                        <ns2:DescText>AAdvantage\302\256 members traveling within the U.S. can cancel Basic Economy fare
+                            tickets on aa.com or American app for a travel credit, less a Basic Economy cancellation
+                            fee.
+                        </ns2:DescText>
+                    </ns2:Desc>
+                </ns2:PriceClass>
+            </ns2:PriceClassList>
+        </ns2:DataLists>
+        <ns2:Metadata>
+            <ns2:Other>
+                <ns2:OtherMetadata>
+                    <ns2:CurrencyMetadatas>
+                        <ns2:CurrencyMetadata MetadataKey="USD">
+                            <ns2:Decimals>2</ns2:Decimals>
+                        </ns2:CurrencyMetadata>
+                        <ns2:CurrencyMetadata MetadataKey="EUR">
+                            <ns2:Decimals>2</ns2:Decimals>
+                        </ns2:CurrencyMetadata>
+                    </ns2:CurrencyMetadatas>
+                </ns2:OtherMetadata>
+                <ns2:OtherMetadata>
+                    <ns2:RuleMetadatas>
+                        <ns2:RuleMetadata MetadataKey="PcncP61BD1976-BB44-4BB5-894DN">
+                            <ns2:RuleID>Cancel</ns2:RuleID>
+                            <ns2:Values>
+                                <ns2:Value>
+                                    <ns2:Instruction>Not Allowed</ns2:Instruction>
+                                </ns2:Value>
+                            </ns2:Values>
+                        </ns2:RuleMetadata>
+                        <ns2:RuleMetadata MetadataKey="PchgP61BD1976-BB44-4BB5-894DY">
+                            <ns2:RuleID>Change</ns2:RuleID>
+                            <ns2:Values>
+                                <ns2:Value>
+                                    <ns2:Instruction>Allowed</ns2:Instruction>
+                                </ns2:Value>
+                            </ns2:Values>
+                        </ns2:RuleMetadata>
+                    </ns2:RuleMetadatas>
+                </ns2:OtherMetadata>
+            </ns2:Other>
+        </ns2:Metadata>
+        <ns2:PricedOffer>
+            <ns2:Offer>
+                <ns2:OfferID>
+                    TOvW6csMGVQYqdXf~jMJtDoC.1_1A_13e5d186-d100-4f17-9361-e28deeb79598_1A_P61BD1976-BB44-4BB5-894Dwhup1piwe9rr8-1
+                </ns2:OfferID>
+                <ns2:OwnerCode>AA</ns2:OwnerCode>
+                <ns2:ValidatingCarrierCode>AA</ns2:ValidatingCarrierCode>
+                <ns2:OfferExpirationDateTime>2024-09-13T12:21:11Z</ns2:OfferExpirationDateTime>
+                <ns2:PaymentTimeLimitDateTime>2024-09-16T23:59:00</ns2:PaymentTimeLimitDateTime>
+                <ns2:BaggageAllowance>
+                    <ns2:PaxJourneyRefID>Pfltfdks9w3459ikj</ns2:PaxJourneyRefID>
+                    <ns2:PaxRefID>T1</ns2:PaxRefID>
+                    <ns2:PaxRefID>T2</ns2:PaxRefID>
+                    <ns2:BaggageAllowanceRefID>Pbgaiq3jcty0f3po2</ns2:BaggageAllowanceRefID>
+                </ns2:BaggageAllowance>
+                <ns2:JourneyOverview>
+                    <ns2:JourneyPriceClass>
+                        <ns2:PriceClassRefID>Ppckhh52b9wgphkg</ns2:PriceClassRefID>
+                        <ns2:PaxJourneyRefID>Pfltfdks9w3459ikj</ns2:PaxJourneyRefID>
+                    </ns2:JourneyPriceClass>
+                </ns2:JourneyOverview>
+                <ns2:PTC_OfferParameters>
+                    <ns2:PTC_PricedCode>ADT</ns2:PTC_PricedCode>
+                    <ns2:PTC_RequestedCode>ADT</ns2:PTC_RequestedCode>
+                    <ns2:RequestedPaxNumber>2</ns2:RequestedPaxNumber>
+                    <ns2:PricedPaxNumber>2</ns2:PricedPaxNumber>
+                </ns2:PTC_OfferParameters>
+                <ns2:OfferItem>
+                    <ns2:OfferItemID>P61BD1976-BB44-4BB5-894Dwhup1piwe9rr8-1-1</ns2:OfferItemID>
+                    <ns2:MandatoryInd>true</ns2:MandatoryInd>
+                    <ns2:FareDetail>
+                        <ns2:FareIndicatorCode>0</ns2:FareIndicatorCode>
+                        <ns2:PassengerRefs>T1</ns2:PassengerRefs>
+                        <ns2:PassengerRefs>T2</ns2:PassengerRefs>
+                        <ns2:Price>
+                            <ns2:BaseAmount Code="USD">21100</ns2:BaseAmount>
+                            <ns2:Taxes>
+                                <ns2:Total Code="USD">21040</ns2:Total>
+                                <ns2:Breakdown>
+                                    <ns2:Tax>
+                                        <ns2:Amount Code="USD">310</ns2:Amount>
+                                        <ns2:Nation>IE</ns2:Nation>
+                                        <ns2:TaxCode>UP</ns2:TaxCode>
+                                        <ns2:LocalAmount Code="EUR">284</ns2:LocalAmount>
+                                        <ns2:Description>Ireland Passenger Charge</ns2:Description>
+                                    </ns2:Tax>
+                                    <ns2:Tax>
+                                        <ns2:Amount Code="USD">560</ns2:Amount>
+                                        <ns2:Nation>US</ns2:Nation>
+                                        <ns2:TaxCode>AY</ns2:TaxCode>
+                                        <ns2:Description>United States Passenger Civil Aviation Security Service Fee
+                                        </ns2:Description>
+                                    </ns2:Tax>
+                                    <ns2:Tax>
+                                        <ns2:Amount Code="USD">17500</ns2:Amount>
+                                        <ns2:TaxCode>YR</ns2:TaxCode>
+                                        <ns2:Description>AA YR surcharge</ns2:Description>
+                                    </ns2:Tax>
+                                    <ns2:Tax>
+                                        <ns2:Amount Code="USD">2220</ns2:Amount>
+                                        <ns2:Nation>US</ns2:Nation>
+                                        <ns2:TaxCode>US</ns2:TaxCode>
+                                        <ns2:Description>US International Departure Tax</ns2:Description>
+                                    </ns2:Tax>
+                                    <ns2:Tax>
+                                        <ns2:Amount Code="USD">450</ns2:Amount>
+                                        <ns2:Nation>US</ns2:Nation>
+                                        <ns2:TaxCode>XF</ns2:TaxCode>
+                                        <ns2:Description>US Passenger Facility Charge</ns2:Description>
+                                    </ns2:Tax>
+                                </ns2:Breakdown>
+                            </ns2:Taxes>
+                        </ns2:Price>
+                        <ns2:FareComponent>
+                            <ns2:Price>
+                                <ns2:BaseAmount Code="USD">21100</ns2:BaseAmount>
+                                <ns2:Taxes>
+                                    <ns2:Total Code="USD">21040</ns2:Total>
+                                    <ns2:Breakdown>
+                                        <ns2:Tax>
+                                            <ns2:Amount Code="USD">560</ns2:Amount>
+                                            <ns2:Nation>US</ns2:Nation>
+                                            <ns2:TaxCode>AY</ns2:TaxCode>
+                                            <ns2:Description>United States Passenger Civil Aviation Security Service
+                                                Fee
+                                            </ns2:Description>
+                                        </ns2:Tax>
+                                        <ns2:Tax>
+                                            <ns2:Amount Code="USD">17500</ns2:Amount>
+                                            <ns2:TaxCode>YR</ns2:TaxCode>
+                                            <ns2:Description>AA YR surcharge</ns2:Description>
+                                        </ns2:Tax>
+                                        <ns2:Tax>
+                                            <ns2:Amount Code="USD">2220</ns2:Amount>
+                                            <ns2:Nation>US</ns2:Nation>
+                                            <ns2:TaxCode>US</ns2:TaxCode>
+                                            <ns2:Description>US International Departure Tax</ns2:Description>
+                                        </ns2:Tax>
+                                        <ns2:Tax>
+                                            <ns2:Amount Code="USD">450</ns2:Amount>
+                                            <ns2:Nation>US</ns2:Nation>
+                                            <ns2:TaxCode>XF</ns2:TaxCode>
+                                            <ns2:Description>US Passenger Facility Charge</ns2:Description>
+                                        </ns2:Tax>
+                                        <ns2:Tax>
+                                            <ns2:Amount Code="USD">310</ns2:Amount>
+                                            <ns2:Nation>IE</ns2:Nation>
+                                            <ns2:TaxCode>UP</ns2:TaxCode>
+                                            <ns2:LocalAmount Code="EUR">284</ns2:LocalAmount>
+                                            <ns2:Description>Ireland Passenger Charge</ns2:Description>
+                                        </ns2:Tax>
+                                    </ns2:Breakdown>
+                                </ns2:Taxes>
+                            </ns2:Price>
+                            <ns2:FareBasis>
+                                <ns2:FareBasisCode refs="Pfcp0wliqzjlkhsrx">
+                                    <ns2:Code>NLN8A4M5</ns2:Code>
+                                </ns2:FareBasisCode>
+                                <ns2:FareBasisCityPair>NYCLONAA</ns2:FareBasisCityPair>
+                                <ns2:RBD>N N</ns2:RBD>
+                                <ns2:CabinType>
+                                    <ns2:CabinTypeCode>Y Y</ns2:CabinTypeCode>
+                                    <ns2:CabinTypeName>ECONOMY ECONOMY</ns2:CabinTypeName>
+                                </ns2:CabinType>
+                            </ns2:FareBasis>
+                            <ns2:FareRules>
+                                <ns2:Penalty CancelFeeInd="true" ChangeFeeInd="false" RefundableInd="false">
+                                    <ns2:Details>
+                                        <ns2:Detail refs="PcncP61BD1976-BB44-4BB5-894DN">
+                                            <ns2:Type>Cancel</ns2:Type>
+                                            <ns2:Amounts>
+                                                <ns2:Amount>
+                                                    <ns2:CurrencyAmountValue Code="USD">0</ns2:CurrencyAmountValue>
+                                                    <ns2:AmountApplication>MIN</ns2:AmountApplication>
+                                                </ns2:Amount>
+                                                <ns2:Amount>
+                                                    <ns2:CurrencyAmountValue Code="USD">0</ns2:CurrencyAmountValue>
+                                                    <ns2:AmountApplication>MAX</ns2:AmountApplication>
+                                                </ns2:Amount>
+                                            </ns2:Amounts>
+                                        </ns2:Detail>
+                                        <ns2:Detail refs="PchgP61BD1976-BB44-4BB5-894DY">
+                                            <ns2:Type>Change</ns2:Type>
+                                            <ns2:Amounts>
+                                                <ns2:Amount>
+                                                    <ns2:CurrencyAmountValue Code="USD">0</ns2:CurrencyAmountValue>
+                                                    <ns2:AmountApplication>MIN</ns2:AmountApplication>
+                                                </ns2:Amount>
+                                                <ns2:Amount>
+                                                    <ns2:CurrencyAmountValue Code="USD">0</ns2:CurrencyAmountValue>
+                                                    <ns2:AmountApplication>MAX</ns2:AmountApplication>
+                                                </ns2:Amount>
+                                            </ns2:Amounts>
+                                        </ns2:Detail>
+                                        <ns2:Detail>
+                                            <ns2:Type>Cancel</ns2:Type>
+                                            <ns2:Application>1</ns2:Application>
+                                            <ns2:Amounts>
+                                                <ns2:Amount>
+                                                    <ns2:CurrencyAmountValue Code="USD">0</ns2:CurrencyAmountValue>
+                                                    <ns2:AmountApplication>MIN</ns2:AmountApplication>
+                                                </ns2:Amount>
+                                                <ns2:Amount>
+                                                    <ns2:CurrencyAmountValue Code="USD">0</ns2:CurrencyAmountValue>
+                                                    <ns2:AmountApplication>MAX</ns2:AmountApplication>
+                                                </ns2:Amount>
+                                            </ns2:Amounts>
+                                        </ns2:Detail>
+                                        <ns2:Detail>
+                                            <ns2:Type>Cancel</ns2:Type>
+                                            <ns2:Application>2</ns2:Application>
+                                            <ns2:Amounts>
+                                                <ns2:Amount>
+                                                    <ns2:CurrencyAmountValue Code="USD">0</ns2:CurrencyAmountValue>
+                                                    <ns2:AmountApplication>MIN</ns2:AmountApplication>
+                                                </ns2:Amount>
+                                                <ns2:Amount>
+                                                    <ns2:CurrencyAmountValue Code="USD">0</ns2:CurrencyAmountValue>
+                                                    <ns2:AmountApplication>MAX</ns2:AmountApplication>
+                                                </ns2:Amount>
+                                            </ns2:Amounts>
+                                        </ns2:Detail>
+                                        <ns2:Detail>
+                                            <ns2:Type>Cancel</ns2:Type>
+                                            <ns2:Application>3</ns2:Application>
+                                            <ns2:Amounts>
+                                                <ns2:Amount>
+                                                    <ns2:CurrencyAmountValue Code="USD">0</ns2:CurrencyAmountValue>
+                                                    <ns2:AmountApplication>MIN</ns2:AmountApplication>
+                                                </ns2:Amount>
+                                                <ns2:Amount>
+                                                    <ns2:CurrencyAmountValue Code="USD">0</ns2:CurrencyAmountValue>
+                                                    <ns2:AmountApplication>MAX</ns2:AmountApplication>
+                                                </ns2:Amount>
+                                            </ns2:Amounts>
+                                        </ns2:Detail>
+                                    </ns2:Details>
+                                </ns2:Penalty>
+                                <ns2:AdvanceStay>
+                                    <ns2:AdvancePurchase Context="Latest">P28D</ns2:AdvancePurchase>
+                                    <ns2:AdvanceTicketing>
+                                        <ns2:AdvanceReservation Context="Earliest">P28D</ns2:AdvanceReservation>
+                                        <ns2:AdvanceDeparture Context="Latest">P3D</ns2:AdvanceDeparture>
+                                    </ns2:AdvanceTicketing>
+                                </ns2:AdvanceStay>
+                                <ns2:Ticketing>
+                                    <ns2:Endorsements>
+                                        <ns2:Endorsement>NONREF/RESTRICTIONS APPLY</ns2:Endorsement>
+                                    </ns2:Endorsements>
+                                </ns2:Ticketing>
+                                <ns2:Remarks>
+                                    <ns2:Remark>Ticketing at least 28 DAYS before departure</ns2:Remark>
+                                </ns2:Remarks>
+                            </ns2:FareRules>
+                            <ns2:PriceClassRef>Ppckhh52b9wgphkg</ns2:PriceClassRef>
+                            <ns2:SegmentRefs>Isgma800cc7e42729</ns2:SegmentRefs>
+                            <ns2:SegmentRefs>Isgmb000cc7e42729</ns2:SegmentRefs>
+                        </ns2:FareComponent>
+                    </ns2:FareDetail>
+                    <ns2:Service>
+                        <ns2:ServiceID>Psvc8dhfuhzy7aqd3</ns2:ServiceID>
+                        <ns2:PaxRefID>T1</ns2:PaxRefID>
+                        <ns2:PaxRefID>T2</ns2:PaxRefID>
+                        <ns2:ServiceAssociations>
+                            <ns2:PaxJourneyRefID>Pfltfdks9w3459ikj</ns2:PaxJourneyRefID>
+                        </ns2:ServiceAssociations>
+                    </ns2:Service>
+                    <ns2:Price>
+                        <ns2:TotalAmount CurCode="USD">84280</ns2:TotalAmount>
+                    </ns2:Price>
+                </ns2:OfferItem>
+                <ns2:TotalPrice>
+                    <ns2:TotalAmount CurCode="USD">84280</ns2:TotalAmount>
+                </ns2:TotalPrice>
+            </ns2:Offer>
+        </ns2:PricedOffer>
+        <ns2:ShoppingResponse>
+            <ns2:ShoppingResponseID>P61BD1976-BB44-4BB5-894D</ns2:ShoppingResponseID>
+        </ns2:ShoppingResponse>
+    </ns2:Response>
+</ns2:AMA_TravelOfferPriceRS>

@@ -39,8 +39,7 @@ class ServiceList extends BaseWsMessage
                     $ownerCode
                 )
             );
-        } elseif (
-            ($offerId = $options->offerId)
+        } elseif (($offerId = $options->offerId)
             && ($offerItemId = $options->offerItemId)
             && ($ownerCode = $options->ownerCode)
             && ($serviceId = $options->serviceId)
