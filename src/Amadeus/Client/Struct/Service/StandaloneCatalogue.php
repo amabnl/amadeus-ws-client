@@ -38,7 +38,6 @@ use Amadeus\Client\Struct\Fare\PricePNRWithBookingClass13;
  */
 class StandaloneCatalogue extends BaseWsMessage
 {
-
     /**
      *
      * @var PassengerInfoGroup[]

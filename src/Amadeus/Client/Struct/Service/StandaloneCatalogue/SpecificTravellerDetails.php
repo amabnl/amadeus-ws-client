@@ -30,7 +30,6 @@ namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
  */
 class SpecificTravellerDetails
 {
-
     /**
      *
      * @var specificTravellerDetails[]

@@ -33,7 +33,6 @@ use Psr\Log\LoggerInterface;
  */
 class SessionHandlerParams
 {
-
     /**
      * Full file & path to the WSDL file to be used
      *
