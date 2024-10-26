@@ -38,7 +38,7 @@ class HandlerFactoryTest extends BaseTestCase
 
     public function testCreateWithoutAuthWillThrowException()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
 
         $params = $par = new SessionHandlerParams([
             'wsdl' => '/dummy/path',
@@ -121,7 +121,7 @@ class HandlerFactoryTest extends BaseTestCase
 
     public function testCreateSoapHeader1WillThrowException()
     {
-        $this->setExpectedException('\InvalidArgumentException');
+        $this->expectException(\InvalidArgumentException::class);
 
         $params = $par = new SessionHandlerParams([
             'wsdl' => '/dummy/path',

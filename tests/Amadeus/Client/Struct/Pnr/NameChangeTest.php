@@ -107,7 +107,7 @@ class NameChangeTest extends BaseTestCase
         $this->assertNull($msg->enhancedPassengerGroup[0]->enhancedPassengerInformation[1]->enhancedTravellerNameInfo->otherPaxNamesDetails[0]->nameType);
         $this->assertNull($msg->enhancedPassengerGroup[0]->enhancedPassengerInformation[1]->enhancedTravellerNameInfo->otherPaxNamesDetails[0]->referenceName);
         $this->assertEquals('2007', $msg->enhancedPassengerGroup[0]->enhancedPassengerInformation[1]->dateOfBirthInEnhancedPaxData->dateTime->year);
-        $this->assertEquals('9', $msg->enhancedPassengerGroup[0]->enhancedPassengerInformation[1]->dateOfBirthInEnhancedPaxData->dateTime->month);
+        $this->assertEquals('09', $msg->enhancedPassengerGroup[0]->enhancedPassengerInformation[1]->dateOfBirthInEnhancedPaxData->dateTime->month);
         $this->assertEquals('15', $msg->enhancedPassengerGroup[0]->enhancedPassengerInformation[1]->dateOfBirthInEnhancedPaxData->dateTime->day);
     }
 
@@ -182,7 +182,7 @@ class NameChangeTest extends BaseTestCase
         $this->assertNull($msg->enhancedPassengerGroup[0]->enhancedPassengerInformation[1]->enhancedTravellerNameInfo->otherPaxNamesDetails[0]->nameType);
         $this->assertNull($msg->enhancedPassengerGroup[0]->enhancedPassengerInformation[1]->enhancedTravellerNameInfo->otherPaxNamesDetails[0]->referenceName);
         $this->assertEquals('2011', $msg->enhancedPassengerGroup[0]->enhancedPassengerInformation[1]->dateOfBirthInEnhancedPaxData->dateTime->year);
-        $this->assertEquals('9', $msg->enhancedPassengerGroup[0]->enhancedPassengerInformation[1]->dateOfBirthInEnhancedPaxData->dateTime->month);
+        $this->assertEquals('09', $msg->enhancedPassengerGroup[0]->enhancedPassengerInformation[1]->dateOfBirthInEnhancedPaxData->dateTime->month);
         $this->assertEquals('15', $msg->enhancedPassengerGroup[0]->enhancedPassengerInformation[1]->dateOfBirthInEnhancedPaxData->dateTime->day);
     }
 

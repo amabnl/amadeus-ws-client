@@ -128,7 +128,6 @@ class MopDescription extends WsMessageUtility
             $options->payIds,
             $options->paySupData
         )) {
-
             /**
              * for backwards compatibility use `$options->fopType` as default for `$attributeType`
              */

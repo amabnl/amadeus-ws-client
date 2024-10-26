@@ -30,7 +30,6 @@ namespace Amadeus\Client\Struct\Fop;
  */
 class AuthenticationDataDetails
 {
-
     /**
      * E Error message received from directory server (Internal status)
      * N Card holder not participating

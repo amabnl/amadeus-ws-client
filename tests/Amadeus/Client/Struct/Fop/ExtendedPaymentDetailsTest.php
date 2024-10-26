@@ -64,8 +64,8 @@ class ExtendedPaymentDetailsTest extends BaseTestCase
 
     public function testCanLoadHandleLoadInvalidFormatFormat106()
     {
-
-        $this->setExpectedException('\RuntimeException', "Installments Format 'invalid' is not implemented!");
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage("Installments Format 'invalid' is not implemented!");
 
         new ExtendedPaymentDetails(
             new InstallmentsInfo([

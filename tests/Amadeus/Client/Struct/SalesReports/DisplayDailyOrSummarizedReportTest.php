@@ -64,7 +64,10 @@ class DisplayDailyOrSummarizedReportTest extends BaseTestCase
         $msg = new DisplayDailyOrSummarizedReport($opt);
 
         $expectedSalesReportIdentificationOption = new ItemNumberDetails($number, $type);
-        $this->assertArraySubset([$expectedSalesReportIdentificationOption], $msg->salesReportIdentification->itemNumberDetails);
+        self::assertContainsEquals(
+            $expectedSalesReportIdentificationOption,
+            $msg->salesReportIdentification->itemNumberDetails,
+        );
     }
 
     public function testCanMakeMessageWithCurrency()

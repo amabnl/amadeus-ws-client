@@ -43,10 +43,10 @@ class MPPassenger extends LoadParamsFromArray
     const TYPE_STUDENT = "ST";
 
     const TYPE_INDIVIDUAL_INCLUSIVE_TOUR = 'IIT';
-	
-	const TYPE_YOUTH = "YTH";
-	
-	const TYPE_SENIOR = "SRC";
+
+    const TYPE_YOUTH = "YTH";
+
+    const TYPE_SENIOR = "SRC";
 
     /**
      * What type of passengers? self::TYPE_*

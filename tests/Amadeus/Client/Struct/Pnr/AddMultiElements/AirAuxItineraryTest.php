@@ -22,8 +22,8 @@
 
 namespace Test\Amadeus\Client\Struct\Pnr\AddMultiElements;
 
-use Amadeus\Client\RequestOptions\Pnr\Segment\Air;
 use Amadeus\Client\RequestOptions\Pnr\Segment\Ghost;
+use Amadeus\Client\Struct\InvalidArgumentException;
 use Amadeus\Client\Struct\Pnr\AddMultiElements\AirAuxItinerary;
 use Test\Amadeus\BaseTestCase;
 
@@ -37,10 +37,8 @@ class AirAuxItineraryTest extends BaseTestCase
 {
     public function testGhostWillThrowException()
     {
-        $this->setExpectedException(
-            '\Amadeus\Client\Struct\InvalidArgumentException',
-            'Segment type Ghost is not supported'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Segment type Ghost is not supported');
 
         $obj = new AirAuxItinerary('Ghost', new Ghost());
     }

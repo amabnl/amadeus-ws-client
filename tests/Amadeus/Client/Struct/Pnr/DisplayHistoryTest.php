@@ -106,14 +106,14 @@ class DisplayHistoryTest extends BaseTestCase
 
         $this->assertEquals(DisplayHistory\SelectionDetails::OPT_STANDARD, $message->redundantElements->selectionDetails->option);
 
-        $this->assertInternalType('array', $message->predicate);
+        $this->assertIsArray($message->predicate);
         $this->assertCount(1, $message->predicate);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\DisplayHistory\Predicate', $message->predicate[0]);
 
         $this->assertEquals(DisplayHistory\PredicateSelectionDetails::OPT_SELECTION_PREDICATE, $message->predicate[0]->predicateDetails->selectionDetails->option);
         $this->assertEquals(DisplayHistory\PredicateSelectionDetails::OPTINF_PREDICATE_TYPE, $message->predicate[0]->predicateDetails->selectionDetails->optionInformation);
 
-        $this->assertInternalType('array', $message->predicate[0]->predicateDetails->otherSelectionDetails);
+        $this->assertIsArray($message->predicate[0]->predicateDetails->otherSelectionDetails);
         $this->assertCount(1, $message->predicate[0]->predicateDetails->otherSelectionDetails);
 
         $this->assertEquals(DisplayHistory\PredicateSelectionDetails::OPT_DISP_ENVELOPES_CONTAINING_RF, $message->predicate[0]->predicateDetails->otherSelectionDetails[0]->option);
@@ -178,7 +178,7 @@ class DisplayHistoryTest extends BaseTestCase
 
         $this->assertEquals('3J6YFG', $message->pnrInfo->reservation->controlNumber);
 
-        $this->assertInternalType('array', $message->predicate);
+        $this->assertIsArray($message->predicate);
         $this->assertCount(2, $message->predicate);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\DisplayHistory\Predicate', $message->predicate[0]);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\DisplayHistory\Predicate', $message->predicate[1]);
@@ -186,7 +186,7 @@ class DisplayHistoryTest extends BaseTestCase
         $this->assertEquals(DisplayHistory\PredicateSelectionDetails::OPT_SELECTION_PREDICATE, $message->predicate[0]->predicateDetails->selectionDetails->option);
         $this->assertEquals(DisplayHistory\PredicateSelectionDetails::OPTINF_PREDICATE_TYPE, $message->predicate[0]->predicateDetails->selectionDetails->optionInformation);
         $this->assertEmpty($message->predicate[0]->predicateDetails->otherSelectionDetails);
-        $this->assertInternalType('array', $message->predicate[0]->predicateElementType);
+        $this->assertIsArray($message->predicate[0]->predicateElementType);
         $this->assertCount(1, $message->predicate[0]->predicateElementType);
         $this->assertEquals('AIR', $message->predicate[0]->predicateElementType[0]->segmentName);
         $this->assertNull($message->predicate[0]->predicateElementType[0]->reference);
@@ -195,7 +195,7 @@ class DisplayHistoryTest extends BaseTestCase
 
         $this->assertEquals(DisplayHistory\PredicateSelectionDetails::OPT_FILTER_PREDICATE, $message->predicate[1]->predicateDetails->selectionDetails->option);
         $this->assertEquals(DisplayHistory\PredicateSelectionDetails::OPTINF_MATCH_QUEUE_UPDATES, $message->predicate[1]->predicateDetails->selectionDetails->optionInformation);
-        $this->assertInternalType('array', $message->predicate[1]->predicateDetails->otherSelectionDetails);
+        $this->assertIsArray($message->predicate[1]->predicateDetails->otherSelectionDetails);
         $this->assertCount(1, $message->predicate[1]->predicateDetails->otherSelectionDetails);
 
         $this->assertEquals(DisplayHistory\PredicateSelectionDetails::OPT_MATCH_QUEUE_UPDATE, $message->predicate[1]->predicateDetails->otherSelectionDetails[0]->option);
@@ -229,14 +229,14 @@ class DisplayHistoryTest extends BaseTestCase
 
         $message = new DisplayHistory($opt);
 
-        $this->assertInternalType('array', $message->predicate);
+        $this->assertIsArray($message->predicate);
         $this->assertCount(1, $message->predicate);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\DisplayHistory\Predicate', $message->predicate[0]);
 
         $this->assertEquals(DisplayHistory\PredicateSelectionDetails::OPT_SELECTION_PREDICATE, $message->predicate[0]->predicateDetails->selectionDetails->option);
         $this->assertEquals(DisplayHistory\PredicateSelectionDetails::OPTINF_PREDICATE_TYPE, $message->predicate[0]->predicateDetails->selectionDetails->optionInformation);
         $this->assertEmpty($message->predicate[0]->predicateDetails->otherSelectionDetails);
-        $this->assertInternalType('array', $message->predicate[0]->predicateElementType);
+        $this->assertIsArray($message->predicate[0]->predicateElementType);
         $this->assertCount(1, $message->predicate[0]->predicateElementType);
         $this->assertEquals('AIR', $message->predicate[0]->predicateElementType[0]->segmentName);
         $this->assertEquals(2, $message->predicate[0]->predicateElementType[0]->reference->number);
@@ -264,7 +264,7 @@ class DisplayHistoryTest extends BaseTestCase
 
         $message = new DisplayHistory($opt);
 
-        $this->assertInternalType('array', $message->predicate);
+        $this->assertIsArray($message->predicate);
 
         $this->assertCount(1, $message->predicate);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\DisplayHistory\Predicate', $message->predicate[0]);
@@ -322,7 +322,7 @@ class DisplayHistoryTest extends BaseTestCase
 
         $message = new DisplayHistory($opt);
 
-        $this->assertInternalType('array', $message->predicate);
+        $this->assertIsArray($message->predicate);
 
         $this->assertCount(2, $message->predicate);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\DisplayHistory\Predicate', $message->predicate[0]);
@@ -366,7 +366,7 @@ class DisplayHistoryTest extends BaseTestCase
 
         $message = new DisplayHistory($opt);
 
-        $this->assertInternalType('array', $message->predicate);
+        $this->assertIsArray($message->predicate);
 
         $this->assertCount(1, $message->predicate);
         $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\DisplayHistory\Predicate', $message->predicate[0]);

@@ -31,7 +31,6 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 
 class FareElement
 {
-
     /**
      * @var string
      */

@@ -1,4 +1,7 @@
-## Unreleased
+## Release 2.0 (Unreleased)
+* Require PHP version 8.1+ for compatibility with modern psr/log^3, and phpunit^9.6
+
+## Unreleased (Before 2.0)
 * Added Support for 3DS v2.0 with external Authentication in FOP_CreateFormOfPayment
 
 ## Release 1.13.0 (5 Apr 2021)

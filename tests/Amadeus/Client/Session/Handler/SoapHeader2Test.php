@@ -24,6 +24,7 @@ namespace Amadeus\Client\Session\Handler;
 
 use Amadeus\Client;
 use Amadeus\Client\Params\SessionHandlerParams;
+use Amadeus\Client\SoapClient;
 use Psr\Log\NullLogger;
 use Test\Amadeus\BaseTestCase;
 
@@ -38,7 +39,7 @@ class SoapHeader2Test extends BaseTestCase
 
     public function testCanTrySendMessageWhenNotAuthenticated()
     {
-        $this->setExpectedException('Amadeus\Client\Session\Handler\InvalidSessionException');
+        $this->expectException(InvalidSessionException::class);
 
         $handler = new SoapHeader2($this->makeSessionHandlerParams());
 
@@ -54,13 +55,9 @@ class SoapHeader2Test extends BaseTestCase
 
     public function testCanTryPrepareNextMessageWhenAuthenticated()
     {
-        $overrideSoapClient = $this->getMock(
-            'Amadeus\Client\SoapClient',
-            ['__getLastRequest', '__getLastResponse', 'PNR_Retrieve'],
-            [],
-            '',
-            false
-        );
+        $overrideSoapClient = $this->getMockBuilder(SoapClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $dummyPnrRequest = $this->getTestFile('dummyPnrRequestsoapheader2.txt');
         $dummyPnrReply = $this->getTestFile('dummyPnrReplysoapheader2.txt');
@@ -80,7 +77,8 @@ class SoapHeader2Test extends BaseTestCase
 
         $overrideSoapClient
             ->expects($this->any())
-            ->method('PNR_Retrieve')
+            ->method('__call')
+            ->with('PNR_Retrieve')
             ->will($this->returnValue($dummyPnrResponseObject));
 
         $handler = new SoapHeader2($this->makeSessionHandlerParams(
@@ -111,13 +109,9 @@ class SoapHeader2Test extends BaseTestCase
 
     public function testCanSendAuthCallAndStartSession()
     {
-        $overrideSoapClient = $this->getMock(
-            'Amadeus\Client\SoapClient',
-            ['__getLastRequest', '__getLastResponse', 'Security_Authenticate'],
-            [],
-            '',
-            false
-        );
+        $overrideSoapClient = $this->getMockBuilder(SoapClient::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $dummyRequest = $this->getTestFile('soapheader2' . DIRECTORY_SEPARATOR . 'dummySecurityAuth.txt');
         $dummyReply = $this->getTestFile('soapheader2' . DIRECTORY_SEPARATOR . 'dummySecurityAuthReply.txt');
@@ -145,7 +139,8 @@ class SoapHeader2Test extends BaseTestCase
 
         $overrideSoapClient
             ->expects($this->any())
-            ->method('Security_Authenticate')
+            ->method('__call')
+            ->with('Security_Authenticate')
             ->will($this->returnValue($wsResponse));
 
         $handlerParams = $this->makeSessionHandlerParams(
@@ -218,7 +213,7 @@ class SoapHeader2Test extends BaseTestCase
 
     public function testSetStatelessNotSupported()
     {
-        $this->setExpectedException('\Amadeus\Client\Session\Handler\UnsupportedOperationException');
+        $this->expectException(UnsupportedOperationException::class);
 
         $sessionHandler = new SoapHeader2($this->makeSessionHandlerParams());
 
@@ -236,7 +231,7 @@ class SoapHeader2Test extends BaseTestCase
 
     public function testSetTflNotSupported()
     {
-        $this->setExpectedException('\Amadeus\Client\Session\Handler\UnsupportedOperationException');
+        $this->expectException(UnsupportedOperationException::class);
 
         $sessionHandler = new SoapHeader2($this->makeSessionHandlerParams());
 
@@ -254,7 +249,7 @@ class SoapHeader2Test extends BaseTestCase
 
     public function testSetConsumerIdNotSupported()
     {
-        $this->setExpectedException('\Amadeus\Client\Session\Handler\UnsupportedOperationException');
+        $this->expectException(UnsupportedOperationException::class);
 
         $sessionHandler = new SoapHeader2($this->makeSessionHandlerParams());
 
