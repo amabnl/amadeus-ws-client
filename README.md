@@ -51,17 +51,11 @@ After installing, you need to require Composer's autoloader:
 require 'vendor/autoload.php';
 ```
 
-Update composer to get the client:
-
- ```bash
-composer update
- ```
-
 Once the client is installed, read the [About &amp; Get Started](docs/about-get-started.rst) page.
 
 # Release history
 
-The current release is version 1.13.0. 
+The current release is version 2.0.0. 
 
 See the [Changelog](CHANGELOG.md).
 
