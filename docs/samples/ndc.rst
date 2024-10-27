@@ -54,7 +54,7 @@ Very similar to Travel_OfferPrice but with small differences:
 .. code-block:: php
 
     use Amadeus\Client\RequestOptions\Travel as RequestOptions;
-    use Amadeus\Client\RequestOptions\TravelOfferPriceOptions;
+    use Amadeus\Client\RequestOptions\TravelOrderCreateOptions;
 
     $opt = new TravelOrderCreateOptions([
         'dataLists' => [
@@ -119,7 +119,7 @@ Specify Sender/TravelAgency
 
 .. code-block:: php
 
-    use Client\RequestOptions\Travel;
+    use Amadeus\Client\RequestOptions\Travel;
     use Amadeus\Client\RequestOptions\TravelOrderRetrieveOptions;
 
     $opt = new TravelOrderRetrieveOptions([
@@ -256,15 +256,15 @@ Here need to use offer item data from Travel_SeatAvailability response:
                 'ownerCode' => 'AA', // $seatAvailabilityResponse->ALaCarteOffer->OwnerCode
                 'shoppingResponseRefID' => 'SP1F-14193187327050054900', // $seatAvailabilityResponse->ShoppingResponse->ResponseID
                 'selectedOfferItems' => [
-                    new Client\RequestOptions\Travel\SelectedOfferItem([
+                    new Travel\SelectedOfferItem([
                         'offerItemRefId' => '1A_TPID_CAESH-VNQMUYS0x', // $seatAvailabilityResponse->ALaCarteOffer->ALaCarteOfferItem->OfferItemID
                         'paxRefId' => 'T1', // your pax ref (should match one from dataLists->paxList)
                         'selectedAlaCarteOfferItem' => [
-                            new Client\RequestOptions\Travel\SelectedAlaCarteOfferItem([
+                            new Travel\SelectedAlaCarteOfferItem([
                                 'quantity' => 1,
                             ]),
                         ],
-                        'selectedSeat' => new Client\RequestOptions\Travel\SelectedSeat([
+                        'selectedSeat' => new Travel\SelectedSeat([
                             'column' => 'A',
                             'rowNumber' => 12,
                         ]),
@@ -273,10 +273,10 @@ Here need to use offer item data from Travel_SeatAvailability response:
             ]),
         ]),
         'dataLists' => [
-            new Client\RequestOptions\Travel\DataList([
-                'paxList' => new Client\RequestOptions\Travel\PaxList([
+            new Travel\DataList([
+                'paxList' => new Travel\PaxList([
                     'pax' => [
-                        new Client\RequestOptions\Travel\Pax([ // your traveler data
+                        new Travel\Pax([ // your traveler data
                             'paxId' => 'T1',
                             'ptc' => 'ADT',
                             'genderCode' => 'M',
