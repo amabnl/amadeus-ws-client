@@ -254,7 +254,7 @@ class UpdateRefundTest extends BaseTestCase
 
         $this->assertEquals(UpdateRefund\DateTimeInformation::OPT_DATE_TICKETED, $msg->dateTimeInformation[1]->businessSemantic);
         $this->assertEquals('22', $msg->dateTimeInformation[1]->dateTime->day);
-        $this->assertEquals('5', $msg->dateTimeInformation[1]->dateTime->month);
+        $this->assertEquals('05', $msg->dateTimeInformation[1]->dateTime->month);
         $this->assertEquals('2003', $msg->dateTimeInformation[1]->dateTime->year);
 
         $this->assertCount(2, $msg->referenceInformation->referenceDetails);

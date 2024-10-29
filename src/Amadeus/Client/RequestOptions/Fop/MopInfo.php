@@ -67,7 +67,7 @@ class MopInfo extends LoadParamsFromArray
      * Must be set to 1 if there is only 1 FOP in the FP line.
      * Must be set to 0 if this is an old FOP
      *
-     * @var int
+     * @var int|null
      */
     public $sequenceNr;
 
@@ -120,6 +120,15 @@ class MopInfo extends LoadParamsFromArray
      * @var string
      */
     public $fopType;
+
+    /**
+     * Describe one processing option at FOP level
+     *
+     * AttributeDetails::TYPE_*
+     *
+     * @var string
+     */
+    public $attributeType;
 
     /**
      * The Merchant company

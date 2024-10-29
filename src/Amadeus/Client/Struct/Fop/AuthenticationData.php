@@ -36,18 +36,30 @@ class AuthenticationData
     public $authenticationDataDetails;
 
     /**
+     * Version of the 3DS protocol
+     * @var string
+     */
+    public $tdsVersion;
+
+    /**
      * AuthenticationData constructor.
      *
      * @param string|null $veresStatus
      * @param string|null $paresStatus
      * @param string|null $company
      */
-    public function __construct($veresStatus, $paresStatus, $company)
+    public function __construct($veresStatus, $paresStatus, $company, $transactionsStatus, $authenticationIndicator, $tdsVersion)
     {
+        if (false === empty($tdsVersion)) {
+            $this->tdsVersion = $tdsVersion;
+        }
+
         $this->authenticationDataDetails = new AuthenticationDataDetails(
             $veresStatus,
             $paresStatus,
-            $company
+            $company,
+            $transactionsStatus,
+            $authenticationIndicator
         );
     }
 }

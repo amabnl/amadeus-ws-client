@@ -34,6 +34,8 @@ class TdsReferenceDetails
     const REF_VISA_CARD = 'CAVV';
     const REF_MASTERCARD = 'AVVV';
     const REF_THREEDS_TRANSACTION_IDENTIFIER = 'XID';
+    const REG_THREEDS_SERVER_TRANSACTION_ID = '3DS_SERVER_TRANSACTIONID';
+    const REG_DIRECTORY_SERVER_TRANSACTION_ID = 'DS_TRANSACTIONID';
 
     /**
      * @var string

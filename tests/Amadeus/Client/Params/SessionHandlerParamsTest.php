@@ -113,7 +113,7 @@ class SessionHandlerParamsTest extends BaseTestCase
             ]
         ]);
 
-        $this->assertInternalType('array', $par->soapClientOptions);
+        $this->assertIsArray($par->soapClientOptions);
         $this->assertNotEmpty($par->soapClientOptions);
         $this->assertEquals(
             SOAP_COMPRESSION_ACCEPT | SOAP_COMPRESSION_GZIP,

@@ -59,12 +59,12 @@ class TdsBlbData
      *
      * @param string $binaryData
      * @param string $dataType
-     * @param int|null $dataLength
+     * @param int|string|null $dataLength
      */
     public function __construct($binaryData, $dataType, $dataLength)
     {
         if (!is_null($dataLength)) {
-            $this->dataLength = $dataLength;
+            $this->dataLength = (int)$dataLength;
         } else {
             $this->dataLength = mb_strlen(base64_decode($binaryData));
         }

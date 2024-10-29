@@ -49,7 +49,7 @@ class MoveItemTest extends BaseTestCase
 
         $this->assertEquals(SelectionDetails::MOVE_OPTION_COPY_QUEUE_REMOVE, $struct->placementOption->selectionDetails->option);
         $this->assertEquals('ABC123', $struct->recordLocator->reservation->controlNumber);
-        $this->assertInternalType('array', $struct->targetDetails);
+        $this->assertIsArray($struct->targetDetails);
         $this->assertEquals(2, count($struct->targetDetails));
         $this->assertInstanceOf('Amadeus\Client\Struct\Queue\TargetDetails', $struct->targetDetails[0]);
         $this->assertEquals('BRUXX000', $struct->targetDetails[0]->targetOffice->originatorDetails->inHouseIdentification1);

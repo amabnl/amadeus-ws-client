@@ -73,14 +73,14 @@ class PaymentModule extends WsMessageUtility
     /**
      * PaymentModule constructor.
      *
-     * @param string $fopType
+     * @param string $attributeType
      */
-    public function __construct($fopType)
+    public function __construct($attributeType)
     {
         if ($this instanceof PaymentModule14) {
-            $this->groupUsage = new GroupUsage14($fopType);
+            $this->groupUsage = new GroupUsage14($attributeType);
         } else {
-            $this->groupUsage = new GroupUsage($fopType);
+            $this->groupUsage = new GroupUsage($attributeType);
         }
     }
 

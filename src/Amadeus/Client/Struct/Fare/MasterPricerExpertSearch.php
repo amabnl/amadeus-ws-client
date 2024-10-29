@@ -37,7 +37,6 @@ use Amadeus\Client\Struct\Fare\MasterPricer;
  */
 class MasterPricerExpertSearch extends BaseMasterPricerMessage
 {
-
     /**
      * @var mixed
      */

@@ -30,7 +30,6 @@ namespace Amadeus\Client\Struct\Service\IntegratedPricing;
  */
 class DocumentDetails
 {
-
     /**
      * @var string
      */

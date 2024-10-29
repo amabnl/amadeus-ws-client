@@ -63,14 +63,14 @@ class MpBaseOptions extends Base
      *
      * Must match the data present in $this->passengers
      *
-     * @var int
+     * @var int|null
      */
     public $nrOfRequestedPassengers;
 
     /**
      * Maximum number of recommendations requested
      *
-     * @var int
+     * @var int|null
      */
     public $nrOfRequestedResults;
 
@@ -152,7 +152,7 @@ class MpBaseOptions extends Base
     /**
      * Optional. Weights for Multi Ticket functionality.
      *
-     * @var Fare\MasterPricer\MultiTicketWeights
+     * @var Fare\MasterPricer\MultiTicketWeights|null
      */
     public $multiTicketWeights;
 
@@ -162,4 +162,11 @@ class MpBaseOptions extends Base
      * @var Fare\MasterPricer\FormOfPaymentDetails[]|array
      */
     public $formOfPayment;
+
+    /**
+     * Request for NDC offers only.
+     *
+     * @var bool
+     */
+    public $ndcOnly;
 }

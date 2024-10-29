@@ -24,6 +24,7 @@ namespace Test\Amadeus\Client\Struct\Offer;
 
 use Amadeus\Client\RequestOptions\Offer\PaymentDetails;
 use Amadeus\Client\RequestOptions\OfferConfirmHotelOptions;
+use Amadeus\Client\Struct\InvalidArgumentException;
 use Amadeus\Client\Struct\Offer\ConfirmHotel;
 use Amadeus\Client\Struct\Offer\PassengerReference;
 use Test\Amadeus\BaseTestCase;
@@ -124,10 +125,8 @@ class ConfirmHotelOfferTest extends BaseTestCase
 
     public function testCanConfirmHotelOfferWithUnsupportedFop()
     {
-        $this->setExpectedException(
-            'Amadeus\Client\Struct\InvalidArgumentException',
-            'Hotel Offer Confirm Form of Payment ADV is not yet supported'
-        );
+        $this->expectException(InvalidArgumentException::class);
+        $this->expectExceptionMessage('Hotel Offer Confirm Form of Payment ADV is not yet supported');
         $opt = new OfferConfirmHotelOptions([
             'recordLocator' => 'ABC123',
             'offerReference' => 2,

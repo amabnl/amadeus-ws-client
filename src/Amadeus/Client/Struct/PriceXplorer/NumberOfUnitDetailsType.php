@@ -30,7 +30,6 @@ namespace Amadeus\Client\Struct\PriceXplorer;
  */
 class NumberOfUnitDetailsType
 {
-
     /*
      * https://webservices.amadeus.com/extranet/structures/viewMessageStructure.do?id=2338&serviceVersionId=2304&isQuery=true#
      *     CNS     Cheapest non-stop

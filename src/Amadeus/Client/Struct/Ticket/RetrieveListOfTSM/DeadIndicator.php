@@ -30,7 +30,6 @@ namespace Amadeus\Client\Struct\Ticket\RetrieveListOfTSM;
  */
 class DeadIndicator
 {
-    
     /**
      * @var StatusDetails
      */

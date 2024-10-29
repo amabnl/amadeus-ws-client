@@ -41,6 +41,7 @@ use Amadeus\Client\Struct\Fare\PricePnr12\TaxIdentification;
 use Amadeus\Client\Struct\Fare\PricePnr13\CriteriaDetails;
 use Amadeus\Client\Struct\Fare\PricePnr13\TaxData;
 use Amadeus\Client\Struct\Fare\PricePNRWithBookingClass12;
+use Amadeus\Client\Struct\OptionNotSupportedException;
 use Test\Amadeus\BaseTestCase;
 
 /**
@@ -117,10 +118,8 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
 
     public function testCanThrowExceptionWhenDoPricePnrCallWithObFees()
     {
-        $this->setExpectedException(
-            '\Amadeus\Client\Struct\OptionNotSupportedException',
-            'OB Fees option not supported in version 12 or lower'
-        );
+        $this->expectException(OptionNotSupportedException::class);
+        $this->expectExceptionMessage('OB Fees option not supported in version 12 or lower');
 
         $opt = new FarePricePnrWithBookingClassOptions([
             'obFees' => [
@@ -135,10 +134,8 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
 
     public function testCanThrowExceptionWhenDoPricePnrCallWithPricingLogic()
     {
-        $this->setExpectedException(
-            '\Amadeus\Client\Struct\OptionNotSupportedException',
-            'Pricing Logic option not supported in version 12 or lower'
-        );
+        $this->expectException(OptionNotSupportedException::class);
+        $this->expectExceptionMessage('Pricing Logic option not supported in version 12 or lower');
 
         $opt = new FarePricePnrWithBookingClassOptions([
             'pricingLogic' => FarePricePnrWithBookingClassOptions::PRICING_LOGIC_IATA
@@ -149,10 +146,8 @@ class PricePNRWithBookingClass12Test extends BaseTestCase
 
     public function testCanThrowExceptionWhenDoPricePnrCallWithOverrideOptionsWithCriteria()
     {
-        $this->setExpectedException(
-            '\Amadeus\Client\Struct\OptionNotSupportedException',
-            'Override Options With Criteria are not supported in version 12 or lower'
-        );
+        $this->expectException(OptionNotSupportedException::class);
+        $this->expectExceptionMessage('Override Options With Criteria are not supported in version 12 or lower');
 
         $opt = new FarePricePnrWithBookingClassOptions([
             'overrideOptionsWithCriteria' => [

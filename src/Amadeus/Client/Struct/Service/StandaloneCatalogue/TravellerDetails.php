@@ -29,7 +29,6 @@ namespace Amadeus\Client\Struct\Service\StandaloneCatalogue;
  */
 class TravellerDetails
 {
-
     /**
      *
      * @var int

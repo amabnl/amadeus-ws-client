@@ -37,7 +37,7 @@ class SomewhatRandomGeneratorTest extends BaseTestCase
     {
         $somewhat = SomewhatRandomGenerator::generateSomewhatRandomString();
 
-        $this->assertInternalType('string', $somewhat);
+        $this->assertIsString($somewhat);
         $this->assertEquals(22, mb_strlen($somewhat));
     }
 
@@ -45,7 +45,7 @@ class SomewhatRandomGeneratorTest extends BaseTestCase
     {
         $somewhat = SomewhatRandomGenerator::generateSomewhatRandomString(10);
 
-        $this->assertInternalType('string', $somewhat);
+        $this->assertIsString($somewhat);
         $this->assertEquals(10, mb_strlen($somewhat));
     }
 }

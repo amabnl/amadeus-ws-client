@@ -118,6 +118,7 @@ class MopDescription extends WsMessageUtility
     {
         if ($this->checkAnyNotEmpty(
             $options->fopType,
+            $options->attributeType,
             $options->payMerchant,
             $options->payments,
             $options->installmentsInfo,
@@ -127,10 +128,15 @@ class MopDescription extends WsMessageUtility
             $options->payIds,
             $options->paySupData
         )) {
+            /**
+             * for backwards compatibility use `$options->fopType` as default for `$attributeType`
+             */
+            $attributeType = $options->attributeType ?: $options->fopType;
+
             if ($this instanceof MopDescription14) {
-                $this->paymentModule = new PaymentModule14($options->fopType);
+                $this->paymentModule = new PaymentModule14($attributeType);
             } else {
-                $this->paymentModule = new PaymentModule($options->fopType);
+                $this->paymentModule = new PaymentModule($attributeType);
             }
             $this->paymentModule->loadPaymentData($options);
 
@@ -179,7 +185,8 @@ class MopDescription extends WsMessageUtility
                 $this->paymentModule->mopDetailedData->creditCardDetailedData = new CreditCardDetailedData(
                     $options->creditCardInfo->approvalCode,
                     $options->creditCardInfo->sourceOfApproval,
-                    $options->creditCardInfo->threeDSecure
+                    $options->creditCardInfo->threeDSecure,
+                    $options->creditCardInfo->supplementaryData
                 );
             }
         }

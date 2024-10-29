@@ -22,12 +22,14 @@
 
 namespace Test\Amadeus;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * BaseTestCase
  *
  * @package Test\Amadeus
  */
-class BaseTestCase extends \PHPUnit_Framework_TestCase
+class BaseTestCase extends TestCase
 {
     /**
      * Get a protected or private method from given class

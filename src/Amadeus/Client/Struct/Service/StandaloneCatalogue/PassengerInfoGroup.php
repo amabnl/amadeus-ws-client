@@ -32,7 +32,6 @@ use Amadeus\Client\RequestOptions\Fare\InformativePricing\Passenger;
  */
 class PassengerInfoGroup
 {
-
     /**
      *
      * @var specificTravellerDetails

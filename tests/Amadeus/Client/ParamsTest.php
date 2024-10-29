@@ -65,7 +65,7 @@ class ParamsTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Params\SessionHandlerParams', $params->sessionHandlerParams);
         $this->assertTrue($params->sessionHandlerParams->stateful);
         $this->assertInstanceOf('Psr\Log\LoggerInterface', $params->sessionHandlerParams->logger);
-        $this->assertInternalType('array', $params->sessionHandlerParams->wsdl);
+        $this->assertIsArray($params->sessionHandlerParams->wsdl);
         $this->assertCount(1, $params->sessionHandlerParams->wsdl);
         $this->assertEquals('/var/fake/file/path', $params->sessionHandlerParams->wsdl[0]);
 
@@ -135,7 +135,7 @@ class ParamsTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Params\SessionHandlerParams', $params->sessionHandlerParams);
         $this->assertTrue($params->sessionHandlerParams->stateful);
         $this->assertInstanceOf('Psr\Log\LoggerInterface', $params->sessionHandlerParams->logger);
-        $this->assertInternalType('array', $params->sessionHandlerParams->wsdl);
+        $this->assertIsArray($params->sessionHandlerParams->wsdl);
         $this->assertCount(1, $params->sessionHandlerParams->wsdl);
         $this->assertEquals('/var/fake/file/path', $params->sessionHandlerParams->wsdl[0]);
 
@@ -179,7 +179,7 @@ class ParamsTest extends BaseTestCase
         $this->assertInstanceOf('Amadeus\Client\Params\SessionHandlerParams', $params->sessionHandlerParams);
         $this->assertTrue($params->sessionHandlerParams->stateful);
         $this->assertInstanceOf('Psr\Log\LoggerInterface', $params->sessionHandlerParams->logger);
-        $this->assertInternalType('array', $params->sessionHandlerParams->wsdl);
+        $this->assertIsArray($params->sessionHandlerParams->wsdl);
         $this->assertCount(1, $params->sessionHandlerParams->wsdl);
         $this->assertEquals('/var/fake/file/path', $params->sessionHandlerParams->wsdl[0]);
 
@@ -233,9 +233,9 @@ class ParamsTest extends BaseTestCase
 
     public function testCanCreateParamsWithOverrideSessionHandlerAndRequestCreator()
     {
-        $dummySessionHandler = $this->getMockBuilder('Amadeus\Client\Session\Handler\HandlerInterface')->getMock();
-        $dummyRequestCreator = $this->getMockBuilder('Amadeus\Client\RequestCreator\RequestCreatorInterface')->getMock();
-        $dummyResponseHandler = $this->getMockBuilder('Amadeus\Client\ResponseHandler\ResponseHandlerInterface')->getMock();
+        $dummySessionHandler = $this->createMock('Amadeus\Client\Session\Handler\HandlerInterface');
+        $dummyRequestCreator = $this->createMock('Amadeus\Client\RequestCreator\RequestCreatorInterface');
+        $dummyResponseHandler = $this->createMock('Amadeus\Client\ResponseHandler\ResponseHandlerInterface');
 
         $theParamArray = [
             'sessionHandler' => $dummySessionHandler,

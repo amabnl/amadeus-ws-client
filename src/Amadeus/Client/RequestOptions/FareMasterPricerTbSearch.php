@@ -32,7 +32,6 @@ use Amadeus\Client\RequestOptions\FareMasterPricerExSearchOptions as FareMasterP
  */
 class FareMasterPricerTbSearch extends FareMasterPricerExSearchOptions
 {
-
     /**
      * Set to true to disallow connecting flight to change airports within a city.
      *

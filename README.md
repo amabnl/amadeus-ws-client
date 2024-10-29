@@ -25,6 +25,14 @@ This library makes it a lot easier for developers to integrate content from the 
 
 # Requirements
 
+## v2
+
+* PHP 8.1 or newer
+* SOAP, XSL and DOM extensions activated
+* A WSDL & authentication details from Amadeus _(SoapHeader 4 or SoapHeader 2)_
+
+## v1
+
 * PHP 5.4 or newer _(tested with 5.4 -> 7.3)_
 * SOAP, XSL and DOM extensions activated
 * A WSDL & authentication details from Amadeus _(SoapHeader 4 or SoapHeader 2)_
@@ -43,17 +51,11 @@ After installing, you need to require Composer's autoloader:
 require 'vendor/autoload.php';
 ```
 
-Update composer to get the client:
-
- ```bash
-composer update
- ```
-
 Once the client is installed, read the [About &amp; Get Started](docs/about-get-started.rst) page.
 
 # Release history
 
-The current release is version 1.13.0. 
+The current release is version 2.0.0. 
 
 See the [Changelog](CHANGELOG.md).
 

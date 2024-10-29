@@ -1393,7 +1393,7 @@ It will returned both ADT and IIT fares for one passenger.
             FareMasterPricerTbSearch::FLIGHTOPT_UNIFARES,
         ],
     ]);
-
+    
 Find by location without limit to airport or city
 =================================================
 
@@ -1424,4 +1424,38 @@ If you want find by City and Airport at the same time, change the MPLocation typ
                 ]),
             ]),
         ],
+    ]);
+    
+Return NDC recommendations only
+===============================
+
+If need to get only NDC recommendations enought to add only one flag to the request options:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\FareMasterPricerTbSearch;
+    use Amadeus\Client\RequestOptions\Fare\MPItinerary;
+    use Amadeus\Client\RequestOptions\Fare\MPLocation;
+    use Amadeus\Client\RequestOptions\Fare\MPPassenger;
+    use Amadeus\Client\RequestOptions\Fare\MPDate;
+
+    $opt = new FareMasterPricerTbSearch([
+        'nrOfRequestedResults' => 200,
+        'nrOfRequestedPassengers' => 2,
+        'passengers' => [
+            new MPPassenger([
+                'type' => MPPassenger::TYPE_ADULT,
+                'count' => 2
+            ]),
+        ],
+        'itinerary' => [
+            new MPItinerary([
+                'departureLocation' => new MPLocation(['city' => 'JFK']),
+                'arrivalLocation' => new MPLocation(['city' => 'LHR']),
+                'date' => new MPDate([
+                    'dateTime' => new \DateTime('2024-03-05T10:00:00+0000', new \DateTimeZone('UTC')),
+                ])
+            ])
+        ],
+        'ndcOnly' => true,
     ]);

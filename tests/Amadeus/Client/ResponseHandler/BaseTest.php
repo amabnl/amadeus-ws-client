@@ -22,6 +22,7 @@
 
 namespace Test\Amadeus\Client\ResponseHandler;
 
+use Amadeus\Client\Exception;
 use Amadeus\Client\ResponseHandler;
 use Amadeus\Client\Result;
 use Amadeus\Client\Session\Handler\SendResult;
@@ -1720,19 +1721,14 @@ class BaseTest extends BaseTestCase
 
     public function testCanHandleInvalidXmlDocument()
     {
-        $this->setExpectedException('Amadeus\Client\Exception');
+        $this->expectException(Exception::class);
 
         $respHandler = new ResponseHandler\Base();
 
         $sendResult = new SendResult();
         $sendResult->responseXml = $this->getTestFile('dummyInvalidXmlDocument.txt');
 
-        $warningEnabledOrig = \PHPUnit_Framework_Error_Warning::$enabled;
-        \PHPUnit_Framework_Error_Warning::$enabled = false;
-
         $respHandler->analyzeResponse($sendResult, 'Fare_PricePnrWithBookingClass');
-
-        \PHPUnit_Framework_Error_Warning::$enabled = $warningEnabledOrig;
     }
 
     public function testCanHandleCommandCryptic()
@@ -1967,6 +1963,71 @@ class BaseTest extends BaseTestCase
         $sendResult->responseXml = $this->getTestFile('dummyPNRSplitResponse.txt');
 
         $result = $respHandler->analyzeResponse($sendResult, 'PNR_Split');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleTravelOfferPrice()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTravelOfferPriceResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Travel_OfferPrice');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleTravelOrderCreate()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTravelOrderCreateResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Travel_OrderCreate');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleTravelOrderRetrieve()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTravelOrderRetrieveResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Travel_OrderRetrieve');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleTravelOrderPay()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTravelOrderPayResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Travel_OrderPay');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
+    public function testCanHandleTravelOrderCancel()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyTravelOrderCancelResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Travel_OrderCancel');
 
         $this->assertEquals(Result::STATUS_OK, $result->status);
         $this->assertEquals(0, count($result->messages));
