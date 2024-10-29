@@ -84,7 +84,11 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
 
         $this->assertInstanceOf('\SoapVar', $result[3]->data);
         $this->assertEquals(XSD_ANYXML, $result[3]->data->enc_type);
-        $this->assertEqualXMLStructure($this->toDomElement($expectedSecurityNodeStructureXml), $this->toDomElement($result[3]->data->enc_value), true);
+        self::assertEqualXMLStructure(
+            $this->toDomElement($expectedSecurityNodeStructureXml),
+            $this->toDomElement($result[3]->data->enc_value),
+            true,
+        );
         $this->assertEquals('Security', $result[3]->name);
         $this->assertEquals('http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
             $result[3]->namespace);
@@ -146,7 +150,11 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
 
         $this->assertInstanceOf('\SoapVar', $result[3]->data);
         $this->assertEquals(XSD_ANYXML, $result[3]->data->enc_type);
-        $this->assertEqualXMLStructure($this->toDomElement($expectedSecurityNodeStructureXml), $this->toDomElement($result[3]->data->enc_value), true);
+        self::assertEqualXMLStructure(
+            $this->toDomElement($expectedSecurityNodeStructureXml),
+            $this->toDomElement($result[3]->data->enc_value),
+            true,
+        );
         $this->assertEquals('Security', $result[3]->name);
         $this->assertEquals('http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
             $result[3]->namespace);
@@ -263,7 +271,11 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
 
         $this->assertInstanceOf('\SoapVar', $result[4]->data);
         $this->assertEquals(XSD_ANYXML, $result[4]->data->enc_type);
-        $this->assertEqualXMLStructure($this->toDomElement($expectedSecurityNodeStructureXml), $this->toDomElement($result[4]->data->enc_value), true);
+        self::assertEqualXMLStructure(
+            $this->toDomElement($expectedSecurityNodeStructureXml),
+            $this->toDomElement($result[4]->data->enc_value),
+            true,
+        );
         $this->assertEquals('Security', $result[4]->name);
         $this->assertEquals('http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
             $result[4]->namespace);
@@ -327,7 +339,11 @@ xmlns:oas1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-u
 
         $this->assertInstanceOf('\SoapVar', $result[4]->data);
         $this->assertEquals(XSD_ANYXML, $result[4]->data->enc_type);
-        $this->assertEqualXMLStructure($this->toDomElement($expectedSecurityNodeStructureXml), $this->toDomElement($result[4]->data->enc_value), true);
+        self::assertEqualXMLStructure(
+            $this->toDomElement($expectedSecurityNodeStructureXml),
+            $this->toDomElement($result[4]->data->enc_value),
+            true,
+        );
         $this->assertEquals('Security', $result[4]->name);
         $this->assertEquals('http://docs.oasis-open.org/wss/2004/01/oasis-200401-wsswssecurity-secext-1.0.xsd',
             $result[4]->namespace);
@@ -1207,5 +1223,95 @@ EOT;
         $doc->loadXML($xmlString);
 
         return $doc->firstChild;
+    }
+
+    /**
+     * This is a copy of assertEqualXMLStructure method from PHPUnit < 10.0
+     * Original method was deprecated and later completely removed without any replacement
+     * https://github.com/sebastianbergmann/phpunit/issues/4091
+     */
+    public static function assertEqualXMLStructure(
+        \DOMElement $expectedElement,
+        \DOMElement $actualElement,
+        bool $checkAttributes = false,
+        string $message = '',
+    ): void {
+        /** @var \DOMElement $expectedElement */
+        $expectedElement = (new \DOMDocument)->importNode($expectedElement, true);
+        /** @var \DOMElement $actualElement */
+        $actualElement = (new \DOMDocument)->importNode($expectedElement, true);
+
+        static::assertSame(
+            $expectedElement->tagName,
+            $actualElement->tagName,
+            $message,
+        );
+
+        if ($checkAttributes) {
+            static::assertSame(
+                $expectedElement->attributes->length,
+                $actualElement->attributes->length,
+                sprintf(
+                    '%s%sNumber of attributes on node "%s" does not match',
+                    $message,
+                    !empty($message) ? "\n" : '',
+                    $expectedElement->tagName,
+                ),
+            );
+
+            for ($i = 0; $i < $expectedElement->attributes->length; $i++) {
+                /** @var \DOMAttr $expectedAttribute */
+                $expectedAttribute = $expectedElement->attributes->item($i);
+                $actualAttribute   = $actualElement->attributes->getNamedItem($expectedAttribute->name);
+
+                assert($expectedAttribute instanceof \DOMAttr);
+
+                if (!$actualAttribute) {
+                    static::fail(
+                        sprintf(
+                            '%s%sCould not find attribute "%s" on node "%s"',
+                            $message,
+                            !empty($message) ? "\n" : '',
+                            $expectedAttribute->name,
+                            $expectedElement->tagName,
+                        ),
+                    );
+                }
+            }
+        }
+
+        self::removeCharacterDataNodes($expectedElement);
+        self::removeCharacterDataNodes($actualElement);
+
+        static::assertSame(
+            $expectedElement->childNodes->length,
+            $actualElement->childNodes->length,
+            sprintf(
+                '%s%sNumber of child nodes of "%s" differs',
+                $message,
+                !empty($message) ? "\n" : '',
+                $expectedElement->tagName,
+            ),
+        );
+
+        for ($i = 0; $i < $expectedElement->childNodes->length; $i++) {
+            static::assertEqualXMLStructure(
+                $expectedElement->childNodes->item($i),
+                $actualElement->childNodes->item($i),
+                $checkAttributes,
+                $message,
+            );
+        }
+    }
+
+    public static function removeCharacterDataNodes(\DOMNode $node): void
+    {
+        if ($node->hasChildNodes()) {
+            for ($i = $node->childNodes->length - 1; $i >= 0; $i--) {
+                if (($child = $node->childNodes->item($i)) instanceof \DOMCharacterData) {
+                    $node->removeChild($child);
+                }
+            }
+        }
     }
 }
