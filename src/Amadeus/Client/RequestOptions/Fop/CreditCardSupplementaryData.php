@@ -55,7 +55,9 @@ class CreditCardSupplementaryData extends LoadParamsFromArray
     public $attributeType;
 
     /**
-     * This is the data value.  This may contain:  - a potential attribute of the switch  - the value of the structured data of the FOP
+     * This is the data value. This may contain:
+     * - a potential attribute of the switch
+     * - the value of the structured data of the FOP
      *
      * @var string
      */

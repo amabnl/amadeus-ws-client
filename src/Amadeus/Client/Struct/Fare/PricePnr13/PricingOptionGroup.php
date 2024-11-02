@@ -94,9 +94,9 @@ class PricingOptionGroup
      * PricingOptionGroup constructor.
      *
      * @param string $key
-     * @param string $optionDetail
+     * @param string|null $optionDetail
      */
-    public function __construct($key, $optionDetail=null)
+    public function __construct($key, $optionDetail = null)
     {
         $this->pricingOptionKey = new PricingOptionKey($key);
         if (isset($optionDetail)) {

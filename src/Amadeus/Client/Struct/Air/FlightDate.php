@@ -86,7 +86,9 @@ class FlightDate
     protected function loadDepartureDate($departureDate)
     {
         if ($departureDate instanceof \DateTime) {
-            $this->departureDate = ($departureDate->format('dmy') !== '000000') ? $departureDate->format($this->dateFormat) : null;
+            $this->departureDate = $departureDate->format('dmy') !== '000000'
+                ? $departureDate->format($this->dateFormat)
+                : null;
             $time = $departureDate->format('Hi');
             if ($time !== '0000') {
                 $this->departureTime = $time;
@@ -121,7 +123,9 @@ class FlightDate
      */
     public function setArrivalDate(\DateTime $arrivalDate)
     {
-        $this->arrivalDate = ($arrivalDate->format('dmy') !== '000000') ? $arrivalDate->format($this->dateFormat) : null;
+        $this->arrivalDate = $arrivalDate->format('dmy') !== '000000'
+            ? $arrivalDate->format($this->dateFormat)
+            : null;
         $time = $arrivalDate->format('Hi');
         if ($time !== '0000') {
             $this->arrivalTime = $time;

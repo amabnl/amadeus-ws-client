@@ -59,7 +59,14 @@ class TdsInformation extends WsMessageUtility
             $this->acsURL = new AcsUrl($options->acsUrl);
         }
 
-        if ($this->checkAnyNotEmpty($options->veresStatus, $options->paresStatus, $options->creditCardCompany, $options->transactionsStatus, $options->authenticationIndicator, $options->tdsVersion)) {
+        if ($this->checkAnyNotEmpty(
+            $options->veresStatus,
+            $options->paresStatus,
+            $options->creditCardCompany,
+            $options->transactionsStatus,
+            $options->authenticationIndicator,
+            $options->tdsVersion,
+        )) {
             $this->authenticationData = new AuthenticationData(
                 $options->veresStatus,
                 $options->paresStatus,

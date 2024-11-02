@@ -101,7 +101,10 @@ class FlightInfo
         }
 
         if (!is_null($connections)) {
-            $this->unitNumberDetail[] = new UnitNumberDetail($connections, UnitNumberDetail::TYPE_NUM_OF_CONNECTIONS_ALLOWED);
+            $this->unitNumberDetail[] = new UnitNumberDetail(
+                $connections,
+                UnitNumberDetail::TYPE_NUM_OF_CONNECTIONS_ALLOWED,
+            );
         }
 
         if ($noAirportChange === true) {

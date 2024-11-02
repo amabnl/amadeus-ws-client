@@ -165,7 +165,8 @@ class ThreeDSecureInfo extends LoadParamsFromArray
     public $tdsAuthenticationVerificationCode;
 
     /**
-     * 3DS authentication verification code reference (CAVV : Visa, Diners, JCB AEVV : American Express AAV : Mastercard)
+     * 3DS authentication verification code reference
+     * (CAVV : Visa, Diners, JCB AEVV : American Express AAV : Mastercard)
      *
      * @var string
      */
