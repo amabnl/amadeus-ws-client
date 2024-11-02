@@ -54,12 +54,7 @@ class Account
      */
     public $gSTTaxDetails;
 
-    /**
-     * Account constructor.
-     *
-     * @param null $number
-     */
-    public function __construct($number = null)
+    public function __construct(?string $number = null)
     {
         $this->number = $number;
     }

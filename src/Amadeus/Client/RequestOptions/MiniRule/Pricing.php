@@ -90,7 +90,8 @@ class Pricing extends LoadParamsFromArray
     /**
      * self::ALL_PRICINGS to indicate ALL or a number indicating a specific pricing
      *
-     *  Contains TST tatoo, ticket number, PNR recloc, fare recommendation, PQR Offer Id, fare upsell recommendation or the keyword 'ALL', when used with MiniRule_GetFromRec
+     * Contains TST tatoo, ticket number, PNR recloc, fare recommendation, PQR Offer Id,
+     * fare upsell recommendation or the keyword 'ALL', when used with MiniRule_GetFromRec
      *
      * @var int|string
      */

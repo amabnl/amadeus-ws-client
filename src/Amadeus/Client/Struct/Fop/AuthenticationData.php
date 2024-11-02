@@ -47,9 +47,18 @@ class AuthenticationData
      * @param string|null $veresStatus
      * @param string|null $paresStatus
      * @param string|null $company
+     * @param string|null $transactionsStatus
+     * @param string|null $authenticationIndicator
+     * @param string|null $tdsVersion
      */
-    public function __construct($veresStatus, $paresStatus, $company, $transactionsStatus, $authenticationIndicator, $tdsVersion)
-    {
+    public function __construct(
+        $veresStatus,
+        $paresStatus,
+        $company,
+        $transactionsStatus,
+        $authenticationIndicator,
+        $tdsVersion,
+    ) {
         if (false === empty($tdsVersion)) {
             $this->tdsVersion = $tdsVersion;
         }

@@ -293,7 +293,12 @@ class DataElementsIndiv extends WsMessageUtility
                 break;
             case 'FareMiscellaneousInformation':
                 /** @var Element\FareMiscellaneousInformation $element */
-                $this->fareElement = new FareElement($element->indicator, $element->passengerType, $element->freeText, $element->officeId);
+                $this->fareElement = new FareElement(
+                    $element->indicator,
+                    $element->passengerType,
+                    $element->freeText,
+                    $element->officeId,
+                );
                 break;
             case 'PnrSecurity':
                 /** @var Element\PnrSecurity $element */

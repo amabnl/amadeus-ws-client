@@ -170,7 +170,9 @@ class PricePNRWithBookingClass12 extends BaseWsMessage
         }
 
         if (!empty($options->overrideOptionsWithCriteria)) {
-            throw new OptionNotSupportedException('Override Options With Criteria are not supported in version 12 or lower');
+            throw new OptionNotSupportedException(
+                'Override Options With Criteria are not supported in version 12 or lower',
+            );
         }
     }
 

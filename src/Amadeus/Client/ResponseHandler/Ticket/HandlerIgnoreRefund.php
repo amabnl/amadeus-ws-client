@@ -48,7 +48,6 @@ class HandlerIgnoreRefund extends StandardResponseHandler
         if ($errorCodeNodeList->length > 0) {
             $analyzeResponse->status = Result::STATUS_ERROR;
 
-            $errorCatNode = $errorCodeNodeList->item(0);
             foreach (iterator_to_array($errorCodeNodeList) as $msg) {
                 $analyzeResponse->messages[] = trim($msg->nodeValue);
             }

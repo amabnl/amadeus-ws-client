@@ -128,7 +128,8 @@ class MPItinerary extends LoadParamsFromArray
     /**
      * A number of connections can be requested for connecting flights.
      *
-     * If you specify a value here, results will only show connecting flights with exactly the specified number of connections.
+     * If you specify a value here, results will only show connecting flights with exactly the specified number of
+     * connections.
      *
      * @var int
      */
@@ -166,7 +167,7 @@ class MPItinerary extends LoadParamsFromArray
     /**
      * Anchored Search segment (MPAnchoredSegment)
      *
-     * @var array[MPAnchoredSegment]
+     * @var MPAnchoredSegment[]
      */
     public $anchoredSegments;
 }

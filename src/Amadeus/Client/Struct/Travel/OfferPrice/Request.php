@@ -39,10 +39,22 @@ class Request extends AbstractOfferRequest
             $selectedOffer->ownerCode,
             $selectedOffer->shoppingResponseRefID,
             array_map(static function (TravelRequest\SelectedOfferItem $selectedOfferItem) {
-                return new SelectedOfferItem(
+                $result = new SelectedOfferItem(
                     $selectedOfferItem->offerItemRefId,
                     $selectedOfferItem->paxRefId
                 );
+
+                if ($selectedAlaCarteOfferItem = $selectedOfferItem->selectedAlaCarteOfferItem) {
+                    $result->setSelectedAlaCarteOfferItem(
+                        new SelectedAlaCarteOfferItem($selectedAlaCarteOfferItem->quantity)
+                    );
+                }
+
+                if ($selectedSeat = $selectedOfferItem->selectedSeat) {
+                    $result->setSelectedSeat(new SelectedSeat($selectedSeat->rowNumber, $selectedSeat->column));
+                }
+
+                return $result;
             }, $selectedOffer->selectedOfferItems),
             $selectedOffer->offerRefID
         );

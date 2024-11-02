@@ -24,6 +24,9 @@ coding_style:
       general:
         size: 1
 
+build_failure_conditions:
+  - 'issues.label("coding-style").new.exists'
+
 build:
   tests:
     override:

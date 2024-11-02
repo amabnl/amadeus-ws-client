@@ -84,7 +84,7 @@ class IntegratedPricing extends BasePricingMessage
 
         $priceOptions = self::mergeOptions(
             $priceOptions,
-            self::makePricingOptionWithOptionDetailAndRefs(
+            $this->makePricingOptionWithOptionDetailAndRefs(
                 PricingOptionKey::OVERRIDE_ACCOUNT_CODE,
                 $options->accountCode,
                 $options->accountCodeRefs
@@ -93,7 +93,7 @@ class IntegratedPricing extends BasePricingMessage
 
         $priceOptions = self::mergeOptions(
             $priceOptions,
-            self::makePricingOptionWithOptionDetailAndRefs(
+            $this->makePricingOptionWithOptionDetailAndRefs(
                 PricingOptionKey::OVERRIDE_AWARD,
                 $options->awardPricing,
                 []
@@ -102,7 +102,7 @@ class IntegratedPricing extends BasePricingMessage
 
         $priceOptions = self::mergeOptions(
             $priceOptions,
-            self::makePricingOptionWithOptionDetailAndRefs(
+            $this->makePricingOptionWithOptionDetailAndRefs(
                 PricingOptionKey::OVERRIDE_CORPORATION_NUMBER,
                 $options->corporationNumber,
                 []
@@ -116,7 +116,7 @@ class IntegratedPricing extends BasePricingMessage
 
         $priceOptions = self::mergeOptions(
             $priceOptions,
-            self::makePricingOptionWithOptionDetailAndRefs(
+            $this->makePricingOptionWithOptionDetailAndRefs(
                 PricingOptionKey::OVERRIDE_TICKET_DESIGNATOR,
                 $options->ticketDesignator,
                 []

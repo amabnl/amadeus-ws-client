@@ -57,7 +57,7 @@ class InclusionDetail
      * InclusionDetail constructor.
      *
      * @param string $locationId
-     * @param string inclusionIdentifier
+     * @param string $inclusionIdentifier
      */
     public function __construct($locationId, $inclusionIdentifier = self::IDENT_MANDATORY)
     {

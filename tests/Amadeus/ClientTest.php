@@ -24,6 +24,8 @@ namespace Test\Amadeus;
 
 use Amadeus\Client;
 use Amadeus\Client\Params;
+use Amadeus\Client\ResponseHandler\ResponseHandlerInterface;
+use Amadeus\Client\Session\Handler\HandlerInterface;
 use Psr\Log\NullLogger;
 
 /**
@@ -3840,59 +3842,514 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
-    public function testCanSendTravelOrderRetrieve()
+    public function testCanSendTravelOfferPrice(): void
     {
-        $mockSessionHandler = $this->createMock('Amadeus\Client\Session\Handler\HandlerInterface');
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
 
         $mockedSendResult = new Client\Session\Handler\SendResult();
-        $mockedSendResult->responseXml = $this->getTestFile('TravelOrderRetrieveReply.txt');
+        $mockedSendResult->responseXml = $this->getTestFile('TravelOfferPriceReply.xml');
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $offerPriceRequestOptions = new Client\RequestOptions\TravelOfferPriceOptions([
+            'dataLists' => [
+                new Client\RequestOptions\Travel\DataList([
+                    'paxList' => new Client\RequestOptions\Travel\PaxList([
+                        'pax' => [
+                            new Client\RequestOptions\Travel\Pax([
+                                'paxId' => 'T1',
+                                'ptc' => 'ADT',
+                            ]),
+                        ],
+                    ]),
+                ]),
+            ],
+            'pricedOffer' => new Client\RequestOptions\Travel\PricedOffer([
+                'selectedOffer' => new Client\RequestOptions\Travel\SelectedOffer([
+                    'offerRefID' => 'OfferRef1',
+                    'ownerCode' => 'AA',
+                    'shoppingResponseRefID' => 'ShopRef1',
+                    'selectedOfferItems' => [
+                        new Client\RequestOptions\Travel\SelectedOfferItem([
+                            'offerItemRefId' => 'ItemRef1',
+                            'paxRefId' => [
+                                'T1',
+                            ],
+                        ]),
+                    ],
+                ]),
+            ]),
+        ]);
+
+        $expectedMessageResult = new Client\Struct\Travel\OfferPrice($offerPriceRequestOptions);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Travel_OfferPrice', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(self::getNdcWsdlMessagesAndVersions());
+
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
+
+        $responseHandlerMock
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Travel_OfferPrice')
+            ->willReturn($messageResult);
+
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX',
+        ]);
+        $params->responseHandler = $responseHandlerMock;
+
+        $client = new Client($params);
+
+        $response = $client->travelOfferPrice($offerPriceRequestOptions);
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTravelOrderCreate(): void
+    {
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('TravelOrderCreateReply.xml');
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $orderCreateRequestOptions = new Client\RequestOptions\TravelOrderCreateOptions([
+            'dataLists' => [
+                new Client\RequestOptions\Travel\DataList([
+                    'paxList' => new Client\RequestOptions\Travel\PaxList([
+                        'pax' => [
+                            new Client\RequestOptions\Travel\Pax([
+                                'paxId' => 'T1',
+                                'ptc' => 'ADT',
+                                'dob' => new \DateTime('1990-01-01'),
+                                'genderCode' => 'M',
+                                'firstName' => 'John',
+                                'lastName' => 'Doe',
+                                'phoneNumber' => '5552225555',
+                                'email' => 'example@test.com',
+                                'passengerContactRefused' => true,
+                            ]),
+                        ],
+                    ]),
+                ]),
+            ],
+            'pricedOffer' => new Client\RequestOptions\Travel\PricedOffer([
+                'selectedOffer' => new Client\RequestOptions\Travel\SelectedOffer([
+                    'offerRefID' => 'OfferRef1',
+                    'ownerCode' => 'AA',
+                    'shoppingResponseRefID' => 'ShopRef1',
+                    'selectedOfferItems' => [
+                        new Client\RequestOptions\Travel\SelectedOfferItem([
+                            'offerItemRefId' => 'ItemRef1',
+                            'paxRefId' => [
+                                'T1',
+                            ],
+                        ]),
+                    ],
+                ]),
+            ]),
+        ]);
+
+        $expectedMessageResult = new Client\Struct\Travel\OrderCreate($orderCreateRequestOptions);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Travel_OrderCreate', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(self::getNdcWsdlMessagesAndVersions());
+
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
+
+        $responseHandlerMock
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Travel_OrderCreate')
+            ->willReturn($messageResult);
+
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX',
+        ]);
+        $params->responseHandler = $responseHandlerMock;
+
+        $client = new Client($params);
+
+        $response = $client->travelOrderCreate($orderCreateRequestOptions);
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTravelOrderPay(): void
+    {
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('TravelOrderPayReply.xml');
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $orderPayRequestOptions = new Client\RequestOptions\TravelOrderPayOptions([
+            'orderId' => 'AA12345',
+            'ownerCode' => 'AA',
+            'amount' => 249.45,
+            'currencyCode' => 'USD',
+            'type' => Client\RequestOptions\TravelOrderPayOptions::PAYMENT_TYPE_CASH,
+        ]);
+
+        $expectedMessageResult = new Client\Struct\Travel\OrderPay($orderPayRequestOptions);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Travel_OrderPay', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(self::getNdcWsdlMessagesAndVersions());
+
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
+
+        $responseHandlerMock
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Travel_OrderPay')
+            ->willReturn($messageResult);
+
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX',
+        ]);
+        $params->responseHandler = $responseHandlerMock;
+
+        $client = new Client($params);
+
+        $response = $client->travelOrderPay($orderPayRequestOptions);
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTravelOrderRetrieve(): void
+    {
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('TravelOrderRetrieveReply.xml');
 
         $messageResult = new Client\Result($mockedSendResult);
 
-        $expectedMessageResult = new Client\Struct\Travel\OrderRetrieve(
-            new Client\RequestOptions\TravelOrderRetrieveOptions([
-                'orderId' => 'AA001HLSXQ4A2',
-                'ownerCode' => 'AA',
-            ])
-        );
+        $orderRetrieveOptions = new Client\RequestOptions\TravelOrderRetrieveOptions([
+            'orderId' => 'AA001HLSXQ4A2',
+            'ownerCode' => 'AA',
+            'party' => new Client\RequestOptions\Travel\Party([
+                'sender' => new Client\RequestOptions\Travel\Sender([
+                    'travelAgency' => new Client\RequestOptions\Travel\TravelAgency([
+                        'agencyId' => '123456',
+                        'pseudoCityId' => 'NYCXXXX',
+                    ]),
+                ]),
+            ]),
+        ]);
 
-        $mockSessionHandler
+        $expectedMessageResult = new Client\Struct\Travel\OrderRetrieve($orderRetrieveOptions);
+
+        $sessionHandlerMock
             ->expects($this->once())
             ->method('sendMessage')
             ->with('Travel_OrderRetrieve', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
-            ->will($this->returnValue($mockedSendResult));
-        $mockSessionHandler
-            ->expects($this->never())
-            ->method('getLastResponse');
-        $mockSessionHandler
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
             ->expects($this->once())
             ->method('getMessagesAndVersions')
-            ->will($this->returnValue(['Travel_OrderRetrieve' => ['version' => "1.10", 'wsdl' => 'dc22e4ee']]));
+            ->willReturn(self::getNdcWsdlMessagesAndVersions());
 
-        $mockResponseHandler = $this->createMock('Amadeus\Client\ResponseHandler\ResponseHandlerInterface');
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
 
-        $mockResponseHandler
+        $responseHandlerMock
             ->expects($this->once())
             ->method('analyzeResponse')
             ->with($mockedSendResult, 'Travel_OrderRetrieve')
-            ->will($this->returnValue($messageResult));
+            ->willReturn($messageResult);
 
-        $par = new Params();
-        $par->sessionHandler = $mockSessionHandler;
-        $par->requestCreatorParams = new Params\RequestCreatorParams([
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
             'receivedFrom' => 'some RF string',
-            'originatorOfficeId' => 'BRUXXXXXX'
+            'originatorOfficeId' => 'BRUXXXXXX',
         ]);
-        $par->responseHandler = $mockResponseHandler;
+        $params->responseHandler = $responseHandlerMock;
 
-        $client = new Client($par);
+        $client = new Client($params);
 
-        $response = $client->travelOrderRetrieve(
-            new Client\RequestOptions\TravelOrderRetrieveOptions([
-                'orderId' => 'AA001HLSXQ4A2',
+        $response = $client->travelOrderRetrieve($orderRetrieveOptions);
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTravelOrderCancel(): void
+    {
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('TravelOrderCancelReply.xml');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $expectedMessageResult = new Client\Struct\Travel\OrderCancel(
+            new Client\RequestOptions\TravelOrderCancelOptions([
+                'orderId' => 'AA12345',
                 'ownerCode' => 'AA',
-            ])
+            ]),
         );
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Travel_OrderCancel', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(self::getNdcWsdlMessagesAndVersions());
+
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
+
+        $responseHandlerMock
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Travel_OrderCancel')
+            ->willReturn($messageResult);
+
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX',
+        ]);
+        $params->responseHandler = $responseHandlerMock;
+
+        $client = new Client($params);
+
+        $response = $client->travelOrderCancel(
+            new Client\RequestOptions\TravelOrderCancelOptions([
+                'orderId' => 'AA12345',
+                'ownerCode' => 'AA',
+            ]),
+        );
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTravelServiceList(): void
+    {
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('TravelServiceListReply.xml');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $serviceListOptions = new Client\RequestOptions\TravelServiceListOptions([
+            'ownerCode' => 'AA',
+            'offerId' => '1A_TPID_CiESG1NQMUYtMTQxOAI=',
+            'offerItemId' => '1A_TPID_CAESH-VNQMUYS0x',
+            'shoppingResponseId' => 'SP1F-14193187327050054900',
+            'serviceId' => 1,
+        ]);
+
+        $expectedMessageResult = new Client\Struct\Travel\ServiceList($serviceListOptions);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Travel_ServiceList', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(self::getNdcWsdlMessagesAndVersions());
+
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
+
+        $responseHandlerMock
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Travel_ServiceList')
+            ->willReturn($messageResult);
+
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX',
+        ]);
+        $params->responseHandler = $responseHandlerMock;
+
+        $client = new Client($params);
+
+        $response = $client->travelServiceList($serviceListOptions);
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTravelSeatAvailability(): void
+    {
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('TravelSeatAvailabilityReply.xml');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $seatAvailabilityOptions = new Client\RequestOptions\TravelSeatAvailabilityOptions([
+            'ownerCode' => 'AA12345',
+            'offerItemId' => 'AA',
+            'shoppingResponseId' => 'Pr_Re-sponseID_00',
+        ]);
+
+        $expectedMessageResult = new Client\Struct\Travel\SeatAvailability($seatAvailabilityOptions);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Travel_SeatAvailability', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(self::getNdcWsdlMessagesAndVersions());
+
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
+
+        $responseHandlerMock
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Travel_SeatAvailability')
+            ->willReturn($messageResult);
+
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX',
+        ]);
+        $params->responseHandler = $responseHandlerMock;
+
+        $client = new Client($params);
+
+        $response = $client->travelSeatAvailability($seatAvailabilityOptions);
+
+        $this->assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendTravelOrderChange(): void
+    {
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('TravelOrderChangeReply.xml');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $orderChangeOptions = new Client\RequestOptions\TravelOrderChangeOptions([
+            'updateOrderItem' => new Client\RequestOptions\Travel\OrderChange\UpdateOrderItem([
+                'offer' => new Client\RequestOptions\Travel\SelectedOffer([
+                    'offerRefID' => '1A_TPID_CiESG1NQMUYtMTQxOAI=',
+                    'ownerCode' => 'AA',
+                    'shoppingResponseRefID' => 'SP1F-14193187327050054900',
+                    'selectedOfferItems' => [
+                        new Client\RequestOptions\Travel\SelectedOfferItem([
+                            'offerItemRefId' => '1A_TPID_CAESH-VNQMUYS0x',
+                            'paxRefId' => 'T1',
+                            'selectedAlaCarteOfferItem' => [
+                                new Client\RequestOptions\Travel\SelectedAlaCarteOfferItem([
+                                    'quantity' => 1,
+                                ]),
+                            ],
+                            'selectedSeat' => new Client\RequestOptions\Travel\SelectedSeat([
+                                'column' => 'A',
+                                'rowNumber' => 12,
+                            ]),
+                        ]),
+                    ],
+                ]),
+            ]),
+            'dataLists' => [
+                new Client\RequestOptions\Travel\DataList([
+                    'paxList' => new Client\RequestOptions\Travel\PaxList([
+                        'pax' => [
+                            new Client\RequestOptions\Travel\Pax([
+                                'paxId' => 'T1',
+                                'ptc' => 'ADT',
+                                'genderCode' => 'M',
+                                'dob' => new \DateTime('1994-01-01'),
+                                'firstName' => 'John',
+                                'lastName' => 'Doe',
+                            ]),
+                        ],
+                    ]),
+                ]),
+            ],
+            'ownerCode' => 'AA12345',
+            'offerItemId' => 'AA',
+        ]);
+
+        $expectedMessageResult = new Client\Struct\Travel\OrderChange($orderChangeOptions);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Travel_OrderChange', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(self::getNdcWsdlMessagesAndVersions());
+
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
+
+        $responseHandlerMock
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Travel_OrderChange')
+            ->willReturn($messageResult);
+
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX',
+        ]);
+        $params->responseHandler = $responseHandlerMock;
+
+        $client = new Client($params);
+
+        $response = $client->travelOrderChange($orderChangeOptions);
 
         $this->assertEquals($messageResult, $response);
     }
@@ -6464,5 +6921,19 @@ class ClientTest extends BaseTestCase
             dirname(__FILE__) . DIRECTORY_SEPARATOR . "Client" .
             DIRECTORY_SEPARATOR . "testfiles" . DIRECTORY_SEPARATOR . "dummywsdl.wsdl"
         );
+    }
+
+    private static function getNdcWsdlMessagesAndVersions(): array
+    {
+        return [
+            'Travel_OfferPrice' => ['version' => '1.2', 'wsdl' => 'dc22e4ee'],
+            'Travel_OrderCancel' => ['version' => '1.0', 'wsdl' => 'dc22e4ee'],
+            'Travel_SeatAvailability' => ['version' => '1.0', 'wsdl' => 'dc22e4ee'],
+            'Travel_OrderChange' => ['version' => '1.5', 'wsdl' => 'dc22e4ee'],
+            'Travel_OrderCreate' => ['version' => '1.5', 'wsdl' => 'dc22e4ee'],
+            'Travel_OrderPay' => ['version' => '1.5', 'wsdl' => 'dc22e4ee'],
+            'Travel_OrderRetrieve' => ['version' => '1.5', 'wsdl' => 'dc22e4ee'],
+            'Travel_ServiceList' => ['version' => '1.1', 'wsdl' => 'dc22e4ee'],
+        ];
     }
 }

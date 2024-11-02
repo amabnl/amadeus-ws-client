@@ -35,7 +35,7 @@ use Amadeus\Client\Struct;
 class MasterPricerExpertSearchConv extends BaseConverter
 {
     /**
-     * @param FareMasterPricerExSearch $requestOptions
+     * @param FareMasterPricerExSearchOptions $requestOptions
      * @param int|string $version
      * @return Struct\Fare\MasterPricerExpertSearch
      */

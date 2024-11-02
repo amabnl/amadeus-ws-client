@@ -38,7 +38,7 @@ class AmountInfo
     /**
      * AmountInfo constructor.
      *
-     * @param int $amount
+     * @param int|float $amount
      */
     public function __construct($amount)
     {

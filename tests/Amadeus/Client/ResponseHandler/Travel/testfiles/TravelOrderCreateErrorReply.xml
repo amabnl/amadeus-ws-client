@@ -1,0 +1,14 @@
+<AMA_TravelOrderViewRS xmlns="http://xml.amadeus.com/2010/06/Travel_OrderViewRS_v1"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Errors>
+        <Error>
+            <Code>38629</Code>
+            <DescText>Unable to proceed - The flight is not available and waitlist is closed</DescText>
+            <OwnerName>1A</OwnerName>
+        </Error>
+        <Error>
+            <DescText>Unable to confirm Flight AA442 2024-12-08 JFKDFW L - Invalid Place of Destination Code</DescText>
+            <OwnerName>AA</OwnerName>
+        </Error>
+    </Errors>
+</AMA_TravelOrderViewRS>

@@ -2,8 +2,6 @@
 
 namespace Amadeus\Client\ResponseHandler\Ticket;
 
-use Amadeus\Client\ResponseHandler\StandardResponseHandler;
-
 /**
  * HandlerList
  *

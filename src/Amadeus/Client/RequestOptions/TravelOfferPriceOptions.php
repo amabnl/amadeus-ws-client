@@ -22,4 +22,9 @@ class TravelOfferPriceOptions extends AbstractTravelOptions
      * @var PricedOffer
      */
     public $pricedOffer;
+
+    /**
+     * @var string Existing offer id
+     */
+    public $orderId = '';
 }

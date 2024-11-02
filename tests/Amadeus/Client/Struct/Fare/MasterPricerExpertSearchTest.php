@@ -1683,6 +1683,7 @@ class MasterPricerExpertSearchTest extends BaseTestCase
             'count' => 1
         ]);
         $opt->itinerary[] = new MPItinerary([
+            'segmentReference' => 1,
             'departureLocation' => new MPLocation(['city' => 'BRU']),
             'arrivalLocation' => new MPLocation(['city' => 'LON']),
             'date' => new MPDate(['dateTime' => new \DateTime('2017-01-15T00:00:00+0000', new \DateTimeZone('UTC'))]),

@@ -31,7 +31,7 @@ namespace Amadeus\Client\Struct\Pnr\AddMultiElements;
 class NewFopsDetails
 {
     /**
-     * @var int
+     * @var int|string
      */
     public $cvData;
 

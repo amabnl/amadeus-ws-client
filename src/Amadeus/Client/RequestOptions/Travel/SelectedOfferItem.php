@@ -15,4 +15,14 @@ class SelectedOfferItem extends LoadParamsFromArray
      * @var string[]
      */
     public $paxRefId;
+
+    /**
+     * @var SelectedAlaCarteOfferItem|null
+     */
+    public $selectedAlaCarteOfferItem = null;
+
+    /**
+     * @var SelectedSeat|null
+     */
+    public $selectedSeat = null;
 }

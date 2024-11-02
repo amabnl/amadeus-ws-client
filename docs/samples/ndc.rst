@@ -1,6 +1,6 @@
-===========================================================
+==================================
 Samples for NDC methods (Travel_*)
-===========================================================
+==================================
 
 .. contents::
 
@@ -54,7 +54,7 @@ Very similar to Travel_OfferPrice but with small differences:
 .. code-block:: php
 
     use Amadeus\Client\RequestOptions\Travel as RequestOptions;
-    use Amadeus\Client\RequestOptions\TravelOfferPriceOptions;
+    use Amadeus\Client\RequestOptions\TravelOrderCreateOptions;
 
     $opt = new TravelOrderCreateOptions([
         'dataLists' => [
@@ -100,6 +100,9 @@ Very similar to Travel_OfferPrice but with small differences:
 Travel_OrderRetrieve
 --------------------
 
+Basic Request
+=============
+
 .. code-block:: php
 
     use Amadeus\Client\RequestOptions\TravelOrderRetrieveOptions;
@@ -107,6 +110,29 @@ Travel_OrderRetrieve
     $opt = new TravelOrderRetrieveOptions([
         'orderId' => 'AA12345',
         'ownerCode' => 'AA',
+    ]);
+
+    $response = $client->travelOrderRetrieve($opt);
+
+Specify Sender/TravelAgency
+===========================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\Travel;
+    use Amadeus\Client\RequestOptions\TravelOrderRetrieveOptions;
+
+    $opt = new TravelOrderRetrieveOptions([
+        'orderId' => 'AA12345',
+        'ownerCode' => 'AA',
+        'party' => new Travel\Party([
+            'sender' => new Travel\Sender([
+                'travelAgency' => new Travel\TravelAgency([
+                    'agencyId' => '123456',
+                    'pseudoCityId' => 'NYCXXXX',
+                ]),
+            ]),
+        ]),
     ]);
 
     $response = $client->travelOrderRetrieve($opt);
@@ -143,4 +169,128 @@ Travel_OrderCancel
     ]);
 
     $response = $client->travelOrderCancel($opt);
+
+-----------------------
+Travel_SeatAvailability
+-----------------------
+
+After pricing
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TravelSeatAvailabilityOptions;
+
+    $opt = new TravelSeatAvailabilityOptions([
+        'ownerCode' => 'AA12345',
+        'offerItemId' => 'AA',
+        'shoppingResponseId' => 'Pr_Re-sponseID_00',
+    ]);
+
+    $response = $client->travelSeatAvailability($opt);
+
+After booking
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TravelSeatAvailabilityOptions;
+
+    $opt = new TravelSeatAvailabilityOptions([
+        'orderId' => 'AA12345',
+        'ownerCode' => 'AA',
+    ]);
+
+    $response = $client->travelSeatAvailability($opt);
+
+------------------
+Travel_ServiceList
+------------------
+
+After pricing
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TravelServiceListOptions;
+
+    $opt = new TravelServiceListOptions([
+        'ownerCode' => 'AA',
+        'offerId' => '1A_TPID_CiESG1NQMUYtMTQxOAI=',
+        'offerItemId' => '1A_TPID_CAESH-VNQMUYS0x',
+        'shoppingResponseId' => 'SP1F-14193187327050054900',
+        'serviceId' => 1
+    ]);
+
+    $response = $client->travelServiceList($opt);
+
+After booking
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\TravelServiceListOptions;
+
+    $opt = new TravelServiceListOptions([
+        'orderId' => 'AA12345',
+        'ownerCode' => 'AA',
+    ]);
+
+    $response = $client->travelServiceList($opt);
+
+------------------
+Travel_OrderChange
+------------------
+
+Seat Request
+============
+
+For more information about seat assignment flow please reach Amadeus developers portal for complete documentation.
+Here need to use offer item data from Travel_SeatAvailability response:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\Travel;
+    use Amadeus\Client\RequestOptions\TravelOrderChangeOptions;
+
+    $orderChangeOptions = new TravelOrderChangeOptions([
+        'updateOrderItem' => new Travel\OrderChange\UpdateOrderItem([
+            'offer' => new Travel\SelectedOffer([
+                'offerRefID' => '1A_TPID_CiESG1NQMUYtMTQxOAI=', // $seatAvailabilityResponse->ALaCarteOffer->OfferID
+                'ownerCode' => 'AA', // $seatAvailabilityResponse->ALaCarteOffer->OwnerCode
+                'shoppingResponseRefID' => 'SP1F-14193187327050054900', // $seatAvailabilityResponse->ShoppingResponse->ResponseID
+                'selectedOfferItems' => [
+                    new Travel\SelectedOfferItem([
+                        'offerItemRefId' => '1A_TPID_CAESH-VNQMUYS0x', // $seatAvailabilityResponse->ALaCarteOffer->ALaCarteOfferItem->OfferItemID
+                        'paxRefId' => 'T1', // your pax ref (should match one from dataLists->paxList)
+                        'selectedAlaCarteOfferItem' => [
+                            new Travel\SelectedAlaCarteOfferItem([
+                                'quantity' => 1,
+                            ]),
+                        ],
+                        'selectedSeat' => new Travel\SelectedSeat([
+                            'column' => 'A',
+                            'rowNumber' => 12,
+                        ]),
+                    ]),
+                ],
+            ]),
+        ]),
+        'dataLists' => [
+            new Travel\DataList([
+                'paxList' => new Travel\PaxList([
+                    'pax' => [
+                        new Travel\Pax([ // your traveler data
+                            'paxId' => 'T1',
+                            'ptc' => 'ADT',
+                            'genderCode' => 'M',
+                            'dob' => new \DateTime('1994-01-01'),
+                            'firstName' => 'John',
+                            'lastName' => 'Doe',
+                        ]),
+                    ],
+                ]),
+            ]),
+        ],
+        'ownerCode' => 'AA12345',
+        'offerItemId' => 'AA',
+    ]);
+
+    $response = $client->travelOrderChange($orderChangeOptions);
 

@@ -31,14 +31,14 @@ namespace Amadeus\Client\Struct\Queue;
 class Account
 {
     /**
-     * @var int
+     * @var int|string
      */
     public $number;
 
     /**
      * Account constructor.
      *
-     * @param string $accountNumber
+     * @param int|string $accountNumber
      */
     public function __construct($accountNumber)
     {
