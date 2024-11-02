@@ -53,6 +53,15 @@ class MPLocation extends LoadParamsFromArray
     public $city;
 
     /**
+     * City or Airport code
+     *
+     * Use ATA/IATA defined 3 letter city code
+     *
+     * @var string
+     */
+    public $all;
+
+    /**
      * List of one or more cities
      *
      * @var string[]
