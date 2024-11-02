@@ -1,3 +1,9 @@
+## Release 2.1 (2 Nov 2024)
+* New messages (NDC): Travel_OrderChange, Travel_SeatAvailability, Travel_ServiceList (https://github.com/amabnl/amadeus-ws-client/pull/484) - Artem Zakharchenko
+* Fix mt_srand() argument is always 0 after #https://github.com/amabnl/amadeus-ws-client/pull/449 (https://github.com/amabnl/amadeus-ws-client/pull/482) - Artem Zakharchenko
+* Fix PHPUnit warnings "assertEqualXMLStructure() is deprecated and will be removed in PHPUnit 10." (https://github.com/amabnl/amadeus-ws-client/pull/485) - Artem Zakharchenko
+* MPTB: Allow filter by location without limit to airport or city (https://github.com/amabnl/amadeus-ws-client/pull/441) - José Ayrám
+
 ## Release 2.0 (26 Oct 2024)
 * Require PHP version 8.1+ for compatibility with modern psr/log^3, and phpunit^9.6 (https://github.com/amabnl/amadeus-ws-client/pull/481) - Artem Zakharchenko
 * Added Support for 3DS v2.0 with external Authentication in FOP_CreateFormOfPayment (https://github.com/amabnl/amadeus-ws-client/pull/458) - FriedemannSchmuhl

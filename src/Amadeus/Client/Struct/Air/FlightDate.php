@@ -81,20 +81,18 @@ class FlightDate
     }
 
     /**
-     * @param \DateTime|string|null $departureDate
+     * @param \DateTime|string|null $date
      */
-    protected function loadDepartureDate($departureDate)
+    protected function loadDepartureDate($date)
     {
-        if ($departureDate instanceof \DateTime) {
-            $this->departureDate = $departureDate->format('dmy') !== '000000'
-                ? $departureDate->format($this->dateFormat)
-                : null;
-            $time = $departureDate->format('Hi');
+        if ($date instanceof \DateTime) {
+            $this->departureDate = $date->format('dmy') !== '000000' ? $date->format($this->dateFormat) : null;
+            $time = $date->format('Hi');
             if ($time !== '0000') {
                 $this->departureTime = $time;
             }
-        } elseif (!empty($departureDate)) {
-            $this->departureDate = $departureDate;
+        } elseif (!empty($date)) {
+            $this->departureDate = $date;
         }
     }
 
@@ -123,9 +121,7 @@ class FlightDate
      */
     public function setArrivalDate(\DateTime $arrivalDate)
     {
-        $this->arrivalDate = $arrivalDate->format('dmy') !== '000000'
-            ? $arrivalDate->format($this->dateFormat)
-            : null;
+        $this->arrivalDate = $arrivalDate->format('dmy') !== '000000' ? $arrivalDate->format($this->dateFormat) : null;
         $time = $arrivalDate->format('Hi');
         if ($time !== '0000') {
             $this->arrivalTime = $time;

@@ -721,7 +721,7 @@ class UpdateRefundTest extends BaseTestCase
                     'amount' => 0.00,
                     'freeText' => 'P',
                     'rate' => 0.00,
-                ])
+                ]),
             ],
             'taxData' => [
                 new TaxData([
@@ -927,7 +927,34 @@ class UpdateRefundTest extends BaseTestCase
         $this->assertNull($msg->firstAndLastSegmentDates);
         $this->assertNull($msg->originAndDestination);
         $this->assertNull($msg->transactionContext);
+    }
 
+    public function testCanMakeMessageWithOtherCommissionDetails(): void
+    {
+        $opt = new DocRefundUpdateRefundOptions([
+            //Other parameters omitted
+            'commission' => [
+                new CommissionOpt([
+                    'type' => CommissionOpt::TYPE_NEW_COMMISSION,
+                    'amount' => 0.0,
+                    'freeText' => 'P',
+                    'rate' => 0.0,
+                ]),
+                new CommissionOpt([
+                    'type' => CommissionOpt::TYPE_NEW_COMMISSION,
+                    'amount' => 2.0,
+                    'freeText' => 'A',
+                    'rate' => 0.0,
+                ]),
+            ],
+        ]);
+
+        $msg = new UpdateRefund($opt);
+
+        self::assertEquals('P', $msg->commission->commissionDetails->freeText);
+        self::assertCount(1, $msg->commission->otherCommissionDetails);
+        self::assertEquals(2.0, $msg->commission->otherCommissionDetails[0]->amount);
+        self::assertEquals('A', $msg->commission->otherCommissionDetails[0]->freeText);
     }
 }
 

@@ -1953,4 +1953,69 @@ class MasterPricerTravelBoardSearchTest extends BaseTestCase
         $this->assertCount(1, $message->paxReference[0]->traveller);
         $this->assertEquals(1, $message->paxReference[0]->traveller[0]->ref);
     }
+
+    public function testCanMakeRequestForLocationAll(): void
+    {
+        $opt = new FareMasterPricerTbSearch([
+            'nrOfRequestedPassengers' => 1,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 1
+                ]),
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['all' => 'MVD']),
+                    'arrivalLocation' => new MPLocation(['all' => 'SAO']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2021-09-15T10:00:00+0000', new \DateTimeZone('UTC'))
+                    ]),
+                ]),
+            ],
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        self::assertEquals('MVD', $message->itinerary[0]->departureLocalization->departurePoint->locationId);
+        self::assertNull($message->itinerary[0]->departureLocalization->departurePoint->airportCityQualifier);
+
+        self::assertEquals('SAO', $message->itinerary[0]->arrivalLocalization->arrivalPointDetails->locationId);
+        self::assertNull($message->itinerary[0]->arrivalLocalization->arrivalPointDetails->airportCityQualifier);
+    }
+
+    public function testCanMakeNdcOnlyRequest(): void
+    {
+        $opt = new FareMasterPricerTbSearch([
+            'nrOfRequestedResults' => 200,
+            'nrOfRequestedPassengers' => 2,
+            'passengers' => [
+                new MPPassenger([
+                    'type' => MPPassenger::TYPE_ADULT,
+                    'count' => 2
+                ]),
+            ],
+            'itinerary' => [
+                new MPItinerary([
+                    'departureLocation' => new MPLocation(['city' => 'JFK']),
+                    'arrivalLocation' => new MPLocation(['city' => 'LHR']),
+                    'date' => new MPDate([
+                        'dateTime' => new \DateTime('2024-03-05T10:00:00+0000', new \DateTimeZone('UTC')),
+                    ])
+                ])
+            ],
+            'ndcOnly' => true,
+        ]);
+
+        $message = new MasterPricerTravelBoardSearch($opt);
+
+        self::assertEquals(2, $message->numberOfUnit->unitNumberDetail[0]->numberOfUnits);
+        self::assertEquals('PX', $message->numberOfUnit->unitNumberDetail[0]->typeOfUnit);
+
+        self::assertEquals(200, $message->numberOfUnit->unitNumberDetail[1]->numberOfUnits);
+        self::assertEquals('RC', $message->numberOfUnit->unitNumberDetail[1]->typeOfUnit);
+
+        self::assertEquals(100, $message->numberOfUnit->unitNumberDetail[2]->numberOfUnits);
+        self::assertEquals('NDC', $message->numberOfUnit->unitNumberDetail[2]->typeOfUnit);
+    }
 }

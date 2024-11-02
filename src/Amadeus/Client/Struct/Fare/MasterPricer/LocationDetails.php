@@ -60,7 +60,7 @@ class LocationDetails
      * D  Consider Destination (off point) of the PNR requested segment
      * O  Consider Origin (board point) of the PNR requested segment
      *
-     * @var string
+     * @var string|null
      */
     public $airportCityQualifier;
     /**
