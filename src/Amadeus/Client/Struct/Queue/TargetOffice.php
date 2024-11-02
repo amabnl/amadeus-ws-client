@@ -41,9 +41,8 @@ class TargetOffice
     /**
      * @param int $sourceType
      * @param string $originatorOffice
-     * @param string|null $specificOffice
      */
-    public function __construct($sourceType, $originatorOffice, $specificOffice = null)
+    public function __construct($sourceType, $originatorOffice)
     {
         $this->sourceType = new SourceType($sourceType);
 

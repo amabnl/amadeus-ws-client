@@ -345,8 +345,6 @@ class AddMultiElements extends BaseWsMessage
      */
     protected function createElement($element, &$tattooCounter)
     {
-        $createdElement = null;
-
         $tattooCounter++;
 
         $createdElement = new DataElementsIndiv($element, $tattooCounter);

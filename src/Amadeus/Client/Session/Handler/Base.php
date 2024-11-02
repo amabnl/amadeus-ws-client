@@ -83,7 +83,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     protected $isAuthenticated = false;
 
     /**
-     * @var array[string]\SoapClient
+     * @var array<string, \SoapClient>
      */
     protected $soapClients = [];
 

@@ -57,7 +57,7 @@ class FopExtension extends WsMessageUtility
      * FopExtension constructor.
      *
      * @param int $fopSequenceNumber
-     * @param string|null $cvcCode
+     * @param int|string|null $cvcCode
      * @param string|null $holderName
      */
     public function __construct($fopSequenceNumber, $cvcCode = null, $holderName = null)

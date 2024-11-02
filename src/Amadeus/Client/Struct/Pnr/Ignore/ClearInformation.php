@@ -44,7 +44,7 @@ class ClearInformation extends BaseWsMessage
     /**
      * Ignore constructor.
      *
-     * @param string $actionRequestCode self::CODE_*
+     * @param self::CODE_* $actionRequestCode
      */
     public function __construct($actionRequestCode)
     {

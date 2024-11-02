@@ -52,7 +52,7 @@ class ConversionDetails
      *
      * @param string|null $convertOption (OPTIONAL) SelectionDetails::OPTION_CONVERT_*
      * @param string|null $currency
-     * @param int|null $amount
+     * @param int|float|null $amount
      */
     public function __construct($convertOption = null, $currency = null, $amount = null)
     {

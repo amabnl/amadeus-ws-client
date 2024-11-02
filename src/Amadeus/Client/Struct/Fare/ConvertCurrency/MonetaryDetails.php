@@ -44,7 +44,7 @@ class MonetaryDetails
     public $typeQualifier = self::BASE_FARE;
 
     /**
-     * @var int|string
+     * @var int|float
      */
     public $amount;
 
@@ -56,7 +56,7 @@ class MonetaryDetails
     /**
      * Construct MonetaryDetails
      *
-     * @param int $amount
+     * @param int|float $amount
      */
     public function __construct($amount)
     {

@@ -35,7 +35,7 @@ use Amadeus\Client\Struct;
 class StandaloneCatalogueConv extends BaseConverter
 {
     /**
-     * @param ServiceIntegratedCatalogueOptions $requestOptions
+     * @param ServiceStandaloneCatalogueOptions $requestOptions
      * @param int|string $version
      * @return Struct\Service\StandaloneCatalogue
      */

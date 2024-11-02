@@ -54,7 +54,7 @@ class Split extends BaseWsMessage
         if (is_string($params->recordLocator) && strlen($params->recordLocator) >= 6) {
             $this->reservationInfo = new ReservationInfo($params->recordLocator);
         }
-        if ($params->passengerTattoos) {
+        if (!empty($params->passengerTattoos)) {
             $this->splitDetails = new SplitDetails($params->passengerTattoos);
         }
     }

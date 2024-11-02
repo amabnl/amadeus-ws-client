@@ -52,7 +52,7 @@ class FareConvertCurrencyOptions extends Base
     const RATE_TYPE_IATA_CLEARINGHOUSE = '700';
 
     /**
-     * @var double
+     * @var float
      */
     public $amount;
 
