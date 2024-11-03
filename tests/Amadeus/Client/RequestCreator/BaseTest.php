@@ -45,6 +45,8 @@ use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
 use Amadeus\Client\RequestOptions\Queue;
 use Amadeus\Client\RequestOptions\QueueListOptions;
+use Amadeus\Client\RequestOptions\Service\BookPriceProduct\Recommendation;
+use Amadeus\Client\RequestOptions\ServiceBookPriceProductOptions;
 use Amadeus\Client\Struct\Fare\InformativeBestPricingWithoutPNR13;
 use Amadeus\Client\Struct\Offer\Reference;
 use Amadeus\Client\Struct\Offer\Verify;
@@ -455,4 +457,35 @@ class BaseTest extends BaseTestCase
 
         self::assertInstanceOf(InformativeBestPricingWithoutPNR13::class, $result);
     }
+
+    public function testCanCreateServiceBookPriceProductMessage()
+    {
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['Service_BookPriceProduct' => ['version' => '1.0', 'wsdl' => 'aabbccdd']]
+        ]);
+
+        $rq = new Base($par);
+
+        $message = $rq->createRequest(
+            'Service_BookPriceProduct',
+            new ServiceBookPriceProductOptions(
+                [
+                    'version' => '1.1',
+                    'recommendations' => [
+                        new Recommendation(['id' => '14', 'customerRefIds' => [0, 1]])
+                    ]
+                ]
+            )
+        );
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\Service\BookPriceProduct', $message);
+        /** @var RetrieveAndDisplay $message */
+        $this->assertEquals('1.1', $message->Version);
+        $this->assertInstanceOf('Amadeus\Client\Struct\Service\BookPriceProduct\Recommendation', $message->Recommendation[0]);
+        $this->assertEquals('14', $message->Recommendation[0]->RecoID);
+        $this->assertEquals([0, 1], $message->Recommendation[0]->CustomerRefIds);
+    }
+
 }

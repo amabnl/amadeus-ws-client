@@ -5104,6 +5104,50 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendServiceBookPriceProduct()
+    {
+        $mockSessionHandler = $this->createMock('Amadeus\Client\Session\Handler\HandlerInterface');
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('serviceBookPriceProductReply.txt');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $opts = new Client\RequestOptions\ServiceBookPriceProductOptions([
+            'recommendations' => [new Client\RequestOptions\Service\BookPriceProduct\Recommendation([
+                'id' => '14',
+                'customerRefIds' => [1, 2]
+            ])]
+        ]);
+        $expectedMessageResult = new Client\Struct\Service\BookPriceProduct($opts);
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Service_BookPriceProduct', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));;
+        $mockSessionHandler
+            ->expects($this->never())
+            ->method('getLastResponse');
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['Service_BookPriceProduct' => ['version' => '1.0', 'wsdl' => 'dc22e4ee']]));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+
+        $client = new Client($par);
+
+        $response = $client->serviceBookPriceProduct($opts);
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanSendServiceBookPriceService()
     {
         $mockSessionHandler = $this->createMock('Amadeus\Client\Session\Handler\HandlerInterface');

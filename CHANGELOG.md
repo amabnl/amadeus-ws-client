@@ -1,3 +1,7 @@
+## Unreleased
+* Implemented ``Service_BookPriceProduct``
+* Added Dockerfile/Makefile for easier development
+
 ## Release 2.1 (2 Nov 2024)
 * New messages (NDC): Travel_OrderChange, Travel_SeatAvailability, Travel_ServiceList (https://github.com/amabnl/amadeus-ws-client/pull/484) - Artem Zakharchenko
 * Fix mt_srand() argument is always 0 after #https://github.com/amabnl/amadeus-ws-client/pull/449 (https://github.com/amabnl/amadeus-ws-client/pull/482) - Artem Zakharchenko

@@ -36,3 +36,10 @@ For that it's best to rely on the Amadeus Web Services Extranet functional docum
 You should also remember that the request options object is an object used by users of this library, so we should be able to maintain backwards compatibility even when changing the features implemented for a message.
 
 An example pull request to learn from: https://github.com/amabnl/amadeus-ws-client/pull/74
+
+## Testing your changes
+If you have docker installed, simply run `make test`, that will 
+- build a basic docker image (`make build-docker-image`)
+- download a composer.phar (`make composer-download`)
+- install all dependencies (`make composer-install`)
+- and finally run the tests (`make phpunit`)
