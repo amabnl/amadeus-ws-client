@@ -24,13 +24,9 @@ namespace Amadeus;
 
 use Amadeus\Client\Base;
 use Amadeus\Client\Exception;
-use Amadeus\Client\InvalidMessageException;
 use Amadeus\Client\Params;
-use Amadeus\Client\RequestCreator\MessageVersionUnsupportedException;
 use Amadeus\Client\RequestOptions;
-use Amadeus\Client\RequestOptions\ServiceBookPriceProductOptions;
 use Amadeus\Client\Result;
-use Amadeus\Client\Session\Handler\UnsupportedOperationException;
 
 /**
  * Amadeus Web Service Client.
@@ -811,6 +807,23 @@ class Client extends Base
     public function fareGetFareRules(RequestOptions\FareGetFareRulesOptions $options, $messageOptions = [])
     {
         $msgName = 'Fare_GetFareRules';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Fare_TLAGetFareRules
+     *
+     * @param RequestOptions\FareTLAGetFareRulesOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function fareTLAGetFareRules(RequestOptions\FareTLAGetFareRulesOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Fare_TLAGetFareRules';
 
         return $this->callMessage($msgName, $options, $messageOptions);
     }
@@ -1700,13 +1713,12 @@ class Client extends Base
     /**
      * Service_BookPriceProduct
      *
-     * @param ServiceBookPriceProductOptions $options
+     * @param RequestOptions\ServiceBookPriceProductOptions $options
      * @param array                          $messageOptions  (OPTIONAL)
      *
      * @return Result
-     * @throws Exception
-     * @throws InvalidMessageException
-     * @throws MessageVersionUnsupportedException
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
      */
     public function serviceBookPriceProduct(
         RequestOptions\ServiceBookPriceProductOptions $options,

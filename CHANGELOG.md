@@ -1,5 +1,6 @@
 ## Unreleased
 * Implemented ``Service_BookPriceProduct``
+* Implemented ``Fare_TLAGetFareRules``
 * Added Dockerfile/Makefile for easier development
 
 ## Release 2.1 (2 Nov 2024)

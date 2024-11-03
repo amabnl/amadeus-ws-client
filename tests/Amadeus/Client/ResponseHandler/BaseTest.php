@@ -1968,6 +1968,19 @@ class BaseTest extends BaseTestCase
         $this->assertEquals(0, count($result->messages));
     }
 
+    public function testCanHandleFareTLAGetFareRules()
+    {
+        $respHandler = new ResponseHandler\Base();
+
+        $sendResult = new SendResult();
+        $sendResult->responseXml = $this->getTestFile('dummyFareTLAGetFareRulesResponse.txt');
+
+        $result = $respHandler->analyzeResponse($sendResult, 'Fare_TLAGetFareRules');
+
+        $this->assertEquals(Result::STATUS_OK, $result->status);
+        $this->assertEquals(0, count($result->messages));
+    }
+
     public function testCanHandleTravelOfferPrice()
     {
         $respHandler = new ResponseHandler\Base();
