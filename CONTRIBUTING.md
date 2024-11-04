@@ -39,7 +39,6 @@ An example pull request to learn from: https://github.com/amabnl/amadeus-ws-clie
 
 ## Testing your changes
 If you have docker installed, simply run `make test`, that will 
-- build a basic docker image (`make build-docker-image`)
-- download a composer.phar (`make composer-download`)
+- build a basic docker image (`make build-docker-image-once`)
 - install all dependencies (`make composer-install`)
 - and finally run the tests (`make phpunit`)
