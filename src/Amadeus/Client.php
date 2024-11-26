@@ -1654,6 +1654,82 @@ class Client extends Base
     }
 
     /**
+     * Profile_ReadProfile
+     *
+     * @param RequestOptions\ProfileReadProfileOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function profileReadProfile(
+        RequestOptions\ProfileReadProfileOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Profile_ReadProfile';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Profile_CreateProfile
+     *
+     * @param RequestOptions\ProfileCreateProfileOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function profileCreateProfile(
+        RequestOptions\ProfileCreateProfileOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Profile_CreateProfile';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Profile_CreateProfile
+     *
+     * @param RequestOptions\ProfileDeleteProfileOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function profileDeleteProfile(
+        RequestOptions\ProfileDeleteProfileOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Profile_DeleteProfile';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
+     * Profile_UpdateProfile
+     *
+     * @param RequestOptions\ProfileUpdateProfileOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function profileUpdateProfile(
+        RequestOptions\ProfileUpdateProfileOptions $options,
+        $messageOptions = []
+    ) {
+        $msgName = 'Profile_UpdateProfile';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * SalesReports_DisplayQueryReport
      *
      * @param RequestOptions\SalesReportsDisplayQueryReportOptions $options
