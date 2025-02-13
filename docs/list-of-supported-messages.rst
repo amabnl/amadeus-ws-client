@@ -89,6 +89,10 @@ This is the list of messages that are at least partially supported at this time:
 - SalesReports_DisplayQueryReport
 - SalesReports_DisplayDailyOrSummarizedReport
 - SalesReports_DisplayNetRemitReport
+- PAY_ListVirtualCards
+- PAY_GetVirtualCardDetails
+- PAY_GenerateVirtualCard (partially)
+- PAY_DeleteVirtualCard
 - Travel_OfferPrice
 - Travel_OrderCreate
 - Travel_OrderRetrieve
