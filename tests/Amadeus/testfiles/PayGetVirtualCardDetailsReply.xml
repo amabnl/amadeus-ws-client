@@ -1,0 +1,75 @@
+<AMA_PAY_GetVirtualCardDetailsRS Version="2.0" xmlns="http://xml.amadeus.com/2010/06/PAY_VirtualCard_v2"
+                                 xmlns:fop="http://xml.amadeus.com/2010/06/FOP_Types_v6"
+                                 xmlns:pay="http://xml.amadeus.com/2010/06/PAY_Types_v1"
+>
+    <Success>
+        <VirtualCard LastUpdatedTime="2017-06-08T09:46:55" CreationTime="2017-06-08T09:46:45" CreationUser="9879WS"
+                     CreationOffice="NCE1A0950" CardStatus="DELETED">
+            <pay:Card HolderName="Amadeus IT Group SA" SubType="PREPAID">
+                <fop:AddressVerificationSystemValue CityName="Madrid" PostalCode="28027" Country="SPAIN">
+                    <fop:Line>Salvador de Madariaga 1</fop:Line>
+                </fop:AddressVerificationSystemValue>
+                <fop:PrimaryAccountNumber>5220938369101435</fop:PrimaryAccountNumber>
+                <fop:CVV>123</fop:CVV>
+                <fop:Validity EndDate="1217"/>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">2222483Q</pay:Reference>
+                <pay:Reference Type="External">0RABg9JZ0fdbtH28BiAtcJRd8</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+                <pay:Value Type="AvailableBalance" Amount="0" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:AllowedTransactions Maximum="1"/>
+                <pay:ValidityPeriod StartDate="2017-06-08" EndDate="2017-12-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <Transactions>
+            <Transaction Reference="0RABoIkHGNcj4o-kNsuOQjaQP" Type="CREATE_CARD" Timestamp="2017-06-08T09:46:47">
+                <Values>
+                    <Value Type="ResultingBalance" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+                    <Value Type="FundsCredited" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+                </Values>
+                <Details>
+                    <Detail>Payment Partner Transfer from Funding Account [faamadeus_EUR] to Virtual Card [Amadeus IT
+                        Group SA.QTY74TYQRK0, reference 0RABg9JZ0fdbtH28BiAtcJRd8]
+                    </Detail>
+                </Details>
+            </Transaction>
+            <Transaction Reference="0RADdrRXo_6e0jF4lKNIh0NG6" Type="FREEZE_CARD" Timestamp="2017-06-08T09:46:50">
+                <Values>
+                    <Value Type="ResultingBalance" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+                </Values>
+                <Details>
+                    <Detail>Freezing instrument with freeze type [User]</Detail>
+                </Details>
+            </Transaction>
+            <Transaction Reference="0RACSfg-yyjmx4MyLYGEwkbIr" Type="THAW_CARD" Timestamp="2017-06-08T09:46:53">
+                <Values>
+                    <Value Type="ResultingBalance" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+                </Values>
+                <Details>
+                    <Detail>Thawing instrument from freeze type [User]</Detail>
+                </Details>
+            </Transaction>
+            <Transaction Reference="0RACmY1bp84sG_K6I8rqv5rUW" Type="DELETE_CARD" Timestamp="2017-06-08T09:46:56">
+                <Values>
+                    <Value Type="FundsDebited" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+                    <Value Type="ResultingBalance" Amount="0" DecimalPlaces="2" CurrencyCode="EUR"/>
+                </Values>
+                <Details>
+                    <Detail>Instrument Destroy</Detail>
+                </Details>
+            </Transaction>
+        </Transactions>
+        <Notifications/>
+        <ReportingInfo>
+            <pay:AdditionalInfo Code="Reason">First night on 13AUG2017</pay:AdditionalInfo>
+        </ReportingInfo>
+        <Reservation/>
+    </Success>
+</AMA_PAY_GetVirtualCardDetailsRS>

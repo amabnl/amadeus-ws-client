@@ -37,16 +37,18 @@ class DeleteVirtualCard extends BaseWsMessage
 {
     public $Version = '2.0';
 
+    /**
+     * @var Reference[]
+     */
     public $References;
 
     /**
      * DeleteVirtualCard constructor.
      * @param PayDeleteVirtualCardOptions $params
-     * @param string|int                  $version
      */
-    public function __construct(PayDeleteVirtualCardOptions $params, $version)
+    public function __construct(PayDeleteVirtualCardOptions $params)
     {
-        if ($params->amadeusReference === null || $params->externalReference === null) {
+        if ((string)$params->amadeusReference === '' || (string)$params->externalReference === '') {
             throw new InvalidArgumentException('All DeleteVirtualCard options are mandatory');
         }
 

@@ -24,6 +24,7 @@
 namespace Amadeus\Client\ResponseHandler\PAY;
 
 use Amadeus\Client\ResponseHandler\StandardResponseHandler;
+use stdClass;
 
 /**
  * VirtualCardDetailsBaseResponseHandler
@@ -50,7 +51,7 @@ abstract class AbstractCardDetailsResponseHandler extends StandardResponseHandle
         $address = $domXpath->query('//fop:AddressVerificationSystemValue');
         if ($address->length > 0) {
             if (empty($analyzeResponse->response->Success->VirtualCard->Card->AddressVerificationSystemValue)) {
-                $analyzeResponse->response->Success->VirtualCard->Card->AddressVerificationSystemValue = new \stdClass();
+                $analyzeResponse->response->Success->VirtualCard->Card->AddressVerificationSystemValue = new stdClass();
             }
             $analyzeResponse->response->Success->VirtualCard->Card->AddressVerificationSystemValue->Line =
                 $address->item(0)->nodeValue;
@@ -64,25 +65,20 @@ abstract class AbstractCardDetailsResponseHandler extends StandardResponseHandle
 
         $limitations = $domXpath->query('//pay:Limitations');
         if ($limitations->length > 0) {
-            $limitationsNodes = $limitations->item(0)->childNodes;
+            $limitationsNodesArrayData = $this->nodeToArray($limitations->item(0));
             $analyzeResponse->response->Success->VirtualCard->AllowedTransactions =
-                $limitationsNodes->item(0)->getAttribute('Maximum');
+                $limitationsNodesArrayData['pay:AllowedTransactions'][0]['Maximum'];
             $analyzeResponse->response->Success->VirtualCard->ValidityPeriod =
-                $limitationsNodes->item(1)->getAttribute('EndDate');
+                $limitationsNodesArrayData['pay:ValidityPeriod'][0]['EndDate'];
         }
-
 
         $balance = $domXpath->query('//pay:Value[@Type=\'AvailableBalance\']');
-        if ($balance->length > 0) {
-            $analyzeResponse->response->Success->VirtualCard->Amount =
-                $balance->item(0)->getAttribute('Amount');
-            $analyzeResponse->response->Success->VirtualCard->DecimalPlaces =
-                $balance->item(0)->getAttribute('DecimalPlaces');
-            $analyzeResponse->response->Success->VirtualCard->CurrencyCode =
-                $balance->item(0)->getAttribute('CurrencyCode');
+
+        if ($balance->length === 0) {
+            // OnCard = amount actually on card, but some responses may not contain such type
+            $balance = $domXpath->query('//pay:Value[@Type=\'OnCard\']');
         }
 
-        $balance = $domXpath->query('//pay:Value[@Type=\'OnCard\']');
         if ($balance->length > 0) {
             $analyzeResponse->response->Success->VirtualCard->Amount =
                 $balance->item(0)->getAttribute('Amount');
@@ -93,5 +89,37 @@ abstract class AbstractCardDetailsResponseHandler extends StandardResponseHandle
         }
 
         return $analyzeResponse;
+    }
+
+    /**
+     * Using this method because otherwise uploaded XML used for unit-tests for unknown reason does not recognize:
+     * $limitations = $domXpath->query('//pay:Limitations');
+     * $limitationsNodes = $limitations->item(0)->childNodes;
+     * $limitationsNodes->item(0)->getAttribute('Maximum'); <<<--- Call to undefined method DOMText::getAttribute()
+     *
+     * So using this nodeToArray() method which works in both unit-tests and real SOAP client
+     * https://www.php.net/manual/en/class.domdocument.php#101014
+     * @param $node
+     * @return array
+     */
+    protected function nodeToArray($node): array
+    {
+        $result = [];
+
+        if ($node->hasAttributes()) {
+            foreach ($node->attributes as $attr) {
+                $result[$attr->nodeName] = $attr->nodeValue;
+            }
+        }
+
+        if ($node->hasChildNodes()) {
+            foreach ($node->childNodes as $childNode) {
+                if ($childNode->nodeType !== XML_TEXT_NODE) {
+                    $result[$childNode->nodeName][] = $this->nodeToArray($childNode);
+                }
+            }
+        }
+
+        return $result;
     }
 }

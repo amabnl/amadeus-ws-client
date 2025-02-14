@@ -4354,6 +4354,219 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendPayListVirtualCards(): void
+    {
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('PayListVirtualCardsReply.xml');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $requestOptions = new Client\RequestOptions\PayListVirtualCardsOptions([
+            'SubType' => Client\RequestOptions\PayListVirtualCardsOptions::SUBTYPE_PREPAID,
+            'CurrencyCode' => 'EUR',
+            'Period' => new Client\RequestOptions\Pay\Period([
+                'start' => new \DateTime('2017-04-01'),
+                'end' => new \DateTime('2017-04-18'),
+            ]),
+            'CardStatus' => Client\RequestOptions\PayListVirtualCardsOptions::CARD_STATUS_ACTIVE,
+        ]);
+
+        $expectedMessageResult = new Client\Struct\Pay\ListVirtualCards($requestOptions);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PAY_ListVirtualCards', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(self::getPayWsdlMessagesAndVersions());
+
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
+
+        $responseHandlerMock
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'PAY_ListVirtualCards')
+            ->willReturn($messageResult);
+
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX',
+        ]);
+        $params->responseHandler = $responseHandlerMock;
+
+        $client = new Client($params);
+
+        $response = $client->payListVirtualCards($requestOptions);
+
+        self::assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendPayGenerateVirtualCard(): void
+    {
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('PayGenerateVirtualCardReply.xml');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $requestOptions = new Client\RequestOptions\PayGenerateVirtualCardOptions([
+            'CardName' => 'Card_Friendly_Name_UNIQ',
+            'VendorCode' => Client\RequestOptions\PayGenerateVirtualCardOptions::VENDOR_VISA,
+            'ReturnCVV' => true,
+            'SubType' => Client\RequestOptions\PayGenerateVirtualCardOptions::SUBTYPE_DEBIT,
+            'Amount' => 1,
+            'DecimalPlaces' => 0,
+            'CurrencyCode' => 'EUR',
+            'maxAllowedTransactions' => 1,
+            'endValidityPeriod' => '2025-03-01',
+        ]);
+
+        $expectedMessageResult = new Client\Struct\Pay\GenerateVirtualCard($requestOptions);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PAY_GenerateVirtualCard', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(self::getPayWsdlMessagesAndVersions());
+
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
+
+        $responseHandlerMock
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'PAY_GenerateVirtualCard')
+            ->willReturn($messageResult);
+
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX',
+        ]);
+        $params->responseHandler = $responseHandlerMock;
+
+        $client = new Client($params);
+
+        $response = $client->payGenerateVirtualCard($requestOptions);
+
+        self::assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendPayGetVirtualCardDetails(): void
+    {
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('PayGetVirtualCardDetailsReply.xml');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $requestOptions = new Client\RequestOptions\PayGetVirtualCardDetailsOptions([
+            'amadeusReference' => '2222483Q',
+            'externalReference' => '0RABg9JZ0fdbtH28BiAtcJRd8',
+            'displayFilter' => Client\RequestOptions\PayGetVirtualCardDetailsOptions::FILTER_FULL,
+        ]);
+
+        $expectedMessageResult = new Client\Struct\Pay\GetVirtualCardDetails($requestOptions);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PAY_GetVirtualCardDetails', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(self::getPayWsdlMessagesAndVersions());
+
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
+
+        $responseHandlerMock
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'PAY_GetVirtualCardDetails')
+            ->willReturn($messageResult);
+
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX',
+        ]);
+        $params->responseHandler = $responseHandlerMock;
+
+        $client = new Client($params);
+
+        $response = $client->payGetVirtualCardDetails($requestOptions);
+
+        self::assertEquals($messageResult, $response);
+    }
+
+    public function testCanSendPayDeleteVirtualCard(): void
+    {
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('PayDeleteVirtualCardReply.xml');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $requestOptions = new Client\RequestOptions\PayDeleteVirtualCardOptions([
+            'amadeusReference' => '222245PE',
+            'externalReference' => '0RAAbaOZgJ2ePy4eo0K5g1Hfa',
+        ]);
+
+        $expectedMessageResult = new Client\Struct\Pay\DeleteVirtualCard($requestOptions);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PAY_DeleteVirtualCard', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(self::getPayWsdlMessagesAndVersions());
+
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
+
+        $responseHandlerMock
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'PAY_DeleteVirtualCard')
+            ->willReturn($messageResult);
+
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX',
+        ]);
+        $params->responseHandler = $responseHandlerMock;
+
+        $client = new Client($params);
+
+        $response = $client->payDeleteVirtualCard($requestOptions);
+
+        self::assertEquals($messageResult, $response);
+    }
+
     public function testCanFareGetFareRules()
     {
         $mockSessionHandler = $this->createMock('Amadeus\Client\Session\Handler\HandlerInterface');
@@ -7035,6 +7248,19 @@ class ClientTest extends BaseTestCase
             'Travel_OrderPay' => ['version' => '1.5', 'wsdl' => 'dc22e4ee'],
             'Travel_OrderRetrieve' => ['version' => '1.5', 'wsdl' => 'dc22e4ee'],
             'Travel_ServiceList' => ['version' => '1.1', 'wsdl' => 'dc22e4ee'],
+        ];
+    }
+
+    private static function getPayWsdlMessagesAndVersions(): array
+    {
+        return [
+            'PAY_CancelVirtualCardLoad' => ['version' => 'CancelVirtualCardLoadRQ.3.000', 'wsdl' => '5073cf5a'],
+            'PAY_DeleteVirtualCard' => ['version' => 'DeleteVirtualCardRQ.3.000', 'wsdl' => '5073cf5a'],
+            'PAY_GenerateVirtualCard' => ['version' => 'GenerateVirtualCardRQ.3.000', 'wsdl' => '5073cf5a'],
+            'PAY_GetVirtualCardDetails' => ['version' => 'GetVirtualCardDetailsRQ.3.000', 'wsdl' => '5073cf5a'],
+            'PAY_ListVirtualCards' => ['version' => 'ListVirtualCardsRQ.3.000', 'wsdl' => '5073cf5a'],
+            'PAY_ScheduleVirtualCardLoad' => ['version' => 'ScheduleVirtualCardLoadRQ.3.000', 'wsdl' => '5073cf5a'],
+            'PAY_UpdateVirtualCard' => ['version' => 'UpdateVirtualCardRQ.3.000', 'wsdl' => '5073cf5a'],
         ];
     }
 }

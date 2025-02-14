@@ -33,17 +33,21 @@ use Amadeus\Client\LoadParamsFromArray;
  */
 class Period extends LoadParamsFromArray
 {
+    public const EVENT_TYPE_CREATION = 'Creation';
+
     /**
-     * YYYY-MM-DD or YYYY-MM-DD-hh:mm:ss
-     *
-     * @var string
+     * @var \DateTimeInterface|null
      */
     public $start;
 
     /**
-     * YYYY-MM-DD or YYYY-MM-DD-hh:mm:ss
-     *
-     * @var string
+     * @var \DateTimeInterface|null
      */
     public $end;
+
+    /**
+     * Only "Creation" is allowed.
+     * @var string
+     */
+    public $eventType = self::EVENT_TYPE_CREATION;
 }

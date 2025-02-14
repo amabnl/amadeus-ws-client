@@ -57,7 +57,7 @@ class ListVirtualCards extends BaseWsMessage
     public $CurrencyCode;
 
     /**
-     * @var Period
+     * @var \SoapVar
      */
     public $Period;
 
@@ -74,9 +74,8 @@ class ListVirtualCards extends BaseWsMessage
     /**
      * ListVirtualCards constructor.
      * @param PayListVirtualCardsOptions $params
-     * @param string|int                 $version
      */
-    public function __construct(PayListVirtualCardsOptions $params, $version)
+    public function __construct(PayListVirtualCardsOptions $params)
     {
         if ($params->SubType !== null) {
             $this->SubType = $params->SubType;
@@ -94,8 +93,34 @@ class ListVirtualCards extends BaseWsMessage
             $this->CurrencyCode = $params->CurrencyCode;
         }
 
-        if ($params->Period !== null) {
-            $this->Period = new Period($params);
+        $period = $params->Period;
+
+        if ($period !== null) {
+            /**
+             * For unknown reason, the SOAP client does not generate proper XML with attributes for Period node.
+             * Expected to have <Period Start="2017-04-01" End="2017-04-1" EventType="Creation" />
+             * But generated XML never contains "Start" and "End" attributes (by the way "EventType" present).
+             * This SoapVar solution is not ideal, but at least it works.
+             */
+            $periodAttributes = array_filter([
+                'Start' => $period->start?->format('Y-m-d'),
+                'End' => $period->end?->format('Y-m-d'),
+                'EventType' => $period->eventType,
+            ]);
+
+            // Result is <ns1:Period Start="2017-04-01" End="2017-04-1" EventType="Creation" />
+            $xml = sprintf(
+                '<ns1:Period %s ></ns1:Period>',
+                implode(
+                    ' ',
+                    array_map(
+                        static fn (string $key, string $value): string => sprintf('%s="%s"', $key, $value),
+                        array_keys($periodAttributes),
+                        $periodAttributes,
+                    ),
+                ),
+            );
+            $this->Period = new \SoapVar($xml, XSD_ANYXML);
         }
 
         if ($params->CardStatus !== null) {

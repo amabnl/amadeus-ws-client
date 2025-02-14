@@ -37,11 +37,11 @@ class GenerateVirtualCardConv extends BaseConverter
 {
     /**
      * @param PayGenerateVirtualCardOptions $requestOptions
-     * @param int|string                 $version
+     * @param int|string $version
      * @return Struct\Pay\GenerateVirtualCard
      */
     public function convert($requestOptions, $version)
     {
-        return new Struct\Pay\GenerateVirtualCard($requestOptions, $version);
+        return new Struct\Pay\GenerateVirtualCard($requestOptions);
     }
 }

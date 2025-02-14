@@ -401,6 +401,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      */
     protected function initSoapClient($wsdlId)
     {
+//        d($wsdlId);
         $wsdlPath = WsdlAnalyser::$wsdlIds[$wsdlId];
 
         $client = new Client\SoapClient(

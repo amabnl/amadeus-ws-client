@@ -1,0 +1,17 @@
+<AMA_PAY_ListVirtualCardsRS xmlns="http://xml.amadeus.com/2010/06/PAY_VirtualCard_v3"
+                            xmlns:iata="http://www.iata.org/IATA/2007/00/IATA2010.1"
+                            xmlns:ota="http://www.opentravel.org/OTA/2003/05/OTA2011A"
+                            xmlns:etr="http://xml.amadeus.com/2010/06/ETR_Types_v4"
+                            xmlns:fop="http://xml.amadeus.com/2010/06/FOP_Types_v6"
+                            xmlns:pay="http://xml.amadeus.com/2010/06/PAY_Types_v2"
+                            xmlns:pnr="http://xml.amadeus.com/2010/06/PNR_Types_v4"
+                            xmlns:tkt="http://xml.amadeus.com/2010/06/PayIssueTypes_v1"
+                            xmlns:qt="http://xml.amadeus.com/2010/06/QuotationTypes_v2"
+                            xmlns:ttr="http://xml.amadeus.com/2010/06/TTR_Types_v3"
+                            xmlns:ama_ct="http://xml.amadeus.com/2010/06/Types_v3" Version="3">
+    <Failure>
+        <ama_ct:Errors>
+            <ama_ct:Error Type="ERR" ShortText="NO RESULT FOUND" Code="34629"/>
+        </ama_ct:Errors>
+    </Failure>
+</AMA_PAY_ListVirtualCardsRS>

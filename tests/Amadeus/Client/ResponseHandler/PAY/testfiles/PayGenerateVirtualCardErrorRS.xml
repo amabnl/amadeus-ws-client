@@ -1,0 +1,13 @@
+<AMA_PAY_GenerateVirtualCardRS xmlns="http://xml.amadeus.com/2010/06/PAY_VirtualCard_v3"
+                               xmlns:fop="http://xml.amadeus.com/2010/06/FOP_Types_v6"
+                               xmlns:pay="http://xml.amadeus.com/2010/06/PAY_Types_v2"
+                               xmlns:ama="http://xml.amadeus.com/2010/06/Types_v3" Version="3">
+    <Failure>
+        <Errors>
+            <ama:Errors>
+                <ama:Error Type="ERR" Language="EN" ShortText="NO VIRTUAL CREDIT CARD AVAILABLE FOR THIS VENDOR"
+                           Code="33099" DocURL="33099"/>
+            </ama:Errors>
+        </Errors>
+    </Failure>
+</AMA_PAY_GenerateVirtualCardRS>

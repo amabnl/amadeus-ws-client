@@ -1,0 +1,54 @@
+<AMA_PAY_GetVirtualCardDetailsRS xmlns="http://xml.amadeus.com/2010/06/PAY_VirtualCard_v3"
+                                 xmlns:fop="http://xml.amadeus.com/2010/06/FOP_Types_v6"
+                                 xmlns:pay="http://xml.amadeus.com/2010/06/PAY_Types_v2"
+                                 xmlns:ama_ct="http://xml.amadeus.com/2010/06/Types_v3" Version="3">
+    <Success>
+        <VirtualCard CardStatus="ACTIVE" CreationOffice="NCE1A0950" CreationTime="2024-10-17T06:53:10"
+                     CreationUser="1645PD" LastUpdatedTime="2024-10-17T06:53:14">
+            <Card HolderName="Amadeus IT Group SA" SubType="PREPAID">
+                <fop:AddressVerificationSystemValue CityName="Madrid" Country="SPAIN" PostalCode="28027">
+                    <fop:Line>Salvador de Madariaga 1</fop:Line>
+                </fop:AddressVerificationSystemValue>
+                <fop:PrimaryAccountNumber>52532XXXXXX0854</fop:PrimaryAccountNumber>
+                <fop:CVV>123</fop:CVV>
+                <fop:Validity EndDate="0425"></fop:Validity>
+                <fop:Vendor Code="CA"></fop:Vendor>
+            </Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">2222ZTJA</pay:Reference>
+                <pay:Reference Type="External">0UwKXXXXXXXXXXXX8enokxPgw</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Amount="1100" CurrencyCode="EUR" DecimalPlaces="2" Type="Requested"></pay:Value>
+                <pay:Value Amount="1100" CurrencyCode="EUR" DecimalPlaces="2" Type="OnCard"></pay:Value>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:AllowedTransactions Maximum="1"/>
+                <pay:ValidityPeriod StartDate="2025-02-13" EndDate="2025-08-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <Transactions>
+            <Transaction Reference="0RADmhaKgvGZ2EN_7291479902" Timestamp="2024-10-17T06:53:10" Type="CREATE_CARD">
+                <Values>
+                    <Value Amount="1100" CurrencyCode="EUR" DecimalPlaces="2" Type="FundsCredited"></Value>
+                </Values>
+            </Transaction>
+            <Transaction Reference="TR_DELETE_ABCLGT3CEWABL" Timestamp="2024-10-17T06:53:13"
+                         Type="DELETE_CARD"></Transaction>
+            <Transaction Reference="0UwLRUWT_0W_mY97291479902" Timestamp="2024-10-17T00:00:01" Type="AUTHORISATION">
+                <Values>
+                    <Value Amount="1100" CurrencyCode="EUR" DecimalPlaces="2" Type="FundsDebited"></Value>
+                </Values>
+                <Details>
+                    <Detail Type="MerchantName">AMIXXXXXXXXOUP</Detail>
+                    <Detail Type="Status">OK</Detail>
+                    <Detail Type="ApprovalCode">129763</Detail>
+                    <Detail Type="ResponseCode">00</Detail>
+                    <Detail Type="ResponseMessage">Approved</Detail>
+                </Details>
+            </Transaction>
+        </Transactions>
+        <Reservation></Reservation>
+    </Success>
+</AMA_PAY_GetVirtualCardDetailsRS>

@@ -1,0 +1,8 @@
+<AMA_PAY_GetVirtualCardDetailsRS xmlns="http://xml.amadeus.com/2010/06/PAY_VirtualCard_v3"
+                                 xmlns:ama_ct="http://xml.amadeus.com/2010/06/Types_v3" Version="3">
+    <Failure>
+        <ama_ct:Errors>
+            <ama_ct:Error Type="ERR" Code="34734" ShortText="VIRTUAL CARD NOT FOUND"/>
+        </ama_ct:Errors>
+    </Failure>
+</AMA_PAY_GetVirtualCardDetailsRS>
