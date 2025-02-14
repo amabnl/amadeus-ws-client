@@ -32,7 +32,6 @@ use Amadeus\Client\RequestOptions\PayListVirtualCardsOptions;
  */
 class AmountRange
 {
-
     /**
      * @var integer
      */

@@ -1,0 +1,33 @@
+<AMA_PAY_GenerateVirtualCardRS Version="2.0" xmlns="http://xml.amadeus.com/2010/06/PAY_VirtualCard_v2"
+                               xmlns:fop="http://xml.amadeus.com/2010/06/FOP_Types_v6"
+                               xmlns:pay="http://xml.amadeus.com/2010/06/PAY_Types_v1"
+>
+    <Success>
+        <VirtualCard LastUpdatedTime="2017-06-08T08:59:48" CreationTime="2017-06-08T08:59:48" CreationUser="9879WS"
+                     CreationOffice="NCE1A0950" CardStatus="ACTIVE">
+            <pay:Card HolderName="Amadeus IT Group SA" SubType="DEBIT">
+                <fop:AddressVerificationSystemValue CityName="Salvador de Madariaga 1" PostalCode="28027"
+                                                    Country="SPAIN">
+                    <fop:Line>Salvador de Madariaga 1</fop:Line>
+                </fop:AddressVerificationSystemValue>
+                <fop:PrimaryAccountNumber>4568201876689613</fop:PrimaryAccountNumber>
+                <fop:CVV>123</fop:CVV>
+                <fop:Validity EndDate="1217"/>
+                <fop:Vendor Code="VI"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="External">0RAC83Iv4wSJAtB7VM_hmpSRC</pay:Reference>
+                <pay:Reference Type="Amadeus">2222483C</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+                <pay:Value Type="OnCard" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:AllowedTransactions Maximum="1"/>
+                <pay:ValidityPeriod StartDate="2017-06-08" EndDate="2017-12-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+    </Success>
+</AMA_PAY_GenerateVirtualCardRS>

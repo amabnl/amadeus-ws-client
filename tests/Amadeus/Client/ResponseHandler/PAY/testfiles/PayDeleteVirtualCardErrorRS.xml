@@ -1,0 +1,10 @@
+<AMA_PAY_DeleteVirtualCardRS xmlns="http://xml.amadeus.com/2010/06/PAY_VirtualCard_v3"
+                             xmlns:ama="http://xml.amadeus.com/2010/06/Types_v3" Version="3">
+    <Failure>
+        <Errors>
+            <ama:Errors>
+                <ama:Error Type="ERR" Language="EN" ShortText="VIRTUAL CARD NOT FOUND" Code="34734"/>
+            </ama:Errors>
+        </Errors>
+    </Failure>
+</AMA_PAY_DeleteVirtualCardRS>

@@ -1,0 +1,688 @@
+<AMA_PAY_ListVirtualCardsRS Version="2.0" xmlns="http://xml.amadeus.com/2010/06/PAY_VirtualCard_v2"
+                            xmlns:fop="http://xml.amadeus.com/2010/06/FOP_Types_v6"
+                            xmlns:pay="http://xml.amadeus.com/2010/06/PAY_Types_v1"
+                            xmlns:ama_ct="http://xml.amadeus.com/2010/06/Types_v3">
+    <Success>
+        <VirtualCard LastUpdatedTime="2017-04-18T16:49:31" CreationTime="2017-04-18T16:49:31" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX9909</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XQX</pay:Reference>
+                <pay:Reference Type="External">0RACUm3dNbCx-dM5OA0wle1M6</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="1500" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-18" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-18T16:47:39" CreationTime="2017-04-18T16:47:39" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX5673</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XQW</pay:Reference>
+                <pay:Reference Type="External">0RAC-vD9YEcW6EDUqhguvvbtT</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="1500" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-18" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-18T16:23:55" CreationTime="2017-04-18T16:23:55" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX6424</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XQV</pay:Reference>
+                <pay:Reference Type="External">0RABxhHo7uSWjFI17v5kQsIcb</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="1500" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-18" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-18T16:23:29" CreationTime="2017-04-18T16:23:29" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX4273</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XQU</pay:Reference>
+                <pay:Reference Type="External">0RADM_BVgIqkhlodezswb95S6</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="1500" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-18" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-18T16:18:00" CreationTime="2017-04-18T16:18:00" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX7564</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XQT</pay:Reference>
+                <pay:Reference Type="External">0RACQV8IMPc0h-P_R4mYX1774</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="1500" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-18" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-18T16:17:28" CreationTime="2017-04-18T16:17:28" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX9960</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XQS</pay:Reference>
+                <pay:Reference Type="External">0RABtTonmJeY6b7l-9Yxxsh27</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="1500" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-18" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-18T16:15:49" CreationTime="2017-04-18T16:15:49" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX0050</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XQQ</pay:Reference>
+                <pay:Reference Type="External">0RABnkjsO2V6krfBsseXCV15n</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="1500" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-18" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-18T16:14:53" CreationTime="2017-04-18T16:14:53" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX4382</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XQP</pay:Reference>
+                <pay:Reference Type="External">0RADNOij0TOh9bxP71QK7C3yi</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="1500" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-18" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-18T16:05:42" CreationTime="2017-04-18T16:05:42" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX6648</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XQO</pay:Reference>
+                <pay:Reference Type="External">0RAA_bjTl5OgrX8IQjDiNqLk1</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="9232" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-18" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-18T14:06:14" CreationTime="2017-04-18T14:06:14" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX4789</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XQ7</pay:Reference>
+                <pay:Reference Type="External">0RACaq-YQLaolfMFpngm8aRaH</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-18" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-18T09:07:34" CreationTime="2017-04-18T09:07:34" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX2767</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XO6</pay:Reference>
+                <pay:Reference Type="External">0RAB13GO68yI_zF1lLb-Ll-Yp</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="57441" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-18" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-14T13:01:18" CreationTime="2017-04-14T13:01:18" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX8087</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XGR</pay:Reference>
+                <pay:Reference Type="External">0RAAi1d7p8zG51XY3mXgyvQZn</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-14" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-14T12:52:14" CreationTime="2017-04-14T12:52:14" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX8298</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XGQ</pay:Reference>
+                <pay:Reference Type="External">0RAAbF9GV3PCA7SKzalsopYil</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-14" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-14T12:49:46" CreationTime="2017-04-14T12:49:46" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX7186</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XGP</pay:Reference>
+                <pay:Reference Type="External">0RAAJVNHWVnr_9BkNw4ILXO7T</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-14" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-14T12:43:21" CreationTime="2017-04-14T12:43:21" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX7856</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XGO</pay:Reference>
+                <pay:Reference Type="External">0RAAE3bXcGefNFfQlQtsIRB8L</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-14" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-14T12:42:07" CreationTime="2017-04-14T12:42:07" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX9477</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XGN</pay:Reference>
+                <pay:Reference Type="External">0RADkDTS0ZZa8-FIC6DyB9BLq</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-14" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-14T12:40:16" CreationTime="2017-04-14T12:40:16" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX3488</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XGM</pay:Reference>
+                <pay:Reference Type="External">0RABMwsRK1Im284EtY1P0drCj</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-14" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-14T08:57:49" CreationTime="2017-04-14T08:57:49" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX4292</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XG8</pay:Reference>
+                <pay:Reference Type="External">0RACyCohdPjVmN6_DzuH6YFEy</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-14" EndDate="2017-12-12"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-13T16:02:06" CreationTime="2017-04-13T16:01:38" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX0287</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223XDD</pay:Reference>
+                <pay:Reference Type="External">0RABEEIyZ8lzUJBAQLVZFm9-p</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-05-05" EndDate="2017-12-12"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-07T07:57:47" CreationTime="2017-04-07T07:57:47" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX8923</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223WPG</pay:Reference>
+                <pay:Reference Type="External">0RAD0udLL3-8q8tfM2vhFy8PL</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="1000" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-07" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-06T20:56:37" CreationTime="2017-04-06T20:56:37" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX7335</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223WLS</pay:Reference>
+                <pay:Reference Type="External">0RACLLUr8jC2viLZq7X1_ch6R</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="16536" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-06" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-06T14:50:37" CreationTime="2017-04-06T14:50:37" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX4567</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223WLL</pay:Reference>
+                <pay:Reference Type="External">0RABCjM-YEeIbpVfGm9aBuzSg</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="31788" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-06" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation ID="WHPJJQ"/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-06T14:40:50" CreationTime="2017-04-06T14:40:50" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX7377</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223WLH</pay:Reference>
+                <pay:Reference Type="External">0RAB4AHOjbVMTZyyzYv61tZ4k</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="4500" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-06" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-06T14:36:32" CreationTime="2017-04-06T14:36:32" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX1860</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223WLF</pay:Reference>
+                <pay:Reference Type="External">0RABW8wWoo1wsCuE6-OX25XK_</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="123345" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-06" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-06T14:34:14" CreationTime="2017-04-06T14:34:14" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX8917</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223WLE</pay:Reference>
+                <pay:Reference Type="External">0RAB8ZSnTePWSAASNmsyIB5hT</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-06" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-06T14:33:52" CreationTime="2017-04-06T14:33:52" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX5321</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223WLD</pay:Reference>
+                <pay:Reference Type="External">0RAAzHq2i6zEzqVDOqhjvGskL</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-06" EndDate="2017-12-12"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-06T13:45:00" CreationTime="2017-04-06T13:45:00" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX1113</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223WL2</pay:Reference>
+                <pay:Reference Type="External">0RACfV_CjUhnSXaRNsKyMlev4</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="31788" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-06" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation ID="WHGL4U"/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-06T02:33:20" CreationTime="2017-04-06T02:33:20" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX1850</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223WGG</pay:Reference>
+                <pay:Reference Type="External">0RACZOs4Nt41uGPegA624edDW</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="12344" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-06" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-05T08:59:10" CreationTime="2017-04-05T08:59:10" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX0873</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223WC4</pay:Reference>
+                <pay:Reference Type="External">0RAC8XmcovwrQsdNF83ImN1ON</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="11670" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-05" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-04T22:08:17" CreationTime="2017-04-04T22:08:17" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX9535</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223W9A</pay:Reference>
+                <pay:Reference Type="External">0RABYpir4SGuDhkAQgW3Z6pMe</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="10170" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-04" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-04T16:24:04" CreationTime="2017-04-04T16:24:04" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX5550</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223W93</pay:Reference>
+                <pay:Reference Type="External">0RADGPtxrsgCrX7jZgXjDKDJX</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="10170" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-04" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-04T16:00:01" CreationTime="2017-04-04T16:00:01" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX2459</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223W92</pay:Reference>
+                <pay:Reference Type="External">0RAD5utPKA3daSjh9P810b8M5</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="10170" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-04" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-04T15:40:56" CreationTime="2017-04-04T15:40:56" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX3868</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223W8Z</pay:Reference>
+                <pay:Reference Type="External">0RAA6Mn84a3-r6LtLT9j6wWCI</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="10170" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-04" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-04T13:56:53" CreationTime="2017-04-04T13:56:53" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX6117</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223W87</pay:Reference>
+                <pay:Reference Type="External">0RAC5bgpSFp_6cFi3X6fWdesK</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="10170" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-04" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-04T09:38:12" CreationTime="2017-04-04T09:38:12" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX4541</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223W6L</pay:Reference>
+                <pay:Reference Type="External">0RAB9rDgbQRrQ_dd8raT8Bhkp</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="15418" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-04" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-30T21:00:11" CreationTime="2017-04-04T09:27:04" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX0203</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223W6K</pay:Reference>
+                <pay:Reference Type="External">0RABiwvpfJX_Sot2ie8ifYkm4</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="8806" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-05-25" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-03T14:46:34" CreationTime="2017-04-03T14:46:34" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX3404</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223W3H</pay:Reference>
+                <pay:Reference Type="External">0RACuPhziGxn_dNmMkGft6iZI</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="14418" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-03" EndDate="2017-10-31"/>
+            </pay:Limitations>
+            <Reservation/>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-03T12:46:02" CreationTime="2017-04-03T12:46:02" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX2155</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223W2R</pay:Reference>
+                <pay:Reference Type="External">0RADgSaDvyWzzhn_mclit-N5w</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-03" EndDate="2017-08-21"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <VirtualCard LastUpdatedTime="2017-04-03T08:55:13" CreationTime="2017-04-03T08:55:13" CardStatus="ACTIVE">
+            <pay:Card SubType="Prepaid">
+                <fop:PrimaryAccountNumber>522093XXXXXX3186</fop:PrimaryAccountNumber>
+                <fop:Vendor Code="CA"/>
+            </pay:Card>
+            <pay:References>
+                <pay:Reference Type="Amadeus">22223W2F</pay:Reference>
+                <pay:Reference Type="External">0RABhyVe7gGV7Ib_hdzHCSmh9</pay:Reference>
+            </pay:References>
+            <pay:Provider>IXARIS</pay:Provider>
+            <pay:Values>
+                <pay:Value Type="Requested" Amount="100" DecimalPlaces="2" CurrencyCode="EUR"/>
+            </pay:Values>
+            <pay:Limitations>
+                <pay:ValidityPeriod StartDate="2017-04-03" EndDate="2017-10-31"/>
+            </pay:Limitations>
+        </VirtualCard>
+        <Warnings>
+            <ama_ct:Warnings>
+                <ama_ct:Warning Type="WNG" ShortText="INFORMATION MAY NOT BE UP TO DATE" Code="36547"/>
+            </ama_ct:Warnings>
+        </Warnings>
+    </Success>
+</AMA_PAY_ListVirtualCardsRS>

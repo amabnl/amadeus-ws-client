@@ -35,11 +35,11 @@ use Amadeus\Client\Struct\InvalidArgumentException;
  */
 class GetVirtualCardDetails extends BaseWsMessage
 {
-    const FILTER_FULL = 'Full';
-    const FILTER_LIGHT = 'Light';
-
     public $Version = '2.0';
 
+    /**
+     * @var Reference[]
+     */
     public $References;
 
     public $DisplayFilter;
@@ -47,9 +47,8 @@ class GetVirtualCardDetails extends BaseWsMessage
     /**
      * GetVirtualCardDetails constructor.
      * @param PayGetVirtualCardDetailsOptions $params
-     * @param string|int                      $version
      */
-    public function __construct(PayGetVirtualCardDetailsOptions $params, $version)
+    public function __construct(PayGetVirtualCardDetailsOptions $params)
     {
         if ($params->amadeusReference !== null) {
             $this->References[] = new Reference(Reference::TYPE_AMADEUS, $params->amadeusReference);

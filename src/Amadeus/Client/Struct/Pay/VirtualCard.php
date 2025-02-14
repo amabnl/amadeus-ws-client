@@ -85,14 +85,14 @@ class VirtualCard
     {
         if ($params->CardName !== null) {
             if (strlen($params->CardName) > 35) {
-                throw new InvalidArgumentException('Max card name length 35');
+                throw new InvalidArgumentException('Max card name length is 35 characters');
             }
 
             $this->CardName = $params->CardName;
         }
 
         if ($params->Amount === null) {
-            throw new InvalidArgumentException('You should set currency code');
+            throw new InvalidArgumentException('Amount is required');
         }
 
         if ($params->DecimalPlaces !== null) {
@@ -102,7 +102,7 @@ class VirtualCard
         $this->Amount = $params->Amount;
 
         if ($params->CurrencyCode === null) {
-            throw new InvalidArgumentException('You should set currency code');
+            throw new InvalidArgumentException('Currency code is required');
         }
 
         $this->CurrencyCode = $params->CurrencyCode;
@@ -115,11 +115,9 @@ class VirtualCard
             $this->VendorCode = $params->VendorCode;
         }
 
-
         if ($params->ReturnCVV !== null) {
             $this->ReturnCVV = $params->ReturnCVV;
         }
-
 
         $this->Limitations = new Limitations($params);
     }

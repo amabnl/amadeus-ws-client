@@ -36,13 +36,16 @@ class GenerateVirtualCard extends BaseWsMessage
 {
     public $Version = '2.0';
 
+    /**
+     * @var VirtualCard
+     */
     public $VirtualCard;
+
     /**
      * GenerateVirtualCard constructor.
      * @param PayGenerateVirtualCardOptions $params
-     * @param string|int                    $version
      */
-    public function __construct(PayGenerateVirtualCardOptions $params, $version)
+    public function __construct(PayGenerateVirtualCardOptions $params)
     {
         $this->VirtualCard = new VirtualCard($params);
     }

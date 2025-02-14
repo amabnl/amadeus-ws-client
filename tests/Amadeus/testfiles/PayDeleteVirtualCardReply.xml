@@ -1,0 +1,8 @@
+<AMA_PAY_DeleteVirtualCardRS Version="2.0" xmlns="http://xml.amadeus.com/2010/06/PAY_VirtualCard_v2">
+    <Success>
+        <References>
+            <Reference type="External">0999Wn0OM90x43u19svF0r0Ve</Reference>
+            <Reference type="Amadeus">229925F9</Reference>
+        </References>
+    </Success>
+</AMA_PAY_DeleteVirtualCardRS>

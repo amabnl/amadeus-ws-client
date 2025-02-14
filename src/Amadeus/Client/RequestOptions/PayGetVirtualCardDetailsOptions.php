@@ -31,6 +31,9 @@ namespace Amadeus\Client\RequestOptions;
  */
 class PayGetVirtualCardDetailsOptions extends Base
 {
+    public const FILTER_FULL = 'Full';
+    public const FILTER_LIGHT = 'Light';
+
     public $amadeusReference;
 
     public $externalReference;

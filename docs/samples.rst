@@ -4231,3 +4231,9 @@ NDC (Travel)
 ************
 
 `See examples for NDC services <samples/ndc.rst>`_
+
+***
+PAY
+***
+
+`See examples for PAY services <samples/pay.rst>`_

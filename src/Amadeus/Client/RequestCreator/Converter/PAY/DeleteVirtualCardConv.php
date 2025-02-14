@@ -37,11 +37,11 @@ class DeleteVirtualCardConv extends BaseConverter
 {
     /**
      * @param PayDeleteVirtualCardOptions $requestOptions
-     * @param int|string                     $version
+     * @param int|string $version
      * @return Struct\Pay\DeleteVirtualCard
      */
     public function convert($requestOptions, $version)
     {
-        return new Struct\Pay\DeleteVirtualCard($requestOptions, $version);
+        return new Struct\Pay\DeleteVirtualCard($requestOptions);
     }
 }

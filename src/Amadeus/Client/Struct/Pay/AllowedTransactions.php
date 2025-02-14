@@ -45,6 +45,6 @@ class AllowedTransactions
      */
     public function __construct(PayGenerateVirtualCardOptions $params)
     {
-        $this->Maximum = $params->maxAlowedTransactions;
+        $this->Maximum = $params->maxAllowedTransactions;
     }
 }
