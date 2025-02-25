@@ -40,6 +40,8 @@ class Pax
      */
     public $ContactInfo;
 
+    public $PaxRefID;
+
     /**
      * @param string $paxId
      * @param string $ptc
@@ -48,7 +50,7 @@ class Pax
      * @param Individual|null $individual
      * @param ContactInfo|null $contactInfo
      */
-    public function __construct($paxId, $ptc, $birthdate, $genderCode, $individual, $contactInfo)
+    public function __construct($paxId, $ptc, $birthdate, $genderCode, $individual, $contactInfo, $paxRefID = null)
     {
         $this->PaxID = $paxId;
         $this->PTC = $ptc;
@@ -56,5 +58,6 @@ class Pax
         $this->GenderCode = $genderCode;
         $this->Individual = $individual;
         $this->ContactInfo = $contactInfo;
+        $this->PaxRefID = $paxRefID;
     }
 }
