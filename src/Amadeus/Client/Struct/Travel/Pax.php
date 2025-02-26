@@ -40,6 +40,9 @@ class Pax
      */
     public $ContactInfo;
 
+    /**
+     * @var string|null
+     */
     public $PaxRefID;
 
     /**
@@ -49,6 +52,7 @@ class Pax
      * @param string $genderCode
      * @param Individual|null $individual
      * @param ContactInfo|null $contactInfo
+     * @param string|null $paxRefID
      */
     public function __construct($paxId, $ptc, $birthdate, $genderCode, $individual, $contactInfo, $paxRefID = null)
     {

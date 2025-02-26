@@ -51,6 +51,8 @@ class Pax extends LoadParamsFromArray
      */
     public $passengerContactRefused;
 
+    /**
+     * @var string|null
+     */
     public $paxRefId;
-
 }
