@@ -54,7 +54,8 @@ class PaxList
                 ($dob = $requestPax->dob) ? $dob->format('Y-m-d') : null,
                 $requestPax->genderCode,
                 $individual,
-                $contactInfo
+                $contactInfo,
+                $requestPax->paxRefId
             );
         }, $requestPaxList->pax);
     }
