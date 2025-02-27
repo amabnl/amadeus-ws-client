@@ -1,5 +1,8 @@
 ## Unreleased
 
+## Release 2.3.1 (27 Feb 2025)
+* Travel_OrderCreate: add support for lap infant booking (https://github.com/amabnl/amadeus-ws-client/pull/490) - yustikodm
+
 ## Release 2.3 (17 Feb 2025)
 * Implemented ``PAY_ListVirtualCards``, ``PAY_GetVirtualCardDetails``, ``PAY_GenerateVirtualCard``, ``PAY_DeleteVirtualCard`` (https://github.com/amabnl/amadeus-ws-client/pull/368 - Konstantin Bogomolov / https://github.com/amabnl/amadeus-ws-client/pull/489 - Artem Zakharchenko)
 
