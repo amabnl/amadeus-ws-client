@@ -37,7 +37,7 @@ class MasterPricerCalendar extends MasterPricerTravelBoardSearch
      *
      * @param FareMasterPricerCalendarOptions|null $options
      */
-    public function __construct(FareMasterPricerCalendarOptions $options = null)
+    public function __construct(?FareMasterPricerCalendarOptions $options = null)
     {
         parent::__construct($options);
     }

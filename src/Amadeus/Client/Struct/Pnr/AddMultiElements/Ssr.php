@@ -121,7 +121,7 @@ class Ssr
      *
      * @param ServiceRequestOptions|null $options
      */
-    public function __construct(ServiceRequestOptions $options = null)
+    public function __construct(?ServiceRequestOptions $options = null)
     {
         if (!is_null($options)) {
             $this->status = $options->status;

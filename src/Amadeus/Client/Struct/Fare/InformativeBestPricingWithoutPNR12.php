@@ -40,7 +40,7 @@ class InformativeBestPricingWithoutPNR12 extends BaseWsMessage
      * @param FareInformativeBestPricingWithoutPnrOptions|null $options
      * @throws MessageVersionUnsupportedException
      */
-    public function __construct(FareInformativeBestPricingWithoutPnrOptions $options = null)
+    public function __construct(?FareInformativeBestPricingWithoutPnrOptions $options = null)
     {
         throw new MessageVersionUnsupportedException(
             'Fare_InformativeBestPricingWithoutPNR versions < 13 are not yet implemented'

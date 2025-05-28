@@ -49,7 +49,7 @@ class SoapClient extends \SoapClient implements Log\LoggerAwareInterface
      * @param array $options initialisation options
      * @param Log\LoggerInterface|null $logger Error logging object
      */
-    public function __construct($wsdl, $options, Log\LoggerInterface $logger = null)
+    public function __construct($wsdl, $options, ?Log\LoggerInterface $logger = null)
     {
         if (!($logger instanceof Log\LoggerInterface)) {
             $logger = new Log\NullLogger();

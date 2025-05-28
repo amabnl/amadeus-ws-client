@@ -88,7 +88,7 @@ class SecurityAuthenticateOptions extends Base
      *
      * @param AuthParams|null $authParams
      */
-    public function __construct(AuthParams $authParams = null)
+    public function __construct(?AuthParams $authParams = null)
     {
         if ($authParams instanceof AuthParams) {
             $this->loadFromAuthParams($authParams);
