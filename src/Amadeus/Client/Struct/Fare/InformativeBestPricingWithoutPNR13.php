@@ -40,7 +40,7 @@ class InformativeBestPricingWithoutPNR13 extends InformativePricingWithoutPNR13
      *
      * @param FareInformativeBestPricingWithoutPnrOptions|null $options
      */
-    public function __construct(FareInformativeBestPricingWithoutPnrOptions $options = null)
+    public function __construct(?FareInformativeBestPricingWithoutPnrOptions $options = null)
     {
         parent::__construct($options);
 

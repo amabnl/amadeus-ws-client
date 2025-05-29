@@ -80,7 +80,7 @@ class AddMultiElements extends BaseWsMessage
      * @param PnrAddMultiElementsBase|null $params
      * @throws \ReflectionException
      */
-    public function __construct(PnrAddMultiElementsBase $params = null)
+    public function __construct(?PnrAddMultiElementsBase $params = null)
     {
         if (!is_null($params)) {
             if ($params instanceof PnrCreatePnrOptions) {

@@ -37,7 +37,7 @@ class PricePNRWithLowerFares12 extends PricePNRWithBookingClass12
      *
      * @param FarePricePnrWithLowerFaresOptions|null $options
      */
-    public function __construct(FarePricePnrWithLowerFaresOptions $options = null)
+    public function __construct(?FarePricePnrWithLowerFaresOptions $options = null)
     {
         parent::__construct($options);
     }
