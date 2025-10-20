@@ -55,7 +55,7 @@ Once the client is installed, read the [About &amp; Get Started](docs/about-get-
 
 # Release history
 
-The current release is version 2.3.0.
+The current release is version 2.3.2.
 
 See the [Changelog](CHANGELOG.md).
 

@@ -1,5 +1,9 @@
 ## Unreleased
 
+## Release 2.3.2 (20 Oct 2025)
+*  Fix PHP 8.4 deprecation messages (https://github.com/amabnl/amadeus-ws-client/pull/493) - constantin-girsteoga
+*  Fixed warning on passing null to strlen when Amadeus returned null response instead of string (https://github.com/amabnl/amadeus-ws-client/pull/495) - alexandr-sibov
+
 ## Release 2.3.1 (27 Feb 2025)
 * Travel_OrderCreate: add support for lap infant booking (https://github.com/amabnl/amadeus-ws-client/pull/490) - yustikodm
 
