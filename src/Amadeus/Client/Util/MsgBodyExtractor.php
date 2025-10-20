@@ -38,7 +38,9 @@ class MsgBodyExtractor
      */
     public function extract($soapResponse)
     {
-        $messageBody = null;
+        if ($soapResponse === null) {
+            return null;
+        }
 
         $messageBody = $this->getStringBetween($soapResponse, '<SOAP-ENV:Body>', '</SOAP-ENV:Body>');
 
