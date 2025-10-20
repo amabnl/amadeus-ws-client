@@ -33,12 +33,14 @@ class MsgBodyExtractor
     /**
      * Extracts the message content from the soap envelope (i.e. everything under the soap body)
      *
-     * @param string $soapResponse
+     * @param string|null $soapResponse
      * @return string|null
      */
     public function extract($soapResponse)
     {
-        $messageBody = null;
+        if ($soapResponse === null) {
+            return null;
+        }
 
         $messageBody = $this->getStringBetween($soapResponse, '<SOAP-ENV:Body>', '</SOAP-ENV:Body>');
 

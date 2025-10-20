@@ -55,4 +55,14 @@ class MsgBodyExtractorTest extends BaseTestCase
 
         $this->assertEquals($expectedResult, $actual);
     }
+
+    public function testGetMessageBodyReturnsNullOnNullResponse(): void
+    {
+        $xml = null;
+
+        $extractor = new MsgBodyExtractor();
+        $actual = $extractor->extract($xml);
+
+        $this->assertNull($actual);
+    }
 }
