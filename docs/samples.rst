@@ -763,13 +763,13 @@ Make a simple Masterpricer Expert availability & fare search:
 
 .. code-block:: php
 
-    use Amadeus\Client\RequestOptions\FareMasterPricerExSearch;
+    use Amadeus\Client\RequestOptions\FareMasterPricerExSearchOptions;
     use Amadeus\Client\RequestOptions\Fare\MPPassenger;
     use Amadeus\Client\RequestOptions\Fare\MPItinerary;
     use Amadeus\Client\RequestOptions\Fare\MPDate;
     use Amadeus\Client\RequestOptions\Fare\MPLocation;
 
-    $opt = new FareMasterPricerExSearch([
+    $opt = new FareMasterPricerExSearchOptions([
         'nrOfRequestedResults' => 200,
         'nrOfRequestedPassengers' => 1,
         'passengers' => [
