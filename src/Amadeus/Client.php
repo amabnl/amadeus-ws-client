@@ -396,6 +396,23 @@ class Client extends Base
     }
 
     /**
+     * PNR_ListPassengersByFlight
+     *
+     * @param RequestOptions\PnrListPassengersByFlightOptions $options
+     * @param array $messageOptions (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function pnrListPassengersByFlight(RequestOptions\PnrListPassengersByFlightOptions $options, $messageOptions = [])
+    {
+        $msgName = 'PNR_ListPassengersByFlight';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * PNR_NameChange
      *
      * @param RequestOptions\PnrNameChangeOptions $options

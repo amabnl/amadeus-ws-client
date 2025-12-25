@@ -41,6 +41,7 @@ use Amadeus\Client\RequestOptions\Fop\MopInfo;
 use Amadeus\Client\RequestOptions\Fop\Payment;
 use Amadeus\Client\RequestOptions\FopCreateFopOptions;
 use Amadeus\Client\RequestOptions\OfferVerifyOptions;
+use Amadeus\Client\RequestOptions\PnrListPassengersByFlightOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveAndDisplayOptions;
 use Amadeus\Client\RequestOptions\PnrRetrieveOptions;
 use Amadeus\Client\RequestOptions\Queue;
@@ -488,4 +489,31 @@ class BaseTest extends BaseTestCase
         $this->assertEquals([0, 1], $message->Recommendation[0]->CustomerRefIds);
     }
 
+    public function testCanCreatePNRListPassengersByFlightMessage()
+    {
+        $par = new RequestCreatorParams([
+            'originatorOfficeId' => 'BRUXXXXXX',
+            'receivedFrom' => 'some RF string',
+            'messagesAndVersions' => ['PNR_ListPassengersByFlight' => ['version' => '14.2', 'wsdl' => 'aabbccdd']]
+        ]);
+
+        $rq = new Base($par);
+
+        $message = $rq->createRequest(
+            'PNR_ListPassengersByFlight',
+            new PnrListPassengersByFlightOptions([
+                'flightIdentification' => new \Amadeus\Client\RequestOptions\Pnr\ListPassengersByFlight\FlightIdentification([
+                    'marketingCarrier' => 'LH',
+                    'flightNumber' => '123'
+                ]),
+                'dateIdentification' => new \Amadeus\Client\RequestOptions\Pnr\ListPassengersByFlight\DateIdentification([
+                    'dateTime' => new \DateTime('2025-12-25')
+                ])
+            ])
+        );
+
+        $this->assertInstanceOf('Amadeus\Client\Struct\Pnr\ListPassengersByFlight', $message);
+        $this->assertEquals('LH', $message->flightDateQuery->flightIdentification->carrierDetails->marketingCarrier);
+        $this->assertEquals('123', $message->flightDateQuery->flightIdentification->flightDetails->flightNumber);
+    }   
 }

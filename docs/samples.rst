@@ -530,6 +530,30 @@ Split passengers 1 and 2 from PNR ABC123:
         new PnrSplitOptions(['recordLocator' => 'ABC123', 'passengerTattoos' => [1, 2]])
     );
 
+----------------
+PNR_ListPassengersByFlight
+----------------
+
+List passengers by flight with minimal parameters:
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\PnrListPassengersByFlightOptions;
+    use Amadeus\Client\RequestOptions\PnrListPassengersByFlight\FlightIdentification;
+    use Amadeus\Client\RequestOptions\PnrListPassengersByFlight\DateIdentification;
+
+    $pnrContent = $client->pnrListPassengersByFlight( 
+        new PnrListPassengersByFlightOptions([
+            'flightIdentification' => new FlightIdentification([
+                'marketingCarrier' => 'LH',
+                'flightNumber' => '1234',
+            ]),
+            'dateIdentification' => new DateIdentification([
+                'businessSemantic' => DateIdentification::BUSINESS_SEMANTIC_FLIGHT_DEPARTURE_DATE,
+                'dateTime' => \DateTime::createFromFormat('Y-m-d', '2025-12-25'),
+            ]),
+        ])
+    );
 
 *****
 Queue

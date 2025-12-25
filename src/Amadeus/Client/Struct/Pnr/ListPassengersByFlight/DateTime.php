@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * amadeus-ws-client
+ *
+ * Copyright 2015 Amadeus Benelux NV
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @package Amadeus
+ * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
+ */
+
+namespace Amadeus\Client\Struct\Pnr\ListPassengersByFlight;
+
+/**
+ * DateTime
+ *
+ * @package Amadeus\Client\Struct\Pnr\ListPassengersByFlight
+ * @author Evan Chuang <ycchuang1999@gmail.com>
+ */
+class DateTime
+{
+    /**
+     * @var string
+     */
+    public $year;
+
+    /**
+     * @var string
+     */
+    public $month;
+
+    /**
+     * @var string
+     */
+    public $day;
+
+    /**
+     * @var string
+     */
+    public $hour;
+
+    /**
+     * @var string
+     */
+    public $minute;
+
+    /**
+     * DateTime constructor.
+     *
+     * @param \DateTime $dateTime
+     */
+    public function __construct(\DateTime $dateTime)
+    {
+        $this->year = $dateTime->format('Y');
+        $this->month = $dateTime->format('m');
+        $this->day = $dateTime->format('d');
+        $this->hour = $dateTime->format('H');
+        $this->minute = $dateTime->format('i');
+    }
+}
