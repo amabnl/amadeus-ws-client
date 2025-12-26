@@ -1,15 +1,16 @@
-image_name = amadeus-ws-client:build
+php_version ?= 8.5
+image_name = amadeus-ws-client:${php_version}
 
 SHELL = /bin/sh
 
 build-docker-image:
-	docker build -t $(image_name) -f Dockerfile .
+	docker build -t $(image_name) -f Dockerfile --build-arg PHP_VERSION=$(php_version) .
 
 build-docker-image-once:
 	make verify-docker-image-exists || make build-docker-image
 
 build-docker-image-no-cache:
-	docker build --no-cache -t $(image_name) -f Dockerfile .
+	docker build --no-cache -t $(image_name) -f Dockerfile --build-arg PHP_VERSION=$(php_version) .
 
 verify-docker-image-exists:
 	docker image inspect $(image_name) >/dev/null 2>&1

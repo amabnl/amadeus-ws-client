@@ -38,7 +38,6 @@ class TravellerInfoTest extends BaseTestCase
         $travellerInfoClass = new \ReflectionClass('\Amadeus\Client\Struct\Pnr\AddMultiElements\TravellerInfo');
 
         $method = $travellerInfoClass->getMethod('formatDateOfBirth');
-        $method->setAccessible(true);
 
         $travellerInfo = new TravellerInfo();
 

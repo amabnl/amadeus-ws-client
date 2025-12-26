@@ -299,10 +299,10 @@ abstract class StandardResponseHandler implements MessageResponseHandler
             'ZZZ' => Result::STATUS_UNKNOWN
         ];
 
-        if (array_key_exists($qualifier, $statusQualMapping)) {
-            $status = $statusQualMapping[$qualifier];
-        } elseif (is_null($qualifier)) {
+        if (is_null($qualifier)) {
             $status = $defaultStatus;
+        } elseif (array_key_exists($qualifier, $statusQualMapping)) {
+            $status = $statusQualMapping[$qualifier];
         } else {
             $status = Result::STATUS_UNKNOWN;
         }

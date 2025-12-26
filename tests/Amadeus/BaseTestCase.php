@@ -41,7 +41,6 @@ class BaseTestCase extends TestCase
     protected static function getMethod($helper, $name)
     {
         $method = new \ReflectionMethod($helper, $name);
-        $method->setAccessible(true);
         return $method;
     }
 
@@ -55,7 +54,6 @@ class BaseTestCase extends TestCase
     protected static function getProperty($helper, $name)
     {
         $property = new \ReflectionProperty($helper, $name);
-        $property->setAccessible(true);
         return $property;
     }
 

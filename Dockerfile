@@ -1,22 +1,11 @@
-FROM php:8.3-apache
+ARG PHP_VERSION=8.5
 
-# Requirements
-RUN apt-get update \
-    && apt-get install -y libxslt1-dev libzip-dev unzip git curl
+FROM php:${PHP_VERSION}-cli-alpine
 
-# PHP extensions
-RUN docker-php-ext-install soap
-RUN docker-php-ext-install xsl
+RUN apk update && apk add --no-cache \
+    libxml2-dev \
+    libxslt-dev
 
-# Add the application
-ADD . /var/www
-WORKDIR /var/www
+RUN docker-php-ext-install soap xsl
 
-RUN git config --system --add safe.directory /var/www
-
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/bin/composer
-
-# Install dependencies
-RUN composer i
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
