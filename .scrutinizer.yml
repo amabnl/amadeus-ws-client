@@ -33,6 +33,10 @@ build:
       - vendor/bin/phpunit
 
   nodes:
+#    php85:
+#      environment:
+#        php: 8.5.2
+
     php84:
       environment:
         php: 8.4.13

@@ -362,7 +362,7 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
     {
         $msgAndVer = $this->getMessagesAndVersions();
 
-        if (isset($msgAndVer[$messageName]) && isset($msgAndVer[$messageName]['wsdl'])) {
+        if (!empty($messageName) && isset($msgAndVer[$messageName]) && isset($msgAndVer[$messageName]['wsdl'])) {
             return $msgAndVer[$messageName]['wsdl'];
         }
 
@@ -401,7 +401,6 @@ abstract class Base implements HandlerInterface, LoggerAwareInterface
      */
     protected function initSoapClient($wsdlId)
     {
-//        d($wsdlId);
         $wsdlPath = WsdlAnalyser::$wsdlIds[$wsdlId];
 
         $client = new Client\SoapClient(

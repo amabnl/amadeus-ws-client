@@ -38,7 +38,22 @@ You should also remember that the request options object is an object used by us
 An example pull request to learn from: https://github.com/amabnl/amadeus-ws-client/pull/74
 
 ## Testing your changes
-If you have docker installed, simply run `make test`, that will 
-- build a basic docker image (`make build-docker-image-once`)
-- install all dependencies (`make composer-install`)
-- and finally run the tests (`make phpunit`)
+
+The project provides a Docker-based test environment to ensure consistency across different PHP versions.
+
+To run the full test suite using the default PHP version (8.5):
+
+```bash
+make test
+```
+
+To run tests against a specific PHP version (e.g., 8.4):
+
+```bash
+php_version=8.4 make test
+```
+
+Running `make test` will automatically:
+1. Build the Docker image if it doesn't exist (`make build-docker-image-once`).
+2. Install dependencies via Composer inside the container (`make composer-install`).
+3. Execute the PHPUnit test suite (`make phpunit`).
