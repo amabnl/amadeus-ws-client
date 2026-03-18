@@ -11,6 +11,7 @@ This is the list of messages that are at least partially supported at this time:
 - PNR_AddMultiElements
 - PNR_Cancel
 - PNR_DisplayHistory
+- PNR_ListPassengersByFlight
 - PNR_TransferOwnership
 - PNR_NameChange
 - PNR_Split

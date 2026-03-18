@@ -7136,6 +7136,62 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanDoPnrListPassengersByFlightCall()
+    {
+        $mockSessionHandler = $this->createMock('Amadeus\Client\Session\Handler\HandlerInterface');
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = 'dummyresponse';
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $options = new Client\RequestOptions\PnrListPassengersByFlightOptions([
+            'flightIdentification' => new Client\RequestOptions\Pnr\ListPassengersByFlight\FlightIdentification([
+                'marketingCarrier' => 'LH',
+                'flightNumber' => '123',
+                'boardPoint' => 'BRU',
+                'offPoint' => 'FRA'
+            ]),
+            'dateIdentification' => new Client\RequestOptions\Pnr\ListPassengersByFlight\DateIdentification([
+                'dateTime' => new \DateTime('2025-12-25')
+            ])
+        ]);
+
+        $expectedMessageResult = new Client\Struct\Pnr\ListPassengersByFlight($options);
+
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('PNR_ListPassengersByFlight', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->will($this->returnValue($mockedSendResult));
+        $mockSessionHandler
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->will($this->returnValue(['PNR_ListPassengersByFlight' => ['version' => "14.2", 'wsdl' => 'dc22e4ee']]));
+
+        $mockResponseHandler = $this->createMock('Amadeus\Client\ResponseHandler\ResponseHandlerInterface');
+
+        $mockResponseHandler
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'PNR_ListPassengersByFlight')
+            ->will($this->returnValue($messageResult));
+
+        $par = new Params();
+        $par->sessionHandler = $mockSessionHandler;
+        $par->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX'
+        ]);
+        $par->responseHandler = $mockResponseHandler;
+
+        $client = new Client($par);
+
+        $response = $client->pnrListPassengersByFlight($options);
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     /**
      * @return array
      */
