@@ -1,0 +1,14 @@
+<AMA_TravelOrderReshopRS xmlns="http://xml.amadeus.com/2010/06/Travel_OrderReshopRS_v1"
+                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Response>
+        <ReshopOffers>
+            <Offer>
+                <OfferID>1A_TPID_OFFER_1</OfferID>
+                <OwnerCode>6X</OwnerCode>
+                <OfferItem>
+                    <OfferItemID>1A_TPID_OFFERITEM_1</OfferItemID>
+                </OfferItem>
+            </Offer>
+        </ReshopOffers>
+    </Response>
+</AMA_TravelOrderReshopRS>

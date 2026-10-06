@@ -98,6 +98,7 @@ This is the list of messages that are at least partially supported at this time:
 - Travel_OrderRetrieve
 - Travel_OrderPay
 - Travel_OrderCancel
+- Travel_OrderReshop
 
 **********
 To-do list

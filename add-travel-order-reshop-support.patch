@@ -1,0 +1,2948 @@
+diff --git a/src/Amadeus/Client/RequestCreator/Converter/Travel/OrderReshopConv.php b/src/Amadeus/Client/RequestCreator/Converter/Travel/OrderReshopConv.php
+new file mode 100644
+index 0000000..90ba25b
+--- /dev/null
++++ b/src/Amadeus/Client/RequestCreator/Converter/Travel/OrderReshopConv.php
+@@ -0,0 +1,45 @@
++<?php
++/**
++ * amadeus-ws-client
++ *
++ * Copyright 2015 Amadeus Benelux NV
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ *
++ * @package Amadeus
++ * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
++ */
++
++namespace Amadeus\Client\RequestCreator\Converter\Travel;
++
++use Amadeus\Client\RequestCreator\Converter\BaseConverter;
++use Amadeus\Client\RequestOptions\TravelOrderReshopOptions;
++use Amadeus\Client\Struct;
++
++/**
++ * Travel_OrderReshop request converter
++ *
++ * @package Amadeus\Client\RequestCreator\Converter\Travel
++ */
++class OrderReshopConv extends BaseConverter
++{
++    /**
++     * @param TravelOrderReshopOptions $requestOptions
++     * @param int|string $version
++     * @return Struct\Travel\OrderReshop
++     */
++    public function convert($requestOptions, $version)
++    {
++        return new Struct\Travel\OrderReshop($requestOptions);
++    }
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/AddOfferItems.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/AddOfferItems.php
+new file mode 100644
+index 0000000..227db95
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/AddOfferItems.php
+@@ -0,0 +1,31 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * AddOfferItems - request options
++ *
++ * Action to request new Offer Items for the specified Order. Maps to
++ * ServiceOrder/AddOfferItems. FlightRequest is mandatory; the other elements
++ * are optional shopping qualifiers.
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class AddOfferItems extends LoadParamsFromArray
++{
++    /**
++     * Passenger information (Paxs/Pax).
++     *
++     * @var Pax[]|null
++     */
++    public $paxs;
++
++    /**
++     * Flight request (mandatory). One of the FlightRequestType choices.
++     *
++     * @var FlightRequest
++     */
++    public $flightRequest;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/BookingRef.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/BookingRef.php
+new file mode 100644
+index 0000000..bf30267
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/BookingRef.php
+@@ -0,0 +1,37 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * BookingRef - request options
++ *
++ * Information related to a booking or reservation.
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class BookingRef extends LoadParamsFromArray
++{
++    /**
++     * Existing booking reference identifier.
++     *
++     * @var string
++     */
++    public $bookingId;
++
++    /**
++     * Booking reference type (PADIS 1153). Example: 6
++     *
++     * @var string|null
++     */
++    public $typeCode;
++
++    /**
++     * Airline or organization assigning the booking information (BookingEntity).
++     * Example: an airline designator code such as "6X".
++     *
++     * @var string
++     */
++    public $bookingEntityAirlineDesigCode;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/DeleteOrderItem.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/DeleteOrderItem.php
+new file mode 100644
+index 0000000..1b3df73
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/DeleteOrderItem.php
+@@ -0,0 +1,30 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * DeleteOrderItem - request options
++ *
++ * Function to request the removal of an Order Item from a specific Order.
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class DeleteOrderItem extends LoadParamsFromArray
++{
++    /**
++     * Reference to the Order Item requested for deletion.
++     *
++     * @var string
++     */
++    public $orderItemRefId;
++
++    /**
++     * Reference(s) to the Service(s) within the Order Item that the passenger
++     * would like the airline to retain in the proposed Offer Item(s).
++     *
++     * @var string|string[]|null
++     */
++    public $retainServiceId;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/FlightRequest.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/FlightRequest.php
+new file mode 100644
+index 0000000..28ed12b
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/FlightRequest.php
+@@ -0,0 +1,48 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * FlightRequest - request options
++ *
++ * Choice of flight information for the shopping request. Exactly one of the
++ * following should be populated (maps to the FlightRequestType choice):
++ *  - $originDestRequests (OriginDestRequest[])
++ *  - $specificOriginDestRequests (SpecificOriginDestRequest[])
++ *  - $selectedOffers (SelectedOffer[])
++ *  - $shoppingResponseRefId (ShoppingResponse/ShoppingResponseID)
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class FlightRequest extends LoadParamsFromArray
++{
++    /**
++     * Origin/Destination based shopping request(s).
++     *
++     * @var OriginDestRequest[]|null
++     */
++    public $originDestRequests;
++
++    /**
++     * Segment-detailed shopping request(s).
++     *
++     * @var SpecificOriginDestRequest[]|null
++     */
++    public $specificOriginDestRequests;
++
++    /**
++     * Selected offer(s) from a previous shopping response.
++     *
++     * @var SelectedOffer[]|null
++     */
++    public $selectedOffers;
++
++    /**
++     * Shopping session (message response) ID.
++     *
++     * @var string|null
++     */
++    public $shoppingResponseRefId;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/TravelOrderReshopOptions.php b/src/Amadeus/Client/RequestOptions/TravelOrderReshopOptions.php
+new file mode 100644
+index 0000000..b0277d3
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/TravelOrderReshopOptions.php
+@@ -0,0 +1,70 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\BookingRef;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\RepriceOrder;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\ReshopOrder;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\ReuseTicket;
++
++/**
++ * Travel_OrderReshop Request Options
++ *
++ * The OrderReshop transaction passes new shopping requests to an airline to
++ * replace existing order or order items in an Order, reprice an Order or reuse
++ * a ticket. The airline responds with product offers within the context of the
++ * existing Order (typically followed by an OrderChangeRQ or OrderCancelRQ).
++ *
++ * Only $orderItemRefId is mandatory. The UpdateOrder action is optional: when
++ * one of $repriceOrder, $reshopOrder or $reuseTickets is provided it is emitted
++ * as the (mutually exclusive) UpdateOrder choice; when all are omitted no
++ * UpdateOrder element is sent and the request carries only the OrderItemRefID
++ * (and optional BookingRef) context.
++ *
++ * @package Amadeus\Client\RequestOptions
++ */
++class TravelOrderReshopOptions extends AbstractTravelOptions
++{
++    /**
++     * Reference to the existing Order Item the Seller wants to add, update or
++     * delete (Request/OrderItemRefID). Required.
++     *
++     * @var string
++     */
++    public $orderItemRefId;
++
++    /**
++     * Reference to PADIS codeset REA providing context for the requested change.
++     *
++     * @var string|null
++     */
++    public $orderActionContextText;
++
++    /**
++     * Information related to a booking or reservation.
++     *
++     * @var BookingRef[]|null
++     */
++    public $bookingRefs;
++
++    /**
++     * Reprice the entire Order or a specific Order Item.
++     *
++     * @var RepriceOrder|null
++     */
++    public $repriceOrder;
++
++    /**
++     * Reshop items within an Order (add offer items, delete order items, ...).
++     *
++     * @var ReshopOrder|null
++     */
++    public $reshopOrder;
++
++    /**
++     * Retained tickets for reusing the passenger's credit.
++     *
++     * @var ReuseTicket[]|null
++     */
++    public $reuseTickets;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/OriginDestRequest.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/OriginDestRequest.php
+new file mode 100644
+index 0000000..430656a
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/OriginDestRequest.php
+@@ -0,0 +1,43 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * OriginDestRequest - request options
++ *
++ * The origin/destination pair for a shopping request (OriginDestType).
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class OriginDestRequest extends LoadParamsFromArray
++{
++    /**
++     * Destination IATA location code (DestArrivalRequest/IATA_LocationCode).
++     *
++     * @var string
++     */
++    public $destStationCode;
++
++    /**
++     * Requested destination arrival date (Y-m-d) - optional.
++     *
++     * @var \DateTime|string|null
++     */
++    public $destDate;
++
++    /**
++     * Origin IATA location code (OriginDepRequest/IATA_LocationCode).
++     *
++     * @var string
++     */
++    public $originStationCode;
++
++    /**
++     * Requested origin departure date (Y-m-d) - mandatory in OriginDepRequest.
++     *
++     * @var \DateTime|string
++     */
++    public $originDate;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/Pax.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/Pax.php
+new file mode 100644
+index 0000000..05e210e
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/Pax.php
+@@ -0,0 +1,116 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++use Amadeus\Client\RequestOptions\Travel\IdentityDoc;
++
++/**
++ * Pax - request options
++ *
++ * Passenger details (PaxType) used within AddOfferItems/Paxs and within
++ * UpdatePax (Current / New). Only PaxID is mandatory; the remaining fields are
++ * optional and emitted only when supplied.
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class Pax extends LoadParamsFromArray
++{
++    /**
++     * Uniquely identifies the passenger within the message (PaxID).
++     *
++     * @var string
++     */
++    public $paxId;
++
++    /**
++     * Passenger type code driving pricing (PTC). Example: ADT, CHD.
++     *
++     * @var string|null
++     */
++    public $ptc;
++
++    /**
++     * Date of birth (Y-m-d) - optional.
++     *
++     * @var \DateTime|string|null
++     */
++    public $birthdate;
++
++    /**
++     * ISO citizenship country code - optional.
++     *
++     * @var string|null
++     */
++    public $citizenshipCountryCode;
++
++    /**
++     * ISO residence country code - optional.
++     *
++     * @var string|null
++     */
++    public $residenceCountryCode;
++
++    /**
++     * Given name (Individual/GivenName) - optional.
++     *
++     * @var string|null
++     */
++    public $givenName;
++
++    /**
++     * Surname (Individual/Surname) - optional.
++     *
++     * @var string|null
++     */
++    public $surname;
++
++    /**
++     * Title (Individual/TitleName) - optional. Example: MR.
++     *
++     * @var string|null
++     */
++    public $titleName;
++
++    /**
++     * Gender code (Individual/GenderCode) - optional. Example: M, F.
++     *
++     * @var string|null
++     */
++    public $genderCode;
++
++    /**
++     * Contact phone label (ContactInfo/Phone/LabelText) - optional.
++     *
++     * @var string|null
++     */
++    public $phoneLabel;
++
++    /**
++     * Contact phone number (ContactInfo/Phone/PhoneNumberText) - optional.
++     *
++     * @var string|null
++     */
++    public $phoneNumber;
++
++    /**
++     * Contact email label (ContactInfo/EmailAddress/LabelText) - optional.
++     *
++     * @var string|null
++     */
++    public $emailLabel;
++
++    /**
++     * Contact email (ContactInfo/EmailAddress/EmailAddressText) - optional.
++     *
++     * @var string|null
++     */
++    public $email;
++
++    /**
++     * Identity document(s) - optional.
++     *
++     * @var IdentityDoc[]|null
++     */
++    public $identityDocs;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/PaxSegment.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/PaxSegment.php
+new file mode 100644
+index 0000000..88e7dc6
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/PaxSegment.php
+@@ -0,0 +1,71 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * PaxSegment - request options
++ *
++ * Transportation of a passenger on a dated operating segment (PaxSegmentType).
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class PaxSegment extends LoadParamsFromArray
++{
++    /**
++     * Segment ID (PaxSegmentID) - optional.
++     *
++     * @var string|null
++     */
++    public $paxSegmentId;
++
++    /**
++     * Departure IATA location code.
++     *
++     * @var string
++     */
++    public $departureLocationCode;
++
++    /**
++     * Departure scheduled date/time (Y-m-d\TH:i:s) - optional.
++     *
++     * @var \DateTime|string|null
++     */
++    public $departureDateTime;
++
++    /**
++     * Arrival IATA location code.
++     *
++     * @var string
++     */
++    public $arrivalLocationCode;
++
++    /**
++     * Arrival scheduled date/time (Y-m-d\TH:i:s) - optional.
++     *
++     * @var \DateTime|string|null
++     */
++    public $arrivalDateTime;
++
++    /**
++     * Marketing carrier code (MarketingCarrierInfo/CarrierDesigCode).
++     *
++     * @var string
++     */
++    public $marketingCarrierCode;
++
++    /**
++     * Marketing carrier flight number.
++     *
++     * @var string
++     */
++    public $marketingFlightNumber;
++
++    /**
++     * Reservation booking designator code (RBD_Code) - optional.
++     *
++     * @var string|null
++     */
++    public $rbdCode;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/RepriceOrder.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/RepriceOrder.php
+new file mode 100644
+index 0000000..c883d1d
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/RepriceOrder.php
+@@ -0,0 +1,23 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * RepriceOrder - request options
++ *
++ * Function to reprice the entire Order (when no OrderItemRefID is supplied) or
++ * a specific Order Item (when the reference is provided).
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class RepriceOrder extends LoadParamsFromArray
++{
++    /**
++     * Optionally specify which OrderItem needs to be repriced.
++     *
++     * @var string|null
++     */
++    public $orderItemRefId;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/ReshopOrder.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/ReshopOrder.php
+new file mode 100644
+index 0000000..cfca294
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/ReshopOrder.php
+@@ -0,0 +1,53 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * ReshopOrder - request options
++ *
++ * Function used to reshop items within an Order. Maps to the ReshopOrderType
++ * choice in the WSDL, which is one of:
++ *  - ServiceOrder (AddOfferItems and/or DeleteOrderItem)
++ *  - UpdatePax
++ *  - UpdatePaxName
++ *
++ * $addOfferItems and $deleteOrderItems both belong to the ServiceOrder branch
++ * and may be combined. $updatePax and $updatePaxName are mutually exclusive
++ * alternatives to the ServiceOrder branch.
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class ReshopOrder extends LoadParamsFromArray
++{
++    /**
++     * ServiceOrder / AddOfferItems: request new Offer Items for the Order.
++     *
++     * @var AddOfferItems|null
++     */
++    public $addOfferItems;
++
++    /**
++     * ServiceOrder / DeleteOrderItem: Order Item references to remove.
++     *
++     * Each entry may be a plain OrderItemRefID string or a DeleteOrderItem object.
++     *
++     * @var DeleteOrderItem[]|string[]|null
++     */
++    public $deleteOrderItems;
++
++    /**
++     * UpdatePax: add / remove / update passenger details.
++     *
++     * @var UpdatePax[]|null
++     */
++    public $updatePax;
++
++    /**
++     * UpdatePaxName: request whether fees apply to a passenger name correction.
++     *
++     * @var UpdatePaxName|null
++     */
++    public $updatePaxName;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/ReuseTicket.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/ReuseTicket.php
+new file mode 100644
+index 0000000..a49471a
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/ReuseTicket.php
+@@ -0,0 +1,37 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * ReuseTicket - request options
++ *
++ * Per-passenger information for reusing an unused ticket's credit on a new
++ * ticket (ReuseTickets/RetainedTicketDoc).
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class ReuseTicket extends LoadParamsFromArray
++{
++    /**
++     * Reference ticket for reusable credit.
++     *
++     * @var string
++     */
++    public $ticketNumber;
++
++    /**
++     * Uniquely identifies the passenger within the message.
++     *
++     * @var string
++     */
++    public $paxId;
++
++    /**
++     * Ticket/document reference codeset.
++     *
++     * @var string|null
++     */
++    public $type;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/SelectedOfferItem.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/SelectedOfferItem.php
+new file mode 100644
+index 0000000..f6948b4
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/SelectedOfferItem.php
+@@ -0,0 +1,29 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * SelectedOfferItem - request options
++ *
++ * Offer item selected by the passenger (SelectedOffer/SelectedOfferItem).
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class SelectedOfferItem extends LoadParamsFromArray
++{
++    /**
++     * Reference to the selected OfferItemID.
++     *
++     * @var string
++     */
++    public $offerItemRefId;
++
++    /**
++     * Reference(s) to the passenger(s) this item applies to.
++     *
++     * @var string|string[]
++     */
++    public $paxRefId;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/SelectedOffer.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/SelectedOffer.php
+new file mode 100644
+index 0000000..bb2df81
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/SelectedOffer.php
+@@ -0,0 +1,44 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * SelectedOffer - request options
++ *
++ * Offer selected by the passenger from a previous shopping response
++ * (FlightRequest/SelectedOffer).
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class SelectedOffer extends LoadParamsFromArray
++{
++    /**
++     * Reference to the OfferID of the selected Offer.
++     *
++     * @var string
++     */
++    public $offerRefId;
++
++    /**
++     * Designator of the airline that owns these IDs.
++     *
++     * @var string
++     */
++    public $ownerCode;
++
++    /**
++     * Reference to the shopping session response ID.
++     *
++     * @var string
++     */
++    public $shoppingResponseRefId;
++
++    /**
++     * Selected offer items.
++     *
++     * @var SelectedOfferItem[]
++     */
++    public $selectedOfferItems;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/SpecificOriginDestRequest.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/SpecificOriginDestRequest.php
+new file mode 100644
+index 0000000..a052e29
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/SpecificOriginDestRequest.php
+@@ -0,0 +1,44 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * SpecificOriginDestRequest - request options
++ *
++ * Origin/Destination specific query, including detailed Journey and Segment
++ * information (FlightRequest/SpecificOriginDestRequest).
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class SpecificOriginDestRequest extends LoadParamsFromArray
++{
++    /**
++     * IATA code identifying the origin city or station.
++     *
++     * @var string
++     */
++    public $originStationCode;
++
++    /**
++     * IATA code identifying the destination city or station.
++     *
++     * @var string
++     */
++    public $destStationCode;
++
++    /**
++     * Journey ID (PaxJourney/PaxJourneyID) - optional.
++     *
++     * @var string|null
++     */
++    public $paxJourneyId;
++
++    /**
++     * The segments of this journey.
++     *
++     * @var PaxSegment[]
++     */
++    public $paxSegments;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/UpdatePaxName.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/UpdatePaxName.php
+new file mode 100644
+index 0000000..f61958a
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/UpdatePaxName.php
+@@ -0,0 +1,58 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * UpdatePaxName - request options
++ *
++ * Request to the airline whether fees apply to a proposed correction to a
++ * passenger's name details (UpdatePaxNameType). Only PaxRefID is mandatory.
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class UpdatePaxName extends LoadParamsFromArray
++{
++    /**
++     * Reference to the passenger ID for whom the name change is requested.
++     *
++     * @var string
++     */
++    public $paxRefId;
++
++    /**
++     * Title (TitleName) - optional. Example: Mr.
++     *
++     * @var string|null
++     */
++    public $titleName;
++
++    /**
++     * Given name(s) (GivenName) - optional.
++     *
++     * @var string|string[]|null
++     */
++    public $givenName;
++
++    /**
++     * Middle name(s) (MiddleName) - optional.
++     *
++     * @var string|string[]|null
++     */
++    public $middleName;
++
++    /**
++     * Surname (Surname) - optional.
++     *
++     * @var string|null
++     */
++    public $surname;
++
++    /**
++     * Suffix (SuffixName) - optional. Example: Jr.
++     *
++     * @var string|null
++     */
++    public $suffixName;
++}
+diff --git a/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/UpdatePax.php b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/UpdatePax.php
+new file mode 100644
+index 0000000..eeffdc9
+--- /dev/null
++++ b/src/Amadeus/Client/RequestOptions/Travel/OrderReshop/UpdatePax.php
+@@ -0,0 +1,31 @@
++<?php
++
++namespace Amadeus\Client\RequestOptions\Travel\OrderReshop;
++
++use Amadeus\Client\LoadParamsFromArray;
++
++/**
++ * UpdatePax - request options
++ *
++ * Function to add, remove or update passenger details (UpdatePaxType).
++ * Providing both $current and $new implies an update; $new alone requests an
++ * addition; $current alone requests a removal.
++ *
++ * @package Amadeus\Client\RequestOptions\Travel\OrderReshop
++ */
++class UpdatePax extends LoadParamsFromArray
++{
++    /**
++     * Current passenger details (UpdatePax/Current) - optional.
++     *
++     * @var Pax|null
++     */
++    public $current;
++
++    /**
++     * New passenger details (UpdatePax/New) - optional.
++     *
++     * @var Pax|null
++     */
++    public $new;
++}
+diff --git a/src/Amadeus/Client/ResponseHandler/Travel/HandlerOrderReshop.php b/src/Amadeus/Client/ResponseHandler/Travel/HandlerOrderReshop.php
+new file mode 100644
+index 0000000..eecca69
+--- /dev/null
++++ b/src/Amadeus/Client/ResponseHandler/Travel/HandlerOrderReshop.php
+@@ -0,0 +1,155 @@
++<?php
++/**
++ * amadeus-ws-client
++ *
++ * Copyright 2015 Amadeus Benelux NV
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ * http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ *
++ * @package Amadeus
++ * @license https://opensource.org/licenses/Apache-2.0 Apache 2.0
++ */
++
++namespace Amadeus\Client\ResponseHandler\Travel;
++
++use Amadeus\Client\Result;
++use Amadeus\Client\Result\NotOk;
++use Amadeus\Client\Session\Handler\SendResult;
++
++/**
++ * HandlerOrderReshop
++ *
++ * Response handler for the Travel_OrderReshop message.
++ *
++ * The shared HandlerTravel only recognises errors shaped as <Error> or
++ * <Errors><Error>. The NDC OrderReshop response can instead return a "flat"
++ * error where the <Errors> node directly carries <Code> and <DescText> without
++ * an inner <Error> wrapper, e.g.:
++ *
++ *   <Errors>
++ *       <Code>368</Code>
++ *       <DescText>NO CANCELLATION SOLUTION FOUND</DescText>
++ *       <OwnerName>EY</OwnerName>
++ *   </Errors>
++ *
++ * Note: $response->responseObject is the object graph decoded by PHP's
++ * \SoapClient (stdClass / arrays), not a SimpleXMLElement, so error detection
++ * is done against that structure.
++ *
++ * @package Amadeus\Client\ResponseHandler\Travel
++ */
++class HandlerOrderReshop extends HandlerTravel
++{
++    /**
++     * @param SendResult $response
++     * @return Result
++     */
++    public function analyze(SendResult $response)
++    {
++        $result = $this->analyzeSimpleResponseErrorCodeAndMessageStatusCode($response);
++
++        foreach ($this->collectErrorNodes($response->responseObject) as $errorNode) {
++            $result->setStatus(Result::STATUS_ERROR);
++            $result->messages[] = new NotOk(
++                $this->stringValue($errorNode, 'Code'),
++                $this->stringValue($errorNode, 'DescText')
++            );
++        }
++
++        if ($unwrapped = isset($result->response->Response) ? $result->response->Response : null) {
++            $result->response = $unwrapped;
++        }
++
++        return $result;
++    }
++
++    /**
++     * Collect every error node from the possible NDC locations and shapes.
++     *
++     * Handles, both at the document root and nested under Response:
++     *  - Error                                   (one or more)
++     *  - Errors -> Error                         (wrapped, one or more)
++     *  - Errors carrying Code/DescText directly  (flat NDC error)
++     *
++     * The response object is the SoapClient-decoded graph (stdClass / array).
++     *
++     * @param \stdClass|array|null $responseObject
++     * @return array
++     */
++    private function collectErrorNodes($responseObject)
++    {
++        $nodes = [];
++
++        if (!is_object($responseObject)) {
++            return $nodes;
++        }
++
++        $containers = [$responseObject];
++        if (isset($responseObject->Response) && is_object($responseObject->Response)) {
++            $containers[] = $responseObject->Response;
++        }
++
++        foreach ($containers as $container) {
++            if (isset($container->Error)) {
++                foreach ($this->toArray($container->Error) as $error) {
++                    if (is_object($error)) {
++                        $nodes[] = $error;
++                    }
++                }
++            }
++
++            if (isset($container->Errors)) {
++                foreach ($this->toArray($container->Errors) as $errors) {
++                    if (!is_object($errors)) {
++                        continue;
++                    }
++
++                    if (isset($errors->Error)) {
++                        foreach ($this->toArray($errors->Error) as $error) {
++                            if (is_object($error)) {
++                                $nodes[] = $error;
++                            }
++                        }
++                    } elseif (isset($errors->Code) || isset($errors->DescText)) {
++                        $nodes[] = $errors;
++                    }
++                }
++            }
++        }
++
++        return $nodes;
++    }
++
++    /**
++     * @param mixed $value
++     * @return array
++     */
++    private function toArray($value)
++    {
++        return is_array($value) ? $value : [$value];
++    }
++
++    /**
++     * Safely read a scalar property from an error node.
++     *
++     * @param \stdClass $node
++     * @param string $property
++     * @return string
++     */
++    private function stringValue($node, $property)
++    {
++        return isset($node->$property) && is_scalar($node->$property)
++            ? (string) $node->$property
++            : '';
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/AddOfferItems.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/AddOfferItems.php
+new file mode 100644
+index 0000000..d0ef539
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/AddOfferItems.php
+@@ -0,0 +1,45 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\AddOfferItems as RequestAddOfferItems;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\Pax as RequestPax;
++
++/**
++ * AddOfferItems
++ *
++ * Action to request new Offer Items for the specified Order.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class AddOfferItems
++{
++    /**
++     * @var Paxs|null
++     */
++    public $Paxs;
++
++    /**
++     * @var FlightRequest
++     */
++    public $FlightRequest;
++
++    /**
++     * @param RequestAddOfferItems $addOfferItems
++     */
++    public function __construct(RequestAddOfferItems $addOfferItems)
++    {
++        if (!empty($addOfferItems->paxs)) {
++            $this->Paxs = new Paxs(
++                array_map(
++                    static function (RequestPax $pax) {
++                        return new Pax($pax);
++                    },
++                    $addOfferItems->paxs
++                )
++            );
++        }
++
++        $this->FlightRequest = new FlightRequest($addOfferItems->flightRequest);
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/BookingEntity.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/BookingEntity.php
+new file mode 100644
+index 0000000..6ba2119
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/BookingEntity.php
+@@ -0,0 +1,26 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * BookingEntity
++ *
++ * Airline or organization assigning the booking information.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class BookingEntity
++{
++    /**
++     * @var Carrier
++     */
++    public $Carrier;
++
++    /**
++     * @param string $airlineDesigCode
++     */
++    public function __construct($airlineDesigCode)
++    {
++        $this->Carrier = new Carrier($airlineDesigCode);
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/BookingRef.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/BookingRef.php
+new file mode 100644
+index 0000000..7a80c71
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/BookingRef.php
+@@ -0,0 +1,44 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * BookingRef
++ *
++ * Information related to a booking or reservation.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class BookingRef
++{
++    /**
++     * @var string
++     */
++    public $BookingID;
++
++    /**
++     * @var string|null
++     */
++    public $TypeCode;
++
++    /**
++     * @var BookingEntity
++     */
++    public $BookingEntity;
++
++    /**
++     * @param string $bookingId
++     * @param string $bookingEntityAirlineDesigCode
++     * @param string|null $typeCode
++     */
++    public function __construct($bookingId, $bookingEntityAirlineDesigCode, $typeCode = null)
++    {
++        $this->BookingID = $bookingId;
++
++        if ($typeCode !== null) {
++            $this->TypeCode = $typeCode;
++        }
++
++        $this->BookingEntity = new BookingEntity($bookingEntityAirlineDesigCode);
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/Carrier.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/Carrier.php
+new file mode 100644
+index 0000000..76b7830
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/Carrier.php
+@@ -0,0 +1,26 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * Carrier
++ *
++ * The carrier issuing the ticket.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class Carrier
++{
++    /**
++     * @var string
++     */
++    public $AirlineDesigCode;
++
++    /**
++     * @param string $airlineDesigCode
++     */
++    public function __construct($airlineDesigCode)
++    {
++        $this->AirlineDesigCode = $airlineDesigCode;
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/ContactInfo.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/ContactInfo.php
+new file mode 100644
+index 0000000..c34713a
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/ContactInfo.php
+@@ -0,0 +1,41 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * ContactInfo
++ *
++ * Passenger contact channel (ContactInfoType). Phone and EmailAddress are
++ * emitted only when supplied.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class ContactInfo
++{
++    /**
++     * @var Phone|null
++     */
++    public $Phone;
++
++    /**
++     * @var EmailAddress|null
++     */
++    public $EmailAddress;
++
++    /**
++     * @param string|null $phoneNumber
++     * @param string|null $phoneLabel
++     * @param string|null $email
++     * @param string|null $emailLabel
++     */
++    public function __construct($phoneNumber, $phoneLabel, $email, $emailLabel)
++    {
++        if ($phoneNumber !== null) {
++            $this->Phone = new Phone($phoneNumber, $phoneLabel);
++        }
++
++        if ($email !== null) {
++            $this->EmailAddress = new EmailAddress($email, $emailLabel);
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/DeleteOrderItem.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/DeleteOrderItem.php
+new file mode 100644
+index 0000000..4ac2d1c
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/DeleteOrderItem.php
+@@ -0,0 +1,36 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * DeleteOrderItem
++ *
++ * Function to request the removal of an Order Item from a specific Order.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class DeleteOrderItem
++{
++    /**
++     * @var string
++     */
++    public $OrderItemRefID;
++
++    /**
++     * @var string|string[]|null
++     */
++    public $RetainServiceID;
++
++    /**
++     * @param string $orderItemRefId
++     * @param string|string[]|null $retainServiceId
++     */
++    public function __construct($orderItemRefId, $retainServiceId = null)
++    {
++        $this->OrderItemRefID = $orderItemRefId;
++
++        if (!empty($retainServiceId)) {
++            $this->RetainServiceID = $retainServiceId;
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/DestArrivalRequest.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/DestArrivalRequest.php
+new file mode 100644
+index 0000000..24475a7
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/DestArrivalRequest.php
+@@ -0,0 +1,36 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * DestArrivalRequest
++ *
++ * Requested destination arrival location/time (DestArrivalRequestType).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class DestArrivalRequest
++{
++    /**
++     * @var string
++     */
++    public $IATA_LocationCode;
++
++    /**
++     * @var string|null
++     */
++    public $Date;
++
++    /**
++     * @param string $iataLocationCode
++     * @param \DateTime|string|null $date
++     */
++    public function __construct($iataLocationCode, $date = null)
++    {
++        $this->IATA_LocationCode = $iataLocationCode;
++
++        if ($date !== null) {
++            $this->Date = $date instanceof \DateTimeInterface ? $date->format('Y-m-d') : $date;
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/EmailAddress.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/EmailAddress.php
+new file mode 100644
+index 0000000..d331662
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/EmailAddress.php
+@@ -0,0 +1,36 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * EmailAddress
++ *
++ * Email contact (EmailAddressType).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class EmailAddress
++{
++    /**
++     * @var string|null
++     */
++    public $LabelText;
++
++    /**
++     * @var string
++     */
++    public $EmailAddressText;
++
++    /**
++     * @param string $emailAddressText
++     * @param string|null $labelText
++     */
++    public function __construct($emailAddressText, $labelText = null)
++    {
++        if ($labelText !== null) {
++            $this->LabelText = $labelText;
++        }
++
++        $this->EmailAddressText = $emailAddressText;
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/FlightRequest.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/FlightRequest.php
+new file mode 100644
+index 0000000..b76ea9f
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/FlightRequest.php
+@@ -0,0 +1,77 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\FlightRequest as RequestFlightRequest;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\OriginDestRequest as RequestOriginDestRequest;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\SelectedOffer as RequestSelectedOffer;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\SpecificOriginDestRequest as RequestSpecificOriginDestRequest;
++use InvalidArgumentException;
++
++/**
++ * FlightRequest
++ *
++ * Choice of flight information for the shopping request (FlightRequestType):
++ * OriginDestRequest, SpecificOriginDestRequest, SelectedOffer or
++ * ShoppingResponse.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class FlightRequest
++{
++    /**
++     * @var OriginDestRequest[]|null
++     */
++    public $OriginDestRequest;
++
++    /**
++     * @var SpecificOriginDestRequest[]|null
++     */
++    public $SpecificOriginDestRequest;
++
++    /**
++     * @var SelectedOffer[]|null
++     */
++    public $SelectedOffer;
++
++    /**
++     * @var ShoppingResponse|null
++     */
++    public $ShoppingResponse;
++
++    /**
++     * @param RequestFlightRequest $flightRequest
++     */
++    public function __construct(RequestFlightRequest $flightRequest)
++    {
++        if (!empty($flightRequest->originDestRequests)) {
++            $this->OriginDestRequest = array_map(
++                static function (RequestOriginDestRequest $req) {
++                    return new OriginDestRequest($req);
++                },
++                $flightRequest->originDestRequests
++            );
++        } elseif (!empty($flightRequest->specificOriginDestRequests)) {
++            $this->SpecificOriginDestRequest = array_map(
++                static function (RequestSpecificOriginDestRequest $req) {
++                    return new SpecificOriginDestRequest($req);
++                },
++                $flightRequest->specificOriginDestRequests
++            );
++        } elseif (!empty($flightRequest->selectedOffers)) {
++            $this->SelectedOffer = array_map(
++                static function (RequestSelectedOffer $offer) {
++                    return new SelectedOffer($offer);
++                },
++                $flightRequest->selectedOffers
++            );
++        } elseif ($flightRequest->shoppingResponseRefId !== null) {
++            $this->ShoppingResponse = new ShoppingResponse($flightRequest->shoppingResponseRefId);
++        } else {
++            throw new InvalidArgumentException(
++                'FlightRequest requires one of originDestRequests, specificOriginDestRequests, '
++                . 'selectedOffers or shoppingResponseRefId'
++            );
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/IdentityDoc.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/IdentityDoc.php
+new file mode 100644
+index 0000000..8635f5a
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/IdentityDoc.php
+@@ -0,0 +1,117 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\IdentityDoc as RequestIdentityDoc;
++
++/**
++ * IdentityDoc
++ *
++ * Passenger identity document (IdentityDocType). IdentityDocID and
++ * IdentityDocTypeCode are mandatory; the remaining nodes are emitted only when
++ * supplied and follow the XSD element order.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class IdentityDoc
++{
++    /**
++     * @var string
++     */
++    public $IdentityDocID;
++
++    /**
++     * @var string
++     */
++    public $IdentityDocTypeCode;
++
++    /**
++     * @var string|null
++     */
++    public $IssuingCountryCode;
++
++    /**
++     * @var string|null
++     */
++    public $CitizenshipCountryCode;
++
++    /**
++     * @var string|null
++     */
++    public $ResidenceCountryCode;
++
++    /**
++     * @var string|string[]|null
++     */
++    public $GivenName;
++
++    /**
++     * @var string|null
++     */
++    public $IssueDate;
++
++    /**
++     * @var string|null
++     */
++    public $ExpiryDate;
++
++    /**
++     * @var string|null
++     */
++    public $Birthdate;
++
++    /**
++     * @var string|null
++     */
++    public $GenderCode;
++
++    /**
++     * @param RequestIdentityDoc $doc
++     */
++    public function __construct(RequestIdentityDoc $doc)
++    {
++        $this->IdentityDocID = $doc->identityDocID;
++        $this->IdentityDocTypeCode = $doc->identityDocTypeCode;
++
++        if ($doc->issuingCountryCode !== null) {
++            $this->IssuingCountryCode = $doc->issuingCountryCode;
++        }
++
++        if ($doc->citizenshipCountryCode !== null) {
++            $this->CitizenshipCountryCode = $doc->citizenshipCountryCode;
++        }
++
++        if ($doc->residenceCountryCode !== null) {
++            $this->ResidenceCountryCode = $doc->residenceCountryCode;
++        }
++
++        if ($doc->givenName !== null) {
++            $this->GivenName = $doc->givenName;
++        }
++
++        if ($doc->issueDate !== null) {
++            $this->IssueDate = self::formatDate($doc->issueDate);
++        }
++
++        if ($doc->expiryDate !== null) {
++            $this->ExpiryDate = self::formatDate($doc->expiryDate);
++        }
++
++        if ($doc->birthdate !== null) {
++            $this->Birthdate = self::formatDate($doc->birthdate);
++        }
++
++        if ($doc->genderCode !== null) {
++            $this->GenderCode = $doc->genderCode;
++        }
++    }
++
++    /**
++     * @param \DateTime|string $date
++     * @return string
++     */
++    private static function formatDate($date)
++    {
++        return $date instanceof \DateTimeInterface ? $date->format('Y-m-d') : $date;
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/Individual.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/Individual.php
+new file mode 100644
+index 0000000..bbdab71
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/Individual.php
+@@ -0,0 +1,59 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * Individual
++ *
++ * A single human being (IndividualType). All nodes are optional and emitted
++ * only when supplied.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class Individual
++{
++    /**
++     * @var string|null
++     */
++    public $TitleName;
++
++    /**
++     * @var string|null
++     */
++    public $GivenName;
++
++    /**
++     * @var string|null
++     */
++    public $Surname;
++
++    /**
++     * @var string|null
++     */
++    public $GenderCode;
++
++    /**
++     * @param string|null $titleName
++     * @param string|null $givenName
++     * @param string|null $surname
++     * @param string|null $genderCode
++     */
++    public function __construct($titleName, $givenName, $surname, $genderCode)
++    {
++        if ($titleName !== null) {
++            $this->TitleName = $titleName;
++        }
++
++        if ($givenName !== null) {
++            $this->GivenName = $givenName;
++        }
++
++        if ($surname !== null) {
++            $this->Surname = $surname;
++        }
++
++        if ($genderCode !== null) {
++            $this->GenderCode = $genderCode;
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/MarketingCarrierInfo.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/MarketingCarrierInfo.php
+new file mode 100644
+index 0000000..795d9af
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/MarketingCarrierInfo.php
+@@ -0,0 +1,44 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * MarketingCarrierInfo
++ *
++ * The commercial designation under which a dated operating segment can be
++ * booked (DatedMarketingSegmentType).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class MarketingCarrierInfo
++{
++    /**
++     * @var string
++     */
++    public $CarrierDesigCode;
++
++    /**
++     * @var string
++     */
++    public $MarketingCarrierFlightNumberText;
++
++    /**
++     * @var string|null
++     */
++    public $RBD_Code;
++
++    /**
++     * @param string $carrierDesigCode
++     * @param string $marketingCarrierFlightNumberText
++     * @param string|null $rbdCode
++     */
++    public function __construct($carrierDesigCode, $marketingCarrierFlightNumberText, $rbdCode = null)
++    {
++        $this->CarrierDesigCode = $carrierDesigCode;
++        $this->MarketingCarrierFlightNumberText = $marketingCarrierFlightNumberText;
++
++        if ($rbdCode !== null) {
++            $this->RBD_Code = $rbdCode;
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/OriginDepRequest.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/OriginDepRequest.php
+new file mode 100644
+index 0000000..e3ecaa6
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/OriginDepRequest.php
+@@ -0,0 +1,34 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * OriginDepRequest
++ *
++ * Requested origin departure location/date (OriginDepRequestType). Date is
++ * mandatory per the XSD.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class OriginDepRequest
++{
++    /**
++     * @var string
++     */
++    public $IATA_LocationCode;
++
++    /**
++     * @var string
++     */
++    public $Date;
++
++    /**
++     * @param string $iataLocationCode
++     * @param \DateTime|string $date
++     */
++    public function __construct($iataLocationCode, $date)
++    {
++        $this->IATA_LocationCode = $iataLocationCode;
++        $this->Date = $date instanceof \DateTimeInterface ? $date->format('Y-m-d') : $date;
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/OriginDestRequest.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/OriginDestRequest.php
+new file mode 100644
+index 0000000..3142d5a
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/OriginDestRequest.php
+@@ -0,0 +1,41 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\OriginDestRequest as RequestOriginDestRequest;
++
++/**
++ * OriginDestRequest
++ *
++ * Origin/Destination shopping request (OriginDestType). Element order follows
++ * the XSD: DestArrivalRequest then OriginDepRequest.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class OriginDestRequest
++{
++    /**
++     * @var DestArrivalRequest
++     */
++    public $DestArrivalRequest;
++
++    /**
++     * @var OriginDepRequest
++     */
++    public $OriginDepRequest;
++
++    /**
++     * @param RequestOriginDestRequest $req
++     */
++    public function __construct(RequestOriginDestRequest $req)
++    {
++        $this->DestArrivalRequest = new DestArrivalRequest(
++            $req->destStationCode,
++            $req->destDate
++        );
++        $this->OriginDepRequest = new OriginDepRequest(
++            $req->originStationCode,
++            $req->originDate
++        );
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/PaxJourney.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/PaxJourney.php
+new file mode 100644
+index 0000000..4ece11f
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/PaxJourney.php
+@@ -0,0 +1,37 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * PaxJourney
++ *
++ * A collection of segments satisfying transportation for a given
++ * origin/destination (PaxJourneyType).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class PaxJourney
++{
++    /**
++     * @var string|null
++     */
++    public $PaxJourneyID;
++
++    /**
++     * @var PaxSegment[]
++     */
++    public $PaxSegment;
++
++    /**
++     * @param string|null $paxJourneyId
++     * @param PaxSegment[] $paxSegments
++     */
++    public function __construct($paxJourneyId, array $paxSegments)
++    {
++        if ($paxJourneyId !== null) {
++            $this->PaxJourneyID = $paxJourneyId;
++        }
++
++        $this->PaxSegment = $paxSegments;
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/Pax.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/Pax.php
+new file mode 100644
+index 0000000..e15155b
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/Pax.php
+@@ -0,0 +1,117 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\IdentityDoc as RequestIdentityDoc;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\Pax as RequestPax;
++
++/**
++ * Pax
++ *
++ * Passenger details (PaxType). Only PaxID is mandatory; the remaining nodes are
++ * only emitted when the corresponding option is provided.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class Pax
++{
++    /**
++     * @var string
++     */
++    public $PaxID;
++
++    /**
++     * @var string|null
++     */
++    public $PTC;
++
++    /**
++     * @var string|null
++     */
++    public $Birthdate;
++
++    /**
++     * @var string|null
++     */
++    public $CitizenshipCountryCode;
++
++    /**
++     * @var string|null
++     */
++    public $ResidenceCountryCode;
++
++    /**
++     * @var ContactInfo|null
++     */
++    public $ContactInfo;
++
++    /**
++     * @var IdentityDoc[]|null
++     */
++    public $IdentityDoc;
++
++    /**
++     * @var Individual|null
++     */
++    public $Individual;
++
++    /**
++     * @param RequestPax $pax
++     */
++    public function __construct(RequestPax $pax)
++    {
++        $this->PaxID = $pax->paxId;
++
++        if ($pax->ptc !== null) {
++            $this->PTC = $pax->ptc;
++        }
++
++        if ($pax->birthdate !== null) {
++            $this->Birthdate = self::formatDate($pax->birthdate);
++        }
++
++        if ($pax->citizenshipCountryCode !== null) {
++            $this->CitizenshipCountryCode = $pax->citizenshipCountryCode;
++        }
++
++        if ($pax->residenceCountryCode !== null) {
++            $this->ResidenceCountryCode = $pax->residenceCountryCode;
++        }
++
++        if ($pax->phoneNumber !== null || $pax->email !== null) {
++            $this->ContactInfo = new ContactInfo(
++                $pax->phoneNumber,
++                $pax->phoneLabel,
++                $pax->email,
++                $pax->emailLabel
++            );
++        }
++
++        if (!empty($pax->identityDocs)) {
++            $this->IdentityDoc = array_map(
++                static function (RequestIdentityDoc $doc) {
++                    return new IdentityDoc($doc);
++                },
++                $pax->identityDocs
++            );
++        }
++
++        if ($pax->givenName !== null || $pax->surname !== null || $pax->titleName !== null || $pax->genderCode !== null) {
++            $this->Individual = new Individual(
++                $pax->titleName,
++                $pax->givenName,
++                $pax->surname,
++                $pax->genderCode
++            );
++        }
++    }
++
++    /**
++     * @param \DateTime|string $date
++     * @return string
++     */
++    private static function formatDate($date)
++    {
++        return $date instanceof \DateTimeInterface ? $date->format('Y-m-d') : $date;
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/PaxSegment.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/PaxSegment.php
+new file mode 100644
+index 0000000..b487896
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/PaxSegment.php
+@@ -0,0 +1,59 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\PaxSegment as RequestPaxSegment;
++
++/**
++ * PaxSegment
++ *
++ * Transportation of a passenger on a dated operating segment (PaxSegmentType).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class PaxSegment
++{
++    /**
++     * @var string|null
++     */
++    public $PaxSegmentID;
++
++    /**
++     * @var TransportPoint
++     */
++    public $Departure;
++
++    /**
++     * @var TransportPoint
++     */
++    public $Arrival;
++
++    /**
++     * @var MarketingCarrierInfo
++     */
++    public $MarketingCarrierInfo;
++
++    /**
++     * @param RequestPaxSegment $segment
++     */
++    public function __construct(RequestPaxSegment $segment)
++    {
++        if ($segment->paxSegmentId !== null) {
++            $this->PaxSegmentID = $segment->paxSegmentId;
++        }
++
++        $this->Departure = new TransportPoint(
++            $segment->departureLocationCode,
++            $segment->departureDateTime
++        );
++        $this->Arrival = new TransportPoint(
++            $segment->arrivalLocationCode,
++            $segment->arrivalDateTime
++        );
++        $this->MarketingCarrierInfo = new MarketingCarrierInfo(
++            $segment->marketingCarrierCode,
++            $segment->marketingFlightNumber,
++            $segment->rbdCode
++        );
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/Paxs.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/Paxs.php
+new file mode 100644
+index 0000000..685ca9b
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/Paxs.php
+@@ -0,0 +1,26 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * Paxs
++ *
++ * Passenger information wrapper (PaxsType).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class Paxs
++{
++    /**
++     * @var Pax[]
++     */
++    public $Pax;
++
++    /**
++     * @param Pax[] $pax
++     */
++    public function __construct(array $pax)
++    {
++        $this->Pax = $pax;
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/Phone.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/Phone.php
+new file mode 100644
+index 0000000..02af738
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/Phone.php
+@@ -0,0 +1,36 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * Phone
++ *
++ * Telephone contact (PhoneType).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class Phone
++{
++    /**
++     * @var string|null
++     */
++    public $LabelText;
++
++    /**
++     * @var string
++     */
++    public $PhoneNumberText;
++
++    /**
++     * @param string $phoneNumberText
++     * @param string|null $labelText
++     */
++    public function __construct($phoneNumberText, $labelText = null)
++    {
++        if ($labelText !== null) {
++            $this->LabelText = $labelText;
++        }
++
++        $this->PhoneNumberText = $phoneNumberText;
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop.php b/src/Amadeus/Client/Struct/Travel/OrderReshop.php
+new file mode 100644
+index 0000000..f6c0df0
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop.php
+@@ -0,0 +1,31 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel;
++
++use Amadeus\Client\RequestOptions\TravelOrderReshopOptions;
++use Amadeus\Client\Struct\BaseWsMessage;
++use Amadeus\Client\Struct\Travel\OrderReshop\Request;
++
++/**
++ * Travel_OrderReshop message structure
++ *
++ * @package Amadeus\Client\Struct\Travel
++ */
++class OrderReshop extends BaseWsMessage
++{
++    /**
++     * @var Party
++     */
++    public $Party;
++
++    /**
++     * @var Request
++     */
++    public $Request;
++
++    public function __construct(TravelOrderReshopOptions $options)
++    {
++        $this->Party = new Party($options->party);
++        $this->Request = new Request($options);
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/RepriceOrder.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/RepriceOrder.php
+new file mode 100644
+index 0000000..30e2132
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/RepriceOrder.php
+@@ -0,0 +1,29 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * RepriceOrder
++ *
++ * Function to reprice the entire Order (when no OrderItemRefID is supplied) or
++ * a specific Order Item.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class RepriceOrder
++{
++    /**
++     * @var string|null
++     */
++    public $OrderItemRefID;
++
++    /**
++     * @param string|null $orderItemRefId
++     */
++    public function __construct($orderItemRefId = null)
++    {
++        if ($orderItemRefId !== null) {
++            $this->OrderItemRefID = $orderItemRefId;
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/Request.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/Request.php
+new file mode 100644
+index 0000000..85810d8
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/Request.php
+@@ -0,0 +1,73 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\BookingRef as RequestBookingRef;
++use Amadeus\Client\RequestOptions\TravelOrderReshopOptions;
++
++/**
++ * Request
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class Request
++{
++    /**
++     * @var string
++     */
++    public $OrderItemRefID;
++
++    /**
++     * @var string|null
++     */
++    public $OrderActionContextText;
++
++    /**
++     * @var BookingRef[]|null
++     */
++    public $BookingRef;
++
++    /**
++     * @var UpdateOrder|null
++     */
++    public $UpdateOrder;
++
++    /**
++     * @param TravelOrderReshopOptions $options
++     */
++    public function __construct(TravelOrderReshopOptions $options)
++    {
++        $this->OrderItemRefID = $options->orderItemRefId;
++
++        if ($options->orderActionContextText !== null) {
++            $this->OrderActionContextText = $options->orderActionContextText;
++        }
++
++        if (!empty($options->bookingRefs)) {
++            $this->BookingRef = array_map(
++                static function (RequestBookingRef $bookingRef) {
++                    return new BookingRef(
++                        $bookingRef->bookingId,
++                        $bookingRef->bookingEntityAirlineDesigCode,
++                        $bookingRef->typeCode
++                    );
++                },
++                $options->bookingRefs
++            );
++        }
++
++        // UpdateOrder is optional: only include it when a reprice/reshop/reuse
++        // action is requested. When omitted, the request only carries the
++        // OrderItemRefID (and optional BookingRef) context.
++        if ($options->repriceOrder !== null
++            || $options->reshopOrder !== null
++            || !empty($options->reuseTickets)
++        ) {
++            $this->UpdateOrder = new UpdateOrder(
++                $options->repriceOrder,
++                $options->reshopOrder,
++                $options->reuseTickets
++            );
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/ReshopOrder.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/ReshopOrder.php
+new file mode 100644
+index 0000000..39924a1
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/ReshopOrder.php
+@@ -0,0 +1,60 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\ReshopOrder as RequestReshopOrder;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\UpdatePax as RequestUpdatePax;
++use InvalidArgumentException;
++
++/**
++ * ReshopOrder
++ *
++ * Function used to reshop items within an Order. Maps to the ReshopOrderType
++ * choice: ServiceOrder (AddOfferItems and/or DeleteOrderItem), UpdatePax, or
++ * UpdatePaxName.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class ReshopOrder
++{
++    /**
++     * @var ServiceOrder|null
++     */
++    public $ServiceOrder;
++
++    /**
++     * @var UpdatePax[]|null
++     */
++    public $UpdatePax;
++
++    /**
++     * @var UpdatePaxName|null
++     */
++    public $UpdatePaxName;
++
++    /**
++     * @param RequestReshopOrder $reshopOrder
++     */
++    public function __construct(RequestReshopOrder $reshopOrder)
++    {
++        if ($reshopOrder->addOfferItems !== null || !empty($reshopOrder->deleteOrderItems)) {
++            $this->ServiceOrder = new ServiceOrder(
++                $reshopOrder->addOfferItems,
++                $reshopOrder->deleteOrderItems
++            );
++        } elseif (!empty($reshopOrder->updatePax)) {
++            $this->UpdatePax = array_map(
++                static function (RequestUpdatePax $updatePax) {
++                    return new UpdatePax($updatePax);
++                },
++                $reshopOrder->updatePax
++            );
++        } elseif ($reshopOrder->updatePaxName !== null) {
++            $this->UpdatePaxName = new UpdatePaxName($reshopOrder->updatePaxName);
++        } else {
++            throw new InvalidArgumentException(
++                'ReshopOrder requires one of addOfferItems, deleteOrderItems, updatePax or updatePaxName'
++            );
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/RetainedTicketDoc.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/RetainedTicketDoc.php
+new file mode 100644
+index 0000000..693fea3
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/RetainedTicketDoc.php
+@@ -0,0 +1,43 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * RetainedTicketDoc
++ *
++ * Per-passenger information for reusable credit.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class RetainedTicketDoc
++{
++    /**
++     * @var string
++     */
++    public $TicketNumber;
++
++    /**
++     * @var string
++     */
++    public $PaxID;
++
++    /**
++     * @var string|null
++     */
++    public $Type;
++
++    /**
++     * @param string $ticketNumber
++     * @param string $paxId
++     * @param string|null $type
++     */
++    public function __construct($ticketNumber, $paxId, $type = null)
++    {
++        $this->TicketNumber = $ticketNumber;
++        $this->PaxID = $paxId;
++
++        if ($type !== null) {
++            $this->Type = $type;
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/ReuseTickets.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/ReuseTickets.php
+new file mode 100644
+index 0000000..1df949f
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/ReuseTickets.php
+@@ -0,0 +1,26 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * ReuseTickets
++ *
++ * Retained tickets for reusing the passenger's credit.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class ReuseTickets
++{
++    /**
++     * @var RetainedTicketDoc[]
++     */
++    public $RetainedTicketDoc;
++
++    /**
++     * @param RetainedTicketDoc[] $retainedTicketDocs
++     */
++    public function __construct(array $retainedTicketDocs)
++    {
++        $this->RetainedTicketDoc = $retainedTicketDocs;
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/SelectedOfferItem.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/SelectedOfferItem.php
+new file mode 100644
+index 0000000..aab3a2e
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/SelectedOfferItem.php
+@@ -0,0 +1,33 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * SelectedOfferItem
++ *
++ * Offer item selected by the passenger (SelectedOfferItemType).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class SelectedOfferItem
++{
++    /**
++     * @var string
++     */
++    public $OfferItemRefID;
++
++    /**
++     * @var string|string[]
++     */
++    public $PaxRefID;
++
++    /**
++     * @param string $offerItemRefId
++     * @param string|string[] $paxRefId
++     */
++    public function __construct($offerItemRefId, $paxRefId)
++    {
++        $this->OfferItemRefID = $offerItemRefId;
++        $this->PaxRefID = $paxRefId;
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/SelectedOffer.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/SelectedOffer.php
+new file mode 100644
+index 0000000..95115d0
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/SelectedOffer.php
+@@ -0,0 +1,54 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\SelectedOffer as RequestSelectedOffer;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\SelectedOfferItem as RequestSelectedOfferItem;
++
++/**
++ * SelectedOffer
++ *
++ * Offer selected by the passenger from a previous shopping response
++ * (SelectedOfferType).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class SelectedOffer
++{
++    /**
++     * @var string
++     */
++    public $OfferRefID;
++
++    /**
++     * @var string
++     */
++    public $OwnerCode;
++
++    /**
++     * @var string
++     */
++    public $ShoppingResponseRefID;
++
++    /**
++     * @var SelectedOfferItem[]
++     */
++    public $SelectedOfferItem;
++
++    /**
++     * @param RequestSelectedOffer $offer
++     */
++    public function __construct(RequestSelectedOffer $offer)
++    {
++        $this->OfferRefID = $offer->offerRefId;
++        $this->OwnerCode = $offer->ownerCode;
++        $this->ShoppingResponseRefID = $offer->shoppingResponseRefId;
++
++        $this->SelectedOfferItem = array_map(
++            static function (RequestSelectedOfferItem $item) {
++                return new SelectedOfferItem($item->offerItemRefId, $item->paxRefId);
++            },
++            $offer->selectedOfferItems
++        );
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/ServiceOrder.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/ServiceOrder.php
+new file mode 100644
+index 0000000..56c8cb0
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/ServiceOrder.php
+@@ -0,0 +1,64 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\AddOfferItems as RequestAddOfferItems;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\DeleteOrderItem as RequestDeleteOrderItem;
++
++/**
++ * ServiceOrder
++ *
++ * Functions to request additions (AddOfferItems) and/or deletions
++ * (DeleteOrderItem) of Order Items in a specific Order.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class ServiceOrder
++{
++    /**
++     * @var AddOfferItems|null
++     */
++    public $AddOfferItems;
++
++    /**
++     * @var DeleteOrderItem[]|null
++     */
++    public $DeleteOrderItem;
++
++    /**
++     * @param RequestAddOfferItems|null $addOfferItems
++     * @param RequestDeleteOrderItem[]|string[]|null $deleteOrderItems
++     */
++    public function __construct($addOfferItems, $deleteOrderItems)
++    {
++        if ($addOfferItems !== null) {
++            $this->AddOfferItems = new AddOfferItems($addOfferItems);
++        }
++
++        if (!empty($deleteOrderItems)) {
++            $this->DeleteOrderItem = $this->buildDeleteOrderItems($deleteOrderItems);
++        }
++    }
++
++    /**
++     * @param RequestDeleteOrderItem[]|string[] $deleteOrderItems
++     * @return DeleteOrderItem[]
++     */
++    private function buildDeleteOrderItems(array $deleteOrderItems)
++    {
++        $items = [];
++
++        foreach ($deleteOrderItems as $deleteOrderItem) {
++            if ($deleteOrderItem instanceof RequestDeleteOrderItem) {
++                $items[] = new DeleteOrderItem(
++                    $deleteOrderItem->orderItemRefId,
++                    $deleteOrderItem->retainServiceId
++                );
++            } else {
++                $items[] = new DeleteOrderItem($deleteOrderItem, null);
++            }
++        }
++
++        return $items;
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/ShoppingResponse.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/ShoppingResponse.php
+new file mode 100644
+index 0000000..077644b
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/ShoppingResponse.php
+@@ -0,0 +1,26 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * ShoppingResponse
++ *
++ * Shopping session (message response) reference (ShoppingResponseType).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class ShoppingResponse
++{
++    /**
++     * @var string
++     */
++    public $ShoppingResponseID;
++
++    /**
++     * @param string $shoppingResponseId
++     */
++    public function __construct($shoppingResponseId)
++    {
++        $this->ShoppingResponseID = $shoppingResponseId;
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/SpecificOriginDestRequest.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/SpecificOriginDestRequest.php
+new file mode 100644
+index 0000000..22356f5
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/SpecificOriginDestRequest.php
+@@ -0,0 +1,50 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\PaxSegment as RequestPaxSegment;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\SpecificOriginDestRequest as RequestSpecificOriginDestRequest;
++
++/**
++ * SpecificOriginDestRequest
++ *
++ * Segment-detailed origin/destination query
++ * (FlightRequest/SpecificOriginDestRequest).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class SpecificOriginDestRequest
++{
++    /**
++     * @var string
++     */
++    public $OriginStationCode;
++
++    /**
++     * @var string
++     */
++    public $DestStationCode;
++
++    /**
++     * @var PaxJourney
++     */
++    public $PaxJourney;
++
++    /**
++     * @param RequestSpecificOriginDestRequest $req
++     */
++    public function __construct(RequestSpecificOriginDestRequest $req)
++    {
++        $this->OriginStationCode = $req->originStationCode;
++        $this->DestStationCode = $req->destStationCode;
++
++        $paxSegments = array_map(
++            static function (RequestPaxSegment $segment) {
++                return new PaxSegment($segment);
++            },
++            $req->paxSegments
++        );
++
++        $this->PaxJourney = new PaxJourney($req->paxJourneyId, $paxSegments);
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/TransportPoint.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/TransportPoint.php
+new file mode 100644
+index 0000000..bd43fee
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/TransportPoint.php
+@@ -0,0 +1,39 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++/**
++ * TransportPoint
++ *
++ * Departure/Arrival point of a segment (TransportDepType / TransportArrivalType,
++ * which share the same element structure).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class TransportPoint
++{
++    /**
++     * @var string
++     */
++    public $IATA_LocationCode;
++
++    /**
++     * @var string|null
++     */
++    public $AircraftScheduledDateTime;
++
++    /**
++     * @param string $iataLocationCode
++     * @param \DateTime|string|null $dateTime
++     */
++    public function __construct($iataLocationCode, $dateTime = null)
++    {
++        $this->IATA_LocationCode = $iataLocationCode;
++
++        if ($dateTime !== null) {
++            $this->AircraftScheduledDateTime = $dateTime instanceof \DateTimeInterface
++                ? $dateTime->format('Y-m-d\TH:i:s')
++                : $dateTime;
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/UpdateOrder.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/UpdateOrder.php
+new file mode 100644
+index 0000000..83195f0
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/UpdateOrder.php
+@@ -0,0 +1,65 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\RepriceOrder as RequestRepriceOrder;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\ReshopOrder as RequestReshopOrder;
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\ReuseTicket as RequestReuseTicket;
++use InvalidArgumentException;
++
++/**
++ * UpdateOrder
++ *
++ * Maps to the mutually exclusive UpdateOrder choice: RepriceOrder, ReshopOrder
++ * or ReuseTickets. Exactly one branch must be populated.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class UpdateOrder
++{
++    /**
++     * @var RepriceOrder|null
++     */
++    public $RepriceOrder;
++
++    /**
++     * @var ReshopOrder|null
++     */
++    public $ReshopOrder;
++
++    /**
++     * @var ReuseTickets|null
++     */
++    public $ReuseTickets;
++
++    /**
++     * @param RequestRepriceOrder|null $repriceOrder
++     * @param RequestReshopOrder|null $reshopOrder
++     * @param RequestReuseTicket[]|null $reuseTickets
++     */
++    public function __construct($repriceOrder, $reshopOrder, $reuseTickets)
++    {
++        if ($repriceOrder !== null) {
++            $this->RepriceOrder = new RepriceOrder($repriceOrder->orderItemRefId);
++        } elseif ($reshopOrder !== null) {
++            $this->ReshopOrder = new ReshopOrder($reshopOrder);
++        } elseif (!empty($reuseTickets)) {
++            $this->ReuseTickets = new ReuseTickets(
++                array_map(
++                    static function (RequestReuseTicket $ticket) {
++                        return new RetainedTicketDoc(
++                            $ticket->ticketNumber,
++                            $ticket->paxId,
++                            $ticket->type
++                        );
++                    },
++                    $reuseTickets
++                )
++            );
++        } else {
++            throw new InvalidArgumentException(
++                'Travel_OrderReshop requires one of repriceOrder, reshopOrder or reuseTickets to be set'
++            );
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/UpdatePaxName.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/UpdatePaxName.php
+new file mode 100644
+index 0000000..54420ef
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/UpdatePaxName.php
+@@ -0,0 +1,74 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\UpdatePaxName as RequestUpdatePaxName;
++
++/**
++ * UpdatePaxName
++ *
++ * Request whether fees apply to a proposed passenger name correction
++ * (UpdatePaxNameType). Element order follows the XSD.
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class UpdatePaxName
++{
++    /**
++     * @var string
++     */
++    public $PaxRefID;
++
++    /**
++     * @var string|null
++     */
++    public $TitleName;
++
++    /**
++     * @var string|string[]|null
++     */
++    public $GivenName;
++
++    /**
++     * @var string|string[]|null
++     */
++    public $MiddleName;
++
++    /**
++     * @var string|null
++     */
++    public $Surname;
++
++    /**
++     * @var string|null
++     */
++    public $SuffixName;
++
++    /**
++     * @param RequestUpdatePaxName $updatePaxName
++     */
++    public function __construct(RequestUpdatePaxName $updatePaxName)
++    {
++        $this->PaxRefID = $updatePaxName->paxRefId;
++
++        if ($updatePaxName->titleName !== null) {
++            $this->TitleName = $updatePaxName->titleName;
++        }
++
++        if ($updatePaxName->givenName !== null) {
++            $this->GivenName = $updatePaxName->givenName;
++        }
++
++        if ($updatePaxName->middleName !== null) {
++            $this->MiddleName = $updatePaxName->middleName;
++        }
++
++        if ($updatePaxName->surname !== null) {
++            $this->Surname = $updatePaxName->surname;
++        }
++
++        if ($updatePaxName->suffixName !== null) {
++            $this->SuffixName = $updatePaxName->suffixName;
++        }
++    }
++}
+diff --git a/src/Amadeus/Client/Struct/Travel/OrderReshop/UpdatePax.php b/src/Amadeus/Client/Struct/Travel/OrderReshop/UpdatePax.php
+new file mode 100644
+index 0000000..33b4429
+--- /dev/null
++++ b/src/Amadeus/Client/Struct/Travel/OrderReshop/UpdatePax.php
+@@ -0,0 +1,39 @@
++<?php
++
++namespace Amadeus\Client\Struct\Travel\OrderReshop;
++
++use Amadeus\Client\RequestOptions\Travel\OrderReshop\UpdatePax as RequestUpdatePax;
++
++/**
++ * UpdatePax
++ *
++ * Function to add, remove or update passenger details (UpdatePaxType).
++ *
++ * @package Amadeus\Client\Struct\Travel\OrderReshop
++ */
++class UpdatePax
++{
++    /**
++     * @var Pax|null
++     */
++    public $Current;
++
++    /**
++     * @var Pax|null
++     */
++    public $New;
++
++    /**
++     * @param RequestUpdatePax $updatePax
++     */
++    public function __construct(RequestUpdatePax $updatePax)
++    {
++        if ($updatePax->current !== null) {
++            $this->Current = new Pax($updatePax->current);
++        }
++
++        if ($updatePax->new !== null) {
++            $this->New = new Pax($updatePax->new);
++        }
++    }
++}
+diff --git a/src/Amadeus/Client.php b/src/Amadeus/Client.php
+index 5de337a..4e4aa5a 100644
+--- a/src/Amadeus/Client.php
++++ b/src/Amadeus/Client.php
+@@ -1951,5 +1951,23 @@ public function travelOrderChange(RequestOptions\TravelOrderChangeOptions $optio
+         return $this->callMessage($msgName, $options, $messageOptions);
+     }
+ 
++    /**
++     * Travel_OrderReshop
++     *
++     * @param RequestOptions\TravelOrderReshopOptions $options
++     * @param array $messageOptions
++     *            (OPTIONAL)
++     * @return Result
++     * @throws Client\InvalidMessageException
++     * @throws Client\RequestCreator\MessageVersionUnsupportedException
++     * @throws Exception
++     */
++    public function travelOrderReshop(RequestOptions\TravelOrderReshopOptions $options, $messageOptions = [])
++    {
++        $msgName = 'Travel_OrderReshop';
++
++        return $this->callMessage($msgName, $options, $messageOptions);
++    }
++ 
+     /**
+      * PAY_GetVirtualCardDetails
