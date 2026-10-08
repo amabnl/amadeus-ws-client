@@ -1,5 +1,7 @@
 ## Unreleased
-* New message (NDC): Travel_OrderReshop - reshop an existing Order (add/delete order items, update passenger details, reprice or reuse tickets)
+
+## Release 2.3.4 (8 Oct 2026)
+* New message (NDC): Travel_OrderReshop (https://github.com/amabnl/amadeus-ws-client/pull/504) - ahmedsalim-flyakeed
 
 ## Release 2.3.3 (20 May 2026)
 *  Fix fatal error on declaration of Amadeus\Client\SoapClient::__doRequest is not compatible with the PHP 8.5 Soap client (https://github.com/amabnl/amadeus-ws-client/pull/503) - alexandr-sibov
