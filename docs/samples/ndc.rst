@@ -294,3 +294,119 @@ Here need to use offer item data from Travel_SeatAvailability response:
 
     $response = $client->travelOrderChange($orderChangeOptions);
 
+
+------------------
+Travel_OrderReshop
+------------------
+
+The ``Travel_OrderReshop`` transaction passes new shopping requests to an airline in
+order to replace an existing Order (or Order Items), reprice an Order, or reuse a
+ticket. The airline responds with product offers within the context of the existing
+Order (typically followed by a ``Travel_OrderChange`` or ``Travel_OrderCancel``).
+
+Only ``orderItemRefId`` is mandatory. The ``UpdateOrder`` action is optional: provide
+one of ``repriceOrder``, ``reshopOrder`` or ``reuseTickets`` and it will be emitted as
+the (mutually exclusive) ``UpdateOrder`` choice.
+
+Reshop an Order by requesting new flights (Origin/Destination)
+==============================================================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\Travel\OrderReshop;
+    use Amadeus\Client\RequestOptions\TravelOrderReshopOptions;
+
+    $orderReshopOptions = new TravelOrderReshopOptions([
+        'orderItemRefId' => 'OITEM-1', // reference of the existing Order Item to reshop
+        'orderActionContextText' => 'REA', // PADIS codeset REA giving context for the change
+        'bookingRefs' => [
+            new OrderReshop\BookingRef([
+                'bookingId' => 'ABC123',
+                'typeCode' => '6',
+                'bookingEntityAirlineDesigCode' => '6X',
+            ]),
+        ],
+        'reshopOrder' => new OrderReshop\ReshopOrder([
+            'addOfferItems' => new OrderReshop\AddOfferItems([
+                'paxs' => [
+                    new OrderReshop\Pax([
+                        'paxId' => 'PAX1',
+                        'ptc' => 'ADT',
+                    ]),
+                ],
+                'flightRequest' => new OrderReshop\FlightRequest([
+                    'originDestRequests' => [
+                        new OrderReshop\OriginDestRequest([
+                            'originStationCode' => 'BRU',
+                            'originDate' => new \DateTime('2025-06-01'),
+                            'destStationCode' => 'JFK',
+                        ]),
+                    ],
+                ]),
+            ]),
+        ]),
+    ]);
+
+    $response = $client->travelOrderReshop($orderReshopOptions);
+
+Delete an Order Item
+====================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\Travel\OrderReshop;
+    use Amadeus\Client\RequestOptions\TravelOrderReshopOptions;
+
+    $orderReshopOptions = new TravelOrderReshopOptions([
+        'orderItemRefId' => 'OITEM-1',
+        'reshopOrder' => new OrderReshop\ReshopOrder([
+            'deleteOrderItems' => [
+                // a plain OrderItemRefID string ...
+                'OITEM-9',
+                // ... or a DeleteOrderItem retaining specific services
+                new OrderReshop\DeleteOrderItem([
+                    'orderItemRefId' => 'OITEM-10',
+                    'retainServiceId' => ['SVC-1', 'SVC-2'],
+                ]),
+            ],
+        ]),
+    ]);
+
+    $response = $client->travelOrderReshop($orderReshopOptions);
+
+Reprice the entire Order
+========================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\Travel\OrderReshop;
+    use Amadeus\Client\RequestOptions\TravelOrderReshopOptions;
+
+    $orderReshopOptions = new TravelOrderReshopOptions([
+        'orderItemRefId' => 'OITEM-1',
+        // omit RepriceOrder->orderItemRefId to reprice the whole Order,
+        // or provide it to reprice a single Order Item.
+        'repriceOrder' => new OrderReshop\RepriceOrder([]),
+    ]);
+
+    $response = $client->travelOrderReshop($orderReshopOptions);
+
+Reuse the credit of a retained ticket
+=====================================
+
+.. code-block:: php
+
+    use Amadeus\Client\RequestOptions\Travel\OrderReshop;
+    use Amadeus\Client\RequestOptions\TravelOrderReshopOptions;
+
+    $orderReshopOptions = new TravelOrderReshopOptions([
+        'orderItemRefId' => 'OITEM-1',
+        'reuseTickets' => [
+            new OrderReshop\ReuseTicket([
+                'ticketNumber' => '1234567890123',
+                'paxId' => 'PAX1',
+            ]),
+        ],
+    ]);
+
+    $response = $client->travelOrderReshop($orderReshopOptions);

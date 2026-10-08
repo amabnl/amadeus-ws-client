@@ -1,0 +1,8 @@
+<AMA_TravelOrderReshopRS xmlns="http://xml.amadeus.com/2010/06/Travel_OrderReshopRS_v1"
+                         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <Errors>
+        <Code>368</Code>
+        <DescText>NO CANCELLATION SOLUTION FOUND</DescText>
+        <OwnerName>EY</OwnerName>
+    </Errors>
+</AMA_TravelOrderReshopRS>

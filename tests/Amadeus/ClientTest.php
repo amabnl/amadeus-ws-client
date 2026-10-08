@@ -4354,6 +4354,82 @@ class ClientTest extends BaseTestCase
         $this->assertEquals($messageResult, $response);
     }
 
+    public function testCanSendTravelOrderReshop(): void
+    {
+        $sessionHandlerMock = $this->createMock(HandlerInterface::class);
+
+        $mockedSendResult = new Client\Session\Handler\SendResult();
+        $mockedSendResult->responseXml = $this->getTestFile('TravelOrderReshopReply.xml');
+
+        $messageResult = new Client\Result($mockedSendResult);
+
+        $orderReshopOptions = new Client\RequestOptions\TravelOrderReshopOptions([
+            'orderItemRefId' => 'OITEM-1',
+            'orderActionContextText' => 'REA',
+            'bookingRefs' => [
+                new Client\RequestOptions\Travel\OrderReshop\BookingRef([
+                    'bookingId' => 'ABC123',
+                    'typeCode' => '6',
+                    'bookingEntityAirlineDesigCode' => '6X',
+                ]),
+            ],
+            'reshopOrder' => new Client\RequestOptions\Travel\OrderReshop\ReshopOrder([
+                'addOfferItems' => new Client\RequestOptions\Travel\OrderReshop\AddOfferItems([
+                    'paxs' => [
+                        new Client\RequestOptions\Travel\OrderReshop\Pax([
+                            'paxId' => 'PAX1',
+                            'ptc' => 'ADT',
+                        ]),
+                    ],
+                    'flightRequest' => new Client\RequestOptions\Travel\OrderReshop\FlightRequest([
+                        'originDestRequests' => [
+                            new Client\RequestOptions\Travel\OrderReshop\OriginDestRequest([
+                                'originStationCode' => 'BRU',
+                                'originDate' => new \DateTime('2025-06-01'),
+                                'destStationCode' => 'JFK',
+                            ]),
+                        ],
+                    ]),
+                ]),
+            ]),
+        ]);
+
+        $expectedMessageResult = new Client\Struct\Travel\OrderReshop($orderReshopOptions);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('sendMessage')
+            ->with('Travel_OrderReshop', $expectedMessageResult, ['endSession' => false, 'returnXml' => true])
+            ->willReturn($mockedSendResult);
+
+        $sessionHandlerMock
+            ->expects($this->once())
+            ->method('getMessagesAndVersions')
+            ->willReturn(self::getNdcWsdlMessagesAndVersions());
+
+        $responseHandlerMock = $this->createMock(ResponseHandlerInterface::class);
+
+        $responseHandlerMock
+            ->expects($this->once())
+            ->method('analyzeResponse')
+            ->with($mockedSendResult, 'Travel_OrderReshop')
+            ->willReturn($messageResult);
+
+        $params = new Params();
+        $params->sessionHandler = $sessionHandlerMock;
+        $params->requestCreatorParams = new Params\RequestCreatorParams([
+            'receivedFrom' => 'some RF string',
+            'originatorOfficeId' => 'BRUXXXXXX',
+        ]);
+        $params->responseHandler = $responseHandlerMock;
+
+        $client = new Client($params);
+
+        $response = $client->travelOrderReshop($orderReshopOptions);
+
+        $this->assertEquals($messageResult, $response);
+    }
+
     public function testCanSendPayListVirtualCards(): void
     {
         $sessionHandlerMock = $this->createMock(HandlerInterface::class);
@@ -7244,6 +7320,7 @@ class ClientTest extends BaseTestCase
             'Travel_OrderCancel' => ['version' => '1.0', 'wsdl' => 'dc22e4ee'],
             'Travel_SeatAvailability' => ['version' => '1.0', 'wsdl' => 'dc22e4ee'],
             'Travel_OrderChange' => ['version' => '1.5', 'wsdl' => 'dc22e4ee'],
+            'Travel_OrderReshop' => ['version' => '1.5', 'wsdl' => 'dc22e4ee'],
             'Travel_OrderCreate' => ['version' => '1.5', 'wsdl' => 'dc22e4ee'],
             'Travel_OrderPay' => ['version' => '1.5', 'wsdl' => 'dc22e4ee'],
             'Travel_OrderRetrieve' => ['version' => '1.5', 'wsdl' => 'dc22e4ee'],

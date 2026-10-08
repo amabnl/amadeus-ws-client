@@ -1952,6 +1952,24 @@ class Client extends Base
     }
 
     /**
+     * Travel_OrderReshop
+     *
+     * @param RequestOptions\TravelOrderReshopOptions $options
+     * @param array $messageOptions
+     *            (OPTIONAL)
+     * @return Result
+     * @throws Client\InvalidMessageException
+     * @throws Client\RequestCreator\MessageVersionUnsupportedException
+     * @throws Exception
+     */
+    public function travelOrderReshop(RequestOptions\TravelOrderReshopOptions $options, $messageOptions = [])
+    {
+        $msgName = 'Travel_OrderReshop';
+
+        return $this->callMessage($msgName, $options, $messageOptions);
+    }
+
+    /**
      * PAY_GetVirtualCardDetails
      *
      * @param RequestOptions\PayGetVirtualCardDetailsOptions $options
